@@ -1,0 +1,14 @@
+<div>
+    <div *ngIf="!!g && g.groupings.length == 0" class="w-100 text-center" style="break-inside: avoid; border: 1px solid #ccc; border-radius: .3rem">
+        <h6><strong>{{title}}</strong></h6>
+        <canvas [id]="'canvasScore-' + g.groupingId" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
+      </div>
+
+      <h5 *ngIf="!!g && g.groupings.length > 0">
+          {{title}}
+      </h5>
+</div>
+
+<div *ngFor="let s of g.groupings" class="my-3">
+    <app-cis-scoring-chart [g]="s"></app-cis-scoring-chart>
+</div>

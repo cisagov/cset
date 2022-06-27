@@ -26,7 +26,6 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
-            CYOTE_ANSWERS = new HashSet<CYOTE_ANSWERS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -76,17 +75,16 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
-        public bool UseCyote { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_ORGANIZATION_DEMOGRAPHICS CIST_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_ORGANIZATION_DEMOGRAPHICS CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_COMPOSITION CIST_CSI_SERVICE_COMPOSITION { get; set; }
+        public virtual CIS_CSI_SERVICE_COMPOSITION CIS_CSI_SERVICE_COMPOSITION { get; set; }
         [InverseProperty("Assessment")]
-        public virtual CIST_CSI_SERVICE_DEMOGRAPHICS CIST_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public virtual CIS_CSI_SERVICE_DEMOGRAPHICS CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
         [InverseProperty("IdNavigation")]
@@ -115,8 +113,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment")]

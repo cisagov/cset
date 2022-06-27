@@ -110,9 +110,7 @@ import { AssessmentContactsComponent } from './assessment/prepare/assessment-inf
 import { ContactItemComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-item/contact-item.component';
 // tslint:disable-next-line:max-line-length
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
-import { AssessmentDemographicsCyoteComponent } from './assessment/prepare/assessment-info/assessment-demographics-cyote/assessment-demographics-cyote.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
-import { AssessmentDetailCyoteComponent } from './assessment/prepare/assessment-info/assessment-detail-cyote/assessment-detail-cyote.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
@@ -257,7 +255,6 @@ import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.compone
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
-import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { DetailComponent } from './reports/detail/detail.component';
@@ -291,7 +288,6 @@ import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executi
 import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
-import { CyoteOriginComponent } from './initial/cyote-origin/cyote-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
@@ -314,6 +310,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
@@ -384,25 +381,18 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
-import { CyoteService } from './services/cyote.service';
 import { Utilities } from './services/utilities.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
-import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
-import { LoginCyoteComponent } from './initial/login-cyote/login-cyote.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
-import { AboutCyoteComponent } from './dialogs/about-cyote/about-cyote.component';
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
-import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
-import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
-import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
 import { LoginRraComponent } from './initial/login-rra/login-rra.component';
 import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
 import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
@@ -410,11 +400,6 @@ import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component'
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
-import { CyoteCategorizationComponent } from './assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component';
-import { CyoteDeepDiveComponent } from './assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component';
-import { CyoteCollectComponent } from './assessment/questions/cyote-questions/cyote-collect/cyote-collect.component';
-import { AnomalyIconsComponent } from './assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component';
-import { CyoteRecommendationComponent } from './assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component';
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
 import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
@@ -429,7 +414,6 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
-import { CyoteQuestionOptionsComponent } from './assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 import { VadrAnswerComplianceComponent } from './assessment/results/mat-vadr/vadr-answer-compliance/vadr-answer-compliance.component';
@@ -442,6 +426,20 @@ import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vad
 import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
 import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
 import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
+import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
+import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
+import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
+import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
+import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
+import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
+
 
 
 @NgModule({
@@ -553,10 +551,8 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         PrepareComponent,
         AssessmentInfoComponent,
         AssessmentDetailComponent,
-        AssessmentDetailCyoteComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
-        AssessmentDemographicsCyoteComponent,
         ContactItemComponent,
         ResultsComponent,
         SalSimpleComponent,
@@ -698,7 +694,6 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
-        CyoteOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
         ChartsDonutComponent,
@@ -722,6 +717,7 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
+        CisCommentsmarkedComponent,
         QuestionTextComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
@@ -785,17 +781,11 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
         TsaLayoutMainComponent,
-        CyoteLayoutMainComponent,
         TsaAssessmentCompleteComponent,
-        CyoteAssessmentCompleteComponent,
         LoginTsaComponent,
-        LoginCyoteComponent,
         AssessmentConfigTsaComponent,
         FeatureOptionTsaComponent,
         AboutTsaComponent,
-        AboutCyoteComponent,
-        CyoteQuestionsComponent,
-        CyoteResultsComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
         RraLayoutMainComponent,
@@ -804,15 +794,9 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         LogoCsetComponent,
         TopMenusComponent,
         LogoForReportsComponent,
-        CyoteAnomalyComponent,
         LogoForReportsComponent,
         QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
-        CyoteCategorizationComponent,
-        CyoteDeepDiveComponent,
-        CyoteCollectComponent,
-        AnomalyIconsComponent,
-        CyoteRecommendationComponent,
         CsiComponent,
         CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
@@ -827,7 +811,6 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         ModuleContentComponent,
         ModuleContentLaunchComponent,
         TutorialCisComponent,
-        CyoteQuestionOptionsComponent,
         QuestionExtrasDialogComponent,
         VadrReportComponent,
         VadrAnswerComplianceComponent,
@@ -840,6 +823,20 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         VadrSummaryComponent,
         VadrSummaryAllComponent,
         OpenEndedQuestionsComponent,
+        CisSurveyComponent,
+        GroupingBlockNestedReportComponent,
+        QuestionBlockNestedReportComponent,
+        OptionBlockNestedReportComponent,
+        CoverSheetAComponent,
+        DisclaimerBlurbAComponent,
+        ConfigCisComponent,
+        CisRankedDeficiencyComponent,
+        RankedDeficienctyChartComponent,
+        CisCommentsmarkedComponent,
+        RankedDeficiencyComponent,
+        CisSectionScoringComponent,
+        CisScoringChartComponent,
+        SectionScoringComponent,
     ],
     providers: [
         ConfigService,
@@ -897,7 +894,6 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
         CrrFilteringService,
         RraFilteringService,
         CrrService,
-        CyoteService,
         Utilities,
     ],
     bootstrap: [AppComponent],

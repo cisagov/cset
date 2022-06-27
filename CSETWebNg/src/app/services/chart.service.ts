@@ -126,7 +126,7 @@ export class ChartService {
  * @param canvasId
  * @param x
  */
-  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean, opts: any = {}) {
+  buildHorizBarChart(canvasId: string, x: any, showLegend: boolean, zeroHundred: boolean, opts: any = {}, isPercent:boolean=true) {
     if (!x.labels) {
       x.labels = [];
     }
@@ -144,7 +144,7 @@ export class ChartService {
     if (tempChart) {
       tempChart.destroy();
     }
-
+    let percent = isPercent?'%':' ';
 
     var myOptions: any = {
       indexAxis: 'y',
@@ -156,9 +156,10 @@ export class ChartService {
           callbacks: {
             label: ((context) =>
               context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
-              + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
+              + (<Number>context.dataset.data[context.dataIndex]).toFixed() + percent )
           }
-        }
+        },
+       
       }
     };
 

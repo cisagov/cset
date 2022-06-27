@@ -25,11 +25,12 @@
         <span style="white-space: normal;">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
-        <span (click)="openExtras(q)" matTooltip="question details">
-            <svg viewBox="0 0 30 30" class="ml-3 cursor-pointer"
-                style="height: 31px; width: 31px; margin-top: 4px">
+        <span (click)="openExtras(q)" matTooltip="Question Details">
+            <svg viewBox="0 0 30 30" class="ml-1 cursor-pointer" style="height: 31px; width: 45px; margin-top: 4px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.75)"
                     d="M18.879,29.328C17.64,29.934 16.341,30.24 14.986,30.24 14.044,30.24 13.424,29.824 13.125,28.99 12.927,28.434 13.014,27.26 13.386,25.472L15.071,17.634C15.214,16.934 15.287,16.422 15.287,16.09 15.287,15.614 15.063,15.364 14.615,15.336L13.088,15.228C12.989,15.05 12.945,14.794 12.958,14.466 12.972,14.134 13.039,13.892 13.164,13.74 15.756,13.402 17.941,13.236 19.718,13.236 20.239,13.236 20.499,13.506 20.499,14.044 20.499,14.24 20.462,14.516 20.384,14.868 20.308,15.22 20.206,15.686 20.077,16.27 19.949,16.85 19.846,17.31 19.772,17.65L18.119,25.136C17.758,26.69 17.807,27.464 18.263,27.464 18.49,27.464 18.877,27.294 19.429,26.954 19.981,26.612 20.487,26.19 20.948,25.682 21.171,25.682 21.391,25.802 21.608,26.042 21.825,26.286 21.971,26.518 22.045,26.74 21.175,27.856 20.121,28.718 18.879,29.328 M16.841,5.47C17.307,4.998 17.962,4.764 18.804,4.764 19.538,4.764 20.133,5.024 20.592,5.546 21.052,6.068 21.281,6.652 21.281,7.296 21.281,7.856 21.028,8.388 20.518,8.896 20.008,9.406 19.363,9.66 18.582,9.66 17.849,9.66 17.26,9.404 16.812,8.888 16.365,8.374 16.142,7.788 16.142,7.126 16.142,6.496 16.375,5.942 16.841,5.47 M17.5,0C7.835,0 0,7.834 0,17.5 0,27.164 7.835,35 17.5,35 27.166,35 35,27.164 35,17.5 35,7.834 27.166,0 17.5,0" />
+                <circle cx="27" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="hasDetails(q)"
+                    class="test" />
             </svg>
         </span>
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
@@ -40,19 +41,14 @@
         </div>
 
         <div *ngIf="q.questionType == 'text'">
-            <input type="text" class="form-control w-100" maxlength="4000"
-                [value]="q.answerMemo"
+            <input type="text" class="form-control w-100" maxlength="4000" [value]="q.answerMemo"
                 (change)="changeText(q, $event)">
         </div>
 
         <div *ngIf="q.questionType == 'min-hr-day'">
-            <input type="text" class="form-control mr-2" style="width: 6rem; display: inline" 
-                maxlength="5" #tsNumber digitsOnly
-                [value]="getMhdNum(q.answerMemo)"
-                (change)="changeMinHrDay(tsNumber, tsUnit, q)">
-            <select class="form-control d-inline" style="width: 30%;"
-                #tsUnit
-                [value]="getMhdUnit(q.answerMemo)"
+            <input type="text" class="form-control mr-2" style="width: 6rem; display: inline" maxlength="5" #tsNumber
+                digitsOnly [value]="getMhdNum(q.answerMemo)" (change)="changeMinHrDay(tsNumber, tsUnit, q)">
+            <select class="form-control d-inline" style="width: 30%;" #tsUnit [value]="getMhdUnit(q.answerMemo)"
                 (change)="changeMinHrDay(tsNumber, tsUnit, q)">
                 <option value="">-- Select Unit --</option>
                 <option value="min">minutes</option>
@@ -60,10 +56,10 @@
                 <option value="day">days</option>
             </select>
         </div>
-        
-        <app-option-block-cis [q]="q" [opts]="q.options"></app-option-block-cis>
-        
-        <app-question-block-cis #questionBlock [questions]="q.followups"></app-question-block-cis>
+
+        <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
+
+        <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
     </div>
 
 </div>

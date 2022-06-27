@@ -50,20 +50,21 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
-              "src/favicon_cyote.ico",
               "src/uploadAssessment.html",
-              "src/sass"
+              "src/sass",
+              "src/web.config"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "src/assets/cset.js",
               "src/assets/shim.min.js",
               "src/assets/zone.js",
@@ -184,7 +185,6 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
-              "src/favicon_cyote.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",

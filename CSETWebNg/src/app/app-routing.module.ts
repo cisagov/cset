@@ -90,7 +90,6 @@ import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.compone
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
-import { CyoteLayoutMainComponent } from './layout/cyote-layout-main/cyote-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -128,6 +127,7 @@ import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
+import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { RelationshipFormationComponent } from './assessment/results/edm/relationship-formation/relationship-formation.component';
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
@@ -155,13 +155,10 @@ import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
-import { CyoteAssessmentCompleteComponent } from './assessment/results/cyote-assessment-complete/cyote-assessment-complete.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
-import { CyoteQuestionsComponent } from './assessment/questions/cyote-questions/cyote-questions.component';
-import { CyoteResultsComponent } from './assessment/results/analysis/cyote-results/cyote-results.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
@@ -169,6 +166,12 @@ import { MaturityQuestionsNestedComponent } from './assessment/questions/maturit
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
+import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
+import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
+import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
+import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
+import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -181,9 +184,6 @@ switch (installationMode) {
     break;
   case 'TSA':
     homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
-    break;
-  case 'CYOTE':
-    homeComponentForCurrentInstallationMode = CyoteLayoutMainComponent;
     break;
   case 'RRA':
     homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
@@ -308,6 +308,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-crr', component: TutorialCrrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
+              { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -339,15 +340,6 @@ const appRoutes: Routes = [
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
-          { path: 'cyote-collect', component: CyoteQuestionsComponent},
-          { path: 'cyote-categorize', component: CyoteQuestionsComponent},
-          { path: 'cyote-deepdive', component: CyoteQuestionsComponent},
-          { path: 'cyote-recommendation', component: CyoteQuestionsComponent},
-          // children: [
-          //   { path: 'cyote1', component: AssessmentInfoComponent },
-          //   { path: 'cyote2', component: Assessment2InfoComponent },
-          //  ]
-          // },
 
           {
             path: 'results',
@@ -400,13 +392,12 @@ const appRoutes: Routes = [
               { path: 'acet-maturity', component: MatDetailComponent },
               { path: 'acet-dashboard', component: ACETDashboardComponent },
 
-              { path: 'cyote-results', component: CyoteResultsComponent },
-
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
-              { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
+              { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
+              { path: 'section-scoring', component: SectionScoringComponent },
               { path: '', component: DashboardComponent },
             ]
           },
@@ -437,6 +428,7 @@ const appRoutes: Routes = [
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
+      { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
       { path: 'acetgaps', component: AcetDeficencyComponent },
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
@@ -449,6 +441,9 @@ const appRoutes: Routes = [
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'vadrOpenEndedReport', component: OpenEndedQuestionsComponent },
+      { path: 'cisSurveyReport', component: CisSurveyComponent },
+      { path: 'cisSectionScoringReport', component: CisSectionScoringComponent },
+      { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },

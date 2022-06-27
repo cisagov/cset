@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-        (localdb)\MSSQLLocalDB.CSETWeb11013   -  This database will be modified
+        (localdb)\MSSQLLocalDB.CSETWeb11013    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 5/24/2022 4:21:25 PM
+Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 6/22/2022 2:45:46 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -869,46 +869,6 @@ END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
-PRINT N'Altering [dbo].[Assessments_For_User]'
-GO
-
-
-
-
-
-ALTER VIEW [dbo].[Assessments_For_User]
-AS
-select 	
-    AssessmentId = a.Assessment_Id,
-	AssessmentName = Assessment_Name,
-	AssessmentDate = Assessment_Date,
-	AssessmentCreatedDate,
-	CreatorName = u.FirstName + ' ' + u.LastName,
-	LastModifiedDate = LastModifiedDate,
-	MarkedForReview = isnull(mark_for_review,0),
-	c.UserId
-	from ASSESSMENTS a 
-		join INFORMATION i on a.Assessment_Id = i.Id
-		join USERS u on a.AssessmentCreatorId = u.UserId
-		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id
-		left join (
-			select distinct a.Assessment_Id, Mark_For_Review 
-			from ASSESSMENTS a 
-			join Answer_Standards_InScope v on a.Assessment_Id = v.Assessment_Id 
-			where v.Mark_For_Review = 1
-			union
-			select distinct a.Assessment_Id, Mark_For_Review
-			from ASSESSMENTS a
-			join Answer_Maturity v on a.Assessment_id = v.Assessment_Id
-			where v.Mark_For_Review = 1
-			union 
-			select distinct a.Assessment_Id, Mark_For_Review 
-			from ASSESSMENTS a 
-			join Answer_Components_InScope v on a.Assessment_Id = v.Assessment_Id 
-			where v.Mark_For_Review = 1) b on a.Assessment_Id = b.Assessment_Id
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
 PRINT N'Creating [dbo].[usp_getGenericModelSummaryByGoal]'
 GO
 -- =============================================
@@ -1050,6 +1010,46 @@ END
 
 
 --update MATURITY_QUESTIONS set Sequence = Sequence + 2 where Mat_Question_Id >=6341 and mat_question_id not in (6390,6392)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[Assessments_For_User]'
+GO
+
+
+
+
+
+ALTER VIEW [dbo].[Assessments_For_User]
+AS
+select 	
+    AssessmentId = a.Assessment_Id,
+	AssessmentName = Assessment_Name,
+	AssessmentDate = Assessment_Date,
+	AssessmentCreatedDate,
+	CreatorName = u.FirstName + ' ' + u.LastName,
+	LastModifiedDate = LastModifiedDate,
+	MarkedForReview = isnull(mark_for_review,0),
+	c.UserId
+	from ASSESSMENTS a 
+		join INFORMATION i on a.Assessment_Id = i.Id
+		join USERS u on a.AssessmentCreatorId = u.UserId
+		join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id
+		left join (
+			select distinct a.Assessment_Id, Mark_For_Review 
+			from ASSESSMENTS a 
+			join Answer_Standards_InScope v on a.Assessment_Id = v.Assessment_Id 
+			where v.Mark_For_Review = 1
+			union
+			select distinct a.Assessment_Id, Mark_For_Review
+			from ASSESSMENTS a
+			join Answer_Maturity v on a.Assessment_id = v.Assessment_Id
+			where v.Mark_For_Review = 1
+			union 
+			select distinct a.Assessment_Id, Mark_For_Review 
+			from ASSESSMENTS a 
+			join Answer_Components_InScope v on a.Assessment_Id = v.Assessment_Id 
+			where v.Mark_For_Review = 1) b on a.Assessment_Id = b.Assessment_Id
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

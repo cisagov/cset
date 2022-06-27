@@ -4,12 +4,15 @@ namespace CSETWebCore.Model.Aggregation
 {
     public class ChartDataSet
     {
-        public string label { get; set; }
-        public List<float> data { get; set; }
+        public string Type { get; set; }
+        public string Label { get; set; }
+        public List<float> Data { get; set; }
+        public List<string> BackgroundColor { get; set; }
 
         public ChartDataSet()
         {
-            this.data = new List<float>();
+            this.Data = new List<float>();
+            this.BackgroundColor = new List<string>();
         }
     }
 }
