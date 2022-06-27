@@ -29,6 +29,7 @@ import { ngxCsv } from "ngx-csv/ngx-csv";
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
   // subgroup: any [];
+  noData:boolean=false;
   openEndedQuestion = false;
   onlyOpenQuestionData = [];
   response: any;
@@ -110,8 +111,11 @@ export class OpenEndedQuestionsComponent implements OnInit {
             });
             if (myArray.length >= 1) {
               this.data2.push({ title, myArray });
+            }else if(this.data2.length===0){
+              this.noData=true;
             }
           });
+          console.log(this.data2)
         },
         (error) => {
           console.log(
