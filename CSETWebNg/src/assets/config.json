@@ -14,7 +14,7 @@
     },
     "reportsApi":"http://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
-    "helpContactEmail": "cset@dhs.gov",
+    "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
     "defaultPasswordSubject": "Your CSET password has been reset",
     "defaultPasswordTemplate": "Your CSET password has been reset.\nIf you are unable to login, please use the \"Forgot Password\" option on the login page.\nIf you did not change this password, please contact.........",
