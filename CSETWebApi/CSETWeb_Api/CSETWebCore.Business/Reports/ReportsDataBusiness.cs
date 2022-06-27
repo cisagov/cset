@@ -449,9 +449,12 @@ namespace CSETWebCore.Business.Reports
         public List<BasicReportData.RequirementControl> GetControls()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-
+            _questionRequirement.InitializeManager(_assessmentId);
 
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            string level = _questionRequirement.StandardLevel==null?"L":_questionRequirement.StandardLevel; 
+            
 
             var q = (from rs in _context.REQUIREMENT_SETS
                      join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
@@ -460,9 +463,9 @@ namespace CSETWebCore.Business.Reports
                      join av in _context.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
                      join rqs in _context.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
                      join qu in _context.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
-                     join a in _context.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
-                     where rl.Standard_Level == _questionRequirement.StandardLevel && av.Selected == true && rl.Level_Type == "NST"
-                         && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
+                     join a in _context.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id                     
+                     where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
+                      && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
                      orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
                      select new { r, rs, rl, s, qu, a }).ToList();
 
