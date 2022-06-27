@@ -25,11 +25,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
+import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
 @Component({
-  selector: 'app-option-block-cis',
+  selector: 'app-option-block-nested',
   templateUrl: './option-block-nested.component.html'
 })
 export class OptionBlockNestedComponent implements OnInit {
@@ -45,13 +46,14 @@ export class OptionBlockNestedComponent implements OnInit {
   sectionId = 0;
 
   // temporary debug aids
-  showIdTag = false;
+  showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   showWeightTag = false;
 
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private utilSvc: Utilities,
+    private configSvc: ConfigService,
     private route: ActivatedRoute,
   ) {
 
@@ -72,6 +74,15 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
+   * Returns a boolean indiating if all of the
+   * options are unselected.
+   */
+  noneChecked(opts) {
+    let n = opts.every(o => !o.selected);
+    return n;
+  }
+
+  /**
    *
    */
   changeRadio(o, event): void {
@@ -86,10 +97,29 @@ export class OptionBlockNestedComponent implements OnInit {
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
-      desc.selected = false;
-      desc.answerText = '';
-      desc.freeResponseAnswer = '';
+      for (let key in desc) {
+        //options are where the radio & checkboxes live within the "desc" data structure
+        if (key === "options" && desc[key] != null && desc[key].length > 0) {
+          var lengthOfOptions = desc[key].length;
+          for (var i = 0; i <= lengthOfOptions; i++) {
+            if (desc[key]["" + i + ""] != undefined) {
+              desc[key]["" + i + ""].selected = false;
+            }
+          }
+        }
 
+        if (key === "answerText" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "answerMemo" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "freeResponseAnswer" && desc[key] != null) {
+          desc[key] = '';
+        }
+      }
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
@@ -100,21 +130,44 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event): void {
+  changeCheckbox(o, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
+    //don't love the super nested if's but the amount
+    //of redesign to work around it is crazy so sorry
+    //for all the if's
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
+    else {
+      if (o.optionText.toLowerCase() == 'none of the above') {
+        listOfOptions.forEach(obj => {
+          if (o != obj) {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+      else {
+        listOfOptions.forEach(obj => {
+          if (obj.optionText.toLowerCase() == 'none of the above') {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+    }
+
 
     // add this option to the request
     answers.push(this.makeAnswer(o));
 
     // if unselected, clean up my kids
     if (!o.selected) {
-
-      const descendants = this.getDescendants([o]);
+      // get the descendants for my peer radios to clean them up
+      var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+      const descendants = this.getDescendants(siblingOptions);
 
       descendants.forEach(desc => {
         desc.selected = false;
@@ -181,18 +234,36 @@ export class OptionBlockNestedComponent implements OnInit {
    * from the supplied options/questions.
    */
   getDescendants(y: any[]): any[] {
-    const desc = []; // immediate descendants
+    const allYDescendants = []; // all descendants of all "y" objects
 
     if (!y || y.length === 0) {
-      return desc;
+      return allYDescendants;
     }
 
     y.forEach(x => {
-      desc.push(...x.followups ?? []);
-      desc.push(...x.options ?? []);
-      desc.push(...this.getDescendants(desc));
+      const xDescendants = [];
+      xDescendants.push(...x.followups ?? []);
+      xDescendants.push(...x.options ?? []);
+
+      if (xDescendants.length > 0) {
+        xDescendants.push(...this.getDescendants(xDescendants) ?? []);
+      }
+
+      allYDescendants.push(...xDescendants);
     });
 
-    return desc;
+    return allYDescendants;
+  }
+
+  /**
+   * Ignores spacebar event if the target
+   * is within a "div-shield" parent.
+   */
+  catchSpace(e: Event, tag: string) {
+    let el = document.getElementById(tag);
+    let foundEl = el.closest('.div-shield');
+    if (foundEl) {
+      e.preventDefault();
+    }
   }
 }

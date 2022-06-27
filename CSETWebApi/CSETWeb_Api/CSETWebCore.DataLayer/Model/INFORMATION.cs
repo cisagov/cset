@@ -83,6 +83,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Real_Property_Unique_Id { get; set; }
         public int? eMass_Document_Id { get; set; }
         public bool? IsAcetOnly { get; set; }
+        public int? Baseline_Assessment_Id { get; set; }
         [StringLength(30)]
         public string Workflow { get; set; }
 

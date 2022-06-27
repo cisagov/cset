@@ -47,6 +47,7 @@ export interface QuestionDocument {
 }
 
 export interface QuestionDetailsContentViewModel {
+  questionId: number;
   selectedStandardTabIndex: number;
   noQuestionInformationText: string;
   showQuestionDetailTab: boolean;

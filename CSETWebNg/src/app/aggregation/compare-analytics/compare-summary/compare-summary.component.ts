@@ -47,7 +47,7 @@ export class CompareSummaryComponent implements OnInit {
   assessmentColors: Map<string, string>;
 
   /**
-   * 
+   *
    */
   constructor(
     public aggregationSvc: AggregationService,
@@ -78,6 +78,11 @@ export class CompareSummaryComponent implements OnInit {
 
     // Standards Answers
     this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
+      if (x.data.every(item => item === 0)) {
+        x.data = [100];
+        x.labels = ['No Standards Selected'];
+      }
+
       this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
 
@@ -85,6 +90,11 @@ export class CompareSummaryComponent implements OnInit {
 
     // Components Answers
     this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
+      if (x.data.every(item => item === 0)) {
+        x.data = [100];
+        x.labels = ['No Assessment Diagrams'];
+      }
+
       this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
     });
 
@@ -113,25 +123,37 @@ export class CompareSummaryComponent implements OnInit {
 
     // Maturity Compliance By Model/Domain
     this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+      let showLegend = true;
+
+      if (!resp.length) {
+        showLegend = false;
+        resp = [{
+          chartName: '',
+          labels: ['No Maturity Models Selected'],
+          datasets: [{data: 0}],
+          chart: null
+        }];
+      }
+
       this.chartsMaturityCompliance = resp;
 
       resp.forEach(x => {
-        this.buildMaturityChart(x);
+        this.buildMaturityChart(x, showLegend);
       });
     });
   }
 
   /**
-   * 
+   *
    */
-  buildMaturityChart(c) {
+  buildMaturityChart(c, showLegend) {
     c.datasets.forEach(ds => {
       ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
     });
 
 
     setTimeout(() => {
-      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, true, true)
+      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, showLegend, true)
     }, 1000);
   }
 }

@@ -87,7 +87,6 @@ export class SelectAssessmentsComponent implements OnInit {
    * @param assessment
    */
   toggleSelection(event, assessment) {
-    console.log(assessment);
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });
