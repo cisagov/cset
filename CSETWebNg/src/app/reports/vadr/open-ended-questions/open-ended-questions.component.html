@@ -81,14 +81,13 @@
       <div class="row mt-3">
         <div class="d-grid gap-2 col-6 mx-auto text-center">
           <div (click)="toggleShow()" type="checkbox" >
-             <button  class="btn btn-outline-secondary btn-button noprint" data-bs-toggle="tooltip" title="Lists only “Open ended” questions to which answers had been provided." *ngIf="openEndedQuestion &&!noData"> Only Answered Questions</button>
-              <button class="btn btn-outline-secondary btn-button noprint" data-bs-toggle="tooltip" title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion &&!noData">    Show ALL    </button>
+             <button  class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip" title="Lists only “Open ended” questions to which answers had been provided." *ngIf="openEndedQuestion &&!noData"> Only Answered Questions</button>
+              <button class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip" title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion &&!noData">    Show ALL    </button>
             </div>
          </div>
         <div class="d-grid gap-2 col-6 mx-auto text-center">
-          <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
-          <span class="mr-2 fs-base cset-icons-import">asa</span> <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()">Export to Excel</button>
-          <button *ngIf="!openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvOnlyAnswered()">Export to Excel</button>
+         <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()">Export to Excel</button>
+          <button *ngIf="!openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvOnlyAnswered()"> <i class="far fa-file-excel"></i>  Export to Excel</button>
         </div>
 
         <div *ngIf="noData"> Please answer some questions in order to see some data on this report </div>
