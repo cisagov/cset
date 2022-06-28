@@ -17,6 +17,7 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Reports;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Snickler.EFCore;
@@ -95,10 +96,10 @@ namespace CSETWebCore.Business.Reports
             var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
 
             // Set IsParentWithChildren property for all parent questions that have child questions
-            foreach (var matAns in responseList) 
+            foreach (var matAns in responseList)
             {
-                if (childQuestions.Exists(x => x.Mat.Parent_Question_Id == matAns.Mat.Mat_Question_Id)) 
-                { 
+                if (childQuestions.Exists(x => x.Mat.Parent_Question_Id == matAns.Mat.Mat_Question_Id))
+                {
                     matAns.IsParentWithChildren = true;
                 }
             }
@@ -166,8 +167,8 @@ namespace CSETWebCore.Business.Reports
 
             // We don't consider parent questions that have children to be unanswered for certain maturity models
             // (i.e. for CRR, EDM since they just house the question extras)
-            if (ignoreParentQuestions) 
-            { 
+            if (ignoreParentQuestions)
+            {
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
 
@@ -446,28 +447,84 @@ namespace CSETWebCore.Business.Reports
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<BasicReportData.RequirementControl> GetControls()
+        public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
             _questionRequirement.InitializeManager(_assessmentId);
 
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
 
-            string level = _questionRequirement.StandardLevel==null?"L":_questionRequirement.StandardLevel; 
-            
+            string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
 
-            var q = (from rs in _context.REQUIREMENT_SETS
-                     join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
-                     join rl in _context.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
-                     join s in _context.SETS on rs.Set_Name equals s.Set_Name
-                     join av in _context.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
-                     join rqs in _context.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
-                     join qu in _context.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
-                     join a in _context.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id                     
-                     where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
-                      && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
-                     orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
-                     select new { r, rs, rl, s, qu, a }).ToList();
+            List<ControlRow> controlRows = new List<ControlRow>();
+            
+            if (applicationMode == CSETWebCore.Business.Assessment.AssessmentMode.QUESTIONS_BASED_APPLICATION_MODE)
+            {
+                var qQ = (from rs in _context.REQUIREMENT_SETS
+                          join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
+                          join rl in _context.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
+                          join s in _context.SETS on rs.Set_Name equals s.Set_Name
+                          join av in _context.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
+                          join rqs in _context.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
+                          join qu in _context.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
+                          join a in _context.Answer_Questions_No_Components on qu.Question_Id equals a.Question_Or_Requirement_Id
+                          where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
+                           && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
+                          orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
+                          select new { r, rl, s, qu, a }).ToList();
+
+                foreach (var q in qQ)
+                {
+                    controlRows.Add(new ControlRow() { 
+                        Requirement_Id = q.r.Requirement_Id,
+                        Requirement_Text = q.r.Requirement_Text,
+                        Answer_Text = q.a.Answer_Text,
+                        Comment = q.a.Comment,
+                        Question_Id = q.qu.Question_Id,
+                        Requirement_Title = q.r.Requirement_Title,
+                        Short_Name = q.s.Short_Name,
+                        Simple_Question = q.qu.Simple_Question,
+                        Standard_Category = q.r.Standard_Category,
+                        Standard_Sub_Category = q.r.Standard_Sub_Category,
+                        Standard_Level = q.rl.Standard_Level
+                    });
+                }
+            }
+            else
+            {
+                var qR = (from rs in _context.REQUIREMENT_SETS
+                          join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
+                          join rl in _context.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
+                          join s in _context.SETS on rs.Set_Name equals s.Set_Name
+                          join av in _context.AVAILABLE_STANDARDS on s.Set_Name equals av.Set_Name
+                          join rqs in _context.REQUIREMENT_QUESTIONS_SETS on new { r.Requirement_Id, s.Set_Name } equals new { rqs.Requirement_Id, rqs.Set_Name }
+                          join qu in _context.NEW_QUESTION on rqs.Question_Id equals qu.Question_Id
+                          join a in _context.Answer_Requirements on r.Requirement_Id equals a.Question_Or_Requirement_Id
+                          where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
+                           && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
+                          orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
+                          select new { r, rl, s, qu, a }).ToList();
+
+                foreach (var q in qR)
+                {
+                    controlRows.Add(new ControlRow()
+                    {
+                        Requirement_Id = q.a.Question_Or_Requirement_Id,
+                        Requirement_Text = q.r.Requirement_Text,
+                        Answer_Text = q.a.Answer_Text,
+                        Comment = q.a.Comment,
+                        Question_Id = q.qu.Question_Id,
+                        Requirement_Title = q.r.Requirement_Title,
+                        Short_Name = q.s.Short_Name,
+                        Simple_Question = q.qu.Simple_Question,
+                        Standard_Category = q.r.Standard_Category,
+                        Standard_Sub_Category = q.r.Standard_Sub_Category,
+                        Standard_Level = q.rl.Standard_Level
+                    });
+                }
+            }
+
+
 
             //get all the questions for this control 
             //determine the percent implemented.                 
@@ -476,29 +533,29 @@ namespace CSETWebCore.Business.Reports
             int questionsAnswered = 0;
             BasicReportData.RequirementControl control = null;
             List<BasicReportData.Control_Questions> questions = null;
-            foreach (var a in q.ToList())
-            {
 
-                if (prev_requirement_id != a.r.Requirement_Id)
+            foreach (var a in controlRows)
+            {
+                if (prev_requirement_id != a.Requirement_Id)
                 {
                     questionCount = 0;
                     questionsAnswered = 0;
                     questions = new List<BasicReportData.Control_Questions>();
                     control = new BasicReportData.RequirementControl()
                     {
-                        ControlDescription = a.r.Requirement_Text,
-                        RequirementTitle = a.r.Requirement_Title,
-                        Level = a.rl.Standard_Level,
-                        StandardShortName = a.s.Short_Name,
-                        Standard_Category = a.r.Standard_Category,
-                        SubCategory = a.r.Standard_Sub_Category,
+                        ControlDescription = a.Requirement_Text,
+                        RequirementTitle = a.Requirement_Title,
+                        Level = a.Standard_Level,
+                        StandardShortName = a.Short_Name,
+                        Standard_Category = a.Standard_Category,
+                        SubCategory = a.Standard_Sub_Category,
                         Control_Questions = questions
                     };
                     controls.Add(control);
                 }
                 questionCount++;
 
-                switch (a.a.Answer_Text)
+                switch (a.Answer_Text)
                 {
                     case Constants.Constants.ALTERNATE:
                     case Constants.Constants.YES:
@@ -508,13 +565,13 @@ namespace CSETWebCore.Business.Reports
 
                 questions.Add(new BasicReportData.Control_Questions()
                 {
-                    Answer = a.a.Answer_Text,
-                    Comment = a.a.Comment,
-                    Simple_Question = a.qu.Simple_Question
+                    Answer = a.Answer_Text,
+                    Comment = a.Comment,
+                    Simple_Question = a.Simple_Question
                 });
 
                 control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
-                prev_requirement_id = a.r.Requirement_Id;
+                prev_requirement_id = a.Requirement_Id;
             }
 
             return controls;
@@ -1077,9 +1134,9 @@ namespace CSETWebCore.Business.Reports
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
-                
+
                 // get the question identifier and text
-                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id, 
+                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                     out string qid, out string qtxt);
                 rfind.QuestionIdentifier = qid;
                 rfind.QuestionText = qtxt;
@@ -1102,8 +1159,8 @@ namespace CSETWebCore.Business.Reports
         /// case of a requirement.
         /// </summary>
         /// <returns></returns>
-        private void GetQuestionTitleAndText(dynamic f, 
-            List<StandardQuestions> stdList, List<ComponentQuestion> compList, 
+        private void GetQuestionTitleAndText(dynamic f,
+            List<StandardQuestions> stdList, List<ComponentQuestion> compList,
             int answerId,
             out string identifier, out string questionText)
         {
@@ -1115,7 +1172,7 @@ namespace CSETWebCore.Business.Reports
                 case "Question":
                     foreach (var s in stdList)
                     {
-                        var q1= s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                        var q1 = s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
                         if (q1 != null)
                         {
                             identifier = q1.CategoryAndNumber;

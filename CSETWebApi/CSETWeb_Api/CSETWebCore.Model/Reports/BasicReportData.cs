@@ -17,6 +17,7 @@ namespace CSETWebCore.Business.Reports
 {
     public class BasicReportData
     {
+        public string ApplicationMode { get; set; }
         public List<usp_GetOverallRankedCategoriesPage_Result> top5Categories;
 
         public INFORMATION information { get; set; }

@@ -926,7 +926,7 @@
                     <td colspan="3">{{control.affectedComponents}}
                     </td>
                 </tr>
-                <tr>
+                <tr *ngIf="response.applicationMode == 'Questions Based'">
                     <td colspan="3">
                         <table class="related-questions">
                             <tr *ngFor="let q of control.control_Questions">
