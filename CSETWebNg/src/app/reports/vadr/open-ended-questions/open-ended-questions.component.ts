@@ -116,7 +116,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
               this.noData=true;
             }
           });
-          console.log(this.data2)
+
         },
         (error) => {
           console.log(
@@ -135,11 +135,9 @@ export class OpenEndedQuestionsComponent implements OnInit {
     const  dataOnlyAnswered=[];
     this.data2.forEach((e) => {
       const title = e.title;
-      // console.log(title)
       dataOnlyAnswered.push({ title });
       e.myArray.forEach((x) => {
-        // const title=e.title
-        // console.log(title)
+
         const questionNumber = x.displayNumber;
         const question = x.questionText;
         var OpenAnswer = "";
@@ -179,11 +177,9 @@ export class OpenEndedQuestionsComponent implements OnInit {
     this.onlyOpenQuestionData.forEach((e) => {
 
       const title = e.title;
-      // console.log(title)
+
       data1.push({ title });
       e.questions.forEach((x) => {
-        // const title=e.title
-        // console.log(title)
         const questionNumber = x.displayNumber;
         const question = x.questionText;
         var OpenAnswer = "";
