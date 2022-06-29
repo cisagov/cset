@@ -86,7 +86,7 @@
             </div>
          </div>
         <div class="d-grid gap-2 col-6 mx-auto text-center">
-         <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()">Export to Excel</button>
+         <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()"> <i class="far fa-file-excel"></i> Export to Excel</button>
           <button *ngIf="!openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvOnlyAnswered()"> <i class="far fa-file-excel"></i>  Export to Excel</button>
         </div>
 
