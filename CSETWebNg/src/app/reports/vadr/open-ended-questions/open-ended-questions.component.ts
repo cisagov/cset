@@ -35,7 +35,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
   response: any;
   data2 = [];
   modelName: string = "";
-  data1 = [];
+  // data1 = [];
+
   options = {
     fieldSeparator: ",",
     quoteStrings: '"',
@@ -131,10 +132,11 @@ export class OpenEndedQuestionsComponent implements OnInit {
     this.openEndedQuestion = !this.openEndedQuestion;
   }
   convertTocSvOnlyAnswered() {
+    const  dataOnlyAnswered=[];
     this.data2.forEach((e) => {
       const title = e.title;
       // console.log(title)
-      this.data1.push({ title });
+      dataOnlyAnswered.push({ title });
       e.myArray.forEach((x) => {
         // const title=e.title
         // console.log(title)
@@ -161,7 +163,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
           OpenAnswer = x.freeResponseAnswer;
           ParentAnswer = "";
         }
-        this.data1.push({
+        dataOnlyAnswered.push({
           title: "",
           questionNumber,
           question,
@@ -170,14 +172,15 @@ export class OpenEndedQuestionsComponent implements OnInit {
         });
       });
     });
-    new ngxCsv(this.data1, "Open Ended questions report", this.options);
+    new ngxCsv(dataOnlyAnswered, "Open Ended questions report only answered questions", this.options);
   }
   convertTocSvAll(){
+    const data1 = [];
     this.onlyOpenQuestionData.forEach((e) => {
 
       const title = e.title;
       // console.log(title)
-      this.data1.push({ title });
+      data1.push({ title });
       e.questions.forEach((x) => {
         // const title=e.title
         // console.log(title)
@@ -204,7 +207,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
           OpenAnswer = x.freeResponseAnswer;
           ParentAnswer = "";
         }
-        this.data1.push({
+        data1.push({
           title: "",
           questionNumber,
           question,
@@ -213,6 +216,6 @@ export class OpenEndedQuestionsComponent implements OnInit {
         });
       });
     });
-    new ngxCsv(this.data1, "Open Ended All questions report", this.options);
+    new ngxCsv(data1, "Open Ended All questions report", this.options);
   }
 }
