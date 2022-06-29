@@ -13,10 +13,14 @@ import { QuestionsService } from '../../services/questions.service';
 export class MergeExaminationsComponent implements OnInit {
 
   mergeList: any[] = [];
-  listAsString: string = '';
   groupings: QuestionGrouping[] = null;
   questionCount: number[] = [];
+  
+  assessmentOneData: any;
+  assessmentTwoData: any;
+  
   allConflictsResolved: boolean = false;
+
 
   constructor(
     public ncuaSvc: NCUAService,
@@ -29,20 +33,40 @@ export class MergeExaminationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mergeList = this.ncuaSvc.assessmentsToMerge;
-    this.listAsString = JSON.stringify(this.mergeList, null, 4);
-    this.loadQuestions();
+    this.loadStatements();
+    this.loadAnswers();
   }
 
-  loadQuestions() {
+  loadStatements() {
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
         this.groupings = response.groupings;
-        console.log("Response: " + JSON.stringify(this.groupings, null, 4));
         this.questionCount = Array(this.groupings[0].questions.length).fill(1).map((x,i)=>i);
       }
     )
   }
 
-  
-  
+  loadAnswers() {
+      this.ncuaSvc.getAnswers(13481).subscribe(
+        (response: any) => {
+          for (let i = 0; i <= response.length; i++) {
+            this.assessmentOneData = response;
+            console.log("RESPONSE: " + JSON.stringify(response, null, 4));
+          }
+        }
+      )
+
+      this.ncuaSvc.getAnswers(13482).subscribe(
+        (response: any) => {
+          for (let i = 0; i <= response.length; i++) {
+            this.assessmentTwoData = response;
+            console.log("RESPONSE: " + JSON.stringify(response, null, 4));
+          }
+        }
+      )
+
+
+  }
+
+
 }

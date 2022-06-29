@@ -49,7 +49,7 @@ const headers = {
 
   // used for keeping track of which examinations are being merged
   prepForMerge: boolean = false;
-  assessmentsToMerge: AssessmentDetail[] = [];
+  assessmentsToMerge: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -85,11 +85,16 @@ const headers = {
     const optionChecked = event.srcElement.checked;
 
     if (optionChecked) {
-      this.assessmentsToMerge.push(assessment);
+      this.assessmentsToMerge.push(assessment.assessmentId);
       } else {
       const index = this.assessmentsToMerge.indexOf(assessment);
       this.assessmentsToMerge.splice(index, 1);
     }
+  }
+
+  getAnswers(assessId: number) {
+    headers.params = headers.params.set("id", assessId);
+    return this.http.get(this.configSvc.apiUrl + 'getMergeAnswers', headers);
   }
 
 
