@@ -42,21 +42,45 @@
                 </tr>
                 <tr *ngFor="let question of this.childStatements; let i = index">
                     <ng-container>
-                        <td style="padding-left: 0.5rem">{{ this.childStatements[i].questionText }}</td>
-
-                        <td *ngFor="let assessment of this.mergeList; let j = index">
-                            <ng-container *ngIf="j === 0">{{ this.assessmentOneData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 1">{{ this.assessmentTwoData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 2">{{ this.assessmentThreeData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 3">{{ this.assessmentFourData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 4">{{ this.assessmentFiveData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 5">{{ this.assessmentSixData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 6">{{ this.assessmentSevenData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 7">{{ this.assessmentEightData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 8">{{ this.assessmentNineData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 9">{{ this.assessmentTenData[i].answer_Text }}</ng-container>
+                        <td style="padding-left: 0.5rem; width: 50%">
+                            {{ this.childStatements[i].questionText }} <sup matTooltipPosition="above" matTooltip="{{ getParentText(this.childStatements[i].parentQuestionId) }}">?</sup>
                         </td>
-                        
+
+                        <td style="padding-left: 1.0rem;" 
+                            *ngFor="let assessment of this.mergeList; let j = index">
+                            <ng-container *ngIf="j === 0">
+                                {{ this.assessmentOneData[i]?.answer_Text !== null ? this.assessmentOneData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 1">
+                                {{ this.assessmentTwoData[i]?.answer_Text !== null ? this.assessmentTwoData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 2">
+                                {{ this.assessmentThreeData[i]?.answer_Text !== null ? this.assessmentThreeData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 3">
+                                {{ this.assessmentFourData[i]?.answer_Text !== null ? this.assessmentFourData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 4">
+                                {{ this.assessmentFiveData[i]?.answer_Text !== null ? this.assessmentFiveData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 5">
+                                {{ this.assessmentSixData[i]?.answer_Text !== null ? this.assessmentSixData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 6">
+                                {{ this.assessmentSevenData[i]?.answer_Text !== null ? this.assessmentSevenData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 7">
+                                {{ this.assessmentEightData[i]?.answer_Text !== null ? this.assessmentEightData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 8">
+                                {{ this.assessmentNineData[i]?.answer_Text !== null ? this.assessmentNineData[i].answer_Text : "U" }}
+                            </ng-container>
+                            <ng-container *ngIf="j === 9">
+                                {{ this.assessmentTenData[i]?.answer_Text !== null ? this.assessmentTenData[i].answer_Text : "U" }}
+                            </ng-container>
+
+                        </td>
+
                         <td><input type="radio" id="yes" name="option{{i}}"></td>
                         <td><input type="radio" id="no" name="option{{i}}"></td>
                         <td><input type="radio" id="na" name="option{{i}}"></td>
