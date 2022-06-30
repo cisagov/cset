@@ -12,12 +12,16 @@ import { QuestionsService } from '../../services/questions.service';
 })
 export class MergeExaminationsComponent implements OnInit {
 
-  mergeList: any[] = [];
-  groupings: QuestionGrouping[] = null;
+  groupings: QuestionGrouping[] = [];
   questionCount: number[] = [];
+
+  mergeList: any[] = [];
+  childStatements: any[] = [];
   
-  assessmentOneData: any;
-  assessmentTwoData: any;
+  assessmentOneData: any; assessmentTwoData: any; assessmentThreeData: any;
+  assessmentFourData: any; assessmentFiveData: any; assessmentSixData: any;
+  assessmentSevenData: any; assessmentEightData: any; assessmentNineData: any;
+  assessmentTenData: any;
   
   allConflictsResolved: boolean = false;
 
@@ -41,32 +45,53 @@ export class MergeExaminationsComponent implements OnInit {
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
         this.groupings = response.groupings;
+        console.log("RESPONSE: " + JSON.stringify(response, null, 4));
+
+        for (let i = 0; i < this.groupings[0].questions.length; i++) {
+          if (!this.groupings[0].questions[i].isParentQuestion) {
+            this.childStatements.push(this.groupings[0].questions[i]);
+          }
+        }
+
+        console.log("CHILDREN: " + JSON.stringify(this.childStatements, null, 4));
         this.questionCount = Array(this.groupings[0].questions.length).fill(1).map((x,i)=>i);
       }
     )
   }
 
   loadAnswers() {
-      this.ncuaSvc.getAnswers(13481).subscribe(
+    this.mergeList.forEach((id, index) => {
+      this.ncuaSvc.getAnswers(id).subscribe(
         (response: any) => {
           for (let i = 0; i <= response.length; i++) {
-            this.assessmentOneData = response;
-            console.log("RESPONSE: " + JSON.stringify(response, null, 4));
+            if (index === 0) {
+              this.assessmentOneData = response;
+            } else if (index === 1) {
+              this.assessmentTwoData = response;
+            } else if (index === 2) {
+              this.assessmentThreeData = response;
+            } else if (index === 3) {
+              this.assessmentFourData = response;
+            } else if (index === 4) {
+              this.assessmentFiveData = response;
+            } else if (index === 5) {
+              this.assessmentSixData = response;
+            } else if (index === 6) {
+              this.assessmentSevenData = response;
+            } else if (index === 7) {
+              this.assessmentEightData = response;
+            } else if (index === 8) {
+              this.assessmentNineData = response;
+            } else if (index === 9) {
+              this.assessmentTenData = response;
+            }
           }
-        }
-      )
-
-      this.ncuaSvc.getAnswers(13482).subscribe(
-        (response: any) => {
-          for (let i = 0; i <= response.length; i++) {
-            this.assessmentTwoData = response;
-            console.log("RESPONSE: " + JSON.stringify(response, null, 4));
-          }
-        }
-      )
-
-
+      })
+    })
   }
 
+  checkForNull() {
+    
+  }
 
 }
