@@ -7,5 +7,11 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_GetStandardsSummaryPageResult
     {
+        public string Answer_Full_Name { get; set; }
+        public string Short_Name { get; set; }
+        public string Answer_Text { get; set; }
+        public int qc { get; set; }
+        public int Total { get; set; }
+        public int Percent { get; set; }
     }
 }

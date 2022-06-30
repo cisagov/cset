@@ -579,9 +579,9 @@
                 <th>Title</th>
                 <th>File Name</th>
             </tr>
-            <tr *ngFor="let doc of response?.DocumentLibraryTable">
-                <td>{{doc.documenttitle}}</td>
-                <td>{{doc.FileName}}</td>
+            <tr *ngFor="let doc of response?.documentLibraryTable">
+                <td>{{doc.documentTitle}}</td>
+                <td>{{doc.fileName}}</td>
             </tr>
             <tr *ngIf="response?.documentLibraryTable.length === 0">
                 <td></td>
@@ -631,7 +631,7 @@
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>
-                <th style="width: 15%">Rank: {{rq.Rank}}</th>
+                <th style="width: 15%">Rank: {{rq.rank}}</th>
                 <th>{{rq?.categoryAndNumber}}</th>
                 <th style="width: 15%">Level: {{configSvc.salLabels[rq.level]}}</th>
             </tr>

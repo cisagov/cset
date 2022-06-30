@@ -34,19 +34,16 @@
             <app-grouping-block [grouping]="sg"></app-grouping-block>
         </div>
         <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('VADR')">
-          <app-question-block-vadr #questionBlock [myGrouping]="grouping">
-          </app-question-block-vadr>
-      </div>
+            <app-question-block-vadr #questionBlock [myGrouping]="grouping">
+            </app-question-block-vadr>
+        </div>
         <div *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR')">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>
-        <div *ngIf="(grouping.questions.length > 0) && isTSA && !assessSvc.usesMaturityModel('VADR')">
-          <app-question-block-maturity #questionBlock [myGrouping]="grouping">
-          </app-question-block-maturity>
-      </div>
 
-        <div *ngIf="isDomain() && (assessSvc.usesMaturityModel('EDM') || assessSvc.usesMaturityModel('CRR'))" class="mt-4">
+        <div *ngIf="isDomain() && (assessSvc.usesMaturityModel('EDM') || assessSvc.usesMaturityModel('CRR'))"
+            class="mt-4">
             <h5 for="DomainRemarks">Remarks - {{grouping.title}}</h5>
             <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
                 autosize (blur)="submitTextComment(grouping)">

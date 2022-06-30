@@ -36,18 +36,18 @@ export class AssessmentConfigComponent implements OnInit {
 
   expandedDesc: boolean[] = [];
 
-  // the list of features that can be selected
+  // the list of categories that can be selected
   features: any = [...[
     {
       code: 'maturity',
-      label: 'Maturity Model',
-      description: 'A maturity model is a formal measurement used by an organization to gauge and improve its programs and processes. Maturity models are intended to measure the degree to which an organization has institutionalized its cybersecurity practices. Implementing process maturity within an organization will ensure that practices are consistent, repeatable, and constantly being improved.',
+      label: 'Cybersecurity Assessment Module',
+      description: "A CSET cybersecurity module is based on:</br><ul style=\"margin-block-end: 0;\"><li>Organizational Maturity (Maturity Models)</li><li>Best Practices and Critical Infrastructure/Industry</li></ul>",
       expanded: false
     },
     {
       code: 'standard',
-      label: 'Standard',
-      description: 'A CSET cybersecurity assessment examines the organization\'s cybersecurity posture against a specific standard. The assessment tests its security controls and measures how they stack up against known vulnerabilities.',
+      label: 'Standard-Based Assessment',
+      description: "A CSET standard-based assessment is based on industry standards like NIST SP 800 series, the CSF, NERC, NISTIR and other industry authorities. The assessment examines the organization's cybersecurity posture against the standard, tests its security controls, and measures how they stack up against known vulnerabilities. Multiple standards can be selected so the user can facilitate a combination of standards during one CSET assessment.",
       expanded: false
     },
     {
@@ -56,14 +56,7 @@ export class AssessmentConfigComponent implements OnInit {
       description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
       expanded: false
     }
-  ], ...(this.configSvc.installationMode === 'CYOTE' ? [
-    {
-      code: 'cyote',
-      label: 'CyOTE',
-      description: 'The CyOTE methodology applies fundamental concepts of perception and comprehension to a universe of knowns and unknowns in operational technology (OT) environments.  The methodology is aimed at providing capabilities to Asset Owner Operators (AOO) to independently detect adversarial tactics, techniques, and procedures (TTPs) within their OT environments to distinguish between observables, anomalies, and triggering events.',
-      expanded: false
-    }
-  ] : [])];
+  ]];
 
 
   /**
@@ -88,8 +81,6 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
-    if(this.configSvc.installationMode === 'CYOTE')
-      this.features.find(x => x.code === 'cyote').selected = this.assessSvc.assessment.useCyote;
   }
 
 

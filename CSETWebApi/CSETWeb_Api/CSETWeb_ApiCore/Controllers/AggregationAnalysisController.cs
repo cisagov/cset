@@ -50,14 +50,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 var ds = new ChartDataSet
                 {
-                    label = name
+                    Label = name
                 };
 
                 response.datasets.Add(ds);
 
                 foreach (var a in assessmentList)
                 {
-                    ds.data.Add(0);
+                    ds.Data.Add(0);
                 }
             }
 
@@ -88,10 +88,10 @@ namespace CSETWebCore.Api.Controllers
                                 stat = "Standards";
                             }
 
-                            var ds = response.datasets.Find(x => x.label == stat);
+                            var ds = response.datasets.Find(x => x.Label == stat);
                             if (ds != null)
                             {
-                                ds.data[i] = (float)procResult.Value;
+                                ds.Data[i] = (float)procResult.Value;
                             }
                         }
                     });
@@ -142,9 +142,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare([FromBody] AggBody body)
+        public IActionResult CategoryPercentCompare(int aggregationID)
         {
-            int aggregationID = body.AggregationID;
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
             dt.Columns.Add("Alias");
@@ -184,22 +183,22 @@ namespace CSETWebCore.Api.Controllers
 
 
             var response = new HorizBarChart();
-            response.reportTitle = "Category Percent Comparisons";
+            response.ReportTitle = "Category Percent Comparisons";
 
             foreach (string category in categories)
             {
-                response.labels.Add(category);
+                response.Labels.Add(category);
             }
 
             foreach (DataRow rowAssessment in dt.Rows)
             {
                 var ds = new ChartDataSet();
-                response.datasets.Add(ds);
-                ds.label = rowAssessment["Alias"].ToString();
+                response.Datasets.Add(ds);
+                ds.Label = rowAssessment["Alias"].ToString();
 
                 foreach (string category in categories)
                 {
-                    ds.data.Add(rowAssessment[category] != DBNull.Value ? (float)rowAssessment[category] : 0f);
+                    ds.Data.Add(rowAssessment[category] != DBNull.Value ? (float)rowAssessment[category] : 0f);
                 }
             }
 
@@ -248,7 +247,7 @@ namespace CSETWebCore.Api.Controllers
             //}
 
             var response = new HorizBarChart();
-            response.reportTitle = "Overall Average Summary";
+            response.ReportTitle = "Overall Average Summary";
 
 
             Dictionary<string, List<double>> dict = new Dictionary<string, List<double>>
@@ -282,18 +281,18 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var ds = new ChartDataSet();
-            response.datasets.Add(ds);
+            response.Datasets.Add(ds);
 
-            response.labels.Add("Overall");
-            ds.data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
+            response.Labels.Add("Overall");
+            ds.Data.Add((float)dict["Overall"].DefaultIfEmpty(0).Average());
 
-            response.labels.Add("Standards");
-            ds.data.Add(
+            response.Labels.Add("Standards");
+            ds.Data.Add(
                 (float)dict["Questions"].DefaultIfEmpty(0).Average()
                 + (float)dict["Requirement"].DefaultIfEmpty(0).Average());
 
-            response.labels.Add("Components");
-            ds.data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
+            response.Labels.Add("Components");
+            ds.Data.Add((float)dict["Components"].DefaultIfEmpty(0).Average());
 
             return Ok(response);
         }
@@ -443,11 +442,11 @@ namespace CSETWebCore.Api.Controllers
 
             var response = new HorizBarChart();
             var ds = new ChartDataSet();
-            response.datasets.Add(ds);
-            response.labels.AddRange(catList);
+            response.Datasets.Add(ds);
+            response.Labels.AddRange(catList);
             foreach (string cat in catList)
             {
-                ds.data.Add((float)dict[cat].DefaultIfEmpty(0).Average());
+                ds.Data.Add((float)dict[cat].DefaultIfEmpty(0).Average());
             }
 
             return Ok(response);
@@ -511,9 +510,9 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var response = new HorizBarChart();
-            response.reportTitle = "Overall Comparison";
+            response.ReportTitle = "Overall Comparison";
             var statTypes = new List<string>() { "Overall", "Standards", "Components" };
-            response.labels.AddRange(statTypes);
+            response.Labels.AddRange(statTypes);
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
@@ -545,12 +544,12 @@ namespace CSETWebCore.Api.Controllers
 
                         var ds = new ChartDataSet
                         {
-                            label = a.Alias
+                            Label = a.Alias
                         };
-                        response.datasets.Add(ds);
+                        response.Datasets.Add(ds);
                         foreach (var statType in statTypes)
                         {
-                            ds.data.Add((float)dict[statType]);
+                            ds.Data.Add((float)dict[statType]);
                         }
                     });
             }

@@ -60,6 +60,7 @@ export interface MaturityDomainRemarks
 export interface QuestionGrouping {
     abbreviation: string;
     domainRemark: string;
+    prefix: string;
     title: string;
     description: string;
     groupingID: number;
@@ -142,11 +143,13 @@ export interface Question {
     answer_Id: number;
     answer: string;
     altAnswerText: string;
-    freeResponseAnswer?:string;
+    freeResponseAnswer?: string;
+    answerMemo?: string;
     comment: string;
     feedback: string;
     hasDiscovery: boolean;
     hasDocument: boolean;
+    documentIds: number[];
     markForReview: boolean;
     reviewed: boolean;
     maturityLevel: number;

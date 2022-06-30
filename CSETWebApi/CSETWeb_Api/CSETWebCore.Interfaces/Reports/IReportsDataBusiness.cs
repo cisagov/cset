@@ -23,7 +23,7 @@ namespace CSETWebCore.Interfaces.Reports
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers);
 
-        List<BasicReportData.RequirementControl> GetControls();
+        List<BasicReportData.RequirementControl> GetControls(string applicationMode);
         List<List<DiagramZones>> GetDiagramZones();
         List<usp_getFinancialQuestions_Result> GetFinancialQuestions();
         List<StandardQuestions> GetQuestionsForEachStandard();

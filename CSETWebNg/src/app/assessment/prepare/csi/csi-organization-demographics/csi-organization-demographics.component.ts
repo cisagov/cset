@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { CsiOrganizationDemographic, CsiStaffCount } from '../../../../models/csi.model';
-import { CsiService } from '../../../../services/csi.service';
+import { CsiService } from '../../../../services/cis-csi.service';
 import { AssessmentService } from './../../../../services/assessment.service';
 
 @Component({
@@ -80,7 +80,7 @@ export class CsiOrganizationDemographicsComponent implements OnInit {
           this.orgDemographic = data;
           this.orgDemographic.visitDate = this.datePipe.transform(this.orgDemographic.visitDate, 'yyyy-MM-dd');
         },
-        error => console.log('CIST CSI organization demographic load Error: ' + (<Error>error).message)
+        error => console.log('CIS CSI organization demographic load Error: ' + (<Error>error).message)
     );
   }
 

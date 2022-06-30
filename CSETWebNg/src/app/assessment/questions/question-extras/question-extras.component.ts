@@ -54,12 +54,16 @@ export class QuestionExtrasComponent implements OnInit {
   @Output() changeComponents = new EventEmitter();
   @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
 
+  @Input() myOptions: any;
+
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
+
+  showMfr = false;
 
   showQuestionIds = false;
 
@@ -69,7 +73,7 @@ export class QuestionExtrasComponent implements OnInit {
   origTitle: string;
 
   constructor(
-    private questionsSvc: QuestionsService,
+    public questionsSvc: QuestionsService,
     private findSvc: FindingsService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
@@ -82,9 +86,19 @@ export class QuestionExtrasComponent implements OnInit {
 
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+
+    if (!!this.myOptions) {
+      if (this.myOptions.eagerSupplemental) {
+        this.toggleExtras('SUPP');
+      }
+
+      this.showMfr = this.myOptions.showMfr;
+    }
   }
 
-
+  /**
+   *
+   */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
       width: '600px',
@@ -97,11 +111,12 @@ export class QuestionExtrasComponent implements OnInit {
       }
     });
   }
+
   /**
- * Shows/hides the "expand" section.
- * @param q
- * @param feature
- */
+   * Shows/hides the "expand" section.
+   * @param q
+   * @param feature
+   */
   toggleExtras(clickedMode: string) {
     if (this.expanded && clickedMode === this.mode) {
 
@@ -139,10 +154,10 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
       (details) => {
         this.extras = details;
+        this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
-        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
-
+        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
         this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
@@ -173,12 +188,12 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   showFeedbackIcon(): boolean {
-    if (this.configSvc.installationMode ==='ACET') {
+    if (this.configSvc.installationMode === 'ACET') {
       return false;
-    } 
+    }
     if (this.configSvc.installationMode === 'RRA') {
       return false;
     }
@@ -246,9 +261,13 @@ export class QuestionExtrasComponent implements OnInit {
     this.answer.comment = this.myQuestion.comment;
     this.answer.feedback = this.myQuestion.feedback;
     this.answer.componentGuid = this.myQuestion.componentGuid;
+    this.answer.freeResponseAnswer = this.myQuestion.freeResponseAnswer;
 
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
+
+    // Tell any observers the new extras
+    this.questionsSvc.broadcastExtras(this.extras);
 
     this.questionsSvc.storeAnswer(this.answer).subscribe(
       (response: number) => {
@@ -285,6 +304,8 @@ export class QuestionExtrasComponent implements OnInit {
           return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+
+
     }
   }
 
@@ -360,6 +381,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+
       }
     });
   }
@@ -389,6 +411,7 @@ export class QuestionExtrasComponent implements OnInit {
         // refresh the document list
         if (resp.status === 200 && resp.body) {
           this.extras.documents = resp.body;
+          this.questionsSvc.broadcastExtras(this.extras);
         }
         e.target.value = "";
       }
@@ -451,6 +474,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
 
+          this.questionsSvc.broadcastExtras(this.extras);
       }
     });
   }
@@ -575,6 +599,7 @@ export class QuestionExtrasComponent implements OnInit {
    * It can grow as new behaviors are required.
    */
   displayIcon(mode) {
+
     // EDM
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
@@ -595,6 +620,23 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REVIEWED') {
         return false;
       }
+    }
+
+    // CISA CIS
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'REVIEWED') {
+        return false;
+      }
+      if (mode == 'DISC') {
+        return false;
+      }
+      if (mode == 'REFS') {
+        return false;
+      }
+
     }
 
     return true;
@@ -620,4 +662,6 @@ export class QuestionExtrasComponent implements OnInit {
 
     return "I";
   }
+
+
 }

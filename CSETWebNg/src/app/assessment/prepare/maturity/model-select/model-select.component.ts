@@ -30,7 +30,7 @@ import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-model-select',
-  templateUrl: './model-select.component.html', 
+  templateUrl: './model-select.component.html',
   styleUrls: ['./model-select.component.scss']
 })
 export class ModelSelectComponent implements OnInit {
@@ -38,7 +38,7 @@ export class ModelSelectComponent implements OnInit {
   docUrl: string;
   cmmcURL: string;
   modelChoice: string;
-
+  isTSA:boolean=false;
   // this should be stored in a service
   selectedModels = [];
 
@@ -50,11 +50,14 @@ export class ModelSelectComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
+    if ( this.configSvc.installationMode=="TSA"){
+      this.isTSA=true;
+    }
   }
 
   /**
@@ -97,5 +100,19 @@ export class ModelSelectComponent implements OnInit {
     }
 
     return '';
+  }
+
+  /**
+   * Returns the model title that is stored in the database for the given model
+   */
+  getModelTitle(model: string) {
+    return AssessmentService.allMaturityModels.find(x => x.modelName === model)?.modelTitle;
+  }
+
+  /**
+   * Return the model description that is stored in the database for the given model
+   */
+  getModelDescription(model: string) {
+    return AssessmentService.allMaturityModels.find(x => x.modelName === model)?.modelDescription;
   }
 }

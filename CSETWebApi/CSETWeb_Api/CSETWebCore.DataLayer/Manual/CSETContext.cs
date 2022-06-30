@@ -237,18 +237,18 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<Assessments_For_User> usp_AssessmentsForUser(Nullable<int> userId)
+        public virtual IList<usp_Assessments_For_UserResult> usp_AssessmentsForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
-            IList<Assessments_For_User> myrval = null;
+            IList<usp_Assessments_For_UserResult> myrval = null;
             this.LoadStoredProc("usp_Assessments_For_User")
                      .WithSqlParam("user_id", userId)
 
                      .ExecuteStoredProc((handler) =>
                      {
-                         myrval = handler.ReadToList<Assessments_For_User>();
+                         myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
                      });
             return myrval;
         }
@@ -322,6 +322,17 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+        public virtual IList<SetStandard> analytics_selectedStandardList(int assessmentId)
+        {
+            IList<SetStandard> myrval = null;
+            this.LoadStoredProc("analytics_selectedStandardList")
+                .WithSqlParam("standard_assessment_id",assessmentId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<SetStandard>();
+                });
+            return myrval;
+        }
         
 
         public virtual IList<AnalyticsgetMedianOverall> analytics_getMedianOverall()
@@ -346,12 +357,44 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-
-        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id)
+        public virtual IList<AnalyticsStandardMinMaxAvg> analytics_Compute_standard_all(int assessmentId,  string setname, int? sectorId,
+            int? industryId)
+        {
+     
+            IList<AnalyticsStandardMinMaxAvg> myrval = null;
+            this.LoadStoredProc("analytics_Compute_standard_all")
+                .WithSqlParam("assessment_id", assessmentId)
+                .WithSqlParam("set_name", setname)
+                .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
+                // .WithSqlParam("industry_id",industryId ==null?DBNull.Value:industryId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<AnalyticsStandardMinMaxAvg>();
+                });
+            return myrval;
+        }
+        public virtual IList<standardAnalyticsgetMedianOverall> analytics_compute_single_averages_standard(int assessmentId,  string setname)
+        {
+     
+            IList<standardAnalyticsgetMedianOverall> myrval = null;
+            this.LoadStoredProc("analytics_compute_single_averages_standard")
+                .WithSqlParam("assessment_id", assessmentId)
+                .WithSqlParam("set_name", setname)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<standardAnalyticsgetMedianOverall>();
+                });
+            return myrval;
+        }
+        
+        public virtual IList<AnalyticsMinMaxAvgMedianByGroup> analytics_Compute_MaturityAll(int model_id, int? sectorId,int? industryId )
         {
             IList<AnalyticsMinMaxAvgMedianByGroup> myrval = null;
             this.LoadStoredProc("analytics_Compute_MaturityAll")
                  .WithSqlParam("maturity_model_id", model_id)
+                 .WithSqlParam("sector_id", sectorId ==null?DBNull.Value:sectorId )
+                 .WithSqlParam("industry_id", industryId ==null?DBNull.Value:industryId)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<AnalyticsMinMaxAvgMedianByGroup>();
@@ -749,31 +792,6 @@ namespace CSETWebCore.DataLayer.Model
                          var myrval2 = handler.ReadToList<Requirement_Id_result>();
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();
                      });
-            return myrval;
-        }    
-        
-        public virtual IList<CyOTEAnsweredQuestions> usp_GetCyOTEQuestionsAnswers(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("assessment_id parameter may not be null");
-
-            IList<CyOTEAnsweredQuestions> myrval = null;
-            this.LoadStoredProc("usp_CyOTEQuestionsAnswers")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<CyOTEAnsweredQuestions>();
-                     });
-
-            HashSet<int?> hasChild = myrval.Where(x=>x.Parent_Question_Id != null)
-                    .Select(x=>x.Parent_Question_Id).Distinct().ToHashSet();            
-            foreach (CyOTEAnsweredQuestions answer in myrval)
-            {
-                answer.expandable = hasChild.Contains(answer.Mat_Question_Id);
-                answer.isExpanded = answer.expandable==true?true:null;
-            }
-
             return myrval;
         }
     }

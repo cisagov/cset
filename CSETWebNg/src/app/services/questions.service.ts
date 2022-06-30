@@ -28,6 +28,7 @@ import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCate
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -95,14 +96,14 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getComponentQuestionsList() {
     return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
   }
 
   /**
-   * 
+   *
    */
   getQuestionListOverridesOnly() {
     return this.http.get(this.configSvc.apiUrl + 'QuestionListComponentOverridesOnly', headers);
@@ -150,16 +151,14 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getQuestionsForDocument(id: number) {
     return this.http.get(this.configSvc.apiUrl + 'questionsfordocument?id=' + id, headers);
   }
 
-
-
   /**
-   * 
+   *
    */
   getDefaultParametersForAssessment() {
     return this.http.get(this.configSvc.apiUrl + 'ParametersForAssessment', headers);
@@ -221,6 +220,43 @@ export class QuestionsService {
         });
       }
     });
+  }
+
+  /**
+   * Save the answer with the Marked for Review flag flipped.
+   */
+  saveMFR(q: Question) {
+    q.markForReview = !q.markForReview;
+
+    const newAnswer: Answer = {
+      answerId: q.answer_Id,
+      questionId: q.questionId,
+      questionType: q.questionType,
+      questionNumber: q.displayNumber,
+      answerText: q.answer,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      freeResponseAnswer: q.freeResponseAnswer,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.componentGuid
+    };
+
+    this.storeAnswer(newAnswer).subscribe();
+  }
+
+  /**
+   * The service can emit the question extras object that is given to it.
+   * This was originally built to broadcast changes to documents/artifacts
+   * but could be expanded for other changes as well.
+   */
+  extrasChanged$: BehaviorSubject<number> = new BehaviorSubject(0);
+  broadcastExtras(qe: any) {
+    this.extrasChanged$.next(qe);
   }
 
   /**

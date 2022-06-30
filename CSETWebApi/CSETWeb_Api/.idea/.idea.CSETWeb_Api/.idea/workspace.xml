@@ -12,7 +12,103 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="" />
+    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/Assessment/AssessmentBusiness.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Business/Assessment/AssessmentBusiness.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/CyOTE/CyoteBusiness.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/CyOTE/CyoteQuestionsBusiness.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Manual/CSETContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Manual/CSETContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Manual/CyOTEAnsweredQuestions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/ASSESSMENTS.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/ASSESSMENTS.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_ANSWERS.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_OBSERVABLES.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_OPTIONS.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_PATHS.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_PATH_QUESTION.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CYOTE_QUESTIONS.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContextProcedures.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContextProcedures.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/usp_Assessments_For_UserResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/usp_Assessments_For_UserResult.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/usp_CyOTEQuestionsAnswersResult.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DataLayer/efpt.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/efpt.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.DatabaseManager/DbManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.DatabaseManager/DbManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Enum/MaturityModelEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Enum/MaturityModelEnum.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/CyOTE/CyoteDetail.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/CyOTE/Observable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/CyOTE/ObservableOption.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/CyOTE/Questions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/CyoteController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/main-electron.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/main-electron.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-config/assessment-config.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-config/assessment-config.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-demographics-cyote/assessment-demographics-cyote.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-demographics-cyote/assessment-demographics-cyote.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-detail-cyote/assessment-detail-cyote.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-detail-cyote/assessment-detail-cyote.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-info.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-info.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment2-info/assessment2-info.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/assessment-info/assessment2-info/assessment2-info.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/anomaly-icons/anomaly-icons.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-categorization/cyote-categorization.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-collect/cyote-collect.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-collect/cyote-collect.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-deep-dive/cyote-deep-dive.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-deep-dive/dialog-supplemental.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-question-options/cyote-question-options.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-question/cyote-question.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-question/cyote-question.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-questions.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-questions.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-questions.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/questions/cyote-questions/cyote-recommendation/cyote-recommendation.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/analysis/cyote-results/cyote-results.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/analysis/cyote-results/cyote-results.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/cyote-assessment-complete/cyote-assessment-complete.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/results/cyote-assessment-complete/cyote-assessment-complete.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/about-cyote/about-cyote.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/about-cyote/about-cyote.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/about-cyote/about-cyote.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/about/about.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/about/about.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/advisory/advisory.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/dialogs/advisory/advisory.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/cyote-origin/cyote-origin.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/cyote-origin/cyote-origin.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page/landing-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page/landing-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page/landing-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page/landing-page.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login-cyote/login-cyote.component copy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login-cyote/login-cyote.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login-cyote/login-cyote.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login-cyote/login-cyote.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/reset-pass/reset-pass.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/reset-pass/reset-pass.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/cyote-layout-main/cyote-layout-main.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/cyote-layout-main/cyote-layout-main.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/cyote-layout-main/cyote-layout-main.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/models/assessment-info.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/models/assessment-info.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/models/cyote.model.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/reports/logo-for-reports/logo-for-reports.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/reports/logo-for-reports/logo-for-reports.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/cyote.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/assets/splashACET.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/assets/splashACET.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/assets/splashCYOTE.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +116,25 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9dde5a1c17304cc381f2398d38f0ea6d1749f0/34/2c203d9a/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/134622bcf8ad016d3faf7776eb0457b76a5798c537458aa82651ab2cee6e1/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3b6e6a47179af0cc67d5434bad6aca4c7b77f9b7ba6b4a67bed78c8d3b9e80/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/44b1161d866765c6ec11ee821b79d9bff8660b65aef1d48c273eb26a29d4a/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6066e3e78cc9f9a2aae73722595d8cc94a41e118e8519d5422561250a0c37/Buffer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f2c3a317ee06bc1b0766b94d4e6a045ea25c9a3da49cb9075bcee751250d4/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7262732eee179af215faab36a7f3c3cfac93ba12af52a3888d839fe7e53420/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bcae882191178c8bf44c9add4cdeffa874a7afe629e3e56e9280f5896e953425/Monitor.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c7f6322b139ebc72ce44bf58444bb78ff0dfde58de66a127227ef1e829481c4/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/caccb9a16b7398be8d7bb6172f25e9c31e7d93eca254e79c3c6ff3ce733da8c/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed6d3cfce28a908e474af54c42b83e78339f233df99419dd2cce16aa8c2d7a0/AsyncValueTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,15 +145,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RunManager">
     <configuration name="CSETWebCore.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CSETWeb_ApiCore/CSETWebCore.Api.csproj" />
@@ -73,6 +192,9 @@
       <workItem from="1644965776855" duration="1994000" />
       <workItem from="1650040524978" duration="22000" />
       <workItem from="1650040695090" duration="1749000" />
+      <workItem from="1652821222950" duration="17429000" />
+      <workItem from="1653322124514" duration="14674000" />
+      <workItem from="1654182260175" duration="34168000" />
     </task>
     <servers />
   </component>
@@ -92,6 +214,76 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs</url>
+          <line>69</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs" initialLine="69" containingFunctionPresentation="method 'LoginStandalone'">
+            <startOffsets>
+              <option value="2304" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2369" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/FileUploadController.cs</url>
+          <line>50</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/FileUploadController.cs" initialLine="48" containingFunctionPresentation="method 'Upload'">
+            <startOffsets>
+              <option value="1572" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1615" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Question/QuestionRequirementManager.cs</url>
+          <line>248</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Question/QuestionRequirementManager.cs" initialLine="248" containingFunctionPresentation="method 'StoreAnswer'">
+            <startOffsets>
+              <option value="9211" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9255" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs</url>
+          <line>251</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs" initialLine="251" containingFunctionPresentation="method 'GetDeficiencyChartData'">
+            <startOffsets>
+              <option value="9394" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9454" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContext.cs</url>
+          <line>998</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Model/CsetwebContext.cs" initialLine="998" containingFunctionPresentation="lambda expression inside method 'OnModelCreating'">
+            <startOffsets>
+              <option value="52750" />
+            </startOffsets>
+            <endOffsets>
+              <option value="52788" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

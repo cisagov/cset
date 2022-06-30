@@ -4,7 +4,7 @@ import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
-//import { RraDataService } from '../../../services/rra-data.service';
+
 
 @Component({
   selector: 'app-vadr-deficiency',
@@ -30,16 +30,14 @@ export class VadrDeficiencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Deficiency Report - VADR");
+    this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
 
     this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
       (r: any) => {
-        this.response = r;   
+        this.response = r;
 
         // remove any child questions - they are not Y/N
         this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
-        
-        console.log(this.response);
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );

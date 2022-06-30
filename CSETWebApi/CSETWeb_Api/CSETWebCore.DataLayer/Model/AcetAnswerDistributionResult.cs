@@ -7,5 +7,7 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class AcetAnswerDistributionResult
     {
+        public string Answer_Text { get; set; }
+        public int? Count { get; set; }
     }
 }

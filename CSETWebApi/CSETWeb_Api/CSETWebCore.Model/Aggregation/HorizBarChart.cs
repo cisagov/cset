@@ -4,15 +4,15 @@ namespace CSETWebCore.Model.Aggregation
 {
     public class HorizBarChart
     {
-        public string reportTitle { get; set; }
-        public List<string> labels { get; set; }
+        public string ReportTitle { get; set; }
+        public List<string> Labels { get; set; }
 
-        public List<ChartDataSet> datasets { get; set; }
+        public List<ChartDataSet> Datasets { get; set; } = new List<ChartDataSet>();
 
         public HorizBarChart()
         {
-            this.labels = new List<string>();
-            this.datasets = new List<ChartDataSet>();
+            this.Labels = new List<string>();
+            this.Datasets = new List<ChartDataSet>();
         }
     }
 }

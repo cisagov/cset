@@ -7,13 +7,44 @@
 
 <div class="mx-3 form">
     <div class="d-flex flex-row justify-content-between align-items-end">
-        <h1 class="report-section-title">Practices Marked for Review</h1>
+        <h1 class="report-section-title">Practice Comments</h1>
         <p style="color: #de761c; text-align: right;">
             @{
                 var flagBinary = File.ReadAllBytes(@Url.Content("wwwroot/images/icons/MarkedFlag.png"));
                 var flagURI = @"data:image/png;base64," + Convert.ToBase64String(flagBinary);
                 var flagHtml = String.Format("<img src='{0}' class=\"marked-flag\">", flagURI);
             }
+            Marked for Review - @Html.Raw(flagHtml)
+        </p>
+    </div>
+</div>
+
+<hr class="page-line m-0" />
+
+@{
+    if (Model.ReportData.Comments.Count == 0)
+    {
+        <div class="row">
+            <div class="col text-start">
+                There are no practices with comments
+            </div>
+        </div>
+    }
+    else
+    {
+        ViewData["head-only"] = true;
+        await Html.RenderPartialAsync("_MatAnswersListCrr", Model.ReportData.AddMissingParentsTo(Model.ReportData.Comments));
+    }
+}
+
+
+<div class="page-break"></div>
+
+
+<div class="mx-3 form">
+    <div class="d-flex flex-row justify-content-between align-items-end">
+        <h1 class="report-section-title">Practices Marked for Review</h1>
+        <p style="color: #de761c; text-align: right;">
             Marked for Review - @Html.Raw(flagHtml)
         </p>
     </div>
