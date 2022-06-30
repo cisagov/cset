@@ -165,6 +165,7 @@ import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-inf
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
+import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
@@ -396,7 +397,7 @@ const appRoutes: Routes = [
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
-              { path: 'section-scoring', component: SectionScoringComponent }, 
+              { path: 'section-scoring', component: SectionScoringComponent },
               { path: '', component: DashboardComponent },
             ]
           },
@@ -439,6 +440,7 @@ const appRoutes: Routes = [
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
+      { path: 'vadrOpenEndedReport', component: OpenEndedQuestionsComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
       { path: 'cisSectionScoringReport', component: CisSectionScoringComponent },
       { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },

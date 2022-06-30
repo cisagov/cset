@@ -491,8 +491,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
-
-
+        
         /// <summary>
         /// get all comments and marked for review
         /// </summary>

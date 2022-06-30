@@ -425,6 +425,7 @@ import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/v
 import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
 import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
 import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
+import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
 import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
@@ -821,6 +822,7 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        OpenEndedQuestionsComponent,
         CisSurveyComponent,
         GroupingBlockNestedReportComponent,
         QuestionBlockNestedReportComponent,
