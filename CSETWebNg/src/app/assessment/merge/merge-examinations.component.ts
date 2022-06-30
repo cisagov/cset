@@ -17,6 +17,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   mergeList: any[] = [];
   childStatements: any[] = [];
+  parentStatements: any[] = [];
   
   assessmentOneData: any; assessmentTwoData: any; assessmentThreeData: any;
   assessmentFourData: any; assessmentFiveData: any; assessmentSixData: any;
@@ -50,10 +51,13 @@ export class MergeExaminationsComponent implements OnInit {
         for (let i = 0; i < this.groupings[0].questions.length; i++) {
           if (!this.groupings[0].questions[i].isParentQuestion) {
             this.childStatements.push(this.groupings[0].questions[i]);
+          } else {
+            this.parentStatements.push(this.groupings[0].questions[i]);
           }
         }
 
         console.log("CHILDREN: " + JSON.stringify(this.childStatements, null, 4));
+        console.log("PARENT: " + JSON.stringify(this.parentStatements, null, 4));
         this.questionCount = Array(this.groupings[0].questions.length).fill(1).map((x,i)=>i);
       }
     )
@@ -90,8 +94,16 @@ export class MergeExaminationsComponent implements OnInit {
     })
   }
 
-  checkForNull() {
+  getParentText(parentId: number) {
+    let parentText = "";
+
+    for (let i = 0; i < this.parentStatements.length; i++) {
+      if (parentId === this.parentStatements[i].questionId) {
+        parentText = this.parentStatements[i].questionText;
+      }
+    }
     
+    return parentText;
   }
 
 }
