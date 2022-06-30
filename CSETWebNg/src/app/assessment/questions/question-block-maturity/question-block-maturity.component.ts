@@ -67,7 +67,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
   statementOne = []; statementTwo= []; statementThree = []; statementFour = [];
   statementFive = []; statementSix = []; statementSeven = [];
 
-
   /**
    * Constructor.
    * @param configSvc 
@@ -386,6 +385,21 @@ export class QuestionBlockMaturityComponent implements OnInit {
         break;
     }
   }
-
+  
+/*
+  isNewMaturityLevel(id: number) {
+    switch (id) {
+      case 7190:
+      case 7276:
+      case 7190:
+      case 7198:
+      case 7288:
+      case 7204:
+      case 7284:
+        return true;
+      
+    }
+  }
+*/
   
 }
