@@ -97,5 +97,9 @@ const headers = {
     return this.http.get(this.configSvc.apiUrl + 'getMergeAnswers', headers);
   }
 
+  fillEmpty() {
+    
+  }
+
 
 }
