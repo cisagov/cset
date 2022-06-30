@@ -30,7 +30,6 @@ import { NavigationService } from '../../../services/navigation.service';
   selector: 'app-sals',
   templateUrl: './sals.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class SalsComponent implements OnInit {
 

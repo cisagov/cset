@@ -7,5 +7,15 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class GetComparisonAreasFileResult
     {
+        public string Alias { get; set; }
+        public string Question_group_heading { get; set; }
+        public int Total { get; set; }
+        public double? Y { get; set; }
+        public double? N { get; set; }
+        public double? NA { get; set; }
+        public double? A { get; set; }
+        public double? U { get; set; }
+        public double? Value { get; set; }
+        public int TotalNoNA { get; set; }
     }
 }

@@ -22,32 +22,39 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer } from '../../../../../models/questions.model';
+import { MatDialog } from '@angular/material/dialog';
+import { Answer, Question } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
-import { MaturityService } from '../../../../../services/maturity.service';
 import { QuestionsService } from '../../../../../services/questions.service';
+import { ConfigService } from '../../../../../services/config.service';
+import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
+import { AssessmentService } from '../../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-question-block-cis',
+  selector: 'app-question-block-nested',
   templateUrl: './question-block-nested.component.html'
 })
 export class QuestionBlockNestedComponent implements OnInit {
 
   @Input() grouping: any;
-  @Input() questions: any[];
+  @Input() questions: Question[];
 
-  questionList: any[];
+  questionList: Question[];
+
 
   // temporary debug aid
   showIdTag = false;
 
   constructor(
+    public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
-    public cisSvc: CisService
+    public cisSvc: CisService,
+    private configSvc: ConfigService,
+    public dialog: MatDialog
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     if (!!this.grouping) {
@@ -57,24 +64,107 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (!!this.questions) {
       this.questionList = this.questions;
     }
+
+    this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
+
+    // listen for changes to the extras
+    this.questionsSvc.extrasChanged$.subscribe((qe) => {
+      this.refreshExtras(qe);
+    });
+
+  }
+
+  getMhdNum(val: string) {
+    if (!val) {
+      return '';
+    }
+    let p = val.split('|');
+    if (p.length > 0) {
+      return p[0];
+    }
+  }
+
+  getMhdUnit(val: string) {
+    if (!val) {
+      return '';
+    }
+    let p = val.split('|');
+    if (p.length > 1) {
+      return p[1];
+    }
   }
 
   /**
-   * 
+   * Returns 'inline' if any details/extras exist
+   */
+  hasDetails(q: Question): string {
+    if (q.comment !== null && q.comment.length > 0) {
+      return 'inline';
+    }
+    if (q.documentIds.length > 0) {
+      return 'inline';
+    }
+    if (q.feedback !== null && q.feedback.length > 0) {
+      return 'inline';
+    }
+    if (q.markForReview) {
+      return 'inline';
+    }
+    return 'none';
+  }
+
+  /**
+   * Updates the local question object's document ID list.
+   * This is done to refresh the red content dot on the "i" icon.
+   */
+  refreshExtras(extras: any) {
+    // make sure these extras belong to the current assessment
+    if (this.assessSvc.id() !== extras.assessmentId) {
+      return;
+    }
+
+    // find the question whose extras were just changed 
+    var q = this.questionList.find(q => q.questionId == extras.questionId);
+    if (!q) {
+      return;
+    }
+
+    // update the documentIds per the extras passed to me
+    q.documentIds = [];
+    extras.documents.forEach(doc => {
+      q.documentIds.push(doc.document_Id);
+    });
+  }
+
+  /**
+   *
    */
   changeText(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
   /**
-   * 
+   *
    */
   changeMemo(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
+
   /**
-   * 
+   * Builds a single answer from the number + unit fields
+   */
+  changeMinHrDay(num, unit, q) {
+    let val = num.value + '|' + unit.value;
+
+    q.answerMemo = val;
+    this.storeAnswer(q, val);
+  }
+
+  /**
+   *
    */
   storeAnswer(q, val) {
     const answer: Answer = {
@@ -96,7 +186,27 @@ export class QuestionBlockNestedComponent implements OnInit {
     };
 
     this.cisSvc.storeAnswer(answer).subscribe(x => {
-      console.log(x);
+    });
+  }
+
+  /**
+   *
+   */
+  openExtras(q) {
+    if (!q.questionType) {
+      q.questionType = 'Maturity';
+    }
+
+    this.dialog.open(QuestionExtrasDialogComponent, {
+      data: {
+        question: q,
+        options: {
+          eagerSupplemental: true,
+          showMfr: true
+        }
+      },
+      width: '50%',
+      maxWidth: '50%'
     });
   }
 }

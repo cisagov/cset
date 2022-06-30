@@ -108,7 +108,7 @@ namespace CSETWeb_ApiCore
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+                }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
                 options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
@@ -121,7 +121,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
             services.AddTransient<IDemographicBusiness, DemographicBusiness>();
-            services.AddTransient<ICistDemographicBusiness, CistDemographicBusiness>();
+            services.AddTransient<ICisDemographicBusiness, CisDemographicBusiness>();
             services.AddTransient<IDiagramManager, DiagramManager>();
             services.AddTransient<IDocumentBusiness, DocumentBusiness>();
             services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();

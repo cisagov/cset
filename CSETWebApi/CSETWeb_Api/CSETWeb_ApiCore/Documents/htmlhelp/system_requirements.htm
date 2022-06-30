@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -303,47 +304,50 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
-                <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Local Installation</strong></h1></div>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
+                <div class="description_on_page"><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Local Installation</strong></h1></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-2;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">6 GB free disk space</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">4 GB of RAM</span></div>
-</li><li class="list-element list-counter-2" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft Windows 10 or higher</span></div>
-</li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4AF4BF9DD6">• Microsoft .NET Core 5.0 Runtime (included in CSET installation)</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><span class="de_4AF4BF9DD6">• SQL Server 2019 Express LocalDB (included in CSET installation)</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Enterprise Installation</strong></h1></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-3;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">8 GB free disk space</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">4 GB of RAM</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft Windows Server 2016 Edition or higher recommended</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Microsoft .NET Framework 5.0 Runtime</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">SQL Server 2019 or higher recommended</span></div>
-</li><li class="list-element list-counter-3" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; ">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">Internet Information Server (IIS) or Kestrel</span></div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_98CC41B486">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</span></div>
+<ul class="de_list"><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; counter-reset: list-counter-2;">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">6 GB free disk space</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">4 GB of RAM</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Microsoft Windows 10 or higher</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Microsoft ASP.NET Core 6 Runtime (included in CSET installation)</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Microsoft .NET 6 Runtime (included in CSET installation)</span></div>
+</li><li class="list-element list-counter-2" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">SQL Server 2019 Express LocalDB (included in CSET installation)</span></div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h2><strong>Other Items of Note: </strong></h2></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>System Requirements Enterprise Installation</strong></h1></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-4" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-4;">
-<div class="p" style="text-align: left; direction: ltr; margin-left: 50px; text-indent: 0px;"><div class="list-marker" style="color:#000000;font-size:11pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Bullet">For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.</span></div>
-</li></ul></div>                                    			
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_98CC41B486">It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:</span></div>
+<ul class="de_list"><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; counter-reset: list-counter-3;">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Pentium dual core 2.2 GHz processor (Intel x86 compatible)</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">8 GB free disk space</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">4 GB of RAM</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Microsoft Windows Server 2016 Edition or higher recommended</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Microsoft .NET 6 Hosting Bundle (Includes ASP.NET Core 6 Runtime, .NET 6 Runtime, and IIS support)</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">SQL Server 2019 or higher recommended</span></div>
+</li><li class="list-element list-counter-3" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; direction: ltr; ">
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#1d1c1d;font-size:11pt;font-family:&quot;Slack-Lato&quot;; display: inline-block; direction: ltr;"></div><span class="de_98CC41B486">Internet Information Server (IIS) or Kestrel</span></div>
+</li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><h1><strong>Other Items of Note:</strong></h1></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_98CC41B486">For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.</span></div>
+</div>                                    			
                 			                <h6 class="b-article__generatorCopyright">
                     <a class="b-link b-article__generatorCopyrightLink" href="https://www.drexplain.com" target="_blank" rel="nofollow">Made with help of Dr.Explain</a>
                 </h6>

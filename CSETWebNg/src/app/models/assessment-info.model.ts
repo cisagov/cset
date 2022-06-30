@@ -29,6 +29,7 @@ export interface AssessmentDetail {
     createdDate?: string;
     creatorId?: number;
     assessmentDate?: string;
+    baselineAssessmentId?: number; 
     facilityName?: string;
     cityOrSiteName?: string;
     stateProvRegion?: string;
@@ -42,7 +43,6 @@ export interface AssessmentDetail {
     useStandard?: boolean;
     useMaturity?: boolean;
     useDiagram?: boolean;
-    useCyote?: boolean;
 
     isAcetOnly?: boolean;
     workflow?: string;
@@ -65,6 +65,8 @@ export interface MaturityModel {
 
     // the options for answering questions in this model
     answerOptions: string[];
+    modelTitle: string;
+    modelDescription: string;
 }
 
 /**
@@ -77,7 +79,7 @@ export interface MaturityLevel {
 }
 
 /**
- * 
+ *
  */
 export interface AssessmentContactsResponse {
     contactList: User[];

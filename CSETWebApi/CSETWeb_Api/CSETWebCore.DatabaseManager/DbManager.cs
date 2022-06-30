@@ -55,7 +55,7 @@ namespace CSETWebCore.DatabaseManager
 
                     // Create the new version folder in local app data folder
                     Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
-                    ResolveLocalDBVersion();
+                    // ResolveLocalDBVersion();
 
                     // No previous version of application found on LocalDB 2012
                     if (!localDb2012Info.Exists)
@@ -414,10 +414,6 @@ namespace CSETWebCore.DatabaseManager
                 if (ApplicationCode.Equals("CSET"))
                 {
                     return ApplicationCode + "Web";
-                }
-                else if (ApplicationCode.Equals("CSET-CYOTE"))
-                {
-                    return "CYOTEWeb";
                 }
                 else 
                 {

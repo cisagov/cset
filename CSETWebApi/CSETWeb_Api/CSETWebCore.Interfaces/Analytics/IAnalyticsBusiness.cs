@@ -6,7 +6,10 @@ namespace CSETWebCore.Interfaces.Analytics
 {
     public interface IAnalyticsBusiness
     {
-        List<DataRowsAnalytics> getMaturityDashboardData(int maturity_model_id);
+        List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id,int? sectorId, int? industryId);
         List<AnalyticsgetMedianOverall> GetMaturityGroupsForAssessment(int assessmentId, int maturity_model_id);
+        List<SetStandard> GetStandardList(int assessmentId);
+        List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(int assessmentId, string setname, int? sectorId, int? industryId);
+        List<standardAnalyticsgetMedianOverall> GetStandardSingleAvg(int assessmentId, string setname);
     }
 }

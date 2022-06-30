@@ -1,0 +1,31 @@
+<div *ngIf="loading">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+</div>
+<div *ngIf="!loading" class="container mb-5 mt-5">
+    <div class="row">
+        <div class="col-4">
+            <div class="alert alert-secondary h-100" style="text-align:left;">
+                <h4 class="alert-heading">“0” = BASELINE</h4>
+                <p>The baseline is denoted at the median which is represented by the zero “0” value on the graph.</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="alert alert-danger h-100">
+                <h4 class="alert-heading">RED BAR</h4>
+                <p>The Deficiency report shows the current CIS assessment deficiencies in red using the baseline assessment selected during the CIS Configuration Step.</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="alert alert-success h-100">
+                <h4 class="alert-heading">GREEN BAR</h4> 
+                <p>The Deficiency report shows the current CIS assessment improvements in green using the baseline assessment selected during the CIS Configuration Step.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<canvas *ngIf="hasBaseline" id="ranked-deficiency" width="800" height="800"></canvas>
+<div *ngIf="!hasBaseline">
+    No baseline assessment has been selected to compare against
+</div>

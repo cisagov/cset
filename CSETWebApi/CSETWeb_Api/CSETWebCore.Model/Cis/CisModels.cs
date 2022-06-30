@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Model.Cis
 {
@@ -17,9 +18,15 @@ namespace CSETWebCore.Model.Cis
     public class CisQuestions
     {
         public int AssessmentId { get; set; }
+
         public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
 
         public Score GroupingScore { get; set; }
+
+
+        public int? BaselineAssessmentId { get; set; }
+        public string BaselineAssessmentName { get; set; }
+        public Score BaselineGroupingScore { get; set; }
     }
 
     public class Grouping
@@ -28,7 +35,16 @@ namespace CSETWebCore.Model.Cis
         public string Description { get; set; }
         public string Abbreviation { get; set; }
         public int GroupingId { get; set; }
+        public string Prefix { get; set; }
         public string Title { get; set; }
+
+        /// <summary>
+        /// The grouping's score based on answers/options
+        /// </summary>
+        public Score Score { get; set; }
+
+        public Aggregation.HorizBarChart Chart { get; set; }
+
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
         public List<Question> Questions { get; set; } = new List<Question>();
     }
@@ -50,6 +66,13 @@ namespace CSETWebCore.Model.Cis
         public List<Option> Options { get; set; } = new List<Option>();
         public List<Question> Followups { get; set; } = new List<Question>();
 
+        public string Comment { get; set; }
+        public string Feedback { get; set; }
+        public bool MarkForReview { get; set; }
+        public List<int> DocumentIds { get; set; } = new List<int>();
+
+        public string BaselineAnswerText { get; set; }
+        public string BaselineAnswerMemo { get; set; }
     }
 
     public class Option
@@ -61,7 +84,8 @@ namespace CSETWebCore.Model.Cis
 
         public decimal? Weight { get; set; }
 
-        public bool Selected { get; set; }
+        public bool Selected { get; set; }  
+
         public int? AnswerId { get; set; }
 
         /// <summary>
@@ -74,10 +98,26 @@ namespace CSETWebCore.Model.Cis
         /// </summary>
         public string AnswerText { get; set; }
 
+        /// <summary>
+        /// Baseline selections can be populated for comparison against
+        /// the current assessment's option.
+        /// </summary>
+        public bool BaselineSelected { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BaselineAnswerText { get; set; }
+
+
+
         public List<Question> Followups { get; set; } = new List<Question>();
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Score
     {
         public int GroupingId { get; set; }
@@ -100,5 +140,37 @@ namespace CSETWebCore.Model.Cis
         public string Title { get; set; }
         public int Level { get; set; }
         public bool HasChildren { get; set; } = false;
+    }
+
+    public class FlatQuestion
+    {
+        public string QuestionText { get; set; }
+        public decimal? Weight { get; set; }
+        public bool Selected { get; set; }
+        public string Type { get; set; }
+    }
+
+    public class GroupedQuestions
+    {
+        public string QuestionText { get; set; }
+        public List<FlatQuestion> OptionQuestions { get; set; }
+    }
+
+    public class RollupOptions
+    {
+        public string Type { get; set; }
+        public decimal? Weight { get; set; }
+    }
+
+    public class CisAssessmentsResponse
+    {
+        public int? BaselineAssessmentId { get; set; }
+        public List<AssessmentDetail> MyCisAssessments { get; set; } = new List<AssessmentDetail>();
+    }
+
+    public class CisImportRequest
+    {
+        public int Dest { get; set; }
+        public int Source { get; set; }
     }
 }

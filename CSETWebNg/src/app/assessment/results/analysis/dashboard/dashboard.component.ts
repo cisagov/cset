@@ -116,6 +116,9 @@ export class DashboardComponent implements OnInit {
     });
 
     this.initialized = true;
+    setTimeout(function(){
+      document.getElementById("analysisDiv").scrollIntoView();
+    }, 250);
   }
 
 

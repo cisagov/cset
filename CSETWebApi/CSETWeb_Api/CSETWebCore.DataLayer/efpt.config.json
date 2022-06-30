@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 0,
+   "CodeGenerationMode": 2,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
@@ -27,6 +27,10 @@
       },
       {
          "Name": "[dbo].[AGGREGATION_TYPES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ANALYTICS_MATURITY_GROUPINGS]",
          "ObjectType": 0
       },
       {
@@ -106,39 +110,39 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_BUDGET_BASES]",
+         "Name": "[dbo].[CIS_CSI_BUDGET_BASES]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_CUSTOMER_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_CUSTOMER_COUNTS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_DEFINING_SYSTEMS]",
+         "Name": "[dbo].[CIS_CSI_DEFINING_SYSTEMS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_ORGANIZATION_DEMOGRAPHICS]",
+         "Name": "[dbo].[CIS_CSI_ORGANIZATION_DEMOGRAPHICS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_COMPOSITION]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_SERVICE_DEMOGRAPHICS]",
+         "Name": "[dbo].[CIS_CSI_SERVICE_DEMOGRAPHICS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_STAFF_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_STAFF_COUNTS]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CIST_CSI_USER_COUNTS]",
+         "Name": "[dbo].[CIS_CSI_USER_COUNTS]",
          "ObjectType": 0
       },
       {
@@ -195,10 +199,6 @@
       },
       {
          "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OBSERVABLES]",
          "ObjectType": 0
       },
       {
@@ -450,6 +450,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_POSSIBLE_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_QUESTION_TYPES]",
          "ObjectType": 0
       },
@@ -467,6 +471,10 @@
       },
       {
          "Name": "[dbo].[MATURITY_SOURCE_FILES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MODES_SETS_MATURITY_MODELS]",
          "ObjectType": 0
       },
       {
@@ -535,10 +543,6 @@
       },
       {
          "Name": "[dbo].[PARAMETERS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ParametersNeedingFixed]",
          "ObjectType": 0
       },
       {
@@ -758,6 +762,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Analytics_Answers]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[Answer_Components]",
          "ObjectType": 3
       },
@@ -798,10 +806,6 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[Assessments_For_User]",
-         "ObjectType": 3
-      },
-      {
          "Name": "[dbo].[ExcelExport]",
          "ObjectType": 3
       },
@@ -823,6 +827,86 @@
       },
       {
          "Name": "[dbo].[AcetAnswerDistribution]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturityAll_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturityAll]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySector_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySector]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry_Median]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_compute_single_averages_maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_compute_single_averages_standard]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_Compute_standard_all]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianGroup_Maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianOverall_Maturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMedianOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustry]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroup]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroupMaturity]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageQuestions]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getMinMaxAverageQuestionsCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_getStandardsResultsByCategory]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[analytics_setup_maturity_groupings]",
          "ObjectType": 1
       },
       {
@@ -970,15 +1054,11 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CopyIntoSet]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_CopyIntoSet_Delete]",
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CyOTEQuestionsAnswers]",
+         "Name": "[dbo].[usp_CopyIntoSet]",
          "ObjectType": 1
       },
       {
@@ -1042,6 +1122,14 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_getMedianOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getMinMaxAverageForSectorIndustry]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_getOverallRankedCategories]",
          "ObjectType": 1
       },
@@ -1067,6 +1155,10 @@
       },
       {
          "Name": "[dbo].[usp_getRankedStandardCategories]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetRawCountsForEachAssessment_Standards]",
          "ObjectType": 1
       },
       {
@@ -1147,7 +1239,7 @@
    "UseHierarchyId": false,
    "UseInflector": false,
    "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": false,
+   "UseManyToManyEntity": true,
    "UseNoConstructor": false,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,

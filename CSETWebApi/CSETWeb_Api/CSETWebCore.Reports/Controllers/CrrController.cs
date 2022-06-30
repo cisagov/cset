@@ -93,7 +93,6 @@ namespace CSETWebCore.Reports.Controllers
         {
             try
             {
-
                 byte[] assessmentIdBytes = null;
                 byte[] securityTemp = null;
                 int assessmentId = 0;

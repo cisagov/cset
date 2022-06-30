@@ -1,4 +1,4 @@
-////////////////////////////////
+/////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
 //
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { Console } from 'console';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
@@ -51,6 +52,12 @@ export class FeatureOptionComponent implements OnInit {
    */
   expandedAcet: boolean;
 
+  /**
+   * Indicates weather or not the record is a new one as going forward
+   * we will only allow for a single assessment feature to be selected
+   * within new assessments
+   */
+  isNotLegacy: boolean;
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -58,28 +65,26 @@ export class FeatureOptionComponent implements OnInit {
     public maturitySvc: MaturityService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { 
+    this.isNotLegacy = !this.checkIfLegacy();
+  } 
 
   /**
-  * Sets the selection of a feature and posts the assesment detail to the server.
+  * LEGACY SUBMIT:  Sets the selection of a feature and posts the assesment detail to the server.
   */
-  submit(feature, event: any) {
+  submitlegacy(feature, event: any) {
+
     const value = event.srcElement.checked;
 
-    switch (feature.code) {
-      case 'maturity':
-        this.assessSvc.assessment.useMaturity = value;
-        break;
-      case 'standard':
-        this.assessSvc.assessment.useStandard = value;
-        break;
-        case 'diagram':
-          this.assessSvc.assessment.useDiagram = value;
-          break;
-        case 'cyote':
-          this.assessSvc.assessment.useCyote = value;
-          break;
+    if(!this.isNotLegacy){
+      this.selectFeature(feature, value);
+    }
+
+    if(this.isNotLegacy){
+      this.setFeatureDefault();
+      this.selectFeature(feature, value);
+    } else {
+      this.isNotLegacy = !this.checkIfLegacy();
     }
 
     // special case for acet-only
@@ -88,9 +93,8 @@ export class FeatureOptionComponent implements OnInit {
 
       if (value) {
         this.assessSvc.setAcetDefaults();
-      }
+      } 
     }
-
 
     if (this.assessSvc.assessment.useMaturity) {
       if (this.assessSvc.assessment.maturityModel == undefined) {
@@ -117,12 +121,66 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
+  onChange(feature: any, event: any){
+
+    var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
+   
+    if(!this.isNotLegacy){
+      this.submitlegacy(feature, event);
+      return
+    }
+
+    for(let i = 0; i < checkboxes.length; i++)
+    {
+      if(checkboxes[i].type == "checkbox")
+      {
+        if(checkboxes[i].name === feature.code)
+        {
+          checkboxes[i].checked = true;
+          this.submitlegacy(feature, event);
+        }
+        else
+        {
+          checkboxes[i].checked = false;
+        }
+      }
+    }
+  }
+
+  setFeatureDefault(){
+    this.assessSvc.assessment.useMaturity = false;
+    this.assessSvc.assessment.useStandard = false;
+    this.assessSvc.assessment.useDiagram = false;
+  }
+
+  checkIfLegacy(){
+    let count = 0;
+    count += this.assessSvc.assessment.useMaturity ? 1 : 0;
+    count += this.assessSvc.assessment.useStandard ? 1 : 0;
+    count += this.assessSvc.assessment.useDiagram ? 1 : 0;
+ 
+    return count > 1;
+  }
 
   /**
    * Toggles the open/closed style of the description div.
    */
   toggleExpansion() {
     this.expandedDesc = !this.expandedDesc;
+  }
+
+  selectFeature(feature:any, value: boolean){
+    switch (feature.code) {
+      case 'maturity':
+        this.assessSvc.assessment.useMaturity = value;
+        break;
+      case 'standard':
+        this.assessSvc.assessment.useStandard = value;
+        break;
+      case 'diagram':
+        this.assessSvc.assessment.useDiagram = value;
+        break;
+    }
   }
 
   /**

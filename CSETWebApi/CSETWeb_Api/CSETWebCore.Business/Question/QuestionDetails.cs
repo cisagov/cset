@@ -10,6 +10,9 @@ namespace CSETWebCore.Business.Question
     /// </summary>
     public class QuestionDetails
     {
+        public int AssessmentId { get; set; }
+
+        public int QuestionId { get; set; }
 
         public int SelectedStandardTabIndex { get; set; }
 

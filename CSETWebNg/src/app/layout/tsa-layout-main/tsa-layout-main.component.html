@@ -30,8 +30,8 @@
   <!-- Navbar -->
   <nav *ngIf="auth.userToken() && auth.userToken() !== 'null'" class="row px-4 no-gutters navbar navbar-expand-md tsa-header">
     <!-- Brand (TSA) -->
-    <span [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
-      (click)="this.router.url!='/resource-library' && goHome()">
+    <span class="btn btn-link navbar-brand" style="padding-left:10px; padding-right:10px; padding-top:5px;"
+      (click)="goHome()">
       <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
         xmlns="http://www.w3.org/2000/svg" xml:space="preserve" enable-background="new 0 0 612 792"
