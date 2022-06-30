@@ -54,6 +54,7 @@
 
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text">                    
+                   <!-- <div [class.display-hidden]="!!q.parentQuestionId" -->
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                         {{ q.displayNumber }}
@@ -119,15 +120,26 @@
 
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
-                    <div [class.display-hidden]="!!q.parentQuestionId"
+                   <!--<div [class.display-hidden]="!!q.parentQuestionId">-->
+                    
+                    <div *ngIf="!q.isParentQuestion; else notNewMatLevel">
+                        <div class="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                        {{ q.displayNumber }}
-                        <div>
-                            <span class="question-mat-level-name">
-                                {{ q.maturityLevelName }}
-                            </span>
+
+                            <div>
+                                <span class="question-mat-level-name">
+                                    {{ q.maturityLevelName }}
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    <ng-template #notNewMatLevel>
+                        <div [class.display-hidden]="!!q.parentQuestionId"
+                        style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
+                            {{ q.displayNumber }}
+
+                        </div>
+                    </ng-template>
                     <div style="width: 100%;">                        
                         <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
