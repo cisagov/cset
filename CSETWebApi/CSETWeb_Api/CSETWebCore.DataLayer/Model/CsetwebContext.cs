@@ -469,11 +469,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
             });
 
-            modelBuilder.Entity<ASSESSMENT_ICONS>(entity =>
-            {
-                entity.Property(e => e.Icon_Id).ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id })
