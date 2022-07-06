@@ -2754,6 +2754,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
 
+                entity.HasOne(d => d.Icon)
+                    .WithMany(p => p.SETS)
+                    .HasForeignKey(d => d.Icon_Id)
+                    .HasConstraintName("FK_SETS_ASSESSMENT_ICONS");
+
                 entity.HasOne(d => d.Set_Category)
                     .WithMany(p => p.SETS)
                     .HasForeignKey(d => d.Set_Category_Id)

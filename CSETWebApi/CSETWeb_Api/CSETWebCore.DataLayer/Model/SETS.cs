@@ -85,6 +85,9 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsACET { get; set; }
         public int? Icon_Id { get; set; }
 
+        [ForeignKey("Icon_Id")]
+        [InverseProperty("SETS")]
+        public virtual ASSESSMENT_ICONS Icon { get; set; }
         [ForeignKey("Set_Category_Id")]
         [InverseProperty("SETS")]
         public virtual SETS_CATEGORY Set_Category { get; set; }

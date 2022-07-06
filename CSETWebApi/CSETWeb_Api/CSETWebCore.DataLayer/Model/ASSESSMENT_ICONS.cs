@@ -13,6 +13,7 @@ namespace CSETWebCore.DataLayer.Model
         public ASSESSMENT_ICONS()
         {
             MATURITY_MODELS = new HashSet<MATURITY_MODELS>();
+            SETS = new HashSet<SETS>();
         }
 
         [Key]
@@ -24,5 +25,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("Icon")]
         public virtual ICollection<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+        [InverseProperty("Icon")]
+        public virtual ICollection<SETS> SETS { get; set; }
     }
 }
