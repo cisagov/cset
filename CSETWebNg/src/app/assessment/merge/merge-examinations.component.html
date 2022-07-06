@@ -40,20 +40,82 @@
                     <th>NO</th>
                     <th>NA</th>
                 </tr>
-                <tr *ngFor="let question of this.childStatements; let i = index">
+                <tr *ngFor="let assessment of this.mergeList; let i = index">
+                    <td>Statement 1</td>
+                    <td>Y</td>
+                    <td>N</td>
+                    <td>
+                        <input type="radio" id="yes" name="optionYes" value="yes"
+                        (change)="updateAnswers(i, $event.target.value)">
+                    </td>
+                    <td>
+                        <input type="radio" id="no" name="optionNo" value="no"
+                        (change)="updateAnswers(i, $event.target.value)">
+                    </td>
+                    <td>
+                        <input type="radio" id="na" name="optionNa" value="na"
+                        (change)="updateAnswers(i, $event.target.value)">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <a mattooltip="Click to see more information about the table data." data-toggle="collapse"
+        href="#table-key" role="button" aria-expanded="false" aria-controls="table-key">Key</a>
+
+        <div class="collapse" id="table-key">
+        1. Y - The statement was answered "Yes" during the examination.<br>
+        2. N - The statement was answered "No" during the examination.<br>
+        3. NA - The statement was answered "Not Applicable" during the examination.<br>
+        4. U - The statement went unanswered during the examination.<br><br>
+        </div>
+
+        <button class="btn btn-primary" matTooltip="Merge checked examinations"
+                style="width: 15%; margin-top: 1.5rem; margin-left: auto; margin-right: 0"
+                [disabled]="conflictCount > 0">Merge Examinations</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--
+                <tr *ngFor="let question of this.groupings[0].questions; let i = index">
                     <ng-container>
                         <td style="padding-left: 0.5rem; width: 50%">
-                            {{ this.childStatements[i].questionText }} <sup matTooltipPosition="above" matTooltip="{{ getParentText(this.childStatements[i].parentQuestionId) }}">?</sup>
+                            {{ this.groupings[0].questions[i].questionText }} <sup matTooltipPosition="above" matTooltip="{{ getParentText(this.childStatements[i].parentQuestionId) }}">?</sup>
                         </td>
 
                         <td style="padding-left: 1.0rem;" 
                             *ngFor="let assessment of this.mergeList; let j = index">
+
+
                             <ng-container *ngIf="j === 0">
-                                {{ this.assessmentOneData[i]?.answer_Text !== null ? this.assessmentOneData[i].answer_Text : "U" }}
+                                <ng-container *ngIf="!this.groupings[0].questions[i].isParentQuestion">
+                                    {{ this.groupings[0].questions[i]?.answer !== null ? this.groupings[0].questions[i].answer : "U" }}
+                                    {{ this.assessmentOneData[i]?.answer_Text !== null ? this.assessmentOneData[i].answer_Text : "U" }}
+                                </ng-container>
                             </ng-container>
+
+
+
                             <ng-container *ngIf="j === 1">
-                                {{ this.assessmentTwoData[i]?.answer_Text !== null ? this.assessmentTwoData[i].answer_Text : "U" }}
+                                <ng-container *ngIf="!this.groupings[0].questions[i].isParentQuestion">
+                                    {{ this.groupings[0].questions[i]?.answer !== null ? this.groupings[0].questions[i].answer: "U" }}
+                                    {{ this.assessmentTwoData[i]?.answer_Text !== null ? this.assessmentTwoData[i].answer_Text : "U" }}
+                                </ng-container>
                             </ng-container>
+
+
+                            
                             <ng-container *ngIf="j === 2">
                                 {{ this.assessmentThreeData[i]?.answer_Text !== null ? this.assessmentThreeData[i].answer_Text : "U" }}
                             </ng-container>
@@ -78,63 +140,31 @@
                             <ng-container *ngIf="j === 9">
                                 {{ this.assessmentTenData[i]?.answer_Text !== null ? this.assessmentTenData[i].answer_Text : "U" }}
                             </ng-container>
-
+                            
+                        <td>
+                            <input type="radio" id="yes" name="option{{0}}}" value="yes"
+                            *ngIf="!(this.groupings[0].questions[0].isParentQuestion)"
+                            [checked]="this.assessmentOneData[i]?.answer_Text !== null ? defaultAnswers(i, 'yes') : false"
+                            (change)="updateAnswers(i, $event.target.value)">
                         </td>
-
-                        <td><input type="radio" id="yes" name="option{{i}}"></td>
-                        <td><input type="radio" id="no" name="option{{i}}"></td>
-                        <td><input type="radio" id="na" name="option{{i}}"></td>
-                        
+                        <td>
+                            <input type="radio" id="no" name="option{{0}}" value="no"
+                            *ngIf="!(this.groupings[0].questions[0].isParentQuestion)"
+                            [checked]="this.assessmentOneData[i]?.answer_Text !== null ? defaultAnswers(i, 'no') : false"
+                            (change)="updateAnswers(i, $event.target.value)">
+                        </td>
+                        <td>
+                            <input type="radio" id="na" name="option{{0}}" value="na"
+                            *ngIf="!(this.groupings[0].questions[0].isParentQuestion)"
+                            [checked]="this.assessmentOneData[i]?.answer_Text !== null ? defaultAnswers(i, 'na') : false"
+                            (change)="updateAnswers(i, $event.target.value)">
+                        </td>
                     </ng-container>
                 </tr>
-
-
-                <!--
-                <tr *ngFor="let question of this.questionCount; let i = index">
-                    <ng-container *ngIf="this.groupings[0].questions[i].isParentQuestion">
-                        <td style="padding-left: 0.5rem; width: 50%; font-weight: bold">{{ this.groupings[0].questions[i].questionText }}</td>
-                        <td *ngFor="let assessment of this.mergeList"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </ng-container>
-                    
-                    <ng-container *ngIf="!this.groupings[0].questions[i].isParentQuestion">
-                        <td style="padding-left: 0.5rem;">{{ this.groupings[0].questions[i].questionText }}</td>
-
-                        <td *ngFor="let assessment of this.mergeList; let j = index">
-                            <ng-container *ngIf="j === 0">
-                                {{ this.assessmentOneData[i].answer_Text }}
-                            </ng-container>
-
-
-
-                            <ng-container *ngIf="j === 1">
-                                    {{ this.assessmentTwoData[i].answer_Text }}
-                            </ng-container>
-
-
-                            <ng-container *ngIf="j === 2">{{ this.assessmentThreeData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 3">{{ this.assessmentFourData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 4">{{ this.assessmentFiveData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 5">{{ this.assessmentSixData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 6">{{ this.assessmentSevenData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 7">{{ this.assessmentEightData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 8">{{ this.assessmentNineData[i].answer_Text }}</ng-container>
-                            <ng-container *ngIf="j === 9">{{ this.assessmentTenData[i].answer_Text }}</ng-container>
-                        </td>
-
-                        <td><input type="radio" id="yes" name="option{{i}}"></td>
-                        <td><input type="radio" id="no" name="option{{i}}"></td>
-                        <td><input type="radio" id="na" name="option{{i}}"></td>
-                    </ng-container>
-                </tr>
-                -->
             </table>
         </div>
 
-
-        <br><br>
+        <br>
         
 
         <a mattooltip="Click to see more information about the table data." data-toggle="collapse"
@@ -149,6 +179,16 @@
 
         <button class="btn btn-primary" matTooltip="Merge checked examinations"
                 style="width: 15%; margin-top: 1.5rem; margin-left: auto; margin-right: 0"
-                [disabled]="!allConflictsResolved">Merge Examinations</button>
+                [disabled]="conflictCount > 0">Merge Examinations</button>
     </div>
+
+    <ng-container *ngFor="let answer of this.assessOneAnswers">
+        {{ answer }}
+    </ng-container>
+    <br>
+    <ng-container *ngFor="let answer of this.assessTwoAnswers">
+        {{ answer }}
+    </ng-container>
 </div>
+
+-->

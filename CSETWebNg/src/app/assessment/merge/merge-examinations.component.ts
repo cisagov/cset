@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { merge } from 'rxjs';
 import { MaturityQuestionResponse, QuestionGrouping } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
@@ -13,17 +14,19 @@ import { QuestionsService } from '../../services/questions.service';
 export class MergeExaminationsComponent implements OnInit {
 
   groupings: QuestionGrouping[] = [];
-  questionCount: number[] = [];
 
   mergeList: any[] = [];
+  mainAssessmentId: number;
   childStatements: any[] = [];
   parentStatements: any[] = [];
   
-  assessmentOneData: any; assessmentTwoData: any; assessmentThreeData: any;
+  assessmentOneData: any[] = []; assessmentTwoData: any; assessmentThreeData: any;
   assessmentFourData: any; assessmentFiveData: any; assessmentSixData: any;
   assessmentSevenData: any; assessmentEightData: any; assessmentNineData: any;
   assessmentTenData: any;
-  
+
+  conflictCount: number = 0;
+  radioAnswers: string[] = [];
   allConflictsResolved: boolean = false;
 
 
@@ -36,7 +39,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.mergeList = this.ncuaSvc.assessmentsToMerge;
     this.loadStatements();
     this.loadAnswers();
@@ -45,25 +48,30 @@ export class MergeExaminationsComponent implements OnInit {
   loadStatements() {
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
-        this.groupings = response.groupings;
-        console.log("RESPONSE: " + JSON.stringify(response, null, 4));
+        //this.groupings = response.groupings;
+        //console.log("Groupings: " + JSON.stringify(this.groupings, null, 4));
 
-        for (let i = 0; i < this.groupings[0].questions.length; i++) {
-          if (!this.groupings[0].questions[i].isParentQuestion) {
+        //for (let i = 0; i < this.groupings[0].questions.length; i++) {
+        //  if (this.groupings[0].questions[i].answer === 'Y' /* this.groupings[0].questions[i].answer*/) {
+        //    this.conflictCount++;
+        //  }
+        //}
+
+          /*if (!this.groupings[0].questions[i].isParentQuestion) {
             this.childStatements.push(this.groupings[0].questions[i]);
           } else {
             this.parentStatements.push(this.groupings[0].questions[i]);
-          }
-        }
-
-        console.log("CHILDREN: " + JSON.stringify(this.childStatements, null, 4));
-        console.log("PARENT: " + JSON.stringify(this.parentStatements, null, 4));
-        this.questionCount = Array(this.groupings[0].questions.length).fill(1).map((x,i)=>i);
-      }
-    )
+          }*/
+    })
   }
 
   loadAnswers() {
+    this.ncuaSvc.getAnswers(13493, 13494).subscribe(
+      (response: any) => {
+        console.log(JSON.stringify("RESPONSE: " + response));
+      }
+    );
+    /*
     this.mergeList.forEach((id, index) => {
       this.ncuaSvc.getAnswers(id).subscribe(
         (response: any) => {
@@ -90,8 +98,13 @@ export class MergeExaminationsComponent implements OnInit {
               this.assessmentTenData = response;
             }
           }
-      })
+        });
     })
+    */
+  }
+
+  checkConflicts() {
+
   }
 
   getParentText(parentId: number) {
@@ -102,8 +115,26 @@ export class MergeExaminationsComponent implements OnInit {
         parentText = this.parentStatements[i].questionText;
       }
     }
-    
+
     return parentText;
+  }
+
+  defaultAnswers(index: number, value: string) {
+    if (value === 'yes' && this.assessmentOneData[index].answer_Text === 'Y') {
+      this.radioAnswers[index] = value;
+      return true;
+    } else if (value === 'no' && this.assessmentOneData[index].answer_Text === 'N') {
+      this.radioAnswers[index] = value;
+      return true;
+    } else if (value === 'na' && this.assessmentOneData[index].answer_Text === 'NA') {
+      this.radioAnswers[index] = value;
+      return true;
+    }
+  }
+
+  updateAnswers(index: number, value: string) {
+    this.radioAnswers[index] = value;
+    console.log("Radio Answer Array: " + JSON.stringify(this.radioAnswers, null, 4));
   }
 
 }
