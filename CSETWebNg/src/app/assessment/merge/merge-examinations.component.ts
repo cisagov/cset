@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { merge } from 'rxjs';
 import { MaturityQuestionResponse, QuestionGrouping } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
@@ -41,7 +40,8 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   getConflicts() {
-    this.ncuaSvc.getAnswers(13493, 13494).subscribe(
+
+    this.ncuaSvc.getAnswers(this.mergeList[0], this.mergeList[1]).subscribe(
       (response: any) => {
         this.mergeConflicts = response;
         this.answersRequired = this.mergeConflicts.length;

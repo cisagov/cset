@@ -13,7 +13,7 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class NcuaController
     {
-        private CSETContext _context;
+        public CSETContext _context;
         
         public NcuaController(CSETContext context)
         {
@@ -32,9 +32,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/getMergeData")]
-        public IList<Get_Merge_ConflictsResult> GetMergeAnswers(int assessmentOneId, int assessmentTwoId)
+        public IList<Get_Merge_ConflictsResult> GetMergeAnswers([FromQuery] int id1, [FromQuery] int id2)
         {
-           return _context.Get_Merge_Conflicts(assessmentOneId, assessmentTwoId); 
+            return _context.Get_Merge_Conflicts(id1, id2); 
         }
     }
 }
