@@ -20,6 +20,8 @@ export class MergeExaminationsComponent implements OnInit {
   statementText: string[] = [];
 
   radioAnswers: string[] = [];
+  answersRequired: number;
+  answersReceived: number = 0;
 
 
 
@@ -42,6 +44,7 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers(13493, 13494).subscribe(
       (response: any) => {
         this.mergeConflicts = response;
+        this.answersRequired = this.mergeConflicts.length;
         console.log(JSON.stringify(this.mergeConflicts, null, 4));
       }
     );
@@ -64,6 +67,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   updateAnswers(i: number, value: string) {
     this.radioAnswers[i] = value;
+    this.answersReceived++;
     console.log("User Answers: " + JSON.stringify(this.radioAnswers, null, 4));
   }
   
