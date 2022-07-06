@@ -76,12 +76,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<CYOTE_ANSWERS> CYOTE_ANSWERS { get; set; }
-        public virtual DbSet<CYOTE_OBSERVABLES> CYOTE_OBSERVABLES { get; set; }
-        public virtual DbSet<CYOTE_OPTIONS> CYOTE_OPTIONS { get; set; }
-        public virtual DbSet<CYOTE_PATHS> CYOTE_PATHS { get; set; }
-        public virtual DbSet<CYOTE_PATH_QUESTION> CYOTE_PATH_QUESTION { get; set; }
-        public virtual DbSet<CYOTE_QUESTIONS> CYOTE_QUESTIONS { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -966,52 +960,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation)
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
-            });
-
-            modelBuilder.Entity<CYOTE_ANSWERS>(entity =>
-            {
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.CYOTE_ANSWERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CYOTE_ANSWERS_ASSESSMENT");
-
-                entity.HasOne(d => d.Observable)
-                    .WithMany(p => p.CYOTE_ANSWERS)
-                    .HasForeignKey(d => d.Observable_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CYOTE_ANSWERS_OBS");
-
-                entity.HasOne(d => d.Option)
-                    .WithMany(p => p.CYOTE_ANSWERS)
-                    .HasForeignKey(d => d.Option_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CYOTE_ANSWERS_OPTION");
-
-                entity.HasOne(d => d.Path)
-                    .WithMany(p => p.CYOTE_ANSWERS)
-                    .HasForeignKey(d => d.Path_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CYOTE_ANSWERS_PATH");
-            });
-
-            modelBuilder.Entity<CYOTE_OPTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Option_Id)
-                    .HasName("PK__CYOTE_OP__3260907E3CCCC788");
-            });
-
-            modelBuilder.Entity<CYOTE_PATH_QUESTION>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Path_Id });
-
-                entity.Property(e => e.Sequence).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<CYOTE_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Question_Id)
-                    .HasName("PK__CYOTE_QU__B0B2E4E65627EA23");
             });
 
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
