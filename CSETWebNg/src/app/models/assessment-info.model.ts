@@ -71,8 +71,8 @@ export interface MaturityModel {
 }
 
 export interface AssessmentIcon {
-  iconId: number;
-  iconPath: string;
+  icon_Id: number;
+  icon_Path: string;
 }
 
 /**

@@ -156,7 +156,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessmenticons")]
         public IActionResult GetAssessmentIcons()
         {
-            return Ok(_context.ASSESSMENT_ICONS);
+            return Ok(_assessmentBusiness.GetAllAssessmentIcons());
         }
     }
 }
