@@ -15,7 +15,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private CSETContext _context;
         
-        public NcuaController(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+        public NcuaController(CSETContext context)
         {
             _context = context;
         }
@@ -32,29 +32,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/getMergeData")]
-        public List<Get_Merge_Conflicts> GetMergeAnswers(int assessmentOneId, int assessmentTwoId)
+        public IList<Get_Merge_ConflictsResult> GetMergeAnswers(int assessmentOneId, int assessmentTwoId)
         {
-            List<Get_Merge_Conflicts> response = null;
-            _context.LoadStoredProc("[Get_Merge_Conflicts]")
-                        .WithSqlParam("id1", assessmentOneId) 
-                        .WithSqlParam("id2", assessmentTwoId)
-                        .ExecuteStoredProc((handler) =>
-                        {
-                            var result = handler.ReadToList<Get_Merge_Conflicts>();
-                            var labels = (from Get_Merge_Conflicts data in result
-                                            orderby data.Exam_Id
-                                            select data.Exam_Id).Distinct().ToList();
-                            
-                            response = (List<Get_Merge_Conflicts>)result;
-                        });
-
-            return response;
+           return _context.Get_Merge_Conflicts(assessmentOneId, assessmentTwoId); 
         }
     }
 }
-    public class Get_Merge_Conflicts
-    {
-        public int Exam_Id { get; set; }
-        public int Merge_Question_Id { get; set; }
-        public string Statement_Answer { get; set; }
-    }

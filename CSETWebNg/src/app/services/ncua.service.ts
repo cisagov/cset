@@ -94,12 +94,10 @@ const headers = {
 
 
   getAnswers(id1: number, id2: number) {
-    //headers.params.append("id1", id1);
-    //headers.params.append("id2", id2);
-    return this.http.get(this.configSvc.apiUrl
-       + 'getMergeData?idOne=' + id1 + '&idTwo=' + id2, 
-       headers
-    );
+    let headers2 = new HttpHeaders().set('Content-Type', 'application/json');
+    let params = new HttpParams().set("id1", id1).set("id2", id2);
+    
+    return this.http.get(this.configSvc.apiUrl + 'getMergeData', { headers: headers2, params: params});
   }
 
   fillEmpty() {
