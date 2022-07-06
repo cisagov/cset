@@ -794,5 +794,20 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+
+        public virtual IList<Get_Merge_ConflictsResult> Get_Merge_Conflicts(Nullable<int> assessmentOneId, Nullable<int> assessmentTwoId)
+        {
+            if (!assessmentOneId.HasValue || !assessmentTwoId.HasValue)
+                throw new ApplicationException("parameters may not be null");
+            IList<Get_Merge_ConflictsResult> myrval = null;
+            this.LoadStoredProc("Get_Merge_Conflicts")
+                     .WithSqlParam("@id1", 13493)
+                     .WithSqlParam("@id2", 13494)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<Get_Merge_ConflictsResult>();
+                     });
+            return myrval;
+        }
     }
 }

@@ -7,8 +7,11 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class Get_Merge_ConflictsResult
     {
-        public int? Assessment_Id { get; set; }
-        public int? Question_Or_Requirement_Id { get; set; }
-        public string Answer_Text { get; set; }
+        public int? Assessment_Id1 { get; set; }
+        public int? Assessment_Id2 { get; set; }
+        public int? Question_Or_Requirement_Id1 { get; set; }
+        public int? Question_Or_Requirement_Id2 { get; set; }
+        public string Answer_Text1 { get; set; }
+        public string Answer_Text2 { get; set; }
     }
 }

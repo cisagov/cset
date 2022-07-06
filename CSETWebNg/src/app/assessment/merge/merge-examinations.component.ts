@@ -13,21 +13,14 @@ import { QuestionsService } from '../../services/questions.service';
 })
 export class MergeExaminationsComponent implements OnInit {
 
-  groupings: QuestionGrouping[] = [];
-
   mergeList: any[] = [];
-  mainAssessmentId: number;
-  childStatements: any[] = [];
-  parentStatements: any[] = [];
-  
-  assessmentOneData: any[] = []; assessmentTwoData: any; assessmentThreeData: any;
-  assessmentFourData: any; assessmentFiveData: any; assessmentSixData: any;
-  assessmentSevenData: any; assessmentEightData: any; assessmentNineData: any;
-  assessmentTenData: any;
+  groupings: any;
 
-  conflictCount: number = 0;
+  mergeConflicts: any[] = [];
+  statementText: string[] = [];
+
   radioAnswers: string[] = [];
-  allConflictsResolved: boolean = false;
+
 
 
   constructor(
@@ -41,100 +34,38 @@ export class MergeExaminationsComponent implements OnInit {
 
   ngOnInit() {
     this.mergeList = this.ncuaSvc.assessmentsToMerge;
-    this.loadStatements();
-    this.loadAnswers();
+    this.getConflicts();
+    this.getStatementText();
   }
 
-  loadStatements() {
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
-      (response: MaturityQuestionResponse) => {
-        //this.groupings = response.groupings;
-        //console.log("Groupings: " + JSON.stringify(this.groupings, null, 4));
-
-        //for (let i = 0; i < this.groupings[0].questions.length; i++) {
-        //  if (this.groupings[0].questions[i].answer === 'Y' /* this.groupings[0].questions[i].answer*/) {
-        //    this.conflictCount++;
-        //  }
-        //}
-
-          /*if (!this.groupings[0].questions[i].isParentQuestion) {
-            this.childStatements.push(this.groupings[0].questions[i]);
-          } else {
-            this.parentStatements.push(this.groupings[0].questions[i]);
-          }*/
-    })
-  }
-
-  loadAnswers() {
+  getConflicts() {
     this.ncuaSvc.getAnswers(13493, 13494).subscribe(
       (response: any) => {
-        console.log(JSON.stringify("RESPONSE: " + response));
+        this.mergeConflicts = response;
+        console.log(JSON.stringify(this.mergeConflicts, null, 4));
       }
     );
-    /*
-    this.mergeList.forEach((id, index) => {
-      this.ncuaSvc.getAnswers(id).subscribe(
-        (response: any) => {
-          for (let i = 0; i <= response.length; i++) {
-            if (index === 0) {
-              this.assessmentOneData = response;
-            } else if (index === 1) {
-              this.assessmentTwoData = response;
-            } else if (index === 2) {
-              this.assessmentThreeData = response;
-            } else if (index === 3) {
-              this.assessmentFourData = response;
-            } else if (index === 4) {
-              this.assessmentFiveData = response;
-            } else if (index === 5) {
-              this.assessmentSixData = response;
-            } else if (index === 6) {
-              this.assessmentSevenData = response;
-            } else if (index === 7) {
-              this.assessmentEightData = response;
-            } else if (index === 8) {
-              this.assessmentNineData = response;
-            } else if (index === 9) {
-              this.assessmentTenData = response;
+  }
+
+  getStatementText() {
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+      (response: MaturityQuestionResponse) => {
+        this.groupings = response.groupings;
+
+        for (let i = 0; i < this.mergeConflicts.length; i++) {
+          for (let j = 0; j < this.groupings[0].questions.length; j++) {
+            if (this.mergeConflicts[i].question_Or_Requirement_Id1 === this.groupings[0].questions[j].questionId) {
+              this.statementText.push(this.groupings[0].questions[j].questionText);
             }
           }
-        });
-    })
-    */
+        }
+      })
   }
 
-  checkConflicts() {
-
+  updateAnswers(i: number, value: string) {
+    this.radioAnswers[i] = value;
+    console.log("User Answers: " + JSON.stringify(this.radioAnswers, null, 4));
   }
-
-  getParentText(parentId: number) {
-    let parentText = "";
-
-    for (let i = 0; i < this.parentStatements.length; i++) {
-      if (parentId === this.parentStatements[i].questionId) {
-        parentText = this.parentStatements[i].questionText;
-      }
-    }
-
-    return parentText;
-  }
-
-  defaultAnswers(index: number, value: string) {
-    if (value === 'yes' && this.assessmentOneData[index].answer_Text === 'Y') {
-      this.radioAnswers[index] = value;
-      return true;
-    } else if (value === 'no' && this.assessmentOneData[index].answer_Text === 'N') {
-      this.radioAnswers[index] = value;
-      return true;
-    } else if (value === 'na' && this.assessmentOneData[index].answer_Text === 'NA') {
-      this.radioAnswers[index] = value;
-      return true;
-    }
-  }
-
-  updateAnswers(index: number, value: string) {
-    this.radioAnswers[index] = value;
-    console.log("Radio Answer Array: " + JSON.stringify(this.radioAnswers, null, 4));
-  }
+  
 
 }
