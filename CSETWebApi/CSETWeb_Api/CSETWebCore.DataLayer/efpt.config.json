@@ -202,30 +202,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[CYOTE_ANSWERS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OBSERVABLES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_OPTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_PATH_QUESTION]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_PATHS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[CYOTE_QUESTIONS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[DEMOGRAPHICS]",
          "ObjectType": 0
       },
@@ -854,27 +830,7 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[analytics_Compute_MaturityAll_Median]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[analytics_Compute_MaturityAll]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_Compute_MaturitySector_Median]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_Compute_MaturitySector]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry_Median]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_Compute_MaturitySectorIndustry]",
          "ObjectType": 1
       },
       {
@@ -887,46 +843,6 @@
       },
       {
          "Name": "[dbo].[analytics_Compute_standard_all]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMedianGroup_Maturity]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMedianOverall_Maturity]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMedianOverall]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverage]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustry]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroup]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverageForSectorIndustryGroupMaturity]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverageQuestions]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getMinMaxAverageQuestionsCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[analytics_getStandardsResultsByCategory]",
          "ObjectType": 1
       },
       {
@@ -967,6 +883,10 @@
       },
       {
          "Name": "[dbo].[final_data_moves]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Get_Merge_Conflicts]",
          "ObjectType": 1
       },
       {

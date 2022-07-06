@@ -11,13 +11,11 @@ namespace CSETWebCore.DataLayer.Model
         public string AssessmentName { get; set; }
         public DateTime AssessmentDate { get; set; }
         public DateTime AssessmentCreatedDate { get; set; }
-        public string CreatorName { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public bool MarkedForReview { get; set; }
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
-        public bool UseCyote { get; set; }
         public string workflow { get; set; }
         public string SelectedMaturityModel { get; set; }
         public string SelectedStandards { get; set; }
