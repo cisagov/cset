@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="ml-4" *ngFor="let o of optRadio">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
         <div class="ml-2" style="white-space: normal">
@@ -53,7 +53,7 @@
 
 
 <div class="ml-4" *ngFor="let o of optCheckbox">
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
         <div class="ml-2" style="white-space: normal">
@@ -82,7 +82,7 @@
 
 
 
-<div *ngFor="let o of optOther" class="ml-4">
+<div *ngFor="let o of optOther" class="ml-4 break-inside-avoid">
     <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1" maxlength="100"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 

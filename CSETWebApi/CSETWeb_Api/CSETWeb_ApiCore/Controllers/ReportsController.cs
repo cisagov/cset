@@ -55,7 +55,14 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.ControlList = _report.GetControls();
+
+            var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (ss != null)
+            {
+                data.ApplicationMode = ss.Application_Mode;
+            }
+
+            data.ControlList = _report.GetControls(data.ApplicationMode);
             data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
             data.salTable = _report.GetSals();

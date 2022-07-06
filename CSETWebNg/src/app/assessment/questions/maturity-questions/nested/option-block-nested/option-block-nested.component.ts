@@ -25,6 +25,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
+import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
@@ -45,13 +46,14 @@ export class OptionBlockNestedComponent implements OnInit {
   sectionId = 0;
 
   // temporary debug aids
-  showIdTag = false;
+  showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   showWeightTag = false;
 
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private utilSvc: Utilities,
+    private configSvc: ConfigService,
     private route: ActivatedRoute,
   ) {
 
@@ -95,10 +97,29 @@ export class OptionBlockNestedComponent implements OnInit {
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
-      desc.selected = false;
-      desc.answerText = '';
-      desc.freeResponseAnswer = '';
+      for (let key in desc) {
+        //options are where the radio & checkboxes live within the "desc" data structure
+        if (key === "options" && desc[key] != null && desc[key].length > 0) {
+          var lengthOfOptions = desc[key].length;
+          for (var i = 0; i <= lengthOfOptions; i++) {
+            if (desc[key]["" + i + ""] != undefined) {
+              desc[key]["" + i + ""].selected = false;
+            }
+          }
+        }
 
+        if (key === "answerText" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "answerMemo" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "freeResponseAnswer" && desc[key] != null) {
+          desc[key] = '';
+        }
+      }
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
@@ -119,23 +140,23 @@ export class OptionBlockNestedComponent implements OnInit {
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
-    else{
-      if(o.optionText == 'None of the above'){
+    else {
+      if (o.optionText.toLowerCase() == 'none of the above') {
         listOfOptions.forEach(obj => {
-          if(o!=obj){
+          if (o != obj) {
             obj.selected = false;
             answers.push(this.makeAnswer(obj));
           }
         });
       }
-      else{
-          listOfOptions.forEach(obj => {
-            if(obj.optionText == 'None of the above'){
-              obj.selected = false;
-              answers.push(this.makeAnswer(obj));
-            }
-          });
-      }      
+      else {
+        listOfOptions.forEach(obj => {
+          if (obj.optionText.toLowerCase() == 'none of the above') {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
     }
 
 
@@ -144,8 +165,9 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // if unselected, clean up my kids
     if (!o.selected) {
-
-      const descendants = this.getDescendants(o);
+      // get the descendants for my peer radios to clean them up
+      var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+      const descendants = this.getDescendants(siblingOptions);
 
       descendants.forEach(desc => {
         desc.selected = false;
@@ -200,7 +222,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  storeAnswers(answers, sectionId) {    
+  storeAnswers(answers, sectionId) {
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
@@ -212,30 +234,35 @@ export class OptionBlockNestedComponent implements OnInit {
    * from the supplied options/questions.
    */
   getDescendants(y: any[]): any[] {
-    const desc = []; // immediate descendants
-
-    var maxStack = y.length;
-    var num = 0;
+    const allYDescendants = []; // all descendants of all "y" objects
 
     if (!y || y.length === 0) {
-      return desc;
+      return allYDescendants;
     }
-      y.forEach(x => {
-        num++;
-        desc.push(...x.followups ?? []);
-        desc.push(...x.options ?? []);
-        if(num > maxStack)
-        {
-          desc.push(...this.getDescendants(y) ?? []);
-        }
-      });
-      return desc;
+
+    y.forEach(x => {
+      const xDescendants = [];
+      xDescendants.push(...x.followups ?? []);
+      xDescendants.push(...x.options ?? []);
+
+      if (xDescendants.length > 0) {
+        xDescendants.push(...this.getDescendants(xDescendants) ?? []);
+      }
+
+      allYDescendants.push(...xDescendants);
+    });
+
+    return allYDescendants;
   }
 
-  catchSpace(e: Event, tag: string){
+  /**
+   * Ignores spacebar event if the target
+   * is within a "div-shield" parent.
+   */
+  catchSpace(e: Event, tag: string) {
     let el = document.getElementById(tag);
     let foundEl = el.closest('.div-shield');
-    if(foundEl){
+    if (foundEl) {
       e.preventDefault();
     }
   }

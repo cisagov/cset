@@ -36,6 +36,6 @@ export const environment = {
   reportsUrl: 'https://localhost:44363/',
   appCode: 'CSET',
   version: '11.2.0.0',
-  helpContactEmail: 'cset@dhs.gov',
+  helpContactEmail: 'cset@cisa.dhs.gov',
   helpContactPhone: ''
 };

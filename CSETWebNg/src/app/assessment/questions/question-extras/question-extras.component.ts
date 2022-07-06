@@ -154,10 +154,10 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
       (details) => {
         this.extras = details;
+        this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
-        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null);
-
+        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
         this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
@@ -266,6 +266,9 @@ export class QuestionExtrasComponent implements OnInit {
     // Tell the parent (subcategory) component that something changed
     this.changeExtras.emit(null);
 
+    // Tell any observers the new extras
+    this.questionsSvc.broadcastExtras(this.extras);
+
     this.questionsSvc.storeAnswer(this.answer).subscribe(
       (response: number) => {
         this.myQuestion.answer_Id = response;
@@ -301,6 +304,8 @@ export class QuestionExtrasComponent implements OnInit {
           return this.myQuestion.hasDiscovery ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+
+
     }
   }
 
@@ -376,6 +381,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+
       }
     });
   }
@@ -405,6 +411,7 @@ export class QuestionExtrasComponent implements OnInit {
         // refresh the document list
         if (resp.status === 200 && resp.body) {
           this.extras.documents = resp.body;
+          this.questionsSvc.broadcastExtras(this.extras);
         }
         e.target.value = "";
       }
@@ -467,6 +474,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
 
+          this.questionsSvc.broadcastExtras(this.extras);
       }
     });
   }
@@ -625,6 +633,10 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'DISC') {
         return false;
       }
+      if (mode == 'REFS') {
+        return false;
+      }
+
     }
 
     return true;

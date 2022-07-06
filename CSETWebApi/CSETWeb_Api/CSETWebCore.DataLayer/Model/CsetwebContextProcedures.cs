@@ -68,7 +68,6 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_Answer_Components_DefaultResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_Completion_For_UserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_For_UserResult>().HasNoKey().ToView(null);
-            modelBuilder.Entity<usp_CyOTEQuestionsAnswersResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_financial_attributesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GenerateSPRSScoreResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getAnswerComponentOverridesResult>().HasNoKey().ToView(null);
@@ -160,7 +159,6 @@ namespace CSETWebCore.DataLayer.Model
         Task<int> usp_BuildCatNumbersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_CopyIntoSet_DeleteAsync(string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_CyOTEQuestionsAnswersResult>> usp_CyOTEQuestionsAnswersAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GenerateSPRSScoreResult>> usp_GenerateSPRSScoreAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getAnswerComponentOverridesResult>> usp_getAnswerComponentOverridesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -1555,33 +1553,7 @@ namespace CSETWebCore.DataLayer.Model
 
             return _;
         }
-
-        public virtual async Task<List<usp_CyOTEQuestionsAnswersResult>> usp_CyOTEQuestionsAnswersAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-
-            var sqlParameters = new []
-            {
-                new SqlParameter
-                {
-                    ParameterName = "Assessment_id",
-                    Value = Assessment_id ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.Int,
-                },
-                parameterreturnValue,
-            };
-            var _ = await _context.SqlQueryAsync<usp_CyOTEQuestionsAnswersResult>("EXEC @returnValue = [dbo].[usp_CyOTEQuestionsAnswers] @Assessment_id", sqlParameters, cancellationToken);
-
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
-        }
-
+        
         public virtual async Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

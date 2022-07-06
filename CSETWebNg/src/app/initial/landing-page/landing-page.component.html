@@ -138,8 +138,7 @@
                 </div>
             </div>
             <p class="mt-3 fst-italic">
-                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET' && configSvc.installationMode !=='CYOTE'"></app-cset-origin>
-                <app-cyote-origin *ngIf="configSvc.installationMode === 'CYOTE'"></app-cyote-origin>
+                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET'"></app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
             </p>
         </ng-template>

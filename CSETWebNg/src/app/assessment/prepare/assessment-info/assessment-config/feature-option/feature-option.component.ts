@@ -65,11 +65,9 @@ export class FeatureOptionComponent implements OnInit {
     public maturitySvc: MaturityService
   ) { }
 
-  ngOnInit(): void {
-    var tsCreatedDate = new Date(this.assessSvc.assessment.createdDate).toLocaleDateString();
-    var legacyDate = new Date("6/11/2022").toLocaleDateString();
-    this.isNotLegacy = tsCreatedDate > legacyDate ;
-  }
+  ngOnInit(): void { 
+    this.isNotLegacy = !this.checkIfLegacy();
+  } 
 
   /**
   * LEGACY SUBMIT:  Sets the selection of a feature and posts the assesment detail to the server.
@@ -77,20 +75,16 @@ export class FeatureOptionComponent implements OnInit {
   submitlegacy(feature, event: any) {
 
     const value = event.srcElement.checked;
+
+    if(!this.isNotLegacy){
+      this.selectFeature(feature, value);
+    }
+
     if(this.isNotLegacy){
       this.setFeatureDefault();
-    }
-    
-    switch (feature.code) {
-      case 'maturity':
-        this.assessSvc.assessment.useMaturity = value;
-        break;
-      case 'standard':
-        this.assessSvc.assessment.useStandard = value;
-        break;
-        case 'diagram':
-          this.assessSvc.assessment.useDiagram = value;
-          break;
+      this.selectFeature(feature, value);
+    } else {
+      this.isNotLegacy = !this.checkIfLegacy();
     }
 
     // special case for acet-only
@@ -99,7 +93,7 @@ export class FeatureOptionComponent implements OnInit {
 
       if (value) {
         this.assessSvc.setAcetDefaults();
-      }
+      } 
     }
 
     if (this.assessSvc.assessment.useMaturity) {
@@ -129,31 +123,43 @@ export class FeatureOptionComponent implements OnInit {
 
   onChange(feature: any, event: any){
 
-   var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
+    var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
+   
+    if(!this.isNotLegacy){
+      this.submitlegacy(feature, event);
+      return
+    }
 
-   for(let i = 0; i < checkboxes.length; i++)
-   {
-    if(checkboxes[i].type == "checkbox")
+    for(let i = 0; i < checkboxes.length; i++)
     {
-      if(checkboxes[i].name === feature.code)
+      if(checkboxes[i].type == "checkbox")
       {
-        checkboxes[i].checked = true;
-        this.submitlegacy(feature, event);
-      }
-      else
-      {
-        checkboxes[i].checked = false;
+        if(checkboxes[i].name === feature.code)
+        {
+          checkboxes[i].checked = true;
+          this.submitlegacy(feature, event);
+        }
+        else
+        {
+          checkboxes[i].checked = false;
+        }
       }
     }
-   }
-
   }
 
   setFeatureDefault(){
     this.assessSvc.assessment.useMaturity = false;
     this.assessSvc.assessment.useStandard = false;
     this.assessSvc.assessment.useDiagram = false;
-    this.assessSvc.assessment.useCyote = false;
+  }
+
+  checkIfLegacy(){
+    let count = 0;
+    count += this.assessSvc.assessment.useMaturity ? 1 : 0;
+    count += this.assessSvc.assessment.useStandard ? 1 : 0;
+    count += this.assessSvc.assessment.useDiagram ? 1 : 0;
+ 
+    return count > 1;
   }
 
   /**
@@ -161,6 +167,20 @@ export class FeatureOptionComponent implements OnInit {
    */
   toggleExpansion() {
     this.expandedDesc = !this.expandedDesc;
+  }
+
+  selectFeature(feature:any, value: boolean){
+    switch (feature.code) {
+      case 'maturity':
+        this.assessSvc.assessment.useMaturity = value;
+        break;
+      case 'standard':
+        this.assessSvc.assessment.useStandard = value;
+        break;
+      case 'diagram':
+        this.assessSvc.assessment.useDiagram = value;
+        break;
+    }
   }
 
   /**

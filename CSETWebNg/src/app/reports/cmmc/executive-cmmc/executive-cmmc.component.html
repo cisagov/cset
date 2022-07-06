@@ -57,13 +57,13 @@
        <app-report-advisory></app-report-advisory>
     </div>
 
-    <div class="page-break" *ngIf="response?.information.assessment_Description || response?.information?.Executive_Summary">
+    <div class="page-break" *ngIf="response?.information.assessment_Description || response?.information?.executive_Summary">
         <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description</h1>
-        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
+        <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
         </p>
 
-        <h1 class="midBlackTitle" *ngIf="response?.information?.Executive_Summary">Executive Summary</h1>
-        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.Executive_Summary)">
+        <h1 class="midBlackTitle" *ngIf="response?.information?.executive_Summary">Executive Summary</h1>
+        <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.executive_Summary)">
         </div>
     </div>
 

@@ -50,7 +50,6 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
-              "src/favicon_cyote.ico",
               "src/uploadAssessment.html",
               "src/sass",
               "src/web.config"
@@ -186,7 +185,6 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
-              "src/favicon_cyote.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",

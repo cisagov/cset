@@ -71,7 +71,6 @@ namespace CSETWebCore.Reports.Controllers
         {
             _engine = engine;
             _token = token;
-            _token.Init();
             _assessment = assessment;
             _demographic = demographic;
             _report = report;

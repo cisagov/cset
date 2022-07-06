@@ -23,13 +23,12 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Answer } from '../../../../../models/questions.model';
+import { Answer, Question } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
-import { MaturityService } from '../../../../../services/maturity.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
-import { QuestionExtrasComponent } from '../../../question-extras/question-extras.component';
+import { AssessmentService } from '../../../../../services/assessment.service';
 
 @Component({
   selector: 'app-question-block-nested',
@@ -38,14 +37,16 @@ import { QuestionExtrasComponent } from '../../../question-extras/question-extra
 export class QuestionBlockNestedComponent implements OnInit {
 
   @Input() grouping: any;
-  @Input() questions: any[];
+  @Input() questions: Question[];
 
-  questionList: any[];
+  questionList: Question[];
+
 
   // temporary debug aid
   showIdTag = false;
 
   constructor(
+    public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private configSvc: ConfigService,
@@ -65,6 +66,12 @@ export class QuestionBlockNestedComponent implements OnInit {
     }
 
     this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
+
+    // listen for changes to the extras
+    this.questionsSvc.extrasChanged$.subscribe((qe) => {
+      this.refreshExtras(qe);
+    });
+
   }
 
   getMhdNum(val: string) {
@@ -87,11 +94,53 @@ export class QuestionBlockNestedComponent implements OnInit {
     }
   }
 
+  /**
+   * Returns 'inline' if any details/extras exist
+   */
+  hasDetails(q: Question): string {
+    if (q.comment !== null && q.comment.length > 0) {
+      return 'inline';
+    }
+    if (q.documentIds.length > 0) {
+      return 'inline';
+    }
+    if (q.feedback !== null && q.feedback.length > 0) {
+      return 'inline';
+    }
+    if (q.markForReview) {
+      return 'inline';
+    }
+    return 'none';
+  }
+
+  /**
+   * Updates the local question object's document ID list.
+   * This is done to refresh the red content dot on the "i" icon.
+   */
+  refreshExtras(extras: any) {
+    // make sure these extras belong to the current assessment
+    if (this.assessSvc.id() !== extras.assessmentId) {
+      return;
+    }
+
+    // find the question whose extras were just changed 
+    var q = this.questionList.find(q => q.questionId == extras.questionId);
+    if (!q) {
+      return;
+    }
+
+    // update the documentIds per the extras passed to me
+    q.documentIds = [];
+    extras.documents.forEach(doc => {
+      q.documentIds.push(doc.document_Id);
+    });
+  }
 
   /**
    *
    */
   changeText(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
@@ -99,6 +148,7 @@ export class QuestionBlockNestedComponent implements OnInit {
    *
    */
   changeMemo(q, event) {
+    q.answerMemo = event.target.value;
     this.storeAnswer(q, event.target.value);
   }
 
@@ -146,7 +196,7 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (!q.questionType) {
       q.questionType = 'Maturity';
     }
-    
+
     this.dialog.open(QuestionExtrasDialogComponent, {
       data: {
         question: q,
