@@ -28,7 +28,7 @@ import { AssessmentService } from './assessment.service';
 import { AssessmentDetailComponent } from '../assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentDetail } from '../models/assessment-info.model';
 
-const headers = {
+let headers = {
     headers: new HttpHeaders()
         .set('Content-Type', 'application/json'),
     params: new HttpParams()
@@ -94,15 +94,8 @@ const headers = {
 
 
   getAnswers(id1: number, id2: number) {
-    let headers2 = new HttpHeaders().set('Content-Type', 'application/json');
-    let params = new HttpParams().set("id1", id1).set("id2", id2);
-    
-    return this.http.get(this.configSvc.apiUrl + 'getMergeData', { headers: headers2, params: params});
+    headers.params = headers.params.set('id1', id1).set('id2', id2);
+    return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }
-
-  fillEmpty() {
-    
-  }
-
 
 }

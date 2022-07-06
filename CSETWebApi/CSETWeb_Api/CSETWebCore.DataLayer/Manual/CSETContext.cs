@@ -801,8 +801,8 @@ namespace CSETWebCore.DataLayer.Model
                 throw new ApplicationException("parameters may not be null");
             IList<Get_Merge_ConflictsResult> myrval = null;
             this.LoadStoredProc("Get_Merge_Conflicts")
-                     .WithSqlParam("@id1", 13493)
-                     .WithSqlParam("@id2", 13494)
+                     .WithSqlParam("@id1", assessmentOneId)
+                     .WithSqlParam("@id2", assessmentTwoId)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<Get_Merge_ConflictsResult>();
