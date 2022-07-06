@@ -33,6 +33,8 @@ import { NavigationService } from '../../../services/navigation.service';
 import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
 import { data } from 'jquery';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
 
 @Component({
     selector: 'app-reports',
@@ -52,8 +54,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     lastModifiedTimestamp = '';
 
+    dialogRef: MatDialogRef<any>;
     /**
-     * 
+     *
      */
     constructor(
         public assessSvc: AssessmentService,
@@ -63,7 +66,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private route: ActivatedRoute,
         public configSvc: ConfigService,
         private cdr: ChangeDetectorRef,
-        private reportSvc: ReportService
+        private reportSvc: ReportService,
+        public dialog: MatDialog
     ) {
         if (this.assessSvc.assessment == null) {
             this.assessSvc.getAssessmentDetail().subscribe(
@@ -74,7 +78,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     ngOnInit() {
         this.assessSvc.currentTab = 'results';
@@ -98,15 +102,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     ngAfterViewInit() {
         this.cdr.detectChanges();
     }
 
     /**
-     * 
-     * @param reportType 
+     *
+     * @param reportType
      */
     clickReportLink(reportType: string, print: boolean = false) {
 
@@ -117,8 +121,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     /**
      * The new way to launch reports that are generated in the API.
-     * @param reportUrl 
-     * @returns 
+     * @param reportUrl
+     * @returns
      */
     clickReportLink2(reportUrl: string) {
         let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
@@ -137,7 +141,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     /**
      * If all ACET statements are not answered, set the 'disable' flag
-     * to true.  
+     * to true.
      */
     checkAcetDisabledStatus() {
         this.disableAcetReportLinks = true;
@@ -155,4 +159,22 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     onSelectSecurity(val) {
         this.securitySelected = val;
     }
+
+    showExcelExportDialog() {
+      const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+      const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+      if (this.dialog.openDialogs[0] || doNotShow) {
+        this.exportToExcel();
+        return;
+      }
+      this.dialogRef = this.dialog.open(ExcelExportComponent);
+      this.dialogRef
+        .afterClosed()
+        .subscribe();
+    }
+
+    exportToExcel() {
+      window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    }
+
 }

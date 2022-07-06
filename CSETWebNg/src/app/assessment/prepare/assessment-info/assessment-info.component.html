@@ -25,11 +25,7 @@
   <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">Demographics</h3>
 
-  <app-assessment-detail *ngIf="this.configSvc.installationMode !== 'CYOTE' && !(this.ncuaSvc.switchStatus)"
-    class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
-
-  <app-assessment-detail-cyote *ngIf="this.configSvc.installationMode === 'CYOTE'"
-    class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-cyote>
+  <app-assessment-detail class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
 
   <app-assessment-detail-ncua *ngIf="this.ncuaSvc.switchStatus" 
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>

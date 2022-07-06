@@ -26,7 +26,6 @@ namespace CSETWebCore.Model.Assessment
         public bool UseStandard { get; set; }
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
-        public bool UseCyote { get; set; }
         public bool? IsAcetOnly { get; set; }
 
         public int? BaselineAssessmentId { get; set; }

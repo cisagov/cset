@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using CSETWebCore.Interfaces.Maturity;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -28,13 +28,15 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDocumentBusiness _documentManager;
         private readonly IFileRepository _fileRepo;
         private readonly IQuestionRequirementManager _answerManager;
+        private readonly IMaturityBusiness _maturityBusiness;
 
         public FileUploadController(
             ITokenManager tokenManager,
             CSETContext context,
             IDocumentBusiness documentManager,
             IFileRepository fileRepo,
-            IQuestionRequirementManager answerManager
+            IQuestionRequirementManager answerManager,
+            IMaturityBusiness maturityBusiness
         )
         {
             _tokenManager = tokenManager;
@@ -42,8 +44,14 @@ namespace CSETWebCore.Api.Controllers
             _documentManager = documentManager;
             _fileRepo = fileRepo;
             _answerManager = answerManager;
+            _maturityBusiness = maturityBusiness;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>        
         [HttpPost]
         [Route("/api/files/blob/create/")]
         public async Task<IActionResult> Upload()
@@ -83,12 +91,12 @@ namespace CSETWebCore.Api.Controllers
             int answerId;
             if (!int.TryParse(result.FormNameValues[key_answerId], out answerId))
             {
-               
-
                 bool isMaturity = false;
                 bool.TryParse(result.FormNameValues[key_maturity], out isMaturity);
                 var answerObj = new ANSWER();
-                if (answerId == 0 && isMaturity)
+
+                // if no answerId was provided, try to find an answer for this assessment/question
+                if (answerId == 0)
                 {
                     answerObj = _context.ANSWER.FirstOrDefault(x =>
                         x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == questionId);
@@ -102,8 +110,16 @@ namespace CSETWebCore.Api.Controllers
                         Is_Maturity = isMaturity
                     };
 
-                    _answerManager.InitializeManager(assessmentId);
-                    answerId = _answerManager.StoreAnswer(answer);
+                    // 
+                    if (isMaturity)
+                    {                        
+                        answerId = _maturityBusiness.StoreAnswer(assessmentId, answer);
+                    }
+                    else
+                    {
+                        _answerManager.InitializeManager(assessmentId);
+                        answerId = _answerManager.StoreAnswer(answer);
+                    }
                 }
                 else
                 {
@@ -116,7 +132,7 @@ namespace CSETWebCore.Api.Controllers
             // returns all documents for the answer to account for updating duplicate docs
             // not the most efficient, but there are lots of shenanigans involved in keeping
             // the frontend for this synced
-            return Ok(_documentManager.GetDocumentsForAnswer(answerId));         
+            return Ok(_documentManager.GetDocumentsForAnswer(answerId));
         }
     }
 }

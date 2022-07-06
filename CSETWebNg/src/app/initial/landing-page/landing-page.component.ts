@@ -117,10 +117,6 @@ export class LandingPageComponent implements OnInit {
         this.appCode = 'TSA';
         this.isTSA=true;
         break;
-      case 'CYOTE':
-        this.titleSvc.setTitle('CSET-CyOTE');
-        this.appCode = 'CyOTE';
-        break;
       case 'RRA':
         this.titleSvc.setTitle('CISA - Ransomware Readiness');
         this.appCode = 'RRA';

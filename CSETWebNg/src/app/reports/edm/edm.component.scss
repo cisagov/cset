@@ -83,3 +83,9 @@
         box-shadow: .3rem .3rem 1rem rgba(0, 0, 0, .5); 
     }
 }
+
+@media print {
+    .prepare-print-overlay-box {
+        display: none;
+    }
+}

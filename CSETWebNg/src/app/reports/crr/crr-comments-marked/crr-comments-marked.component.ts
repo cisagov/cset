@@ -14,6 +14,8 @@ export class CrrCommentsMarkedComponent implements OnInit {
 
   response: any = null;
 
+  loading: boolean = false;
+
   constructor(
   public analysisSvc: ReportAnalysisService,
   public reportSvc: ReportService,
@@ -24,11 +26,13 @@ export class CrrCommentsMarkedComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Comments Report - CRR");
+    this.loading = true;
+    this.titleService.setTitle("Comments Report - CISA CRR");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
-        this.response = r;       
+        this.response = r;
+        this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );

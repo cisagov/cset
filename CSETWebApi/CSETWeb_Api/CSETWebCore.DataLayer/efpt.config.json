@@ -1006,10 +1006,6 @@
          "ObjectType": 1
       },
       {
-         "Name": "[dbo].[usp_CyOTEQuestionsAnswers]",
-         "ObjectType": 1
-      },
-      {
          "Name": "[dbo].[usp_financial_attributes]",
          "ObjectType": 1
       },

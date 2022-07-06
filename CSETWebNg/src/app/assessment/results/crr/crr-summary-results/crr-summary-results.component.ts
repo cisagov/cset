@@ -11,9 +11,11 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class CrrSummaryResultsComponent implements OnInit {
 
   chart: Chart;
-  initialized = false;
   summaryResult: any = '';
   stylesheetUrl: SafeUrl;
+
+  chartLoaded: boolean = false;
+  summaryResultLoaded: boolean = false;
 
   constructor(
     private crrSvc: CrrService,
@@ -24,19 +26,19 @@ export class CrrSummaryResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.stylesheetUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configSvc.reportsUrl + 'css/CRRResults.css');
-    console.log(this.stylesheetUrl);
 
     this.crrSvc.getCrrModel().subscribe((data: any) => {
       this.setupChart(data.reportChart)
+      this.chartLoaded = true;
     });
 
     this.crrSvc.getCrrHtml("_CrrResultsSummary").subscribe((data: any) => {
       this.summaryResult = data.html;
+      this.summaryResultLoaded = true;
     })
   }
 
   setupChart(x: any) {
-    this.initialized = false;
     let tempChart = Chart.getChart('percentagePractices');
     if (tempChart) {
       tempChart.destroy();
@@ -76,6 +78,5 @@ export class CrrSummaryResultsComponent implements OnInit {
         }
       }
     });
-    this.initialized = true;
   }
 }
