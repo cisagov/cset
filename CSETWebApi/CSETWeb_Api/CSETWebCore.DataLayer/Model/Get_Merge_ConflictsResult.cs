@@ -10,8 +10,5 @@ namespace CSETWebCore.DataLayer.Model
         public int? Assessment_Id { get; set; }
         public int? Question_Or_Requirement_Id { get; set; }
         public string Answer_Text { get; set; }
-        public int? Assessment_Id { get; set; }
-        public int? Question_Or_Requirement_Id { get; set; }
-        public string Answer_Text { get; set; }
     }
 }
