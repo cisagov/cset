@@ -34,6 +34,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+        public virtual DbSet<ASSESSMENT_ICONS> ASSESSMENT_ICONS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
@@ -961,6 +962,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
             });
+
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
             {
                 entity.HasComment("A collection of DEMOGRAPHICS records");
@@ -1827,6 +1829,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Analytics_Rollup_Level)
                     .HasDefaultValueSql("((1))")
                     .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+
+                entity.HasOne(d => d.Icon)
+                    .WithMany(p => p.MATURITY_MODELS)
+                    .HasForeignKey(d => d.Icon_Id)
+                    .HasConstraintName("FK_MATURITY_MODELS_ASSESSMENT_ICONS");
             });
 
             modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>
@@ -2746,6 +2753,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
 
                 entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
+
+                entity.HasOne(d => d.Icon)
+                    .WithMany(p => p.SETS)
+                    .HasForeignKey(d => d.Icon_Id)
+                    .HasConstraintName("FK_SETS_ASSESSMENT_ICONS");
 
                 entity.HasOne(d => d.Set_Category)
                     .WithMany(p => p.SETS)

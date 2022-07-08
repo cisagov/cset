@@ -630,5 +630,14 @@ namespace CSETWebCore.Business.Assessment
         //{
         //    throw new NotImplementedException();
         //}
+
+        /// <summary>
+        /// Get all of the available icon paths for assessment selection cards
+        /// </summary>
+        /// <returns></returns>
+        public List<ASSESSMENT_ICONS> GetAllAssessmentIcons() 
+        {
+            return _context.ASSESSMENT_ICONS.ToList();
+        }
     }
 }
