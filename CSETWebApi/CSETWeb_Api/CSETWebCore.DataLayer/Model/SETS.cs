@@ -82,9 +82,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsEncryptedModule { get; set; }
         [Required]
         public bool? IsEncryptedModuleOpen { get; set; }
-        public bool IsACET { get; set; }
         public int? Icon_Id { get; set; }
-
         [ForeignKey("Icon_Id")]
         [InverseProperty("SETS")]
         public virtual ASSESSMENT_ICONS Icon { get; set; }
