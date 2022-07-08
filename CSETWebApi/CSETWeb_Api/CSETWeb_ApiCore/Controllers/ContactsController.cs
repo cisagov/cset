@@ -325,6 +325,16 @@ namespace CSETWebCore.Api.Controllers
                     // Updating a Contact in the context of the current Assessment.  
                     (_token).AuthorizeAdminRole();
 
+                    int newUserId = userBeingUpdated.UserId;
+
+                    // If there is already a user with the same email as the newly updated email, use that existing user's id to connect them
+                    // to the assessment after editing a contact
+                    var existingUser = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail).FirstOrDefault();
+                    if (existingUser != null) 
+                    {
+                        newUserId = existingUser.UserId;
+                    }
+
                     _contact.UpdateContact(new ContactDetail
                     {
                         AssessmentId = assessmentId,
@@ -332,7 +342,7 @@ namespace CSETWebCore.Api.Controllers
                         FirstName = userBeingUpdated.FirstName,
                         LastName = userBeingUpdated.LastName,
                         PrimaryEmail = userBeingUpdated.PrimaryEmail,
-                        UserId = userBeingUpdated.UserId,
+                        UserId = newUserId,
                         Title = userBeingUpdated.Title,
                         Phone = userBeingUpdated.Phone,
                         CellPhone = userBeingUpdated.CellPhone,
@@ -342,7 +352,7 @@ namespace CSETWebCore.Api.Controllers
                         IsPrimaryPoc = userBeingUpdated.IsPrimaryPoc,
                         IsSiteParticipant = userBeingUpdated.IsSiteParticipant,
                         EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
-                    });
+                    }, userBeingUpdated.UserId);
                     _assessmentUtil.TouchAssessment(assessmentId);
                 }
             }
