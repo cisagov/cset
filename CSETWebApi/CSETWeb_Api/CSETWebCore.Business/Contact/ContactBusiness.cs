@@ -332,15 +332,13 @@ namespace CSETWebCore.Business.Contact
 
 
         /// <summary>
-        /// 
+        /// Updates ASSESSMENT_CONTACT record with given userId using provided ContactDetail object
         /// </summary>
         /// <returns></returns>
-        public void UpdateContact(ContactDetail contact)
+        public void UpdateContact(ContactDetail contact, int userId)
         {
-            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == contact.UserId
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
                 && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();
-
-            string prevEmail = ac.PrimaryEmail;
 
             ac.UserId = contact.UserId;
             ac.FirstName = contact.FirstName;
