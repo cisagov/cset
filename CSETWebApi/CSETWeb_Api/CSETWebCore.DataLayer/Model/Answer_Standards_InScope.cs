@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
         public int is_requirement { get; set; }
         public int question_or_requirement_id { get; set; }
         public bool? mark_for_review { get; set; }
-        [StringLength(2048)]
         [Unicode(false)]
         public string comment { get; set; }
         [StringLength(2048)]
