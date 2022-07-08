@@ -14,7 +14,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Answer_Id { get; set; }
         public int Assessment_Id { get; set; }
         public bool? Mark_For_Review { get; set; }
-        [StringLength(2048)]
         [Unicode(false)]
         public string Comment { get; set; }
         [StringLength(2048)]
