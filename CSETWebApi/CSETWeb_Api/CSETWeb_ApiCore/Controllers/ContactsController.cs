@@ -285,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/UpdateUser")]
-        public void PostUpdateUser([FromBody] CreateUser userBeingUpdated)
+        public IActionResult PostUpdateUser([FromBody] CreateUser userBeingUpdated)
         {
             int userid = 0;
             if (_token.IsAuthenticated())
@@ -335,7 +335,7 @@ namespace CSETWebCore.Api.Controllers
                         newUserId = existingUser.UserId;
                     }
 
-                    _contact.UpdateContact(new ContactDetail
+                    ContactDetail updatedContact = new ContactDetail
                     {
                         AssessmentId = assessmentId,
                         AssessmentRoleId = userBeingUpdated.AssessmentRoleId,
@@ -352,9 +352,15 @@ namespace CSETWebCore.Api.Controllers
                         IsPrimaryPoc = userBeingUpdated.IsPrimaryPoc,
                         IsSiteParticipant = userBeingUpdated.IsSiteParticipant,
                         EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
-                    }, userBeingUpdated.UserId);
+                    };
+
+                    _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
                     _assessmentUtil.TouchAssessment(assessmentId);
+
+                    return Ok(updatedContact);
                 }
+
+                return Unauthorized();
             }
             else
             {
@@ -433,6 +439,7 @@ namespace CSETWebCore.Api.Controllers
                     log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
 
+                return Ok();
             }
         }
 
