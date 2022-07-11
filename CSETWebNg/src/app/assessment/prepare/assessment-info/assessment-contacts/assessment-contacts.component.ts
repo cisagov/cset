@@ -209,7 +209,11 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when a contact's edit is complete.
    */
   editContact(contact: User) {
-    this.assessSvc.updateContact(contact).subscribe(() => {
+    this.assessSvc.updateContact(contact).subscribe(data => {
+      if (data && data.userId != contact.userId) {
+        // Update the userId in case changing email linked to new user in backend
+        this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
+      }
       this.contactItems.forEach(x => x.enableMyControls = true);
       this.changeOccurred();
     });
