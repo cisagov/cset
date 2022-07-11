@@ -27,7 +27,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
     // tslint:disable-next-line:directive-selector
     selector: '[digitsOnlyNotZero]'
 })
-export class DigitsOnlyDirective {
+export class DigitsOnlyNotZeroDirective {
 
     constructor(private _el: ElementRef) { }
 
