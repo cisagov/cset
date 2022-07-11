@@ -21,14 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
     // tslint:disable-next-line:directive-selector
-    selector: '[digitsOnly]'
+    selector: '[digitsOnlyNotZero]'
 })
-export class DigitsOnlyDirective {
+export class DigitsOnlyNotZeroDirective {
 
     constructor(private _el: ElementRef) { }
 
@@ -36,6 +35,10 @@ export class DigitsOnlyDirective {
         const initialValue = this._el.nativeElement.value;
 
         this._el.nativeElement.value = initialValue.replace(/[^0-9]*/g, '');
+        this._el.nativeElement.value = this._el.nativeElement.value.replace(/^0*/g, '');
+
+        console.log(initialValue)
+        console.log(this._el.nativeElement.value)
         if (initialValue !== this._el.nativeElement.value) {
             event.stopPropagation();
         }
