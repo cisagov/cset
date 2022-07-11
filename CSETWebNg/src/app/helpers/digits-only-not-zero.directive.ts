@@ -32,10 +32,14 @@ export class DigitsOnlyNotZeroDirective {
     constructor(private _el: ElementRef) { }
 
     @HostListener('input', ['$event']) onInputChange(event) {
-        const initalValue = this._el.nativeElement.value;
+        const initialValue = this._el.nativeElement.value;
 
-        this._el.nativeElement.value = initalValue.replace(/^0*|[^0-9]*/g, '');
-        if (initalValue !== this._el.nativeElement.value) {
+        this._el.nativeElement.value = initialValue.replace(/[^0-9]*/g, '');
+        this._el.nativeElement.value = this._el.nativeElement.value.replace(/^0*/g, '');
+
+        console.log(initialValue)
+        console.log(this._el.nativeElement.value)
+        if (initialValue !== this._el.nativeElement.value) {
             event.stopPropagation();
         }
     }
