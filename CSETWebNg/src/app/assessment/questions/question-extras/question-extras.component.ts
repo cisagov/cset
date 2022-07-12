@@ -404,7 +404,7 @@ export class QuestionExtrasComponent implements OnInit {
     const options = {};
     options['questionId'] = this.myQuestion.questionId;
     options['answerId'] = this.myQuestion.answer_Id;
-    options['maturity'] = this.myQuestion.is_Maturity;
+    options['questionType'] = this.myQuestion.questionType;
 
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
