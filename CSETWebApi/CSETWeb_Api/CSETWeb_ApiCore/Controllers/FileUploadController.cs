@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
             const string key_questionId = "questionId";
             const string key_answerId = "answerId";
             const string key_title = "title";
-            const string key_maturity = "maturity";
+            const string key_questionType = "questionType";
 
             var assessmentId = _tokenManager.AssessmentForUser();
             _documentManager.SetUserAssessmentId(assessmentId);
@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
             keyDict.Add(key_questionId, null);
             keyDict.Add(key_answerId, null);
             keyDict.Add(key_title, null);
-            keyDict.Add(key_maturity, null);
+            keyDict.Add(key_questionType, null);
 
             var loader = new FileUploadStream();
             FileUploadStreamResult result = null;
@@ -82,6 +82,8 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(400);
             }
 
+            string questionType = result.FormNameValues[key_questionType];
+
             int questionId;
             if (!int.TryParse(result.FormNameValues[key_questionId], out questionId))
             {
@@ -90,9 +92,7 @@ namespace CSETWebCore.Api.Controllers
 
             int answerId;
             if (!int.TryParse(result.FormNameValues[key_answerId], out answerId))
-            {
-                bool isMaturity = false;
-                bool.TryParse(result.FormNameValues[key_maturity], out isMaturity);
+            {                
                 var answerObj = new ANSWER();
 
                 // if no answerId was provided, try to find an answer for this assessment/question
@@ -107,11 +107,11 @@ namespace CSETWebCore.Api.Controllers
                     var answer = new Answer
                     {
                         QuestionId = questionId,
-                        Is_Maturity = isMaturity
+                        QuestionType = questionType
                     };
 
                     // 
-                    if (isMaturity)
+                    if (questionType.ToLower() == "maturity")
                     {                        
                         answerId = _maturityBusiness.StoreAnswer(assessmentId, answer);
                     }
