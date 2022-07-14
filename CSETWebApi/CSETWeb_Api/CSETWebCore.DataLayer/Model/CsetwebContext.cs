@@ -1758,6 +1758,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => e.Mat_Option_Id)
                     .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
 
+                entity.Property(e => e.Is_None).HasDefaultValueSql("((0))");
+
                 entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.MATURITY_ANSWER_OPTIONS)
                     .HasForeignKey(d => d.Mat_Question_Id)
