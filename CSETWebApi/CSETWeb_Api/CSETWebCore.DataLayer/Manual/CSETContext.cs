@@ -795,14 +795,16 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        public virtual IList<Get_Merge_ConflictsResult> Get_Merge_Conflicts(Nullable<int> assessmentOneId, Nullable<int> assessmentTwoId)
+        public virtual IList<Get_Merge_ConflictsResult> Get_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
+                                                                            int assessmentId3)
         {
-            if (!assessmentOneId.HasValue || !assessmentTwoId.HasValue)
-                throw new ApplicationException("parameters may not be null");
+            if (!assessmentId1.HasValue || !assessmentId2.HasValue)
+                throw new ApplicationException("first two parameters may not be null");
             IList<Get_Merge_ConflictsResult> myrval = null;
             this.LoadStoredProc("Get_Merge_Conflicts")
-                     .WithSqlParam("@id1", assessmentOneId)
-                     .WithSqlParam("@id2", assessmentTwoId)
+                     .WithSqlParam("@id1", assessmentId1)
+                     .WithSqlParam("@id2", assessmentId2)
+                     .WithSqlParam("@id3", assessmentId3)
                      .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<Get_Merge_ConflictsResult>();

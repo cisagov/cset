@@ -93,7 +93,10 @@ let headers = {
   }
 
 
-  getAnswers(id1: number, id2: number) {
+  getAnswers() {
+    let id1 = this.assessmentsToMerge[0];
+    let id2 = this.assessmentsToMerge[1];
+
     headers.params = headers.params.set('id1', id1).set('id2', id2);
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }

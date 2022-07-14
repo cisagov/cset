@@ -483,11 +483,13 @@ namespace CSETWebCore.Business.Assessment
 
             if (app_code == "ACET")
             {
-                var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
-                    ? string.Empty
-                    : assessment.CreditUnion + " ";
-                assessment.AssessmentName =
-                    app_code + " " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
+                if (assessment.MaturityModel?.ModelName != "ISE") {
+                    var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
+                        ? string.Empty
+                        : assessment.CreditUnion + " ";
+                    assessment.AssessmentName =
+                        app_code + " " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
+                }
             }
 
             // add or update the INFORMATION record

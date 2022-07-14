@@ -61,14 +61,18 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
   }
 
+  isAnExamination() {
+    if (this.assessment.maturityModel?.modelName === 'ISE') {
+      return true;
+    }
+  }
 
   /**
    * Called every time this page is loaded.  
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    //console.log("[assessment-detail-ncua line 70] this.assessment:\n" + JSON.stringify(this.assessSvc.assessment, null, 4));
-
+    
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       this.assessSvc.setNcuaDefaults();
@@ -92,6 +96,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.createAcetName();
   }
 
+
   /**
    * 
    */
@@ -102,7 +107,13 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.assessment.assessmentName = "(Untitled Assessment)";
       }
     }
-    this.createAcetName();
+
+    if (this.assessment.maturityModel.modelName === 'ACET') {
+      this.createAcetName();
+    } else if (this.assessment.maturityModel.modelName === 'ISE') {
+      this.createIseName();
+    }
+
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
@@ -130,17 +141,24 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    * 
    */
   createAcetName() {
-    this.assessment.assessmentName = "ACET"
-    
+    this.assessment.assessmentName = "ACET";
+  
     if (this.assessment.charter) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
     }
+    
     if (this.assessment.creditUnion) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.creditUnion;
     }
+    
     if (this.assessment.assessmentDate) {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
   }
+
+  createIseName() {
+    // Might use later for any special naming conventions requested
+  }
+
 }

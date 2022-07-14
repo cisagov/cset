@@ -340,7 +340,6 @@ export class AssessmentService {
         (response: any) => {
           // set the brand new flag
           this.isBrandNew = true;
-
           this.loadAssessment(response.id);
         },
         error =>
