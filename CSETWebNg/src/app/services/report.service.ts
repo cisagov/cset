@@ -105,14 +105,14 @@ export class ReportService {
     }
 
     /**
-     * 
+     * Calls the API to get the structure of a SET.
      */
     getModuleContent(setName: string): any {
         return this.http.get(this.configSvc.apiUrl + 'reports/modulecontent?set=' + setName);
     }
 
     /**
-     * 
+     * Calls the API to get the structure of a (maturity) model.
      */
     getModelContent(modelId: string): any {
         return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);

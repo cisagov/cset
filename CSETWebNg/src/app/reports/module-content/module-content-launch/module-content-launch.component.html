@@ -24,28 +24,22 @@
     <div class="max-1200">
         <h2>Module Content Report</h2>
 
-        <input type="radio" class="radio-custom" name="report-type" id="rpt-set" (change)="selectType($event)">
-        <label for="rpt-set" class="radio-custom-label">
-            <div>
-                Select a module (standard)
-            </div>
-
+        <h4>Select a Standard</h4>
+        <div class="d-flex flex-row">
             <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
                 <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
             </select>
-        </label>
+            <button class="btn btn-primary text-nowrap ml-3" (click)="launchStandardReport()" [disabled]="!selectedStandard">Launch Report</button>
+        </div>
 
-        <input type="radio" class="radio-custom" name="report-type" id="rpt-model"  (change)="selectType($event)">
-        <label for="rpt-model" class="radio-custom-label">
-            <div>
-                Select a Model
-            </div>
+        <h4>Select a Model</h4>
+        <div class="d-flex flex-row">
             <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedModel">
                 <option *ngFor="let m of models" [value]="m.modelId">{{m.modelName}}</option>
             </select>
-        </label>
 
-        <button class="btn btn-primary" (click)="launchReport()">Launch Report</button>
+            <button class="btn btn-primary text-nowrap ml-3" (click)="launchModelReport()" [disabled]="!selectedModel">Launch Report</button>
+        </div>
 
     </div>
 </div>

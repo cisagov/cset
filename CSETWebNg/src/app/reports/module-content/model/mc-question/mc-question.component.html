@@ -1,0 +1,16 @@
+<div class="mb-2">
+    <div [innerHTML]="q.questionText">
+    </div>
+    
+    <div class="ml-4" *ngIf="q.options.length > 0">
+        <ul>
+            <li *ngFor="let o of q.options">
+                <app-mc-option [o]="o"></app-mc-option>
+            </li>
+        </ul>
+    </div>
+
+    <div class="ml-4" *ngIf="q.followups.length > 0">
+        <app-mc-question *ngFor="let f of q.followups" [q]="f"></app-mc-question>
+    </div>
+</div>
