@@ -13,6 +13,9 @@ export class ModuleContentComponent implements OnInit {
   setName: string;
   set: any;
 
+  modelId: string;
+  model: any;
+
   /**
    * 
    */
@@ -28,10 +31,22 @@ export class ModuleContentComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         this.setName = params.m;
+        this.modelId = params.mm;
       });
 
-    this.reportSvc.getModuleContent(this.setName).subscribe(rpt => {
-      this.set = rpt;
-    });
+    if (!!this.setName) {
+      this.reportSvc.getModuleContent(this.setName).subscribe(rpt => {
+        this.set = rpt;
+      });
+    }
+
+    if (!!this.modelId) {
+      //this.modelId = 'RRA';
+      this.reportSvc.getModelContent(this.modelId).subscribe(rpt => {
+        console.log(rpt);
+        this.model = rpt;
+      });
+    }
+
   }
 }
