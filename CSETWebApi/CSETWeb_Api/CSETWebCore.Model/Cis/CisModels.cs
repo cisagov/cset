@@ -84,6 +84,12 @@ namespace CSETWebCore.Model.Cis
 
         public decimal? Weight { get; set; }
 
+        /// <summary>
+        /// Identifies an option that should not be selected
+        /// if any of its peers is selected, e.g., "none of the above"
+        /// </summary>
+        public bool IsNone { get; set; }
+
         public bool Selected { get; set; }  
 
         public int? AnswerId { get; set; }
