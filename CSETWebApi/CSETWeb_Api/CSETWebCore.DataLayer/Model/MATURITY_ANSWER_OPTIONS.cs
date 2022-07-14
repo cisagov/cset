@@ -41,7 +41,7 @@ namespace CSETWebCore.DataLayer.Model
         [Unicode(false)]
         public string RiFormula { get; set; }
         public int? ThreatType { get; set; }
-        public bool? Is_None { get; set; }
+        public bool Is_None { get; set; }
 
         [ForeignKey("Mat_Question_Id")]
         [InverseProperty("MATURITY_ANSWER_OPTIONS")]
