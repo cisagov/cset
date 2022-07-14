@@ -141,7 +141,7 @@ export class OptionBlockNestedComponent implements OnInit {
       o.freeResponseAnswer = '';
     }
     else {
-      if (o.optionText.toLowerCase() == 'none of the above') {
+      if (o.isNone) {
         listOfOptions.forEach(obj => {
           if (o != obj) {
             obj.selected = false;
@@ -151,7 +151,7 @@ export class OptionBlockNestedComponent implements OnInit {
       }
       else {
         listOfOptions.forEach(obj => {
-          if (obj.optionText.toLowerCase() == 'none of the above') {
+          if (obj.isNone) {
             obj.selected = false;
             answers.push(this.makeAnswer(obj));
           }

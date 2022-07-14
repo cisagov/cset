@@ -5,6 +5,7 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.DataLayer.Model;
 using NodaTime;
 
 namespace CSETWebCore.Api.Controllers
@@ -16,13 +17,15 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
+        private readonly CSETContext _context;
         
         public AssessmentController(IAssessmentBusiness assessmentBusiness, 
-            ITokenManager tokenManager, IDocumentBusiness documentBusiness)
+            ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
+            _context = context;
         }
 
         /// <summary>
@@ -31,7 +34,6 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        
         [Route("api/createassessment")]
         public IActionResult CreateAssessment(string workflow)
         {
@@ -143,6 +145,18 @@ namespace CSETWebCore.Api.Controllers
                           .ToDateTimeUnspecified();
 
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
+        }
+
+
+        /// <summary>
+        /// Gets all of the assessment icons to be used on the asessment type selection screen
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/assessmenticons")]
+        public IActionResult GetAssessmentIcons()
+        {
+            return Ok(_assessmentBusiness.GetAllAssessmentIcons());
         }
     }
 }

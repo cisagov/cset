@@ -70,6 +70,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ASSESSMENT_ICONS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ASSESSMENT_IRP]",
          "ObjectType": 0
       },

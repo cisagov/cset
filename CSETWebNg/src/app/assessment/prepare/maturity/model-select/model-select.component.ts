@@ -117,4 +117,9 @@ export class ModelSelectComponent implements OnInit {
   getModelDescription(model: string) {
     return AssessmentService.allMaturityModels.find(x => x.modelName === model)?.modelDescription;
   }
+
+  getModelIconPath(model: string) {
+    const maturityModel = AssessmentService.allMaturityModels.find(x => x.modelName === model);
+    return AssessmentService.assessmentIcons.find(x => x.icon_Id === maturityModel.iconId).icon_Path;
+  }
 }

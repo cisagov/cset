@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
+  AssessmentIcon,
   MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
@@ -68,6 +69,7 @@ export class AssessmentService {
 
   static allMaturityModels: MaturityModel[];
 
+  static assessmentIcons: AssessmentIcon[];
 
   /**
    * Indicates if a brand-new assessment is being created.
@@ -94,6 +96,11 @@ export class AssessmentService {
       this.http.get(this.apiUrl + "MaturityModels")
         .subscribe((data: MaturityModel[]) => {
           AssessmentService.allMaturityModels = data;
+        });
+
+        this.http.get(this.apiUrl + "assessmenticons")
+        .subscribe((data: AssessmentIcon[]) => {
+          AssessmentService.assessmentIcons = data;
         });
 
       this.initialized = true;
@@ -399,7 +406,7 @@ export class AssessmentService {
 
 
   /**
-   * 
+   *
    */
   setRraDefaults() {
     if (!!this.assessment) {

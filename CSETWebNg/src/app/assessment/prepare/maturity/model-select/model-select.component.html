@@ -33,7 +33,7 @@
     <div class="d-flex flex-row">
       <div [innerHTML]="getModelDescription('ACET') | safe"></div>
       <div style="max-width: 50%; min-width: 10rem" class="text-center pl-3">
-        <img src="assets/images/ACET/ACET_shield_only.png" alt="acet" style="width: 100%" />
+        <img [src]="getModelIconPath('ACET')" alt="acet" style="width: 100%" />
       </div>
     </div>
   </mat-card>
@@ -59,7 +59,7 @@
   <div class="d-flex flex-row">
     <div style="max-width: 100%" [innerHTML]="getModelDescription('CMMC2') | safe"></div>
     <div style="max-width: 50%" class="text-center pl-3">
-      <img src="assets/images/CMMC/Levels_cmmc2_200px.png" alt="CMMC levels" style="height: 210px; width: auto" />
+      <img [src]="getModelIconPath('CMMC2')" alt="CMMC levels" style="height: 210px; width: auto" />
     </div>
   </div>
 </mat-card>
@@ -71,7 +71,7 @@
 <div class="d-flex flex-row">
   <div class="w-100" [innerHTML]="getModelDescription('CRR') | safe"></div>
   <div style="max-width: 50%" class="text-center pl-3">
-    <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
+    <img [src]="getModelIconPath('CRR')" alt="CRR logo" style="width: 100%" />
   </div>
 </div>
 </mat-card>
@@ -82,7 +82,7 @@
   <div class="d-flex flex-row">
     <div class="w-100" [innerHTML]="getModelDescription('EDM') | safe"></div>
     <div style="max-width: 50%" class="text-center pl-3">
-      <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
+      <img [src]="getModelIconPath('EDM')" alt="EDM logo" style="width: 100%" />
     </div>
   </div>
 </mat-card>
@@ -97,7 +97,7 @@
     <div class="d-flex flex-row">
       <div style="max-width: 100%" [innerHTML]="getModelDescription('CIS') | safe"></div>
       <div style="max-width: 50%" class="text-center pl-3">
-        <img src="assets/images/CIS/CISA_Infrastructure_Security.png" alt="Cyber Infrastructure Survey logo"
+        <img [src]="getModelIconPath('CIS')" alt="Cyber Infrastructure Survey logo"
           style="height: 102px; width: auto" />
       </div>
     </div>
@@ -166,7 +166,7 @@
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
     <h4>{{getModelTitle('RRA')}}</h4>
     <div>
-      <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo"
+      <img [src]="getModelIconPath('RRA')" alt="Ransomware Readiness logo"
         style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
         <div [innerHTML]="getModelDescription('RRA') | safe"></div>
     </div>
@@ -182,5 +182,5 @@
   </div>
 
   <app-nav-back-next [page]="'model-select'"></app-nav-back-next>
-  
+
 </div>
