@@ -21,12 +21,14 @@
   SOFTWARE. 
 -------------------------->
 <h4>Organization Details</h4>
-<!-- NCUA Examiners Form. Only used if the NCUA examiner's switch is turned on during installation. -->
+
+<!-- If using an ACET Maturity Model (Should function as normal)-->
+<ng-container *ngIf="!isAnExamination()">
 <form #f="ngForm">
     <div class="form-row">
         <div class="form-group col-md-12">
             <label class="mb-1" for="name">Assessment Name</label>
-            <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
+            <input type="text" maxlength="100" [disabled]="(configSvc.installationMode === 'ACET')" class="form-control" id="name" name="name" required focusOnInit="true" 
                 [(ngModel)]="assessment.assessmentName"
                 (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
             <div class="invalid-feedback d-block text-muted">
@@ -40,13 +42,6 @@
             <input matInput MatDatepickerInput class="form-control" id="startDate" name="startdate" [(ngModel)]="assessment.assessmentDate"
                 [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
-        </div>
-        <div class="form-group col-md-6">
-            <!-- This value wont save due to only having 1 date field in the db currently -->
-            <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>
-            <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessmentEffectiveDate"
-                [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="effectiveDatePicker.open()" (ngModelChange)="update($event)" tabindex="0">
-            <mat-datepicker #effectiveDatePicker></mat-datepicker>
         </div>
     </div>
     <div class="form-group">
@@ -80,3 +75,61 @@
         <div class="col-md-6"></div>
     </div>
 </form>
+</ng-container>
+
+<ng-container *ngIf="isAnExamination()">
+<form #f="ngForm">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label class="mb-1" for="name">Assessment Name</label>
+            <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true" 
+                [(ngModel)]="assessment.assessmentName"
+                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="date">Assessment Start Date</label>
+            <input matInput MatDatepickerInput class="form-control" id="startDate" name="startdate" [(ngModel)]="assessment.assessmentDate"
+                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>
+                <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessmentEffectiveDate"
+                    [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (click)="effectiveDatePicker.open()" (ngModelChange)="update($event)" tabindex="0">
+                <mat-datepicker #effectiveDatePicker></mat-datepicker>
+            </div>
+    </div>
+    <div class="form-group">
+        <label class="mb-1" for="creditUnion">Credit Union Name</label>
+        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+            (change)="update($event)" tabindex="0">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="citySite">City Or Site Name</label>
+            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
+                (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                (change)="update($event)" tabindex="0">
+        </div>
+    </div>
+    <div class="form-row">
+            <div class="form-group col-md-6">
+                    <label class="mb-1" for="charter">Charter</label>
+                    <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
+                        (change)="update($event)" (blur)="update($event)" tabindex="0">
+                </div>
+        <div class="form-group col-md-6">
+            <label class="mb-1" for="assets">Assets</label>
+            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
+                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</form>
+</ng-container>

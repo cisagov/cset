@@ -78,7 +78,6 @@ export class FeatureOptionNcuaComponent implements OnInit {
   */
   submit(feature, event: any) {
     const optionChecked = event.srcElement.checked;
-
     switch (feature.code) {
       case 'maturity':
       case 'acet':
