@@ -1,0 +1,13 @@
+<h3><em>{{model?.modelName}}</em></h3>
+
+<div *ngIf="!model">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+</div>
+
+<div class="ml-4">
+    <div *ngFor="let g of model.groupings">
+        <app-mc-grouping [g]="g"></app-mc-grouping>
+    </div>  
+</div>

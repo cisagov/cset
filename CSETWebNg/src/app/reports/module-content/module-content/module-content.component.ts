@@ -41,7 +41,6 @@ export class ModuleContentComponent implements OnInit {
     }
 
     if (!!this.modelId) {
-      //this.modelId = 'RRA';
       this.reportSvc.getModelContent(this.modelId).subscribe(rpt => {
         console.log(rpt);
         this.model = rpt;

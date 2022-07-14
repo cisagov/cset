@@ -48,15 +48,17 @@ export class ModuleContentLaunchComponent implements OnInit {
   /**
    * 
    */
-  launchReport() {
-    if (this.whichType == 'rpt-set') {
-      const url = '/report/module-content?m=' + this.selectedStandard;
-      window.open(url);
-    }
-    if (this.whichType == 'rpt-model') {
-      const url = '/report/module-content?mm=' + this.selectedModel;
-      window.open(url);
-    }
+  launchModelReport() {
+    const url = '/report/module-content?mm=' + this.selectedModel;
+    window.open(url, '_blank');
+  }
+
+  /**
+   * 
+   */
+  launchStandardReport() {
+    const url = '/report/module-content?m=' + this.selectedStandard;
+    window.open(url, '_blank');
   }
 
 }
