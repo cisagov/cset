@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StandardsBlock } from '../../../models/standards.model';
 import { StandardService } from '../../../services/standard.service';
 import { SetBuilderService } from '../../../services/set-builder.service';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-module-content-launch',
@@ -11,33 +12,51 @@ import { SetBuilderService } from '../../../services/set-builder.service';
 })
 export class ModuleContentLaunchComponent implements OnInit {
 
-  standards: any[];
+  whichType = '';
 
+  standards: any[];
   selectedStandard;
 
+  models: any[];
+  selectedModel;
+
   /**
-   *
+   * 
    */
   constructor(
-    private standardSvc: StandardService,
     private setBuilderSvc: SetBuilderService
   ) { }
 
   /**
-   *
+   * 
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
       this.standards = x;
     });
+
+    this.models = AssessmentService.allMaturityModels;
   }
 
   /**
-   *
+   * 
+   */
+  selectType(event: any) {
+    this.whichType = event.srcElement.id;
+  }
+
+  /**
+   * 
    */
   launchReport() {
-    const url = 'index.html?returnPath=report/module-content?m=' + this.selectedStandard
-    window.open(url, '_blank');
+    if (this.whichType == 'rpt-set') {
+      const url = '/report/module-content?m=' + this.selectedStandard;
+      window.open(url);
+    }
+    if (this.whichType == 'rpt-model') {
+      const url = '/report/module-content?mm=' + this.selectedModel;
+      window.open(url);
+    }
   }
 
 }

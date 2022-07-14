@@ -23,13 +23,27 @@
 <div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
     <div class="max-1200">
         <h2>Module Content Report</h2>
-        <div>
-            Select a module (standard)
-        </div>
 
-        <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
-            <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
-        </select>
+        <input type="radio" class="radio-custom" name="report-type" id="rpt-set" (change)="selectType($event)">
+        <label for="rpt-set" class="radio-custom-label">
+            <div>
+                Select a module (standard)
+            </div>
+
+            <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
+                <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
+            </select>
+        </label>
+
+        <input type="radio" class="radio-custom" name="report-type" id="rpt-model"  (change)="selectType($event)">
+        <label for="rpt-model" class="radio-custom-label">
+            <div>
+                Select a Model
+            </div>
+            <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedModel">
+                <option *ngFor="let m of models" [value]="m.modelId">{{m.modelName}}</option>
+            </select>
+        </label>
 
         <button class="btn btn-primary" (click)="launchReport()">Launch Report</button>
 
