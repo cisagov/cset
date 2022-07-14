@@ -11,5 +11,6 @@ namespace CSETWebCore.Model.Maturity
         public string QuestionsAlias { get; set; }
         public string ModelDescription { get; set; }
         public string ModelTitle { get; set; }
+        public int? IconId { get; set; }
     }
 }

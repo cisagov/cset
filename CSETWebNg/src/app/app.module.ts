@@ -445,6 +445,8 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
+import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
+
 
 
 @NgModule({
@@ -845,7 +847,8 @@ import { MergeExaminationsComponent } from './assessment/merge/merge-examination
         CisSectionScoringComponent,
         CisScoringChartComponent,
         SectionScoringComponent,
-        MergeExaminationsComponent
+        MergeExaminationsComponent,
+        DigitsOnlyNotZeroDirective
     ],
     providers: [
         ConfigService,

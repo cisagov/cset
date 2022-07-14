@@ -9,7 +9,7 @@ namespace CSETWebCore.Interfaces.Contact
         IEnumerable<ContactSearchResult> SearchContacts(int userId, ContactSearchParameters searchParms);
         ContactDetail AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited);
         ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact);
-        void UpdateContact(ContactDetail contact);
+        void UpdateContact(ContactDetail contact, int userId);
         int? GetUserRoleOnAssessment(int userId, int assessmentId);
         List<ContactDetail> RemoveContact(int assessmentContactId);
         void MarkContactInvited(int userId, int assessmentId);
