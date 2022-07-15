@@ -7,15 +7,59 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class Get_Merge_ConflictsResult
     {
+        public string City_Or_Site_Name { get; set; }
+        public string State_Province_Or_Region { get; set; }
+        public string Assessor_Name { get; set; }
+        public string Assessor_Email { get; set; }
+        public string Assessor_Phone { get; set; }
         public string Question_Text { get; set; }
+
+
+        public string Assessment_Name1 { get; set; }
+        public string Assessment_Name2 { get; set; }
+        public string Assessment_Name3 { get; set; }
+        public string Assessment_Name4 { get; set; }
+        public string Assessment_Name5 { get; set; }
+        public string Assessment_Name6 { get; set; }
+        public string Assessment_Name7 { get; set; }
+        public string Assessment_Name8 { get; set; }
+        public string Assessment_Name9 { get; set; }
+        public string Assessment_Name10 { get; set; }
+
+
         public int? Assessment_Id1 { get; set; }
         public int? Assessment_Id2 { get; set; }
         public int? Assessment_Id3 { get; set; }
+        public int? Assessment_Id4 { get; set; }
+        public int? Assessment_Id5 { get; set; }
+        public int? Assessment_Id6 { get; set; }
+        public int? Assessment_Id7 { get; set; }
+        public int? Assessment_Id8 { get; set; }
+        public int? Assessment_Id9 { get; set; }
+        public int? Assessment_Id10 { get; set; }
+
+
         public int? Question_Or_Requirement_Id1 { get; set; }
         public int? Question_Or_Requirement_Id2 { get; set; }
         public int? Question_Or_Requirement_Id3 { get; set; }
+        public int? Question_Or_Requirement_Id4 { get; set; }
+        public int? Question_Or_Requirement_Id5 { get; set; }
+        public int? Question_Or_Requirement_Id6 { get; set; }
+        public int? Question_Or_Requirement_Id7 { get; set; }
+        public int? Question_Or_Requirement_Id8 { get; set; }
+        public int? Question_Or_Requirement_Id9 { get; set; }
+        public int? Question_Or_Requirement_Id10 { get; set; }
+        
+
         public string Answer_Text1 { get; set; }
         public string Answer_Text2 { get; set; }
         public string Answer_Text3 { get; set; }
+        public string Answer_Text4 { get; set; }
+        public string Answer_Text5 { get; set; }
+        public string Answer_Text6 { get; set; }
+        public string Answer_Text7 { get; set; }
+        public string Answer_Text8 { get; set; }
+        public string Answer_Text9 { get; set; }
+        public string Answer_Text10 { get; set; }
     }
 }
