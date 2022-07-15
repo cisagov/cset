@@ -19,6 +19,9 @@ export class MergeExaminationsComponent implements OnInit {
   // Stored proc data
   mergeConflicts: any[] = [];
 
+  // Merging Assessment Names
+  assessmentNames: string[] = [];
+
   // Main Assessment Answers
   mainAssessmentAnswers: Answer[] = [];
 
@@ -86,8 +89,22 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
         this.mergeConflicts = response;
+        this.getAssessmentNames();
       }
     );
+  }
+
+  getAssessmentNames() {
+      this.assessmentNames[0] = this.mergeConflicts[0].assessment_Name1;
+      this.assessmentNames[1] = this.mergeConflicts[0].assessment_Name2;
+      this.assessmentNames[2] = this.mergeConflicts[0].assessment_Name3;
+      this.assessmentNames[3] = this.mergeConflicts[0].assessment_Name4;
+      this.assessmentNames[4] = this.mergeConflicts[0].assessment_Name5;
+      this.assessmentNames[5] = this.mergeConflicts[0].assessment_Name6;
+      this.assessmentNames[6] = this.mergeConflicts[0].assessment_Name7;
+      this.assessmentNames[7] = this.mergeConflicts[0].assessment_Name8;
+      this.assessmentNames[8] = this.mergeConflicts[0].assessment_Name9;
+      this.assessmentNames[9] = this.mergeConflicts[0].assessment_Name10;
   }
 
   navToHome() {

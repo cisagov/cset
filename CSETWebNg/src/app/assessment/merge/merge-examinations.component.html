@@ -36,7 +36,8 @@
             <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
                 <tr>
                     <th>Statements</th>
-                    <th *ngFor="let assessment of this.ncuaSvc.assessmentsToMerge; let i = index"> {{ "Exam " + (i+1) }}</th>
+                    <th *ngFor="let assessment of this.ncuaSvc.assessmentsToMerge; let i = index"
+                    [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above"> {{ "Exam " + (i+1) }}</th>
                     <th>YES</th>
                     <th>NO</th>
                     <th>NA</th>
@@ -45,6 +46,14 @@
                     <td style="padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
                     <td>{{ this.mergeConflicts[i].answer_Text1 }}</td>
                     <td>{{ this.mergeConflicts[i].answer_Text2 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3">{{ this.mergeConflicts[i].answer_Text3 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4">{{ this.mergeConflicts[i].answer_Text4 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5">{{ this.mergeConflicts[i].answer_Text5 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6">{{ this.mergeConflicts[i].answer_Text6 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7">{{ this.mergeConflicts[i].answer_Text7 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8">{{ this.mergeConflicts[i].answer_Text8 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9">{{ this.mergeConflicts[i].answer_Text9 }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length == 10">{{ this.mergeConflicts[i].answer_Text10 }}</td>
                     <td>
                         <input type="radio" id="yes" name="option{{i}}" value="yes"
                         (change)="updateAnswers(i, $event.target.value)">
