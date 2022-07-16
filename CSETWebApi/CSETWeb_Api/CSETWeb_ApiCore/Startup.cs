@@ -204,7 +204,7 @@ namespace CSETWeb_ApiCore
 
             app.UseEndpoints(endpoints =>
             {
-                 endpoints.MapControllers();
+                endpoints.MapControllers();
             });
         }
     }
