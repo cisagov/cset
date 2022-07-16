@@ -39,7 +39,7 @@ export class IRPService {
 
   /**
    * Retrieves the list of frameworks.
-   */ 
+   */
   getIRPList() {
     return this.http.get(this.configSvc.apiUrl + 'irps');
   }
@@ -51,4 +51,3 @@ export class IRPService {
     return this.http.post(this.configSvc.apiUrl + 'irp', selected, headers);
   }
 }
- 

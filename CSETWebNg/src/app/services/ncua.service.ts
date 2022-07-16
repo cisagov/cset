@@ -21,12 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable, SkipSelf } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { AssessmentService } from './assessment.service';
-import { AssessmentDetailComponent } from '../assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
-import { AssessmentDetail } from '../models/assessment-info.model';
 
 let headers = {
     headers: new HttpHeaders()
