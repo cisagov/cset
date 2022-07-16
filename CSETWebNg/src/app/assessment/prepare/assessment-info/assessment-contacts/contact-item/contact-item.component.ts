@@ -31,7 +31,6 @@ import { AssessmentService, Role } from "../../../../../services/assessment.serv
 import { AuthenticationService } from "../../../../../services/authentication.service";
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
-import { NCUAService } from "../../../../../services/ncua.service";
 
 @Component({
   selector: "app-contact-item",
@@ -71,7 +70,6 @@ export class ContactItemComponent implements OnInit {
     private emailSvc: EmailService,
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
-    private ncuaSvc: NCUAService,
     private dialog: MatDialog
   ) {
     this.editMode = true;

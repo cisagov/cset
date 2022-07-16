@@ -4,7 +4,6 @@ import { NavigationService } from '../../../../services/navigation.service';
 import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentDemographicsComponent } from '../assessment-demographics/assessment-demographics.component';
-import { NCUAService } from '../../../../services/ncua.service';
 
 
 @Component({

@@ -24,7 +24,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { NCUAService } from './ncua.service';
 import { IRP } from '../models/irp.model';
 
 const headers = {
