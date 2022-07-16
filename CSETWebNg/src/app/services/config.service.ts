@@ -56,8 +56,6 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   installationMode = '';
-  examinerSwitch = '';
-
 
   /**
    * Constructor.
