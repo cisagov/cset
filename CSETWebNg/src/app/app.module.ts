@@ -555,6 +555,7 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         LoginComponent,
         LandingPageComponent,
         AssessmentComponent,
+        ContactItemComponent,
         PrepareComponent,
         AssessmentInfoComponent,
         AssessmentDetailComponent,
