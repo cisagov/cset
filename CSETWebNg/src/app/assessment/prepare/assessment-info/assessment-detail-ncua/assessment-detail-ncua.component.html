@@ -23,31 +23,46 @@
 <h4>Organization Details</h4>
 
 <form #f="ngForm">
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <label class="mb-1" for="name">Assessment Name</label>
-            <input type="text" maxlength="100" [disabled]="(configSvc.installationMode === 'ACET')" class="form-control" id="name" name="name" required focusOnInit="true" 
-                [(ngModel)]="assessment.assessmentName"
-                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
-            <div class="invalid-feedback d-block text-muted">
-                Auto-populated based on data provided
+
+
+
+    <ng-container *ngIf="this.assessment.maturityModel.modelName !== 'ISE'">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="name">Assessment Name</label>
+                <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
+                    [(ngModel)]="assessment.assessmentName"
+                    (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+                <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
+                    Auto-populated based on data provided
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="date">Assessment Date</label>
+                <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
+                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+                <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
-    </div>
-    <div class="form-row">
-        <ng-container *ngIf="this.assessment.maturityModel.modelName === 'ISE'; else examinationDates">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="date">Assessment Start Date</label>
-            <input matInput MatDatepickerInput class="form-control" id="startDate" name="startdate" [(ngModel)]="assessment.assessmentDate"
-                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
-            <mat-datepicker #picker></mat-datepicker>
+    </ng-container>
+
+    <ng-container *ngIf="this.assessment.maturityModel.modelName === 'ISE'">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label class="mb-1" for="name">Assessment Name</label>
+                <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true" 
+                    [(ngModel)]="assessment.assessmentName"
+                    (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+                <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
+                    Auto-populated based on data provided
+                </div>
+            </div>
         </div>
-        </ng-container>
-        <ng-template #examinationDates>
+        <div class="form-row">
             <div class="form-group col-md-6">
-                <label class="mb-1" for="date">Assessment Start Date</label>
-                <input matInput MatDatepickerInput class="form-control" id="startDate" name="startdate" [(ngModel)]="assessment.assessmentDate"
-                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+                <label class="mb-1" for="date">Assessment Date</label>
+                <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
+                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
                 <mat-datepicker #picker></mat-datepicker>
             </div>
             <div class="form-group col-md-6">
@@ -56,8 +71,11 @@
                     [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (click)="effectiveDatePicker.open()" (ngModelChange)="update($event)" tabindex="0">
                 <mat-datepicker #effectiveDatePicker></mat-datepicker>
             </div>
-        </ng-template>
-    </div>
+        </div>
+    </ng-container>
+
+
+
     <div class="form-group">
         <label class="mb-1" for="creditUnion">Credit Union Name</label>
         <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
