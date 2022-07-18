@@ -16,6 +16,8 @@ export class ModuleContentComponent implements OnInit {
   modelId: string;
   model: any;
 
+  loading = true;
+
   /**
    * 
    */
@@ -28,24 +30,27 @@ export class ModuleContentComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.set = null;
+    this.model = null;
+
     this.route.queryParams
       .subscribe(params => {
         this.setName = params.m;
         this.modelId = params.mm;
-      });
 
-    if (!!this.setName) {
-      this.reportSvc.getModuleContent(this.setName).subscribe(rpt => {
-        this.set = rpt;
-      });
-    }
+        if (!!this.setName) {
+          this.reportSvc.getModuleContent(this.setName).subscribe(rpt => {
+            this.loading = false;
+            this.set = rpt;
+          });
+        }
 
-    if (!!this.modelId) {
-      this.reportSvc.getModelContent(this.modelId).subscribe(rpt => {
-        console.log(rpt);
-        this.model = rpt;
+        if (!!this.modelId) {
+          this.reportSvc.getModelContent(this.modelId).subscribe(rpt => {
+            this.loading = false;
+            this.model = rpt;
+          });
+        }
       });
-    }
-
   }
 }

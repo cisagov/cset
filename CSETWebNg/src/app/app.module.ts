@@ -445,6 +445,8 @@ import { ModuleContentModelComponent } from './reports/module-content/model/modu
 import { McGroupingComponent } from './reports/module-content/model/mc-grouping/mc-grouping.component';
 import { McQuestionComponent } from './reports/module-content/model/mc-question/mc-question.component';
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
+import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
+import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 
 
 
@@ -849,6 +851,8 @@ import { McOptionComponent } from './reports/module-content/model/mc-option/mc-o
         McGroupingComponent,
         McQuestionComponent,
         McOptionComponent,
+        GuidanceBlockComponent,
+        ReferencesBlockComponent,
     ],
     providers: [
         ConfigService,

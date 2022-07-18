@@ -11,6 +11,7 @@ namespace CSETWebCore.Model.Cis
     public class ModelStructure
     {
         public string ModelName { get; set; }
+        public string ModelTitle { get; set; }
         public int ModelId { get; set; }
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
     }

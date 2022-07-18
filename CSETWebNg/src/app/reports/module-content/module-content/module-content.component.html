@@ -1,5 +1,21 @@
 <div class="m-3">
-    <h2>Module Content Report</h2>
+    <div class="d-flex flex-row justify-content-between">
+        <h2>Module Content Report</h2>
+        <div class="flex-column pr-4">
+            <div>
+                <input type="checkbox"> Show Guidance
+            </div>
+            <div>
+                <input type="checkbox"> Show References
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading">
+        <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+    </div>
 
     <app-module-content-standard *ngIf="!!set" [set]="set"></app-module-content-standard>
 
