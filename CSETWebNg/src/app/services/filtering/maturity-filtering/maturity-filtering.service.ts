@@ -271,8 +271,9 @@ export class MaturityFilteringService {
       switch (this.assesmentSvc.assessment.maturityModel.modelName) {
         case 'ACET':
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
-
           break;
+        case 'ISE':
+          this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
         case 'CMMC':
         case 'CMMC2':
           this.cmmcFilteringSvc.setQuestionVisibility(q);
