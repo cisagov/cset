@@ -93,7 +93,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
     
     if (this.assessment.assessmentName === "New Assessment")
-      this.createAcetName();
+      this.createAssessmentName();
   }
 
 
@@ -108,11 +108,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
-    if (this.assessment.maturityModel.modelName === 'ACET') {
-      this.createAcetName();
-    } else if (this.assessment.maturityModel.modelName === 'ISE') {
-      this.createIseName();
-    }
+    this.createAssessmentName();
 
     this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -140,9 +136,13 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   /**
    * 
    */
-  createAcetName() {
-    this.assessment.assessmentName = "ACET";
-  
+  createAssessmentName() {
+    if (this.isAnExamination()) {
+      this.assessment.assessmentName = "ISE";
+    } else {
+      this.assessment.assessmentName = "ACET";
+    }
+
     if (this.assessment.charter) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
     }
@@ -155,10 +155,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
-  }
-
-  createIseName() {
-    // Might use later for any special naming conventions requested
   }
 
 }
