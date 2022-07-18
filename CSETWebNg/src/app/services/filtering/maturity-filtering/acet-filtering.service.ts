@@ -273,18 +273,12 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
-        // set all true up to the level they hit, then all false above that
-        console.log("Domain Name: " + domainName);
-        console.log("Number: " + f);
-        console.log("E: " + e);
-        
+        // set all true up to the level they hit, then all false above that        
         this.domainFilters
             .find(f => f.domainName == domainName)
             .settings.forEach(s => {
                 s.value = s.level <= f;
             });
-
-            console.log("Domain Name: " + JSON.stringify(this.domainFilters, null, 4));
 
         this.saveFilters(this.domainFilters).subscribe(() => {
             this.filterAcet.emit(true);
