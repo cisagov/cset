@@ -309,18 +309,18 @@
                   <td>Section</td>
               </tr>
               <tr *ngFor="let reference of tab?.sourceDocumentsList">
-                  <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
+                  <td class="align-top"><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
                           target="_blank">{{reference.title}}</a></td>
-                  <td>{{reference.section_Ref}}</td>
+                  <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
               </tr>
               <tr *ngIf="tab?.resourceDocumentList?.length > 0" class="font-weight-bold">
                   <td>Help Documents</td>
                   <td>Section</td>
               </tr>
               <tr *ngFor="let reference of tab?.resourceDocumentList">
-                  <td><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
+                  <td class="align-top"><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
                           target="_blank">{{reference.title}}</a></td>
-                  <td>{{reference.section_Ref}}</td>
+                  <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
               </tr>
               <tr
                   *ngIf="(!tab?.referenceTextList || tab?.referenceTextList?.length === 0) && tab?.sourceDocumentsList.length === 0 && tab?.resourceDocumentList.length === 0">
