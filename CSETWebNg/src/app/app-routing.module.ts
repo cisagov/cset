@@ -56,8 +56,6 @@ import { ModuleContentComponent } from './reports/module-content/module-content/
 
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { InitialComponent } from './initial/initial.component';
-import { LandingPageComponent } from './initial/landing-page/landing-page.component';
 import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
@@ -172,6 +170,7 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
+import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -213,13 +212,13 @@ const appRoutes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'reset-pass', component: ResetPassComponent },
       {
-        path: 'landing-page',
-        component: LandingPageComponent,
+        path: 'landing-page-tabs',
+        component: LandingPageTabsComponent,
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard]
       },
-      { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
-      { path: '**', redirectTo: 'landing-page' }
+      { path: '', redirectTo: 'landing-page-tabs', pathMatch: 'full' },
+      { path: '**', redirectTo: 'landing-page-tabs' }
     ]
   },
   {
@@ -406,7 +405,7 @@ const appRoutes: Routes = [
           { path: '**', redirectTo: 'prepare' }
         ]
       },
-      { path: '', redirectTo: '/home/landing-page', pathMatch: 'full' }
+      { path: '', redirectTo: '/home/landing-page-tabs', pathMatch: 'full' }
     ]
   },
   // reports routing
