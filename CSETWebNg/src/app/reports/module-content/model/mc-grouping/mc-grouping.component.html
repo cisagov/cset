@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <h5 class="font-weight-bold">{{g.title}}</h5>
+
+
+    <div class="ml-3">
+
+        <app-mc-grouping *ngFor="let sg of g.groupings" [g]="sg"></app-mc-grouping>
+    </div>
+
+
+    <div class="ml-3">
+        <app-mc-question *ngFor="let q of g.questions" [q]="q"></app-mc-question>
+    </div>
+</div>

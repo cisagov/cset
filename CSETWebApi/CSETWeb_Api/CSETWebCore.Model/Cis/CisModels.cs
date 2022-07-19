@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Model.Cis
 {
@@ -11,6 +12,7 @@ namespace CSETWebCore.Model.Cis
     public class ModelStructure
     {
         public string ModelName { get; set; }
+        public string ModelTitle { get; set; }
         public int ModelId { get; set; }
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
     }
@@ -60,6 +62,9 @@ namespace CSETWebCore.Model.Cis
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
         public string ReferenceText { get; set; }
+
+        public List<CustomDocument> SourceDocuments { get; set; }
+        public List<CustomDocument> ResourceDocuments { get; set; }
 
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }
