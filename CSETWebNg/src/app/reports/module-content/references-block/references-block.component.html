@@ -8,13 +8,20 @@
     </div>
 
     <div *ngIf="sourceDocs.length > 0" class="mb-3">
-        <strong>Source Documents</strong>
-        <table class="resource-table">
+        <table class="resource-table w-100">
+            <tr>
+                <td>
+                    <strong>Source Documents</strong>
+                </td>
+                <td class="pl-3">
+                    <strong>Section</strong>
+                </td>
+            </tr>
             <tr *ngFor="let d of sourceDocs">
                 <td class="align-top">
                     {{d.title}}
                 </td>
-                <td class="section-ref text-nowrap align-top">
+                <td class="pl-3 section-ref text-nowrap align-top">
                     {{d.sectionRef}}{{d.section_Ref}}
                 </td>
             </tr>
@@ -22,13 +29,20 @@
     </div>
 
     <div *ngIf="resourceDocs.length > 0" class="mb-3">
-        <strong>Help Documents</strong>
-        <table class="resource-table">
+        <table class="resource-table w-100">
+            <tr>
+                <td>
+                    <strong>Help Documents</strong>
+                </td>
+                <td class="pl-3">
+                    <strong>Section</strong>
+                </td>
+            </tr>
             <tr *ngFor="let d of resourceDocs">
                 <td class="align-top">
                     {{d.title}}
                 </td>
-                <td class="section-ref text-nowrap align-top">
+                <td class="pl-3 section-ref text-nowrap align-top">
                     {{d.sectionRef}}{{d.section_Ref}}
                 </td>
             </tr>
@@ -40,7 +54,8 @@
         <div [innerHTML]="referenceText"></div>
     </div>
 
-    <div style="font-style: italic" *ngIf="sourceDocs.length === 0 && resourceDocs.length === 0 && (!referenceText || referenceText.length === 0)">
+    <div style="font-style: italic"
+        *ngIf="sourceDocs.length === 0 && resourceDocs.length === 0 && (!referenceText || referenceText.length === 0)">
         (No reference documents or reference text defined)
     </div>
 </div>
