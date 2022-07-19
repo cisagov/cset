@@ -13,9 +13,9 @@
 
             <div [innerHTML]="req.requirementText" class="mb-4"></div>
 
-            <app-guidance-block [supplementalInfo]="req.supplementalInfo"></app-guidance-block>
+            <app-guidance-block [supplementalInfo]="req.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>
 
-            <app-references-block [sourceDocs]="req.sourceDocs" [resourceDocs]="req.resourceDocs"></app-references-block>            
+            <app-references-block [sourceDocs]="req.sourceDocs" [resourceDocs]="req.resourceDocs" *ngIf="reportSvc.showReferences"></app-references-block>            
         </div>
     </div>
 </div>

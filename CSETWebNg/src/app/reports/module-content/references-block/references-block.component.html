@@ -7,35 +7,40 @@
         </svg>
     </div>
 
-    <div *ngIf="sourceDocs.length > 0">
+    <div *ngIf="sourceDocs.length > 0" class="mb-3">
         <strong>Source Documents</strong>
         <table class="resource-table">
             <tr *ngFor="let d of sourceDocs">
-                <td>
+                <td class="align-top">
                     {{d.title}}
                 </td>
-                <td class="section-ref">
-                    {{d.sectionRef}}
+                <td class="section-ref text-nowrap align-top">
+                    {{d.sectionRef}}{{d.section_Ref}}
                 </td>
             </tr>
         </table>
     </div>
 
-    <div *ngIf="resourceDocs.length > 0">
-        <strong>Resource Documents</strong>
+    <div *ngIf="resourceDocs.length > 0" class="mb-3">
+        <strong>Help Documents</strong>
         <table class="resource-table">
             <tr *ngFor="let d of resourceDocs">
-                <td>
+                <td class="align-top">
                     {{d.title}}
                 </td>
-                <td class="section-ref">
-                    {{d.sectionRef}}
+                <td class="section-ref text-nowrap align-top">
+                    {{d.sectionRef}}{{d.section_Ref}}
                 </td>
             </tr>
         </table>
     </div>
 
-    <div style="font-style: italic" *ngIf="sourceDocs.length === 0 && resourceDocs.length === 0">
-        (No references defined)
+    <div *ngIf="referenceText?.length > 0">
+        <strong>Reference Text</strong>
+        <div [innerHTML]="referenceText"></div>
+    </div>
+
+    <div style="font-style: italic" *ngIf="sourceDocs.length === 0 && resourceDocs.length === 0 && (!referenceText || referenceText.length === 0)">
+        (No reference documents or reference text defined)
     </div>
 </div>

@@ -182,4 +182,10 @@ export class ReportService {
 
         return s;
     }
+
+    /**
+     * Switches that define what to show on Module Content Reports
+     */
+    public showGuidance = true;
+    public showReferences = true;
 }

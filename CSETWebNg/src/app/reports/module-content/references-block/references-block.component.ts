@@ -13,6 +13,9 @@ export class ReferencesBlockComponent implements OnInit {
   @Input()
   resourceDocs: any[];
 
+  @Input()
+  referenceText: string;
+
   constructor() { }
 
   ngOnInit(): void {

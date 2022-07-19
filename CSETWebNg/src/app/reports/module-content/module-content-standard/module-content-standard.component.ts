@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-module-content-standard',
@@ -12,7 +13,8 @@ export class ModuleContentStandardComponent implements OnInit {
   set: any;
 
   constructor(
-    private titleSvc: Title
+    private titleSvc: Title,
+    public reportSvc: ReportService
   ) { }
 
   ngOnInit(): void {

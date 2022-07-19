@@ -168,9 +168,15 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = requires.FirstOrDefault(s => !String.IsNullOrEmpty(s.Supplemental_Info))?.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
-                BuildReferenceDocuments(requirement.Requirement_Id);
 
-                BuildReferenceTextForRequirement(requirement.Requirement_Id);
+                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
+                    out List<CustomDocument> sourceList,
+                    out List<CustomDocument> resourceList);
+                SourceDocumentsList = sourceList;
+                ResourceDocumentList = resourceList;
+
+                ReferenceTextList = refBuilder.BuildReferenceTextForRequirement(requirement.Requirement_Id);
             }
 
             QuestionsVisible = false;
@@ -309,9 +315,14 @@ namespace CSETWebCore.Business.Question
             ShowSALLevel = true;
             ExaminationApproach = requirement.ExaminationApproach;
 
-            BuildReferenceDocuments(requirementData.RequirementID);
+            var refBuilder = new Helpers.ReferencesBuilder(_context);
+            refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
+                    out List<CustomDocument> sourceList,
+                    out List<CustomDocument> resourceList);
+            SourceDocumentsList = sourceList;
+            ResourceDocumentList = resourceList;
 
-            BuildReferenceTextForRequirement(requirementData.RequirementID);
+            ReferenceTextList = refBuilder.BuildReferenceTextForRequirement(requirementData.RequirementID);
         }
 
 
@@ -371,7 +382,10 @@ namespace CSETWebCore.Business.Question
                     QuestionsVisible = false;
 
                     ShowSALLevel = true;
-                    BuildReferenceDocuments(frameworkData.RequirementID);
+
+                    var refBuilder = new Helpers.ReferencesBuilder(_context);
+                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<CustomDocument> sourceDocList, out List<CustomDocument> resourceDocList);
+
                     SetFrameworkQuestions(frameworkData.RequirementID);
                 }
             }
@@ -411,9 +425,19 @@ namespace CSETWebCore.Business.Question
                         Enabled = enabled
                     });
                 }
+
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
                 var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
-                BuildReferenceDocuments(reqid);
+
+
+                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                refBuilder.BuildReferenceDocuments(reqid, 
+                    out List<CustomDocument> sourceList,
+                    out List<CustomDocument> resourceList);
+                SourceDocumentsList = sourceList;
+                ResourceDocumentList = resourceList;
+
+
                 var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
@@ -470,137 +494,20 @@ namespace CSETWebCore.Business.Question
 
                 RequirementsData = tabData;
 
-                BuildDocumentsForMaturityQuestion(info.QuestionID);
 
-                BuildReferenceTextForMaturityQuestion(info.QuestionID);
+                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                refBuilder.BuildDocumentsForMaturityQuestion(info.QuestionID,
+                    out List<CustomDocument> sourceList,
+                    out List<CustomDocument> resourceList);
+                SourceDocumentsList = sourceList;
+                ResourceDocumentList = resourceList;
+
+
+                ReferenceTextList = refBuilder.BuildReferenceTextForMaturityQuestion(info.QuestionID);
             }
             catch (Exception exc)
             {
                 log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
-            }
-        }
-
-
-        /// <summary>
-        /// Returns a list of physical files in the Documents folder.
-        /// Some installations may not have documents installed to reduce installation overhead.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetBuildDocuments()
-        {
-            var dir = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents");
-
-            try
-            {
-                List<string> availableRefDocs = new DirectoryInfo(dir)
-                    .GetFiles()
-                    .Select(f => f.Name)
-                    .ToList();
-                return availableRefDocs;
-            }
-            catch (Exception exc)
-            {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
-
-                return new List<string>();
-            }
-        }
-
-
-        /// <summary>
-        /// Populates SourceDocumentsList and ResourceDocumentsList with any connections from 
-        /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
-        /// </summary>
-        /// <param name="requirement_ID"></param>
-        /// <param name="controlContext"></param>
-        private void BuildReferenceDocuments(int requirement_ID)
-        {
-            // Build a list of available documents
-
-            List<string> availableRefDocs = GetBuildDocuments();
-
-            var documents = _context.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
-                .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
-                .Concat(
-                    _context.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
-                ).ToList();
-
-            // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource)
-                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
-
-
-            // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource)
-                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
-        }
-
-
-        /// <summary>
-        /// Builds lists of Source Documents and Help (Resource) Document references for the question.
-        /// </summary>
-        /// <param name="maturityQuestion_ID"></param>
-        /// <param name="controlContext"></param>
-        private void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID)
-        {
-            List<string> availableRefDocs = GetBuildDocuments();
-
-            var documents = _context.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
-                .Concat(
-              _context.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
-              ).ToList();
-
-            // Source Documents  
-            var sourceDocuments = documents.Where(t => t.IsSource)
-                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
-                .ToList();
-            SourceDocumentsList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
-
-
-            // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource)
-               .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
-               .ToList();
-            ResourceDocumentList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
-        }
-
-
-        /// <summary>
-        /// Returns any plain text that is stored as a reference for the question.
-        /// </summary>
-        private void BuildReferenceTextForMaturityQuestion(int maturityQuestion_ID)
-        {
-            var q = _context.MATURITY_REFERENCE_TEXT
-                .Where(x => x.Mat_Question_Id == maturityQuestion_ID)
-                .ToList().OrderBy(x => x.Sequence);
-
-            ReferenceTextList = new List<string>();
-            foreach (var t in q)
-            {
-                if (t.Reference_Text != null) 
-                { 
-                    ReferenceTextList.Add(t.Reference_Text);
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Returns any plain text that is stored as a reference for the requirement.
-        /// </summary>
-        /// <param name="requirementID"></param>
-        private void BuildReferenceTextForRequirement(int requirementID)
-        {
-            var q = _context.REQUIREMENT_REFERENCE_TEXT
-                .Where(x => x.Requirement_Id == requirementID)
-                .ToList().OrderBy(x => x.Sequence);
-
-            ReferenceTextList = new List<string>();
-            foreach (var t in q)
-            {
-                ReferenceTextList.Add(t.Reference_Text);
             }
         }
 
