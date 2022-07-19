@@ -178,7 +178,7 @@ import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
-import { LandingPageComponent } from './initial/landing-page/landing-page.component';
+import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { LoginComponent } from './initial/login/login.component';
 import { RegisterComponent } from './initial/register/register.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
@@ -440,6 +440,8 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
+import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 
 
 
@@ -547,7 +549,7 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         AppComponent,
         InitialComponent,
         LoginComponent,
-        LandingPageComponent,
+        MyAssessmentsComponent,
         AssessmentComponent,
         PrepareComponent,
         AssessmentInfoComponent,
@@ -839,6 +841,8 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         CisScoringChartComponent,
         SectionScoringComponent,
         DigitsOnlyNotZeroDirective,
+        LandingPageTabsComponent,
+        NewAssessmentComponent,
     ],
     providers: [
         ConfigService,
