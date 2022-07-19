@@ -40,6 +40,7 @@ import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-assessment',
+  styleUrls: ['./assessment.component.scss'],
   templateUrl: './assessment.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }

@@ -1,0 +1,29 @@
+li.active {
+    position:relative;
+    bottom:6px !important;
+    border-right: outset 2px rgba(0,0,0,.7);
+    border-radius: 5px 5px 0 0;
+}
+.btn{
+    line-height:1.6 !important;
+    border-radius:0 !important;
+    outline-style: none !important;
+    box-shadow: none;
+    border-color: transparent;
+    }
+ul.nav-tabs li.active button{
+    font-size:1rem !important;
+}
+
+
+
+li.active button span{
+    padding-bottom:0;
+}
+
+.cset-icons-chevron-right{ padding-bottom:0 !important; }
+.cset-icons-chevron-left{ padding-bottom:0 !important; }
+
+li button span{
+    padding-bottom:6px;
+}
