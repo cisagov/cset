@@ -293,7 +293,7 @@ namespace CSETWebCore.Api.Controllers
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);
-            var dict = mm.getSourceFiles();
+            var dict = mm.GetSourceFiles();
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>

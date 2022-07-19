@@ -440,6 +440,13 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
+import { ModuleContentStandardComponent } from './reports/module-content/module-content-standard/module-content-standard.component';
+import { ModuleContentModelComponent } from './reports/module-content/model/module-content-model/module-content-model.component';
+import { McGroupingComponent } from './reports/module-content/model/mc-grouping/mc-grouping.component';
+import { McQuestionComponent } from './reports/module-content/model/mc-question/mc-question.component';
+import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
+import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
+import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 
 
 
@@ -839,6 +846,13 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         CisScoringChartComponent,
         SectionScoringComponent,
         DigitsOnlyNotZeroDirective,
+        ModuleContentStandardComponent,
+        ModuleContentModelComponent,
+        McGroupingComponent,
+        McQuestionComponent,
+        McOptionComponent,
+        GuidanceBlockComponent,
+        ReferencesBlockComponent,
     ],
     providers: [
         ConfigService,

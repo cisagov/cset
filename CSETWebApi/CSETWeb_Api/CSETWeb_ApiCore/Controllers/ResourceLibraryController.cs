@@ -52,7 +52,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ShowResourceLibrary")]
         public IActionResult ShowResourceLibrary()
         {
-            var buildDocuments = new QuestionInformationTabData(_html, _context).GetBuildDocuments();
+            var refBuilder = new Helpers.ReferencesBuilder(_context);
+            var buildDocuments = refBuilder.GetBuildDocuments();
             return Ok(buildDocuments != null && buildDocuments.Count > 100);
         }
 

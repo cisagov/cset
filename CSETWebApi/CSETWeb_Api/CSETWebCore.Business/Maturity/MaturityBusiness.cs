@@ -322,7 +322,7 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public Dictionary<int,string> getSourceFiles()
+        public Dictionary<int,string> GetSourceFiles()
         {
             List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id

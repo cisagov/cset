@@ -1,0 +1,21 @@
+<h3><em>{{set?.setFullName}}</em></h3>
+
+<div *ngFor="let cat of set?.categories">
+    <div *ngFor="let subcat of cat.subcategories">
+        <div *ngFor="let req of subcat.requirements" class="ml-4 mb-5">
+            <h4>{{cat.categoryName}}</h4>
+
+            <h5>{{subcat.subcategoryName}}</h5>
+
+            <div>CSET ID: {{req.requirementID}}</div>
+
+            <div class="color1 font-weight-bold mt-2">{{req.title}}</div>
+
+            <div [innerHTML]="req.requirementText" class="mb-4"></div>
+
+            <app-guidance-block [supplementalInfo]="req.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>
+
+            <app-references-block [sourceDocs]="req.sourceDocs" [resourceDocs]="req.resourceDocs" *ngIf="reportSvc.showReferences"></app-references-block>            
+        </div>
+    </div>
+</div>
