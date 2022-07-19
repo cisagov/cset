@@ -6,7 +6,7 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-module-content',
   templateUrl: './module-content.component.html',
-  styleUrls: ['./module-content.component.scss']
+  styleUrls: ['./module-content.component.scss', '../../../reports/reports.scss']
 })
 export class ModuleContentComponent implements OnInit {
 
@@ -52,5 +52,13 @@ export class ModuleContentComponent implements OnInit {
           });
         }
       });
+  }
+
+  toggleShowGuidance(evt: any) {
+    this.reportSvc.showGuidance = evt.srcElement.checked;
+  }
+
+  toggleShowReferences(evt: any) {
+    this.reportSvc.showReferences = evt.srcElement.checked;
   }
 }

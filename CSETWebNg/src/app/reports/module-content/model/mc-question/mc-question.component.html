@@ -1,10 +1,16 @@
 <div class="mb-2">
-    <div [innerHTML]="q.questionText" class="mb-1">
+    <div>
+        CSET ID: {{q.questionId}}
+    </div>
+    <div [innerHTML]="q.questionText" class="mb-3">
     </div>
 
-    <app-guidance-block [supplementalInfo]="q.supplementalInfo"></app-guidance-block>
+    <app-guidance-block [supplementalInfo]="q.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>
 
-    <app-references-block [sourceDocs]="q.sourceDocs" [resourceDocs]="q.resourceDocs"></app-references-block>
+    <app-references-block 
+        [sourceDocs]="q.sourceDocuments" [resourceDocs]="q.resourceDocuments" [referenceText]="q.referenceText"
+    *ngIf="reportSvc.showReferences"></app-references-block>
+
 
     <div class="ml-4" *ngIf="q.options.length > 0">
         <ul>

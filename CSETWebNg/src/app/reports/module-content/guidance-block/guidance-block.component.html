@@ -17,9 +17,9 @@
         </svg>
     </div>
     <div *ngIf="!!supplementalInfo && supplementalInfo.length > 0"
-        [innerHTML]="supplementalInfo" class="mb-4"></div>
+        [innerHTML]="supplementalInfo"></div>
 
-    <div *ngIf="!supplementalInfo || supplementalInfo.length === 0" class="mb-4"
+    <div *ngIf="!supplementalInfo || supplementalInfo.length === 0"
         style="font-style: italic">
         (No guidance defined)
     </div>

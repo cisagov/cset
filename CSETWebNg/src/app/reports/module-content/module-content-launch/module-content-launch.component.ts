@@ -32,7 +32,7 @@ export class ModuleContentLaunchComponent implements OnInit {
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
-      this.standards = x;
+      this.standards = x.filter(s => s.isDisplayed);
     });
 
     this.models = AssessmentService.allMaturityModels;

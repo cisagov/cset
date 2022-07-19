@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ReportService } from '../../../../services/report.service';
 
 @Component({
   selector: 'app-mc-question',
@@ -10,7 +11,9 @@ export class McQuestionComponent implements OnInit {
   @Input()
   q: any;
 
-  constructor() { }
+  constructor(
+    public reportSvc: ReportService
+  ) { }
 
   ngOnInit(): void {
   }
