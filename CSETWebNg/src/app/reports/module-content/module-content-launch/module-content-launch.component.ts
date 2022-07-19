@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StandardsBlock } from '../../../models/standards.model';
 import { StandardService } from '../../../services/standard.service';
 import { SetBuilderService } from '../../../services/set-builder.service';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-module-content-launch',
@@ -11,32 +12,52 @@ import { SetBuilderService } from '../../../services/set-builder.service';
 })
 export class ModuleContentLaunchComponent implements OnInit {
 
-  standards: any[];
+  whichType = '';
 
+  standards: any[];
   selectedStandard;
 
+  models: any[];
+  selectedModel;
+
   /**
-   *
+   * 
    */
   constructor(
-    private standardSvc: StandardService,
     private setBuilderSvc: SetBuilderService
   ) { }
 
   /**
-   *
+   * 
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
-      this.standards = x;
+      this.standards = x.filter(s => s.isDisplayed);
     });
+
+    this.models = AssessmentService.allMaturityModels;
   }
 
   /**
-   *
+   * 
    */
-  launchReport() {
-    const url = 'index.html?returnPath=report/module-content?m=' + this.selectedStandard
+  selectType(event: any) {
+    this.whichType = event.srcElement.id;
+  }
+
+  /**
+   * 
+   */
+  launchModelReport() {
+    const url = '/report/module-content?mm=' + this.selectedModel;
+    window.open(url, '_blank');
+  }
+
+  /**
+   * 
+   */
+  launchStandardReport() {
+    const url = '/report/module-content?m=' + this.selectedStandard;
     window.open(url, '_blank');
   }
 
