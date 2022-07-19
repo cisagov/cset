@@ -306,7 +306,8 @@ namespace CSETWebCore.Business.Maturity
                     OptionType = o.Mat_Option_Type,
                     Sequence = o.Answer_Sequence,
                     HasAnswerText = o.Has_Answer_Text,
-                    Weight = o.Weight
+                    Weight = o.Weight,
+                    IsNone = o.Is_None
                 };
 
                 var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id
