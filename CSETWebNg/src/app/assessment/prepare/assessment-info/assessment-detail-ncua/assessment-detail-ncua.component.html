@@ -26,7 +26,7 @@
 
 
 
-    <ng-container *ngIf="this.assessment.maturityModel.modelName !== 'ISE'">
+    <ng-container *ngIf="this.assessment.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label class="mb-1" for="name">Assessment Name</label>
@@ -46,7 +46,7 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="this.assessment.maturityModel.modelName === 'ISE'">
+    <ng-container *ngIf="this.assessment.maturityModel !== null && this.assessment.maturityModel.modelName === 'ISE'">
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label class="mb-1" for="name">Assessment Name</label>

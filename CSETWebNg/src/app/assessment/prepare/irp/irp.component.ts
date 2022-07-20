@@ -53,7 +53,6 @@ export class IRPComponent implements OnInit {
         this.irpSvc.getIRPList().subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
-                console.log(JSON.stringify(data, null, 4));
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
