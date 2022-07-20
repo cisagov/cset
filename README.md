@@ -1,7 +1,3 @@
-# Please note we do not use java and are not vulnerable to the log4j vulnerability.
-After review we do use log4net but are not using log4j
-
-
 # CSET 11.x.x
  
 Download CSET For Windows:
@@ -16,7 +12,10 @@ How Do I Use CSET?
 Older Versions of CSET For Windows:
 [CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
 
-						
+
+# Please note we do not use java and are not vulnerable to the log4j vulnerability.
+After review we do use log4net but are not using log4j
+
 -------------------------------------------------------------------------
 
 File Checksum Integrity Verifier version 2.05.
