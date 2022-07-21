@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public SETS()
         {
+            ASSESSMENT_SEQUENCES = new HashSet<ASSESSMENT_SEQUENCES>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation = new HashSet<CUSTOM_STANDARD_BASE_STANDARD>();
             CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation = new HashSet<CUSTOM_STANDARD_BASE_STANDARD>();
@@ -83,12 +84,15 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         public bool? IsEncryptedModuleOpen { get; set; }
         public int? Icon_Id { get; set; }
+
         [ForeignKey("Icon_Id")]
         [InverseProperty("SETS")]
         public virtual ASSESSMENT_ICONS Icon { get; set; }
         [ForeignKey("Set_Category_Id")]
         [InverseProperty("SETS")]
         public virtual SETS_CATEGORY Set_Category { get; set; }
+        [InverseProperty("Set_NameNavigation")]
+        public virtual ICollection<ASSESSMENT_SEQUENCES> ASSESSMENT_SEQUENCES { get; set; }
         [InverseProperty("Set_NameNavigation")]
         public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         [InverseProperty("Base_StandardNavigation")]
