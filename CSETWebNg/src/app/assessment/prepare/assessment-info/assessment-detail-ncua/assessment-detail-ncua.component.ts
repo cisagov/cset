@@ -39,10 +39,11 @@ import { NCUAService } from '../../../../services/ncua.service';
 export class AssessmentDetailNcuaComponent implements OnInit {
 
   assessment: AssessmentDetail = {};
-  ncuaOptions: boolean;
   
   // Adding a date property here to avoid breaking any other assessments. Will probably update later.
   assessmentEffectiveDate: Date = new Date();
+
+  contactInitials: string = "";
 
   /**
    * 
@@ -82,6 +83,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
+
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+      this.contactInitials = firstInitial + lastInitial;
+      console.log("CONTACT INITIALS : " + this.contactInitials);
+
+    });
 
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -138,6 +147,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   createAssessmentName() {
     if (this.isAnExamination()) {
+      if (this.assessment.assessmentName.includes("merged")) {
+        return;
+      }
+      
       this.assessment.assessmentName = "ISE";
     } else {
       this.assessment.assessmentName = "ACET";
@@ -154,6 +167,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessment.assessmentDate) {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
+    }
+
+    if (this.isAnExamination()) {
+      this.assessment.assessmentName = this.assessment.assessmentName + "_" + this.contactInitials;
     }
   }
 
