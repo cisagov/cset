@@ -34,6 +34,9 @@ export class MergeExaminationsComponent implements OnInit {
   // The returned merged assessment
   mergedAssessment: AssessmentDetail = {};
 
+  mergeContactInitials: string = "";
+  attemptingToMerge: boolean = false;
+
 
   constructor(
     public ncuaSvc: NCUAService,
@@ -89,6 +92,7 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
         this.mergeConflicts = response;
+        console.log("This.mergeConflicts: " + JSON.stringify(this.mergeConflicts, null, 4));
         this.getAssessmentNames();
       }
     );
@@ -105,6 +109,24 @@ export class MergeExaminationsComponent implements OnInit {
       this.assessmentNames[7] = this.mergeConflicts[0].assessment_Name8;
       this.assessmentNames[8] = this.mergeConflicts[0].assessment_Name9;
       this.assessmentNames[9] = this.mergeConflicts[0].assessment_Name10;
+
+      // get any name that's not null
+      let validNames = [];
+      let initialsArray = [];
+      for (let i = 0; i < this.ncuaSvc.assessmentsToMerge.length; i++) {
+          validNames.push(this.assessmentNames[i]);
+        }
+
+      // get the contact initials from the end of each examination being merged
+      for (let i = 0; i < validNames.length; i++) {
+        let initialOne = validNames[i][validNames[i].length - 2];
+        let initialTwo = validNames[i][validNames[i].length - 1];
+        initialsArray.push(initialOne + initialTwo);
+      }
+
+      this.mergeContactInitials = initialsArray.join("_");
+      console.log("Valid Names: " + JSON.stringify(validNames, null, 4));
+      console.log("Initials: " + JSON.stringify(this.mergeContactInitials, null, 4));
   }
 
   navToHome() {
@@ -142,10 +164,12 @@ export class MergeExaminationsComponent implements OnInit {
         componentGuid: '00000000-0000-0000-0000-000000000000'
       }
     }
-
   }
 
   createMergedAssessment() {
+    // null out the button to prevent multiple clicks
+    this.attemptingToMerge = true;
+
     // Create a brand new assessment
     this.assessSvc.createAssessment("ACET")
     .toPromise()
@@ -158,7 +182,7 @@ export class MergeExaminationsComponent implements OnInit {
           this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
             // Update the assessment with the merge data and send it back
-            details.assessmentName = "Merged ISE " + this.datePipe.transform(details.assessmentDate, 'MMddyy') + " " + "";
+            details.assessmentName = "Merged ISE " + this.datePipe.transform(details.assessmentDate, 'MMddyy') + "_" + this.mergeContactInitials;
             details.isAcetOnly = false;
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");
