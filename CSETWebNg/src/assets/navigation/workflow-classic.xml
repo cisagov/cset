@@ -1,0 +1,26 @@
+<nav>
+    <!-- Prepare Phase -->
+    <node displaytext="Prepare" id="phase-prepare">
+        <node displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" />
+        <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" />
+        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" />
+    </node>
+
+
+
+    <!-- Assessment Phase -->
+    <node displaytext="Assessment" id="phase-assessment">
+        <node displaytext="Standard Questions" id="questions" path="assessment/:id>/questions" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+    </node>
+
+
+
+    <!-- Results - Standards -->
+    <node displaytext="Standards Results" id="standards-results-node" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;">
+        <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
+        <node displaytext="Control Priorities" id="ranked-questions" path="assessment/:id>/results/ranked-questions" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+        <node displaytext="Standards Summary" id="standards-summary" path="assessment/:id>/results/standards-summary" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+        <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/:id>/results/standards-ranked" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;"/>
+        <node displaytext="Results By Category" id="standards-results" path="assessment/:id>/results/standards-results" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+    </node>
+</nav>
