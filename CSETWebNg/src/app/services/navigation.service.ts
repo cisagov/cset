@@ -60,6 +60,11 @@ export class NavigationService {
   acetSelected = false;
   diagramSelected = true;
 
+  analyticsIsUp = false;
+  cisSubnodes = null;
+
+
+
   /**
    *
    */
@@ -67,11 +72,34 @@ export class NavigationService {
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
     private router: Router,
-    private http: HttpClient
-  ) { 
+    private http: HttpClient,
+    private analyticsSvc: AnalyticsService,
+    private questionsSvc: QuestionsService,
+    private maturitySvc: MaturityService,
+    private cisSvc: CisService
+  ) {
     this.setWorkflow('classic');
-    debugger;
+
+    // set up the mat tree control and its data source
+    this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
+    this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
+    this.dataChange.subscribe(data => {
+      this.dataSource.data = data;
+      this.treeControl.dataNodes = data;
+      this.treeControl.expandAll();
+    });
+
+    this.analyticsSvc.pingAnalyticsService().subscribe(data => {
+      this.analyticsIsUp = true;
+    });
+
+    // get and store the CIS subnode list from the API.
+    this.cisSvc.cisSubnodeList$.subscribe(l => {
+      this.cisSubnodes = l;
+    });
   }
+
+  private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
 
   /**
@@ -148,30 +176,30 @@ export class NavigationService {
    * to see if it is useful to the user or is just clutter in the nav tree.
    * For now, there's no need to make API calls whose response will not be used.
    */
-   setQuestionsTree() {
+  setQuestionsTree() {
     const d = this.dataSource.data;
     this.dataSource.data = null;
     this.dataSource.data = d;
   }
 
-    /**
-   *
-   */
-     getFramework() {
-      return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
-    }
-  
-    setACETSelected(acet: boolean) {
-      this.acetSelected = acet;
-      localStorage.removeItem('tree');
-      this.buildTree(this.getMagic());
-    }
-  
-    setFrameworkSelected(framework: boolean) {
-      this.frameworkSelected = framework;
-      localStorage.removeItem('tree');
-      this.buildTree(this.getMagic());
-    }
+  /**
+ *
+ */
+  getFramework() {
+    return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
+  }
+
+  setACETSelected(acet: boolean) {
+    this.acetSelected = acet;
+    localStorage.removeItem('tree');
+    this.buildTree(this.getMagic());
+  }
+
+  setFrameworkSelected(framework: boolean) {
+    this.frameworkSelected = framework;
+    localStorage.removeItem('tree');
+    this.buildTree(this.getMagic());
+  }
 
   hasNestedChild(_: number, node: NavTreeNode) {
     return node.children.length > 0;
@@ -256,10 +284,15 @@ export class NavigationService {
    * 
    */
   setWorkflow(name: string) {
-    this.http.get('assets/navigation/workflow-' + name + '.xml', { responseType: 'text' }).subscribe((xml: string) => {
+    const url = 'assets/navigation/workflow-' + name + '.xml';
+    this.http.get(url, { responseType: 'text' }).subscribe((xml: string) => {
       let d = new DOMParser();
       this.workflow = d.parseFromString(xml, 'text/xml');
-    });
+    },
+      (err: HttpErrorResponse) => {
+        debugger;
+        console.log(err);
+      });
   }
 
   /**
@@ -273,25 +306,29 @@ export class NavigationService {
       return;
     }
 
-    if (currentPage.children.length == 0 && currentPage.nextElementSibling == null) {
+    if (currentPage.children.length == 0 && currentPage.nextElementSibling == null && currentPage.parentElement.tagName == 'nav') {
       // we are at the last page, nothing to do
       return;
     }
 
-    let potentialTarget = currentPage;
+    let target = currentPage;
 
     do {
-      if (potentialTarget.children.length > 0) {
-        potentialTarget = <HTMLElement>potentialTarget.firstElementChild;
+
+      if (target.children.length > 0) {
+        target = <HTMLElement>target.firstElementChild;
+      } else if (!target.nextElementSibling) {
+        target = <HTMLElement>target.parentElement;
+        target = <HTMLElement>target.nextElementSibling;
       } else {
-        potentialTarget = <HTMLElement>potentialTarget.nextElementSibling;
+        target = <HTMLElement>target.nextElementSibling;
       }
-    } while (!this.showPage(potentialTarget));
+    } while (!this.showPage(target));
 
 
-    this.setCurrentPage(potentialTarget.id);
+    this.setCurrentPage(target.id);
 
-    const newPath = potentialTarget.attributes['path'].replace('{:id}', this.assessSvc.id().toString());
+    const newPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
   }
 
@@ -305,27 +342,30 @@ export class NavigationService {
       return;
     }
 
-    if (currentPage.previousElementSibling == null && currentPage.parentElement.tagName == 'NAV') {
+    if (currentPage.previousElementSibling == null && currentPage.parentElement.tagName == 'nav') {
       // we are at the first page, nothing to do
       return;
     }
 
-    let potentialTarget = currentPage;
+    let target = currentPage;
 
 
     do {
-      if (potentialTarget.previousElementSibling == null) {
-        potentialTarget = <HTMLElement>potentialTarget.parentElement;
+      if (target.children.length > 0) {
+        target = <HTMLElement>target.lastElementChild;
+      } else if (!target.previousElementSibling) {
+        target = <HTMLElement>target.parentElement;
+        target = <HTMLElement>target.previousElementSibling;
       } else {
-        potentialTarget = <HTMLElement>potentialTarget.previousElementSibling;
+        target = <HTMLElement>target.previousElementSibling;
       }
-    } while (!this.showPage(potentialTarget));
+    } while (!this.showPage(target));
 
 
 
-    this.setCurrentPage(potentialTarget.id);
+    this.setCurrentPage(target.id);
 
-    const newPath = potentialTarget.attributes['path'].replace('{:id}', this.assessSvc.id().toString());
+    const newPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([newPath]);
   }
 
@@ -353,7 +393,7 @@ export class NavigationService {
       this.setCurrentPage(targetPage.id);
 
       // determine the route path
-      const targetPath = targetPage.attributes['path'].replace('{:id}', this.assessSvc.id().toString());
+      const targetPath = targetPage.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
       this.router.navigate([targetPath]);
       return;
     }
@@ -395,10 +435,10 @@ export class NavigationService {
    * Used to hide the "Next" button.
    * @returns
    */
-   isLastVisiblePage(id: string): boolean {
+  isLastVisiblePage(id: string): boolean {
     return false; // TODO
     //var x = this.workflow.lastElementChild
-   }
+  }
 
   /**
    * Recurses a list of NavTreeNode and their children for a
@@ -463,7 +503,7 @@ export class NavigationService {
   /**
    * Dynamically adds the subnodes to the pages array.
    */
-   insertCisNodes() {
+  insertCisNodes() {
     // if (!this.pages || !this.cisSubnodes || this.cisSubnodes.length === 0) {
     //   return;
     // }
@@ -487,10 +527,4 @@ export class NavigationService {
     return assessment?.useDiagram || assessment?.useStandard;
   }
 
-  /**
-   * 
-   */
-  analyticsIsUp(): boolean {
-    return false;
-  }
 }

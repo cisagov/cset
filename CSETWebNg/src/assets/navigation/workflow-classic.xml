@@ -9,18 +9,18 @@
 
 
     <!-- Assessment Phase -->
-    <node displaytext="Assessment" id="phase-assessment">
-        <node displaytext="Standard Questions" id="questions" path="assessment/:id>/questions" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+    <node displaytext="Assessment" id="phase-assessment-1">
+        <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" />
     </node>
 
 
 
     <!-- Results - Standards -->
-    <node displaytext="Standards Results" id="standards-results-node" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;">
+    <node displaytext="Standards Results" id="standards-results-node" >
         <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
-        <node displaytext="Control Priorities" id="ranked-questions" path="assessment/:id>/results/ranked-questions" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
-        <node displaytext="Standards Summary" id="standards-summary" path="assessment/:id>/results/standards-summary" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
-        <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/:id>/results/standards-ranked" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;"/>
-        <node displaytext="Results By Category" id="standards-results" path="assessment/:id>/results/standards-results" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useStandard;" />
+        <node displaytext="Control Priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions"  />
+        <node displaytext="Standards Summary" id="standards-summary" path="assessment/{:id}/results/standards-summary"  />
+        <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/{:id}/results/standards-ranked" />
+        <node displaytext="Results By Category" id="standards-results" path="assessment/{:id}/results/standards-results"  />
     </node>
 </nav>
