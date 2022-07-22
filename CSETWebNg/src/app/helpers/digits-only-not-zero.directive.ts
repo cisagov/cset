@@ -37,8 +37,6 @@ export class DigitsOnlyNotZeroDirective {
         this._el.nativeElement.value = initialValue.replace(/[^0-9]*/g, '');
         this._el.nativeElement.value = this._el.nativeElement.value.replace(/^0*/g, '');
 
-        console.log(initialValue)
-        console.log(this._el.nativeElement.value)
         if (initialValue !== this._el.nativeElement.value) {
             event.stopPropagation();
         }
