@@ -44,7 +44,7 @@ export class AssessmentInfoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.navSvc.setWorkflow("BASE");
+    this.navSvc.setWorkflow('classic');
 
     if (this.configSvc.installationMode === 'RRA') {
       this.navSvc.setWorkflow('RRA');
