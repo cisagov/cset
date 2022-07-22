@@ -1,0 +1,26 @@
+<nav>
+    <!-- Prepare Phase -->
+    <node displaytext="Prepare" id="phase-prepare">
+        <node displaytext="Assessment Configuration" id="info1" path="assessment/:id>/prepare/info1" />
+        <node displaytext="Assessment Information" id="info2" path="assessment/:id>/prepare/info2" />
+    </node>
+
+
+
+    <!-- Assessment Phase -->
+    <node displaytext="Assessment" id="phase-assessment">
+        <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/:id>/diagram-questions" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+    </node>
+
+
+
+    <!-- Results - Components -->
+    <node displaytext="Results" id="phase-results">
+        <node displaytext="Components Results" id="components-results-node" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;"/>
+        <node displaytext="Components Summary" id="components-summary" path="assessment/:id>/results/components-summary" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+        <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/:id>/results/components-ranked" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+        <node displaytext="Component Results By Category" id="components-results" path="assessment/:id>/results/components-results" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+        <node displaytext="Answers By Component Type" id="components-types" path="assessment/:id>/results/components-types" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+        <node displaytext="Network Warnings" id="components-warnings" path="assessment/:id>/results/components-warnings" condition="return !!this.assessSvc.assessment && this.assessSvc.assessment?.useDiagram;" />
+    </node>
+</nav>

@@ -449,9 +449,6 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
-import { WorkflowClassicComponent } from './services/navigation/workflow-classic/workflow-classic.component';
-
-
 
 
 @NgModule({
@@ -858,8 +855,7 @@ import { WorkflowClassicComponent } from './services/navigation/workflow-classic
         McQuestionComponent,
         McOptionComponent,
         GuidanceBlockComponent,
-        ReferencesBlockComponent,
-        WorkflowClassicComponent,
+        ReferencesBlockComponent
     ],
     providers: [
         ConfigService,
