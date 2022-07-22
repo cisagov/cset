@@ -51,7 +51,11 @@ namespace CSETWebCore.Business.Question
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var resp = new QuestionResponse();            
+            var resp = new QuestionResponse();
+
+            // Ideally, we would not call this proc each time we fetch the questions.
+            // Is there a quick way to tell if all the diagram answers have already been filled?
+            _context.FillNetworkDiagramQuestions(assessmentId);
 
             var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
 
