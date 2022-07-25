@@ -323,7 +323,7 @@
                   <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
               </tr>
               <tr
-                  *ngIf="(!tab?.referenceTextList || tab?.referenceTextList?.length === 0) && tab?.sourceDocumentsList.length === 0 && tab?.resourceDocumentList.length === 0">
+                  *ngIf="areNoReferenceDocumentsAvailable()">
                   <td colspan="2">(no reference documents available)</td>
               </tr>
           </table>
