@@ -62,6 +62,17 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
         /// <summary>
+        /// Gets the full list of sets that are being used in an assessment.
+        /// </summary>
+        public List<SetDetail> GetSetsInUseList() 
+        {
+            List<AVAILABLE_STANDARDS> selectedStandards = _context.AVAILABLE_STANDARDS.Where(x => x.Selected).ToList();
+
+            return GetCustomSetList(true).FindAll(x => selectedStandards.Exists(y => y.Set_Name == x.SetName));
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         public void SetBaseSets(String setName, string[] setNames)
