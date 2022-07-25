@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Model.Maturity;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -224,8 +226,40 @@ namespace CSETWebCore.Api.Controllers
             return Ok(questions);
         }
 
+        //--------------------------------
+        // CRMP Controllers
+        //--------------------------------      
+        [HttpGet]
+        [Route("api/results/crmpSiteSummary")]
+        public IActionResult GetCRMPDetailReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
 
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
+            CrmpSummary summary = new CrmpSummary(_context);
+            MaturityReportDetailData data = new MaturityReportDetailData();
+            
+            data.CrmpSummary = summary.GetCrmpSummary(assessmentId);
+            return Ok(data);
+        }
+        //--------------------------------
+        // VBOS Controllers
+        //--------------------------------
+        [HttpGet]
+        [Route("api/results/vbosdetail")]
+        public IActionResult GetVBOSDetailReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            VbosSummary summary = new VbosSummary(_context);
+          //  MaturityReportDetailData data = new MaturityReportDetailData();
+            
+          //  data.VbosSummary = summary.GetVbosSummaryOverall(assessmentId);
+            return Ok(summary.GetVbosSummaryOverall(assessmentId));
+        }
         /// <summary>
         /// Returns the information for a report containing 
         /// questions with alternate justification.

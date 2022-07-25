@@ -160,6 +160,8 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 
 import { TutorialCrmpComponent } from './assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component';
 import { TutorialVbosComponent } from './assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component';
+import { CrmpSummaryComponent } from './assessment/results/crmp/crmp-summary.component';
+import { VbosSummaryComponent } from './assessment/results/vbos/vbos-summary.component';
 
 
 const installationMode = localStorage.getItem('installationMode');
@@ -393,7 +395,9 @@ const appRoutes: Routes = [
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'cyote-assessment-complete', component: CyoteAssessmentCompleteComponent },
-              { path: '', component: DashboardComponent },
+              { path: 'crmp-summary', component: CrmpSummaryComponent},
+              { path: 'vbos-summary', component: VbosSummaryComponent },
+             // { path: 'vbos-summary', component: DashboardComponent }
             ]
           },
 
