@@ -9,6 +9,7 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
     public interface IModuleBuilderBusiness
     {
         List<SetDetail> GetCustomSetList(bool includeNonCustom = false);
+        List<SetDetail> GetSetsInUseList();
         void SetBaseSets(String setName, string[] setNames);
         List<String> GetBaseSets(string customSetName);
         List<SetDetail> GetNonCustomSetList(string exceptionList);
