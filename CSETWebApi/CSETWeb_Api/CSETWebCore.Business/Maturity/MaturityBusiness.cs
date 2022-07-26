@@ -216,7 +216,10 @@ namespace CSETWebCore.Business.Maturity
                             break;
                         case "N":
                         case "U":
-                            q.Score = (int)mx?.SPRSValue;
+                            if (mx != null)
+                            {
+                                q.Score = (int)mx.SPRSValue;
+                            }
                             break;
                     }
 

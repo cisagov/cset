@@ -18,7 +18,12 @@ export class AssessmentInfoTsaComponent implements OnInit {
 
   ngOnInit(): void {
     this.navSvc.setCurrentPage('info-tsa');
-    this.navSvc.setWorkflow("TSA");
+
+    if (this.assessSvc.assessment.workflow === 'TSA') {
+      this.navSvc.setWorkflow("tsa");
+    } else {
+      this.navSvc.setWorkflow('classic');
+    }
   }
 
 }

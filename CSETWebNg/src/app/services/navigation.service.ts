@@ -10,6 +10,8 @@ import { AnalyticsService } from './analytics.service';
 import { QuestionsService } from './questions.service';
 import { MaturityService } from './maturity.service';
 import { CisService } from './cis.service';
+import { nodeName } from 'jquery';
+import { NavBackNextComponent } from '../assessment/navigation/nav-back-next/nav-back-next.component';
 
 
 
@@ -22,7 +24,6 @@ export interface NavTreeNode {
   HeadingText?: string;
   DocId?: string;
   elementType?: string;
-  isPhaseNode?: boolean;
   isCurrent?: boolean;
   expandable: boolean;
   visible: boolean;
@@ -92,11 +93,6 @@ export class NavigationService {
     this.analyticsSvc.pingAnalyticsService().subscribe(data => {
       this.analyticsIsUp = true;
     });
-
-    // get and store the CIS subnode list from the API.
-    this.cisSvc.cisSubnodeList$.subscribe(l => {
-      this.cisSubnodes = l;
-    });
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
@@ -128,8 +124,6 @@ export class NavigationService {
    */
   buildTree(magic: string) {
     if (this.magic === magic) {
-      this.insertCisNodes();
-
       if (localStorage.getItem('tree')) {
         let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
         this.dataSource.data = <NavTreeNode[]>tree;
@@ -139,24 +133,6 @@ export class NavigationService {
       this.treeControl.dataNodes = this.dataSource.data;
       localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
       this.setQuestionsTree();
-
-      this.treeControl.expandAll();
-
-      this.isNavLoading = false;
-    }
-  }
-
-  /**
-   *
-   */
-  setTree(tree: NavTreeNode[], magic: string, collapsible: boolean = true) {
-    if (this.magic === magic) {
-      this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
-        return observableOf(node.children);
-      });
-      this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
-      this.dataSource.data = tree;
-      this.treeControl.dataNodes = tree;
 
       this.treeControl.expandAll();
 
@@ -183,8 +159,26 @@ export class NavigationService {
   }
 
   /**
- *
- */
+   * Called from the resource-library component.
+   */
+  setTree(tree: NavTreeNode[], magic: string, collapsible: boolean = true) {
+    if (this.magic === magic) {
+      this.treeControl = new NestedTreeControl<NavTreeNode>((node: NavTreeNode) => {
+        return observableOf(node.children);
+      });
+      this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
+      this.dataSource.data = tree;
+      this.treeControl.dataNodes = tree;
+
+      this.treeControl.expandAll();
+
+      this.isNavLoading = false;
+    }
+  }
+
+  /**
+   *
+   */
   getFramework() {
     return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
   }
@@ -202,7 +196,7 @@ export class NavigationService {
   }
 
   hasNestedChild(_: number, node: NavTreeNode) {
-    return node.children.length > 0;
+    return node.children?.length > 0;
   }
 
   parseTocData(tree): NavTreeNode[] {
@@ -213,7 +207,6 @@ export class NavigationService {
       const node: NavTreeNode = {
         label: p.label,
         value: p.value,
-        isPhaseNode: p.isPhaseNode,
         children: p.children,
         expandable: p.expandable,
         visible: p.visible
@@ -229,49 +222,56 @@ export class NavigationService {
   buildTocData(): NavTreeNode[] {
     const toc: NavTreeNode[] = [];
 
-    // for (let i = 0; i < this.pages.length; i++) {
-    //   let p = this.pages[i];
-    //   let visible = this.shouldIShow(p.condition);
-
-    //   const node: NavTreeNode = {
-    //     label: p.displayText,
-    //     value: p.pageId,
-    //     isPhaseNode: false,
-    //     children: [],
-    //     expandable: true,
-    //     visible: visible
-    //   };
-
-    //   // the node might need tweaking based on certain factors
-    //   this.adjustNode(node);
-
-    //   if (p.level === 0) {
-    //     node.isPhaseNode = true;
-    //   }
-
-    //   if (this.currentPage === node.value) {
-    //     node.isCurrent = true;
-    //   }
-
-    //   const parentPage = this.findParentPage(i);
-    //   node.index = i;
-    //   if (!!parentPage) {
-    //     const parentNode = this.findInTree(toc, parentPage.pageId);
-    //     if (!!parentNode) {
-    //       parentNode.children.push(node);
-    //     }
-    //   } else {
-    //     toc.push(node);
-    //   }
-    // }
+    this.domToNav(this.workflow.documentElement.children, toc);
 
     return toc;
+  }
+
+
+  /**
+   * Converts workflow DOM nodes to NavTreeNodes.
+   * Calls itself recursively to populate children.
+   */
+  domToNav(domNodes: HTMLCollection, navNodes: NavTreeNode[]) {
+    Array.from(domNodes).forEach((workflowNode: HTMLElement) => {
+
+      // nodes without a 'displaytext' attribute are ignored
+      if (!!workflowNode.attributes['displaytext']) {
+
+        const navNode: NavTreeNode = {
+          label: workflowNode.attributes['displaytext'].value,
+          value: workflowNode.id ?? 0,
+          children: [],
+          expandable: true,
+          visible: true
+        };
+
+
+        // TODO
+        navNode.visible = this.showPage(workflowNode);
+
+
+
+        // the node might need tweaking based on certain factors
+        this.adjustNavNode(navNode);
+
+        if (this.currentPage === navNode.value) {
+          navNode.isCurrent = true;
+        }
+
+        navNodes.push(navNode);
+
+        if (workflowNode.children.length > 0) {
+          this.domToNav(workflowNode.children, navNode.children);
+        }
+      }
+    });
   }
 
   /**
    * Any runtime adjustments can be made here.
    */
-  adjustNode(node: NavTreeNode) {
+  adjustNavNode(node: NavTreeNode) {
     if (node.value == 'maturity-questions') {
       const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias;
       if (!!alias) {
@@ -288,6 +288,8 @@ export class NavigationService {
     this.http.get(url, { responseType: 'text' }).subscribe((xml: string) => {
       let d = new DOMParser();
       this.workflow = d.parseFromString(xml, 'text/xml');
+      localStorage.removeItem('tree');
+      this.buildTree(this.getMagic());
     },
       (err: HttpErrorResponse) => {
         debugger;
@@ -296,8 +298,7 @@ export class NavigationService {
   }
 
   /**
-   *
-   * @param cur
+   * Crawls the workflow document to determine the next viewable page.
    */
   navNext(cur: string) {
     const currentPage = this.workflow.getElementById(cur);
@@ -314,26 +315,21 @@ export class NavigationService {
     let target = currentPage;
 
     do {
-
       if (target.children.length > 0) {
         target = <HTMLElement>target.firstElementChild;
-      } else if (!target.nextElementSibling) {
-        target = <HTMLElement>target.parentElement;
-        target = <HTMLElement>target.nextElementSibling;
       } else {
+        while (!target.nextElementSibling) {
+          target = <HTMLElement>target.parentElement;
+        }
         target = <HTMLElement>target.nextElementSibling;
       }
-    } while (!this.showPage(target));
+    } while (!this.canLandOn(target) || !this.showPage(target));
 
-
-    this.setCurrentPage(target.id);
-
-    const newPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-    this.router.navigate([newPath]);
+    this.routeToTarget(target);
   }
 
   /**
-   * 
+   * Crawls the workflow document to determine the previous viewable page.
    */
   navBack(cur: string) {
     const currentPage = this.workflow.getElementById(cur);
@@ -349,24 +345,18 @@ export class NavigationService {
 
     let target = currentPage;
 
-
     do {
       if (target.children.length > 0) {
         target = <HTMLElement>target.lastElementChild;
-      } else if (!target.previousElementSibling) {
-        target = <HTMLElement>target.parentElement;
-        target = <HTMLElement>target.previousElementSibling;
       } else {
+        while (!target.previousElementSibling) {
+          target = <HTMLElement>target.parentElement;
+        }
         target = <HTMLElement>target.previousElementSibling;
       }
-    } while (!this.showPage(target));
+    } while (!this.canLandOn(target) || !this.showPage(target));
 
-
-
-    this.setCurrentPage(target.id);
-
-    const newPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-    this.router.navigate([newPath]);
+    this.routeToTarget(target);
   }
 
   /**
@@ -377,52 +367,32 @@ export class NavigationService {
     // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof id == 'string') {
-      let targetPage = this.workflow.getElementById(id);
+      let target = this.workflow.getElementById(id);
 
-      if (targetPage == null) {
-        console.error('Cannot find \'' + id + ' \'in navigation tree');
+      if (target == null) {
+        console.error('Cannot find \'' + id + ' \'in workflow document');
         return;
       }
 
       // if they clicked on a tab there won't be a path -- nudge them to the next page
-      if (!targetPage.hasAttribute('path')) {
+      if (!target.hasAttribute('path')) {
         this.navNext(id);
         return;
       }
 
-      this.setCurrentPage(targetPage.id);
-
-      // determine the route path
-      const targetPath = targetPage.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-      this.router.navigate([targetPath]);
+      this.routeToTarget(target);
       return;
     }
-
-
-    // they clicked on a question category, send them to questions
-
-    // if (this.router.url.endsWith('/questions')) {
-    //   // we are sitting on the questions screen, tell it to just scroll to the desired subcat
-    //   this.scrollToQuestion.emit(this.questionsSvc.buildNavTargetID(navTarget));
-    // } else {
-    //   // stash the desired question group and category ID
-    //   this.questionsSvc.scrollToTarget = this.questionsSvc.buildNavTargetID(navTarget);
-
-    //   // navigate to the questions screen
-    //   let targetPage = this.pages.find(p => p.pageId === 'phase-assessment');
-    //   this.setCurrentPage(targetPage.pageId);
-
-    //   const targetPath = targetPage.path.replace('{:id}', this.assessSvc.id().toString());
-    //   this.router.navigate([targetPath]);
-    // }
   }
 
   /**
-   * 
-   * @param page 
-   * @returns 
+   * Indicates if you can "land on" the page.
+   * Phase nodes (or any parent node) can't be landed on
+   * because they aren't displayable pages.  They function
+   * as collapsible nodes in the nav tree.
    */
-  showPage(page: HTMLElement): boolean {
+  canLandOn(page: HTMLElement): boolean {
+    // pages without a path can't be landed on/navigated to
     if (!page.hasAttribute('path')) {
       return false;
     }
@@ -431,13 +401,150 @@ export class NavigationService {
   }
 
   /**
+   * Evaluates conditions where a page should be hidden and
+   * ignored in the TOC and next/back workflow.
+   */
+  showPage(page: HTMLElement): boolean {
+    const conditionAttrib = page.attributes['condition']?.value;
+
+    if (!conditionAttrib || conditionAttrib.length === 0) {
+      return true;
+    }
+
+    let show = true;
+    
+    // All conditions must be true (AND).  
+    // Start with true and if any fail, result is false.
+    let conditions = conditionAttrib.toUpperCase().split(' ');
+    conditions.forEach(c => {
+
+      // if 'HIDE' is present, this trumps everything else
+      if (c == 'HIDE') {
+        show = false;
+      }
+
+      if (c.startsWith('INSTALL-MODE:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+        if (this.configSvc.installationMode == target) {
+          show = show && true;
+        }
+      }
+
+      // maturity 
+      if (c === 'USE-MATURITY') {
+        show = show && (
+          !!this.assessSvc.assessment
+          && this.assessSvc.assessment.useMaturity);
+      }
+
+
+      // standard 
+      if (c === 'USE-STANDARD') {
+        show = show && (
+          !!this.assessSvc.assessment
+          && this.assessSvc.assessment.useStandard);
+      }
+
+
+      // diagram 
+      if (c === 'USE-DIAGRAM') {
+        show = show && (
+          !!this.assessSvc.assessment
+          && this.assessSvc.assessment.useDiagram);
+      }
+
+
+      // look for the specified maturity model
+      if (c.startsWith('MATURITY:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+
+        show = show && (
+        !!this.assessSvc.assessment
+        && this.assessSvc.assessment.useMaturity
+        && this.assessSvc.usesMaturityModel(target));
+      }
+
+
+      // hide if specified maturity model is present
+      if (c.startsWith('MATURITY-NOT:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+
+        show = show && (
+        !!this.assessSvc.assessment
+        && this.assessSvc.assessment.useMaturity
+        && !this.assessSvc.usesMaturityModel(target));
+      }
+
+
+      // look for any of the listed maturity models
+      if (c.startsWith('MATURITY-ANY(')) {
+        let found = false;
+        let p1 = c.indexOf('(');
+        let p2 = c.indexOf(')');
+        let targetText = c.substring(p1 + 1, p2);
+        var targets = targetText.split(',');
+        targets.forEach(t => {
+          found = found || (
+            !!this.assessSvc.assessment
+            && this.assessSvc.assessment.useMaturity
+            && this.assessSvc.usesMaturityModel(t.trim()));
+        });
+
+        show = show && found;
+      }
+
+
+      // is maturity target level greater than X
+      if (c.startsWith('TARGET-LEVEL-GT:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+        show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
+      }
+
+
+      if (c == 'SHOW-EXEC-SUMMARY') {
+        show = show && this.showExecSummaryPage();
+      }
+
+    });
+
+    return show;
+  }
+
+  /**
+   * Navigates to the path specified in the target node.
+   */
+  routeToTarget(target: HTMLElement) {
+    this.setCurrentPage(target.id);
+
+    // determine the route path
+    const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
+    this.router.navigate([targetPath]);
+  }
+
+  /**
    * Determines if the specified page is the last visible page in the nav flow.
    * Used to hide the "Next" button.
    * @returns
    */
   isLastVisiblePage(id: string): boolean {
-    return false; // TODO
-    //var x = this.workflow.lastElementChild
+    let target = this.workflow.getElementById(id);
+
+    do {
+      if (target.children.length > 0) {
+        target = <HTMLElement>target.firstElementChild;
+      } else if (!target.nextElementSibling) {
+        while (!target.nextElementSibling && target.tagName != 'nav') {
+          target = <HTMLElement>target.parentElement;
+        }
+        target = <HTMLElement>target.nextElementSibling;
+      }
+    } while (!!target && !this.showPage(target));
+
+    if (!target) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -498,25 +605,6 @@ export class NavigationService {
       currentNode.isCurrent = true;
       this.currentPage = currentNode.value;
     }
-  }
-
-  /**
-   * Dynamically adds the subnodes to the pages array.
-   */
-  insertCisNodes() {
-    // if (!this.pages || !this.cisSubnodes || this.cisSubnodes.length === 0) {
-    //   return;
-    // }
-
-    // // if the CIS nodes are already in the array, nothing to do
-    // if (this.pages.findIndex(x => x.pageId == this.cisSubnodes[0].pageId) >= 0) {
-    //   return;
-    // }
-
-    // let cisTopIndex = this.pages.findIndex(g => g.pageId == 'maturity-questions-nested');
-    // if (cisTopIndex > 0) {
-    //   this.pages.splice(cisTopIndex + 1, 0, ...this.cisSubnodes);
-    // }
   }
 
   /**
