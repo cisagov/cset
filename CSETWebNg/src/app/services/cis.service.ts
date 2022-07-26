@@ -50,41 +50,6 @@ export class CisService {
     public assessSvc: AssessmentService
   ) { }
 
-
-  /**
-   * Builds and returns the list of CIS subnodes for navigation
-   */
-  cisSubnodeList$ = new Observable((observer) => {
-    var list = [];
-    this.getCisSubnodes().subscribe((data: any) => {
-      data.forEach(n => {
-        let ccc = {
-          displayText: n.title,
-          pageId: 'maturity-questions-nested-' + n.id,
-          level: n.level,
-          path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
-          condition: 'MATURITY-CIS'
-        }
-
-        // remove the path of 'parent' nodes to prevent direct navigation to them
-        if (n.hasChildren) {
-          Reflect.deleteProperty(ccc, 'path');
-        }
-
-        list.push(ccc);
-      });
-
-      observer.next(list);
-    });
-  })
-
-  /**
-   * Gets the CIS structure from the API.
-   */
-  getCisSubnodes() {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/navstruct');
-  }
-
   /**
    *
    */

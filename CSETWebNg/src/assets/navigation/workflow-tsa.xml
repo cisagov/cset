@@ -1,0 +1,51 @@
+<nav>
+    <node displaytext="Prepare" id="phase-prepare">
+        <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" />
+        <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" />
+    </node>
+
+
+
+    <!-- Questions/Requirements/Statements -->
+    <node displaytext="Assessment" id="phase-assessment">
+        <!-- do not show for ACET or TSA -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" 
+            condition="USE-MATURITY" />
+
+
+        <!-- condition: if a standard is in play -->
+        <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions"
+            condition="USE-STANDARD" />
+    </node>
+
+
+
+    <!-- Results -->
+    <node displaytext="Results" id="phase-results">
+
+        <!-- standards results -->
+        <node displaytext="Standards Results" id="standards-results-node" condition="USE-STANDARD">
+            <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" condition="USE-STANDARD" />
+            <node displaytext="Control Priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" condition="USE-STANDARD" />
+            <node displaytext="Standards Summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" condition="USE-STANDARD" />
+            <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/{:id}/results/standards-ranked" condition="USE-STANDARD" />
+            <node displaytext="Results By Category" id="standards-results" path="assessment/{:id}/results/standards-results" condition="USE-STANDARD" />
+        </node>
+
+
+        <!-- components results -->
+        <node displaytext="Components Results" id="components-results-node" condition="USE-DIAGRAM">
+            <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" condition="USE-DIAGRAM" />
+            <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" condition="USE-DIAGRAM" />
+            <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" condition="USE-DIAGRAM" />
+            <node displaytext="Answers By Component Type" id="components-types" path="assessment/{:id}/results/components-types" condition="USE-DIAGRAM" />
+            <node displaytext="Network Warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" condition="USE-DIAGRAM" />
+        </node>
+
+
+        <!-- Reports -->
+        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
+        <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports"/>
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" />
+
+    </nav>

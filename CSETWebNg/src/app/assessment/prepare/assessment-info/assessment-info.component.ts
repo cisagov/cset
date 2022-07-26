@@ -44,11 +44,16 @@ export class AssessmentInfoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.navSvc.setWorkflow('classic');
+    const assessment = this.assessSvc.assessment;
+    if (assessment.useStandard) {
+      this.navSvc.setWorkflow('classic');
+    } 
+    if (assessment.useMaturity) {
+      this.navSvc.setWorkflow('maturity');
+    }
 
     if (this.configSvc.installationMode === 'RRA') {
-      this.navSvc.setWorkflow('RRA');
+      this.navSvc.setWorkflow('rra');
     }
   }
-
 }
