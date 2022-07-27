@@ -45,7 +45,7 @@ export class CisService {
    * This list holds the optionIds for all of the possible inconsistent CIS options.
    * (This information should probably be stored in the DB in some way)
    */
-  public consistencyCheckOptions = [
+  public integrityCheckOptions = [
     {
       optionId: 609,
       isSelected: false,
