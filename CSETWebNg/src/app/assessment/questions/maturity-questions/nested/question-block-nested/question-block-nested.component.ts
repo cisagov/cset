@@ -211,11 +211,13 @@ export class QuestionBlockNestedComponent implements OnInit {
     });
   }
 
-  consistencyCheck(e) {
+  integrityCheck(e) {
 
     this.questionList.forEach(q => {
       if (e.find(o => o.parentQuestionId === q.questionId)) {
+        console.log(q)
         q.integrityCheckFailed = true;
+        console.log(q);
       } else {
         q.integrityCheckFailed = false;
       }

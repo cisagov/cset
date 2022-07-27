@@ -39,7 +39,7 @@ export class OptionBlockNestedComponent implements OnInit {
   @Input() q: any;
   @Input() opts: any[];
 
-  @Output() consistencyCheckEvent = new EventEmitter<number[]>();
+  @Output() integrityCheckEvent = new EventEmitter<number[]>();
 
   optRadio: any[];
   optCheckbox: any[];
@@ -77,7 +77,7 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // Show consistency check warnings on page load.
     this.opts.forEach(o => {
-      this.performConsistencyCheck(o);
+      this.performintegrityCheck(o);
     })
   }
 
@@ -224,7 +224,7 @@ export class OptionBlockNestedComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
-    this.performConsistencyCheck(o);
+    this.performintegrityCheck(o);
 
     return answer;
   }
@@ -280,22 +280,22 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    * Performs a consistency check on a selected option
    */
-  performConsistencyCheck(o) {
-    const consistencyCheckOption = this.cisSvc.consistencyCheckOptions.find(option => option.optionId === o.optionId);
+  performintegrityCheck(o) {
+    const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
     const inconsistentOptions = [];
-    if (consistencyCheckOption) {
+    if (integrityCheckOption) {
 
-      consistencyCheckOption.isSelected = o.selected;
+      integrityCheckOption.isSelected = o.selected;
 
-      if (consistencyCheckOption.isSelected) {
-        consistencyCheckOption.inconsistentOptions.forEach(option => {
-          if (this.cisSvc.consistencyCheckOptions.find(x => x.optionId === option)?.isSelected) {
-            inconsistentOptions.push(consistencyCheckOption);
+      if (integrityCheckOption.isSelected) {
+        integrityCheckOption.inconsistentOptions.forEach(option => {
+          if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected) {
+            inconsistentOptions.push(integrityCheckOption);
           }
         });
       }
     }
 
-    this.consistencyCheckEvent.emit(inconsistentOptions);
+    this.integrityCheckEvent.emit(inconsistentOptions);
   }
 }
