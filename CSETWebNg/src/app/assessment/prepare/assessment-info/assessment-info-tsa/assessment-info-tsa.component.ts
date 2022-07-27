@@ -22,7 +22,7 @@ export class AssessmentInfoTsaComponent implements OnInit {
     if (this.assessSvc.assessment.workflow === 'TSA') {
       this.navSvc.setWorkflow("tsa");
     } else {
-      this.navSvc.setWorkflow('classic');
+      this.navSvc.setWorkflow('omni');
     }
   }
 

@@ -44,16 +44,19 @@ export class AssessmentInfoComponent implements OnInit {
 
 
   ngOnInit() {
-    const assessment = this.assessSvc.assessment;
-    if (assessment.useStandard) {
-      this.navSvc.setWorkflow('classic');
-    } 
-    if (assessment.useMaturity) {
-      this.navSvc.setWorkflow('maturity');
-    }
 
-    if (this.configSvc.installationMode === 'RRA') {
-      this.navSvc.setWorkflow('rra');
-    }
+    // this simple assignment is temporary.  I think we are going to 
+    // need an "omni workflow" that supports everything, in case there
+    // is a mixture of features/options.
+    // The omni workflow will still work in a single-option assessment.
+    // const assessment = this.assessSvc.assessment;
+    // if (assessment.useStandard) {
+    //   this.navSvc.setWorkflow('classic');
+    // } 
+    // if (assessment.useMaturity) {
+    //   this.navSvc.setWorkflow('maturity');
+    // }
+
+    this.navSvc.setWorkflow('omni');
   }
 }

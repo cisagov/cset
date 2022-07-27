@@ -173,15 +173,15 @@ export class FeatureOptionComponent implements OnInit {
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
-        this.navSvc.setWorkflow('maturity');
+        //this.navSvc.setWorkflow('maturity');
         break;
       case 'standard':
         this.assessSvc.assessment.useStandard = value;
-        this.navSvc.setWorkflow('classic');
+        //this.navSvc.setWorkflow('classic');
         break;
       case 'diagram':
         this.assessSvc.assessment.useDiagram = value;
-        this.navSvc.setWorkflow('diagram');
+        //this.navSvc.setWorkflow('diagram');
         break;
     }
   }

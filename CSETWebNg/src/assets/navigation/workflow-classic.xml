@@ -24,5 +24,7 @@
 
         <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
+
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
     </node>
 </nav>
