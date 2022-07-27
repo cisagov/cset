@@ -65,9 +65,9 @@ export class FeatureOptionComponent implements OnInit {
     public maturitySvc: MaturityService
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.isNotLegacy = !this.checkIfLegacy();
-  } 
+  }
 
   /**
   * LEGACY SUBMIT:  Sets the selection of a feature and posts the assesment detail to the server.
@@ -76,11 +76,11 @@ export class FeatureOptionComponent implements OnInit {
 
     const value = event.srcElement.checked;
 
-    if(!this.isNotLegacy){
+    if (!this.isNotLegacy) {
       this.selectFeature(feature, value);
     }
 
-    if(this.isNotLegacy){
+    if (this.isNotLegacy) {
       this.setFeatureDefault();
       this.selectFeature(feature, value);
     } else {
@@ -93,7 +93,7 @@ export class FeatureOptionComponent implements OnInit {
 
       if (value) {
         this.assessSvc.setAcetDefaults();
-      } 
+      }
     }
 
     if (this.assessSvc.assessment.useMaturity) {
@@ -121,44 +121,40 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
-  onChange(feature: any, event: any){
+  onChange(feature: any, event: any) {
 
     var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
-   
-    if(!this.isNotLegacy){
+
+    if (!this.isNotLegacy) {
       this.submitlegacy(feature, event);
       return
     }
 
-    for(let i = 0; i < checkboxes.length; i++)
-    {
-      if(checkboxes[i].type == "checkbox")
-      {
-        if(checkboxes[i].name === feature.code)
-        {
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].type == "checkbox") {
+        if (checkboxes[i].name === feature.code) {
           checkboxes[i].checked = true;
           this.submitlegacy(feature, event);
         }
-        else
-        {
+        else {
           checkboxes[i].checked = false;
         }
       }
     }
   }
 
-  setFeatureDefault(){
+  setFeatureDefault() {
     this.assessSvc.assessment.useMaturity = false;
     this.assessSvc.assessment.useStandard = false;
     this.assessSvc.assessment.useDiagram = false;
   }
 
-  checkIfLegacy(){
+  checkIfLegacy() {
     let count = 0;
     count += this.assessSvc.assessment.useMaturity ? 1 : 0;
     count += this.assessSvc.assessment.useStandard ? 1 : 0;
     count += this.assessSvc.assessment.useDiagram ? 1 : 0;
- 
+
     return count > 1;
   }
 
@@ -169,16 +165,23 @@ export class FeatureOptionComponent implements OnInit {
     this.expandedDesc = !this.expandedDesc;
   }
 
-  selectFeature(feature:any, value: boolean){
+  /**
+   * As of July 2022, value is always 'true'
+   * because the component functions like radio buttons.
+   */
+  selectFeature(feature: any, value: boolean) {
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
+        //this.navSvc.setWorkflow('maturity');
         break;
       case 'standard':
         this.assessSvc.assessment.useStandard = value;
+        //this.navSvc.setWorkflow('classic');
         break;
       case 'diagram':
         this.assessSvc.assessment.useDiagram = value;
+        //this.navSvc.setWorkflow('diagram');
         break;
     }
   }
