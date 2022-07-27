@@ -22,7 +22,7 @@
 -------------------------->
 <div *ngFor="let q of questionList" class="mb-3">
     <div class="mb-2">
-        <span style="white-space: normal;">
+        <span style="white-space: normal;" [ngStyle]="{'color': q.integrityCheckFailed ? 'red' : 'black' }">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
         <span (click)="openExtras(q)" matTooltip="Question Details">
@@ -57,7 +57,7 @@
             </select>
         </div>
 
-        <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
+        <app-option-block-nested [q]="q" [opts]="q.options" (consistencyCheckEvent)="consistencyCheck($event)"></app-option-block-nested>
 
         <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
     </div>
