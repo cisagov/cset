@@ -15,8 +15,7 @@
 
 
     <!-- Results phase -->
-    <node displaytext="Results" id="phase-results">
-        <node displaytext="RRA Results" id="rra-results-node" />
+    <node displaytext="RRA Results" id="phase-results">
         <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" />
         <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" />
         <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" />
