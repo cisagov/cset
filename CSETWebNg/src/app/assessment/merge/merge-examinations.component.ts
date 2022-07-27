@@ -9,12 +9,18 @@ import { QuestionsService } from '../../services/questions.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MergeOptionsComponent } from '../../dialogs/ise-merge-options/merge-options-dialog.component';
+import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'merge-examinations',
-  templateUrl: './merge-examinations.component.html'
+  templateUrl: './merge-examinations.component.html',
+  styles: ['tr { border-bottom: 1px solid black; text-align: center; }']
 })
 export class MergeExaminationsComponent implements OnInit {
+
+  pageLoading: boolean = false;
 
   // Stored proc data
   mergeConflicts: any[] = [];
@@ -34,6 +40,7 @@ export class MergeExaminationsComponent implements OnInit {
   // The returned merged assessment
   mergedAssessment: AssessmentDetail = {};
 
+  optionsDialog: MatDialogRef<MergeOptionsComponent>;
   mergeContactInitials: string = "";
   attemptingToMerge: boolean = false;
 
@@ -46,11 +53,13 @@ export class MergeExaminationsComponent implements OnInit {
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     private router: Router,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    private dialog: MatDialog
 
   ) { }
 
   ngOnInit() {
+    this.pageLoading = true;
     this.getMainAssessmentAnswers();
     this.getConflicts();
   }
@@ -94,11 +103,13 @@ export class MergeExaminationsComponent implements OnInit {
         this.mergeConflicts = response;
         console.log("This.mergeConflicts: " + JSON.stringify(this.mergeConflicts, null, 4));
         this.getAssessmentNames();
+        this.pageLoading = false;
       }
     );
   }
 
   getAssessmentNames() {
+    if (this.mergeConflicts.length > 0) {
       this.assessmentNames[0] = this.mergeConflicts[0].assessment_Name1;
       this.assessmentNames[1] = this.mergeConflicts[0].assessment_Name2;
       this.assessmentNames[2] = this.mergeConflicts[0].assessment_Name3;
@@ -125,8 +136,18 @@ export class MergeExaminationsComponent implements OnInit {
       }
 
       this.mergeContactInitials = initialsArray.join("_");
-      console.log("Valid Names: " + JSON.stringify(validNames, null, 4));
-      console.log("Initials: " + JSON.stringify(this.mergeContactInitials, null, 4));
+    } else {
+      return
+    }
+  }
+
+  showMergeOptions() {
+    this.optionsDialog = this.dialog.open(MergeOptionsComponent, {});
+
+    this.optionsDialog
+    .afterClosed()
+    .subscribe(() => {
+    });
   }
 
   navToHome() {
