@@ -39,7 +39,7 @@ export class OptionBlockNestedComponent implements OnInit {
   @Input() q: any;
   @Input() opts: any[];
 
-  @Output() consistencyCheck = new EventEmitter<number[]>();
+  @Output() consistencyCheckEvent = new EventEmitter<number[]>();
 
   optRadio: any[];
   optCheckbox: any[];
@@ -290,7 +290,7 @@ export class OptionBlockNestedComponent implements OnInit {
         });
 
         if (inconsistentOptions.length) {
-          this.consistencyCheck.emit(inconsistentOptions);
+          this.consistencyCheckEvent.emit(inconsistentOptions);
         }
       }
     }
