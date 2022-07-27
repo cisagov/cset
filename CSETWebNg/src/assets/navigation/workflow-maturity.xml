@@ -8,6 +8,7 @@
         <!-- model select (this will be going away when the Gallery Interface is ready) -->
         <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" />
 
+
         <!-- maturity model tutorials -->
         <node displaytext="CMMC Tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" condition="MATURITY:CMMC" />
         <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" condition="MATURITY-ANY(CMMC,CMMC2)" />
@@ -42,51 +43,51 @@
 
 
         <node displaytext="CIS Questions" condition="MATURITY:CIS">
-            <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management" condition="MATURITY:CIS">
-                <node id="maturity-questions-nested-2306" path="assessment/{:id}/maturity-questions-nested/2306" displaytext="1. Cybersecurity Leadership" condition="MATURITY:CIS" />
+            <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management">
+                <node id="maturity-questions-nested-2306" path="assessment/{:id}/maturity-questions-nested/2306" displaytext="1. Cybersecurity Leadership" />
                 <node id="maturity-questions-nested-2307" displaytext="Cybersecurity Architecture">
-                    <node id="maturity-questions-nested-2328" path="assessment/{:id}/maturity-questions-nested/2328" displaytext="2. Inventory" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2329" path="assessment/{:id}/maturity-questions-nested/2329" displaytext="3. System Architecture" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2330" path="assessment/{:id}/maturity-questions-nested/2330" displaytext="4. Security Architecture" condition="MATURITY:CIS" />
+                    <node id="maturity-questions-nested-2328" path="assessment/{:id}/maturity-questions-nested/2328" displaytext="2. Inventory" />
+                    <node id="maturity-questions-nested-2329" path="assessment/{:id}/maturity-questions-nested/2329" displaytext="3. System Architecture" />
+                    <node id="maturity-questions-nested-2330" path="assessment/{:id}/maturity-questions-nested/2330" displaytext="4. Security Architecture" />
                 </node>
-                <node id="maturity-questions-nested-2308" path="assessment/{:id}/maturity-questions-nested/2308" displaytext="5. Change Management" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2309" path="assessment/{:id}/maturity-questions-nested/2309" displaytext="6. Lifecycle Tracking" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2310" path="assessment/{:id}/maturity-questions-nested/2310" displaytext="7. Assessment and Evaluations" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2311" path="assessment/{:id}/maturity-questions-nested/2311" displaytext="8. Cybersecurity Plan" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2312" path="assessment/{:id}/maturity-questions-nested/2312" displaytext="9. Cybersecurity Exercises" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2308" path="assessment/{:id}/maturity-questions-nested/2308" displaytext="5. Change Management" />
+                <node id="maturity-questions-nested-2309" path="assessment/{:id}/maturity-questions-nested/2309" displaytext="6. Lifecycle Tracking" />
+                <node id="maturity-questions-nested-2310" path="assessment/{:id}/maturity-questions-nested/2310" displaytext="7. Assessment and Evaluations" />
+                <node id="maturity-questions-nested-2311" path="assessment/{:id}/maturity-questions-nested/2311" displaytext="8. Cybersecurity Plan" />
+                <node id="maturity-questions-nested-2312" path="assessment/{:id}/maturity-questions-nested/2312" displaytext="9. Cybersecurity Exercises" />
                 <node id="maturity-questions-nested-2313" displaytext="Information Sharing">
-                    <node id="maturity-questions-nested-2331" path="assessment/{:id}/maturity-questions-nested/2331" displaytext="10. External Information Sharing" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2332" path="assessment/{:id}/maturity-questions-nested/2332" displaytext="11. Internal Information Sharing" condition="MATURITY:CIS" />
+                    <node id="maturity-questions-nested-2331" path="assessment/{:id}/maturity-questions-nested/2331" displaytext="10. External Information Sharing" />
+                    <node id="maturity-questions-nested-2332" path="assessment/{:id}/maturity-questions-nested/2332" displaytext="11. Internal Information Sharing" />
                 </node>
             </node>
             <node id="maturity-questions-nested-2302" displaytext="Cybersecurity Forces">
-                <node id="maturity-questions-nested-2314" path="assessment/{:id}/maturity-questions-nested/2314" displaytext="12. Personnel" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2315" path="assessment/{:id}/maturity-questions-nested/2315" displaytext="13. Cybersecurity Training" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2314" path="assessment/{:id}/maturity-questions-nested/2314" displaytext="12. Personnel" />
+                <node id="maturity-questions-nested-2315" path="assessment/{:id}/maturity-questions-nested/2315" displaytext="13. Cybersecurity Training" />
             </node>
             <node id="maturity-questions-nested-2303" displaytext="Cybersecurity Controls">
-                <node id="maturity-questions-nested-2316" path="assessment/{:id}/maturity-questions-nested/2316" displaytext="14. Authentication and Authorization Controls" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2317"  displaytext="Access Controls">
-                    <node id="maturity-questions-nested-2333" path="assessment/{:id}/maturity-questions-nested/2333" displaytext="15. Access Paths" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2334" path="assessment/{:id}/maturity-questions-nested/2334" displaytext="16. Remote Access Controls" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2316" path="assessment/{:id}/maturity-questions-nested/2316" displaytext="14. Authentication and Authorization Controls" />
+                <node id="maturity-questions-nested-2317" displaytext="Access Controls">
+                    <node id="maturity-questions-nested-2333" path="assessment/{:id}/maturity-questions-nested/2333" displaytext="15. Access Paths" />
+                    <node id="maturity-questions-nested-2334" path="assessment/{:id}/maturity-questions-nested/2334" displaytext="16. Remote Access Controls" />
                 </node>
                 <node id="maturity-questions-nested-2318" displaytext="Cybersecurity Measures">
-                    <node id="maturity-questions-nested-2335" path="assessment/{:id}/maturity-questions-nested/2335" displaytext="17. Malicious Code Controls" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2336" path="assessment/{:id}/maturity-questions-nested/2336" displaytext="18. Monitoring and Scanning" condition="MATURITY:CIS" />
-                    <node id="maturity-questions-nested-2337" path="assessment/{:id}/maturity-questions-nested/2337" displaytext="19. Security and Event Log" condition="MATURITY:CIS" />
+                    <node id="maturity-questions-nested-2335" path="assessment/{:id}/maturity-questions-nested/2335" displaytext="17. Malicious Code Controls" />
+                    <node id="maturity-questions-nested-2336" path="assessment/{:id}/maturity-questions-nested/2336" displaytext="18. Monitoring and Scanning" />
+                    <node id="maturity-questions-nested-2337" path="assessment/{:id}/maturity-questions-nested/2337" displaytext="19. Security and Event Log" />
                 </node>
-                <node id="maturity-questions-nested-2319" path="assessment/{:id}/maturity-questions-nested/2319" displaytext="20. Information Protection" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2320" path="assessment/{:id}/maturity-questions-nested/2320" displaytext="21. User Training" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2321" path="assessment/{:id}/maturity-questions-nested/2321" displaytext="22. Defense Sophistication and Compensating Controls" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2319" path="assessment/{:id}/maturity-questions-nested/2319" displaytext="20. Information Protection" />
+                <node id="maturity-questions-nested-2320" path="assessment/{:id}/maturity-questions-nested/2320" displaytext="21. User Training" />
+                <node id="maturity-questions-nested-2321" path="assessment/{:id}/maturity-questions-nested/2321" displaytext="22. Defense Sophistication and Compensating Controls" />
             </node>
             <node id="maturity-questions-nested-2304" displaytext="Incident Response">
-                <node id="maturity-questions-nested-2322" path="assessment/{:id}/maturity-questions-nested/2322" displaytext="23. Incident Response Measures" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2323" path="assessment/{:id}/maturity-questions-nested/2323" displaytext="24. Alternate Site and Disaster Recovery" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2322" path="assessment/{:id}/maturity-questions-nested/2322" displaytext="23. Incident Response Measures" />
+                <node id="maturity-questions-nested-2323" path="assessment/{:id}/maturity-questions-nested/2323" displaytext="24. Alternate Site and Disaster Recovery" />
             </node>
             <node id="maturity-questions-nested-2305" displaytext="Dependencies">
-                <node id="maturity-questions-nested-2324" path="assessment/{:id}/maturity-questions-nested/2324" displaytext="25. Dependencies - Data at Rest" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2325" path="assessment/{:id}/maturity-questions-nested/2325" displaytext="26. Dependencies - Data in Motion" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2326" path="assessment/{:id}/maturity-questions-nested/2326" displaytext="27. Dependencies - Data in Process" condition="MATURITY:CIS" />
-                <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" condition="MATURITY:CIS" />
+                <node id="maturity-questions-nested-2324" path="assessment/{:id}/maturity-questions-nested/2324" displaytext="25. Dependencies - Data at Rest" />
+                <node id="maturity-questions-nested-2325" path="assessment/{:id}/maturity-questions-nested/2325" displaytext="26. Dependencies - Data in Motion" />
+                <node id="maturity-questions-nested-2326" path="assessment/{:id}/maturity-questions-nested/2326" displaytext="27. Dependencies - Data in Process" />
+                <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" />
             </node>
         </node>
 
@@ -158,14 +159,14 @@
 
         <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
 
-
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
 
         <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="" />
 
         <node displaytext="Share Assessment With CISA" id="analytics" path="assessment/{:id}/results/analytics" condition="HIDE" />
-        <!-- return false;
-        return this.analyticsIsUp() && this.configSvc.installationMode !== 'ACET';"  -->
+
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
+
     </node>
 
 </nav>

@@ -79,7 +79,7 @@ export class NavigationService {
     private maturitySvc: MaturityService,
     private cisSvc: CisService
   ) {
-    this.setWorkflow('classic');
+    this.setWorkflow('omni');
 
     // set up the mat tree control and its data source
     this.treeControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -286,8 +286,12 @@ export class NavigationService {
   setWorkflow(name: string) {
     const url = 'assets/navigation/workflow-' + name + '.xml';
     this.http.get(url, { responseType: 'text' }).subscribe((xml: string) => {
+
+      // build the workflow DOM
       let d = new DOMParser();
       this.workflow = d.parseFromString(xml, 'text/xml');
+
+      // build the sidenav tree
       localStorage.removeItem('tree');
       this.buildTree(this.getMagic());
     },
@@ -387,7 +391,7 @@ export class NavigationService {
 
   /**
    * Indicates if you can "land on" the page.
-   * Phase nodes (or any parent node) can't be landed on
+   * Parent nodes can't be landed on
    * because they aren't displayable pages.  They function
    * as collapsible nodes in the nav tree.
    */
@@ -405,8 +409,11 @@ export class NavigationService {
    * ignored in the TOC and next/back workflow.
    */
   showPage(page: HTMLElement): boolean {
-    const conditionAttrib = page.attributes['condition']?.value;
+    // look for a condition on the current page or its nearest parent
+    let nnnn = page.closest('[condition]');
+    let conditionAttrib = nnnn?.attributes['condition']?.value;
 
+    // if no conditions are applicable, show the page
     if (!conditionAttrib || conditionAttrib.length === 0) {
       return true;
     }
@@ -423,13 +430,37 @@ export class NavigationService {
         show = false;
       }
 
+
       if (c.startsWith('INSTALL-MODE:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && (this.configSvc.installationMode == target);
       }
 
+      // looks for any of the listed options/features
+      if (c.startsWith('OPTION-ANY(')) {
+        let found = false;
+        let p1 = c.indexOf('(');
+        let p2 = c.indexOf(')');
+        let targetText = c.substring(p1 + 1, p2);
+        var targets = targetText.split(',');
+        targets.forEach(t => {
+          switch (t.toUpperCase()) {
+            case 'MATURITY':
+              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useMaturity;
+              break;
+            case 'STANDARD':
+              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useStandard;
+              break;
+            case 'DIAGRAM':
+              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useDiagram;
+              break;
+          }
+        });
+        show = show && found;
+      }
+
       // maturity 
-      if (c === 'USE-MATURITY') {
+      if (c === 'OPTION:MATURITY') {
         show = show && (
           !!this.assessSvc.assessment
           && this.assessSvc.assessment.useMaturity);
@@ -437,7 +468,7 @@ export class NavigationService {
 
 
       // standard 
-      if (c === 'USE-STANDARD') {
+      if (c === 'OPTION:STANDARD') {
         show = show && (
           !!this.assessSvc.assessment
           && this.assessSvc.assessment.useStandard);
@@ -445,7 +476,7 @@ export class NavigationService {
 
 
       // diagram 
-      if (c === 'USE-DIAGRAM') {
+      if (c === 'OPTION:DIAGRAM') {
         show = show && (
           !!this.assessSvc.assessment
           && this.assessSvc.assessment.useDiagram);
