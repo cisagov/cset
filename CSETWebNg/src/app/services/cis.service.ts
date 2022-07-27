@@ -42,6 +42,48 @@ export class CisService {
   public baselineAssessmentId?: number;
 
   /**
+   * This list holds the optionIds for all of the possible inconsistent CIS options.
+   * (This information should probably be stored in the DB in some way)
+   */
+  public consistencyCheckOptions = [
+    {
+      optionId: 609,
+      isSelected: false,
+      inconsistentOptions : []
+    },
+    {
+      optionId: 610,
+      isSelected: false,
+      inconsistentOptions : []
+    },
+    {
+      optionId: 634,
+      isSelected: false,
+      inconsistentOptions : [657]
+    },
+    {
+      optionId: 635,
+      isSelected: false,
+      inconsistentOptions : [656]
+    },
+    {
+      optionId: 656,
+      isSelected: false,
+      inconsistentOptions : [635]
+    },
+    {
+      optionId: 657,
+      isSelected: false,
+      inconsistentOptions : [634]
+    }
+  ]
+
+    // 609: [],
+    // 610: [],
+    // 634: [657],
+    // 635: [656],
+
+  /**
    *
    */
   constructor(
