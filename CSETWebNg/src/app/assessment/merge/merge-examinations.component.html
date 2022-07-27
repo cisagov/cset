@@ -20,40 +20,54 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<!-- <div class="d-flex flex-11a"> -->
-<div class="p-0 d-flex flex-column justify-content-start flex-11a">
-    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
-        <h3 class="mt-0">Merge Examinations</h3>
-        <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
-            <div class="d-flex justify-content-between flex-00a">
-                <div class="d-flex flex-row">
-                </div>
-            </div>
+<!--
+<ng-container *ngIf="this.pageLoading === false">
+    <div class="p-0 d-flex flex-column justify-content-start flex-11a">
+        <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+            <div class="text-right"><input type="button" class="btn btn-primary" value="Merge Options"
+                (click)="showMergeOptions()"></div>
         </div>
-        
+    </div>
+</ng-container>
+-->
+
+<div class="bgc-trans mx-4 pr-4 d-flex flex-column flex-00a">
+    <h2 class="mt-0">Merge Examinations</h2>
+</div>
+
+<div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+    <div *ngIf="this.pageLoading === true">
+        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+            <div class="spinner-size-50"></div>
+        </div>
+    </div>
+</div>
+
+<div class="p-0 d-flex flex-column justify-content-start flex-11a">
+    <div class="bgc-trans mt-2 mx-4 pr-4 d-flex flex-column flex-00a ">
         <ng-container *ngIf="this.mergeConflicts.length > 0">
         <div style="max-height: 600px; width: 64vw; margin: auto; overflow-y: scroll;">
             <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
                 <tr>
                     <th>Statements</th>
                     <th *ngFor="let assessment of this.ncuaSvc.assessmentsToMerge; let i = index"
-                    [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above"> {{ "Exam " + (i+1) }}</th>
+                    [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Exam' : 'Exam ' + (i+1) }}</th>
                     <th>YES</th>
                     <th>NO</th>
                     <th>NA</th>
                 </tr>
                 <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
-                    <td style="padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text1 }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text2 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3">{{ this.mergeConflicts[i].answer_Text3 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4">{{ this.mergeConflicts[i].answer_Text4 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5">{{ this.mergeConflicts[i].answer_Text5 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6">{{ this.mergeConflicts[i].answer_Text6 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7">{{ this.mergeConflicts[i].answer_Text7 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8">{{ this.mergeConflicts[i].answer_Text8 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9">{{ this.mergeConflicts[i].answer_Text9 }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length == 10">{{ this.mergeConflicts[i].answer_Text10 }}</td>
+                    <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
+                    <td>{{ this.mergeConflicts[i].answer_Text1 !== 'U' ? this.mergeConflicts[i].answer_Text1 : " " }}</td>
+                    <td>{{ this.mergeConflicts[i].answer_Text2 !== 'U' ? this.mergeConflicts[i].answer_Text2 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3">{{ this.mergeConflicts[i].answer_Text3 !== 'U' ? this.mergeConflicts[i].answer_Text3 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4">{{ this.mergeConflicts[i].answer_Text4 !== 'U' ? this.mergeConflicts[i].answer_Text4 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5">{{ this.mergeConflicts[i].answer_Text5 !== 'U' ? this.mergeConflicts[i].answer_Text5 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6">{{ this.mergeConflicts[i].answer_Text6 !== 'U' ? this.mergeConflicts[i].answer_Text6 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7">{{ this.mergeConflicts[i].answer_Text7 !== 'U' ? this.mergeConflicts[i].answer_Text7 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8">{{ this.mergeConflicts[i].answer_Text8 !== 'U' ? this.mergeConflicts[i].answer_Text8 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9">{{ this.mergeConflicts[i].answer_Text9 !== 'U' ? this.mergeConflicts[i].answer_Text9 : " " }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length == 10">{{ this.mergeConflicts[i].answer_Text10 !== 'U' ? this.mergeConflicts[i].answer_Text10 : " " }}</td>
                     <td>
                         <input type="radio" id="yes" name="option{{i}}" value="yes"
                         (change)="updateAnswers(i, $event.target.value)">
@@ -77,7 +91,6 @@
         1. Y - The statement was answered "Yes" during the examination.<br>
         2. N - The statement was answered "No" during the examination.<br>
         3. NA - The statement was answered "Not Applicable" during the examination.<br>
-        4. U - The statement went unanswered during the examination.<br><br>
         </div>
 
         <button class="btn btn-primary" matTooltip="Merge checked examinations"
@@ -86,15 +99,16 @@
                 (click)="createMergedAssessment()">Merge Examinations</button>
         </ng-container>
 
-        <ng-container *ngIf="this.mergeConflicts.length === 0">
+        <ng-container *ngIf="this.mergeConflicts.length === 0 && this.pageLoading === false">
 
             <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">        
                 <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
                     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle" aria-label="Caution no questions"></span>
                     <span class="fs-base-3 p-2 justify-content-center flex-11a">
                         There are no conflicting answers within the chosen examinations.
-                        Return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
-                        screen and select different examinations to merge.
+                        Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
+                        screen to select different examinations, change the merge options, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
+                        to proceed with the merge.
                     </span>
                 </div>
             </div>
