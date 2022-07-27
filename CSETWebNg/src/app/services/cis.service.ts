@@ -59,22 +59,14 @@ export class CisService {
     {
       optionId: 634,
       isSelected: false,
-      inconsistentOptions : [657]
-    },
-    {
-      optionId: 635,
-      isSelected: false,
-      inconsistentOptions : [656]
-    },
-    {
-      optionId: 656,
-      isSelected: false,
-      inconsistentOptions : [635]
+      inconsistentOptions : [657],
+      parentQuestionId: 5947
     },
     {
       optionId: 657,
       isSelected: false,
-      inconsistentOptions : [634]
+      inconsistentOptions : [634],
+      parentQuestionId: 5969
     }
   ]
 

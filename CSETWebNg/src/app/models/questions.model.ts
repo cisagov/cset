@@ -164,6 +164,8 @@ export interface Question {
     parentQuestionId: number;
 
     visible: boolean;
+    options: any[];
+    integrityCheckFailed: boolean;
 }
 
 export class Answer {

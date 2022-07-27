@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -123,7 +124,7 @@ export class QuestionBlockNestedComponent implements OnInit {
       return;
     }
 
-    // find the question whose extras were just changed 
+    // find the question whose extras were just changed
     var q = this.questionList.find(q => q.questionId == extras.questionId);
     if (!q) {
       return;
@@ -208,5 +209,16 @@ export class QuestionBlockNestedComponent implements OnInit {
       width: '50%',
       maxWidth: '50%'
     });
+  }
+
+  consistencyCheck(e) {
+
+    this.questionList.forEach(q => {
+      if (e.find(o => o.parentQuestionId === q.questionId)) {
+        q.integrityCheckFailed = true;
+      } else {
+        q.integrityCheckFailed = false;
+      }
+    })
   }
 }

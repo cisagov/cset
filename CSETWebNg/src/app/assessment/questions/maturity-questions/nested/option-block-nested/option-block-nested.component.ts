@@ -74,6 +74,11 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
+
+    // Show consistency check warnings on page load.
+    this.opts.forEach(o => {
+      this.performConsistencyCheck(o);
+    })
   }
 
   /**
@@ -277,22 +282,20 @@ export class OptionBlockNestedComponent implements OnInit {
    */
   performConsistencyCheck(o) {
     const consistencyCheckOption = this.cisSvc.consistencyCheckOptions.find(option => option.optionId === o.optionId);
+    const inconsistentOptions = [];
     if (consistencyCheckOption) {
-      console.log('This option is in the consistency check list');
+
       consistencyCheckOption.isSelected = o.selected;
 
       if (consistencyCheckOption.isSelected) {
-        const inconsistentOptions = [];
         consistencyCheckOption.inconsistentOptions.forEach(option => {
           if (this.cisSvc.consistencyCheckOptions.find(x => x.optionId === option)?.isSelected) {
-            inconsistentOptions.push(option);
+            inconsistentOptions.push(consistencyCheckOption);
           }
         });
-
-        if (inconsistentOptions.length) {
-          this.consistencyCheckEvent.emit(inconsistentOptions);
-        }
       }
     }
+
+    this.consistencyCheckEvent.emit(inconsistentOptions);
   }
 }
