@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -21,7 +22,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
@@ -37,6 +38,8 @@ export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: any;
   @Input() opts: any[];
+
+  @Output() consistencyCheck = new EventEmitter<number[]>();
 
   optRadio: any[];
   optCheckbox: any[];
@@ -216,6 +219,8 @@ export class OptionBlockNestedComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
+    this.performConsistencyCheck(o);
+
     return answer;
   }
 
@@ -264,6 +269,30 @@ export class OptionBlockNestedComponent implements OnInit {
     let foundEl = el.closest('.div-shield');
     if (foundEl) {
       e.preventDefault();
+    }
+  }
+
+  /**
+   * Performs a consistency check on a selected option
+   */
+  performConsistencyCheck(o) {
+    const consistencyCheckOption = this.cisSvc.consistencyCheckOptions.find(option => option.optionId === o.optionId);
+    if (consistencyCheckOption) {
+      console.log('This option is in the consistency check list');
+      consistencyCheckOption.isSelected = o.selected;
+
+      if (consistencyCheckOption.isSelected) {
+        const inconsistentOptions = [];
+        consistencyCheckOption.inconsistentOptions.forEach(option => {
+          if (this.cisSvc.consistencyCheckOptions.find(x => x.optionId === option)?.isSelected) {
+            inconsistentOptions.push(option);
+          }
+        });
+
+        if (inconsistentOptions.length) {
+          this.consistencyCheck.emit(inconsistentOptions);
+        }
+      }
     }
   }
 }
