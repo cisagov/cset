@@ -9,13 +9,11 @@
     <!-- Questions/Requirements/Statements -->
     <node displaytext="Assessment" id="phase-assessment">
         <!-- do not show for ACET or TSA -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" 
-            condition="USE-MATURITY" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="USE-MATURITY" />
 
 
         <!-- condition: if a standard is in play -->
-        <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions"
-            condition="USE-STANDARD" />
+        <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" condition="USE-STANDARD" />
     </node>
 
 
@@ -46,6 +44,7 @@
         <!-- Reports -->
         <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports"/>
-        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" />
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
 
-    </nav>
+    </node>
+</nav>

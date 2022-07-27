@@ -412,7 +412,7 @@ export class NavigationService {
     }
 
     let show = true;
-    
+
     // All conditions must be true (AND).  
     // Start with true and if any fail, result is false.
     let conditions = conditionAttrib.toUpperCase().split(' ');
@@ -425,9 +425,7 @@ export class NavigationService {
 
       if (c.startsWith('INSTALL-MODE:')) {
         let target = c.substring(c.indexOf(':') + 1);
-        if (this.configSvc.installationMode == target) {
-          show = show && true;
-        }
+        show = show && (this.configSvc.installationMode == target);
       }
 
       // maturity 
@@ -459,9 +457,9 @@ export class NavigationService {
         let target = c.substring(c.indexOf(':') + 1);
 
         show = show && (
-        !!this.assessSvc.assessment
-        && this.assessSvc.assessment.useMaturity
-        && this.assessSvc.usesMaturityModel(target));
+          !!this.assessSvc.assessment
+          && this.assessSvc.assessment.useMaturity
+          && this.assessSvc.usesMaturityModel(target));
       }
 
 
@@ -470,9 +468,9 @@ export class NavigationService {
         let target = c.substring(c.indexOf(':') + 1);
 
         show = show && (
-        !!this.assessSvc.assessment
-        && this.assessSvc.assessment.useMaturity
-        && !this.assessSvc.usesMaturityModel(target));
+          !!this.assessSvc.assessment
+          && this.assessSvc.assessment.useMaturity
+          && !this.assessSvc.usesMaturityModel(target));
       }
 
 
@@ -536,6 +534,8 @@ export class NavigationService {
         while (!target.nextElementSibling && target.tagName != 'nav') {
           target = <HTMLElement>target.parentElement;
         }
+        target = <HTMLElement>target.nextElementSibling;
+      } else {
         target = <HTMLElement>target.nextElementSibling;
       }
     } while (!!target && !this.showPage(target));
