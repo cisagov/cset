@@ -188,6 +188,24 @@ export class Answer {
     optionType?: string;
 }
 
+export interface Option {
+    optionId: number;
+    optionType: string;
+    optionText: string;
+    sequence: number;
+    weight: number;
+    isNone: boolean;
+    selected: boolean;
+    answerId?: number;
+    hasAnswerText: boolean;
+    answerText: string;
+    baselineSelected: boolean;
+    baselineAnswerText: string;
+    questionId?: number;
+    freeResponseAnswer?: string;
+    followups: Question[];
+}
+
 export class SubToken {
     id: number;
     token: string;

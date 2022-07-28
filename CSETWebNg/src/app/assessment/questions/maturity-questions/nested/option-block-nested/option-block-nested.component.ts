@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer, Question } from '../../../../../models/questions.model';
+import { Answer, Question, Option } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
@@ -36,7 +36,7 @@ import { Utilities } from '../../../../../services/utilities.service';
 export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: Question;
-  @Input() opts: any[];
+  @Input() opts: Option[];
 
   optRadio: any[];
   optCheckbox: any[];
@@ -80,7 +80,7 @@ export class OptionBlockNestedComponent implements OnInit {
    * Returns a boolean indiating if all of the
    * options are unselected.
    */
-  noneChecked(opts) {
+  noneChecked(opts: Option[]) {
     let n = opts.every(o => !o.selected);
     return n;
   }
@@ -88,7 +88,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeRadio(o, event): void {
+  changeRadio(o: Option, event): void {
     o.selected = event.target.checked;
     var answers = [];
 
@@ -137,7 +137,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event, listOfOptions): void {
+  changeCheckbox(o: Option, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
@@ -192,7 +192,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeText(o, event): void {
+  changeText(o: Option, event): void {
     o.freeResponseAnswer = event.target.value;
     const ans = this.makeAnswer(o);
     this.storeAnswers([ans], this.sectionId);
@@ -202,7 +202,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    * Creates a 'clean' (unanswered) option
    */
-  makeAnswer(o): Answer {
+  makeAnswer(o: Option): Answer {
     const answer: Answer = {
       answerId: o.answerId,
       questionId: o.questionId,
@@ -280,15 +280,15 @@ export class OptionBlockNestedComponent implements OnInit {
   */
   performIntegrityCheck() {
     const integrityCheckErrors = [];
-    this.q.options.forEach(o => {
+    this.q.options.forEach((o: Option) => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
       if (integrityCheckOption?.optionId === o.optionId) {
-        integrityCheckOption.isSelected = o.selected;
+        integrityCheckOption.selected = o.selected;
       }
 
       integrityCheckOption?.inconsistentOptions.forEach(option => {
-        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected && integrityCheckOption.isSelected) {
+        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.selected && integrityCheckOption.selected) {
           integrityCheckErrors.push('Inconsistent OptionId(s): ' + option);
         }
       });
