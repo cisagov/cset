@@ -281,7 +281,7 @@ export class OptionBlockNestedComponent implements OnInit {
   performIntegrityCheck() {
     const integrityCheckErrors = [];
     this.q.options.forEach(o => {
-      const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId)
+      const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
       if (integrityCheckOption?.optionId === o.optionId) {
         integrityCheckOption.isSelected = o.selected;
@@ -289,7 +289,7 @@ export class OptionBlockNestedComponent implements OnInit {
 
       integrityCheckOption?.inconsistentOptions.forEach(option => {
         if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected && integrityCheckOption.isSelected) {
-          integrityCheckErrors.push('Inconsistent OptionId:' + option)
+          integrityCheckErrors.push('Inconsistent OptionId(s): ' + option);
         }
       });
     });
