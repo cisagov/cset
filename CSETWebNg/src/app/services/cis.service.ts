@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
-import { Answer } from '../models/questions.model';
+import { Answer, IntegrityCheckOption } from '../models/questions.model';
 import { of as observableOf, BehaviorSubject, Observable, of } from "rxjs";
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -43,27 +43,8 @@ export class CisService {
 
   /**
    * This list holds the optionIds for all of the possible inconsistent CIS options.
-   * (This information should probably be stored in the DB in some way)
    */
-  public integrityCheckOptions = [
-    {
-      optionId: 634,
-      isSelected: false,
-      inconsistentOptions : [657],
-      parentQuestionId: 5947
-    },
-    {
-      optionId: 657,
-      isSelected: false,
-      inconsistentOptions : [634],
-      parentQuestionId: 5969
-    }
-  ]
-
-    // 609: [],
-    // 610: [],
-    // 634: [657],
-    // 635: [656],
+  public integrityCheckOptions: IntegrityCheckOption[] = [];
 
   /**
    *
@@ -114,6 +95,10 @@ export class CisService {
    */
   getCisSection(sectionId: Number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
+  }
+
+  getIntegrityCheckOptions() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/integritycheck');
   }
 
   /**

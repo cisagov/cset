@@ -287,7 +287,7 @@ export class OptionBlockNestedComponent implements OnInit {
         integrityCheckOption.selected = o.selected;
       }
 
-      integrityCheckOption?.inconsistentOptions.forEach(option => {
+      integrityCheckOption?.inconsistentOptionIds.forEach(option => {
         if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.selected && integrityCheckOption.selected) {
           integrityCheckErrors.push('Inconsistent OptionId(s): ' + option);
         }

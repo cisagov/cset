@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { QuestionGrouping } from '../../../../../models/questions.model';
+import { IntegrityCheckOption, QuestionGrouping } from '../../../../../models/questions.model';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionFilterService } from '../../../../../services/filtering/question-filter.service';
@@ -81,6 +81,16 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.assessSvc.currentTab = 'questions';
+
+    // Initialize integrity check options for CIS assessment
+    if (!this.cisSvc.integrityCheckOptions.length) {
+      this.cisSvc.getIntegrityCheckOptions().subscribe((response: IntegrityCheckOption[]) => {
+        console.log(response);
+        this.cisSvc.integrityCheckOptions = response;
+      }, error => {
+        console.log('Error getting CIS integrity check options: ' + (<Error>error).name + (<Error>error).message);
+      });
+    }
 
     // listen for score changes caused by questions being answered
     this.cisSvc.cisScore.subscribe((s) => {

@@ -206,6 +206,12 @@ export interface Option {
     followups: Question[];
 }
 
+export interface IntegrityCheckOption {
+  optionId: number;
+  selected: boolean;
+  inconsistentOptionIds: number[]
+}
+
 export class SubToken {
     id: number;
     token: string;
