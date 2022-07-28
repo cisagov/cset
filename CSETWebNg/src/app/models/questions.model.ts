@@ -165,7 +165,7 @@ export interface Question {
 
     visible: boolean;
     options: any[];
-    integrityCheckFailed: boolean;
+    integrityCheckErrors: any[];
 }
 
 export class Answer {
