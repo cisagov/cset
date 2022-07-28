@@ -22,7 +22,7 @@
 -------------------------->
 <div *ngFor="let q of questionList" class="mb-3">
     <div class="mb-2">
-        <span style="white-space: normal;" [ngStyle]="{'color': q.integrityCheckFailed ? 'red' : 'black' }">
+        <span style="white-space: normal;" [ngStyle]="{'color': q.integrityCheckErrors?.length ? 'red' : 'black' }">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
         </span>
         <span (click)="openExtras(q)" matTooltip="Question Details">

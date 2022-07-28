@@ -21,14 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer, Question } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
-import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-option-block-nested',
@@ -98,6 +97,10 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // get the descendants for my peer radios to clean them up
     var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    siblingOptions.forEach(option => {
+      option.selected = false;
+    });
+
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
@@ -127,9 +130,6 @@ export class OptionBlockNestedComponent implements OnInit {
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
-
-    this.q.options = this.opts;
-    this.performIntegrityCheck();
 
     this.storeAnswers(answers, this.sectionId);
   }
@@ -186,8 +186,6 @@ export class OptionBlockNestedComponent implements OnInit {
       });
     }
 
-    this.performIntegrityCheck();
-
     this.storeAnswers(answers, this.sectionId);
   }
 
@@ -197,7 +195,6 @@ export class OptionBlockNestedComponent implements OnInit {
   changeText(o, event): void {
     o.freeResponseAnswer = event.target.value;
     const ans = this.makeAnswer(o);
-    this.performIntegrityCheck();
     this.storeAnswers([ans], this.sectionId);
   }
 
@@ -233,6 +230,7 @@ export class OptionBlockNestedComponent implements OnInit {
    *
    */
   storeAnswers(answers, sectionId) {
+    this.performIntegrityCheck();
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
@@ -278,28 +276,24 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * Performs an integrity check on the current question.
-   * Emitting an empty list should indicate that the passed in option passes the
-   * integrity check.
-   */
+  * Performs an integrity check on a  question.
+  */
   performIntegrityCheck() {
-
+    const integrityCheckErrors = [];
     this.q.options.forEach(o => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId)
       if (integrityCheckOption) {
-        integrityCheckOption.isSelected = o.selected;
-
+        if (integrityCheckOption.optionId === o.optionId) {
+          integrityCheckOption.isSelected = o.selected;
+        }
         integrityCheckOption.inconsistentOptions.forEach(option => {
-          if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected) {
-            console.log(this.q.options);
-            console.log('integrity check failed!')
-            this.q.integrityCheckFailed = true;
-            return;
+          if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected && integrityCheckOption.isSelected) {
+            integrityCheckErrors.push('Inconsistent OptionId:' + option)
           }
         });
       }
     });
 
-    this.q.integrityCheckFailed = false;
+    this.q.integrityCheckErrors = integrityCheckErrors;
   }
 }
