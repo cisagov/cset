@@ -344,5 +344,63 @@ namespace CSETWebCore.Business.Maturity
 
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Get all of the integrity check options.
+        /// </summary>
+        /// <returns>The list of all options applicable to an integrity check</returns>
+        public List<IntegrityCheckOption> GetIntegrityCheckOptions() 
+        {
+            List<IntegrityCheckOption> integrityCheckOptions = new List<IntegrityCheckOption>();
+
+            var integrityCheckPairs = _context.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK.ToList();
+            var options = _context.MATURITY_ANSWER_OPTIONS.ToList();
+            var myAnswers = _context.ANSWER.Where(a => a.Assessment_Id == _assessmentId).ToList();
+
+            foreach (var pair in integrityCheckPairs) 
+            {
+                if (!integrityCheckOptions.Exists(opt => opt.OptionId == pair.Mat_Option_Id_1))
+                {
+                    IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pair.Mat_Option_Id_1 };
+                    newOption.Selected = myAnswers.Find(a => a.Mat_Option_Id == newOption.OptionId)?.Answer_Text == "S";
+
+                    foreach (var p in integrityCheckPairs) 
+                    {
+                        if (p.Mat_Option_Id_1 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1)) 
+                        {
+                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
+                        }
+
+                        if (p.Mat_Option_Id_2 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        {
+                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
+                        }
+                    }
+                    integrityCheckOptions.Add(newOption);  
+                }
+
+                if (!integrityCheckOptions.Exists(opt => opt.OptionId == pair.Mat_Option_Id_2))
+                {
+                    IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pair.Mat_Option_Id_2 };
+                    newOption.Selected = myAnswers.Find(a => a.Mat_Option_Id == newOption.OptionId)?.Answer_Text == "S";
+
+                    foreach (var p in integrityCheckPairs)
+                    {
+                        if (p.Mat_Option_Id_1 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1))
+                        {
+                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
+                        }
+
+                        if (p.Mat_Option_Id_2 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        {
+                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
+                        }
+                    }
+                    integrityCheckOptions.Add(newOption);
+                }
+            }
+
+            return integrityCheckOptions;
+        }
     }
 }
