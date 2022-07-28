@@ -45,7 +45,7 @@
 
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <div class="bgc-trans mt-2 mx-4 pr-4 d-flex flex-column flex-00a ">
-        <ng-container *ngIf="this.mergeConflicts.length > 0">
+        <ng-container *ngIf="this.mergeConflicts.length > 0 && this.pageLoading === false">
         <div style="max-height: 600px; width: 64vw; margin: auto; overflow-y: scroll;">
             <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
                 <tr>

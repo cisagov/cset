@@ -7,13 +7,7 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class Get_Merge_ConflictsResult
     {
-        public string City_Or_Site_Name { get; set; }
-        public string State_Province_Or_Region { get; set; }
-        public string Assessor_Name { get; set; }
-        public string Assessor_Email { get; set; }
-        public string Assessor_Phone { get; set; }
         public string Question_Text { get; set; }
-
 
         public string Assessment_Name1 { get; set; }
         public string Assessment_Name2 { get; set; }
@@ -26,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
         public string Assessment_Name9 { get; set; }
         public string Assessment_Name10 { get; set; }
 
-
         public int? Assessment_Id1 { get; set; }
         public int? Assessment_Id2 { get; set; }
         public int? Assessment_Id3 { get; set; }
@@ -37,7 +30,6 @@ namespace CSETWebCore.DataLayer.Model
         public int? Assessment_Id8 { get; set; }
         public int? Assessment_Id9 { get; set; }
         public int? Assessment_Id10 { get; set; }
-
 
         public int? Question_Or_Requirement_Id1 { get; set; }
         public int? Question_Or_Requirement_Id2 { get; set; }
@@ -50,7 +42,6 @@ namespace CSETWebCore.DataLayer.Model
         public int? Question_Or_Requirement_Id9 { get; set; }
         public int? Question_Or_Requirement_Id10 { get; set; }
         
-
         public string Answer_Text1 { get; set; }
         public string Answer_Text2 { get; set; }
         public string Answer_Text3 { get; set; }
