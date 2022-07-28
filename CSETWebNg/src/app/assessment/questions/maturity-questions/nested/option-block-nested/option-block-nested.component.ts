@@ -282,16 +282,16 @@ export class OptionBlockNestedComponent implements OnInit {
     const integrityCheckErrors = [];
     this.q.options.forEach(o => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId)
-      if (integrityCheckOption) {
-        if (integrityCheckOption.optionId === o.optionId) {
-          integrityCheckOption.isSelected = o.selected;
-        }
-        integrityCheckOption.inconsistentOptions.forEach(option => {
-          if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected && integrityCheckOption.isSelected) {
-            integrityCheckErrors.push('Inconsistent OptionId:' + option)
-          }
-        });
+
+      if (integrityCheckOption?.optionId === o.optionId) {
+        integrityCheckOption.isSelected = o.selected;
       }
+
+      integrityCheckOption?.inconsistentOptions.forEach(option => {
+        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected && integrityCheckOption.isSelected) {
+          integrityCheckErrors.push('Inconsistent OptionId:' + option)
+        }
+      });
     });
 
     this.q.integrityCheckErrors = integrityCheckErrors;
