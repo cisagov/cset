@@ -1,4 +1,3 @@
-import { EventEmitter } from '@angular/core';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -24,11 +23,12 @@ import { EventEmitter } from '@angular/core';
 ////////////////////////////////
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer } from '../../../../../models/questions.model';
+import { Answer, Question } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-option-block-nested',
@@ -36,10 +36,8 @@ import { Utilities } from '../../../../../services/utilities.service';
 })
 export class OptionBlockNestedComponent implements OnInit {
 
-  @Input() q: any;
+  @Input() q: Question;
   @Input() opts: any[];
-
-  @Output() integrityCheckEvent = new EventEmitter<number[]>();
 
   optRadio: any[];
   optCheckbox: any[];
@@ -75,10 +73,8 @@ export class OptionBlockNestedComponent implements OnInit {
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
 
-    // Show consistency check warnings on page load.
-    this.opts.forEach(o => {
-      this.performintegrityCheck(o);
-    })
+    // Show integrity check warnings on page load.
+    this.performIntegrityCheck();
   }
 
   /**
@@ -131,6 +127,9 @@ export class OptionBlockNestedComponent implements OnInit {
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
+
+    this.q.options = this.opts;
+    this.performIntegrityCheck();
 
     this.storeAnswers(answers, this.sectionId);
   }
@@ -187,6 +186,8 @@ export class OptionBlockNestedComponent implements OnInit {
       });
     }
 
+    this.performIntegrityCheck();
+
     this.storeAnswers(answers, this.sectionId);
   }
 
@@ -196,6 +197,7 @@ export class OptionBlockNestedComponent implements OnInit {
   changeText(o, event): void {
     o.freeResponseAnswer = event.target.value;
     const ans = this.makeAnswer(o);
+    this.performIntegrityCheck();
     this.storeAnswers([ans], this.sectionId);
   }
 
@@ -223,8 +225,6 @@ export class OptionBlockNestedComponent implements OnInit {
       reviewed: false,
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
-
-    this.performintegrityCheck(o);
 
     return answer;
   }
@@ -278,24 +278,28 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * Performs a consistency check on a selected option
+   * Performs an integrity check on the current question.
+   * Emitting an empty list should indicate that the passed in option passes the
+   * integrity check.
    */
-  performintegrityCheck(o) {
-    const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
-    const inconsistentOptions = [];
-    if (integrityCheckOption) {
+  performIntegrityCheck() {
 
-      integrityCheckOption.isSelected = o.selected;
+    this.q.options.forEach(o => {
+      const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId)
+      if (integrityCheckOption) {
+        integrityCheckOption.isSelected = o.selected;
 
-      if (integrityCheckOption.isSelected) {
         integrityCheckOption.inconsistentOptions.forEach(option => {
           if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.isSelected) {
-            inconsistentOptions.push(integrityCheckOption);
+            console.log(this.q.options);
+            console.log('integrity check failed!')
+            this.q.integrityCheckFailed = true;
+            return;
           }
         });
       }
-    }
+    });
 
-    this.integrityCheckEvent.emit(inconsistentOptions);
+    this.q.integrityCheckFailed = false;
   }
 }
