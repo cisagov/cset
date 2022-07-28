@@ -65,8 +65,8 @@ export class ReportService {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
-    public getAggReport(reportId:string, aggId:number){
-        return this.http.get(this.apiUrl + 'reports/' + reportId+'?aggregationID='+aggId);
+    public getAggReport(reportId: string, aggId: number) {
+        return this.http.get(this.apiUrl + 'reports/' + reportId + '?aggregationID=' + aggId);
     }
 
     public getPdf(pdfString: string, security: string) {
@@ -105,10 +105,17 @@ export class ReportService {
     }
 
     /**
-     * 
+     * Calls the API to get the structure of a SET.
      */
     getModuleContent(setName: string): any {
         return this.http.get(this.configSvc.apiUrl + 'reports/modulecontent?set=' + setName);
+    }
+
+    /**
+     * Calls the API to get the structure of a (maturity) model.
+     */
+    getModelContent(modelId: string): any {
+        return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
     }
 
     /**
@@ -175,4 +182,10 @@ export class ReportService {
 
         return s;
     }
+
+    /**
+     * Switches that define what to show on Module Content Reports
+     */
+    public showGuidance = true;
+    public showReferences = true;
 }

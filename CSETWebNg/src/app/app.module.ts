@@ -178,7 +178,7 @@ import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
-import { LandingPageComponent } from './initial/landing-page/landing-page.component';
+import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { LoginComponent } from './initial/login/login.component';
 import { RegisterComponent } from './initial/register/register.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
@@ -446,7 +446,15 @@ import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
-
+import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
+import { ModuleContentStandardComponent } from './reports/module-content/module-content-standard/module-content-standard.component';
+import { ModuleContentModelComponent } from './reports/module-content/model/module-content-model/module-content-model.component';
+import { McGroupingComponent } from './reports/module-content/model/mc-grouping/mc-grouping.component';
+import { McQuestionComponent } from './reports/module-content/model/mc-question/mc-question.component';
+import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
+import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
+import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 
 
 @NgModule({
@@ -553,7 +561,7 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         AppComponent,
         InitialComponent,
         LoginComponent,
-        LandingPageComponent,
+        MyAssessmentsComponent,
         AssessmentComponent,
         ContactItemComponent,
         PrepareComponent,
@@ -849,7 +857,16 @@ import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.direc
         CisScoringChartComponent,
         SectionScoringComponent,
         MergeExaminationsComponent,
-        DigitsOnlyNotZeroDirective
+        DigitsOnlyNotZeroDirective,
+        LandingPageTabsComponent,
+        NewAssessmentComponent,
+        ModuleContentStandardComponent,
+        ModuleContentModelComponent,
+        McGroupingComponent,
+        McQuestionComponent,
+        McOptionComponent,
+        GuidanceBlockComponent,
+        ReferencesBlockComponent
     ],
     providers: [
         ConfigService,

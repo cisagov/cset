@@ -47,6 +47,14 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpGet]
+        [Route("api/builder/GetSetsInUse")]
+        public IActionResult GetSetsInUseList()
+        {
+            return Ok(_module.GetSetsInUseList());
+        }
+
+
+        [HttpGet]
         [Route("api/builder/GetNonCustomSets")]
         public IActionResult GetNonCustomSetList(string setName)
         {

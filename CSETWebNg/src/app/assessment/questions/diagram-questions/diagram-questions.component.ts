@@ -64,8 +64,8 @@ export class DiagramQuestionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
+    this.loadQuestions();
   }
 
   /**

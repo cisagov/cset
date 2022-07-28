@@ -90,6 +90,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ASSESSMENT_SEQUENCES]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ASSESSMENTS]",
          "ObjectType": 0
       },
