@@ -1,0 +1,6 @@
+<div [innerHTML]="o.optionText">
+</div>
+
+<div class="ml-4">
+    <app-mc-question *ngFor="let f of o.followups" [q]="f"></app-mc-question>
+</div>

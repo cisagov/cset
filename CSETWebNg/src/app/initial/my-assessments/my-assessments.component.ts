@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { FileUploadClientService } from "./../../services/file-client.service";
+import { FileUploadClientService } from "../../services/file-client.service";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
@@ -63,12 +63,12 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: "app-landing-page",
-  templateUrl: "landing-page.component.html",
+  selector: "app-my-assessments",
+  templateUrl: "my-assessments.component.html",
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class LandingPageComponent implements OnInit {
+export class MyAssessmentsComponent implements OnInit {
   // assessments: UserAssessment[] = null;
   sortedAssessments: UserAssessment[] = null;
   unsupportedImportFile: boolean = false;
@@ -133,7 +133,6 @@ export class LandingPageComponent implements OnInit {
       localStorage.removeItem('tree');
       this.navSvc.clearTree(this.navSvc.getMagic());
     }
-
     this.checkPasswordReset();
 
     this.ncuaSvc.assessmentsToMerge = [];

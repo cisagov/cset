@@ -39,6 +39,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class SetListComponent implements OnInit {
 
   setDetailList: SetDetail[];
+  setsInUseList: SetDetail[];
 
   constructor(
     public setBuilderSvc: SetBuilderService,
@@ -49,6 +50,7 @@ export class SetListComponent implements OnInit {
 
   ngOnInit() {
     this.getStandards();
+    this.getStandardsInUse();
   }
 
   getStandards() {
@@ -59,6 +61,19 @@ export class SetListComponent implements OnInit {
       error =>
         console.log(
           "Unable to get Custom Standards: " +
+          (<Error>error).message
+        )
+    );
+  }
+
+  getStandardsInUse() {
+    this.setBuilderSvc.getSetsInUseList().subscribe(
+      (response: SetDetail[]) => {
+        this.setsInUseList = response;
+      },
+      error =>
+        console.log(
+          "Unable to get standards in use: " +
           (<Error>error).message
         )
     );
@@ -106,6 +121,11 @@ export class SetListComponent implements OnInit {
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage =
         "Are you sure you want to delete '" + s.fullName + "?'";
+
+      if (this.setsInUseList.find(x => x.setName === s.setName)) {
+        dialogRef.componentInstance.confirmMessage +=
+          "<div class=\"d-flex align-items-center mt-2\"><span class=\"mr-3 fs-base-6 cset-icons-exclamation-triangle\"></span>This module is currently in use in one or more assessments.<br/> All assessment data pertaining to the module will be lost.</div>";
+      }
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
