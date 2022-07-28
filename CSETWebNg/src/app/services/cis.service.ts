@@ -47,16 +47,6 @@ export class CisService {
    */
   public integrityCheckOptions = [
     {
-      optionId: 609,
-      isSelected: false,
-      inconsistentOptions : []
-    },
-    {
-      optionId: 610,
-      isSelected: false,
-      inconsistentOptions : []
-    },
-    {
       optionId: 634,
       isSelected: false,
       inconsistentOptions : [657],

@@ -57,7 +57,7 @@
             </select>
         </div>
 
-        <app-option-block-nested [q]="q" [opts]="q.options" (integrityCheckEvent)="integrityCheck($event)"></app-option-block-nested>
+        <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
 
         <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
     </div>

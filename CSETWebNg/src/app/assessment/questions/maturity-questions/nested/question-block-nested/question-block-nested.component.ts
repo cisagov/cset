@@ -1,4 +1,3 @@
-import { forEach } from 'lodash';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -209,18 +208,5 @@ export class QuestionBlockNestedComponent implements OnInit {
       width: '50%',
       maxWidth: '50%'
     });
-  }
-
-  integrityCheck(e) {
-
-    this.questionList.forEach(q => {
-      if (e.find(o => o.parentQuestionId === q.questionId)) {
-        console.log(q)
-        q.integrityCheckFailed = true;
-        console.log(q);
-      } else {
-        q.integrityCheckFailed = false;
-      }
-    })
   }
 }
