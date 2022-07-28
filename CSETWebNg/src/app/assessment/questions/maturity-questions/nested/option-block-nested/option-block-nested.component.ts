@@ -38,9 +38,9 @@ export class OptionBlockNestedComponent implements OnInit {
   @Input() q: Question;
   @Input() opts: Option[];
 
-  optRadio: any[];
-  optCheckbox: any[];
-  optOther: any[];
+  optRadio: Option[];
+  optCheckbox: Option[];
+  optOther: Option[];
 
   optionGroupName = '';
   sectionId = 0;
