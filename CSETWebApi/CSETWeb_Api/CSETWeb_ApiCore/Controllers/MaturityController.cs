@@ -334,6 +334,22 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Get all of the possible cis options that can fail the integrity check.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cis/integritycheck")]
+        public IActionResult GetIntegrityCheckOptions() 
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+            var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
+            return Ok(integrityCheckOptions);
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
