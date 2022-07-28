@@ -186,6 +186,13 @@
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
+
+            <div>Have any issues or concerns been identified? If yes, Please comment below:</div>
+            <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
+            [(ngModel)]="q.comment" ></textarea>
         </div>
+
+           
+
     </div>
 </div>
