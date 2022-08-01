@@ -13,6 +13,8 @@ namespace CSETWebCore.DataLayer.Model
         public MATURITY_ANSWER_OPTIONS()
         {
             ANSWER = new HashSet<ANSWER>();
+            MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation = new HashSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
+            MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation = new HashSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
             MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
         }
 
@@ -48,6 +50,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
         [InverseProperty("Mat_Option")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
+        [InverseProperty("Mat_Option_Id_1Navigation")]
+        public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation { get; set; }
+        [InverseProperty("Mat_Option_Id_2Navigation")]
+        public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation { get; set; }
         [InverseProperty("Parent_Option")]
         public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
     }
