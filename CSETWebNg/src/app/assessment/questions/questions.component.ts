@@ -206,6 +206,7 @@ export class QuestionsComponent implements AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
+    this.assessSvc.currentTab = 'questions';
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.applicationMode;
@@ -219,7 +220,6 @@ export class QuestionsComponent implements AfterViewChecked {
 
         this.filterSvc.evaluateFiltersForCategories(this.categories);
 
-        this.assessSvc.currentTab = 'questions';
         this.loaded = true;
         this.refreshQuestionVisibility();
       },
