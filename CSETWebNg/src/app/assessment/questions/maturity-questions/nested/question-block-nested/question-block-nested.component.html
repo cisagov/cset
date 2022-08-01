@@ -34,7 +34,7 @@
             </svg>
         </span>
         <span *ngIf="q.integrityCheckErrors?.length" class="ml-1 fs-base-8 cset-icons-exclamation-triangle"
-            style="vertical-align: middle;" [matTooltip]="q.integrityCheckErrors"></span>
+            style="vertical-align: middle;" [matTooltip]="getIntegrityCheckErrors(q.inconsistentOptions)"></span>
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
         <div *ngIf="q.questionType == 'memo'">

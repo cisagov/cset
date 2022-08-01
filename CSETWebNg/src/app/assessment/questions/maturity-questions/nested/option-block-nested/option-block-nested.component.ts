@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer, Question, Option } from '../../../../../models/questions.model';
+import { Answer, Question, Option, IntegrityCheckOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
@@ -90,6 +90,7 @@ export class OptionBlockNestedComponent implements OnInit {
    */
   changeRadio(o: Option, event): void {
     o.selected = event.target.checked;
+    console.log(o);
     var answers = [];
 
     // add this option to the request
@@ -139,6 +140,7 @@ export class OptionBlockNestedComponent implements OnInit {
    */
   changeCheckbox(o: Option, event, listOfOptions): void {
     o.selected = event.target.checked;
+    console.log(o)
     var answers = [];
 
     //don't love the super nested if's but the amount
@@ -279,7 +281,7 @@ export class OptionBlockNestedComponent implements OnInit {
   * Performs an integrity check on a  question.
   */
   performIntegrityCheck() {
-    const integrityCheckErrors = [];
+    const inconsistentOptions = [];
     this.q.options.forEach((o: Option) => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
@@ -287,13 +289,13 @@ export class OptionBlockNestedComponent implements OnInit {
         integrityCheckOption.selected = o.selected;
       }
 
-      integrityCheckOption?.inconsistentOptionIds.forEach(option => {
-        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option)?.selected && integrityCheckOption.selected) {
-          integrityCheckErrors.push('Inconsistent OptionId(s): ' + option);
+      integrityCheckOption?.inconsistentOptions.forEach((option: IntegrityCheckOption) => {
+        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option.optionId)?.selected && integrityCheckOption.selected) {
+          inconsistentOptions.push(option);
         }
       });
     });
 
-    this.q.integrityCheckErrors = integrityCheckErrors;
+    this.q.inconsistentOptions = inconsistentOptions;
   }
 }
