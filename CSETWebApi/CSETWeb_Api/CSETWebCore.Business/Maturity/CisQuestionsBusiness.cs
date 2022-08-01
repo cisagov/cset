@@ -354,8 +354,11 @@ namespace CSETWebCore.Business.Maturity
             List<IntegrityCheckOption> integrityCheckOptions = new List<IntegrityCheckOption>();
 
             var integrityCheckPairs = _context.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK.ToList();
-            var options = _context.MATURITY_ANSWER_OPTIONS.ToList();
             var myAnswers = _context.ANSWER.Where(a => a.Assessment_Id == _assessmentId).ToList();
+
+            var query = from mq in _context.MATURITY_QUESTIONS
+                        join ma in _context.MATURITY_ANSWER_OPTIONS on mq.Mat_Question_Id equals ma.Mat_Question_Id
+                        select new { mq, ma };
 
             foreach (var pair in integrityCheckPairs) 
             {
@@ -364,16 +367,26 @@ namespace CSETWebCore.Business.Maturity
                     IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pair.Mat_Option_Id_1 };
                     newOption.Selected = myAnswers.Find(a => a.Mat_Option_Id == newOption.OptionId)?.Answer_Text == "S";
 
-                    foreach (var p in integrityCheckPairs) 
+                    foreach (var p in integrityCheckPairs)
                     {
-                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1)) 
+                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_1))
                         {
-                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
-                        }
+                            newOption.InconsistentOptions.Add(
+                                new IntegrityCheckOption()
+                                {
+                                    OptionId = p.Mat_Option_Id_1,
+                                    ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == p.Mat_Option_Id_1).FirstOrDefault().mq.Question_Text
+                                });
+                        }                        
 
-                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_2))
                         {
-                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
+                            newOption.InconsistentOptions.Add(
+                              new IntegrityCheckOption()
+                              {
+                                  OptionId = p.Mat_Option_Id_2,
+                                  ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == p.Mat_Option_Id_2).FirstOrDefault().mq.Question_Text
+                              });
                         }
                     }
                     integrityCheckOptions.Add(newOption);  
@@ -386,14 +399,24 @@ namespace CSETWebCore.Business.Maturity
 
                     foreach (var p in integrityCheckPairs)
                     {
-                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1))
+                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_1))
                         {
-                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
+                            newOption.InconsistentOptions.Add(
+                                new IntegrityCheckOption()
+                                {
+                                    OptionId = p.Mat_Option_Id_1,
+                                    ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == p.Mat_Option_Id_1).FirstOrDefault().mq.Question_Text
+                                });
                         }
 
-                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_2))
                         {
-                            newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
+                            newOption.InconsistentOptions.Add(
+                           new IntegrityCheckOption()
+                           {
+                               OptionId = p.Mat_Option_Id_2,
+                               ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == p.Mat_Option_Id_2).FirstOrDefault().mq.Question_Text
+                           });
                         }
                     }
                     integrityCheckOptions.Add(newOption);

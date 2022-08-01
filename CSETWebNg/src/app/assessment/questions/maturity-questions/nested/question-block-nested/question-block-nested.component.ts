@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Answer, Question } from '../../../../../models/questions.model';
+import { Answer, Question, IntegrityCheckOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
@@ -208,5 +208,23 @@ export class QuestionBlockNestedComponent implements OnInit {
       width: '50%',
       maxWidth: '50%'
     });
+  }
+
+  /**
+   * Gets the corresponding questions to the given optionIds
+   * and returns an error message for the integrity check.
+   */
+  getIntegrityCheckErrors(inconsistentOptions: IntegrityCheckOption[]) {
+    if (!inconsistentOptions.length) {
+      return null;
+    }
+
+    let integrityCheckErrors = 'This answer is inconsistent with the answer to the following question(s): '
+
+    inconsistentOptions.forEach((option: IntegrityCheckOption) => {
+      integrityCheckErrors += option.parentQuestionText;
+    });
+
+    return integrityCheckErrors;
   }
 }

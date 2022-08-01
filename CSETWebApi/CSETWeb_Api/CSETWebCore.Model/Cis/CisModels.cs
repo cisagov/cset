@@ -130,7 +130,8 @@ namespace CSETWebCore.Model.Cis
     {
         public int OptionId { get; set; }
         public bool Selected { get; set; }
-        public List<int> InconsistentOptionIds { get; set; } = new List<int>();
+        public string ParentQuestionText { get; set; }
+        public List<IntegrityCheckOption> InconsistentOptions { get; set; } = new List<IntegrityCheckOption>();
     }
 
 
