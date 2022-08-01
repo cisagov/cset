@@ -363,7 +363,7 @@ namespace CSETWebCore.Business.Maturity
                 ProcessIntegrityCheckOption(pair.Mat_Option_Id_1, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
 
                 // Now add the second option of the pair if not already added.
-                ProcessIntegrityCheckOption(pair.Mat_Option_Id_1, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
+                ProcessIntegrityCheckOption(pair.Mat_Option_Id_2, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
             }
 
             return integrityCheckOptions;
