@@ -31,7 +31,7 @@
 </ng-container>
 -->
 
-<div class="bgc-trans mx-4 pr-4 d-flex flex-column flex-00a">
+<div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a">
     <h2 class="mt-0">Merge Examinations</h2>
 </div>
 
@@ -102,12 +102,12 @@
         <ng-container *ngIf="this.mergeConflicts.length === 0 && this.pageLoading === false">
 
             <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">        
-                <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+                <div class="alert-success mt-4 mb-4 p-4 d-flex flex-row justify-content-center align-items-center flex-11a">
                     <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle" aria-label="Caution no questions"></span>
                     <span class="fs-base-3 p-2 justify-content-center flex-11a">
                         There are no conflicting answers within the chosen examinations.
                         Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
-                        screen to select different examinations, change the merge options, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
+                        screen to select different examinations, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
                         to proceed with the merge.
                     </span>
                 </div>
