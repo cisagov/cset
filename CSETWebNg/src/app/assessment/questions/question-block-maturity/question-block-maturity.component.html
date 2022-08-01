@@ -155,12 +155,14 @@
                 <div *ngIf="!q.isParentQuestion">
                     <!-- build the list of answer options -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                        <label *ngFor="let option of answerOptions" class="btn form-check-label"
-                            [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="configSvc.answerLabels[option]">
-                            <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
-                                (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{configSvc.buttonLabels[option]}}
+                        <label *ngFor="let option of answerOptions">
+                            <label *ngIf="option !== 'NA'" class="btn form-check-label"
+                                [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
+                                [matTooltip]="configSvc.answerLabels[option]">
+                                <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
+                                    (click)="storeAnswer(q, option)" [checked]="q.answer === option">
+                                {{configSvc.buttonLabels[option]}}
+                            </label>
                         </label>
 
                         <!-- Mark For Review Flag  -->
@@ -187,9 +189,6 @@
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
 
-            <div>Have any issues or concerns been identified? If yes, Please comment below:</div>
-            <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
-            [(ngModel)]="q.comment" ></textarea>
         </div>
 
            
