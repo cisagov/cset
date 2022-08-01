@@ -85,7 +85,6 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
     // Initialize integrity check options for CIS assessment
     if (!this.cisSvc.integrityCheckOptions.length) {
       this.cisSvc.getIntegrityCheckOptions().subscribe((response: IntegrityCheckOption[]) => {
-        console.log(response);
         this.cisSvc.integrityCheckOptions = response;
       }, error => {
         console.log('Error getting CIS integrity check options: ' + (<Error>error).name + (<Error>error).message);

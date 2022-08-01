@@ -90,7 +90,6 @@ export class OptionBlockNestedComponent implements OnInit {
    */
   changeRadio(o: Option, event): void {
     o.selected = event.target.checked;
-    console.log(o);
     var answers = [];
 
     // add this option to the request
@@ -140,7 +139,6 @@ export class OptionBlockNestedComponent implements OnInit {
    */
   changeCheckbox(o: Option, event, listOfOptions): void {
     o.selected = event.target.checked;
-    console.log(o)
     var answers = [];
 
     //don't love the super nested if's but the amount
