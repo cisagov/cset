@@ -355,6 +355,7 @@ namespace CSETWebCore.Business.Maturity
 
             var integrityCheckPairs = _context.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK.ToList();
             var myAnswers = _context.ANSWER.Where(a => a.Assessment_Id == _assessmentId).ToList();
+            var cisQuestions = _context.MATURITY_QUESTIONS.Where(q => q.Maturity_Model_Id == _cisModelId);
 
             var query = from mq in _context.MATURITY_QUESTIONS
                         join ma in _context.MATURITY_ANSWER_OPTIONS on mq.Mat_Question_Id equals ma.Mat_Question_Id
@@ -383,11 +384,14 @@ namespace CSETWebCore.Business.Maturity
 
                         if (optionId != null) 
                         {
+                            var matQuestion = query.Where(x => x.ma.Mat_Option_Id == optionId).FirstOrDefault().mq;
+                            // Try to get the next level up parent question, if available, to make integrity check warnings more clear.
+                            string parentQuestionText = cisQuestions.Where(q => q.Mat_Question_Id == matQuestion.Parent_Question_Id).FirstOrDefault()?.Question_Text ?? matQuestion.Question_Text;
                             newOption.InconsistentOptions.Add(
                                 new InconsistentOption()
                                 {
                                     OptionId = (int)optionId,
-                                    ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == optionId).FirstOrDefault().mq.Question_Text
+                                    ParentQuestionText = parentQuestionText
                                 });
                         }
                   
@@ -395,7 +399,7 @@ namespace CSETWebCore.Business.Maturity
                     integrityCheckOptions.Add(newOption);  
                 }
 
-                // Now add the second integrity check option if not already added.
+                // Now add the second option of the pair if not already added.
                 if (!integrityCheckOptions.Exists(opt => opt.OptionId == pair.Mat_Option_Id_2))
                 {
                     IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pair.Mat_Option_Id_2 };
@@ -416,11 +420,14 @@ namespace CSETWebCore.Business.Maturity
 
                         if (optionId != null)
                         {
+                            var matQuestion = query.Where(x => x.ma.Mat_Option_Id == optionId).FirstOrDefault().mq;
+                            // Try to get the next level up parent question, if available, to make integrity check warnings more clear.
+                            string parentQuestionText = cisQuestions.Where(q => q.Mat_Question_Id == matQuestion.Parent_Question_Id).FirstOrDefault()?.Question_Text ?? matQuestion.Question_Text;
                             newOption.InconsistentOptions.Add(
                                 new InconsistentOption()
                                 {
                                     OptionId = (int)optionId,
-                                    ParentQuestionText = query.Where(x => x.ma.Mat_Option_Id == optionId).FirstOrDefault().mq.Question_Text
+                                    ParentQuestionText = parentQuestionText
                                 });
                         }
 
