@@ -451,8 +451,6 @@ import { GuidanceBlockComponent } from './reports/module-content/guidance-block/
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 
 
-
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -857,7 +855,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         McQuestionComponent,
         McOptionComponent,
         GuidanceBlockComponent,
-        ReferencesBlockComponent,
+        ReferencesBlockComponent
     ],
     providers: [
         ConfigService,

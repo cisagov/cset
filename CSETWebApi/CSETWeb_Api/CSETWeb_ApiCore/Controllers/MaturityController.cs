@@ -238,21 +238,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns the CIS subnode list.  This is used to 
-        /// render the sidenav tree in the UI.
-        /// </summary>
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/maturity/cis/navstruct")]
-        public IActionResult GetCisNavStructure()
-        {
-            var nav = new CisNavStructure(_context);
-            var s = nav.GetNavStructure();
-            return Ok(s);
-        }
-
-
-        /// <summary>
         /// Returns list of CIS assessments accessible to the current user.
         /// </summary>
         /// <returns></returns>
