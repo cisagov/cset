@@ -165,7 +165,7 @@ export interface Question {
 
     visible: boolean;
     options: any[];
-    inconsistentOptions: IntegrityCheckOption[];
+    failedIntegrityCheckOptions: IntegrityCheckOption[];
 }
 
 export class Answer {
@@ -210,7 +210,12 @@ export interface IntegrityCheckOption {
   optionId: number;
   selected: boolean;
   parentQuestionText: string;
-  inconsistentOptions: IntegrityCheckOption[];
+  inconsistentOptions: InconsistentOption[];
+}
+
+export interface InconsistentOption {
+  optionId: number;
+  parentQuestionText: string;
 }
 
 export class SubToken {
@@ -218,7 +223,6 @@ export class SubToken {
     token: string;
     substitution: string;
 }
-
 
 export class DefaultParameters {
     defaultParameter: string[];
