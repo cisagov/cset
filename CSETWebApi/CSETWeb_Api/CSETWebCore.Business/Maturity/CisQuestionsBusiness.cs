@@ -366,12 +366,12 @@ namespace CSETWebCore.Business.Maturity
 
                     foreach (var p in integrityCheckPairs) 
                     {
-                        if (p.Mat_Option_Id_1 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1)) 
+                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1)) 
                         {
                             newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
                         }
 
-                        if (p.Mat_Option_Id_2 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
                         {
                             newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
                         }
@@ -386,12 +386,12 @@ namespace CSETWebCore.Business.Maturity
 
                     foreach (var p in integrityCheckPairs)
                     {
-                        if (p.Mat_Option_Id_1 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1))
+                        if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_1))
                         {
                             newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_1);
                         }
 
-                        if (p.Mat_Option_Id_2 != newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
+                        if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptionIds.Contains(p.Mat_Option_Id_2))
                         {
                             newOption.InconsistentOptionIds.Add(p.Mat_Option_Id_2);
                         }
