@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer, Question, Option, IntegrityCheckOption } from '../../../../../models/questions.model';
+import { Answer, Question, Option, InconsistentOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
@@ -281,7 +281,7 @@ export class OptionBlockNestedComponent implements OnInit {
   * Performs an integrity check on a  question.
   */
   performIntegrityCheck() {
-    const inconsistentOptions = [];
+    const failedIntegrityCheckOptions = [];
     this.q.options.forEach((o: Option) => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
@@ -289,13 +289,13 @@ export class OptionBlockNestedComponent implements OnInit {
         integrityCheckOption.selected = o.selected;
       }
 
-      integrityCheckOption?.inconsistentOptions.forEach((option: IntegrityCheckOption) => {
+      integrityCheckOption?.inconsistentOptions.forEach(option => {
         if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option.optionId)?.selected && integrityCheckOption.selected) {
-          inconsistentOptions.push(option);
+          failedIntegrityCheckOptions.push(option);
         }
       });
     });
 
-    this.q.inconsistentOptions = inconsistentOptions;
+    this.q.failedIntegrityCheckOptions = failedIntegrityCheckOptions;
   }
 }
