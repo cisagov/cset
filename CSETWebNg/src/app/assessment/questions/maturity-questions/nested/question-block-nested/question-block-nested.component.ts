@@ -222,7 +222,9 @@ export class QuestionBlockNestedComponent implements OnInit {
     let integrityCheckErrors = 'This answer is inconsistent with the answer to the following question(s): '
 
     inconsistentOptions.forEach((option: IntegrityCheckOption) => {
-      integrityCheckErrors += option.parentQuestionText;
+      if (!integrityCheckErrors.includes(option.parentQuestionText)) {
+        integrityCheckErrors += option.parentQuestionText;
+      }
     });
 
     return integrityCheckErrors;
