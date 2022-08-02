@@ -24,6 +24,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -47,10 +49,13 @@ let headers = {
   // used for keeping track of which examinations are being merged
   prepForMerge: boolean = false;
   assessmentsToMerge: any[] = [];
+  mainAssessCharter: string = "";
+  charterWarningShown: boolean = false;
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
+    public dialog: MatDialog
   ) {
     this.init();
   }
@@ -79,14 +84,47 @@ let headers = {
 
   // Adds or removes selected ISE examinations to the list to merge
   modifyMergeList(assessment: any, event: any) {
+    let tempCharter = "";
+
+    if (this.mainAssessCharter === "") {
+      for (let i = 4; i < 9; i++) {
+        this.mainAssessCharter += assessment.assessmentName[i];
+      }
+    } else {
+      for (let i = 4; i < 9; i++) {
+        tempCharter += assessment.assessmentName[i];
+      }
+    }
+
     const optionChecked = event.srcElement.checked;
+
+    if (this.mainAssessCharter !== "" && tempCharter !== "" && optionChecked) {
+      if (this.mainAssessCharter !== tempCharter && this.charterWarningShown === false) {
+        this.openCharterWarning();
+      }
+    }
 
     if (optionChecked) {
       this.assessmentsToMerge.push(assessment.assessmentId);
-      } else {
+    } else {
       const index = this.assessmentsToMerge.indexOf(assessment);
       this.assessmentsToMerge.splice(index, 1);
     }
+
+    if (this.assessmentsToMerge.length === 0) {
+      this.mainAssessCharter = "";
+      this.charterWarningShown = false;
+    }
+  }
+
+  openCharterWarning() {
+    let dialogRef = this.dialog.open(CharterMismatchComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.charterWarningShown = true;
+    });
   }
 
 

@@ -43,7 +43,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   // Adding a date property here to avoid breaking any other assessments. Will probably update later.
   assessmentEffectiveDate: Date = new Date();
 
-  showNoCharterWarning = false;
   contactInitials: string = "";
 
   /**
@@ -167,9 +166,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     // ISE's require a charter number to verify valid merge.
     if (this.assessment.charter) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
-      this.showNoCharterWarning = false;
-    } else if (this.isAnExamination && !(this.assessment.charter) || (this.assessment.charter === '00000')) {
-      this.showNoCharterWarning = true;
     }
     
     if (this.assessment.creditUnion) {
