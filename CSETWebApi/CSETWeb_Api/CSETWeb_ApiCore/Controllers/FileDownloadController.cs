@@ -2,6 +2,7 @@
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/files/download/{id}")]
-        public IActionResult Download(int id, string token)
+        public async Task<IActionResult> Download(int id, string token)
         {
             var assessmentId = _token.AssessmentForUser(token);
             var file = _fileRepo.GetFileDescription(id);
@@ -32,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reffiles/download/{id}")]
-        public IActionResult DownloadReferenceFile(int id, string token)
+        public async Task<IActionResult> DownloadReferenceFile(int id, string token)
         {
             var file = _fileRepo.GetFileDescription(id);
             var stream = new MemoryStream(file.Data);

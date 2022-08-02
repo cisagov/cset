@@ -15,10 +15,11 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -50,13 +51,13 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/securityplan")]
-        public IActionResult GetSecurityPlan()
+        public async Task<IActionResult> GetSecurityPlan()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
 
-            var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var ss = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             if (ss != null)
             {
                 data.ApplicationMode = ss.Application_Mode;
@@ -75,7 +76,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executive")]
-        public IActionResult GetExecutive()
+        public async Task<IActionResult> GetExecutive()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -85,7 +86,7 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             data.salTable = _report.GetSals();
             data.top5Categories = _report.GetTop5Categories();
-            data.top5Questions = _report.GetTop5Questions();
+            data.top5Questions = await _report.GetTop5Questions();
             return Ok(data);
         }
 
@@ -97,7 +98,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/executivematurity")]
-        public IActionResult GetExecutiveMaturity()
+        public async Task<IActionResult> GetExecutiveMaturity()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
@@ -112,7 +113,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/executivecmmc")]
-        public IActionResult GetCMMCReport()
+        public async Task<IActionResult> GetCMMCReport()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
@@ -127,7 +128,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
-        public IActionResult GetSiteSummaryCMMCReport()
+        public async Task<IActionResult> GetSiteSummaryCMMCReport()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
@@ -159,7 +160,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/rramain")]
-        public IActionResult GetRRAMainReport()
+        public async Task<IActionResult> GetRRAMainReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -179,11 +180,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/rradetail")]
-        public IActionResult GetRRADetailReport()
+        public async Task<IActionResult> GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             RRASummary summary = new RRASummary(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
@@ -201,7 +202,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/rraquestions")]
-        public IActionResult GetRRAQuestions()
+        public async Task<IActionResult> GetRRAQuestions()
         {
             var questions = new List<MaturityQuestion>();
 
@@ -239,7 +240,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/vadrmain")]
-        public IActionResult GetVADRMainReport()
+        public async Task<IActionResult> GetVADRMainReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -259,11 +260,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/vadrdetail")]
-        public IActionResult GetVADRDetailReport()
+        public async Task<IActionResult> GetVADRDetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
 
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             VADRReports summary = new VADRReports(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
@@ -281,7 +282,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/vadrquestions")]
-        public IActionResult GetVADRQuestions()
+        public async Task<IActionResult> GetVADRQuestions()
         {
             var questions = new List<MaturityQuestion>();
 
@@ -293,7 +294,7 @@ namespace CSETWebCore.Api.Controllers
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);
-            var dict = mm.GetSourceFiles();
+            var dict = await mm.GetSourceFiles();
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
@@ -324,7 +325,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/getAltList")]
-        public IActionResult GetAltList()
+        public async Task<IActionResult> GetAltList()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -348,7 +349,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/discoveries")]
-        public IActionResult GetDiscoveries()
+        public async Task<IActionResult> GetDiscoveries()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -362,7 +363,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/sitesummary")]
-        public IActionResult GetSiteSummary()
+        public async Task<IActionResult> GetSiteSummary()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -374,7 +375,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestions();
             data.FinancialQuestionsTable = _report.GetFinancialQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
@@ -385,7 +386,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/detail")]
-        public IActionResult GetDetail()
+        public async Task<IActionResult> GetDetail()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -397,7 +398,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
-            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.RankedQuestionsTable = await _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
@@ -413,7 +414,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/trendreport")]
-        public IActionResult GetTrendReport(int aggregationID)
+        public async Task<IActionResult> GetTrendReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
@@ -473,7 +474,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/comparereport")]
-        public IActionResult GetCompareReport(int aggregationID)
+        public async Task<IActionResult> GetCompareReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
@@ -533,7 +534,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/getconfidentialtypes")]
-        public IActionResult GetConfidentialTypes()
+        public async Task<IActionResult> GetConfidentialTypes()
         {
             return Ok(_report.GetConfidentialTypes());
         }
@@ -544,9 +545,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        protected string GetApplicationMode(int assessmentId)
+        protected async Task<string> GetApplicationMode(int assessmentId)
         {
-            var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
+            var mode = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefaultAsync();
 
             if (mode == null)
             {
@@ -577,7 +578,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/modulecontent")]
-        public IActionResult ModuleContentReport([FromQuery] string set)
+        public async Task<IActionResult> ModuleContentReport([FromQuery] string set)
         {
             var report = new ModuleContentReport(_context, _questionRequirement);
             var resp = report.GetResponse(set);

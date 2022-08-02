@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
@@ -465,16 +466,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual int FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
+        public virtual async Task<int> FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             int myrval = 0;
-            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
+            await this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
                      .WithSqlParam("Assessment_Id", assessment_Id)
 
-                     .ExecuteStoredProc((handler) =>
+                     .ExecuteStoredProcAsync((handler) =>
                      {
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
@@ -552,16 +553,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
+        public virtual async Task<IList<usp_GetRankedQuestions_Result>> usp_GetRankedQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetRankedQuestions_Result> myrval = null;
-            this.LoadStoredProc("usp_GetRankedQuestions")
+            await this.LoadStoredProc("usp_GetRankedQuestions")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProc((handler) =>
+                     .ExecuteStoredProcAsync((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetRankedQuestions_Result>();
                      });

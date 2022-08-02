@@ -3,6 +3,7 @@ using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Acet;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Maturity
 {
@@ -13,7 +14,7 @@ namespace CSETWebCore.Interfaces.Maturity
         List<MaturityDomainRemarks> GetDomainRemarks(int assessmentId);
         void SetDomainRemarks(int assessmentId, MaturityDomainRemarks remarks);
         List<MaturityLevel> GetMaturityLevelsForModel(int maturityModelId, int targetLevel);
-        List<MaturityModel> GetAllModels();
+        Task<List<MaturityModel>> GetAllModels();
         void PersistSelectedMaturityModel(int assessmentId, string modelName);
         void ClearMaturityModel(int assessmentId);
         void PersistMaturityLevel(int assessmentId, int level);

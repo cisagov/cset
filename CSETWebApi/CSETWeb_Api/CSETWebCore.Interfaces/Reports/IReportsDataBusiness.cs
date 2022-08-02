@@ -4,6 +4,7 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Reports
 {
@@ -29,11 +30,12 @@ namespace CSETWebCore.Interfaces.Reports
         List<StandardQuestions> GetQuestionsForEachStandard();
         List<ComponentQuestion> GetComponentQuestions();
         List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories();
-        List<RankedQuestions> GetTop5Questions();
+        Task<List<RankedQuestions>> GetTop5Questions();
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
         List<QuestionsWithComments> GetQuestionsWithComments();
         List<QuestionsMarkedForReview> GetQuestionsMarkedForReview();
-        List<RankedQuestions> GetRankedQuestions();
+
+        Task<List<RankedQuestions>> GetRankedQuestions();
         List<DocumentLibraryTable> GetDocumentLibrary();
         BasicReportData.OverallSALTable GetNistSals();
         List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes();

@@ -10,8 +10,9 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -35,7 +36,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/assessment/export")]
-        public IActionResult ExportAssessment(string token)
+        public async Task<IActionResult> ExportAssessment(string token)
         {
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
@@ -49,7 +50,8 @@ namespace CSETWebCore.Api.Controllers
 
             // determine filename
             var filename = $"{assessmentId}{ext}";
-            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            var assessmentInfo = await _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefaultAsync();
+            string assessmentName = assessmentInfo.Assessor_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
                 filename = $"{assessmentName}{ext}";

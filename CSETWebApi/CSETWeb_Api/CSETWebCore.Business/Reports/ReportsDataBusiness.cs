@@ -24,7 +24,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Reports
 {
@@ -708,9 +708,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<RankedQuestions> GetTop5Questions()
+        public async Task<List<RankedQuestions>> GetTop5Questions()
         {
-            return GetRankedQuestions().Take(5).ToList();
+            var rankQ = await GetRankedQuestions();
+            return rankQ.Take(5).ToList();
         }
 
 
@@ -878,13 +879,15 @@ namespace CSETWebCore.Business.Reports
 
         }
 
-
-        public List<RankedQuestions> GetRankedQuestions()
+       
+        public async Task<List<RankedQuestions>> GetRankedQuestions()
         {
             var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
-            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+            var qList = await _context.usp_GetRankedQuestions(_assessmentId);
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = new List<usp_GetRankedQuestions_Result>();
+            rankedQuestionList.AddRange(qList);
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
                 q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);

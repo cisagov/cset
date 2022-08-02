@@ -15,6 +15,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglecrr")]
-        public IActionResult ToggleCRR([FromBody] AssessmentDetail assessmentDetail)
+        public async Task<IActionResult> ToggleCRR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -103,7 +104,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglerra")]
-        public IActionResult ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
+        public async Task<IActionResult> ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -132,7 +133,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglevadr")]
-        public IActionResult ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
+        public async Task<IActionResult> ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -168,7 +169,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglestandard")]
-        public IActionResult ToggleStandard([FromBody] AssessmentDetail assessmentDetail)
+        public async Task<IActionResult> ToggleStandard([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -189,17 +190,17 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpPost]
         [Route("api/tsa/standard")]
-        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
+        public async Task<IActionResult> PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
         [HttpGet]
         [Route("api/tsa/getModelsName")]
-        public List <TSAModelNames>  getModelsName()
+        public async Task<List <TSAModelNames>>  getModelsName()
         {
             List<TSAModelNames> allModelsList = new List<TSAModelNames>();
-           var  allModelsStandard= (from m in _context.MODES_SETS_MATURITY_MODELS
+           var  allModelsStandard= await (from m in _context.MODES_SETS_MATURITY_MODELS
                 join s in _context.SETS on m.Set_Name equals s.Set_Name
                 // join maturity in _context.MATURITY_MODELS on m.Model_Name equals maturity.Model_Name
 
@@ -216,8 +217,9 @@ namespace CSETWebCore.Api.Controllers
                   
                    
 
-                }).ToList();
-           var allModelsMaturity = (from m in _context.MODES_SETS_MATURITY_MODELS
+                }).ToListAsync();
+
+           var allModelsMaturity = await  (from m in _context.MODES_SETS_MATURITY_MODELS
                    join mat in _context.MATURITY_MODELS on m.Model_Name equals mat.Model_Name
                    where m.AppCode=="TSA"
                    select new TSAModelNames()
@@ -230,7 +232,8 @@ namespace CSETWebCore.Api.Controllers
                        Model_Description= mat.Model_Description,
                        Is_Included=m.Is_Included
                    }
-               ).ToList();
+               ).ToListAsync();
+
            foreach (var x in allModelsStandard)
            {
                TSAModelNames cl = new TSAModelNames();

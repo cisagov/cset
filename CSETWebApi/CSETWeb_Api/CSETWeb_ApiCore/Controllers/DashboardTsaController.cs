@@ -64,7 +64,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
+        public async Task<IActionResult> analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/getStandardList")]
-        public IActionResult getStandardList()
+        public async Task<IActionResult> getStandardList()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
@@ -100,7 +100,7 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/TSA/getSectorIndustryStandardsTSA")]
-        public IActionResult GetStandardsResultsByCategory1( int? sectorId, int? industryId)
+        public async Task<IActionResult> GetStandardsResultsByCategory1( int? sectorId, int? industryId)
         {
             
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -133,7 +133,7 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/TSA/updateChart")]
-        public IActionResult UpdateChart([FromBody] Demographics demographics)
+        public async Task<IActionResult> UpdateChart([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _tokenManager.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));

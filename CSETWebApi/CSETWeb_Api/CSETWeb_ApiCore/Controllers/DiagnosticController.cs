@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using CSETWebCore.Interfaces.Notification;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/diagnostic/email")]
-        public string TestEmailServer(string recip)
+        public async Task<string> TestEmailServer(string recip)
         {
             try
             {

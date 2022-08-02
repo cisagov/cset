@@ -11,7 +11,7 @@ using CSETWebCore.Model.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Contact
 {
@@ -335,10 +335,10 @@ namespace CSETWebCore.Business.Contact
         /// Updates ASSESSMENT_CONTACT record with given userId using provided ContactDetail object
         /// </summary>
         /// <returns></returns>
-        public void UpdateContact(ContactDetail contact, int userId)
+        public async Task UpdateContact(ContactDetail contact, int userId)
         {
-            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
-                && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();
+            var ac = await _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
+                && x.Assessment_Id == contact.AssessmentId).FirstOrDefaultAsync();
 
             ac.UserId = contact.UserId;
             ac.FirstName = contact.FirstName;

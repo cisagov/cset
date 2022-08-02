@@ -10,6 +10,7 @@ using CSETWebCore.Model.Analytics;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Business.Question;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -42,10 +43,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analytics/getAnalytics")]
-        public IActionResult GetAnalytics()
+        public async Task<IActionResult> GetAnalytics()
         {
-            var demographics = GetDemographics();
-            var assessment = GetAnalyticsAssessment();
+            var demographics = await GetDemographics();
+            var assessment = await GetAnalyticsAssessment();
             assessment.Assets = demographics.AssetValue;
             assessment.Size = demographics.Size;
             assessment.IndustryId = demographics.IndustryId;
@@ -55,11 +56,11 @@ namespace CSETWebCore.Api.Controllers
             {
                 Assessment = assessment,
                 Demographics = demographics,
-                QuestionAnswers = GetQuestionsAnswers()
+                QuestionAnswers = await GetQuestionsAnswers()
             });
         }
 
-        private AnalyticsAssessment GetAnalyticsAssessment()
+        private async Task<AnalyticsAssessment> GetAnalyticsAssessment()
         {
             int assessmentId = _token.AssessmentForUser();
             var assessment = _assessment.GetAnalyticsAssessmentDetail(assessmentId);
@@ -70,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
         /// Returns an instance of Demographics for Anonymous export 
         /// </summary>        
         /// <returns></returns>
-        private AnalyticsDemographic GetDemographics()
+        private async Task<AnalyticsDemographic> GetDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
             return _demographic.GetAnonymousDemographics(assessmentId);
@@ -80,7 +81,7 @@ namespace CSETWebCore.Api.Controllers
         /// Returns questions/answers for current selected assessment
         /// </summary>
         /// <returns></returns>
-        private List<AnalyticsQuestionAnswer> GetQuestionsAnswers()
+        private async Task<List<AnalyticsQuestionAnswer>> GetQuestionsAnswers()
         {
             int assessmentId = _token.AssessmentForUser();
             string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
