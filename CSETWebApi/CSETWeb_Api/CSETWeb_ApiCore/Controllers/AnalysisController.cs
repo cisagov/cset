@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/answercolors")]
-        public IActionResult GetAnswerColors()
+        public async Task<IActionResult> GetAnswerColors()
         {
             return Ok(answerColorDefs);
         }
@@ -60,12 +60,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public IActionResult GetRankedQuestions()
+        public async Task<IActionResult> GetRankedQuestions()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
 
-            var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
+            var rankedQuestionList = await _context.usp_GetRankedQuestions(assessmentId);
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
@@ -78,7 +78,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public IActionResult GetFeedback()
+        public async Task<IActionResult> GetFeedback()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
@@ -91,17 +91,17 @@ namespace CSETWebCore.Api.Controllers
                 List<FeedbackQuestion> feedbackQuestions = new List<FeedbackQuestion>();
 
                 // standard questions
-                var q1 = from a in _context.Answer_Standards_InScope
-                         where a.assessment_id == assessmentId &&
-                         a.mode == AssessmentMode && !string.IsNullOrWhiteSpace(a.FeedBack)
-                         select new FeedbackQuestion()
-                         {
-                             AnswerID = a.answer_id,
-                             Feedback = a.FeedBack,
-                             Mode = a.mode,
-                             QuestionID = a.question_or_requirement_id,
-                             QuestionText = a.Question_Text
-                         };
+                var q1 = (from a in  _context.Answer_Standards_InScope
+                          where a.assessment_id == assessmentId &&
+                          a.mode == AssessmentMode && !string.IsNullOrWhiteSpace(a.FeedBack)
+                          select new FeedbackQuestion()
+                          {
+                              AnswerID = a.answer_id,
+                              Feedback = a.FeedBack,
+                              Mode = a.mode,
+                              QuestionID = a.question_or_requirement_id,
+                              QuestionText = a.Question_Text
+                          });
 
                 feedbackQuestions.AddRange(q1);
 

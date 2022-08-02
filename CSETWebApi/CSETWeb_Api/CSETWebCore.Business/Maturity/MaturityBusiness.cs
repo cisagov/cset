@@ -14,6 +14,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace CSETWebCore.Business.Maturity
@@ -325,14 +326,14 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public Dictionary<int,string> GetSourceFiles()
+        public async Task<Dictionary<int,string>> GetSourceFiles()
         {
-            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
+            List<Tuple<int, string>> sourceFiles = await (from a in _context.MATURITY_SOURCE_FILES
                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
                                                    join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
                                                    where q.Maturity_Model_Id == 7
                                                    select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
-                                                   .ToList();
+                                                   .ToListAsync();
             
             Dictionary<int,string> result = new Dictionary<int, string>();
             foreach(var sourceFile in sourceFiles)
@@ -356,7 +357,7 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Model.Maturity.MaturityModel> GetAllModels()
+        public async Task<List<Model.Maturity.MaturityModel>> GetAllModels()
         {
             var response = new List<Model.Maturity.MaturityModel>();
 
@@ -368,10 +369,12 @@ namespace CSETWebCore.Business.Maturity
                              ModelName = a.Model_Name,
                              QuestionsAlias = a.Questions_Alias,
                              ModelDescription = a.Model_Description,
-                             ModelTitle = a.Model_Title,
-                             IconId = a.Icon_Id
+                             ModelTitle = a.Model_Title
+                             //,IconId = a.Icon_Id //TODO: GET DB BACKUP 
                          };
-            foreach (var m in result.ToList())
+
+            var resultList = await result.ToListAsync();    
+            foreach (var m in resultList)
             {
                 response.Add(m);
                 m.Levels = GetMaturityLevelsForModel(m.ModelId, 100);

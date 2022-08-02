@@ -2,6 +2,7 @@
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -21,7 +22,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]
-        public IActionResult GetDeficiencyList()
+        public async Task<IActionResult> GetDeficiencyList()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
@@ -34,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
-        public IActionResult GetAssessmentInformation()
+        public async Task<IActionResult> GetAssessmentInformation()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
@@ -46,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public IActionResult GetAnsweredQuestions()
+        public async Task<IActionResult> GetAnsweredQuestions()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);

@@ -9,6 +9,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -29,14 +30,14 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/overallcompliancescore")]
-        public IActionResult OverallComplianceScore([FromBody] AggBody body)
+        public async Task<IActionResult> OverallComplianceScore([FromBody] AggBody body)
         {
             int aggregationID = body.AggregationID;   
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment)
                 .Include(x => x.Assessment.STANDARD_SELECTION)
                 .OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
 
             // build the empty response structure for the assessments we have
@@ -69,9 +70,9 @@ namespace CSETWebCore.Api.Controllers
 
                 response.labels.Add(a.Assessment.Assessment_Date.ToString("d-MMM-yyyy"));
 
-                _context.LoadStoredProc("[GetCombinedOveralls]")
+                await _context.LoadStoredProc("[GetCombinedOveralls]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
 
@@ -107,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/top5")]
-        public IActionResult Top5([FromBody] AggBody body)
+        public async Task<IActionResult> Top5([FromBody] AggBody body)
         {
             int aggregationID = body.AggregationID;
             var response = new LineChart();
@@ -124,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/analysis/bottom5")]
-        public IActionResult Bottom5([FromBody] AggBody body)
+        public async Task<IActionResult> Bottom5([FromBody] AggBody body)
         {
             int aggregationID = body.AggregationID;
             var response = new LineChart();
@@ -142,15 +143,15 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/categorypercentcompare")]
-        public IActionResult CategoryPercentCompare(int aggregationID)
+        public async Task<IActionResult> CategoryPercentCompare(int aggregationID)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("AssessmentId", typeof(int));
             dt.Columns.Add("Alias");
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
@@ -159,7 +160,7 @@ namespace CSETWebCore.Api.Controllers
                 row["Alias"] = a.Alias;
                 dt.Rows.Add(row);
 
-                var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
+                var percentages = await GetCategoryPercentages(a.Assessment_Id, _context);
 
                 foreach (usp_getStandardsResultsByCategory pct in percentages)
                 {
@@ -211,13 +212,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <param name="db"></param>
-        private List<usp_getStandardsResultsByCategory> GetCategoryPercentages(int assessmentId, CSETContext db)
+        private async Task<List<usp_getStandardsResultsByCategory>> GetCategoryPercentages(int assessmentId, CSETContext db)
         {
             List<usp_getStandardsResultsByCategory> response = null;
 
-            db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+            await db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                         .WithSqlParam("assessment_Id", assessmentId)
-                        .ExecuteStoredProc((handler) =>
+                        .ExecuteStoredProcAsync((handler) =>
                         {
                             var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
                             var labels = (from usp_getStandardsResultsByCategory an in result
@@ -238,7 +239,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/overallaverages")]
-        public IActionResult GetOverallAverages(int aggregationID)
+        public async Task<IActionResult> GetOverallAverages(int aggregationID)
         {
             //var aggregationID = _tokenManager.PayloadInt("aggreg");
             //if (aggregationID == null)
@@ -258,15 +259,15 @@ namespace CSETWebCore.Api.Controllers
                 ["Components"] = new List<double>()
             };
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
+                await _context.LoadStoredProc("[GetCombinedOveralls]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var procResults = (List<GetCombinedOveralls>)handler.ReadToList<GetCombinedOveralls>();
 
@@ -300,7 +301,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/standardsanswers")]
-        public IActionResult GetStandardsAnswerDistribution()
+        public async Task<IActionResult> GetStandardsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -316,15 +317,15 @@ namespace CSETWebCore.Api.Controllers
                 dict.Add(a, new List<decimal>());
             }
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
+               await _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var procResults = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
 
@@ -353,7 +354,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/componentsanswers")]
-        public IActionResult GetComponentsAnswerDistribution()
+        public async Task<IActionResult> GetComponentsAnswerDistribution()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -369,15 +370,15 @@ namespace CSETWebCore.Api.Controllers
                 dict.Add(a, new List<decimal>());
             }
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_GetComponentsSummary]")
+                await _context.LoadStoredProc("[usp_GetComponentsSummary]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var procResults = (List<usp_getComponentsSummmary>)handler.ReadToList<usp_getComponentsSummmary>();
 
@@ -405,19 +406,19 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/analysis/categoryaverages")]
-        public IActionResult GetCategoryAverages(int aggregationID)
+        public async Task<IActionResult> GetCategoryAverages(int aggregationID)
         {
             var dict = new Dictionary<string, List<decimal>>();
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+                await _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         // usp_getStandardsResultsByCategory 15
                         var procResults = (List<usp_getStandardsResultsByCategory>)handler.ReadToList<usp_getStandardsResultsByCategory>();
@@ -459,19 +460,19 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getanswertotals")]
-        public IActionResult GetAnswerTotals(int aggregationID)
+        public async Task<IActionResult> GetAnswerTotals(int aggregationID)
         {
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             List<AnswerCounts> response = new List<AnswerCounts>();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
+                await _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
 
@@ -501,7 +502,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/overallcomparison")]
-        public IActionResult GetOverallComparison()
+        public async Task<IActionResult> GetOverallComparison()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -514,15 +515,15 @@ namespace CSETWebCore.Api.Controllers
             var statTypes = new List<string>() { "Overall", "Standards", "Components" };
             response.Labels.AddRange(statTypes);
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetCombinedOveralls]")
+                await _context.LoadStoredProc("[GetCombinedOveralls]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
+                    .ExecuteStoredProcAsync((handler) =>
                     {
                         var result = handler.ReadToList<GetCombinedOveralls>();
                         var g = (List<GetCombinedOveralls>)result;
@@ -564,7 +565,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/salcomparison")]
-        public IActionResult GetSalComparison()
+        public async Task<IActionResult> GetSalComparison()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -572,16 +573,16 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
 
             var response = new List<SalComparison>();
 
             foreach (var a in assessmentList)
             {
-                var sal = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == a.Assessment_Id).FirstOrDefault();
+                var sal = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == a.Assessment_Id).FirstOrDefaultAsync();
 
                 if (sal != null)
                 {
@@ -604,7 +605,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/analysis/getbesttoworst")]
-        public IActionResult GetBestToWorst()
+        public async Task<IActionResult> GetBestToWorst()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -614,17 +615,17 @@ namespace CSETWebCore.Api.Controllers
 
             Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
 
-            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             var response = new List<BestToWorstCategory>();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetComparisonBestToWorst]")
+                await _context.LoadStoredProc("[GetComparisonBestToWorst]")
                         .WithSqlParam("assessment_id", a.Assessment_Id)
-                        .ExecuteStoredProc((handler) =>
+                        .ExecuteStoredProcAsync((handler) =>
                         {
                             var result = handler.ReadToList<GetComparisonBestToWorst>();
                             foreach (var r in result)

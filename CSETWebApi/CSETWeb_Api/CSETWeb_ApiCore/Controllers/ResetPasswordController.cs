@@ -20,7 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -54,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/ResetPassword/ResetPasswordStatus")]
         [CsetAuthorize]
-        public IActionResult GetResetPasswordStatus()
+        public async Task<IActionResult> GetResetPasswordStatus()
         {
             try
             {
@@ -63,7 +64,7 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest("Invalid Model State");
                 }
                 int userid = _tokenManager.GetUserId();
-                var rval = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+                var rval = await _context.USERS.Where(x => x.UserId == userid).FirstOrDefaultAsync();
                 if (rval != null)
                 {
                     var resetRequired = rval.PasswordResetRequired;
@@ -88,7 +89,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpPost]
         [Route("api/ResetPassword/ChangePassword")]
         [CsetAuthorize]
-        public IActionResult PostChangePassword([FromBody] ChangePassword changePass)
+        public async Task<IActionResult> PostChangePassword([FromBody] ChangePassword changePass)
         {
             try
             {
@@ -135,7 +136,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/ResetPassword/RegisterUser")]
-        public IActionResult PostRegisterUser([FromBody] CreateUser user)
+        public async Task<IActionResult> PostRegisterUser([FromBody] CreateUser user)
         {
             try
             {
@@ -178,7 +179,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/ResetPassword")]
-        public IActionResult ResetPassword([FromBody] SecurityQuestionAnswer answer)
+        public async Task<IActionResult> ResetPassword([FromBody] SecurityQuestionAnswer answer)
         {
             try
             {
@@ -191,7 +192,7 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest();
                 }
 
-                if (IsSecurityAnswerCorrect(answer))
+                if (await IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
                     bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
@@ -215,7 +216,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResetPassword/PotentialQuestions")]
-        public IActionResult GetPotentialQuestions()
+        public async Task<IActionResult> GetPotentialQuestions()
         {
             try
             {
@@ -231,11 +232,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResetPassword/SecurityQuestions")]
-        public IActionResult GetSecurityQuestions([FromQuery] string email, [FromQuery] string appCode)
+        public async Task<IActionResult> GetSecurityQuestions([FromQuery] string email, [FromQuery] string appCode)
         {
             try
             {
-                if (_context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault() == null)
+                if (await _context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefaultAsync() == null)
                 { 
                     return BadRequest();
                 }
@@ -250,7 +251,7 @@ namespace CSETWebCore.Api.Controllers
                             SecurityQuestion2 = b.SecurityQuestion2
                         };
 
-                List<SecurityQuestions> questions = q.ToList();
+                List<SecurityQuestions> questions = await q.ToListAsync();
 
                 //note that you don't have to provide a security question
                 //it will just reset if you don't 
@@ -277,7 +278,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="answer"></param>
         /// <returns></returns>
-        private bool IsSecurityAnswerCorrect(SecurityQuestionAnswer answer)
+        private async Task<bool> IsSecurityAnswerCorrect(SecurityQuestionAnswer answer)
         {
             var questions = from b in _context.USER_SECURITY_QUESTIONS
                             join c in _context.USERS on b.UserId equals c.UserId
@@ -290,7 +291,7 @@ namespace CSETWebCore.Api.Controllers
                                 )
                             select b;
 
-            if ((questions != null) && questions.FirstOrDefault() != null)
+            if ((await questions.FirstOrDefaultAsync() != null) && await questions.FirstOrDefaultAsync() != null)
                 return true;
             return false;
         }

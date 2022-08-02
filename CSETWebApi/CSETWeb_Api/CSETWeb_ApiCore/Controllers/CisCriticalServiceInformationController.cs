@@ -5,6 +5,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Model.Assessment;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -32,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cis/organizationDemographics")]
-        public IActionResult GetOrganizationDemographics() 
+        public async Task<IActionResult> GetOrganizationDemographics() 
         {
             int assessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetOrgDemographics(assessmentId));
@@ -41,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/organizationDemographics")]
-        public IActionResult SaveOrganizationDemographics([FromBody] CisOrganizationDemographics orgDemographics)
+        public async Task<IActionResult> SaveOrganizationDemographics([FromBody] CisOrganizationDemographics orgDemographics)
         {
             orgDemographics.AssessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveOrgDemographics(orgDemographics));
@@ -49,7 +50,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cis/serviceDemographics")]
-        public IActionResult GetServiceDemographics()
+        public async Task<IActionResult> GetServiceDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetServiceDemographics(assessmentId));
@@ -57,7 +58,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/serviceDemographics")]
-        public IActionResult SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
+        public async Task<IActionResult> SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics));
@@ -65,7 +66,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cis/serviceComposition")]
-        public IActionResult GetServiceComposition()
+        public async Task<IActionResult> GetServiceComposition()
         {
             int assessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetServiceComposition(assessmentId));
@@ -73,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/cis/serviceComposition")]
-        public IActionResult SaveServiceComposition([FromBody] CisServiceComposition serviceComposition)
+        public async Task<IActionResult> SaveServiceComposition([FromBody] CisServiceComposition serviceComposition)
         {
             serviceComposition.AssessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveServiceComposition(serviceComposition));
@@ -81,35 +82,35 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cis/staffCounts")]
-        public IActionResult GetStaffCounts()
+        public async Task<IActionResult> GetStaffCounts()
         {
             return Ok(_context.CIS_CSI_STAFF_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/definingSystems")]
-        public IActionResult GetDefiningSystems()
+        public async Task<IActionResult> GetDefiningSystems()
         {
             return Ok(_context.CIS_CSI_DEFINING_SYSTEMS);
         }
 
         [HttpGet]
         [Route("api/cis/customerCounts")]
-        public IActionResult GetCustomerCounts()
+        public async Task<IActionResult> GetCustomerCounts()
         {
             return Ok(_context.CIS_CSI_CUSTOMER_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/userCounts")]
-        public IActionResult GetUserCounts()
+        public async Task<IActionResult> GetUserCounts()
         {
             return Ok(_context.CIS_CSI_USER_COUNTS);
         }
 
         [HttpGet]
         [Route("api/cis/budgetBases")]
-        public IActionResult GetBudgetBases()
+        public async Task<IActionResult> GetBudgetBases()
         {
             return Ok(_context.CIS_CSI_BUDGET_BASES);
         }

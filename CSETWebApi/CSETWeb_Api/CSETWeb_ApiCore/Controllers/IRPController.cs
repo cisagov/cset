@@ -33,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/irps")]
-        public IActionResult GetIRPList()
+        public async Task<IActionResult> GetIRPList()
         {
             int assessmentId = _token.AssessmentForUser();
             return Ok(_irp.GetIRPList(assessmentId));
@@ -44,7 +44,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/irp")]
-        public IActionResult PersistSelectedIRP(IRPModel reqIRP)
+        public async Task<IActionResult> PersistSelectedIRP(IRPModel reqIRP)
         {
             // In case nothing is sent, bail out gracefully
             if (reqIRP == null)
