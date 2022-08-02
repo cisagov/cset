@@ -43,6 +43,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   // Adding a date property here to avoid breaking any other assessments. Will probably update later.
   assessmentEffectiveDate: Date = new Date();
 
+  showNoCharterWarning = false;
   contactInitials: string = "";
 
   /**
@@ -77,20 +78,27 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       this.assessSvc.setNcuaDefaults();
+
+      this.assessSvc.getAssessmentContacts().then((response: any) => {
+        let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+        let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+        this.contactInitials = firstInitial + lastInitial;
+      });
+
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
     
     this.assessSvc.isBrandNew = false;
 
+    // This will keep the contact initials the same, even when importing an assessment changes the assessment owner
+    if (this.assessment.assessmentName !== "New Assessment" && !(this.assessment.assessmentName.includes("merged"))) {
+      let splitNameArray = this.assessment.assessmentName.split("_");
+      
+      this.contactInitials = splitNameArray[1];
+    }
+
     this.setCharterPad();
-
-    this.assessSvc.getAssessmentContacts().then((response: any) => {
-      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-      this.contactInitials = firstInitial + lastInitial;
-      console.log("CONTACT INITIALS : " + this.contactInitials);
-
-    });
+    
 
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -156,8 +164,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.assessment.assessmentName = "ACET";
     }
 
+    // ISE's require a charter number to verify valid merge.
     if (this.assessment.charter) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
+      this.showNoCharterWarning = false;
+    } else if (this.isAnExamination && !(this.assessment.charter) || (this.assessment.charter === '00000')) {
+      this.showNoCharterWarning = true;
     }
     
     if (this.assessment.creditUnion) {
