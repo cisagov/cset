@@ -193,7 +193,7 @@ import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
 import { FindingsService } from './services/findings.service';
 import { FrameworkService } from './services/framework.service';
-import { NavigationService } from './services/navigation.service';
+import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
