@@ -30,7 +30,7 @@ import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
-import { NavigationService } from "../../../services/navigation.service";
+import { NavigationService } from "../../../services/navigation/navigation.service";
 import { EnableFeatureService } from "../../../services/enable-feature.service";
 
 @Component({
@@ -207,7 +207,7 @@ export class StandardsComponent implements OnInit {
 
     // refresh sidenav
     localStorage.removeItem('tree');
-    this.navSvc.buildTree(this.navSvc.getMagic());
+    this.navSvc.buildTree();
 
     this.standardSvc
       .postSelections(selectedStandards)

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';

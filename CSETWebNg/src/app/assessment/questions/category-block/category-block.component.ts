@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Category } from '../../../models/questions.model';
-import { NavTreeNode } from '../../../services/navigation.service';
+import { NavTreeNode } from '../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-category-block',

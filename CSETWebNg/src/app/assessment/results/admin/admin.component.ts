@@ -27,7 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { AdminSaveData, AdminPageData, HoursOverride, AdminTableData, AttributePair,
     AdminSaveResponse } from '../../../models/admin-save.model';
 import { ACETService } from '../../../services/acet.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
     selector: 'app-admin',
