@@ -164,6 +164,8 @@ export interface Question {
     parentQuestionId: number;
 
     visible: boolean;
+    options: any[];
+    failedIntegrityCheckOptions: IntegrityCheckOption[];
 }
 
 export class Answer {
@@ -186,12 +188,41 @@ export class Answer {
     optionType?: string;
 }
 
+export interface Option {
+    optionId: number;
+    optionType: string;
+    optionText: string;
+    sequence: number;
+    weight: number;
+    isNone: boolean;
+    selected: boolean;
+    answerId?: number;
+    hasAnswerText: boolean;
+    answerText: string;
+    baselineSelected: boolean;
+    baselineAnswerText: string;
+    questionId?: number;
+    freeResponseAnswer?: string;
+    followups: Question[];
+}
+
+export interface IntegrityCheckOption {
+  optionId: number;
+  selected: boolean;
+  parentQuestionText: string;
+  inconsistentOptions: InconsistentOption[];
+}
+
+export interface InconsistentOption {
+  optionId: number;
+  parentQuestionText: string;
+}
+
 export class SubToken {
     id: number;
     token: string;
     substitution: string;
 }
-
 
 export class DefaultParameters {
     defaultParameter: string[];
