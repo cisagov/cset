@@ -54,7 +54,6 @@
                     [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Exam' : 'Exam ' + (i+1) }}</th>
                     <th>YES</th>
                     <th>NO</th>
-                    <th>NA</th>
                 </tr>
                 <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
                     <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
@@ -76,25 +75,12 @@
                         <input type="radio" id="no" name="option{{i}}" value="no"
                         (change)="updateAnswers(i, $event.target.value)">
                     </td>
-                    <td>
-                        <input type="radio" id="na" name="option{{i}}" value="na"
-                        (change)="updateAnswers(i, $event.target.value)">
-                    </td>
                 </tr>
             </table>
         </div>
-        
-        <a mattooltip="Click to see more information about the table data." data-toggle="collapse"
-        style="margin-top: 0.5rem" href="#table-key" role="button" aria-expanded="false" aria-controls="table-key">Key</a>
-
-        <div class="collapse" id="table-key">
-        1. Y - The statement was answered "Yes" during the examination.<br>
-        2. N - The statement was answered "No" during the examination.<br>
-        3. NA - The statement was answered "Not Applicable" during the examination.<br>
-        </div>
 
         <button class="btn btn-primary" matTooltip="Merge checked examinations"
-                style="width: 15%; margin-top: 0.75rem; margin-left: auto; margin-right: 0"
+                style="width: 15%; margin-top: 1.50rem; margin-left: auto; margin-right: 0"
                 [disabled]="(this.mergeRadioSelections.length !== this.mergeConflicts.length) || (this.attemptingToMerge === true)"
                 (click)="createMergedAssessment()">Merge Examinations</button>
         </ng-container>

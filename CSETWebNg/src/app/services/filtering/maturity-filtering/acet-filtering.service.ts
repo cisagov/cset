@@ -87,15 +87,15 @@ export class AcetFilteringService {
                 case 0:
                     return [];
                 case 1:
-                    return [1]; // SCEUP
+                    return [1]; // SCUEP
                 case 2:
-                    return [1, 2]; // SCEUP, CORE
+                    return [1, 2]; // SCUEP, CORE
                 case 3:
-                    return [1, 2]; // SCEUP, CORE
+                    return [1, 2]; // SCUEP, CORE
                 case 4:
-                    return [1, 2, 3]; // SCEUP, CORE, CORE+
+                    return [1, 2, 3]; // SCUEP, CORE, CORE+
                 case 5:
-                    return [1, 2, 3]; // SCEUP, CORE, CORE+
+                    return [1, 2, 3]; // SCUEP, CORE, CORE+
             }
         } else {
             switch (irp) {
@@ -125,9 +125,9 @@ export class AcetFilteringService {
                 case 0:
                     return [];
                 case 1:
-                    return [1]; // SCEUP
+                    return [1]; // SCUEP
                 case 2:
-                    return [1, 2]; // SCEUP, CORE
+                    return [1, 2]; // SCUEP, CORE
                 case 3:
                     return [2, 3]; // CORE, CORE+
                 case 4:
