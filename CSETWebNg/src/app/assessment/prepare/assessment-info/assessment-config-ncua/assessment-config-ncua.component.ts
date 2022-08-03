@@ -24,7 +24,7 @@
 import { AfterContentInit, AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { NCUAService } from '../../../../services/ncua.service';
