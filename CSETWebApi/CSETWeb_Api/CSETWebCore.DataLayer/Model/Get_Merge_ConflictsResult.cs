@@ -8,6 +8,7 @@ namespace CSETWebCore.DataLayer.Model
     public partial class Get_Merge_ConflictsResult
     {
         public string Question_Text { get; set; }
+        public string Charter_Number { get; set; }
 
         public string Assessment_Name1 { get; set; }
         public string Assessment_Name2 { get; set; }

@@ -127,6 +127,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.createAssessmentName();
 
     this.setCharterPad();
+
+    this.ncuaSvc.iseAssetSize = this.assessment.assets;
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 

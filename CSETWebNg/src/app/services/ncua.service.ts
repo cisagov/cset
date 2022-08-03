@@ -52,6 +52,10 @@ let headers = {
   mainAssessCharter: string = "";
   charterWarningShown: boolean = false;
 
+  // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE)
+  iseAssetSize: string = "0";
+
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -127,7 +131,6 @@ let headers = {
     });
   }
 
-
   getAnswers() {
     let id1 = this.assessmentsToMerge[0];
     let id2 = this.assessmentsToMerge[1];
@@ -145,6 +148,14 @@ let headers = {
     .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
+  }
+
+  determineIRP() {
+    if (Number(this.iseAssetSize) > 50000000) {
+      console.log("Asset size is greater than $50 Million. Core/Core+ will be used.");
+    } else {
+      console.log("Asset size is less than $50 Million. SCUEP will be used.");
+    }
   }
 
 }
