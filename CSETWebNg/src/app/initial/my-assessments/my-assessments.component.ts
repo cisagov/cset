@@ -36,12 +36,13 @@ import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { ImportAssessmentService } from "../../services/import-assessment.service";
 import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
 import { Title } from "@angular/platform-browser";
-import { NavigationService } from "../../services/navigation.service";
+import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
+import { NavTreeService } from "../../services/navigation/nav-tree.service";
 
 
 interface UserAssessment {
@@ -96,6 +97,7 @@ export class MyAssessmentsComponent implements OnInit {
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
     public navSvc: NavigationService,
+    public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
     private tsaanalyticSvc :TsaAnalyticsService,
@@ -131,7 +133,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
     else {
       localStorage.removeItem('tree');
-      this.navSvc.clearTree(this.navSvc.getMagic());
+      this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
     this.checkPasswordReset();
 

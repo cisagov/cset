@@ -29,7 +29,7 @@ import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ChartService } from '../../../../services/chart.service';
 import { ConfigService } from '../../../../services/config.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { Utilities } from '../../../../services/utilities.service';
 
 @Component({

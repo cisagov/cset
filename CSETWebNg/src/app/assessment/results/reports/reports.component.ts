@@ -29,7 +29,7 @@ import { ACETService } from '../../../services/acet.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
 import { data } from 'jquery';

@@ -36,7 +36,8 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
-import { NavigationService } from '../services/navigation.service';
+import { NavTreeService } from '../services/navigation/nav-tree.service';
+import { NavigationService } from '../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment',
@@ -87,6 +88,7 @@ export class AssessmentComponent implements AfterContentChecked {
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
+    public navTreeSvc: NavTreeService,
     private cd: ChangeDetectorRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
@@ -94,7 +96,7 @@ export class AssessmentComponent implements AfterContentChecked {
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
     if (localStorage.getItem('tree')) {
-      this.navSvc.buildTree(this.navSvc.getMagic());
+      this.navSvc.buildTree();
     }
   }
 
