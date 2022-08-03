@@ -51,6 +51,8 @@ export class PageVisibilityService {
     let conditions = conditionAttrib.toUpperCase().split(' ');
     conditions.forEach(c => {
 
+      //console.log(c);
+
       // if 'HIDE' is present, this trumps everything else
       if (c == 'HIDE') {
         show = false;
@@ -58,12 +60,12 @@ export class PageVisibilityService {
 
       if (c.startsWith('SOURCE:')) {
         let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.assessSvc.assessment.workflow == target);
+        show = show && (this.assessSvc.assessment?.workflow == target);
       }
 
       if (c.startsWith('SOURCE-NOT:')) {
         let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.assessSvc.assessment.workflow !== target);
+        show = show && (this.assessSvc.assessment?.workflow !== target);
       }
 
       if (c.startsWith('SOURCE-ANY(')) {
@@ -73,7 +75,7 @@ export class PageVisibilityService {
         let targetText = c.substring(p1 + 1, p2);
         var targets = targetText.split(',');
         targets.forEach(t => {
-          found = found || (this.assessSvc.assessment.workflow == t);
+          found = found || (this.assessSvc.assessment?.workflow == t);
         });
         show = show && found;
       }
@@ -97,6 +99,7 @@ export class PageVisibilityService {
         let targetText = c.substring(p1 + 1, p2);
         var targets = targetText.split(',');
         targets.forEach(t => {
+          console.log(t);
           switch (t.toUpperCase()) {
             case 'MATURITY':
               found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useMaturity;
