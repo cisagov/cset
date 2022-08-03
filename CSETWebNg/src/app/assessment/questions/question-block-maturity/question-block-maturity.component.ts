@@ -55,6 +55,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
 
   showQuestionIds = false;
 
@@ -88,6 +89,16 @@ export class QuestionBlockMaturityComponent implements OnInit {
   ngOnInit(): void {
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      this.configSvc.buttonLabels['A'] = "Notes(N)";
+      this.configSvc.answerLabels['A'] = "Notes or Issues";
+      console.log("In isISE check")
+    }
+    else{
+      this.configSvc.buttonLabels['A'] = "Yes(C)";
+      this.configSvc.answerLabels['A'] = "Yes Compensating Control"
+    }
+
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 
@@ -99,7 +110,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
     });
 
     if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+      if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+        this.altTextPlaceholder = this.altTextPlaceholder_ISE;
+      }
+      else {
+        this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+      }
     }
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
