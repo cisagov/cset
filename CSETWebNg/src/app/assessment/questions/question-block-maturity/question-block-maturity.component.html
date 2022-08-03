@@ -174,14 +174,14 @@
                             <span class="cset-icons-flag-dark fs-base"></span>
                         </label>
                     </div>
-
-                    <div *ngIf="q.answer === 'A'">
-                        <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                            style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
-                            [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
-                    </div>
                 </div>
+            </div>
+            
+            <div *ngIf="q.answer === 'A'">
+                <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                    style="width: 100%; min-height: 120px;" [placeholder]="altTextPlaceholder"
+                    [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+                <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
             </div>
             <hr>
 
@@ -189,9 +189,16 @@
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
 
+             <!-- <div *ngIf="q.answer === 'A'">
+            <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                style="width: 100%; min-height: 120px;" [placeholder]="altTextPlaceholder"
+                [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+            <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+        </div> -->
+
         </div>
 
-           
+       
 
     </div>
 </div>
