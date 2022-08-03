@@ -95,7 +95,7 @@ namespace CSETWebCore.Model.Cis
         /// </summary>
         public bool IsNone { get; set; }
 
-        public bool Selected { get; set; }  
+        public bool Selected { get; set; }
 
         public int? AnswerId { get; set; }
 
@@ -123,6 +123,21 @@ namespace CSETWebCore.Model.Cis
 
 
         public List<Question> Followups { get; set; } = new List<Question>();
+    }
+
+
+    public class IntegrityCheckOption 
+    {
+        public int OptionId { get; set; }
+        public bool Selected { get; set; }
+        public List<InconsistentOption> InconsistentOptions { get; set; } = new List<InconsistentOption>();
+    }
+
+
+    public class InconsistentOption
+    {
+        public int OptionId { get; set; }
+        public string ParentQuestionText { get; set; }
     }
 
 
