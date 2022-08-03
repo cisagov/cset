@@ -26,7 +26,7 @@ import { Console } from 'console';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
-import { NavigationService } from '../../../../../services/navigation.service';
+import { NavigationService } from '../../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-feature-option',
@@ -118,7 +118,7 @@ export class FeatureOptionComponent implements OnInit {
 
     // tell the nav service to refresh the nav tree
     localStorage.removeItem('tree');
-    this.navSvc.buildTree(this.navSvc.getMagic());
+    this.navSvc.buildTree();
   }
 
   onChange(feature: any, event: any) {
