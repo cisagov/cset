@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer } from '../../../../../models/questions.model';
+import { Answer, Question, Option, InconsistentOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionsService } from '../../../../../services/questions.service';
@@ -35,12 +35,12 @@ import { Utilities } from '../../../../../services/utilities.service';
 })
 export class OptionBlockNestedComponent implements OnInit {
 
-  @Input() q: any;
-  @Input() opts: any[];
+  @Input() q: Question;
+  @Input() opts: Option[];
 
-  optRadio: any[];
-  optCheckbox: any[];
-  optOther: any[];
+  optRadio: Option[];
+  optCheckbox: Option[];
+  optOther: Option[];
 
   optionGroupName = '';
   sectionId = 0;
@@ -71,13 +71,16 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
+
+    // Show integrity check warnings on page load.
+    this.performIntegrityCheck();
   }
 
   /**
    * Returns a boolean indiating if all of the
    * options are unselected.
    */
-  noneChecked(opts) {
+  noneChecked(opts: Option[]) {
     let n = opts.every(o => !o.selected);
     return n;
   }
@@ -85,7 +88,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeRadio(o, event): void {
+  changeRadio(o: Option, event): void {
     o.selected = event.target.checked;
     var answers = [];
 
@@ -94,6 +97,10 @@ export class OptionBlockNestedComponent implements OnInit {
 
     // get the descendants for my peer radios to clean them up
     var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    siblingOptions.forEach(option => {
+      option.selected = false;
+    });
+
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
@@ -130,7 +137,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event, listOfOptions): void {
+  changeCheckbox(o: Option, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
@@ -185,7 +192,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeText(o, event): void {
+  changeText(o: Option, event): void {
     o.freeResponseAnswer = event.target.value;
     const ans = this.makeAnswer(o);
     this.storeAnswers([ans], this.sectionId);
@@ -195,7 +202,7 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    * Creates a 'clean' (unanswered) option
    */
-  makeAnswer(o): Answer {
+  makeAnswer(o: Option): Answer {
     const answer: Answer = {
       answerId: o.answerId,
       questionId: o.questionId,
@@ -223,6 +230,7 @@ export class OptionBlockNestedComponent implements OnInit {
    *
    */
   storeAnswers(answers, sectionId) {
+    this.performIntegrityCheck();
     this.cisSvc.storeAnswers(answers, sectionId).subscribe((x: any) => {
       let score = x.groupingScore;
       this.cisSvc.changeScore(score);
@@ -265,5 +273,27 @@ export class OptionBlockNestedComponent implements OnInit {
     if (foundEl) {
       e.preventDefault();
     }
+  }
+
+  /**
+  * Performs an integrity check on a  question.
+  */
+  performIntegrityCheck() {
+    const failedIntegrityCheckOptions = [];
+    this.q.options.forEach((o: Option) => {
+      const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
+
+      if (integrityCheckOption?.optionId === o.optionId) {
+        integrityCheckOption.selected = o.selected;
+      }
+
+      integrityCheckOption?.inconsistentOptions.forEach(option => {
+        if (this.cisSvc.integrityCheckOptions.find(x => x.optionId === option.optionId)?.selected && integrityCheckOption.selected) {
+          failedIntegrityCheckOptions.push(option);
+        }
+      });
+    });
+
+    this.q.failedIntegrityCheckOptions = failedIntegrityCheckOptions;
   }
 }
