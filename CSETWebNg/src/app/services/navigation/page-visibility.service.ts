@@ -56,10 +56,37 @@ export class PageVisibilityService {
         show = false;
       }
 
+      if (c.startsWith('SOURCE:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+        show = show && (this.assessSvc.assessment.workflow == target);
+      }
 
+      if (c.startsWith('SOURCE-NOT:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+        show = show && (this.assessSvc.assessment.workflow !== target);
+      }
+
+      if (c.startsWith('SOURCE-ANY(')) {
+        let found = false;
+        let p1 = c.indexOf('(');
+        let p2 = c.indexOf(')');
+        let targetText = c.substring(p1 + 1, p2);
+        var targets = targetText.split(',');
+        targets.forEach(t => {
+          found = found || (this.assessSvc.assessment.workflow == t);
+        });
+        show = show && found;
+      }
+
+      
       if (c.startsWith('INSTALL-MODE:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && (this.configSvc.installationMode == target);
+      }
+
+      if (c.startsWith('INSTALL-MODE-NOT:')) {
+        let target = c.substring(c.indexOf(':') + 1);
+        show = show && (this.configSvc.installationMode !== target);
       }
 
       // looks for any of the listed options/features
