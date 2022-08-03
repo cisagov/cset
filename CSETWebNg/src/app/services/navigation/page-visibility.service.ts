@@ -51,13 +51,13 @@ export class PageVisibilityService {
     let conditions = conditionAttrib.toUpperCase().split(' ');
     conditions.forEach(c => {
 
-      //console.log(c);
-
       // if 'HIDE' is present, this trumps everything else
       if (c == 'HIDE') {
         show = false;
       }
 
+
+      // SOURCE checks the assessment's 'workflow' value (the skin it was born in)
       if (c.startsWith('SOURCE:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && (this.assessSvc.assessment?.workflow == target);
@@ -81,6 +81,7 @@ export class PageVisibilityService {
       }
 
       
+      // Installation Mode
       if (c.startsWith('INSTALL-MODE:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && (this.configSvc.installationMode == target);
@@ -91,7 +92,6 @@ export class PageVisibilityService {
         show = show && (this.configSvc.installationMode !== target);
       }
 
-      // looks for any of the listed options/features
       if (c.startsWith('OPTION-ANY(')) {
         let found = false;
         let p1 = c.indexOf('(');
@@ -99,7 +99,6 @@ export class PageVisibilityService {
         let targetText = c.substring(p1 + 1, p2);
         var targets = targetText.split(',');
         targets.forEach(t => {
-          console.log(t);
           switch (t.toUpperCase()) {
             case 'MATURITY':
               found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useMaturity;
@@ -115,23 +114,20 @@ export class PageVisibilityService {
         show = show && found;
       }
 
-      // maturity 
+
+      // OPTION is which features are included in the assessment: maturity, standard or diagram
       if (c === 'OPTION:MATURITY') {
         show = show && (
           !!this.assessSvc.assessment
           && this.assessSvc.assessment.useMaturity);
       }
 
-
-      // standard 
       if (c === 'OPTION:STANDARD') {
         show = show && (
           !!this.assessSvc.assessment
           && this.assessSvc.assessment.useStandard);
       }
 
-
-      // diagram 
       if (c === 'OPTION:DIAGRAM') {
         show = show && (
           !!this.assessSvc.assessment
@@ -149,8 +145,6 @@ export class PageVisibilityService {
           && this.assessSvc.usesMaturityModel(target));
       }
 
-
-      // hide if specified maturity model is present
       if (c.startsWith('MATURITY-NOT:')) {
         let target = c.substring(c.indexOf(':') + 1);
 
@@ -160,8 +154,6 @@ export class PageVisibilityService {
           && !this.assessSvc.usesMaturityModel(target));
       }
 
-
-      // look for any of the listed maturity models
       if (c.startsWith('MATURITY-ANY(')) {
         let found = false;
         let p1 = c.indexOf('(');
@@ -179,7 +171,7 @@ export class PageVisibilityService {
       }
 
 
-      // is maturity target level greater than X
+      // Look for a maturity target level greater than X
       if (c.startsWith('TARGET-LEVEL-GT:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
