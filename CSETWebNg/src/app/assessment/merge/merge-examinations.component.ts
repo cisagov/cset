@@ -18,7 +18,7 @@ import { MergeOptionsComponent } from '../../dialogs/ise-merge-options/merge-opt
   styles: ['tr { border-bottom: 1px solid black; text-align: center; }']
 })
 export class MergeExaminationsComponent implements OnInit {
-
+  // Show a spinner on the frontend if the "behind the scenes" code is still running.
   pageLoading: boolean = false;
 
   // Stored proc data
@@ -29,10 +29,8 @@ export class MergeExaminationsComponent implements OnInit {
   contactsInitials: any[] = [];
   initialsAsString: string = "";
 
-
   // Answers pulled from the assessments being merged (that aren't in conflict)
   mergingAssessmentAnswers: Answer[] = [];
-  count: number = 0;
 
   // Values the user picks
   mergeRadioSelections: string[] = [];
@@ -44,6 +42,9 @@ export class MergeExaminationsComponent implements OnInit {
   mergedAssessment: AssessmentDetail = {};
   optionsDialog: MatDialogRef<MergeOptionsComponent>;
   attemptingToMerge: boolean = false;
+
+  // "Temp" variables to help the merge track when it needs to do certain things.
+  count: number = 0;
   count2: number = 0;
 
   constructor(
@@ -117,6 +118,7 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
         this.mergeConflicts = response;
+        console.log("this.mergeConflicts: " + JSON.stringify(this.mergeConflicts, null, 4));
         this.getAssessmentNames();
       }
     );
@@ -215,7 +217,8 @@ export class MergeExaminationsComponent implements OnInit {
           this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
             // Update the assessment with the merge data and send it back
-            details.assessmentName = "Merged ISE " + this.datePipe.transform(details.assessmentDate, 'MMddyy') + "_" + this.initialsAsString;
+            details.assessmentName = "Merged ISE " + " " + this.mergeConflicts[0].charter_Number + " " + 
+                                      this.datePipe.transform(details.assessmentDate, 'MMddyy') + "_" + this.initialsAsString;
             details.isAcetOnly = false;
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");

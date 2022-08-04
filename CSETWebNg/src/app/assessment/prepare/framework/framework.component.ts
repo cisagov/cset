@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { FrameworkService } from '../../../services/framework.service';
 import { Frameworks, SelectedTier } from '../../../models/frameworks.model';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-framework',

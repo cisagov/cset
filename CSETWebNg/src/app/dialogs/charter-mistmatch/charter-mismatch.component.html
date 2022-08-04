@@ -19,16 +19,20 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
--------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <h3 class="mb-3">Assessment Configuration</h3>
-
-        <app-assessment-detail class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
-        
-        <app-assessment-config-tsa></app-assessment-config-tsa>
-
-        <app-nav-back-next [page]="'info-tsa'" [hide]="'back'"></app-nav-back-next>
-
+--------------------------> 
+<div class="d-flex flex-column justify-content-center flex-11a">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+        <span class="mr-3 fs-base-6 cset-icons-exclamation-triangle" aria-label="charter-warning"></span>
+        <span>Charter Number Mismatch Warning</span>
     </div>
+    <mat-dialog-content class="pt-3 pl-3 pr-3 d-flex flex-column flex-11a">
+        <div class="">
+            <p>You are attempting to merge examinations with differing charter numbers.</p>
+            <p>If you continue, the first exam's charter number will be used.</p>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-11a">
+        <button class="btn btn-secondary" (click)="confirmWarning()">OK</button>
+      </mat-dialog-actions>
 </div>
+  

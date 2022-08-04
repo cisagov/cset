@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityService } from '../../../../services/maturity.service';
@@ -80,7 +80,7 @@ export class ModelSelectComponent implements OnInit {
         localStorage.removeItem('tree');
 
         // refresh Prepare section of the sidenav
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
       });
     }
   }

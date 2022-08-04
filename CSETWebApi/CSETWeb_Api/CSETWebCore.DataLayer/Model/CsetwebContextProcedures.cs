@@ -687,7 +687,7 @@ namespace CSETWebCore.DataLayer.Model
                     Value = id3 ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
-                                new SqlParameter
+                new SqlParameter
                 {
                     ParameterName = "id4",
                     Value = id4 ?? Convert.DBNull,
@@ -705,7 +705,7 @@ namespace CSETWebCore.DataLayer.Model
                     Value = id6 ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
-                                new SqlParameter
+                new SqlParameter
                 {
                     ParameterName = "id7",
                     Value = id7 ?? Convert.DBNull,
@@ -723,7 +723,7 @@ namespace CSETWebCore.DataLayer.Model
                     Value = id9 ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
-                                new SqlParameter
+                new SqlParameter
                 {
                     ParameterName = "id10",
                     Value = id10 ?? Convert.DBNull,

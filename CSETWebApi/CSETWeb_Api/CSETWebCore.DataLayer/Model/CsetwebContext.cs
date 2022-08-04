@@ -135,6 +135,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
         public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
+        public virtual DbSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK { get; set; }
         public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
@@ -1776,6 +1777,24 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_ANSWER_OPTIONS)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1");
+            });
+
+            modelBuilder.Entity<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Option_Id_1, e.Mat_Option_Id_2 })
+                    .HasName("PK_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+                entity.HasOne(d => d.Mat_Option_Id_1Navigation)
+                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation)
+                    .HasForeignKey(d => d.Mat_Option_Id_1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+                entity.HasOne(d => d.Mat_Option_Id_2Navigation)
+                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation)
+                    .HasForeignKey(d => d.Mat_Option_Id_2)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS2");
             });
 
             modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
