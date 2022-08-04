@@ -6,6 +6,8 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -30,9 +32,9 @@ namespace CSETWebCore.Api.Controllers
         /// IsEncryptedModule is used to indicate a 'lockable' module; they are not actulaly encrypted.
         /// </summary>
         /// <returns></returns>
-        public IActionResult GetFeatures()
+        public async Task<IActionResult> GetFeatures()
         {
-            var openFaaSets = _context.SETS.Where(s=> s.IsEncryptedModule).ToList();
+            var openFaaSets = await _context.SETS.Where(s=> s.IsEncryptedModule).ToListAsync();
 
             var result = new List<EnabledModule>();
 
@@ -55,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
         /// <returns></returns>
-        public IActionResult EnableFAA(string set_name)
+        public async Task<IActionResult> EnableFAA(string set_name)
         {
             AddNewlyEnabledModules();
 
@@ -64,12 +66,12 @@ namespace CSETWebCore.Api.Controllers
             };
             return Ok(response);
         }
-                   
+
 
         /// <summary>
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
-        private void AddNewlyEnabledModules()
+        private async Task AddNewlyEnabledModules()
         {
             var sets2 = _context.SETS.Where(s=> s.IsEncryptedModule);
             foreach (SETS sts in sets2)

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -20,13 +21,13 @@ namespace CSETWebCore.Helpers
         /// <summary>
         /// Updates the "LastModifiedDate" of the Assessment.
         /// </summary>
-        public void TouchAssessment(int assessmentId)
+        public async Task TouchAssessment(int assessmentId)
         {
             DateTime nowUTC = _utilities.LocalToUtc(DateTime.Now);
 
             try
             {
-                var assess = _context.ASSESSMENTS.First(a => a.Assessment_Id == assessmentId);
+                var assess = await _context.ASSESSMENTS.FirstAsync(a => a.Assessment_Id == assessmentId);
                 assess.LastModifiedDate = nowUTC;
                 _context.SaveChanges();
             }
