@@ -153,8 +153,10 @@ let headers = {
   determineIRP() {
     if (Number(this.iseAssetSize) > 50000000) {
       console.log("Asset size is greater than $50 Million. Core/Core+ will be used.");
+      return 'CORE';
     } else {
       console.log("Asset size is less than $50 Million. SCUEP will be used.");
+      return 'SCUEP'
     }
   }
 

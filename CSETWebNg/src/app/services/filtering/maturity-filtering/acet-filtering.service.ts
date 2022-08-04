@@ -89,13 +89,13 @@ export class AcetFilteringService {
                 case 1:
                     return [1]; // SCUEP
                 case 2:
-                    return [1, 2]; // SCUEP, CORE
+                    return [2]; // CORE
                 case 3:
-                    return [1, 2]; // SCUEP, CORE
+                    return [2]; // CORE
                 case 4:
-                    return [1, 2, 3]; // SCUEP, CORE, CORE+
+                    return [3]; // CORE+
                 case 5:
-                    return [1, 2, 3]; // SCUEP, CORE, CORE+
+                    return [3]; // CORE+
             }
         } else {
             switch (irp) {
