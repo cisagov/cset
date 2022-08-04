@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';

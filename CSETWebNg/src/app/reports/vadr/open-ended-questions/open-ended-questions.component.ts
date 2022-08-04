@@ -10,7 +10,7 @@ import {
   MaturityQuestionResponse,
   Domain,
 } from "../../../models/questions.model";
-import { NavigationService } from "../../../services/navigation.service";
+import { NavigationService } from "../../../services/navigation/navigation.service";
 import { QuestionFilterService } from "../../../services/filtering/question-filter.service";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../../dialogs/question-filters/question-filters.component";
