@@ -54,6 +54,7 @@ let headers = {
 
   // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE)
   iseAssetSize: string = "0";
+  iseIRP: string = "";
 
 
   constructor(
@@ -151,11 +152,12 @@ let headers = {
   }
 
   determineIRP() {
+    console.log("Asset Size: " + this.iseAssetSize);
     if (Number(this.iseAssetSize) > 50000000) {
-      console.log("Asset size is greater than $50 Million. Core/Core+ will be used.");
+      this.iseIRP = 'CORE';
       return 'CORE';
     } else {
-      console.log("Asset size is less than $50 Million. SCUEP will be used.");
+      this.iseIRP = 'SCUEP';
       return 'SCUEP'
     }
   }

@@ -115,8 +115,8 @@
 
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
     <div *ngIf="this.assessSvc.assessment.maturityModel.modelName === 'ISE'" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
-            [class.display-none]="!q.visible">
+        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion" 
+        [class.display-none]="(q.maturityLevelName !== this.ncuaSvc.iseIRP)">
 
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
@@ -185,23 +185,15 @@
             </div>
             <hr>
 
-            <button  *ngIf="!!isLastCoreQuestion(q.questionId)" class="btn btn-na form-check-label mt-2 mb-4" style="width: 15%">
-                    Expand Section</button>
+            <button *ngIf="!!isLastCoreQuestion(q.questionId) && q.maturityLevelName === 'CORE'" 
+                    class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                    (click)="updateCorePlusStatus()">
+                    Expand CORE+</button>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
 
-             <!-- <div *ngIf="q.answer === 'A'">
-            <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                style="width: 100%; min-height: 120px;" [placeholder]="altTextPlaceholder"
-                [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-            <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
-        </div> -->
-
         </div>
-
-       
-
     </div>
 </div>

@@ -59,7 +59,11 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+  iseIRP: string = '';
+  showCorePlus: boolean = false;
+
   iseParentStatements = [];
+
 
   showSubOne: boolean; showSubTwo: boolean; showSubThree: boolean;
   showSubFour: boolean; showSubFive: boolean; showSubSix: boolean;
@@ -92,17 +96,18 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
       this.configSvc.buttonLabels['A'] = "Notes(N)";
       this.configSvc.answerLabels['A'] = "Notes or Issues";
-      console.log("In isISE check")
-    }
-    else{
+    } else {
       this.configSvc.buttonLabels['A'] = "Yes(C)";
       this.configSvc.answerLabels['A'] = "Yes Compensating Control"
     }
+
+    this.iseIRP = this.ncuaSvc.iseIRP
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 
     // set sub questions' titles so that they align with their parent when hidden
+    console.log("my grouping.questions: " + JSON.stringify(this.myGrouping.questions, null, 4));
     this.myGrouping.questions.forEach(q => {
       if (!!q.parentQuestionId) {
         q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
@@ -423,6 +428,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
       case 7269:
         return true;
     }
+  }
+
+  updateCorePlusStatus() {
+    this.showCorePlus = !this.showCorePlus
   }
 
   

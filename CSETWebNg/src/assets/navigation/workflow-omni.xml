@@ -101,7 +101,8 @@
         </node>
 
 
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY-ANY(ACET,ISE) " />
+        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
+        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
