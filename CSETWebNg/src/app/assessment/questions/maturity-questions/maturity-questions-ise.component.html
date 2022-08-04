@@ -36,7 +36,7 @@
         </div>
 
         <div class="d-block mb-2">
-            <h2>Statements</h2>
+            <h2>Statements - {{ statementLevel }}</h2>
         </div>
 
         <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
@@ -49,11 +49,12 @@
     
 
         <!-- top level (Domains) -->
-        <div *ngFor="let g of groupings" class="w-100 mb-5">
+        <!--<div *ngFor="let g of groupings" class="w-100 mb-5">
             <app-domain-maturity-filter [domain]="g" [maturityLevels]="maturityLevels"
-                (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>
+                (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>-->
 
-        <app-grouping-block [grouping]="g"></app-grouping-block>
+        <div *ngFor="let g of groupings" class="w-100 mb-5">
+            <app-grouping-block [grouping]="g"></app-grouping-block>
         </div>
 
     </div>

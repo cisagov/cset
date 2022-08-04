@@ -110,6 +110,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
     if (this.assessment.assessmentName === "New Assessment")
       this.createAssessmentName();
+    
+    // ISE's determine IRP based on asset size
+    this.ncuaSvc.iseAssetSize = this.assessment.assets;
   }
 
 

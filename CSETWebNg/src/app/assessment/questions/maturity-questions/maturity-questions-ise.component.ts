@@ -34,6 +34,7 @@ import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { CisService } from '../../../services/cis.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 
 @Component({
@@ -41,6 +42,8 @@ import { CisService } from '../../../services/cis.service';
   templateUrl: './maturity-questions-ise.component.html'
 })
 export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
+
+  statementLevel: string = '';
 
   maturityLevels: any[];
   groupings: QuestionGrouping[] = null;
@@ -67,6 +70,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
     private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
     public cisSvc: CisService,
+    public ncuaSvc: NCUAService,
     private dialog: MatDialog
   ) {
 
@@ -82,6 +86,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   ngOnInit() {    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
+    this.statementLevel = this.ncuaSvc.determineIRP();
   }
 
   /**
