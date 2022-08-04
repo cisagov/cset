@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';

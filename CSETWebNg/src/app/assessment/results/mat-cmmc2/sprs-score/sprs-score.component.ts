@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-sprs-score',

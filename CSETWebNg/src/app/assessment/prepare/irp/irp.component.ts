@@ -26,7 +26,7 @@ import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
 
 @Component({

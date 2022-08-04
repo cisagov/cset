@@ -193,7 +193,7 @@ import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
 import { FindingsService } from './services/findings.service';
 import { FrameworkService } from './services/framework.service';
-import { NavigationService } from './services/navigation.service';
+import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
@@ -445,6 +445,7 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
+import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
@@ -857,6 +858,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         CisScoringChartComponent,
         SectionScoringComponent,
         MergeExaminationsComponent,
+        CharterMismatchComponent,
         DigitsOnlyNotZeroDirective,
         LandingPageTabsComponent,
         NewAssessmentComponent,

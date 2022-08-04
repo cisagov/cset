@@ -27,7 +27,7 @@ import { QuestionFiltersComponent } from "../../dialogs/question-filters/questio
 import { QuestionResponse, Domain, Category } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
-import { NavigationService } from '../../services/navigation.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 

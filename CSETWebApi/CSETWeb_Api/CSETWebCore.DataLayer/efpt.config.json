@@ -434,6 +434,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_DOMAIN_REMARKS]",
          "ObjectType": 0
       },
