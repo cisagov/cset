@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
@@ -16,6 +17,7 @@ using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CSETWebCore.Business.Diagram.Analysis
@@ -42,17 +44,17 @@ namespace CSETWebCore.Business.Diagram.Analysis
             NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
         }
 
-        public List<IDiagramAnalysisNodeMessage> PerformAnalysis(XmlDocument xDoc)
+        public async Task<List<IDiagramAnalysisNodeMessage>> PerformAnalysis(XmlDocument xDoc)
         {
             String sal = db.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment_id).First().Selected_Sal_Level;
             SimplifiedNetwork network = new SimplifiedNetwork(this.imageToTypePath, sal);
             network.ExtractNetworkFromXml(xDoc);
 
-            List<IDiagramAnalysisNodeMessage> msgs = AnalyzeNetwork(network);
+            List<IDiagramAnalysisNodeMessage> msgs = await AnalyzeNetwork(network);
             return msgs;
         }
 
-        private List<IDiagramAnalysisNodeMessage> AnalyzeNetwork(SimplifiedNetwork network)
+        private async Task<List<IDiagramAnalysisNodeMessage>> AnalyzeNetwork(SimplifiedNetwork network)
         {
             List<IRuleEvaluate> rules = new List<IRuleEvaluate>();
             rules.Add(new Rule1(network));
@@ -72,12 +74,12 @@ namespace CSETWebCore.Business.Diagram.Analysis
             // number and persist warning messages
             using (CSETContext context = new CSETContext())
             {
-                var oldWarnings = context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
+                var oldWarnings = await context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToListAsync();
                 context.NETWORK_WARNINGS.RemoveRange(oldWarnings);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 int n = 0;
-                msgs.ForEach(m =>
+                msgs.ForEach(async m =>
                 {
                     StringBuilder sb = new StringBuilder();
                     m.SetMessages.ToList().ForEach(m2 =>
@@ -86,16 +88,17 @@ namespace CSETWebCore.Business.Diagram.Analysis
                     });
 
                     m.Number = ++n;
-                    context.NETWORK_WARNINGS.Add(new NETWORK_WARNINGS
+                    var newNetworkWarning = new NETWORK_WARNINGS
                     {
                         Assessment_Id = assessment_id,
                         Id = m.Number,
                         WarningText = sb.ToString()
-                    });
+                    };
+                    await context.NETWORK_WARNINGS.AddAsync(newNetworkWarning);
                 });
 
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             return msgs;

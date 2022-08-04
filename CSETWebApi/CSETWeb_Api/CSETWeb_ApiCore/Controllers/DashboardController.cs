@@ -3,6 +3,7 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Acet;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -21,17 +22,17 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/acet/dashboard")]
-        public IActionResult GetDashboard()
+        public async Task<IActionResult> GetDashboard()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_acetDashboard.LoadDashboard(assessmentId));
         }
 
         [HttpPost]
         [Route("api/acet/summary")]
-        public IActionResult UpdateACETDashboardSummary(ACETDashboard summary)
+        public async Task<IActionResult> UpdateACETDashboardSummary(ACETDashboard summary)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _acetDashboard.UpdateACETDashboardSummary(assessmentId, summary);
             return Ok();
         }

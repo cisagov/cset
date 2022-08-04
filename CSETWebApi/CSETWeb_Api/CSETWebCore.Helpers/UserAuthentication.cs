@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
@@ -33,7 +34,7 @@ namespace CSETWebCore.Helpers
             _context = context;
         }
 
-        public LoginResponse Authenticate(Login login)
+        public async Task<LoginResponse> Authenticate(Login login)
         {
             // Ensure that we have what we need
             if (login == null || string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password))
@@ -59,7 +60,7 @@ namespace CSETWebCore.Helpers
             }
 
             // Generate a token for this user
-            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            string token = await _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
@@ -87,7 +88,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
+        public async Task<LoginResponse> AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
             int?  assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
             
@@ -168,7 +169,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
+                string token = await _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
 
                 // Build response object
                 LoginResponse resp = new LoginResponse

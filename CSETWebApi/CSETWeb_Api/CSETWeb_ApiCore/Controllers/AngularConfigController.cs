@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,7 +27,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assets/config")]
-        public IActionResult GetConfigURLRewrite()
+        public async Task<IActionResult> GetConfigURLRewrite()
         {
             try
             {

@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -57,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public void SaveDiagram([FromBody] DiagramRequest req)
+        public async Task SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -86,15 +88,15 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/analysis")]
         [HttpPost]
-        public List<IDiagramAnalysisNodeMessage> PerformAnalysis([FromBody] DiagramRequest req)
+        public async Task<List<IDiagramAnalysisNodeMessage>> PerformAnalysis([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            return PerformAnalysis(req, assessmentId ?? 0);
+            return await PerformAnalysis(req, assessmentId ?? 0);
 
         }
 
-        private List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)
+        private async Task<List<IDiagramAnalysisNodeMessage>> PerformAnalysis(DiagramRequest req, int assessmentId)
         {
             try
             {
@@ -102,7 +104,7 @@ namespace CSETWebCore.Api.Controllers
                 if (!string.IsNullOrEmpty(req.DiagramXml))
                 {
                     // persist the analysis switch setting
-                        var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First();
+                        var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
                         assessment.AnalyzeDiagram = req.AnalyzeDiagram;
                         _context.SaveChanges();
 
@@ -110,7 +112,7 @@ namespace CSETWebCore.Api.Controllers
                         xDoc.LoadXml(req.DiagramXml);
 
                         DiagramAnalysis analysis = new DiagramAnalysis(_context, assessmentId);
-                        messages = analysis.PerformAnalysis(xDoc);
+                        messages = await analysis.PerformAnalysis(xDoc);
                 }
 
                 return messages;
@@ -132,7 +134,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/get")]
         [HttpGet]
-        public DiagramResponse GetDiagram()
+        public async Task<DiagramResponse> GetDiagram()
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -140,7 +142,7 @@ namespace CSETWebCore.Api.Controllers
 
             var response = _diagram.GetDiagram((int)assessmentId);
 
-            var assessmentDetail = _assessment.GetAssessmentDetail((int) assessmentId);
+            var assessmentDetail = await _assessment.GetAssessmentDetail((int) assessmentId);
             response.AssessmentName = assessmentDetail.AssessmentName;
 
             return response;
@@ -154,9 +156,9 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getimage")]
         [HttpGet]
-        public IActionResult GetDiagramImage()
+        public async Task<IActionResult> GetDiagramImage()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string requestUrl = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}";
             return Ok(new { diagram = _diagram.GetDiagramImage(assessmentId, requestUrl)});
         }
@@ -169,7 +171,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/has")]
         [HttpGet]
-        public IActionResult HasDiagram()
+        public async Task<IActionResult> HasDiagram()
         {
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -187,7 +189,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/importcsetd")]
         [HttpPost]
-        public string ImportCsetd([FromBody] DiagramRequest importRequest)
+        public async Task<string> ImportCsetd([FromBody] DiagramRequest importRequest)
         {
             if (importRequest == null)
             {
@@ -219,7 +221,7 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/symbols/get")]
         [HttpGet]
-        public List<ComponentSymbolGroup> GetComponentSymbols()
+        public async Task<List<ComponentSymbolGroup>> GetComponentSymbols()
         {
             return _diagram.GetComponentSymbols();
         }
@@ -232,7 +234,7 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/symbols/getAll")]
         [HttpGet]
-        public List<ComponentSymbol> GetAllSymbols()
+        public async Task<List<ComponentSymbol>> GetAllSymbols()
         {
             return _diagram.GetAllComponentSymbols();
         }
@@ -244,7 +246,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getComponents")]
         [HttpGet]
-        public List<mxGraphModelRootObject> GetComponents()
+        public async Task<List<mxGraphModelRootObject>> GetComponents()
         {
             try
             {int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -272,7 +274,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getZones")]
         [HttpGet]
-        public List<mxGraphModelRootObject> GetZones()
+        public async Task<List<mxGraphModelRootObject>> GetZones()
         {
             try
             {
@@ -300,7 +302,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getLinks")]
         [HttpGet]
-        public List<mxGraphModelRootMxCell> GetLinks()
+        public async Task<List<mxGraphModelRootMxCell>> GetLinks()
         {
             try
             {
@@ -328,7 +330,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getShapes")]
         [HttpGet]
-        public List<mxGraphModelRootMxCell> GetShapes()
+        public async Task<List<mxGraphModelRootMxCell>> GetShapes()
         {
             try
             {
@@ -356,7 +358,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getTexts")]
         [HttpGet]
-        public List<mxGraphModelRootMxCell> GetTexts()
+        public async Task<List<mxGraphModelRootMxCell>> GetTexts()
         {
             try
             {
@@ -386,7 +388,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/diagram/exportExcel")]
-        public IActionResult GetExcelExportDiagram()
+        public async Task<IActionResult> GetExcelExportDiagram()
         {
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var stream = new ExcelExporter(_context,_dataHandling, _maturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
@@ -402,7 +404,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/templates")]
         [HttpGet]
-        public IEnumerable<DiagramTemplate> GetTemplates()
+        public async Task<IEnumerable<DiagramTemplate>> GetTemplates()
         {
             var userId = _token.PayloadInt(Constants.Constants.Token_UserId);
 
@@ -418,7 +420,7 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [Route("api/diagram/testqueue")]
         [HttpPost]
-        public int testQueue([FromBody] int requestId)
+        public async Task<int> testQueue([FromBody] int requestId)
         {
             lock (_object)
             {

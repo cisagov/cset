@@ -26,26 +26,26 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost, HttpGet]
         [Route("api/admintab/Data")]
-        public IActionResult GetList()
+        public async Task<IActionResult> GetList()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_tabBusiness.GetTabData(assessmentId));
         }
 
         [HttpPost]
         [Route("api/admintab/save")]
-        public IActionResult SaveData([FromBody] AdminSaveData save)
+        public async Task<IActionResult> SaveData([FromBody] AdminSaveData save)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_tabBusiness.SaveData(assessmentId, save));
         }
 
 
         [HttpPost]
         [Route("api/admintab/saveattribute")]
-        public IActionResult SaveDataAttribute([FromBody] AttributePair attribute)
+        public async Task<IActionResult> SaveDataAttribute([FromBody] AttributePair attribute)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             _tabBusiness.SaveDataAttribute(assessmentId, attribute);
             return Ok();
         }
