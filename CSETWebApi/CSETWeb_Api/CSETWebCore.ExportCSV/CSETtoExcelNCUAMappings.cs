@@ -4,7 +4,6 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
@@ -34,9 +33,9 @@ namespace CSETWebCore.ExportCSV
         }
 
 
-        public async Task ProcessAssessment(int assessmentID, MemoryStream stream)
+        public void ProcessAssessment(int assessmentID, MemoryStream stream)
         {
-            DataTable dt = await BuildAssessment(assessmentID);
+            DataTable dt = BuildAssessment(assessmentID);
 
             // Create an Excel document from the data that has been gathered
             var doc = new CSETtoExcelDocument();
@@ -51,7 +50,7 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="stream"></param>
-        public async Task ProcessAllAssessmentsForUser(int userID, MemoryStream stream)
+        public void ProcessAllAssessmentsForUser(int userID, MemoryStream stream)
         {
             DataTable dtAll = null;
            
@@ -66,7 +65,7 @@ namespace CSETWebCore.ExportCSV
                 }
 
                 // get the values as a DataTable
-                DataTable dt = await BuildAssessment(assessmentID);
+                DataTable dt = BuildAssessment(assessmentID);
 
                 // append the row into dtAll .....
                 if (dtAll == null)
@@ -99,7 +98,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public async Task<DataTable> BuildAssessment(int assessmentID)
+        public DataTable BuildAssessment(int assessmentID)
         {
             var assess = db.ASSESSMENTS
                 .Include(x => x.INFORMATION)
@@ -112,9 +111,9 @@ namespace CSETWebCore.ExportCSV
 
             // A few helper classes gather data
             
-            var acetDashboard = await _acet.LoadDashboard(assessmentID);
+            var acetDashboard = _acet.LoadDashboard(assessmentID);
 
-            var maturityDomains = await _maturity.GetMaturityAnswers(assessmentID);
+            var maturityDomains = _maturity.GetMaturityAnswers(assessmentID);
 
 
             // Build the row for the assessment

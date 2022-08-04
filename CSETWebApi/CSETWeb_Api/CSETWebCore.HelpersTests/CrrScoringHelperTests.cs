@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers.Tests
 {
@@ -31,15 +30,15 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public async Task Test01_AllNo()
+        public void Test01_AllNo()
         {
             // flip all answers to "NO"
-            var myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToListAsync();
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "N";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
 
             crrScoring.InstantiateScoringHelper(assessmentId);
@@ -55,15 +54,15 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public async Task Test02_AllYes()
+        public void Test02_AllYes()
         {
             // flip all answers to "YES"
-            var myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToListAsync();
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "Y";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
 
             crrScoring.InstantiateScoringHelper(assessmentId);
@@ -102,15 +101,15 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public async Task Test03_AllNoOneYes()
+        public void Test03_AllNoOneYes()
         {
             // flip all answers to "NO"
-            var myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToListAsync();
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "N";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
             // answer AM:G2.Q4-F as YES
             SetAnswer("AM:G2.Q4-F", "Y");
@@ -139,27 +138,26 @@ namespace CSETWebCore.Helpers.Tests
         /// Answer everything in AM:MIL-1 YES but other MILs NO
         /// </summary>
         [TestMethod()]
-        public async Task Test04_Mil1Yes()
+        public void Test04_Mil1Yes()
         {
             // flip all answers to "NO"
-            var myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToListAsync();
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "N";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
             // Answer AM MIL-1 all YES
-            var amMil1Questions = await context.MATURITY_QUESTIONS
-                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToListAsync();
-
-            myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId 
-                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToListAsync();
+            var amMil1Questions = context.MATURITY_QUESTIONS
+                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToList();
+            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId 
+                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "Y";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
 
             crrScoring.InstantiateScoringHelper(assessmentId);
@@ -176,28 +174,26 @@ namespace CSETWebCore.Helpers.Tests
 
 
         [TestMethod()]
-        public async Task Test05_Mil1And2()
+        public void Test05_Mil1And2()
         {
             // flip all answers to "NO"
-            var myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToListAsync();
+            var myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "N";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
             // Answer AM MIL-1 all YES
-            var amMil1Questions = await context.MATURITY_QUESTIONS
-                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToListAsync();
-
-            myAnswers = await context.ANSWER.Where(a => a.Assessment_Id == assessmentId
-                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToListAsync();
-
+            var amMil1Questions = context.MATURITY_QUESTIONS
+                .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToList();
+            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId
+                && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToList();
             foreach (var ans in myAnswers)
             {
                 ans.Answer_Text = "Y";
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
             // Answer one question in AM MIL-2 YES
             SetAnswer("AM:MIL2.Q1", "Y");
@@ -218,7 +214,7 @@ namespace CSETWebCore.Helpers.Tests
         /// <param name="assessmentId"></param>
         /// <param name="title"></param>
         /// <param name="answer"></param>
-        private async Task SetAnswer(string title, string answer)
+        private void SetAnswer(string title, string answer)
         {
             var query = from aa in context.ANSWER
                         join qq in context.MATURITY_QUESTIONS on aa.Question_Or_Requirement_Id equals qq.Mat_Question_Id
@@ -226,11 +222,11 @@ namespace CSETWebCore.Helpers.Tests
                         && qq.Question_Title == title
                         select aa;
 
-            foreach (var dbAnswer in await query.ToListAsync())
+            foreach (var dbAnswer in query.ToList())
             {
                 dbAnswer.Answer_Text = answer;
             }
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
 

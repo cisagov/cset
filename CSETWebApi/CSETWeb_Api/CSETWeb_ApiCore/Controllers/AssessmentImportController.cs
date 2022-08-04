@@ -78,7 +78,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         //  [CSETAuthorize]
         [Route("api/assessment/legacy/import/installed")]
-        public async Task<IActionResult> LegacyImportIsInstalled()
+        public IActionResult LegacyImportIsInstalled()
         {
             return Ok(LegacyImportProcessExists());
         }
@@ -163,7 +163,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/import/AWWA")]
-        public async Task<IActionResult> ImportAwwaSpreadsheet()
+        public IActionResult ImportAwwaSpreadsheet()
         {
             var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
 

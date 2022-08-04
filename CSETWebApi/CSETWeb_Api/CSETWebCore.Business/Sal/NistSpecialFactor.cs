@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Interfaces.Helpers;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Sal
 {
@@ -74,12 +72,10 @@ namespace CSETWebCore.Business.Sal
         /// </summary>
         /// <param name="id"></param>
         /// <param name="db"></param>
-        public async Task SaveToDb(int id, CSETContext context, IAssessmentUtil assessmentUtils)
+        public void SaveToDb(int id, CSETContext context, IAssessmentUtil assessmentUtils)
         {
             var nistProcessing = new NistProcessingLogic(context, _assessmentUtils);
-
-            var dblist = await context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == id)?.ToListAsync();//<CNSS_CIA_JUSTIFICATIONS>();
-
+            var dblist = context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == id).AsEnumerable<CNSS_CIA_JUSTIFICATIONS>();
             Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues = dblist.ToDictionary(x => x.CIA_Type.ToLower(), x => x);
 
             CNSS_CIA_JUSTIFICATIONS cnvalu;
@@ -87,7 +83,7 @@ namespace CSETWebCore.Business.Sal
             // Availability
             if (!String.IsNullOrWhiteSpace(this.Availability_Special_Factor))
             {
-                cnvalu = await getOrCreateNew("availability", id, dbValues, context);
+                cnvalu = getOrCreateNew("availability", id, dbValues, context);
                 cnvalu.Justification = this.Availability_Special_Factor == null ? String.Empty : this.Availability_Special_Factor;
                 cnvalu.DropDownValueLevel = this.Availability_Value.SALName;
             }
@@ -95,7 +91,7 @@ namespace CSETWebCore.Business.Sal
             // Confidentiality
             if (!String.IsNullOrWhiteSpace(this.Confidentiality_Special_Factor))
             {
-                cnvalu = await getOrCreateNew("confidentiality", id, dbValues, context);
+                cnvalu = getOrCreateNew("confidentiality", id, dbValues, context);
                 cnvalu.Justification = this.Confidentiality_Special_Factor == null ? string.Empty : this.Confidentiality_Special_Factor;
                 cnvalu.DropDownValueLevel = this.Confidentiality_Value.SALName;
             }
@@ -103,16 +99,16 @@ namespace CSETWebCore.Business.Sal
             // Integrity
             if (!String.IsNullOrWhiteSpace(this.Integrity_Special_Factor))
             {
-                cnvalu = await getOrCreateNew("integrity", id, dbValues, context);
+                cnvalu = getOrCreateNew("integrity", id, dbValues, context);
                 cnvalu.Justification = this.Integrity_Special_Factor == null ? String.Empty : this.Integrity_Special_Factor;
                 cnvalu.DropDownValueLevel = this.Integrity_Value.SALName;
             }
 
-            await context.SaveChangesAsync();
-            await assessmentUtils.TouchAssessment(id);
+            context.SaveChanges();
+            assessmentUtils.TouchAssessment(id);
         }
 
-        private async Task<CNSS_CIA_JUSTIFICATIONS> getOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CSETContext context)
+        private CNSS_CIA_JUSTIFICATIONS getOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CSETContext context)
         {
             CNSS_CIA_JUSTIFICATIONS cnvalu;
             if (dbValues.TryGetValue(ciaType, out cnvalu))
@@ -122,7 +118,7 @@ namespace CSETWebCore.Business.Sal
             else
             {
                 CNSS_CIA_JUSTIFICATIONS rval = new CNSS_CIA_JUSTIFICATIONS() { Assessment_Id = id, CIA_Type = UCF(ciaType) };
-                await context.CNSS_CIA_JUSTIFICATIONS.AddAsync(rval);
+                context.CNSS_CIA_JUSTIFICATIONS.Add(rval);
                 return rval;
             }
         }
