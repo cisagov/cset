@@ -402,20 +402,28 @@ export class QuestionBlockMaturityComponent implements OnInit {
     }
   }
   
-/*
-  isNewMaturityLevel(id: number) {
+
+  isLastCoreQuestion(id: number) {
     switch (id) {
-      case 7190:
-      case 7276:
-      case 7190:
-      case 7198:
-      case 7288:
-      case 7204:
-      case 7284:
+      case 7427:
+      case 7290:
+      case 7439:
+      case 7443:
+      case 7302:
+      case 7311:
+      case 7226:
+      case 7231:
+      case 7237:
+      case 7243:
+      case 7247:
+      case 7251:
+      case 7254:
+      case 7257:
+      case 7262:
+      case 7269:
         return true;
-      
     }
   }
-*/
+
   
 }

@@ -185,6 +185,9 @@
             </div>
             <hr>
 
+            <button  *ngIf="!!isLastCoreQuestion(q.questionId)" class="btn btn-na form-check-label mt-2 mb-4" style="width: 15%">
+                    Expand Section</button>
+
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
