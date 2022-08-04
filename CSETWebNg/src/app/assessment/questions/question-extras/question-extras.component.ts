@@ -110,7 +110,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: '600px',
+      width: this.handsetPortrait ? '90%' : '600px',
+      maxWidth: this.handsetPortrait ? '90%' : '600px',
       height: '800px',
       data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
@@ -344,8 +345,12 @@ export class QuestionExtrasComponent implements OnInit {
       vulnerabilities: ''
     };
 
-    this.dialog
-      .open(FindingsComponent, { data: find, disableClose: true })
+    this.dialog.open(FindingsComponent, { 
+        data: find, 
+        disableClose: true,
+        width: this.handsetPortrait ? '90%' : '600px',
+        maxWidth: this.handsetPortrait ? '90%' : '600px'
+      })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
