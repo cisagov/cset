@@ -28,6 +28,7 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
 /**
@@ -57,6 +58,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+  handsetPortrait = false;
+
   /**
    * Constructor.
    * @param configSvc
@@ -65,7 +68,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService
+    public acetFilteringSvc: AcetFilteringService,
+    public boSvc: BreakpointObserver
   ) {
 
 
@@ -75,6 +79,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
    *
    */
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     this.refreshReviewIndicator();
