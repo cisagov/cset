@@ -38,6 +38,7 @@ import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { MaturityService } from '../../../services/maturity.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-question-extras',
@@ -67,6 +68,8 @@ export class QuestionExtrasComponent implements OnInit {
 
   showQuestionIds = false;
 
+  handsetPortrait = false;
+
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
    */
@@ -80,11 +83,17 @@ export class QuestionExtrasComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
-    private maturitySvc: MaturityService) {
+    private maturitySvc: MaturityService,
+    public boSvc: BreakpointObserver
+    ) {
   }
 
 
   ngOnInit() {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
     if (!!this.myOptions) {
