@@ -2,7 +2,6 @@
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -22,38 +21,38 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/getDeficiencyList")]
-        public async Task<IActionResult> GetDeficiencyList()
+        public IActionResult GetDeficiencyList()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.DeficienciesList = await _report.GetMaturityDeficiencies();
-            data.Information = await _report.GetInformation();
+            data.DeficienciesList = _report.GetMaturityDeficiencies();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
 
 
         [HttpGet]
         [Route("api/reports/acet/GetAssessmentInformation")]
-        public async Task<IActionResult> GetAssessmentInformation()
+        public IActionResult GetAssessmentInformation()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Information = await _report.GetInformation();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
 
 
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public async Task<IActionResult> GetAnsweredQuestions()
+        public IActionResult GetAnsweredQuestions()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.MatAnsweredQuestions = await _report.GetAnsweredQuestionList();
-            data.Information = await _report.GetInformation();
+            data.MatAnsweredQuestions = _report.GetAnsweredQuestionList();
+            data.Information = _report.GetInformation();
             return Ok(data);
         }
     }

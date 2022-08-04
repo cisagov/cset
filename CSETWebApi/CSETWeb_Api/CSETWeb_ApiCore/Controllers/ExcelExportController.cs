@@ -12,9 +12,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -51,16 +49,16 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExport")]
-        public async Task<IActionResult> GetExcelExport(string token)
+        public IActionResult GetExcelExport(string token)
         {
-            int assessmentId = await _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToCSV(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            return File(stream, excelContentType, await GetFilename(assessmentId, appCode));
+            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
         }
 
 
@@ -71,17 +69,17 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportNCUA")]
-        public async Task<IActionResult> GetExcelExportNCUA(string token)
+        public IActionResult GetExcelExportNCUA(string token)
         {
             _token.SetToken(token);
-            int assessmentId = await _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToExcelNCUA(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            return File(stream, excelContentType, await GetFilename(assessmentId, appCode));
+            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
         }
 
 
@@ -93,7 +91,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportAllNCUA")]
-        public async Task<IActionResult> GetExcelExportAllNCUA(string token)
+        public IActionResult GetExcelExportAllNCUA(string token)
         {
             _token.SetToken(token);
             int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
@@ -111,12 +109,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        private async Task<string> GetFilename(int assessmentId, string appCode)
+        private string GetFilename(int assessmentId, string appCode)
         {
             string filename = $"ExcelExport{excelExtension}";
 
-            var assesmentInfo = await _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefaultAsync();
-            var assessmentName = assesmentInfo?.Assessment_Name;
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
                 filename = $"{appCode} Export - {assessmentName}{excelExtension}";

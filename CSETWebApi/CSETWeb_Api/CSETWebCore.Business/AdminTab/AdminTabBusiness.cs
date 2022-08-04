@@ -3,8 +3,6 @@ using System.Linq;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Model.AdminTab;
 using CSETWebCore.DataLayer.Model;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.AdminTab
 {
@@ -17,7 +15,7 @@ namespace CSETWebCore.Business.AdminTab
             _context = context;
         }
 
-        public async Task<AdminTabData> GetTabData(int assessmentId)
+        public AdminTabData GetTabData(int assessmentId)
         {
             Dictionary<string, int> countStatementsReviewed = new Dictionary<string, int>();
 
@@ -25,15 +23,14 @@ namespace CSETWebCore.Business.AdminTab
 
             try
             {
-                var statementsRevList = await _context.usp_StatementsReviewed(assessmentId);
-                var stmtCounts = statementsRevList.ToList<usp_StatementsReviewed_Result>();
+                var stmtCounts = _context.usp_StatementsReviewed(assessmentId).ToList<usp_StatementsReviewed_Result>();
                 foreach (var row in stmtCounts)
                 {
                     rvalue.DetailData.Add(new FINANCIAL_HOURS_OVERRIDE(row));
                     countStatementsReviewed[row.Component] = row.ReviewedCount ?? 0;
                 }
-                var statementsRevTabList = await _context.usp_StatementsReviewedTabTotals(assessmentId);
-                var totals = statementsRevTabList.ToList<usp_StatementsReviewedTabTotals_Result>();
+
+                var totals = _context.usp_StatementsReviewedTabTotals(assessmentId).ToList<usp_StatementsReviewedTabTotals_Result>();
                 foreach (var row in totals)
                 {
                     rvalue.ReviewTotals.Add(new ReviewTotals() { Total = row.Totals, ReviewType = row.ReviewType });
@@ -58,8 +55,8 @@ namespace CSETWebCore.Business.AdminTab
             }
             rvalue.ReviewTotals.Add(totalReviewed);
 
-            var financialAttribList = await _context.usp_financial_attributes(assessmentId);
-            rvalue.Attributes = financialAttribList.ToList();
+
+            rvalue.Attributes = _context.usp_financial_attributes(assessmentId).ToList();
             return rvalue;
         }
 
@@ -69,11 +66,11 @@ namespace CSETWebCore.Business.AdminTab
         /// <param name="assessmentId"></param>
         /// <param name="save"></param>
         /// <returns></returns>
-        public async Task<AdminSaveResponse> SaveData(int assessmentId, AdminSaveData save)
+        public AdminSaveResponse SaveData(int assessmentId, AdminSaveData save)
         {
             FINANCIAL_HOURS fh = null;
 
-            var items = await _context.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentId && x.Component == save.Component).ToListAsync();
+            var items = _context.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentId && x.Component == save.Component).ToList();
 
             if (items.Count == 0)
             {
@@ -115,7 +112,7 @@ namespace CSETWebCore.Business.AdminTab
                 GrandTotal = 0,
                 ReviewedTotal = 0
             };
-            AdminTabData d = await GetTabData(assessmentId);
+            AdminTabData d = GetTabData(assessmentId);
             foreach (var t in d.ReviewTotals)
             {
                 switch (t.ReviewType.ToLower())
@@ -146,24 +143,24 @@ namespace CSETWebCore.Business.AdminTab
             };
         }
 
-        public async Task SaveDataAttribute(int assessmentId, AttributePair att)
+        public void SaveDataAttribute(int assessmentId, AttributePair att)
         {
 
-            var item = await _context.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentId && x.AttributeName == att.AttributeName).FirstOrDefaultAsync();
+            var item = _context.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentId && x.AttributeName == att.AttributeName).FirstOrDefault();
             if (item == null)
             {
-                await _context.FINANCIAL_ASSESSMENT_VALUES.AddAsync(new FINANCIAL_ASSESSMENT_VALUES()
+                _context.FINANCIAL_ASSESSMENT_VALUES.Add(new FINANCIAL_ASSESSMENT_VALUES()
                 {
                     Assessment_Id = assessmentId,
                     AttributeName = att.AttributeName,
                     AttributeValue = att.AttributeValue
                 });
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             else
             {
                 item.AttributeValue = att.AttributeValue;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
     }

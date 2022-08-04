@@ -64,9 +64,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public async Task<IActionResult> analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             ChartDataTSA chartData = new ChartDataTSA();
             
@@ -92,18 +92,18 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/getStandardList")]
-        public async Task<IActionResult> getStandardList()
+        public IActionResult getStandardList()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
             return Ok(standardList);
         }
         [HttpGet]
         [Route("api/TSA/getSectorIndustryStandardsTSA")]
-        public async Task<IActionResult> GetStandardsResultsByCategory1( int? sectorId, int? industryId)
+        public IActionResult GetStandardsResultsByCategory1( int? sectorId, int? industryId)
         {
             
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
             // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
             ChartDataTSA[] chartDatas = new ChartDataTSA[standardList.Count()];
@@ -133,9 +133,9 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/TSA/updateChart")]
-        public async Task<IActionResult> UpdateChart([FromBody] Demographics demographics)
+        public IActionResult UpdateChart([FromBody] Demographics demographics)
         {
-            demographics.AssessmentId = await _tokenManager.AssessmentForUser();
+            demographics.AssessmentId = _tokenManager.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
         

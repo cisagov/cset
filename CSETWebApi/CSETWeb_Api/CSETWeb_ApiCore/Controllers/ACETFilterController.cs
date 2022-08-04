@@ -13,7 +13,6 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/IsAcetOnly")]
-        public async Task<IActionResult> GetAcetOnly()
+        public IActionResult GetAcetOnly()
         {
             //if the appcode is null throw an exception
             //if it is not null return the default for the app
@@ -46,8 +45,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                int assessment_id = await _tokenManager.AssessmentForUser();
-                var ar = await _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefaultAsync();
+                int assessment_id = _tokenManager.AssessmentForUser();
+                var ar = _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
                 bool defaultAcet = (app_code == "ACET");
                 return Ok(ar.IsAcetOnly ?? defaultAcet);
             }
@@ -61,11 +60,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/SaveIsAcetOnly")]
-        public async Task<IActionResult> SaveACETFilters([FromBody] bool value)
+        public IActionResult SaveACETFilters([FromBody] bool value)
         {
-            int assessment_id = await _tokenManager.AssessmentForUser();
+            int assessment_id = _tokenManager.AssessmentForUser();
            
-            var ar = await _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefaultAsync();
+            var ar = _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
             if (ar != null)
             {
                 ar.IsAcetOnly = value;
@@ -78,11 +77,10 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ACETDomains")]
-        public async Task<IActionResult> GetAcetDomains()
+        public IActionResult GetAcetDomains()
         {
             List<ACETDomain> domains = new List<ACETDomain>();
-            var dbDomains = await _context.FINANCIAL_DOMAINS.ToListAsync();
-            foreach (var domain in dbDomains)
+            foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
             {
                 domains.Add(new ACETDomain()
                 {
@@ -105,12 +103,12 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/acet/filters")]
-        public async Task<IActionResult> GetACETFilters()
+        public IActionResult GetACETFilters()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             List<ACETFilter> filters = new List<ACETFilter>();
 
-            filters = await (from a in _context.FINANCIAL_DOMAIN_FILTERS
+            filters = (from a in _context.FINANCIAL_DOMAIN_FILTERS
                        join b in _context.FINANCIAL_DOMAINS on a.DomainId equals b.DomainId
                        where a.Assessment_Id == assessmentId
                        select new ACETFilter()
@@ -122,7 +120,7 @@ namespace CSETWebCore.Api.Controllers
                            Int = a.Int,
                            A = a.A,
                            Inn = a.Inn
-                       }).ToListAsync();
+                       }).ToList();
 
             // create Settings according to the B, E, Int, A and Inn bits.
             filters.ForEach(f =>
@@ -146,17 +144,17 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/acet/savefilter")]
-        public async Task<IActionResult> SaveACETFilters([FromBody] ACETFilterValue filterValue)
+        public IActionResult SaveACETFilters([FromBody] ACETFilterValue filterValue)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             string domainname = filterValue.DomainName;
             int level = filterValue.Level;
             bool value = filterValue.Value;
 
-            Dictionary<string, int> domainIds = await _context.FINANCIAL_DOMAINS.ToDictionaryAsync(x => x.Domain, x => x.DomainId);
+            Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
             int domainId = domainIds[domainname];
 
-            var filter = await _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+            var filter = _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
             if (filter == null)
             {
                 filter = new FINANCIAL_DOMAIN_FILTERS()
@@ -188,7 +186,7 @@ namespace CSETWebCore.Api.Controllers
 
             _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
 
             return Ok();
         }
@@ -202,16 +200,15 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/acet/savefilters")]
-        public async Task<IActionResult> SaveACETFilters([FromBody] List<ACETFilter> filters)
+        public IActionResult SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             
-            Dictionary<string, int> domainIds = await _context.FINANCIAL_DOMAINS.ToDictionaryAsync(x => x.Domain, x => x.DomainId);
-
+            Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
             foreach (ACETFilter f in filters.Where(x => x.DomainName != null).ToList())
             {
                 int domainId = domainIds[f.DomainName];
-                var filter = await _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+                var filter = _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (filter == null)
                 {
                     filter = new FINANCIAL_DOMAIN_FILTERS()
@@ -247,7 +244,7 @@ namespace CSETWebCore.Api.Controllers
 
             _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
 
             return Ok();
         }
@@ -259,15 +256,15 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/acet/resetfilters")]
-        public async Task<IActionResult> ResetAllAcetFilters()
+        public IActionResult ResetAllAcetFilters()
         {
-            int assessmentID = await _tokenManager.AssessmentForUser();
+            int assessmentID = _tokenManager.AssessmentForUser();
 
-            var filters = await _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToListAsync();
+            var filters = _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToList();
             _context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
             _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(assessmentID);
+            _assessmentUtil.TouchAssessment(assessmentID);
 
             return Ok();
         }

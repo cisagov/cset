@@ -11,7 +11,7 @@ using CSETWebCore.Model.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace CSETWebCore.Business.Contact
 {
@@ -217,15 +217,15 @@ namespace CSETWebCore.Business.Contact
         /// Creates a new Contact if needed.  If a Contact already exists for the email, no 
         /// changes are made to the Contact row.
         /// </summary>
-        public async Task<ContactDetail> CreateAndAddContactToAssessment(ContactCreateParameters newContact)
+        public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             string appCode = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
 
             // See if the Contact already exists
-            existingContact = await _context.ASSESSMENT_CONTACTS.FirstOrDefaultAsync(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
+            existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
             if (existingContact == null)
             {
                 // Create Contact
@@ -248,9 +248,9 @@ namespace CSETWebCore.Business.Contact
                 };
 
                 // Include the userid if such a user exists
-                USERS user = await _context.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
+                USERS user = _context.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
                     && u.PrimaryEmail == newContact.PrimaryEmail)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefault();
                 if (user != null)
                 {
                     c.UserId = user.UserId;
@@ -290,7 +290,7 @@ namespace CSETWebCore.Business.Contact
 
                 _context.SaveChanges();
 
-                await _assessmentUtil.TouchAssessment(assessmentId);
+                _assessmentUtil.TouchAssessment(assessmentId);
 
                 existingContact = c;
             }
@@ -335,10 +335,10 @@ namespace CSETWebCore.Business.Contact
         /// Updates ASSESSMENT_CONTACT record with given userId using provided ContactDetail object
         /// </summary>
         /// <returns></returns>
-        public async Task UpdateContact(ContactDetail contact, int userId)
+        public void UpdateContact(ContactDetail contact, int userId)
         {
-            var ac = await _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
-                && x.Assessment_Id == contact.AssessmentId).FirstOrDefaultAsync();
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId
+                && x.Assessment_Id == contact.AssessmentId).FirstOrDefault();
 
             ac.UserId = contact.UserId;
             ac.FirstName = contact.FirstName;

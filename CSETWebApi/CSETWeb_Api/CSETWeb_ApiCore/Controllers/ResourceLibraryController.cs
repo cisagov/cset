@@ -14,7 +14,6 @@ using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -39,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>        
         [HttpPost]
         [Route("api/ResourceLibrary")]
-        public async Task<IActionResult> GetDetails([FromBody] SearchRequest searchRequest)
+        public IActionResult GetDetails([FromBody] SearchRequest searchRequest)
         {
             if (String.IsNullOrWhiteSpace(searchRequest.term))
                 return Ok(new List<ResourceNode>());
@@ -51,7 +50,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ShowResourceLibrary")]
-        public async Task<IActionResult> ShowResourceLibrary()
+        public IActionResult ShowResourceLibrary()
         {
             var refBuilder = new Helpers.ReferencesBuilder(_context);
             var buildDocuments = refBuilder.GetBuildDocuments();
@@ -60,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResourceLibrary/tree")]
-        public async Task<List<SimpleNode>> GetTree()
+        public List<SimpleNode> GetTree()
         {
             IResourceLibraryRepository resource = new ResourceLibraryRepository(_context, new CSETGlobalProperties());
             return resource.GetTreeNodes();
@@ -68,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResourceLibrary/doc")]
-        public async Task<string> GetFlowDoc(string type, int id)
+        public string GetFlowDoc(string type, int id)
         {
             // pull the flowdoc from the database
             string html = _flow.GetFlowDoc(type, id);
