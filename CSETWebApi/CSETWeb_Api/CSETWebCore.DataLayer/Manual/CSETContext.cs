@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
@@ -161,17 +160,17 @@ namespace CSETWebCore.DataLayer.Model
         }
 
         
-        public virtual async Task<IList<SPRSScore>> usp_GetSPRSScore(Nullable<int> assessment_id)
+        public virtual IList<SPRSScore> usp_GetSPRSScore(Nullable<int> assessment_id)
         {
 
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<SPRSScore> myrval = null;
-            await this.LoadStoredProc("usp_GenerateSPRSScore")
+            this.LoadStoredProc("usp_GenerateSPRSScore")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<SPRSScore>();
                      });
@@ -199,17 +198,17 @@ namespace CSETWebCore.DataLayer.Model
         //public virtual DbSet<Answer_Components> Answer_Components { get; set; }
         //public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         //public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
-        public virtual async Task<IList<Answer_Components_Default>> usp_Answer_Components_Default(Nullable<int> assessment_id)
+        public virtual IList<Answer_Components_Default> usp_Answer_Components_Default(Nullable<int> assessment_id)
         {
            
                 if (!assessment_id.HasValue)
                     throw new ApplicationException("parameters may not be null");
 
                 IList<Answer_Components_Default> myrval = null;
-                await this.LoadStoredProc("usp_Answer_Components_Default")
+                this.LoadStoredProc("usp_Answer_Components_Default")
                          .WithSqlParam("assessment_id", assessment_id)
 
-                         .ExecuteStoredProcAsync((handler) =>
+                         .ExecuteStoredProc((handler) =>
                          {
                              myrval = handler.ReadToList<Answer_Components_Default>();
                          });
@@ -238,16 +237,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_Assessments_For_UserResult>> usp_AssessmentsForUser(Nullable<int> userId)
+        public virtual IList<usp_Assessments_For_UserResult> usp_AssessmentsForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_Assessments_For_UserResult> myrval = null;
-            await this.LoadStoredProc("usp_Assessments_For_User")
+            this.LoadStoredProc("usp_Assessments_For_User")
                      .WithSqlParam("user_id", userId)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_Assessments_For_UserResult>();
                      });
@@ -260,16 +259,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
-        public virtual async Task<IList<usp_Assessments_Completion_For_UserResult>> usp_AssessmentsCompletionForUser(Nullable<int> userId)
+        public virtual IList<usp_Assessments_Completion_For_UserResult> usp_AssessmentsCompletionForUser(Nullable<int> userId)
         {
             if (!userId.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_Assessments_Completion_For_UserResult> myrval = null;
-            await this.LoadStoredProc("usp_Assessments_Completion_For_User")
+            this.LoadStoredProc("usp_Assessments_Completion_For_User")
                      .WithSqlParam("user_id", userId)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_Assessments_Completion_For_UserResult>();
                      });
@@ -444,16 +443,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual async Task<int> FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
+        public virtual int FillEmptyQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             int myrval = 0;
-            await this.LoadStoredProc("FillEmptyQuestionsForAnalysis")
+            this.LoadStoredProc("FillEmptyQuestionsForAnalysis")
                      .WithSqlParam("Assessment_Id", assessment_Id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
@@ -466,16 +465,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual async Task<int> FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
+        public virtual int FillEmptyMaturityQuestionsForAnalysis(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             int myrval = 0;
-            await this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
+            this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
                      .WithSqlParam("Assessment_Id", assessment_Id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
@@ -488,16 +487,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_Id"></param>
         /// <returns></returns>
-        public virtual async Task<int> FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
+        public virtual int FillNetworkDiagramQuestions(Nullable<int> assessment_Id)
         {
             if (!assessment_Id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             int myrval = 0;
-            await this.LoadStoredProc("FillNetworkDiagramQuestions")
+            this.LoadStoredProc("FillNetworkDiagramQuestions")
                      .WithSqlParam("Assessment_Id", assessment_Id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToValue<int>() ?? 0;
                      });
@@ -510,15 +509,15 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_GetOverallRankedCategoriesPage_Result>> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
+        public virtual IList<usp_GetOverallRankedCategoriesPage_Result> usp_GetOverallRankedCategoriesPage(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetOverallRankedCategoriesPage_Result> myrval = null;
-            await this.LoadStoredProc("usp_GetOverallRankedCategoriesPage")
+            this.LoadStoredProc("usp_GetOverallRankedCategoriesPage")
                      .WithSqlParam("assessment_id", assessment_id)
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetOverallRankedCategoriesPage_Result>();
                      });
@@ -531,16 +530,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_getFinancialQuestions_Result>> usp_getFinancialQuestions(Nullable<int> assessment_id)
+        public virtual IList<usp_getFinancialQuestions_Result> usp_getFinancialQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_getFinancialQuestions_Result> myrval = null;
-            await this.LoadStoredProc("usp_getFinancialQuestions")
+            this.LoadStoredProc("usp_getFinancialQuestions")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_getFinancialQuestions_Result>();
                      });
@@ -553,16 +552,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_GetRankedQuestions_Result>> usp_GetRankedQuestions(Nullable<int> assessment_id)
+        public virtual IList<usp_GetRankedQuestions_Result> usp_GetRankedQuestions(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetRankedQuestions_Result> myrval = null;
-            await this.LoadStoredProc("usp_GetRankedQuestions")
+            this.LoadStoredProc("usp_GetRankedQuestions")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetRankedQuestions_Result>();
                      });
@@ -618,16 +617,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<GetMaturityDetailsCalculations_Result>> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
+        public virtual IList<GetMaturityDetailsCalculations_Result> GetMaturityDetailsCalculations(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<GetMaturityDetailsCalculations_Result> myrval = null;
-            await this.LoadStoredProc("GetMaturityDetailsCalculations")
+            this.LoadStoredProc("GetMaturityDetailsCalculations")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<GetMaturityDetailsCalculations_Result>();
                      });
@@ -640,17 +639,17 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<AcetAnswerDistribution_Result>> AcetAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        public virtual IList<AcetAnswerDistribution_Result> AcetAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<AcetAnswerDistribution_Result> myrval = null;
-            await this.LoadStoredProc("AcetAnswerDistribution")
+            this.LoadStoredProc("AcetAnswerDistribution")
                      .WithSqlParam("assessment_id", assessment_id)
                      .WithSqlParam("targetLevel", targetLevel)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
                      });
@@ -663,16 +662,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_StatementsReviewed_Result>> usp_StatementsReviewed(Nullable<int> assessment_id)
+        public virtual IList<usp_StatementsReviewed_Result> usp_StatementsReviewed(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_StatementsReviewed_Result> myrval = null;
-            await this.LoadStoredProc("usp_StatementsReviewed")
+            this.LoadStoredProc("usp_StatementsReviewed")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_StatementsReviewed_Result>();
                      });
@@ -685,16 +684,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_StatementsReviewedTabTotals_Result>> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
+        public virtual IList<usp_StatementsReviewedTabTotals_Result> usp_StatementsReviewedTabTotals(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_StatementsReviewedTabTotals_Result> myrval = null;
-            await this.LoadStoredProc("usp_StatementsReviewedTabTotals")
+            this.LoadStoredProc("usp_StatementsReviewedTabTotals")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_StatementsReviewedTabTotals_Result>();
                      });
@@ -710,16 +709,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual async Task<IList<usp_financial_attributes_result>> usp_financial_attributes(Nullable<int> assessment_id)
+        public virtual IList<usp_financial_attributes_result> usp_financial_attributes(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_financial_attributes_result> myrval = null;
-            await this.LoadStoredProc("usp_financial_attributes")
+            this.LoadStoredProc("usp_financial_attributes")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          myrval = handler.ReadToList<usp_financial_attributes_result>();
                      });

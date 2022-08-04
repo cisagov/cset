@@ -31,12 +31,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/sets")]
-        public async Task<IActionResult> GetAllSets()
+        public IActionResult GetAllSets()
         {
-            var sets = await _context.SETS.Where(s => s.Is_Displayed ?? true)
+            var sets = _context.SETS.Where(s => s.Is_Displayed ?? true)
                 .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name })
                 .OrderBy(s => s.Name)
-                .ToArrayAsync();
+                .ToArray();
             return Ok(sets);
         }
 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/sets/import")]
-        public async Task<IActionResult> Import([FromBody] ExternalStandard externalStandard)
+        public IActionResult Import([FromBody] ExternalStandard externalStandard)
         {
             try
             {
@@ -85,9 +85,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/sets/export/{setName}")]
-        public async Task<IActionResult> Export(string setName)
+        public IActionResult Export(string setName)
         {
-            var set = await _context.SETS
+            var set = _context.SETS
                 .Include(s => s.Set_Category)
                 .Include(s => s.REQUIREMENT_SETS)
                     .ThenInclude(r => r.Requirement)
@@ -96,7 +96,7 @@ namespace CSETWebCore.Api.Controllers
                 .Include(s => s.REQUIREMENT_SETS)
                     .ThenInclude(r => r.Requirement)
                         .ThenInclude(r => r.REQUIREMENT_LEVELS)
-                .Where(s => (s.Is_Displayed ?? false) && s.Set_Name == setName).FirstOrDefaultAsync();
+                .Where(s => (s.Is_Displayed ?? false) && s.Set_Name == setName).FirstOrDefault();
 
             if (set == null)
             {

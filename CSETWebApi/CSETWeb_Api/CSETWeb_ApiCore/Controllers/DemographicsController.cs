@@ -31,9 +31,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/demographics")]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             return Ok(_demographic.GetDemographics(assessmentId));
         }
 
@@ -45,9 +45,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/demographics")]
-        public async Task<IActionResult> Post([FromBody] Demographics demographics)
+        public IActionResult Post([FromBody] Demographics demographics)
         {
-            demographics.AssessmentId = await _token.AssessmentForUser();
+            demographics.AssessmentId = _token.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
 
@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getOrganizationTypes")]
-        public async Task<IActionResult> GetOrganizationTypes()
+        public IActionResult GetOrganizationTypes()
         {
             return Ok(_assessment.GetOrganizationTypes());
         }
@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry")]
         // GET: api/SECTOR_INDUSTRY
-        public async Task<IActionResult> GetSECTOR_INDUSTRY()
+        public IActionResult GetSECTOR_INDUSTRY()
         {
             return Ok(_context.SECTOR_INDUSTRY);
         }

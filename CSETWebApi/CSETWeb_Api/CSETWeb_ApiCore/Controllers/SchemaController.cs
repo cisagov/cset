@@ -2,7 +2,7 @@
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -22,7 +22,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/Schema")]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             try
             {

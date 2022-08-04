@@ -8,7 +8,7 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace CSETWebCore.Business.Acet
 {
@@ -31,15 +31,15 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<Model.Acet.ACETDashboard> LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
 
-            Model.Acet.ACETDashboard result = await GetIrpCalculation(assessmentId);
+            Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
             MaturityBusiness matManager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var domains = await matManager.GetMaturityAnswers(assessmentId);
+            var domains = matManager.GetMaturityAnswers(assessmentId);
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -58,9 +58,9 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<string> GetOverallIrp(int assessmentId)
+        public string GetOverallIrp(int assessmentId)
         {
-            var calc = await GetIrpCalculation(assessmentId);
+            var calc = GetIrpCalculation(assessmentId);
             int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
             return overall == 1 ? Constants.Constants.LeastIrp :
                 overall == 2 ? Constants.Constants.MinimalIrp :
@@ -75,9 +75,9 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<int> GetOverallIrpNumber(int assessmentId)
+        public int GetOverallIrpNumber(int assessmentId)
         {
-            var calc = await GetIrpCalculation(assessmentId);
+            var calc = GetIrpCalculation(assessmentId);
             int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
             return overall;
         }
@@ -88,29 +88,28 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<Model.Acet.ACETDashboard> GetIrpCalculation(int assessmentId)
+        public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
             
             // now just properties on an Assessment
-            ASSESSMENTS assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment == null) { return null; }
             result.CreditUnionName = assessment.CreditUnionName;
             result.Charter = assessment.Charter;
             result.Assets = assessment.Assets;
-            var tabData = await _adminTabBusiness.GetTabData(assessmentId);
-            result.Hours =tabData.GrandTotal;
+
+            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
 
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
-            var headerList = await _context.IRP_HEADER.ToListAsync();
-            foreach (IRP_HEADER header in headerList)
+            foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
                 summary.HeaderText = header.Header;
 
-                ASSESSMENT_IRP_HEADER headerInfo = await _context.ASSESSMENT_IRP_HEADER.FirstOrDefaultAsync(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
+                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
                 if (headerInfo != null)
                 {
                     summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
@@ -118,8 +117,8 @@ namespace CSETWebCore.Business.Acet
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<DataLayer.Model.IRP> irps = await _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToListAsync();
-                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = await _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionaryAsync(x => x.IRP_Id, x => x);
+                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
                 foreach (DataLayer.Model.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
@@ -151,7 +150,7 @@ namespace CSETWebCore.Business.Acet
                 }
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             result.SumRiskLevel = 1;
             int maxRisk = 0;
@@ -168,12 +167,12 @@ namespace CSETWebCore.Business.Acet
             return result;
         }
 
-        public async Task UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
+        public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
         {
             if (assessmentId == 0 || summary == null) { return; }
 
 
-            ASSESSMENTS assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment != null)
             {
                 assessment.CreditUnionName = summary.CreditUnionName;
@@ -186,7 +185,7 @@ namespace CSETWebCore.Business.Acet
 
             foreach (IRPSummary irp in summary.Irps)
             {
-                ASSESSMENT_IRP_HEADER dbSummary = await _context.ASSESSMENT_IRP_HEADER.FirstOrDefaultAsync(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
+                ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
                 if (dbSummary != null)
                 {
                     dbSummary.RISK_LEVEL = irp.RiskLevel;
@@ -198,7 +197,7 @@ namespace CSETWebCore.Business.Acet
                 }
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
         }
     }

@@ -12,7 +12,6 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -42,7 +41,7 @@ namespace CSETWebCore.Api.Controllers
             _tokenManager = tokenManager;
             _requirement = requirement;
 
-            _assessmentId = _tokenManager.AssessmentForUser().Result;
+            _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
         }
 
@@ -53,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/answercolors")]
-        public async Task<IActionResult> GetAnswerColors()
+        public IActionResult GetAnswerColors()
         {
             return Ok(answerColorDefs);
         }
@@ -61,12 +60,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/RankedQuestions")]
-        public async Task<IActionResult> GetRankedQuestions()
+        public IActionResult GetRankedQuestions()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
 
-            var rankedQuestionList = await _context.usp_GetRankedQuestions(assessmentId);
+            var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
@@ -79,9 +78,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/Feedback")]
-        public async Task<IActionResult> GetFeedback()
+        public IActionResult GetFeedback()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
             FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
@@ -92,17 +91,17 @@ namespace CSETWebCore.Api.Controllers
                 List<FeedbackQuestion> feedbackQuestions = new List<FeedbackQuestion>();
 
                 // standard questions
-                var q1 = (from a in  _context.Answer_Standards_InScope
-                          where a.assessment_id == assessmentId &&
-                          a.mode == AssessmentMode && !string.IsNullOrWhiteSpace(a.FeedBack)
-                          select new FeedbackQuestion()
-                          {
-                              AnswerID = a.answer_id,
-                              Feedback = a.FeedBack,
-                              Mode = a.mode,
-                              QuestionID = a.question_or_requirement_id,
-                              QuestionText = a.Question_Text
-                          });
+                var q1 = from a in _context.Answer_Standards_InScope
+                         where a.assessment_id == assessmentId &&
+                         a.mode == AssessmentMode && !string.IsNullOrWhiteSpace(a.FeedBack)
+                         select new FeedbackQuestion()
+                         {
+                             AnswerID = a.answer_id,
+                             Feedback = a.FeedBack,
+                             Mode = a.mode,
+                             QuestionID = a.question_or_requirement_id,
+                             QuestionText = a.Question_Text
+                         };
 
                 feedbackQuestions.AddRange(q1);
 
@@ -121,8 +120,8 @@ namespace CSETWebCore.Api.Controllers
 
                 feedbackQuestions.AddRange(q2);
 
-                bool FaaMail = await _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
-                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefaultAsync() != null;
+                bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
+                && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
 
 
                 string FeedbackSalutations = "Dear " + (FaaMail ? "FAA" : "CSET") + " Standards Administrator:";
@@ -188,24 +187,24 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/dashboard")]
-        public async Task<IActionResult> GetDashboard()
+        public IActionResult GetDashboard()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
-            var assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(x => x.Assessment_Id == assessmentId);
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
             FirstPage rval = null;
 
             var results = new FirstPageMultiResult();
             _context.Database.AutoTransactionsEnabled = true;
-            await _context.LoadStoredProc("[usp_GetFirstPage]")
+            _context.LoadStoredProc("[usp_GetFirstPage]")
               .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProcAsync((handler) =>
+              .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<GetCombinedOveralls>().ToList();
               });
-            await _context.LoadStoredProc("[usp_GetFirstPage]")
+            _context.LoadStoredProc("[usp_GetFirstPage]")
                 .WithSqlParam("assessment_id", assessmentId)
-                .ExecuteStoredProcAsync((handler) =>
+                .ExecuteStoredProc((handler) =>
                 {
                     results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
                 });
@@ -328,20 +327,20 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/TopCategories")]
-        public async Task<IActionResult> GetTopCategories(int? total)
+        public IActionResult GetTopCategories(int? total)
         {
             if (total == null)
             {
                 total = 10000;
             }
 
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
 
             var results = new RankedCategoriesMultiResult();
-            await _context.LoadStoredProc("[usp_GetRankedCategoriesPage]")
+            _context.LoadStoredProc("[usp_GetRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProcAsync((handler) =>
+              .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
 
@@ -446,15 +445,15 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/OverallRankedCategories")]
-        public async Task<IActionResult> GetOverallRankedCategories()
+        public IActionResult GetOverallRankedCategories()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
 
             var results = new RankedCategoriesMultiResult();
-            await _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
+            _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
               .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProcAsync((handler) =>
+              .ExecuteStoredProc((handler) =>
               {
                   results.Result1 = handler.ReadToList<usp_getRankedCategories>().ToList();
               });
@@ -496,9 +495,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/StandardsSummaryOverall")]
-        public async Task<IActionResult> GetStandardSummaryOverall()
+        public IActionResult GetStandardSummaryOverall()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(GetStandardsSummarySingle(_context, assessmentId));
         }
@@ -509,11 +508,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsSummary")]
-        public async Task<IActionResult> GetStandardsSummary()
+        public IActionResult GetStandardsSummary()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
-            if (await _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).CountAsync() > 1)
+            if (_context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).Count() > 1)
             {
                 return Ok(GetStandardsSummaryMultiple(_context, assessmentId));
             }
@@ -667,9 +666,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsSummary")]
-        public async Task<IActionResult> GetComponentsSummary()
+        public IActionResult GetComponentsSummary()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             // initialize the response container
             ChartData chartData = new ChartData();
@@ -677,9 +676,9 @@ namespace CSETWebCore.Api.Controllers
             chartData.DataRowsPie = new List<DataRowsPie>();
 
 
-            await _context.LoadStoredProc("[usp_getComponentsSummary]")
+            _context.LoadStoredProc("[usp_getComponentsSummary]")
                      .WithSqlParam("assessment_Id", assessmentId)
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          var answerTotals = handler.ReadToList<usp_getComponentsSummmary>();
 
@@ -717,9 +716,9 @@ namespace CSETWebCore.Api.Controllers
 
 
             // include component count so front end can know whether components are present
-            await _context.LoadStoredProc("[usp_getExplodedComponent]")
+            _context.LoadStoredProc("[usp_getExplodedComponent]")
               .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProcAsync((handler) =>
+              .ExecuteStoredProc((handler) =>
               {
                   chartData.ComponentCount = handler.ReadToList<usp_getExplodedComponent>().Distinct().Count();
               });
@@ -746,9 +745,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/DocumentComments")]
-        public async Task<IActionResult> GetDocumentComments()
+        public IActionResult GetDocumentComments()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             var items = from a in _context.ASSESSMENTS_REQUIRED_DOCUMENTATION
                         join d in _context.REQUIRED_DOCUMENTATION on a.Documentation_Id equals d.Documentation_Id
@@ -756,20 +755,20 @@ namespace CSETWebCore.Api.Controllers
                         orderby d.Document_Order
                         select new CommentData() { Number = d.Number, AssociatedHeader = d.Document_Description, Comment = a.Comment, Answer = a.Answer };
 
-            return Ok(await items.ToListAsync());
+            return Ok(items.ToList());
         }
 
 
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
-        public async Task<IActionResult> GetStandardsResultsByCategory()
+        public IActionResult GetStandardsResultsByCategory()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = new ChartData();
 
-            await _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+            _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
                     .WithSqlParam("assessment_Id", assessmentId)
-                    .ExecuteStoredProcAsync((handler) =>
+                    .ExecuteStoredProc((handler) =>
                     {
                         var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
                         var labels = (from usp_getStandardsResultsByCategory an in result
@@ -829,14 +828,14 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/StandardsRankedCategories")]
-        public async Task<IActionResult> GetStandardsRankedCategories()
+        public IActionResult GetStandardsRankedCategories()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
 
-            await _context.LoadStoredProc("[usp_getStandardsRankedCategories]")
+            _context.LoadStoredProc("[usp_getStandardsRankedCategories]")
                   .WithSqlParam("assessment_Id", assessmentId)
-                  .ExecuteStoredProcAsync((handler) =>
+                  .ExecuteStoredProc((handler) =>
                   {
                       var result = handler.ReadToList<usp_getStandardsRankedCategories>();
                       List<double> data = new List<double>();
@@ -868,14 +867,14 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsResultsByCategory")]
-        public async Task<IActionResult> GetComponentsResultsByCategory()
+        public IActionResult GetComponentsResultsByCategory()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
 
-            await _context.LoadStoredProc("[usp_getComponentsResultsByCategory]")
+            _context.LoadStoredProc("[usp_getComponentsResultsByCategory]")
                   .WithSqlParam("assessment_Id", assessmentId)
-                  .ExecuteStoredProcAsync((handler) =>
+                  .ExecuteStoredProc((handler) =>
                   {
                       var result = handler.ReadToList<usp_getComponentsResultsByCategory>();
 
@@ -901,14 +900,14 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentsRankedCategories")]
-        public async Task<IActionResult> GetComponentsRankedCategories()
+        public IActionResult GetComponentsRankedCategories()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             ChartData chartData = null;
 
-            await _context.LoadStoredProc("[usp_getComponentsRankedCategories]")
+            _context.LoadStoredProc("[usp_getComponentsRankedCategories]")
                 .WithSqlParam("assessment_Id", assessmentId)
-                .ExecuteStoredProcAsync((handler) =>
+                .ExecuteStoredProc((handler) =>
                 {
                     var result = handler.ReadToList<usp_getComponentsRankedCategories>();
                     chartData = new ChartData();
@@ -935,9 +934,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/ComponentTypes")]
-        public async Task<IActionResult> ComponentTypes()
+        public IActionResult ComponentTypes()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             // initialize the response container
             ChartData chartData = new ChartData
@@ -946,9 +945,9 @@ namespace CSETWebCore.Api.Controllers
                 DataRowsPie = new List<DataRowsPie>()
             };
 
-            await _context.LoadStoredProc("[usp_getComponentTypes]")
+            _context.LoadStoredProc("[usp_getComponentTypes]")
                      .WithSqlParam("assessment_Id", assessmentId)
-                     .ExecuteStoredProcAsync((handler) =>
+                     .ExecuteStoredProc((handler) =>
                      {
                          var componentTotals = handler.ReadToList<usp_getComponentTypes>();
 
@@ -1029,13 +1028,13 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analysis/NetworkWarnings")]
-        public async Task<IActionResult> GetNetworkWarnings()
+        public IActionResult GetNetworkWarnings()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok((List<NETWORK_WARNINGS>) await _context.NETWORK_WARNINGS
+            return Ok((List<NETWORK_WARNINGS>)_context.NETWORK_WARNINGS
                 .Where(x => x.Assessment_Id == assessmentId)
-                .OrderBy(x => x.Id).ToListAsync());
+                .OrderBy(x => x.Id).ToList());
         }
 
 
