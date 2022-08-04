@@ -112,7 +112,7 @@ namespace CSETWebCore.Api.Controllers
                         xDoc.LoadXml(req.DiagramXml);
 
                         DiagramAnalysis analysis = new DiagramAnalysis(_context, assessmentId);
-                        messages = analysis.PerformAnalysis(xDoc);
+                        messages = await analysis.PerformAnalysis(xDoc);
                 }
 
                 return messages;
@@ -142,7 +142,7 @@ namespace CSETWebCore.Api.Controllers
 
             var response = _diagram.GetDiagram((int)assessmentId);
 
-            var assessmentDetail = _assessment.GetAssessmentDetail((int) assessmentId);
+            var assessmentDetail = await _assessment.GetAssessmentDetail((int) assessmentId);
             response.AssessmentName = assessmentDetail.AssessmentName;
 
             return response;
@@ -158,7 +158,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDiagramImage()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string requestUrl = $"{Request.Scheme}://{Request.Host.Value}{Request.Path}";
             return Ok(new { diagram = _diagram.GetDiagramImage(assessmentId, requestUrl)});
         }

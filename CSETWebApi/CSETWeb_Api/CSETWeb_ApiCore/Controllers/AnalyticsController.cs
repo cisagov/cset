@@ -62,8 +62,8 @@ namespace CSETWebCore.Api.Controllers
 
         private async Task<AnalyticsAssessment> GetAnalyticsAssessment()
         {
-            int assessmentId = _token.AssessmentForUser();
-            var assessment = _assessment.GetAnalyticsAssessmentDetail(assessmentId);
+            int assessmentId = await _token.AssessmentForUser();
+            var assessment = await _assessment.GetAnalyticsAssessmentDetail(assessmentId);
             return assessment;
         }
 
@@ -73,7 +73,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         private async Task<AnalyticsDemographic> GetDemographics()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return _demographic.GetAnonymousDemographics(assessmentId);
         }
 
@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         private async Task<List<AnalyticsQuestionAnswer>> GetQuestionsAnswers()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
            
             if (applicationMode.ToLower().StartsWith("questions"))
@@ -95,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
             else
             {
                 _requirement.SetRequirementAssessmentId(assessmentId);
-                QuestionResponse resp = _requirement.GetRequirementsList();
+                QuestionResponse resp = await _requirement.GetRequirementsList();
                 return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
             }
         }

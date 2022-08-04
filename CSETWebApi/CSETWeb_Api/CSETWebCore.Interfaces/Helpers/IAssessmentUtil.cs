@@ -1,7 +1,9 @@
-﻿namespace CSETWebCore.Interfaces.Helpers
+﻿using System.Threading.Tasks;
+
+namespace CSETWebCore.Interfaces.Helpers
 {
     public interface IAssessmentUtil
     {
-        void TouchAssessment(int assessmentId);
+        Task TouchAssessment(int assessmentId);
     }
 }

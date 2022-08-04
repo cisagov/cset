@@ -49,7 +49,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/contacts")]
         public async Task<IActionResult> GetContactsForAssessment()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             int userId = _token.GetCurrentUserId();
 
             ContactsListResponse resp = new ContactsListResponse
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/contacts/getcurrent")]
         public async Task<IActionResult> GetCurrentUserContact()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             int currentUserId = _token.GetUserId();
 
             var resp = _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
@@ -86,7 +86,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/contacts/addnew")]
         public async Task<IActionResult> CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string app_code = _token.Payload(Constants.Constants.Token_Scope);
 
             // Make sure the user is an admin on this assessment
@@ -96,7 +96,7 @@ namespace CSETWebCore.Api.Controllers
             newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
 
             List<ContactDetail> details = new List<ContactDetail>(1);
-            details.Add(_contact.CreateAndAddContactToAssessment(newContact));
+            details.Add(await _contact.CreateAndAddContactToAssessment(newContact));
 
             ContactsListResponse resp = new ContactsListResponse
             {
@@ -166,7 +166,7 @@ namespace CSETWebCore.Api.Controllers
 
             // Do not allow the user to remove themself if they are the last Admin on the assessment and there are other users
             if (ac.UserId == currentUserId
-                && _token.AmILastAdminWithUsers(ac.Assessment_Id))
+                && await _token.AmILastAdminWithUsers(ac.Assessment_Id))
             {
                 var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -225,7 +225,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/contacts/invite")]
         public async Task<IActionResult> InviteContacts([FromBody] ContactInviteParameters inviteParms)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             Dictionary<string, Boolean> success = new Dictionary<string, bool>();
             foreach (string invitee in inviteParms.InviteeList)
             {
@@ -310,7 +310,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                assessmentId = _token.AssessmentForUser();
+                assessmentId = await _token.AssessmentForUser();
             }
             catch (Exception exc)
             {
@@ -472,7 +472,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> ValidateMyRemoval(int assessmentId)
         {
             _token.IsAuthenticated();
-            if (_token.AmILastAdminWithUsers(assessmentId))
+            if (await _token.AmILastAdminWithUsers(assessmentId))
             {
                 return Ok(false);
             }

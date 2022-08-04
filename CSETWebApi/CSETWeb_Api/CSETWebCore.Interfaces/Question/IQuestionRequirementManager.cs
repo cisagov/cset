@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 
@@ -20,7 +21,7 @@ namespace CSETWebCore.Interfaces.Question
         string GetApplicationMode(int assessmentId);
         int StoreComponentAnswer(Answer answer);
         int StoreAnswer(Answer answer);
-        void BuildComponentsResponse(QuestionResponse resp);
+        Task BuildComponentsResponse(QuestionResponse resp);
         void BuildOverridesOnly(QuestionResponse resp);
         void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname);
 

@@ -47,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/standards")]
         public async Task<IActionResult> GetStandards()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetStandards(assessmentId));
         }
 
@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/standard")]
         public async Task<IActionResult> PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
 
@@ -71,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/basicStandard")]
         public async Task<IActionResult> PersistDefaultSelectedStandards()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistDefaultSelectedStandard(assessmentId));
         }
 
@@ -82,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/standard/IsFramework")]
         public async Task<IActionResult> GetFrameworkSelected()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetFramework(assessmentId));
         }
 
@@ -93,7 +93,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/standard/IsACET")]
         public async Task<IActionResult> GetACETSelected()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetACET(assessmentId));
         }
     }

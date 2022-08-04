@@ -11,42 +11,42 @@ namespace CSETWebCore.Interfaces.Reports
     public interface IReportsDataBusiness
     {
         void SetReportsAssessmentId(int assessmentId);
-        List<MatRelevantAnswers> GetMaturityDeficiencies();
-        List<MatRelevantAnswers> GetCommentsList();
-        List<MatRelevantAnswers> GetMarkedForReviewList();
-        List<MatRelevantAnswers> GetAlternatesList();
-        List<MatRelevantAnswers> GetQuestionsList();
-        List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
-        List<string> GetDomains();
+        Task<List<MatRelevantAnswers>> GetMaturityDeficiencies();
+        Task<List<MatRelevantAnswers>> GetCommentsList();
+        Task<List<MatRelevantAnswers>> GetMarkedForReviewList();
+        Task<List<MatRelevantAnswers>> GetAlternatesList();
+        Task<List<MatRelevantAnswers>> GetQuestionsList();
+        Task<List<MatAnsweredQuestionDomain>> GetAnsweredQuestionList();
+        Task<List<string>> GetDomains();
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers);
 
-        List<BasicReportData.RequirementControl> GetControls(string applicationMode);
-        List<List<DiagramZones>> GetDiagramZones();
-        List<usp_getFinancialQuestions_Result> GetFinancialQuestions();
-        List<StandardQuestions> GetQuestionsForEachStandard();
-        List<ComponentQuestion> GetComponentQuestions();
-        List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories();
+        Task<List<BasicReportData.RequirementControl>> GetControls(string applicationMode);
+        Task<List<List<DiagramZones>>> GetDiagramZones();
+        Task<List<usp_getFinancialQuestions_Result>> GetFinancialQuestions();
+        Task<List<StandardQuestions>> GetQuestionsForEachStandard();
+        Task<List<ComponentQuestion>> GetComponentQuestions();
+        Task<List<usp_GetOverallRankedCategoriesPage_Result>> GetTop5Categories();
         Task<List<RankedQuestions>> GetTop5Questions();
-        List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
-        List<QuestionsWithComments> GetQuestionsWithComments();
-        List<QuestionsMarkedForReview> GetQuestionsMarkedForReview();
+        Task<List<QuestionsWithAltJust>> GetQuestionsWithAlternateJustification();
+        Task<List<QuestionsWithComments>> GetQuestionsWithComments();
+        Task<List<QuestionsMarkedForReview>> GetQuestionsMarkedForReview();
 
         Task<List<RankedQuestions>> GetRankedQuestions();
-        List<DocumentLibraryTable> GetDocumentLibrary();
-        BasicReportData.OverallSALTable GetNistSals();
-        List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes();
-        BasicReportData.OverallSALTable GetSals();
-        BasicReportData.INFORMATION GetInformation();
-        List<Individual> GetFindingIndividuals();
-        GenSALTable GetGenSals();
-        MaturityReportData.MaturityModel GetBasicMaturityModel();
-        List<MaturityReportData.MaturityModel> GetMaturityModelData();
+        Task<List<DocumentLibraryTable>> GetDocumentLibrary();
+        Task<BasicReportData.OverallSALTable> GetNistSals();
+        Task<List<BasicReportData.CNSSSALJustificationsTable>> GetNistInfoTypes();
+        Task<BasicReportData.OverallSALTable> GetSals();
+        Task<BasicReportData.INFORMATION> GetInformation();
+        Task<List<Individual>> GetFindingIndividuals();
+        Task<GenSALTable> GetGenSals();
+        Task<MaturityReportData.MaturityModel> GetBasicMaturityModel();
+        Task<List<MaturityReportData.MaturityModel>> GetMaturityModelData();
         string FormatName(string firstName, string lastName);
 
-        IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
+        Task<IEnumerable<CONFIDENTIAL_TYPE>> GetConfidentialTypes();
     }
 }

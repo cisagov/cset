@@ -29,7 +29,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/analyticsMaturityDashboard")]
         public async Task<List<AnalyticsMinMaxAvgMedianByGroup>> getMaturityDashboardData([FromQuery] int maturity_model_id, int? sectorId, int? industryId)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return _analytics.getMaturityDashboardData(maturity_model_id, sectorId, industryId);
 
         }

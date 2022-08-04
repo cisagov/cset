@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -14,6 +15,7 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -47,7 +49,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int currentUserId, string workflow)
+        public async Task<AssessmentDetail> CreateNewAssessment(int currentUserId, string workflow)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
@@ -75,7 +77,7 @@ namespace CSETWebCore.Business.Assessment
             }
 
             // Commit the new assessment
-            int assessment_id = SaveAssessmentDetail(0, newAssessment);
+            int assessment_id = await SaveAssessmentDetail(0, newAssessment);
             newAssessment.Id = assessment_id;
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
@@ -98,14 +100,14 @@ namespace CSETWebCore.Business.Assessment
             }
 
 
-            CreateIrpHeaders(assessment_id);
+            await CreateIrpHeaders(assessment_id);
 
             return newAssessment;
         }
 
 
 
-        public AssessmentDetail CreateNewAssessmentForImport(int currentUserId)
+        public async Task<AssessmentDetail> CreateNewAssessmentForImport(int currentUserId)
         {
             DateTime nowUTC = DateTime.Now;
             AssessmentDetail newAssessment = new AssessmentDetail
@@ -118,7 +120,7 @@ namespace CSETWebCore.Business.Assessment
             };
 
             // Commit the new assessment
-            int assessment_id = SaveAssessmentDetail(0, newAssessment);
+            int assessment_id = await SaveAssessmentDetail(0, newAssessment);
             newAssessment.Id = assessment_id;
 
 
@@ -132,11 +134,9 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId)
-        {
-            List<usp_Assessments_For_UserResult> list = new List<usp_Assessments_For_UserResult>();
-            list = _context.usp_AssessmentsForUser(userId).ToList();
-
+        public async Task<IEnumerable<usp_Assessments_For_UserResult>> GetAssessmentsForUser(int userId)
+        {            
+            var list = await _context.usp_AssessmentsForUser(userId);
             return list;
         }
 
@@ -145,16 +145,14 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId)
-        {
-            List<usp_Assessments_Completion_For_UserResult> list = new List<usp_Assessments_Completion_For_UserResult>();
-            list = _context.usp_AssessmentsCompletionForUser(userId).ToList();
-
+        public async Task<IEnumerable<usp_Assessments_Completion_For_UserResult>> GetAssessmentsCompletionForUser(int userId)
+        {            
+            var list = await _context.usp_AssessmentsCompletionForUser(userId);
             return list;
         }
 
 
-        public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
+        public async Task<AnalyticsAssessment> GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
 
@@ -187,8 +185,9 @@ namespace CSETWebCore.Business.Assessment
 
 
 
-            var result = query.ToList().FirstOrDefault();
-            var modeResult = query.Join(_context.STANDARD_SELECTION, x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
+            var resultList = await query.ToListAsync();
+            var result = resultList.FirstOrDefault();
+            var modeResult = resultList.Join(_context.STANDARD_SELECTION, x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
                 .FirstOrDefault();
 
             if (result != null)
@@ -215,11 +214,11 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public AssessmentDetail GetAssessmentDetail(int assessmentId, string token = "")
+        public async Task<AssessmentDetail> GetAssessmentDetail(int assessmentId, string token = "")
         {
             AssessmentDetail assessment = new AssessmentDetail();
             if (!string.IsNullOrEmpty(token))
-                _tokenManager.Init(token);
+                await _tokenManager.Init(token);
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             var query = (from ii in _context.INFORMATION
@@ -227,9 +226,11 @@ namespace CSETWebCore.Business.Assessment
                          where ii.Id == assessmentId
                          select new { ii, aa });
 
-            var result = query.ToList().FirstOrDefault();
-            if (result != null)
+            var resultList = await query.ToListAsync();
+            if (resultList.Any())
             {
+
+                var result = resultList.FirstOrDefault();
                 assessment.Id = result.aa.Assessment_Id;
                 assessment.AssessmentName = result.ii.Assessment_Name;
                 assessment.AssessmentDate = result.aa.Assessment_Date;
@@ -248,7 +249,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.UseStandard = result.aa.UseStandard;
                 if (assessment.UseStandard)
                 {
-                    GetSelectedStandards(ref assessment);
+                    assessment = await GetSelectedStandards(assessment);
                 }
 
                 assessment.UseDiagram = result.aa.UseDiagram;
@@ -256,7 +257,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.UseMaturity = result.aa.UseMaturity;
                 if (assessment.UseMaturity)
                 {
-                    GetMaturityModelDetails(ref assessment);
+                    assessment = await GetMaturityModelDetails(assessment);
                 }
 
                 assessment.Workflow = result.ii.Workflow;
@@ -277,7 +278,7 @@ namespace CSETWebCore.Business.Assessment
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
-                    DetermineFeaturesFromData(ref assessment);
+                    assessment = await DetermineFeaturesFromData(assessment);
                 }
 
                 bool defaultAcet = (app_code == "ACET");
@@ -286,7 +287,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.BaselineAssessmentId = result.ii.Baseline_Assessment_Id;
                 if (assessment.BaselineAssessmentId != null)
                 {
-                    var baseInfo = _context.INFORMATION.FirstOrDefault(x => x.Id == assessment.BaselineAssessmentId);
+                    var baseInfo = await _context.INFORMATION.FirstOrDefaultAsync(x => x.Id == assessment.BaselineAssessmentId);
                     assessment.BaselineAssessmentName = baseInfo.Assessment_Name;
                 }
 
@@ -316,11 +317,11 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public DateTime GetLastModifiedDateUtc(int assessmentId)
+        public async Task<DateTime> GetLastModifiedDateUtc(int assessmentId)
         {
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
-            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             if (assessment != null)
             {
                 return assessment.LastModifiedDate ?? DateTime.UtcNow;
@@ -334,11 +335,13 @@ namespace CSETWebCore.Business.Assessment
         /// 
         /// </summary>
         /// <returns></returns>
-        public void GetMaturityModelDetails(ref AssessmentDetail assessment)
+        public async Task<AssessmentDetail> GetMaturityModelDetails(AssessmentDetail assessment)
         {
             int assessmentId = assessment.Id;
 
-            assessment.MaturityModel = _maturityBusiness.GetMaturityModel(assessmentId);
+            assessment.MaturityModel = await _maturityBusiness.GetMaturityModel(assessmentId);
+
+            return assessment;
         }
 
 
@@ -347,15 +350,17 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessment"></param>
         /// <param name="db"></param>
-        public void GetSelectedStandards(ref AssessmentDetail assessment)
+        public async Task<AssessmentDetail> GetSelectedStandards(AssessmentDetail assessment)
         {
             var assessmentId = assessment.Id;
-            var standardsList = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).ToList();
+            var standardsList = await _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected).ToListAsync();
             assessment.Standards = new List<string>();
             foreach (var s in standardsList)
             {
                 assessment.Standards.Add(s.Set_Name);
             }
+
+            return assessment;
         }
 
 
@@ -364,41 +369,43 @@ namespace CSETWebCore.Business.Assessment
         /// created prior to incorporating features into the assessment data model.
         /// </summary>
         /// <param name="assessment"></param>
-        public void DetermineFeaturesFromData(ref AssessmentDetail assessment)
+        public async Task<AssessmentDetail> DetermineFeaturesFromData(AssessmentDetail assessment)
         {
             var a = assessment;
 
-            var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == a.Id);
+            var dbAssessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(x => x.Assessment_Id == a.Id);
 
-            if (_context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == a.Id))
+            if (await _context.AVAILABLE_STANDARDS.AnyAsync(x => x.Assessment_Id == a.Id))
             {
                 assessment.UseStandard = true;
                 dbAssessment.UseStandard = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
 
-            if (_context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
+            if (await _context.ASSESSMENT_DIAGRAM_COMPONENTS.AnyAsync(x => x.Assessment_Id == a.Id))
             {
 
                 assessment.UseDiagram = _diagramManager.HasDiagram(a.Id);
                 dbAssessment.UseDiagram = assessment.UseDiagram;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
 
             // determine if there are maturity answers and attach maturity models
-            var maturityAnswers = _context.ANSWER.Where(x => x.Assessment_Id == a.Id && x.Question_Type.ToLower() == "maturity").ToList();
+            var maturityAnswers = await _context.ANSWER.Where(x => x.Assessment_Id == a.Id && x.Question_Type.ToLower() == "maturity").ToListAsync();
             if (maturityAnswers.Count > 0)
             {
                 assessment.UseMaturity = true;
                 dbAssessment.UseMaturity = true;
 
-                if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
+                if (! await _context.AVAILABLE_MATURITY_MODELS.AnyAsync(x => x.Assessment_Id == a.Id))
                 {
 
                     // determine the maturity models represented by the questions that have been answered
-                    var qqq = _context.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
+                    var qqq = await _context.MATURITY_QUESTIONS.Where(q => maturityAnswers
+                    .Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToListAsync();
+
                     var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
                     foreach (var modelId in maturityModelIds)
                     {
@@ -409,15 +416,17 @@ namespace CSETWebCore.Business.Assessment
                             Selected = true
                         };
 
-                        _context.AVAILABLE_MATURITY_MODELS.Add(mm);
+                        await _context.AVAILABLE_MATURITY_MODELS.AddAsync(mm);
 
                         // get the newly-attached model for the response
-                        assessment.MaturityModel = _maturityBusiness.GetMaturityModel(a.Id);
+                        assessment.MaturityModel = await _maturityBusiness.GetMaturityModel(a.Id);
                     }
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
+
+            return a;
         }
 
 
@@ -428,18 +437,18 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessment"></param>
         /// <returns></returns>
-        public int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
+        public async Task<int> SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
         {            
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             // Add or update the ASSESSMENTS record
-            var dbAssessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var dbAssessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
 
             if (dbAssessment == null)
             {
                 dbAssessment = new ASSESSMENTS();
-                _context.ASSESSMENTS.Add(dbAssessment);
-                _context.SaveChanges();
+                await _context.ASSESSMENTS.AddAsync(dbAssessment);
+                await _context.SaveChangesAsync();
                 assessmentId = dbAssessment.Assessment_Id;
             }
 
@@ -461,15 +470,24 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
+            /*
+             //TODO:  create a base class and inject the DbContext class into it and create async Update method: 
+            EntityBaseRepository<T>:IEntityBaseRepository<T> where T: class, IEntityBase, new()  
+             public async Task UpdateAsync(int id, T entity)
+             {
+                EntityEntry entityEntry = _context.Entry<T>(entity);
+                entityEntry.State = EntityState.Modified;
+             }
+             
+             */
+            _context.ASSESSMENTS.Update(dbAssessment);//i think this will get ignored by EF TBH...
+            await _context.SaveChangesAsync();
 
-            _context.ASSESSMENTS.Update(dbAssessment);
-            _context.SaveChanges();
+
+            var user = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == dbAssessment.AssessmentCreatorId);
 
 
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-
-
-            var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            var dbInformation = await _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefaultAsync();
             if (dbInformation == null)
             {
                 dbInformation = new INFORMATION()
@@ -477,8 +495,8 @@ namespace CSETWebCore.Business.Assessment
                     Id = assessmentId,
                     Assessment_Name = ""
                 };
-                _context.INFORMATION.Add(dbInformation);
-                _context.SaveChanges();
+                await _context.INFORMATION.AddAsync(dbInformation);
+                await _context.SaveChangesAsync();
             }
 
             if (app_code == "ACET")
@@ -501,21 +519,21 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
 
-            _context.INFORMATION.Update(dbInformation);
-            _context.SaveChanges();
+            _context.INFORMATION.Update(dbInformation);//I think EF will ignore this TBH (see above TODO in case)
+            await _context.SaveChangesAsync();
 
 
             // persist maturity data
             if (assessment.UseMaturity)
             {
-                _maturityBusiness.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel?.ModelName);
+                await _maturityBusiness.PersistSelectedMaturityModel(assessmentId, assessment.MaturityModel?.ModelName);
             }
             else
             {
-                _maturityBusiness.ClearMaturityModel(assessmentId);
+               await _maturityBusiness.ClearMaturityModel(assessmentId);
             }
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
         }
@@ -525,19 +543,20 @@ namespace CSETWebCore.Business.Assessment
         /// Create new headers for IRP calculations
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void CreateIrpHeaders(int assessmentId)
+        public async Task CreateIrpHeaders(int assessmentId)
         {
             int idOffset = 1;
 
             // now just properties on an Assessment
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            ASSESSMENTS assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
 
-            foreach (IRP_HEADER header in _context.IRP_HEADER)
+            var headerList = await _context.IRP_HEADER.ToListAsync();
+            foreach (IRP_HEADER header in headerList)
             {
                 IRPSummary summary = new IRPSummary();
                 summary.HeaderText = header.Header;
 
-                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h =>
+                ASSESSMENT_IRP_HEADER headerInfo = await _context.ASSESSMENT_IRP_HEADER.FirstOrDefaultAsync(h =>
                     h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id &&
                     h.ASSESSMENT.Assessment_Id == assessmentId);
 
@@ -548,23 +567,23 @@ namespace CSETWebCore.Business.Assessment
                     IRP_HEADER = header
                 };
                 headerInfo.ASSESSMENT = assessment;
-                if (_context.ASSESSMENT_IRP_HEADER.Count() == 0)
+                if (await _context.ASSESSMENT_IRP_HEADER.CountAsync() == 0)
                 {
                     headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;
                 }
                 else
                 {
                     headerInfo.HEADER_RISK_LEVEL_ID =
-                        _context.ASSESSMENT_IRP_HEADER.Max(i => i.HEADER_RISK_LEVEL_ID) + idOffset;
+                        await _context.ASSESSMENT_IRP_HEADER.MaxAsync(i => i.HEADER_RISK_LEVEL_ID) + idOffset;
                     idOffset++;
                 }
 
                 summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
 
-                _context.ASSESSMENT_IRP_HEADER.Add(headerInfo);
+                await _context.ASSESSMENT_IRP_HEADER.AddAsync(headerInfo);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -582,10 +601,10 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
+        public async Task<List<DEMOGRAPHICS_ORGANIZATION_TYPE>> GetOrganizationTypes()
         {
-            var orgType = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
-            orgType = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            
+            var orgType = await _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToListAsync();
 
             return orgType;
         }
@@ -596,12 +615,12 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public bool IsCurrentUserOnAssessment(int assessmentId)
+        public async Task<bool> IsCurrentUserOnAssessment(int assessmentId)
         {
             int currentUserId = _tokenManager.GetUserId();
 
-            int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
-            && ac.UserId == currentUserId).Count();
+            int countAC = await _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
+            && ac.UserId == currentUserId).CountAsync();
 
             return (countAC > 0);
         }
@@ -611,9 +630,9 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public ASSESSMENTS GetAssessmentById(int assessmentId)
+        public async Task<ASSESSMENTS> GetAssessmentById(int assessmentId)
         {
-            return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            return await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
         }
 
         //public void GetMaturityDetails(ref AssessmentDetail assessment)
@@ -635,9 +654,9 @@ namespace CSETWebCore.Business.Assessment
         /// Get all of the available icon paths for assessment selection cards
         /// </summary>
         /// <returns></returns>
-        public List<ASSESSMENT_ICONS> GetAllAssessmentIcons() 
+        public async Task<List<ASSESSMENT_ICONS>> GetAllAssessmentIcons() 
         {
-            return _context.ASSESSMENT_ICONS.ToList();
+            return await _context.ASSESSMENT_ICONS.ToListAsync();
         }
     }
 }

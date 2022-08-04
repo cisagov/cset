@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/securityplan")]
         public async Task<IActionResult> GetSecurityPlan()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
 
@@ -63,13 +63,13 @@ namespace CSETWebCore.Api.Controllers
                 data.ApplicationMode = ss.Application_Mode;
             }
 
-            data.ControlList = _report.GetControls(data.ApplicationMode);
-            data.genSalTable = _report.GetGenSals();
-            data.information = _report.GetInformation();
-            data.salTable = _report.GetSals();
-            data.nistTypes = _report.GetNistInfoTypes();
-            data.nistSalTable = _report.GetNistSals();
-            data.Zones = _report.GetDiagramZones();
+            data.ControlList = await _report.GetControls(data.ApplicationMode);
+            data.genSalTable = await _report.GetGenSals();
+            data.information = await _report.GetInformation();
+            data.salTable = await _report.GetSals();
+            data.nistTypes = await _report.GetNistInfoTypes();
+            data.nistSalTable = await _report.GetNistSals();
+            data.Zones = await _report.GetDiagramZones();
             return Ok(data);
         }
 
@@ -78,14 +78,14 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/executive")]
         public async Task<IActionResult> GetExecutive()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
-            data.information = _report.GetInformation();
-            data.salTable = _report.GetSals();
-            data.top5Categories = _report.GetTop5Categories();
+            data.genSalTable = await  _report.GetGenSals();
+            data.information = await _report.GetInformation();
+            data.salTable = await _report.GetSals();
+            data.top5Categories = await _report.GetTop5Categories();
             data.top5Questions = await _report.GetTop5Questions();
             return Ok(data);
         }
@@ -100,12 +100,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/executivematurity")]
         public async Task<IActionResult> GetExecutiveMaturity()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData data = new MaturityReportData(_context);
             data.MaturityModels = new List<MaturityReportData.MaturityModel>();
-            data.MaturityModels.Add(_report.GetBasicMaturityModel());
-            data.information = _report.GetInformation();
+            data.MaturityModels.Add(await _report.GetBasicMaturityModel());
+            data.information = await _report.GetInformation();
 
             return Ok(data);
         }
@@ -115,12 +115,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/executivecmmc")]
         public async Task<IActionResult> GetCMMCReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData data = new MaturityReportData(_context);
             data.AnalyzeMaturityData();
-            data.MaturityModels = _report.GetMaturityModelData();
-            data.information = _report.GetInformation();
+            data.MaturityModels = await _report.GetMaturityModelData();
+            data.information = await _report.GetInformation();
             data.AnalyzeMaturityData();
 
             return Ok(data);
@@ -130,12 +130,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/sitesummarycmmc")]
         public async Task<IActionResult> GetSiteSummaryCMMCReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData data = new MaturityReportData(_context);
 
-            data.MaturityModels = _report.GetMaturityModelData();
-            data.information = _report.GetInformation();
+            data.MaturityModels = await _report.GetMaturityModelData();
+            data.information = await _report.GetInformation();
             data.AnalyzeMaturityData();
 
 
@@ -162,7 +162,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/rramain")]
         public async Task<IActionResult> GetRRAMainReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
@@ -170,8 +170,8 @@ namespace CSETWebCore.Api.Controllers
 
             MaturityReportData data = new MaturityReportData(_context);
             data.AnalyzeMaturityData();
-            data.MaturityModels = reportsDataManager.GetMaturityModelData();
-            data.information = reportsDataManager.GetInformation();
+            data.MaturityModels = await reportsDataManager.GetMaturityModelData();
+            data.information = await reportsDataManager.GetInformation();
             data.AnalyzeMaturityData();
 
             return Ok(data);
@@ -182,7 +182,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/rradetail")]
         public async Task<IActionResult> GetRRADetailReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
@@ -206,14 +206,14 @@ namespace CSETWebCore.Api.Controllers
         {
             var questions = new List<MaturityQuestion>();
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true);
+            var resp = await mm.GetMaturityQuestions(assessmentId, "", true);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            var dict = mm.GetReferences(assessmentId);
+            var dict = await mm.GetReferences(assessmentId);
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
@@ -242,7 +242,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/vadrmain")]
         public async Task<IActionResult> GetVADRMainReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
@@ -250,8 +250,8 @@ namespace CSETWebCore.Api.Controllers
 
             MaturityReportData data = new MaturityReportData(_context);
             data.AnalyzeMaturityData();
-            data.MaturityModels = reportsDataManager.GetMaturityModelData();
-            data.information = reportsDataManager.GetInformation();
+            data.MaturityModels = await reportsDataManager.GetMaturityModelData();
+            data.information = await reportsDataManager.GetInformation();
             data.AnalyzeMaturityData();
 
             return Ok(data);
@@ -262,7 +262,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/vadrdetail")]
         public async Task<IActionResult> GetVADRDetailReport()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
@@ -286,11 +286,11 @@ namespace CSETWebCore.Api.Controllers
         {
             var questions = new List<MaturityQuestion>();
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true);
+            var resp = await mm.GetMaturityQuestions(assessmentId, "", true);
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);
@@ -327,13 +327,13 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/getAltList")]
         public async Task<IActionResult> GetAltList()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             var data = new BasicReportData();
-            data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
-            data.MaturityQuestionsWithAlt = _report.GetAlternatesList();
-            data.information = _report.GetInformation();
+            data.QuestionsWithAltJust = await _report.GetQuestionsWithAlternateJustification();
+            data.MaturityQuestionsWithAlt = await _report.GetAlternatesList();
+            data.information = await _report.GetInformation();
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -351,12 +351,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/discoveries")]
         public async Task<IActionResult> GetDiscoveries()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.information = _report.GetInformation();
-            data.Individuals = _report.GetFindingIndividuals();
+            data.information = await _report.GetInformation();
+            data.Individuals = await _report.GetFindingIndividuals();
             return Ok(data);
         }
 
@@ -365,21 +365,21 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/sitesummary")]
         public async Task<IActionResult> GetSiteSummary()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
-            data.information = _report.GetInformation();
-            data.salTable = _report.GetSals();
-            data.nistTypes = _report.GetNistInfoTypes();
-            data.nistSalTable = _report.GetNistSals();
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.genSalTable = await _report.GetGenSals();
+            data.information = await _report.GetInformation();
+            data.salTable = await _report.GetSals();
+            data.nistTypes = await _report.GetNistInfoTypes();
+            data.nistSalTable = await _report.GetNistSals();
+            data.DocumentLibraryTable = await _report.GetDocumentLibrary();
             data.RankedQuestionsTable = await _report.GetRankedQuestions();
-            data.FinancialQuestionsTable = _report.GetFinancialQuestions();
-            data.QuestionsWithComments = _report.GetQuestionsWithComments();
-            data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
-            data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
+            data.FinancialQuestionsTable = await _report.GetFinancialQuestions();
+            data.QuestionsWithComments = await _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = await _report.GetQuestionsMarkedForReview();
+            data.QuestionsWithAltJust = await _report.GetQuestionsWithAlternateJustification();
             return Ok(data);
         }
 
@@ -388,22 +388,22 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/detail")]
         public async Task<IActionResult> GetDetail()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
-            data.information = _report.GetInformation();
-            data.salTable = _report.GetSals();
-            data.nistTypes = _report.GetNistInfoTypes();
-            data.nistSalTable = _report.GetNistSals();
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.genSalTable = await _report.GetGenSals();
+            data.information = await _report.GetInformation();
+            data.salTable = await _report.GetSals();
+            data.nistTypes = await _report.GetNistInfoTypes();
+            data.nistSalTable = await _report.GetNistSals();
+            data.DocumentLibraryTable = await _report.GetDocumentLibrary();
             data.RankedQuestionsTable = await _report.GetRankedQuestions();
-            data.QuestionsWithComments = _report.GetQuestionsWithComments();
-            data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
-            data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
-            data.StandardsQuestions = _report.GetQuestionsForEachStandard();
-            data.ComponentQuestions = _report.GetComponentQuestions();
+            data.QuestionsWithComments = await _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = await _report.GetQuestionsMarkedForReview();
+            data.QuestionsWithAltJust = await _report.GetQuestionsWithAlternateJustification();
+            data.StandardsQuestions = await _report.GetQuestionsForEachStandard();
+            data.ComponentQuestions = await _report.GetComponentQuestions();
             return Ok(data);
         }
 
@@ -437,7 +437,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 _report.SetReportsAssessmentId(a.AssessmentId);
                 // Incorporate SAL values into response
-                var salTable = _report.GetSals();
+                var salTable = await _report.GetSals();
 
                 var entry = new BasicReportData.OverallSALTable();
                 response.SalList.Add(entry);
@@ -457,7 +457,7 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
+                var documentLibraryTable = await _report.GetDocumentLibrary();
                 foreach (var docEntry in documentLibraryTable)
                 {
                     docEntry.Alias = a.Alias;
@@ -501,7 +501,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 _report.SetReportsAssessmentId(a.AssessmentId);
                 // Incorporate SAL values into response
-                var salTable = _report.GetSals();
+                var salTable = await _report.GetSals();
 
                 var entry = new BasicReportData.OverallSALTable();
                 response.SalList.Add(entry);
@@ -521,7 +521,7 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
+                var documentLibraryTable = await _report.GetDocumentLibrary();
                 foreach (var docEntry in documentLibraryTable)
                 {
                     docEntry.Alias = a.Alias;
@@ -536,7 +536,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/getconfidentialtypes")]
         public async Task<IActionResult> GetConfidentialTypes()
         {
-            return Ok(_report.GetConfidentialTypes());
+            return Ok(await _report.GetConfidentialTypes());
         }
 
 
@@ -560,9 +560,9 @@ namespace CSETWebCore.Api.Controllers
 
         }
 
-        private void SetMode(string mode)
+        private async Task SetMode(string mode)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _question.SetQuestionAssessmentId(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
         }

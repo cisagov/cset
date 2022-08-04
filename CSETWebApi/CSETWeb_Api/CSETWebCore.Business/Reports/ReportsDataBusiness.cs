@@ -69,15 +69,16 @@ namespace CSETWebCore.Business.Reports
         /// Returns an unfiltered list of MatRelevantAnswers for the current assessment.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetQuestionsList()
+        public async Task<List<MatRelevantAnswers>> GetQuestionsList()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = await _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model)
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
             if (myModel == null)
             {
                 return new List<MatRelevantAnswers>();
             }
 
-            _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
+            await _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_LevelNavigation)
@@ -92,7 +93,7 @@ namespace CSETWebCore.Business.Reports
                             Mat = m
                         };
 
-            var responseList = query.ToList();
+            var responseList = await query.ToListAsync();
             var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
 
             // Set IsParentWithChildren property for all parent questions that have child questions
@@ -105,8 +106,10 @@ namespace CSETWebCore.Business.Reports
             }
 
             // if a maturity level is defined, only report on questions at or below that level
-            int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
-                && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
+            int? selectedLevel = await _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == myModel.Assessment_Id
+                && x.Level_Name == Constants.Constants.MaturityLevel)
+                .Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefaultAsync();
 
             if (selectedLevel != null && selectedLevel != 0)
             {
@@ -122,9 +125,11 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of MatRelevantAnswers that are considered deficient for the assessment.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMaturityDeficiencies()
+        public async Task<List<MatRelevantAnswers>> GetMaturityDeficiencies()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var myModel = await _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
             bool ignoreParentQuestions = false;
 
             // default answer values that are considered 'deficient'
@@ -163,7 +168,8 @@ namespace CSETWebCore.Business.Reports
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
-            var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
+            var questionsList = await GetQuestionsList();
+            var responseList = questionsList.Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
             // We don't consider parent questions that have children to be unanswered for certain maturity models
             // (i.e. for CRR, EDM since they just house the question extras)
@@ -181,9 +187,10 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of MatRelevantAnswers that contain comments.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetCommentsList()
+        public async Task<List<MatRelevantAnswers>> GetCommentsList()
         {
-            var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            var questionsList = await GetQuestionsList();
+            var responseList = questionsList.Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }
@@ -194,9 +201,9 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMarkedForReviewList()
+        public async Task<List<MatRelevantAnswers>> GetMarkedForReviewList()
         {
-            var questionList = GetQuestionsList();
+            var questionList = await GetQuestionsList();
             var responseList = questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
             return responseList;
         }
@@ -206,9 +213,10 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of MatRelevantAnswers that have been answered "A".
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetAlternatesList()
+        public async Task<List<MatRelevantAnswers>> GetAlternatesList()
         {
-            var responseList = GetQuestionsList().Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
+            var questionsList = await GetQuestionsList();
+            var responseList = questionsList.Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
             return responseList;
         }
 
@@ -218,23 +226,24 @@ namespace CSETWebCore.Business.Reports
         /// but could be used by other maturity models with some work.
         /// </summary>
         /// <returns></returns>
-        public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList()
+        public async Task<List<MatAnsweredQuestionDomain>> GetAnsweredQuestionList()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
 
-            var myModel = _context.AVAILABLE_MATURITY_MODELS
+            var myModel = await _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
-                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
 
-            var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+            var myMaturityLevels = await _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToListAsync();
 
+            var maturityBusinessObj = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             // get the target maturity level IDs
-            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
+            var targetRange = await maturityBusinessObj.GetMaturityRangeIds(_assessmentId);
 
-            var questions = _context.MATURITY_QUESTIONS.Where(q =>
+            var questions = await _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
-                && targetRange.Contains(q.Maturity_Level)).ToList();
+                && targetRange.Contains(q.Maturity_Level)).ToListAsync();
 
 
             // Get all MATURITY answers for the assessment
@@ -244,14 +253,14 @@ namespace CSETWebCore.Business.Reports
 
 
             // Get all subgroupings for this maturity model
-            var allGroupings = _context.MATURITY_GROUPINGS
+            var allGroupings = await _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToListAsync();
 
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
-            BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
+            BuildSubGroupings(questionGrouping, null, allGroupings, questions, await answers.ToListAsync());
 
             var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
@@ -350,16 +359,16 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of domains for the assessment.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetDomains()
+        public async Task<List<string>> GetDomains()
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS
+            var myModel = await _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
-                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
 
             // Get all domains for this maturity model
-            var domains = _context.MATURITY_GROUPINGS
+            var domains = await _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == myModel.model_id && x.Type_Id == 1).ToList();
+                .Where(x => x.Maturity_Model_Id == myModel.model_id && x.Type_Id == 1).ToListAsync();
 
             return domains.Select(d => d.Title).ToList();
         }
@@ -447,12 +456,12 @@ namespace CSETWebCore.Business.Reports
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
+        public async Task<List<BasicReportData.RequirementControl>> GetControls(string applicationMode)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
             _questionRequirement.InitializeManager(_assessmentId);
 
-            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+            await _context.FillEmptyQuestionsForAnalysis(_assessmentId);
 
             string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
 
@@ -460,7 +469,7 @@ namespace CSETWebCore.Business.Reports
             
             if (applicationMode == CSETWebCore.Business.Assessment.AssessmentMode.QUESTIONS_BASED_APPLICATION_MODE)
             {
-                var qQ = (from rs in _context.REQUIREMENT_SETS
+                var qQ = await (from rs in _context.REQUIREMENT_SETS
                           join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
                           join rl in _context.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
                           join s in _context.SETS on rs.Set_Name equals s.Set_Name
@@ -471,7 +480,7 @@ namespace CSETWebCore.Business.Reports
                           where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
                            && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
                           orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
-                          select new { r, rl, s, qu, a }).ToList();
+                          select new { r, rl, s, qu, a }).ToListAsync();
 
                 foreach (var q in qQ)
                 {
@@ -492,7 +501,7 @@ namespace CSETWebCore.Business.Reports
             }
             else
             {
-                var qR = (from rs in _context.REQUIREMENT_SETS
+                var qR = await (from rs in _context.REQUIREMENT_SETS
                           join r in _context.NEW_REQUIREMENT on rs.Requirement_Id equals r.Requirement_Id
                           join rl in _context.REQUIREMENT_LEVELS on r.Requirement_Id equals rl.Requirement_Id
                           join s in _context.SETS on rs.Set_Name equals s.Set_Name
@@ -503,7 +512,7 @@ namespace CSETWebCore.Business.Reports
                           where rl.Standard_Level == level && av.Selected == true && rl.Level_Type == "NST"
                            && av.Assessment_Id == _assessmentId && a.Assessment_Id == _assessmentId
                           orderby r.Standard_Category, r.Standard_Sub_Category, rs.Requirement_Sequence
-                          select new { r, rl, s, qu, a }).ToList();
+                          select new { r, rl, s, qu, a }).ToListAsync();
 
                 foreach (var q in qR)
                 {
@@ -578,12 +587,12 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<List<DiagramZones>> GetDiagramZones()
+        public async Task<List<List<DiagramZones>>> GetDiagramZones()
         {
-            var level = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var level = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
 
 
-            var rval1 = (from c in _context.ASSESSMENT_DIAGRAM_COMPONENTS
+            var rval1 = await (from c in _context.ASSESSMENT_DIAGRAM_COMPONENTS
                          join s in _context.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
                          where c.Assessment_Id == _assessmentId && c.Zone_Id == null
                          orderby s.Symbol_Name, c.label
@@ -593,9 +602,9 @@ namespace CSETWebCore.Business.Reports
                              label = c.label,
                              Zone_Name = "No Assigned Zone",
                              Universal_Sal_Level = level == null ? "Low" : level.Selected_Sal_Level
-                         }).ToList();
+                         }).ToListAsync();
 
-            var rval = (from c in _context.ASSESSMENT_DIAGRAM_COMPONENTS
+            var rval = await (from c in _context.ASSESSMENT_DIAGRAM_COMPONENTS
                         join z in _context.DIAGRAM_CONTAINER on c.Zone_Id equals z.Container_Id
                         join s in _context.COMPONENT_SYMBOLS on c.Component_Symbol_Id equals s.Component_Symbol_Id
                         where c.Assessment_Id == _assessmentId
@@ -606,19 +615,20 @@ namespace CSETWebCore.Business.Reports
                             label = c.label,
                             Zone_Name = z.Name,
                             Universal_Sal_Level = z.Universal_Sal_Level
-                        }).ToList();
+                        }).ToListAsync();
 
             return rval.Union(rval1).GroupBy(u => u.Zone_Name).Select(grp => grp.ToList()).ToList();
         }
 
 
-        public List<usp_getFinancialQuestions_Result> GetFinancialQuestions()
+        public async Task<List<usp_getFinancialQuestions_Result>> GetFinancialQuestions()
         {
-            return _context.usp_getFinancialQuestions(_assessmentId).ToList();
+            var financialQuestionsList = await _context.usp_getFinancialQuestions(_assessmentId);
+            return financialQuestionsList.ToList();
         }
 
 
-        public List<StandardQuestions> GetQuestionsForEachStandard()
+        public async Task<List<StandardQuestions>> GetQuestionsForEachStandard()
         {
             var dblist = from a in _context.AVAILABLE_STANDARDS
                          join b in _context.NEW_QUESTION_SETS on a.Set_Name equals b.Set_Name
@@ -641,7 +651,8 @@ namespace CSETWebCore.Business.Reports
             List<StandardQuestions> list = new List<StandardQuestions>();
             string lastshortname = "";
             List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
-            foreach (var a in dblist.ToList())
+            var simpleStandardQuestionsList = await dblist.ToListAsync();
+            foreach (var a in simpleStandardQuestionsList)
             {
                 if (a.ShortName != lastshortname)
                 {
@@ -666,15 +677,15 @@ namespace CSETWebCore.Business.Reports
         /// Questions for components in hidden layers are not included.
         /// </summary>
         /// <returns></returns>
-        public List<ComponentQuestion> GetComponentQuestions()
+        public async Task<List<ComponentQuestion>> GetComponentQuestions()
         {
             var l = new List<ComponentQuestion>();
 
             List<usp_getExplodedComponent> results = null;
 
-            _context.LoadStoredProc("[usp_getExplodedComponent]")
+            await _context.LoadStoredProc("[usp_getExplodedComponent]")
               .WithSqlParam("assessment_id", _assessmentId)
-              .ExecuteStoredProc((handler) =>
+              .ExecuteStoredProcAsync((handler) =>
               {
                   results = handler.ReadToList<usp_getExplodedComponent>().OrderBy(c => c.ComponentName).ThenBy(c => c.QuestionText).ToList();
               });
@@ -699,10 +710,11 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
+        public async Task<List<usp_GetOverallRankedCategoriesPage_Result>> GetTop5Categories()
         {
+            var overallRankedCategoriesPageList = await _context.usp_GetOverallRankedCategoriesPage(_assessmentId);
 
-            return _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+            return overallRankedCategoriesPageList.Take(5).ToList();
 
 
         }
@@ -719,7 +731,7 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of questions that have been answered "Alt"
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification()
+        public async Task<List<QuestionsWithAltJust>> GetQuestionsWithAlternateJustification()
         {
 
             var results = new List<QuestionsWithAltJust>();
@@ -739,15 +751,16 @@ namespace CSETWebCore.Business.Reports
             // include Question or Requirement contextual information
             if (requirementMode)
             {
-                var query = from ans in relevantAnswers
-                            join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
-                            select new QuestionsWithAltJust()
-                            {
-                                Answer = ans.Answer_Text,
-                                CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                AlternateJustification = ans.Alternate_Justification,
-                                Question = req.Requirement_Text
-                            };
+
+                var query = (from ans in relevantAnswers
+                                   join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                                   select new QuestionsWithAltJust()
+                                   {
+                                       Answer = ans.Answer_Text,
+                                       CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                       AlternateJustification = ans.Alternate_Justification,
+                                       Question = req.Requirement_Text
+                                   });
 
                 return query.ToList();
             }
@@ -775,7 +788,7 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of questions that have comments.
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsWithComments> GetQuestionsWithComments()
+        public async Task<List<QuestionsWithComments>> GetQuestionsWithComments()
         {
 
             var results = new List<QuestionsWithComments>();
@@ -796,7 +809,7 @@ namespace CSETWebCore.Business.Reports
             if (requirementMode)
             {
                 var query = from ans in relevantAnswers
-                            join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                            join req in await _context.NEW_REQUIREMENT.ToListAsync() on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsWithComments()
                             {
                                 Answer = ans.Answer_Text,
@@ -810,8 +823,8 @@ namespace CSETWebCore.Business.Reports
             else
             {
                 var query = from ans in relevantAnswers
-                            join q in _context.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
-                            join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                            join q in await _context.NEW_QUESTION.ToListAsync() on ans.Question_Or_Requirement_ID equals q.Question_Id
+                            join h in await _context.vQUESTION_HEADINGS.ToListAsync() on q.Heading_Pair_Id equals h.Heading_Pair_Id
                             orderby h.Question_Group_Heading
                             select new QuestionsWithComments()
                             {
@@ -830,7 +843,7 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of questions that have been marked for review.
         /// </summary>
         /// <returns></returns>
-        public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
+        public async Task<List<QuestionsMarkedForReview>> GetQuestionsMarkedForReview()
         {
 
             var results = new List<QuestionsMarkedForReview>();
@@ -851,7 +864,7 @@ namespace CSETWebCore.Business.Reports
             if (requirementMode)
             {
                 var query = from ans in relevantAnswers
-                            join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                            join req in await _context.NEW_REQUIREMENT.ToListAsync() on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsMarkedForReview()
                             {
                                 Answer = ans.Answer_Text,
@@ -864,8 +877,8 @@ namespace CSETWebCore.Business.Reports
             else
             {
                 var query = from ans in relevantAnswers
-                            join q in _context.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
-                            join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                            join q in await _context.NEW_QUESTION.ToListAsync() on ans.Question_Or_Requirement_ID equals q.Question_Id
+                            join h in await _context.vQUESTION_HEADINGS.ToListAsync() on q.Heading_Pair_Id equals h.Heading_Pair_Id
                             orderby h.Question_Group_Heading
                             select new QuestionsMarkedForReview()
                             {
@@ -906,10 +919,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<DocumentLibraryTable> GetDocumentLibrary()
+        public async Task<List<DocumentLibraryTable>> GetDocumentLibrary()
         {
             List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
-            var docs = from a in _context.DOCUMENT_FILE
+            var docs = from a in await _context.DOCUMENT_FILE.ToListAsync()
                        where a.Assessment_Id == _assessmentId
                        select a;
             foreach (var doc in docs)
@@ -925,13 +938,13 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public BasicReportData.OverallSALTable GetNistSals()
+        public async Task<BasicReportData.OverallSALTable> GetNistSals()
         {
             var manager = new NistSalBusiness(_context, _assessmentUtil);
             var sals = manager.CalculatedNist(_assessmentId);
             List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
-            var infos = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
-            Dictionary<string, string> typeToLevel = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToDictionary(x => x.CIA_Type, x => x.DropDownValueLevel);
+            var infos = await _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToListAsync();
+            Dictionary<string, string> typeToLevel = await _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToDictionaryAsync(x => x.CIA_Type, x => x.DropDownValueLevel);
 
             BasicReportData.OverallSALTable overallSALTable = new BasicReportData.OverallSALTable()
             {
@@ -954,10 +967,10 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes()
+        public async Task<List<BasicReportData.CNSSSALJustificationsTable>> GetNistInfoTypes()
         {
             List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
-            var infos = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
+            var infos = await _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToListAsync();
             foreach (CNSS_CIA_JUSTIFICATIONS info in infos)
             {
                 list.Add(new BasicReportData.CNSSSALJustificationsTable()
@@ -975,12 +988,12 @@ namespace CSETWebCore.Business.Reports
         /// Returns SAL CIA values for the assessment.
         /// </summary>
         /// <returns></returns>
-        public BasicReportData.OverallSALTable GetSals()
+        public async Task<BasicReportData.OverallSALTable> GetSals()
         {
-            var sals = (from a in _context.STANDARD_SELECTION
+            var sals = await (from a in _context.STANDARD_SELECTION
                         join b in _context.ASSESSMENT_SELECTED_LEVELS on a.Assessment_Id equals b.Assessment_Id
                         where a.Assessment_Id == _assessmentId
-                        select new { a, b }).ToList();
+                        select new { a, b }).ToListAsync();
 
             string OSV = "Low";
             string Q_CV = "Low";
@@ -1004,7 +1017,7 @@ namespace CSETWebCore.Business.Reports
             }
 
             // get active SAL type
-            var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+            var standardSelection = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
 
             return new BasicReportData.OverallSALTable()
             {
@@ -1021,9 +1034,9 @@ namespace CSETWebCore.Business.Reports
         /// Returns a block of data generally from the INFORMATION table plus a few others.
         /// </summary>
         /// <returns></returns>
-        public BasicReportData.INFORMATION GetInformation()
+        public async Task<BasicReportData.INFORMATION> GetInformation()
         {
-            INFORMATION infodb = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+            INFORMATION infodb = await _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefaultAsync();
 
             TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
             {
@@ -1032,21 +1045,21 @@ namespace CSETWebCore.Business.Reports
             var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
 
-            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            var assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(x => x.Assessment_Id == _assessmentId);
             info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
 
             // Primary Assessor
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            var user = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == assessment.AssessmentCreatorId);
             info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
 
 
             // Other Contacts
             info.Additional_Contacts = new List<string>();
-            var contacts = _context.ASSESSMENT_CONTACTS
+            var contacts = await _context.ASSESSMENT_CONTACTS
                 .Where(ac => ac.Assessment_Id == _assessmentId
                         && ac.UserId != assessment.AssessmentCreatorId)
                 .Include(u => u.User)
-                .ToList();
+                .ToListAsync();
             foreach (var c in contacts)
             {
                 info.Additional_Contacts.Add(FormatName(c.FirstName, c.LastName));
@@ -1074,9 +1087,9 @@ namespace CSETWebCore.Business.Reports
             }
 
             // Maturity properties
-            var myModel = _context.AVAILABLE_MATURITY_MODELS
+            var myModel = await _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
-                .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+                .FirstOrDefaultAsync(x => x.Assessment_Id == _assessmentId);
             if (myModel != null)
             {
                 info.QuestionsAlias = myModel.model.Questions_Alias;
@@ -1090,9 +1103,9 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of individuals assigned to findings/observations.
         /// </summary>
         /// <returns></returns>
-        public List<Individual> GetFindingIndividuals()
+        public async Task<List<Individual>> GetFindingIndividuals()
         {
-            var findings = (from a in _context.FINDING_CONTACT
+            var findings = await (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
                             join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mqs
@@ -1103,12 +1116,12 @@ namespace CSETWebCore.Business.Reports
                             join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id
                             where c.Assessment_Id == _assessmentId
                             orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                            select new { a, b, c, mq, r, d, i.Value }).ToList();
+                            select new { a, b, c, mq, r, d, i.Value }).ToListAsync();
 
 
             // Get any associated questions to get their display reference
-            var standardQuestions = GetQuestionsForEachStandard();
-            var componentQuestions = GetComponentQuestions();
+            var standardQuestions = await GetQuestionsForEachStandard();
+            var componentQuestions = await GetComponentQuestions();
 
 
             List<Individual> individualList = new List<Individual>();
@@ -1144,9 +1157,10 @@ namespace CSETWebCore.Business.Reports
                 rfind.QuestionIdentifier = qid;
                 rfind.QuestionText = qtxt;
 
+               
 
                 var othersList = (from a in f.b.FINDING_CONTACT
-                                  join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
+                                  join b in await _context.ASSESSMENT_CONTACTS.ToListAsync() on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
                                   select FormatName(b.FirstName, b.LastName)).ToList();
                 rfind.OtherContacts = string.Join(",", othersList);
 
@@ -1217,12 +1231,12 @@ namespace CSETWebCore.Business.Reports
         /// 
         /// </summary>
         /// <returns></returns>
-        public GenSALTable GetGenSals()
+        public async Task<GenSALTable> GetGenSals()
         {
-            var gensalnames = _context.GEN_SAL_NAMES.ToList();
-            var actualvalues = (from a in _context.GENERAL_SAL.Where(x => x.Assessment_Id == _assessmentId)
+            var gensalnames = await _context.GEN_SAL_NAMES.ToListAsync();
+            var actualvalues = await (from a in _context.GENERAL_SAL.Where(x => x.Assessment_Id == _assessmentId)
                                 join b in _context.GEN_SAL_WEIGHTS on new { a.Sal_Name, a.Slider_Value } equals new { b.Sal_Name, b.Slider_Value }
-                                select b).ToList();
+                                select b).ToListAsync();
             GenSALTable genSALTable = new GenSALTable();
             foreach (var a in gensalnames)
             {
@@ -1240,9 +1254,9 @@ namespace CSETWebCore.Business.Reports
         /// 
         /// </summary>
         /// <returns></returns>
-        public MaturityReportData.MaturityModel GetBasicMaturityModel()
+        public async Task<MaturityReportData.MaturityModel> GetBasicMaturityModel()
         {
-            var query = (
+            var query = await (
                 from amm in _context.AVAILABLE_MATURITY_MODELS
                 join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
@@ -1250,7 +1264,7 @@ namespace CSETWebCore.Business.Reports
                 where asl2.Level_Name == Constants.Constants.MaturityLevel
                 where amm.Assessment_Id == _assessmentId
                 select new { amm, mm, asl2 }
-                ).FirstOrDefault();
+                ).FirstOrDefaultAsync();
 
 
             var response = new MaturityReportData.MaturityModel()
@@ -1272,14 +1286,14 @@ namespace CSETWebCore.Business.Reports
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<MaturityReportData.MaturityModel> GetMaturityModelData()
+        public async Task<List<MaturityReportData.MaturityModel>> GetMaturityModelData()
         {
             List<MaturityQuestion> mat_questions = new List<MaturityQuestion>();
             List<MaturityReportData.MaturityModel> mat_models = new List<MaturityReportData.MaturityModel>();
 
-            _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
+            await _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
-            var query = (
+            var query = await (
                 from amm in _context.AVAILABLE_MATURITY_MODELS
                 join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 join mq in _context.MATURITY_QUESTIONS on mm.Maturity_Model_Id equals mq.Maturity_Model_Id
@@ -1290,7 +1304,7 @@ namespace CSETWebCore.Business.Reports
                 && ans.Is_Maturity == true
                 && asl.Level_Name == Constants.Constants.MaturityLevel
                 select new { amm, mm, mq, ans, asl }
-                ).ToList();
+                ).ToListAsync();
             var models = query.Select(x => new { x.mm, x.asl }).Distinct();
             foreach (var model in models)
             {
@@ -1366,9 +1380,10 @@ namespace CSETWebCore.Business.Reports
         /// Gets all confidential types for report generation
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
+        public async Task<IEnumerable<CONFIDENTIAL_TYPE>> GetConfidentialTypes()
         {
-            return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
+            return await _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder).ToListAsync();
+           
         }
     }
 }

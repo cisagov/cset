@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int asssessmentId = _token.AssessmentForUser();
+                int asssessmentId = await _token.AssessmentForUser();
 
                 TinyMapper.Bind<STANDARD_SELECTION, Sals>();
                 TinyMapper.Bind<Sals, STANDARD_SELECTION>();
@@ -101,7 +101,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int asssessmentId = _token.AssessmentForUser();
+                int asssessmentId = await _token.AssessmentForUser();
                 STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.FindAsync(asssessmentId);
                 if (sTANDARD_SELECTION != null)
                 {
@@ -127,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
             STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             if (sTANDARD_SELECTION != null)
@@ -228,7 +228,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SAL/NistData")]
         public async Task<NistModel> GetNistData()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             NistModel rvalue = new NistModel()
             {
@@ -244,7 +244,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SAL/NistData")]
         public async Task<Sals> PostNistData([FromBody] NistSalModel updateValue)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return nistSal.UpdateSalValue(updateValue, assessmentId);
 
@@ -255,7 +255,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SAL/NistDataQuestions")]
         public async Task<Sals> PostNistDataQuestions([FromBody] NistQuestionsAnswers updateValue)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return nistSal.SaveNistQuestions(assessmentId, updateValue);
         }
@@ -264,7 +264,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SAL/NistDataSpecialFactor")]
         public async Task<Sals> PostNistDataSpecialFactor([FromBody] NistSpecialFactor updateValue)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
         }

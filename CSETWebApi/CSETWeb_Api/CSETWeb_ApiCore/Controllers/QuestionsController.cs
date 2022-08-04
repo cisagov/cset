@@ -81,20 +81,20 @@ namespace CSETWebCore.Api.Controllers
                 group = "*";
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string applicationMode = await GetApplicationMode(assessmentId);
 
 
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-                QuestionResponse resp = qb.GetQuestionList(group);
+                QuestionResponse resp = await qb.GetQuestionList(group);
                 return Ok(resp);
             }
             else
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                QuestionResponse resp = rb.GetRequirementsList();
+                QuestionResponse resp = await rb.GetRequirementsList();
                 return Ok(resp);
             }
         }
@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetComponentQuestionsList(string group)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = manager.GetResponse();
+            QuestionResponse resp = await manager.GetResponse();
             return Ok(resp);
         }
 
@@ -135,7 +135,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SetMode")]
         public async Task<IActionResult> SetMode([FromQuery] string mode)
         {
-            _questionRequirement.InitializeManager(_token.AssessmentForUser());
+            _questionRequirement.InitializeManager(await _token.AssessmentForUser());
             _questionRequirement.SetApplicationMode(mode);
             return Ok();
         }
@@ -148,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetMode")]
         public async Task<IActionResult> GetMode()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             var appMode = await GetApplicationMode(assessmentId);
             string mode = appMode.Trim().Substring(0, 1);
@@ -209,7 +209,7 @@ namespace CSETWebCore.Api.Controllers
                     answer.QuestionType = "Question";
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             var appMode = await GetApplicationMode(assessmentId);
             string applicationMode = appMode;
 
@@ -250,7 +250,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(0);
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
 
@@ -310,7 +310,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerSubcategory")]
         public async Task<IActionResult> StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _questionRequirement.AssessmentId = assessmentId;
 
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
@@ -329,7 +329,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerAllDiscoveries")]
         public async Task<IActionResult> AllDiscoveries([FromQuery] int Answer_Id)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var fm = new FindingsManager(_context, assessmentId);
             return Ok(fm.AllFindings(Answer_Id));
@@ -347,7 +347,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetFinding")]
         public async Task<IActionResult> GetFinding([FromQuery] int Answer_Id, [FromQuery] int Finding_id, [FromQuery] int Question_Id, [FromQuery] string QuestionType)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             if (Answer_Id == 0)
             {
@@ -396,7 +396,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/DeleteFinding")]
         public async Task<IActionResult> DeleteFinding([FromBody] int finding_Id)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             var fm = new FindingsManager(_context, assessmentId);
 
             var f = fm.GetFinding(finding_Id);
@@ -413,7 +413,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerSaveDiscovery")]
         public async Task<IActionResult> SaveDiscovery([FromBody] Finding finding)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             if (finding.IsFindingEmpty())
             {
@@ -439,7 +439,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             return Ok(manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id));
         }
@@ -454,7 +454,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerSaveComponentOverrides")]
         public async Task<IActionResult> SaveComponentOverride([FromQuery] String guid, [FromQuery] Boolean ShouldSave)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string applicationMode = await GetApplicationMode(assessmentId);
 
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
@@ -527,7 +527,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
-            return rm.SaveAssessmentParameter(token.Id, token.Substitution);
+            return await rm.SaveAssessmentParameter(token.Id, token.Substitution);
         }
 
 
@@ -540,7 +540,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
-            return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
+            return await rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
     }
 }

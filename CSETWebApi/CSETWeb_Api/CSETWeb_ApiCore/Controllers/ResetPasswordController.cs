@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
                     Password = changePass.CurrentPassword
                 };
 
-                LoginResponse resp = _userAuthentication.Authenticate(login);
+                LoginResponse resp = await _userAuthentication.Authenticate(login);
                 if (resp == null)
                 {
                     return BadRequest("Current password is invalid. Try again or request a new temporary password.");

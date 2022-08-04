@@ -56,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModel")]
         public async Task<IActionResult> GetMaturityModel()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModel")]
         public async Task<IActionResult> SetMaturityModel(string modelName)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
@@ -82,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModel/DomainRemarks")]
         public async Task<IActionResult> GetDomainRemarks()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
         }
 
@@ -94,7 +94,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModel/DomainRemarks")]
         public async Task<IActionResult> SetDomainRemarks([FromBody] MaturityDomainRemarks remarks)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
             return Ok();
         }
@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityLevel")]
         public async Task<IActionResult> GetMaturityLevel()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityLevel(assessmentId));
         }
 
@@ -121,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityLevel")]
         public async Task<IActionResult> SetMaturityLevel([FromBody] int level)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
@@ -134,7 +134,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityQuestions")]
         public async Task<IActionResult> GetQuestions([FromQuery] string installationMode, bool fill)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
         }
@@ -143,7 +143,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/targetlevel")]
         public async Task<IActionResult> GetTargetLevel()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
         }
@@ -155,7 +155,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SPRSScore")]
         public async Task<IActionResult> GetSPRSScore()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
         }
@@ -165,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/results/compliancebylevel")]
         public async Task<IActionResult> GetComplianceByLevel()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByLevel(assessmentId));
         }
@@ -175,7 +175,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/results/compliancebydomain")]
         public async Task<IActionResult> GetComplianceByDomain()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByDomain(assessmentId));
         }
@@ -190,7 +190,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityStructure")]
         public async Task<IActionResult> GetQuestions([FromQuery] string domainAbbrev)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructure(assessmentId);
@@ -230,7 +230,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/questions")]
         public async Task<IActionResult> GetCisGroupingAndQuestions([FromQuery] int sectionId)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             var biz = new CisStructure(assessmentId, sectionId, _context);
             return Ok(biz.MyModel);
@@ -245,7 +245,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/mycisassessments")]
         public async Task<IActionResult> GetCisAssessments()
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
             var userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
@@ -262,7 +262,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/baseline")]
         public async Task<IActionResult> SaveBaseline([FromBody] int? baselineId)
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.SaveBaseline(assessmentId, baselineId);
@@ -278,7 +278,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/getDeficiency")]
         public async Task<IActionResult> GetDeficiency()
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetDeficiencyChartData();
             return Ok(chartData);
@@ -289,7 +289,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/sectionscoring")]
         public async Task<IActionResult> GetSectionScoring()
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetSectionScoringCharts();
             return Ok(chartData);
@@ -304,7 +304,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/cis/importsurvey")]
         public async Task<IActionResult> ImportSurvey([FromBody] Model.Cis.CisImportRequest request)
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
 
 
             // TODO: verify that the user has permission to both assessments
@@ -339,7 +339,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityAnswerCompletionRate")]
         public async Task<IActionResult> GetAnswerCompletionRate()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
         }
@@ -374,7 +374,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getMaturityResults")]
         public async Task<IActionResult> GetMaturityResults()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var maturity = manager.GetMaturityAnswers(assessmentId);
 
@@ -390,7 +390,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getMaturityRange")]
         public async Task<IActionResult> GetMaturityRange()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var maturityRange = manager.GetMaturityRange(assessmentId);
             return Ok(maturityRange);
@@ -405,7 +405,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getOverallIrpForMaturity")]
         public async Task<IActionResult> GetOverallIrp()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(new AcetBusiness(_context, _assessmentUtil, _adminTabBusiness).GetOverallIrp(assessmentId));
         }
 
@@ -418,7 +418,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getTargetBand")]
         public async Task<IActionResult> GetTargetBand()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetBandOnly(assessmentId));
         }
 
@@ -431,7 +431,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/setTargetBand")]
         public async Task<IActionResult> SetTargetBand([FromBody] bool value)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetTargetBandOnly(assessmentId, value);
             return Ok();
         }
@@ -448,13 +448,13 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int assessmentId = _tokenManager.AssessmentForUser();
+                int assessmentId = await _tokenManager.AssessmentForUser();
                 _reports.SetReportsAssessmentId(assessmentId);
 
                 var data = new MaturityBasicReportData
                 {
-                    DeficienciesList = _reports.GetMaturityDeficiencies(),
-                    Information = _reports.GetInformation()
+                    DeficienciesList = await _reports.GetMaturityDeficiencies(),
+                    Information = await _reports.GetInformation()
                 };
 
 
@@ -486,14 +486,14 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getCommentsMarked")]
         public async Task<IActionResult> GetCommentsMarked()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             _reports.SetReportsAssessmentId(assessmentId);
 
             MaturityBasicReportData data = new MaturityBasicReportData
             {
-                Comments = _reports.GetCommentsList(),
-                MarkedForReviewList = _reports.GetMarkedForReviewList(),
-                Information = _reports.GetInformation()
+                Comments = await _reports.GetCommentsList(),
+                MarkedForReviewList = await _reports.GetMarkedForReviewList(),
+                Information = await _reports.GetInformation()
             };
 
 
@@ -529,7 +529,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int assessmentId = _tokenManager.AssessmentForUser();
+                int assessmentId = await _tokenManager.AssessmentForUser();
                 MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 var scores = MaturityBusiness.GetEdmScores(assessmentId, section);
 
@@ -554,7 +554,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int assessmentId = _tokenManager.AssessmentForUser();
+                int assessmentId = await _tokenManager.AssessmentForUser();
                 MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 var scores = MaturityBusiness.GetEdmPercentScores(assessmentId);
 
@@ -577,7 +577,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getEdmNistCsfResults")]
         public async Task<IActionResult> GetEdmNistCsfResults()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             var manager = new EdmNistCsfMapping(_context);
             var maturity = manager.GetEdmNistCsfResults(assessmentId);
 

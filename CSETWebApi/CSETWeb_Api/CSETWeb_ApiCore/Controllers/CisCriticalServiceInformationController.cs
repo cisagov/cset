@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/organizationDemographics")]
         public async Task<IActionResult> GetOrganizationDemographics() 
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetOrgDemographics(assessmentId));
         }
 
@@ -44,7 +44,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/organizationDemographics")]
         public async Task<IActionResult> SaveOrganizationDemographics([FromBody] CisOrganizationDemographics orgDemographics)
         {
-            orgDemographics.AssessmentId = _token.AssessmentForUser();
+            orgDemographics.AssessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveOrgDemographics(orgDemographics));
         }
 
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/serviceDemographics")]
         public async Task<IActionResult> GetServiceDemographics()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetServiceDemographics(assessmentId));
         }
 
@@ -60,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/serviceDemographics")]
         public async Task<IActionResult> SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
-            serviceDemographics.AssessmentId = _token.AssessmentForUser();
+            serviceDemographics.AssessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics));
         }
 
@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/serviceComposition")]
         public async Task<IActionResult> GetServiceComposition()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetServiceComposition(assessmentId));
         }
 
@@ -76,7 +76,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cis/serviceComposition")]
         public async Task<IActionResult> SaveServiceComposition([FromBody] CisServiceComposition serviceComposition)
         {
-            serviceComposition.AssessmentId = _token.AssessmentForUser();
+            serviceComposition.AssessmentId = await _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.SaveServiceComposition(serviceComposition));
         }
 

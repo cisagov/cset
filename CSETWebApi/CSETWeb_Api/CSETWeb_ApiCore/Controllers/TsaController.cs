@@ -73,7 +73,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> ToggleCRR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -107,7 +107,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -136,7 +136,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -172,7 +172,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> ToggleStandard([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -192,7 +192,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/tsa/standard")]
         public async Task<IActionResult> PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
         [HttpGet]
