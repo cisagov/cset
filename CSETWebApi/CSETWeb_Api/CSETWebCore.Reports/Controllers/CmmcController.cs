@@ -9,6 +9,7 @@ using CSETWebCore.Reports.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Reports.Controllers
 {
@@ -49,9 +50,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/cmmc/deficiency")]
-        public IActionResult CmmcDeficiencyReport(string token)
+        public async Task<IActionResult> CmmcDeficiencyReport(string token)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
                 return View(HtmlInit(token));
             }
@@ -62,9 +63,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/cmmc/comments")]
-        public IActionResult CmmcCommentsMarkedForReviewReport(string token)
+        public async Task<IActionResult> CmmcCommentsMarkedForReviewReport(string token)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
                 return View(HtmlInit(token));
             }
@@ -75,9 +76,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/cmmc/alt")]
-        public IActionResult CmmcAlternateJustificationReport(string token)
+        public async Task<IActionResult> CmmcAlternateJustificationReport(string token)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
                 return View(HtmlInit(token));
             }
@@ -92,11 +93,11 @@ namespace CSETWebCore.Reports.Controllers
         /// <param name="token"></param>
         /// <param name="security"></param>
         /// <returns></returns>
-        private object HtmlInit(string token)
+        private async Task<object> HtmlInit(string token)
         {
-            _token.Init(token);
+            await _token.Init(token);
             Request.Headers.Add("Authorization", token);
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = await _token.AssessmentForUser();
             HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
             return GetCmmcModel(assessmentId);
         }
@@ -108,9 +109,9 @@ namespace CSETWebCore.Reports.Controllers
         /// <param name="assessmentId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        private object GetCmmcModel(int assessmentId, string token = "")
+        private async Task<object> GetCmmcModel(int assessmentId, string token = "")
         {
-            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
+            var detail = await _assessment.GetAssessmentDetail(assessmentId, token);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
@@ -119,12 +120,12 @@ namespace CSETWebCore.Reports.Controllers
 
             var reportData = new MaturityBasicReportData()
             {
-                Information = _report.GetInformation(),
-                QuestionsList = _report.GetQuestionsList(),
-                DeficienciesList = _report.GetMaturityDeficiencies(),
-                Comments = _report.GetCommentsList(),
-                MarkedForReviewList = _report.GetMarkedForReviewList(),
-                AlternateList = _report.GetAlternatesList()
+                Information = await _report.GetInformation(),
+                QuestionsList = await _report.GetQuestionsList(),
+                DeficienciesList = await _report.GetMaturityDeficiencies(),
+                Comments = await _report.GetCommentsList(),
+                MarkedForReviewList = await _report.GetMarkedForReviewList(),
+                AlternateList = await _report.GetAlternatesList()
             };
 
             var viewModel = new ReportViewModel(detail, reportData);

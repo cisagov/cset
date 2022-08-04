@@ -27,7 +27,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/frameworks")]
         public async Task<IActionResult> GetFrameworks()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_framework.GetFrameworks(assessmentId));
         }
 
@@ -45,7 +45,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _framework.PersistSelectedTierAnswer(assessmentId, tier);
             return Ok();
         }

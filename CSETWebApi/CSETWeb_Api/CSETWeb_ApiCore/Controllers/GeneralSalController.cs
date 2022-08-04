@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GeneralSal/Descriptions")]
         public async Task<IActionResult> GetGeneralSalDescriptionsWeights()
         {
-            int assessmentid = _token.AssessmentForUser();
+            int assessmentid = await _token.AssessmentForUser();
 
             //TODO: make this async
             TinyMapper.Bind<GENERAL_SAL_DESCRIPTIONS, GeneralSalDescriptionsWeights>();
@@ -103,11 +103,11 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            int assessmentid = _token.AssessmentForUser();
+            int assessmentid = await _token.AssessmentForUser();
             ws.assessmentid = assessmentid;
 
             GeneralSalBusiness salManager = new GeneralSalBusiness(_context, _token, _assessmentUtil);
-            string salvalue = salManager.SaveWeightAndCalculate(ws);
+            string salvalue = await salManager.SaveWeightAndCalculate(ws);
 
             return Ok(salvalue);
         }
@@ -124,7 +124,7 @@ namespace CSETWebCore.Api.Controllers
 
             GeneralSalBusiness salManager = new GeneralSalBusiness(_context, _token, _assessmentUtil);
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string salvalue = salManager.GetSavedSALValue(assessmentId);
             return Ok(salvalue);
         }

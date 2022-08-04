@@ -33,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics")]
         public async Task<IActionResult> Get()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_demographic.GetDemographics(assessmentId));
         }
 
@@ -47,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics")]
         public async Task<IActionResult> Post([FromBody] Demographics demographics)
         {
-            demographics.AssessmentId = _token.AssessmentForUser();
+            demographics.AssessmentId = await _token.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
 

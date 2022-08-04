@@ -24,11 +24,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/acet/getDeficiencyList")]
         public async Task<IActionResult> GetDeficiencyList()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.DeficienciesList = _report.GetMaturityDeficiencies();
-            data.Information = _report.GetInformation();
+            data.DeficienciesList = await _report.GetMaturityDeficiencies();
+            data.Information = await _report.GetInformation();
             return Ok(data);
         }
 
@@ -37,10 +37,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/acet/GetAssessmentInformation")]
         public async Task<IActionResult> GetAssessmentInformation()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.Information = _report.GetInformation();
+            data.Information = await _report.GetInformation();
             return Ok(data);
         }
 
@@ -49,11 +49,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/acet/getAnsweredQuestions")]
         public async Task<IActionResult> GetAnsweredQuestions()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.MatAnsweredQuestions = _report.GetAnsweredQuestionList();
-            data.Information = _report.GetInformation();
+            data.MatAnsweredQuestions = await _report.GetAnsweredQuestionList();
+            data.Information = await _report.GetInformation();
             return Ok(data);
         }
     }

@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                int assessment_id = _tokenManager.AssessmentForUser();
+                int assessment_id = await _tokenManager.AssessmentForUser();
                 var ar = await _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefaultAsync();
                 bool defaultAcet = (app_code == "ACET");
                 return Ok(ar.IsAcetOnly ?? defaultAcet);
@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveIsAcetOnly")]
         public async Task<IActionResult> SaveACETFilters([FromBody] bool value)
         {
-            int assessment_id = _tokenManager.AssessmentForUser();
+            int assessment_id = await _tokenManager.AssessmentForUser();
            
             var ar = await _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefaultAsync();
             if (ar != null)
@@ -107,7 +107,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/filters")]
         public async Task<IActionResult> GetACETFilters()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             List<ACETFilter> filters = new List<ACETFilter>();
 
             filters = await (from a in _context.FINANCIAL_DOMAIN_FILTERS
@@ -148,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/savefilter")]
         public async Task<IActionResult> SaveACETFilters([FromBody] ACETFilterValue filterValue)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             string domainname = filterValue.DomainName;
             int level = filterValue.Level;
             bool value = filterValue.Value;
@@ -188,7 +188,7 @@ namespace CSETWebCore.Api.Controllers
 
             _context.SaveChanges();
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             return Ok();
         }
@@ -204,7 +204,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/savefilters")]
         public async Task<IActionResult> SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             
             Dictionary<string, int> domainIds = await _context.FINANCIAL_DOMAINS.ToDictionaryAsync(x => x.Domain, x => x.DomainId);
 
@@ -247,7 +247,7 @@ namespace CSETWebCore.Api.Controllers
 
             _context.SaveChanges();
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             return Ok();
         }
@@ -261,13 +261,13 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/resetfilters")]
         public async Task<IActionResult> ResetAllAcetFilters()
         {
-            int assessmentID = _tokenManager.AssessmentForUser();
+            int assessmentID = await _tokenManager.AssessmentForUser();
 
             var filters = await _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToListAsync();
             _context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
             _context.SaveChanges();
 
-            _assessmentUtil.TouchAssessment(assessmentID);
+            await _assessmentUtil.TouchAssessment(assessmentID);
 
             return Ok();
         }

@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/irps")]
         public async Task<IActionResult> GetIRPList()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_irp.GetIRPList(assessmentId));
         }
 
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _irp.PersistSelectedIRP(assessmentId, reqIRP);
 
             _assessmentUtil.TouchAssessment(assessmentId);

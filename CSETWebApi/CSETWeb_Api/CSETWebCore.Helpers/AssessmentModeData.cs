@@ -4,6 +4,8 @@ using CSETWebCore.Enum;
 using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -39,13 +41,13 @@ namespace CSETWebCore.Helpers
         /// We can't do this in the constructor because at that point there's
         /// no assessment in play yet.
         /// </summary>
-        private STANDARD_SELECTION GetStandard()
+        private async Task<STANDARD_SELECTION> GetStandard()
         {
             try
             {
-                int assessmentId = _tokenManager.AssessmentForUser();
+                int assessmentId = await _tokenManager.AssessmentForUser();
 
-                this.standard = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                this.standard = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             }
             catch (Exception exc)
             {
@@ -69,8 +71,8 @@ namespace CSETWebCore.Helpers
         public bool IsRequirement
         {
             get
-            {
-                return (GetStandard().Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE));
+            {               
+                return GetIsRequirement();
             }
         }
 
@@ -78,7 +80,7 @@ namespace CSETWebCore.Helpers
         {
             get
             {
-                return (GetStandard().Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE));
+                return GetIsQuestion();
             }
         }
 
@@ -86,37 +88,48 @@ namespace CSETWebCore.Helpers
         {
             get
             {
-                return (GetStandard().Application_Mode.Equals(NIST_FRAMEWORK_MODE));
+                return GetIsFramework();
             }
         }
 
+
+        public bool GetIsRequirement()
+        {
+            var standard = GetStandard().Result;
+            return standard.Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE);
+        }
+
+
+        public bool GetIsQuestion()
+        {
+            var standard = GetStandard().Result;
+            return standard.Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE);
+        }
+
+        public bool GetIsFramework()
+        {
+            var standard = GetStandard().Result;
+            return standard.Application_Mode.Equals(NIST_FRAMEWORK_MODE);
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public StandardModeEnum GetAssessmentMode()
+        public async Task<StandardModeEnum> GetAssessmentMode()
         {
+            var standard = await GetStandard();
 
-
-            if (GetStandard().Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE))
+            switch(standard.Application_Mode)
             {
-                return StandardModeEnum.Question;
+                case QUESTIONS_BASED_APPLICATION_MODE:
+                    return StandardModeEnum.Question;                    
+                case REQUIREMENTS_BASED_APPLICATION_MODE:
+                    return StandardModeEnum.Requirement;
+                case NIST_FRAMEWORK_MODE:
+                case NIST_OLD_MODE_ASSESSMENT:
+                    return StandardModeEnum.NISTFramework;
             }
-            if (GetStandard().Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE))
-            {
-                return StandardModeEnum.Requirement;
-            }
-            if (GetStandard().Application_Mode.Equals(NIST_FRAMEWORK_MODE))
-            {
-                return StandardModeEnum.NISTFramework;
-            }
-            if (GetStandard().Application_Mode.Equals(NIST_OLD_MODE_ASSESSMENT))
-            {
-                return StandardModeEnum.NISTFramework;
-            }
-
-            //CSETLogger.Error("Can't determine mode of assessment. ApplicationMode: " + standard.Application_Mode);
             Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standard.Application_Mode);
             return StandardModeEnum.Question;
         }
@@ -126,27 +139,27 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="standardMode"></param>
-        public void SaveMode(StandardModeEnum standardMode)
+        public async Task SaveMode(StandardModeEnum standardMode)
         {
-            if (standardMode == StandardModeEnum.Question)
-            {
-                GetStandard().Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
-            }
-            else if (standardMode == StandardModeEnum.Requirement)
-            {
-                GetStandard().Application_Mode = REQUIREMENTS_BASED_APPLICATION_MODE;
-            }
-            else if (standardMode == StandardModeEnum.NISTFramework)
-            {
-                GetStandard().Application_Mode = NIST_FRAMEWORK_MODE;
-            }
-            else
-            {
-                GetStandard().Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
-                //CSETLogger.Error("Can't determine mode of assessment. ApplicationMode: " + standardMode);
-                Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standardMode);
-            }
+            var standard = await GetStandard();
 
+            switch(standardMode)
+            {
+                case StandardModeEnum.Question:
+                    standard.Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
+                    break;
+                case StandardModeEnum.Requirement:
+                    standard.Application_Mode = REQUIREMENTS_BASED_APPLICATION_MODE;
+                    break;
+                case StandardModeEnum.NISTFramework:
+                    standard.Application_Mode = NIST_FRAMEWORK_MODE;
+                    break;
+                default:
+                    standard.Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
+                    Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standardMode);
+                    break;
+
+            }
             _context.SaveChanges();
         }
 
@@ -155,9 +168,10 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="set"></param>
-        public void SaveSortSet(string set)
+        public async Task SaveSortSet(string set)
         {
-            GetStandard().Sort_Set_Name = set;
+            var standard = await GetStandard();
+            standard.Sort_Set_Name = set;
             _context.SaveChanges();
         }
 
@@ -166,9 +180,10 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <returns></returns>
-        public string GetSortSet()
+        public async Task<string> GetSortSet()
         {
-            if (GetStandard() != null)
+            var standard = await GetStandard();
+            if (standard != null)
                 return standard.Sort_Set_Name;
             else
                 return string.Empty;

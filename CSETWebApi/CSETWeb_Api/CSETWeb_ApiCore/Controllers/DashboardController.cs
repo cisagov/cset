@@ -24,7 +24,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/dashboard")]
         public async Task<IActionResult> GetDashboard()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return Ok(_acetDashboard.LoadDashboard(assessmentId));
         }
 
@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/acet/summary")]
         public async Task<IActionResult> UpdateACETDashboardSummary(ACETDashboard summary)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _acetDashboard.UpdateACETDashboardSummary(assessmentId, summary);
             return Ok();
         }

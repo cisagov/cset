@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ExcelExport")]
         public async Task<IActionResult> GetExcelExport(string token)
         {
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = await _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToCSV(assessmentId);
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetExcelExportNCUA(string token)
         {
             _token.SetToken(token);
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = await _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToExcelNCUA(assessmentId);

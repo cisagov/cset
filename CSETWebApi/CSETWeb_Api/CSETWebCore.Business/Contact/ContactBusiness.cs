@@ -217,15 +217,15 @@ namespace CSETWebCore.Business.Contact
         /// Creates a new Contact if needed.  If a Contact already exists for the email, no 
         /// changes are made to the Contact row.
         /// </summary>
-        public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
+        public async Task<ContactDetail> CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             string appCode = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
 
             // See if the Contact already exists
-            existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
+            existingContact = await _context.ASSESSMENT_CONTACTS.FirstOrDefaultAsync(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
             if (existingContact == null)
             {
                 // Create Contact
@@ -248,9 +248,9 @@ namespace CSETWebCore.Business.Contact
                 };
 
                 // Include the userid if such a user exists
-                USERS user = _context.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
+                USERS user = await _context.USERS.Where(u => !string.IsNullOrEmpty(u.PrimaryEmail)
                     && u.PrimaryEmail == newContact.PrimaryEmail)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
                 if (user != null)
                 {
                     c.UserId = user.UserId;
@@ -290,7 +290,7 @@ namespace CSETWebCore.Business.Contact
 
                 _context.SaveChanges();
 
-                _assessmentUtil.TouchAssessment(assessmentId);
+                await _assessmentUtil.TouchAssessment(assessmentId);
 
                 existingContact = c;
             }

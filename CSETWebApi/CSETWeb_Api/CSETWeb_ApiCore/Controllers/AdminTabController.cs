@@ -28,7 +28,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/admintab/Data")]
         public async Task<IActionResult> GetList()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_tabBusiness.GetTabData(assessmentId));
         }
 
@@ -36,7 +36,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/admintab/save")]
         public async Task<IActionResult> SaveData([FromBody] AdminSaveData save)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_tabBusiness.SaveData(assessmentId, save));
         }
 
@@ -45,7 +45,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/admintab/saveattribute")]
         public async Task<IActionResult> SaveDataAttribute([FromBody] AttributePair attribute)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             _tabBusiness.SaveDataAttribute(assessmentId, attribute);
             return Ok();
         }

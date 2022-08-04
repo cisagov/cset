@@ -85,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> Get()
         {
             // Get the AssessmentId from the token
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             return Ok(_assessmentBusiness.GetAssessmentDetail(assessmentId));
         }
@@ -100,7 +100,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> Post([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -117,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessmentdocuments")]
         public async Task<IActionResult> GetDocumentsForAssessment()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             _documentBusiness.SetUserAssessmentId(assessmentId);
             
             return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
@@ -133,10 +133,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/lastmodified")]
         public async Task<IActionResult> GetLastModified()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             var tzOffset = _tokenManager.PayloadInt(Constants.Constants.Token_TimezoneOffsetKey);
 
-            var dt = _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
+            var dt = await _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
             dt = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
 
             var offset = Offset.FromSeconds(-((tzOffset ?? 0) * 60));

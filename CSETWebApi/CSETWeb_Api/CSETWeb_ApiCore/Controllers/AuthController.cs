@@ -31,7 +31,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
-            LoginResponse resp = _userAuthentication.Authenticate(login);
+            LoginResponse resp = await _userAuthentication.Authenticate(login);
             if (resp != null)
             {
                 return Ok(resp);
@@ -51,9 +51,8 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 _tokenManager.GenerateSecret();
-                lock (_locker)
-                {
-                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login, _tokenManager);
+                
+                    LoginResponse resp = await _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                     if (resp != null)
                     {
                         return Ok(resp);
@@ -64,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
                         LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
                     };
                     return Ok(resp);
-                }
+                
             }
             catch (Exception exc)
             {
@@ -128,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // If we make it this far, we can issue the new token with what we know to be current and valid
-            string token = _tokenManager.GenerateToken(
+            string token = await _tokenManager.GenerateToken(
                 currentUserId,
                 _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey),
                 expSeconds,
