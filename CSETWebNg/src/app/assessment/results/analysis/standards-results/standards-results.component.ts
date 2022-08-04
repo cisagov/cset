@@ -27,7 +27,7 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { StandardService } from '../../../../services/standard.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-standards-results',

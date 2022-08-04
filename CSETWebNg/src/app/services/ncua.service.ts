@@ -24,6 +24,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -47,10 +49,17 @@ let headers = {
   // used for keeping track of which examinations are being merged
   prepForMerge: boolean = false;
   assessmentsToMerge: any[] = [];
+  mainAssessCharter: string = "";
+  charterWarningShown: boolean = false;
+
+  // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE)
+  iseAssetSize: string = "0";
+
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
+    public dialog: MatDialog
   ) {
     this.init();
   }
@@ -79,16 +88,48 @@ let headers = {
 
   // Adds or removes selected ISE examinations to the list to merge
   modifyMergeList(assessment: any, event: any) {
+    let tempCharter = "";
+
+    if (this.mainAssessCharter === "") {
+      for (let i = 4; i < 9; i++) {
+        this.mainAssessCharter += assessment.assessmentName[i];
+      }
+    } else {
+      for (let i = 4; i < 9; i++) {
+        tempCharter += assessment.assessmentName[i];
+      }
+    }
+
     const optionChecked = event.srcElement.checked;
+
+    if (this.mainAssessCharter !== "" && tempCharter !== "" && optionChecked) {
+      if (this.mainAssessCharter !== tempCharter && this.charterWarningShown === false) {
+        this.openCharterWarning();
+      }
+    }
 
     if (optionChecked) {
       this.assessmentsToMerge.push(assessment.assessmentId);
-      } else {
+    } else {
       const index = this.assessmentsToMerge.indexOf(assessment);
       this.assessmentsToMerge.splice(index, 1);
     }
+
+    if (this.assessmentsToMerge.length === 0) {
+      this.mainAssessCharter = "";
+      this.charterWarningShown = false;
+    }
   }
 
+  openCharterWarning() {
+    let dialogRef = this.dialog.open(CharterMismatchComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.charterWarningShown = true;
+    });
+  }
 
   getAnswers() {
     let id1 = this.assessmentsToMerge[0];
@@ -107,6 +148,16 @@ let headers = {
     .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
+  }
+
+  determineIRP() {
+    if (Number(this.iseAssetSize) > 50000000) {
+      console.log("Asset size is greater than $50 Million. Core/Core+ will be used.");
+      return 'CORE';
+    } else {
+      console.log("Asset size is less than $50 Million. SCUEP will be used.");
+      return 'SCUEP'
+    }
   }
 
 }
