@@ -9,7 +9,6 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Standards
 {
@@ -374,7 +373,7 @@ namespace CSETWebCore.Business.Standards
 
         }
 
-        public async Task Init()
+        public void Init()
         {
             // standard = _context.STANDARD_SELECTION.Include(t => t..UNIVERSAL_SAL_LEVEL).FirstOrDefault();
             standard = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
@@ -385,7 +384,7 @@ namespace CSETWebCore.Business.Standards
             this.ISALevelComboItems = salStrings;
             this.ASALevelComboItems = salStrings;
 
-            StandardMode = await _assessmentMode.GetAssessmentMode();
+            StandardMode = _assessmentMode.GetAssessmentMode();
 
             SalLevels = levelManager.GetObservableCollectionSALStrings();
             /**
@@ -445,9 +444,9 @@ namespace CSETWebCore.Business.Standards
         {
             _assessmentMode.SaveSortSet(set);
         }
-        public async Task<string> GetSortSet()
+        public string GetSortSet()
         {
-            return await _assessmentMode.GetSortSet();
+            return _assessmentMode.GetSortSet();
         }
 
         public void SetStandardMode()

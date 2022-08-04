@@ -7,7 +7,6 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.DataLayer.Model;
 using NodaTime;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -36,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment")]
-        public async Task<IActionResult> CreateAssessment(string workflow)
+        public IActionResult CreateAssessment(string workflow)
         {
             int currentuserId = _tokenManager.GetUserId();
             return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, workflow));
@@ -48,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentsforuser")]
-        public async Task<IActionResult> GetMyAssessments()
+        public IActionResult GetMyAssessments()
         {
             // get all Assessments that the current user is associated with
             return Ok(_assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId()));
@@ -61,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentsCompletionForUser")]
-        public async Task<IActionResult> GetAssessmentsCompletion()
+        public IActionResult GetAssessmentsCompletion()
         {
             // get completion stats for all assessments associated to the current user
             return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser(_tokenManager.GetCurrentUserId()));
@@ -70,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/getAssessmentById")]
-        public async Task<IActionResult> GetAssessmentById(int assessmentId)
+        public IActionResult GetAssessmentById(int assessmentId)
         {
             var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);
             return Ok(assessment);
@@ -82,10 +81,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdetail")]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             // Get the AssessmentId from the token
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(_assessmentBusiness.GetAssessmentDetail(assessmentId));
         }
@@ -97,10 +96,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/assessmentdetail")]
-        public async Task<IActionResult> Post([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult Post([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -115,9 +114,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmentdocuments")]
-        public async Task<IActionResult> GetDocumentsForAssessment()
+        public IActionResult GetDocumentsForAssessment()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             _documentBusiness.SetUserAssessmentId(assessmentId);
             
             return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
@@ -131,12 +130,12 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/lastmodified")]
-        public async Task<IActionResult> GetLastModified()
+        public IActionResult GetLastModified()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             var tzOffset = _tokenManager.PayloadInt(Constants.Constants.Token_TimezoneOffsetKey);
 
-            var dt = await _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
+            var dt = _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
             dt = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
 
             var offset = Offset.FromSeconds(-((tzOffset ?? 0) * 60));
@@ -155,7 +154,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/assessmenticons")]
-        public async Task<IActionResult> GetAssessmentIcons()
+        public IActionResult GetAssessmentIcons()
         {
             return Ok(_assessmentBusiness.GetAllAssessmentIcons());
         }

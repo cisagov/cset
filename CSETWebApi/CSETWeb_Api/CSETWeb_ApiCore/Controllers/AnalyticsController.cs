@@ -10,7 +10,6 @@ using CSETWebCore.Model.Analytics;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Business.Question;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -43,10 +42,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/analytics/getAnalytics")]
-        public async Task<IActionResult> GetAnalytics()
+        public IActionResult GetAnalytics()
         {
-            var demographics = await GetDemographics();
-            var assessment = await GetAnalyticsAssessment();
+            var demographics = GetDemographics();
+            var assessment = GetAnalyticsAssessment();
             assessment.Assets = demographics.AssetValue;
             assessment.Size = demographics.Size;
             assessment.IndustryId = demographics.IndustryId;
@@ -56,14 +55,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 Assessment = assessment,
                 Demographics = demographics,
-                QuestionAnswers = await GetQuestionsAnswers()
+                QuestionAnswers = GetQuestionsAnswers()
             });
         }
 
-        private async Task<AnalyticsAssessment> GetAnalyticsAssessment()
+        private AnalyticsAssessment GetAnalyticsAssessment()
         {
-            int assessmentId = await _token.AssessmentForUser();
-            var assessment = await _assessment.GetAnalyticsAssessmentDetail(assessmentId);
+            int assessmentId = _token.AssessmentForUser();
+            var assessment = _assessment.GetAnalyticsAssessmentDetail(assessmentId);
             return assessment;
         }
 
@@ -71,9 +70,9 @@ namespace CSETWebCore.Api.Controllers
         /// Returns an instance of Demographics for Anonymous export 
         /// </summary>        
         /// <returns></returns>
-        private async Task<AnalyticsDemographic> GetDemographics()
+        private AnalyticsDemographic GetDemographics()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             return _demographic.GetAnonymousDemographics(assessmentId);
         }
 
@@ -81,9 +80,9 @@ namespace CSETWebCore.Api.Controllers
         /// Returns questions/answers for current selected assessment
         /// </summary>
         /// <returns></returns>
-        private async Task<List<AnalyticsQuestionAnswer>> GetQuestionsAnswers()
+        private List<AnalyticsQuestionAnswer> GetQuestionsAnswers()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
            
             if (applicationMode.ToLower().StartsWith("questions"))
@@ -95,7 +94,7 @@ namespace CSETWebCore.Api.Controllers
             else
             {
                 _requirement.SetRequirementAssessmentId(assessmentId);
-                QuestionResponse resp = await _requirement.GetRequirementsList();
+                QuestionResponse resp = _requirement.GetRequirementsList();
                 return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
             }
         }

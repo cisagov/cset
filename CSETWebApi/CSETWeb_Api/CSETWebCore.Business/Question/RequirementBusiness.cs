@@ -4,13 +4,11 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Question
 {
@@ -48,9 +46,9 @@ namespace CSETWebCore.Business.Question
         /// Builds a response containing Requirements that are related to the
         /// assessment's SAL level.
         /// </summary>
-        public async Task<QuestionResponse> GetRequirementsList()
+        public QuestionResponse GetRequirementsList()
         {
-            RequirementsPass controls = await GetControls();
+            RequirementsPass controls = GetControls();
             return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
         }
 
@@ -60,18 +58,17 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="db"></param>
         /// <returns></returns>
-        public async Task<RequirementsPass> GetControls()
+        public RequirementsPass GetControls()
         {
-            SetRequirementAssessmentId(await _tokenManager.AssessmentForUser());
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
             
-            var q = (from rs in _context.REQUIREMENT_SETS
+            var q = from rs in _context.REQUIREMENT_SETS
                 from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
                 from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
                 from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
                 where _questionRequirement.SetNames.Contains(rs.Set_Name)
                       && rl.Standard_Level == _questionRequirement.StandardLevel
-                    select new { r, rs, s });
-
+                    select new { r, rs, s };
             var results = q.Distinct()
                 .OrderBy(x => x.s.Short_Name)
                 .ThenBy(x => x.rs.Requirement_Sequence)
@@ -80,10 +77,10 @@ namespace CSETWebCore.Business.Question
             var domains = new List<DomainAssessmentFactor>();
             if (results.Any(r => r.SetName == "ACET_V1"))
             {
-                domains = await (from d in _context.FINANCIAL_DOMAINS
+                domains = (from d in _context.FINANCIAL_DOMAINS
                            join fg in _context.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
                            join af in _context.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToListAsync();
+                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
             }
 
 
@@ -92,8 +89,8 @@ namespace CSETWebCore.Business.Question
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
 
-            this.Requirements = await q.Select(x => x.r).ToListAsync();
-            this.Answers = await answers.ToListAsync();
+            this.Requirements = q.Select(x => x.r).ToList();
+            this.Answers = answers.ToList();
 
             return new RequirementsPass()
             {
@@ -365,9 +362,9 @@ namespace CSETWebCore.Business.Question
         /// multiple copies of the question and answer queries.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<int>> GetActiveAnswerIds()
+        public List<int> GetActiveAnswerIds()
         {
-            QuestionResponse resp = await this.GetRequirementsList();
+            QuestionResponse resp = this.GetRequirementsList();
 
             List<int> relevantAnswerIds = this.Answers.Where(ans =>
                 this.Requirements.Select(q => q.Requirement_Id).Contains(ans.a.Question_Or_Requirement_Id))
@@ -382,18 +379,18 @@ namespace CSETWebCore.Business.Question
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public async Task<int> StoreAnswer(Answer answer)
+        public int StoreAnswer(Answer answer)
         {
             // Find the Question or Requirement
-            var question = await  _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefaultAsync();
-            var requirement = await _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefaultAsync();
+            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
+            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
 
             if (question == null && requirement == null)
             {
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
 
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
 
             // in case a null is passed, store 'unanswered'
@@ -406,15 +403,15 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
-                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefaultAsync();
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
             else if (answer != null)
             {
-                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefaultAsync();
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
             }
 
             if (dbAnswer == null)
@@ -453,9 +450,9 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <param name="db"></param>
-        public async Task LoadParametersList()
+        public void LoadParametersList()
         {
-            SetRequirementAssessmentId(await _tokenManager.AssessmentForUser());
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
 
             parametersDictionary = (from p in _context.PARAMETERS
                                     join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
@@ -540,15 +537,14 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ParameterToken>> GetDefaultParametersForAssessment()
+        public List<ParameterToken> GetDefaultParametersForAssessment()
         {
-            SetRequirementAssessmentId(await _tokenManager.AssessmentForUser());
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
 
             ParameterSubstitution ps = new ParameterSubstitution();
 
             // Get the list of requirement IDs
-            var controls = await GetControls();
-            List<RequirementPlus> reqs = controls.Requirements.ToList();
+            List<RequirementPlus> reqs = GetControls().Requirements.ToList();
             List<int> requirementIds = reqs.Select(r => r.Requirement.Requirement_Id).ToList();
 
 
@@ -589,32 +585,32 @@ namespace CSETWebCore.Business.Question
         /// <param name="answerId"></param>
         /// <param name="newText"></param>
         /// <returns></returns>
-        public async Task<ParameterToken> SaveAssessmentParameter(int parameterId, string newText)
+        public ParameterToken SaveAssessmentParameter(int parameterId, string newText)
         {
-            SetRequirementAssessmentId(await _tokenManager.AssessmentForUser());
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
 
             // If an empty value is supplied, delete the PARAMETER_VALUES row.
             if (string.IsNullOrEmpty(newText))
             {
-                var g = await _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                        && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefaultAsync();
+                var g = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                        && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
                 if (g != null)
                 {
                     _context.PARAMETER_ASSESSMENT.Remove(g);
                     _context.SaveChanges();
                 }
 
-                await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+                _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
                 // build a partial return object just to inform the UI what the new value is
-                var baseParameter = await _context.PARAMETERS.Where(p => p.Parameter_ID == parameterId).FirstAsync();
+                var baseParameter = _context.PARAMETERS.Where(p => p.Parameter_ID == parameterId).First();
                 return new ParameterToken(baseParameter.Parameter_ID, "", baseParameter.Parameter_Name, 0, 0);
             }
 
 
             // Otherwise, insert or update the PARAMETER_ASSESSMENT record
-            var pa = await _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
-                    && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefaultAsync();
+            var pa = _context.PARAMETER_ASSESSMENT.Where(p => p.Parameter_ID == parameterId
+                    && p.Assessment_ID == _questionRequirement.AssessmentId).FirstOrDefault();
 
             if (pa == null)
             {
@@ -635,7 +631,7 @@ namespace CSETWebCore.Business.Question
             }
             _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
             // build a partial return object just to inform the UI what the new value is
             return new ParameterToken(pa.Parameter_ID, "", pa.Parameter_Value_Assessment, 0, 0);
@@ -652,9 +648,9 @@ namespace CSETWebCore.Business.Question
         /// <param name="answerId"></param>
         /// <param name="newText"></param>
         /// <returns></returns>
-        public async Task<ParameterToken> SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText)
+        public ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText)
         {
-            SetRequirementAssessmentId(await _tokenManager.AssessmentForUser());
+            SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
 
             // create an answer if there isn't one already
             if (answerId == 0)
@@ -673,22 +669,22 @@ namespace CSETWebCore.Business.Question
             // If an empty value is supplied, delete the PARAMETER_VALUES row.
             if (string.IsNullOrEmpty(newText))
             {
-                var g = await _context.PARAMETER_VALUES.Where(pv => pv.Parameter_Id == parameterId && pv.Answer_Id == answerId).FirstOrDefaultAsync();
+                var g = _context.PARAMETER_VALUES.Where(pv => pv.Parameter_Id == parameterId && pv.Answer_Id == answerId).FirstOrDefault();
                 if (g != null)
                 {
                     _context.PARAMETER_VALUES.Remove(g);
                     _context.SaveChanges();
                 }
 
-                await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+                _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
                 return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
             }
 
 
             // Otherwise, add or update the PARAMETER_VALUES row
-            var dbParameterValues = await _context.PARAMETER_VALUES.Where(pv => pv.Parameter_Id == parameterId
-                    && pv.Answer_Id == answerId).FirstOrDefaultAsync();
+            var dbParameterValues = _context.PARAMETER_VALUES.Where(pv => pv.Parameter_Id == parameterId
+                    && pv.Answer_Id == answerId).FirstOrDefault();
 
             if (dbParameterValues == null)
             {
@@ -701,9 +697,9 @@ namespace CSETWebCore.Business.Question
             dbParameterValues.Parameter_Value = newText;
 
 
-            if (await _context.PARAMETER_VALUES.FindAsync(dbParameterValues.Answer_Id, dbParameterValues.Parameter_Id) == null)
+            if (_context.PARAMETER_VALUES.Find(dbParameterValues.Answer_Id, dbParameterValues.Parameter_Id) == null)
             {
-                await _context.PARAMETER_VALUES.AddAsync(dbParameterValues);
+                _context.PARAMETER_VALUES.Add(dbParameterValues);
             }
             else
             {

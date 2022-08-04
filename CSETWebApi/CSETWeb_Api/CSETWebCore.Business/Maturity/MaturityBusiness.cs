@@ -14,7 +14,6 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace CSETWebCore.Business.Maturity
@@ -39,7 +38,7 @@ namespace CSETWebCore.Business.Maturity
         /// Returns the maturity model selected for the assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public async Task<Model.Maturity.MaturityModel> GetMaturityModel(int assessmentId)
+        public Model.Maturity.MaturityModel GetMaturityModel(int assessmentId)
         {
             var q = from amm in _context.AVAILABLE_MATURITY_MODELS
                     from mm in _context.MATURITY_MODELS
@@ -50,13 +49,13 @@ namespace CSETWebCore.Business.Maturity
                         ModelName = mm.Model_Name,
                         QuestionsAlias = mm.Questions_Alias
                     };
-            var myModel = await q.FirstOrDefaultAsync();
+            var myModel = q.FirstOrDefault();
 
             if (myModel != null)
             {
-                myModel.MaturityTargetLevel = await GetMaturityTargetLevel(assessmentId);
+                myModel.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
 
-                myModel.Levels = await GetMaturityLevelsForModel(myModel.ModelId, 100);
+                myModel.Levels = GetMaturityLevelsForModel(myModel.ModelId, 100);
             }
 
             return myModel;
@@ -67,13 +66,13 @@ namespace CSETWebCore.Business.Maturity
         /// Gets the current target level for the assessment form ASSESSMENT_SELECTED_LEVELS.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> GetMaturityTargetLevel(int assessmentId)
+        public int GetMaturityTargetLevel(int assessmentId)
         {
             // The maturity target level is stored similar to a SAL level
             int targetLevel = 1;
-            var myLevel = await _context.ASSESSMENT_SELECTED_LEVELS
+            var myLevel = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             if (myLevel != null)
             {
@@ -88,11 +87,10 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<List<MaturityDomainRemarks>> GetDomainRemarks(int assessmentId)
+        public List<MaturityDomainRemarks> GetDomainRemarks(int assessmentId)
         {
             List<MaturityDomainRemarks> remarks = new List<MaturityDomainRemarks>();
-            var maturityDomainRemarkList = await _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId).ToListAsync(); 
-            foreach (var m in maturityDomainRemarkList)
+            foreach (var m in _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId).ToList())
             {
                 remarks.Add(new MaturityDomainRemarks()
                 {
@@ -109,10 +107,10 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <param name="remarks"></param>
-        public async Task SetDomainRemarks(int assessmentId, MaturityDomainRemarks remarks)
+        public void SetDomainRemarks(int assessmentId, MaturityDomainRemarks remarks)
         {
-            var remark = await _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId
-                                                               && x.Grouping_ID == remarks.Group_Id).FirstOrDefaultAsync();
+            var remark = _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId
+                                                               && x.Grouping_ID == remarks.Group_Id).FirstOrDefault();
             if (remark != null)
             {
                 remark.DomainRemarks = remarks.DomainRemark;
@@ -121,7 +119,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 if (remarks.DomainRemark != null)
                 {
-                    await _context.MATURITY_DOMAIN_REMARKS.AddAsync(new MATURITY_DOMAIN_REMARKS()
+                    _context.MATURITY_DOMAIN_REMARKS.Add(new MATURITY_DOMAIN_REMARKS()
                     {
                         Assessment_Id = assessmentId,
                         Grouping_ID = remarks.Group_Id,
@@ -129,7 +127,7 @@ namespace CSETWebCore.Business.Maturity
                     });
                 }
             }
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
 
@@ -139,12 +137,12 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="myModel"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        public async Task<List<MaturityLevel>> GetMaturityLevelsForModel(int maturityModelId, int targetLevel)
+        public List<MaturityLevel> GetMaturityLevelsForModel(int maturityModelId, int targetLevel)
         {
             // get the levels and their display names
             var levels = new List<MaturityLevel>();
-            foreach (var l in await _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == maturityModelId)
-                .OrderBy(y => y.Level).ToListAsync())
+            foreach (var l in _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == maturityModelId)
+                .OrderBy(y => y.Level).ToList())
             {
                 levels.Add(new MaturityLevel()
                 {
@@ -162,11 +160,11 @@ namespace CSETWebCore.Business.Maturity
         /// If no target level is found, 0 is returned.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> GetTargetLevel(int assessmentId)
+        public int GetTargetLevel(int assessmentId)
         {
-            var asl = await _context.ASSESSMENT_SELECTED_LEVELS
+            var asl = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
             if (asl != null)
             {
                 return int.Parse(asl.Standard_Specific_Sal_Level);
@@ -180,14 +178,14 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<SprsScoreModel> GetSPRSScore(int assessmentId)
+        public SprsScoreModel GetSPRSScore(int assessmentId)
         {
             var response = new SprsScoreModel();
 
-            IList<SPRSScore> scores = await _context.usp_GetSPRSScore(assessmentId);
+            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
 
 
-            var maturityExtra = await _context.MATURITY_EXTRA.ToListAsync();
+            var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructure(assessmentId);
@@ -244,16 +242,16 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<LevelAnswers>> GetAnswerDistributionByLevel(int assessmentId)
+        public List<LevelAnswers> GetAnswerDistributionByLevel(int assessmentId)
         {
-            await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var model = await _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+            var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             int targetLevel;
 
-            var selectedLevel = await _context.ASSESSMENT_SELECTED_LEVELS
+            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             if (selectedLevel == null)
             {
@@ -264,10 +262,10 @@ namespace CSETWebCore.Business.Maturity
                 targetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
             }
 
-            var levels = await _context.MATURITY_LEVELS
+            var levels = _context.MATURITY_LEVELS
                 .Include(x => x.MATURITY_QUESTIONS)
                 .Where(x => x.Maturity_Model_Id == model.model_id && x.Level <= targetLevel)
-                .ToListAsync();
+                .ToList();
 
             var answers = _context.Answer_Maturity.Where(x => x.Assessment_Id == assessmentId);
 
@@ -279,7 +277,7 @@ namespace CSETWebCore.Business.Maturity
                 var levelAnswers = answers.Where(x => 
                     l.MATURITY_QUESTIONS.Select(q => q.Mat_Question_Id).Contains(x.Question_Or_Requirement_Id));
 
-                var distrib = StatUtils.CalculateDistribution(await levelAnswers.Select(a => a.Answer_Text).ToListAsync());
+                var distrib = StatUtils.CalculateDistribution(levelAnswers.Select(a => a.Answer_Text).ToList());
 
                 var levelAns = new LevelAnswers();
                 levelAns.Name = l.Level_Name;
@@ -296,9 +294,9 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<DomainAnswers>> GetAnswerDistributionByDomain(int assessmentId)
+        public List<DomainAnswers> GetAnswerDistributionByDomain(int assessmentId)
         {
-            await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             var response = new List<DomainAnswers>();
 
 
@@ -327,14 +325,14 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public async Task<Dictionary<int,string>> GetSourceFiles()
+        public Dictionary<int,string> GetSourceFiles()
         {
-            List<Tuple<int, string>> sourceFiles = await (from a in _context.MATURITY_SOURCE_FILES
+            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
                                                    join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
                                                    where q.Maturity_Model_Id == 7
                                                    select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
-                                                   .ToListAsync();
+                                                   .ToList();
             
             Dictionary<int,string> result = new Dictionary<int, string>();
             foreach(var sourceFile in sourceFiles)
@@ -358,7 +356,7 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Model.Maturity.MaturityModel>> GetAllModels()
+        public List<Model.Maturity.MaturityModel> GetAllModels()
         {
             var response = new List<Model.Maturity.MaturityModel>();
 
@@ -370,15 +368,13 @@ namespace CSETWebCore.Business.Maturity
                              ModelName = a.Model_Name,
                              QuestionsAlias = a.Questions_Alias,
                              ModelDescription = a.Model_Description,
-                             ModelTitle = a.Model_Title
-                             //,IconId = a.Icon_Id //TODO: GET DB BACKUP 
+                             ModelTitle = a.Model_Title,
+                             IconId = a.Icon_Id
                          };
-
-            var resultList = await result.ToListAsync();    
-            foreach (var m in resultList)
+            foreach (var m in result.ToList())
             {
                 response.Add(m);
-                m.Levels = await GetMaturityLevelsForModel(m.ModelId, 100);
+                m.Levels = GetMaturityLevelsForModel(m.ModelId, 100);
             }
 
             return response;
@@ -389,9 +385,9 @@ namespace CSETWebCore.Business.Maturity
         /// Saves the selected maturity models.
         /// </summary>
         /// <returns></returns>
-        public async Task PersistSelectedMaturityModel(int assessmentId, string modelName)
+        public void PersistSelectedMaturityModel(int assessmentId, string modelName)
         {
-            var model = await _context.MATURITY_MODELS.FirstOrDefaultAsync(x => x.Model_Name == modelName);
+            var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name == modelName);
 
             if (model == null)
             {
@@ -399,7 +395,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            var amm = await _context.AVAILABLE_MATURITY_MODELS.FirstOrDefaultAsync(x => x.model_id == model.Maturity_Model_Id && x.Assessment_Id == assessmentId);
+            var amm = _context.AVAILABLE_MATURITY_MODELS.FirstOrDefault(x => x.model_id == model.Maturity_Model_Id && x.Assessment_Id == assessmentId);
             if (amm != null)
             {
                 // we already have the model set; do nothing
@@ -407,12 +403,12 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            await ClearMaturityModel(assessmentId);
+            ClearMaturityModel(assessmentId);
 
-            var mm = await _context.MATURITY_MODELS.FirstOrDefaultAsync(x => x.Model_Name == modelName);
+            var mm = _context.MATURITY_MODELS.FirstOrDefault(x => x.Model_Name == modelName);
             if (mm != null)
             {
-                await _context.AVAILABLE_MATURITY_MODELS.AddAsync(new AVAILABLE_MATURITY_MODELS()
+                _context.AVAILABLE_MATURITY_MODELS.Add(new AVAILABLE_MATURITY_MODELS()
                 {
                     Assessment_Id = assessmentId,
                     model_id = mm.Maturity_Model_Id,
@@ -423,13 +419,13 @@ namespace CSETWebCore.Business.Maturity
                 // default the target level if the model supports a target level
                 if (_modelsWithTargetLevel.Contains(mm.Model_Name))
                 {
-                    var targetLevel = await _context.ASSESSMENT_SELECTED_LEVELS
+                    var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS
                         .Where(l => l.Assessment_Id == assessmentId && l.Level_Name == Constants.Constants.MaturityLevel)
-                        .FirstOrDefaultAsync();
+                        .FirstOrDefault();
 
                     if (targetLevel == null)
                     {
-                        await _context.ASSESSMENT_SELECTED_LEVELS.AddAsync(new ASSESSMENT_SELECTED_LEVELS()
+                        _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                         {
                             Assessment_Id = assessmentId,
                             Level_Name = Constants.Constants.MaturityLevel,
@@ -439,10 +435,10 @@ namespace CSETWebCore.Business.Maturity
                 }
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            await SetDefaultTargetLevels(assessmentId, modelName);
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            SetDefaultTargetLevels(assessmentId, modelName);
+            _assessmentUtil.TouchAssessment(assessmentId);
         }
 
 
@@ -450,22 +446,21 @@ namespace CSETWebCore.Business.Maturity
         /// Deletes any maturity model connections to the assessment
         /// </summary>
         /// <param name="assessmentId"></param>
-        public async Task ClearMaturityModel(int assessmentId)
+        public void ClearMaturityModel(int assessmentId)
         {
-            var targetLevel = await _context.ASSESSMENT_SELECTED_LEVELS
-                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel).FirstOrDefaultAsync();
+            var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel).FirstOrDefault();
             if (targetLevel != null)
             {
                 _context.ASSESSMENT_SELECTED_LEVELS.Remove(targetLevel);
             }
 
-            var result = await _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToListAsync();
+            var result = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).ToList();
             if (result.Count > 0)
             {
                 _context.AVAILABLE_MATURITY_MODELS.RemoveRange(result);
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
 
@@ -474,11 +469,11 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<int> GetMaturityLevel(int assessmentId)
+        public int GetMaturityLevel(int assessmentId)
         {
-            var result = await _context.ASSESSMENT_SELECTED_LEVELS
+            var result = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
             if (result != null)
             {
                 if (int.TryParse(result.Standard_Specific_Sal_Level, out int level))
@@ -494,7 +489,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// Connects the assessment to a Maturity_Level.
         /// </summary>
-        public async Task PersistMaturityLevel(int assessmentId, int level)
+        public void PersistMaturityLevel(int assessmentId, int level)
         {
             // SAL selections live in ASSESSMENT_SELECTED_LEVELS, which
             // is more complex to allow for the different types of SALs
@@ -502,34 +497,34 @@ namespace CSETWebCore.Business.Maturity
 
             var result = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
-            if (await result.AnyAsync())
+            if (result.Any())
             {
                 _context.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
 
-            await _context.ASSESSMENT_SELECTED_LEVELS.AddAsync(new ASSESSMENT_SELECTED_LEVELS()
+            _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
             {
                 Assessment_Id = assessmentId,
                 Level_Name = Constants.Constants.MaturityLevel,
                 Standard_Specific_Sal_Level = level.ToString()
             });
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
         }
 
 
-        public async Task<AVAILABLE_MATURITY_MODELS> ProcessModelDefaults(int assessmentId, string installationMode)
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
             //if the application is ACET the default is ACET
 
-            var myModel = await _context.AVAILABLE_MATURITY_MODELS
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
               .Include(x => x.model)
-              .Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+              .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (myModel == null)
             {
                 myModel = new AVAILABLE_MATURITY_MODELS()
@@ -538,8 +533,8 @@ namespace CSETWebCore.Business.Maturity
                     model_id = (installationMode == "ACET") ? 1 : 3,
                     Selected = true
                 };
-                await _context.AVAILABLE_MATURITY_MODELS.AddAsync(myModel);
-                await _context.SaveChangesAsync();
+                _context.AVAILABLE_MATURITY_MODELS.Add(myModel);
+                _context.SaveChanges();
             }
 
             return myModel;
@@ -569,19 +564,19 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public async Task<MaturityResponse> GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
         {
             var response = new MaturityResponse();
 
             if (fill)
             {
-                await _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+                _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = await ProcessModelDefaults(assessmentId, installationMode);
+            var myModel = ProcessModelDefaults(assessmentId, installationMode);
 
 
-            var myModelDefinition = await _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefaultAsync();
+            var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
 
             if (myModelDefinition == null)
             {
@@ -601,26 +596,26 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            response.MaturityTargetLevel = await GetMaturityTargetLevel(assessmentId);
+            response.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
 
             if (response.ModelName == "ACET")
             {
-                response.OverallIRP = await GetOverallIrpNumber(assessmentId);
+                response.OverallIRP = GetOverallIrpNumber(assessmentId);
                 response.MaturityTargetLevel = response.OverallIRP;
             }
 
 
             // get the levels and their display names for this model
-            response.Levels = await GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
+            response.Levels = GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
 
 
 
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
-            var questions = await _context.MATURITY_QUESTIONS
+            var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Where(q =>
-                myModel.model_id == q.Maturity_Model_Id).ToListAsync();
+                myModel.model_id == q.Maturity_Model_Id).ToList();
 
 
             // Get all MATURITY answers for the assessment
@@ -630,19 +625,19 @@ namespace CSETWebCore.Business.Maturity
 
 
             // Get all subgroupings for this maturity model
-            var allGroupings = await _context.MATURITY_GROUPINGS
+            var allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToListAsync();
+                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
-            BuildSubGroupings(tempModel, null, allGroupings, questions, await answers.ToListAsync());
+            BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
 
             //GRAB all the domain remarks and assign them if necessary
             Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
-               await _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId)
-                .ToDictionaryAsync(x => x.Grouping_ID, x => x);
+                _context.MATURITY_DOMAIN_REMARKS.Where(x => x.Assessment_Id == assessmentId)
+                .ToDictionary(x => x.Grouping_ID, x => x);
             foreach (MaturityGrouping g in tempModel.SubGroupings)
             {
                 MATURITY_DOMAIN_REMARKS dm;
@@ -656,7 +651,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             // Add any glossary terms
-            response.Glossary = await this.GetGlossaryEntries(myModel.model_id);
+            response.Glossary = this.GetGlossaryEntries(myModel.model_id);
 
             return response;
         }
@@ -747,18 +742,18 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<Dictionary<int, string>> GetReferences(int assessmentId)
+        public Dictionary<int, string> GetReferences(int assessmentId)
         {
-            var myModel = await _context.AVAILABLE_MATURITY_MODELS
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
-                .Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+                .Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             var refQ = from q in _context.MATURITY_QUESTIONS
                        join t in _context.MATURITY_REFERENCE_TEXT on q.Mat_Question_Id equals t.Mat_Question_Id
                        where q.Maturity_Model_Id == myModel.model_id
                        select t;
 
-            var refText = await refQ.ToListAsync();
+            var refText = refQ.ToList();
 
             var dict = new Dictionary<int, string>();
             refText.ForEach(t =>
@@ -774,10 +769,10 @@ namespace CSETWebCore.Business.Maturity
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public async Task<int> StoreAnswer(int assessmentId, Answer answer)
+        public int StoreAnswer(int assessmentId, Answer answer)
         {
             // Find the Maturity Question
-            var question = await _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefaultAsync();
+            var question = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
 
             if (question == null)
             {
@@ -791,10 +786,10 @@ namespace CSETWebCore.Business.Maturity
                 answer.AnswerText = "U";
             }
 
-            ANSWER dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
                 && x.Question_Type == answer.QuestionType
-                && x.Mat_Option_Id == answer.OptionId).FirstOrDefaultAsync();
+                && x.Mat_Option_Id == answer.OptionId).FirstOrDefault();
 
 
             if (dbAnswer == null)
@@ -816,9 +811,9 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -830,14 +825,14 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<double> GetAnswerCompletionRate(int assessmentId)
+        public double GetAnswerCompletionRate(int assessmentId)
         {
-            var irp = await GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIrpNumber(assessmentId);
 
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetTopMatLevelForRisk(irp);
-            var acetAnswerDistList = await _context.AcetAnswerDistribution(assessmentId, topMatLevel);
-            var answerDistribution = acetAnswerDistList.ToList();
+
+            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -890,25 +885,23 @@ namespace CSETWebCore.Business.Maturity
 
 
 
-        public async Task<List<MaturityDomain>> GetMaturityAnswers(int assessmentId)
+        public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
-            var maturityDetailsCalcList = await _context.GetMaturityDetailsCalculations(assessmentId);
-            var data = maturityDetailsCalcList.ToList();
-            return await CalculateComponentValues(data, assessmentId);
+            var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
+            return CalculateComponentValues(data, assessmentId);
         }
 
-        public async Task<bool> GetTargetBandOnly(int assessmentId)
+        public bool GetTargetBandOnly(int assessmentId)
         {
-            var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
-            bool? defaultTarget = assessment.MatDetail_targetBandOnly;
+            bool? defaultTarget = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault().MatDetail_targetBandOnly;
             return defaultTarget ?? false;
         }
 
-        public async Task SetTargetBandOnly(int assessmentId, bool value)
+        public void SetTargetBandOnly(int assessmentId, bool value)
         {
-            var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.MatDetail_targetBandOnly = value;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
 
@@ -917,12 +910,12 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public async Task<List<MaturityDomain>> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
+        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
         {
 
             var maturityDomains = new List<MaturityDomain>();
-            var domains = await _context.FINANCIAL_DOMAINS.ToListAsync();
-            var standardCategories = await _context.FINANCIAL_DETAILS.ToListAsync();
+            var domains = _context.FINANCIAL_DOMAINS.ToList();
+            var standardCategories = _context.FINANCIAL_DETAILS.ToList();
             var sub_categories = from m in maturity
                                  group new { m.Domain, m.AssessmentFactor, m.FinComponent }
                                   by new { m.Domain, m.AssessmentFactor, m.FinComponent } into mk
@@ -1143,10 +1136,10 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="irpRating"></param>
         /// <returns></returns>
-        public async Task<List<string>> GetMaturityRange(int assessmentId)
+        public List<string> GetMaturityRange(int assessmentId)
         {
-            Model.Acet.ACETDashboard irpCalculation = await GetIrpCalculation(assessmentId);
-            bool targetBandOnly = await GetTargetBandOnly(assessmentId);
+            Model.Acet.ACETDashboard irpCalculation = GetIrpCalculation(assessmentId);
+            bool targetBandOnly = GetTargetBandOnly(assessmentId);
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : irpCalculation.SumRiskLevel;
             if (!targetBandOnly)
                 irpRating = 6; //Do the default configuration
@@ -1159,13 +1152,13 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<List<int>> GetMaturityRangeIds(int assessmentId)
+        public List<int> GetMaturityRangeIds(int assessmentId)
         {
             var output = new List<int>();
 
-            var result = await GetMaturityRange(assessmentId);
+            var result = GetMaturityRange(assessmentId);
 
-            var levels = await _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 1).ToListAsync();
+            var levels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 1).ToList();
             foreach (string r in result)
             {
                 output.Add(levels.Where(x => x.Level_Name.ToLower() == r.ToLower()).First().Maturity_Level_Id);
@@ -1211,7 +1204,7 @@ namespace CSETWebCore.Business.Maturity
         /// Returns a Dictionary mapping requirement ID to its corresponding maturity level.
         /// </summary>
         /// <returns></returns>
-        public async Task<Dictionary<int, MaturityMap>> GetRequirementMaturityLevels()
+        public Dictionary<int, MaturityMap> GetRequirementMaturityLevels()
         {
             var q = from req in _context.NEW_REQUIREMENT
                     join fr in _context.FINANCIAL_REQUIREMENTS on req.Requirement_Id equals fr.Requirement_Id
@@ -1292,7 +1285,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="modelName"></param>
         /// <returns></returns>
-        public async Task<object> GetReferenceText(string modelName)
+        public object GetReferenceText(string modelName)
         {
             var q = from model in _context.MATURITY_MODELS
                     join questions in _context.MATURITY_QUESTIONS on model.Maturity_Model_Id equals questions.Maturity_Model_Id
@@ -1300,7 +1293,7 @@ namespace CSETWebCore.Business.Maturity
                     where model.Model_Name == modelName
                     select new { refText.Mat_Question_Id, questions.Question_Title, refText.Sequence, refText.Reference_Text };
 
-            return await q.ToListAsync();
+            return q.ToList();
         }
 
 
@@ -1309,10 +1302,10 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="modelId"></param>
         /// <returns></returns>
-        public async Task<List<GlossaryEntry>> GetGlossaryEntries(int modelId)
+        public List<GlossaryEntry> GetGlossaryEntries(int modelId)
         {
-            var modelName = await _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).Select(y => y.Model_Name).FirstOrDefaultAsync();
-            return await GetGlossaryEntries(modelName);
+            var modelName = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).Select(y => y.Model_Name).FirstOrDefault();
+            return GetGlossaryEntries(modelName);
         }
 
 
@@ -1320,9 +1313,9 @@ namespace CSETWebCore.Business.Maturity
         /// Returns glossary entries by model name.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<GlossaryEntry>> GetGlossaryEntries(string modelName)
+        public List<GlossaryEntry> GetGlossaryEntries(string modelName)
         {
-            var mm = await _context.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefaultAsync();
+            var mm = _context.MATURITY_MODELS.Where(x => x.Model_Name == modelName).FirstOrDefault();
             if (mm == null)
             {
                 return null;
@@ -1331,17 +1324,17 @@ namespace CSETWebCore.Business.Maturity
             var glossaryTerms = from g in _context.GLOSSARY.Where(x => x.Maturity_Model_Id == mm.Maturity_Model_Id).OrderBy(x => x.Term)
                                 select new GlossaryEntry() { Term = g.Term, Definition = g.Definition };
 
-            return await glossaryTerms.ToListAsync();
+            return glossaryTerms.ToList();
         }
 
-        public async Task<Model.Acet.ACETDashboard> LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
         {
 
-            Model.Acet.ACETDashboard result = await GetIrpCalculation(assessmentId);
+            Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
 
-            List<MaturityDomain> domains = await GetMaturityAnswers(assessmentId);
+            List<MaturityDomain> domains = GetMaturityAnswers(assessmentId);
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -1359,9 +1352,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<string> GetOverallIrp(int assessmentId)
+        public string GetOverallIrp(int assessmentId)
         {
-            var calc = await GetIrpCalculation(assessmentId);
+            var calc = GetIrpCalculation(assessmentId);
             int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
             return overall == 1 ? Constants.Constants.LeastIrp :
                 overall == 2 ? Constants.Constants.MinimalIrp :
@@ -1376,9 +1369,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<int> GetOverallIrpNumber(int assessmentId)
+        public int GetOverallIrpNumber(int assessmentId)
         {
-            var calc = await GetIrpCalculation(assessmentId);
+            var calc = GetIrpCalculation(assessmentId);
             int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
             return overall;
         }
@@ -1389,7 +1382,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<Model.Acet.ACETDashboard> GetIrpCalculation(int assessmentId)
+        public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
 
@@ -1401,8 +1394,7 @@ namespace CSETWebCore.Business.Maturity
             result.Charter = assessment.Charter;
             result.Assets = assessment.Assets;
 
-            var tabData = await _adminTabBusiness.GetTabData(assessmentId);
-            result.Hours = tabData.GrandTotal;
+            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
 
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
@@ -1412,7 +1404,7 @@ namespace CSETWebCore.Business.Maturity
                 IRPSummary summary = new IRPSummary();
                 summary.HeaderText = header.Header;
 
-                ASSESSMENT_IRP_HEADER headerInfo = await _context.ASSESSMENT_IRP_HEADER.FirstOrDefaultAsync(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
+                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
                 if (headerInfo != null)
                 {
                     summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
@@ -1420,8 +1412,8 @@ namespace CSETWebCore.Business.Maturity
                     summary.Comment = headerInfo.COMMENT;
                 }
 
-                List<DataLayer.Model.IRP> irps = await _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToListAsync();
-                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = await _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionaryAsync(x => x.IRP_Id, x => x);
+                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
                 foreach (DataLayer.Model.IRP irp in irps)
                 {
                     ASSESSMENT_IRP answer = null;
@@ -1454,7 +1446,7 @@ namespace CSETWebCore.Business.Maturity
                 }
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             result.SumRiskLevel = 1;
             int maxRisk = 0;
@@ -1470,11 +1462,11 @@ namespace CSETWebCore.Business.Maturity
             return result;
         }
 
-        public async Task UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
+        public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
         {
             if (assessmentId == 0 || summary == null) { return; }
 
-            ASSESSMENTS assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment != null)
             {
                 assessment.CreditUnionName = summary.CreditUnionName;
@@ -1487,7 +1479,7 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (IRPSummary irp in summary.Irps)
             {
-                ASSESSMENT_IRP_HEADER dbSummary = await _context.ASSESSMENT_IRP_HEADER.FirstOrDefaultAsync(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
+                ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
                 if (dbSummary != null)
                 {
                     dbSummary.RISK_LEVEL = irp.RiskLevel;
@@ -1499,7 +1491,7 @@ namespace CSETWebCore.Business.Maturity
                 }
             }
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -1507,12 +1499,12 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task SetDefaultTargetLevels(int assessmentId, string modelName)
+        public void SetDefaultTargetLevels(int assessmentId, string modelName)
         {
             var result = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
             //If any level is already selected, avoid setting default
-            if (await result.AnyAsync())
+            if (result.Any())
             {
                 return;
             }
@@ -1520,14 +1512,14 @@ namespace CSETWebCore.Business.Maturity
             //Set the default level for CMMC to 1 (the minimum level)
             if (modelName == "CMMC")
             {
-                await _context.ASSESSMENT_SELECTED_LEVELS.AddAsync(new ASSESSMENT_SELECTED_LEVELS()
+                _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {
                     Assessment_Id = assessmentId,
                     Level_Name = Constants.Constants.MaturityLevel,
                     Standard_Specific_Sal_Level = "1"
                 });
-                await _context.SaveChangesAsync();
-                await _assessmentUtil.TouchAssessment(assessmentId);
+                _context.SaveChanges();
+                _assessmentUtil.TouchAssessment(assessmentId);
             }
         }
 
