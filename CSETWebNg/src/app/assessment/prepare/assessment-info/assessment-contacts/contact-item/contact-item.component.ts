@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
@@ -65,17 +66,24 @@ export class ContactItemComponent implements OnInit {
   roles: Role[];
   editMode: boolean;
 
+  handsetPortrait = false;
+
   constructor(
     private configSvc: ConfigService,
     private emailSvc: EmailService,
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public boSvc: BreakpointObserver
   ) {
     this.editMode = true;
   }
 
   ngOnInit() {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     if (this.roles == null) {
       this.assessSvc.refreshRoles().subscribe((response: Role[]) => {
         this.assessSvc.roles = response;
@@ -104,6 +112,8 @@ export class ContactItemComponent implements OnInit {
     const body = this.configSvc.config.defaultInviteTemplate;
 
     this.emailDialog = this.dialog.open(EmailComponent, {
+      width: this.handsetPortrait ? '90%' : '',
+      maxWidth: this.handsetPortrait ? '90%' : '',
       data: {
         showContacts: false,
         contacts: [this.contact],
@@ -260,7 +270,7 @@ export class ContactItemComponent implements OnInit {
    * Scrolls to the top of this contact item
    */
   scrollToTop() {
-    this.topScroll?.nativeElement.scrollIntoView({behavior: 'smooth', alignToTop: true});
+    this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
   }
 }
 
