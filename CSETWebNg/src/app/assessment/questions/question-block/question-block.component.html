@@ -80,7 +80,7 @@
 
 
   <!-- this houses all of the questions -->
-  <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!mySubCategory.expanded">
+  <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
     <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
       [class.display-none]="!q.visible">
 

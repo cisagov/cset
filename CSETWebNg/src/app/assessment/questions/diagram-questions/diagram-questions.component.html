@@ -27,11 +27,14 @@
 
     <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
       <div class="d-flex align-items-start flex-11a">
-        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
-          All</button>
-        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
+        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
+          matTooltip="Collapse All" aria-label="Collapse All"><i class="fas fa-compress-alt"></i></button>
+        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
+          aria-label="Expand All">
+          <i class="fas fa-expand-alt"></i>
+        </button>
         <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
-          <i class="cset-icons-filter" aria-label="Filter"></i>
+          <i class="cset-icons-filter" matTooltip="Filter" aria-label="Filter"></i>
         </button>
       </div>
     </div>
