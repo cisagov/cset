@@ -291,7 +291,7 @@ export class OptionBlockNestedComponent implements OnInit {
     this.q.options.forEach((o: Option) => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
-      if (integrityCheckOption?.optionId === o.optionId) {
+      if (integrityCheckOption) {
         integrityCheckOption.selected = o.selected;
       }
 
