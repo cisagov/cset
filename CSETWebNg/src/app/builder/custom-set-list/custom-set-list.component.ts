@@ -124,7 +124,7 @@ export class SetListComponent implements OnInit {
 
       if (this.setsInUseList.find(x => x.setName === s.setName)) {
         dialogRef.componentInstance.confirmMessage +=
-          "<div class=\"d-flex align-items-center mt-2\"><span class=\"mr-3 fs-base-6 cset-icons-exclamation-triangle\"></span>This module is currently in use in one or more assessments.<br/> All assessment data pertaining to the module will be lost.</div>";
+          "<div class=\"d-flex align-items-center mt-2\"><span class=\"mr-3 fs-base-6 cset-icons-exclamation-triangle\" style=\"color: #856404\"></span>This module is currently in use in one or more assessments.<br/> All assessment data pertaining to the module will be lost.</div>";
       }
 
       dialogRef.afterClosed().subscribe(result => {
