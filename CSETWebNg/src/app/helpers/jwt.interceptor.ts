@@ -75,8 +75,9 @@ export class JwtInterceptor implements HttpInterceptor {
             console.log('JWT Invalid. logging out.');
           }
 
+          const userToken = localStorage.getItem('userToken')
           localStorage.clear();
-          this.router.navigateByUrl('/home/login/eject');
+          this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
 
           return of({});
         }
