@@ -445,7 +445,7 @@ namespace CSETWebCore.Api.Controllers
                 FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(HttpContext.Request.HttpContext, formValues);
 
                 // Create a GEN_FILE entry, and a SET_FILES entry.
-                return _module.RecordDocInDB(streamResult);
+                return await _module.RecordDocInDB(streamResult);
 
             }
             catch (Exception exc)

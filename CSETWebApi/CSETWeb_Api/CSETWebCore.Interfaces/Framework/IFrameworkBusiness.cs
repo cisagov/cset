@@ -1,10 +1,11 @@
 ﻿using CSETWebCore.Model.Framework;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Framework
 {
     public interface IFrameworkBusiness
     {
         FrameworkResponse GetFrameworks(int assessmentId);
-        void PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier);
+        Task PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier);
     }
 }

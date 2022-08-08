@@ -17,6 +17,8 @@ using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -37,7 +39,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req)
+        public async Task SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req)
         {
             int lastUsedComponentNumber = req.LastUsedComponentNumber;
             string diagramImage = req.DiagramSvg;
@@ -56,7 +58,7 @@ namespace CSETWebCore.Business.Diagram
             }
 
 
-            var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+            var assessmentRecord = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefaultAsync();
             if (assessmentRecord != null)
             {
                 try
@@ -68,7 +70,7 @@ namespace CSETWebCore.Business.Diagram
                         validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
                     }
 
-                    var list = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToList();
+                    var list = await _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToListAsync();
                     foreach (var i in list)
                     {
                         if (!validGuid.Contains(i.Component_Guid.ToString()))
@@ -76,7 +78,7 @@ namespace CSETWebCore.Business.Diagram
                             _context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(i);
                         }
                     }
-                    _context.SaveChanges();
+                   await _context.SaveChangesAsync();
 
                     DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(_context);
                     XmlDocument oldDoc = new XmlDocument();
@@ -85,7 +87,7 @@ namespace CSETWebCore.Business.Diagram
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(assessmentID);
+                    await differenceManager.SaveDifferences(assessmentID);
                 
                 }
                 catch (Exception exc)
@@ -101,7 +103,7 @@ namespace CSETWebCore.Business.Diagram
                         assessmentRecord.Diagram_Markup = diagramXML;
                     }
                     assessmentRecord.Diagram_Image = diagramImage;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
             else
@@ -256,11 +258,12 @@ namespace CSETWebCore.Business.Diagram
             return resp;
         }
 
-        public string ImportOldCSETDFile(string diagramXml, int assessmentId)
+        public async Task<string> ImportOldCSETDFile(string diagramXml, int assessmentId)
         {
             var t = new TranslateCsetdToDrawio();
             string newDiagramXml = t.Translate(diagramXml).OuterXml;
-            _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
+            var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstAsync();
+            assessment.Diagram_Markup = null;
             //string sql =
             //"delete ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
             //"delete [DIAGRAM_CONTAINER] where assessment_id = @id;";
@@ -269,13 +272,13 @@ namespace CSETWebCore.Business.Diagram
             //    new SqlParameter("@Id", assessmentId));
             var diagramComponents = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId);
             var diagramContainer = _context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId);
-            _context.ASSESSMENT_DIAGRAM_COMPONENTS.RemoveRange(diagramComponents);
-            _context.DIAGRAM_CONTAINER.RemoveRange(diagramContainer);
+            _context.ASSESSMENT_DIAGRAM_COMPONENTS.RemoveRange(await diagramComponents.ToListAsync());
+            _context.DIAGRAM_CONTAINER.RemoveRange(await diagramContainer.ToListAsync());
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             XmlDocument xDoc = new XmlDocument();
             xDoc.LoadXml(newDiagramXml);
-            SaveDiagram(assessmentId, xDoc, new DiagramRequest()
+            await SaveDiagram(assessmentId, xDoc, new DiagramRequest()
             {
                 LastUsedComponentNumber = 0,
                 DiagramSvg = String.Empty

@@ -10,7 +10,7 @@ namespace CSETWebCore.Interfaces.Helpers
 {
     public interface ITokenManager
     {
-        void SetToken(String tokenString);
+        Task SetToken(String tokenString);
         Task Init(string tokenString);
         string Payload(string claim);
         int? PayloadInt(string claim);
@@ -21,7 +21,7 @@ namespace CSETWebCore.Interfaces.Helpers
         Task AuthorizeUserForAssessment(int assessmentId);
         void ValidateTokenForAssessment(int assessmentId);
         int GetCurrentUserId();
-        void GenerateSecret();
+        Task GenerateSecret();
         Task<string> GetSecret();
         int GetUserId();
         Task<int> AssessmentForUser();

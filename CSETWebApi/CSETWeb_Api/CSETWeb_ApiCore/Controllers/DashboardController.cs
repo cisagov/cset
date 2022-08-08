@@ -33,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> UpdateACETDashboardSummary(ACETDashboard summary)
         {
             int assessmentId = await _token.AssessmentForUser();
-            _acetDashboard.UpdateACETDashboardSummary(assessmentId, summary);
+            await _acetDashboard.UpdateACETDashboardSummary(assessmentId, summary);
             return Ok();
         }
     }

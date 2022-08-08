@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.FileRepository;
 
@@ -13,7 +14,7 @@ namespace CSETWebCore.Business.FileRepository
             _context = context;
         }
 
-        public IEnumerable<FileDescriptionShort> AddFileDescriptions(FileResult fileResult)
+        public async Task<IEnumerable<FileDescriptionShort>> AddFileDescriptions(FileResult fileResult)
         {
             List<string> filenames = new List<string>();
             for (int i = 0; i < fileResult.FileNames.Count(); i++)
@@ -28,10 +29,10 @@ namespace CSETWebCore.Business.FileRepository
                 };
 
                 filenames.Add(fileResult.FileNames[i]);
-                _context.DOCUMENT_FILE.Add(fileDescription);
+                await _context.DOCUMENT_FILE.AddAsync(fileDescription);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return GetNewFiles(filenames);
         }
 

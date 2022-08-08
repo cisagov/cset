@@ -169,11 +169,11 @@ namespace CSETWebCore.Business.Contact
         /// TODO:  Enforce no duplicates - a user should only be connected once.
         ///        If a new role is supplied, update the existing ASSESSMENT_CONTACTS role.
         /// </summary>
-        public ContactDetail AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited)
+        public async Task<ContactDetail> AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited)
         {
-            USERS user = _context.USERS.Where(x => x.UserId == userId).First();
+            USERS user = await _context.USERS.Where(x => x.UserId == userId).FirstAsync();
 
-            var dbAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId && ac.UserId == user.UserId).FirstOrDefault();
+            var dbAC = await _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId && ac.UserId == user.UserId).FirstOrDefaultAsync();
 
             if (dbAC == null)
             {
@@ -192,9 +192,9 @@ namespace CSETWebCore.Business.Contact
             dbAC.Invited = invited;
 
             _context.ASSESSMENT_CONTACTS.Update(dbAC);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             // Return the full list of Contacts for the Assessment
             return new ContactDetail
@@ -274,7 +274,7 @@ namespace CSETWebCore.Business.Contact
                     UserCreateResponse resp = _userBusiness.CheckUserExists(userDetail);
                     if (!resp.IsExisting)
                     {
-                        resp = _userBusiness.CreateUser(userDetail, _context);
+                        resp = await _userBusiness.CreateUser(userDetail, _context);
 
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
@@ -288,7 +288,7 @@ namespace CSETWebCore.Business.Contact
                     c.UserId = resp.UserId;
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 await _assessmentUtil.TouchAssessment(assessmentId);
 
@@ -357,7 +357,7 @@ namespace CSETWebCore.Business.Contact
             ac.Is_Site_Participant = contact.IsSiteParticipant;
             ac.Is_Primary_POC = contact.IsPrimaryPoc;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -384,30 +384,30 @@ namespace CSETWebCore.Business.Contact
         /// Removes a Contact/User from an Assessment.
         /// Currently we actually delete the ASSESSMENT_CONTACTS record.  
         /// </summary>
-        public List<ContactDetail> RemoveContact(int assessmentContactId)
+        public async Task<List<ContactDetail>> RemoveContact(int assessmentContactId)
         {
-            var ac = (from cc in _context.ASSESSMENT_CONTACTS
+            var ac = await (from cc in _context.ASSESSMENT_CONTACTS
                       where cc.Assessment_Contact_Id == assessmentContactId
-                      select cc).FirstOrDefault();
+                      select cc).FirstOrDefaultAsync();
             if (ac == null)
                 throw new Exception("User does not exist");
             _context.ASSESSMENT_CONTACTS.Remove(ac);
 
 
             // Remove any related FINDING_CONTACT records
-            var fcList = (from fcc in _context.FINDING_CONTACT
+            var fcList = await (from fcc in  _context.FINDING_CONTACT
                           where fcc.Assessment_Contact_Id == ac.Assessment_Contact_Id
-                          select fcc).ToList();
-            if (fcList.Count > 0)
+                          select fcc).ToListAsync();
+            if (fcList.Count() > 0)
             {
                 _context.FINDING_CONTACT.RemoveRange(fcList);
             }
 
 
             // Null out any related Facilitator or Point of Contact references
-            var demoList1 = (from x in _context.DEMOGRAPHICS
+            var demoList1 = await (from x in  _context.DEMOGRAPHICS
                              where x.Facilitator == ac.Assessment_Contact_Id
-                             select x).ToList();
+                             select x).ToListAsync();
 
             foreach (var dd in demoList1)
             {
@@ -415,9 +415,9 @@ namespace CSETWebCore.Business.Contact
             }
 
 
-            var demoList2 = (from x in _context.DEMOGRAPHICS
+            var demoList2 = await (from x in  _context.DEMOGRAPHICS
                              where x.PointOfContact == ac.Assessment_Contact_Id
-                             select x).ToList();
+                             select x).ToListAsync();
 
             foreach (var dd in demoList2)
             {
@@ -426,7 +426,7 @@ namespace CSETWebCore.Business.Contact
 
 
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             _assessmentUtil.TouchAssessment(ac.Assessment_Id);
 
@@ -462,7 +462,7 @@ namespace CSETWebCore.Business.Contact
         /// on any assessments that they are working with, and not what somebody typed
         /// when they were added to an assessment.
         /// </summary>
-        public void RefreshContactNameFromUserDetails()
+        public async Task RefreshContactNameFromUserDetails()
         {
             int? userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -473,7 +473,7 @@ namespace CSETWebCore.Business.Contact
             }
 
             // we can expect to find this record for the current user and assessment.
-            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == (int)assessmentId && x.UserId == userId).FirstOrDefault();
+            var ac = await _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == (int)assessmentId && x.UserId == userId).FirstOrDefaultAsync();
 
             // The ASSESSMENT_CONTACT we want to work with is not there for some reason -- nothing to do
             if (ac == null)
@@ -482,13 +482,13 @@ namespace CSETWebCore.Business.Contact
             }
 
             // get the user record for the definitive name
-            var u = _context.USERS.Where(x => x.UserId == ac.UserId).FirstOrDefault();
+            var u = await _context.USERS.Where(x => x.UserId == ac.UserId).FirstOrDefaultAsync();
 
             ac.FirstName = u.FirstName;
             ac.LastName = u.LastName;
 
             _context.ASSESSMENT_CONTACTS.Update(ac);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 

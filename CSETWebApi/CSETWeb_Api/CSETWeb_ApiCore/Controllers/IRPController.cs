@@ -55,10 +55,10 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = await _token.AssessmentForUser();
             _irp.PersistSelectedIRP(assessmentId, reqIRP);
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             // reset maturity filters because the risk profile has changed
-            new ACETFilterController(_context, _assessmentUtil, _token).ResetAllAcetFilters();
+            await new ACETFilterController(_context, _assessmentUtil, _token).ResetAllAcetFilters();
             return Ok();
         }
     }

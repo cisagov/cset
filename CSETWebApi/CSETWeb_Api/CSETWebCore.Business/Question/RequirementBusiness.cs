@@ -442,8 +442,8 @@ namespace CSETWebCore.Business.Question
 
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _context.SaveChangesAsync();
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -625,15 +625,15 @@ namespace CSETWebCore.Business.Question
             pa.Parameter_ID = parameterId;
             pa.Parameter_Value_Assessment = newText;
 
-            if (_context.PARAMETER_ASSESSMENT.Find(pa.Parameter_ID, pa.Assessment_ID) == null)
+            if (await _context.PARAMETER_ASSESSMENT.FindAsync(pa.Parameter_ID, pa.Assessment_ID) == null)
             {
-                _context.PARAMETER_ASSESSMENT.Add(pa);
+                await _context.PARAMETER_ASSESSMENT.AddAsync(pa);
             }
             else
             {
                 _context.PARAMETER_ASSESSMENT.Update(pa);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
@@ -667,7 +667,7 @@ namespace CSETWebCore.Business.Question
                     QuestionNumber = "0",
                     AnswerText = "U"
                 };
-                answerId = _questionRequirement.StoreAnswer(ans);
+                answerId = await _questionRequirement.StoreAnswer(ans);
             }
 
             // If an empty value is supplied, delete the PARAMETER_VALUES row.
@@ -677,7 +677,7 @@ namespace CSETWebCore.Business.Question
                 if (g != null)
                 {
                     _context.PARAMETER_VALUES.Remove(g);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
 
                 await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
@@ -709,9 +709,9 @@ namespace CSETWebCore.Business.Question
             {
                 _context.PARAMETER_VALUES.Update(dbParameterValues);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+            await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
             // Return the token that was just updated
             return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();

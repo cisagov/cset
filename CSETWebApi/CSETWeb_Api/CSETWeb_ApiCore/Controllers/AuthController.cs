@@ -108,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
                 // If the token has an assess ID, validate the user/assessment
                 if (currentAssessmentId != null)
                 {
-                    _tokenManager.AssessmentForUser(currentUserId, (int)currentAssessmentId);
+                    await _tokenManager.AssessmentForUser(currentUserId, (int)currentAssessmentId);
                 }
             }
             else
@@ -116,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
                 // If an assessmentId was sent, use that in the new token after validating user/assessment
                 if (assessmentId > 0)
                 {
-                    _tokenManager.AssessmentForUser(currentUserId, assessmentId);
+                    await _tokenManager.AssessmentForUser(currentUserId, assessmentId);
                     currentAssessmentId = assessmentId;
                 }
 

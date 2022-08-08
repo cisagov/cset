@@ -420,7 +420,7 @@ namespace CSETWebCore.Api.Controllers
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
 
-            var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
+            var assessmentList = await _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
             var aggregation = _aggregation.GetAggregation((int)aggregationID);
 
@@ -486,7 +486,7 @@ namespace CSETWebCore.Api.Controllers
             //    return Ok(response);
             //}
 
-            var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
+            var assessmentList = await _aggregation.GetAssessmentsForAggregation((int)aggregationID);
             Aggregation ag = _aggregation.GetAggregation((int)aggregationID);
             response.AggregationName = assessmentList.Aggregation.AggregationName;
 
@@ -553,7 +553,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 // default to Questions mode
                 mode = "Q";
-                SetMode(mode);
+                await SetMode(mode);
             }
 
             return mode;

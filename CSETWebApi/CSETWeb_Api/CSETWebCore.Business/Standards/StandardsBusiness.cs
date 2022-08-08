@@ -8,6 +8,8 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Standards;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Standards
 {
@@ -169,11 +171,11 @@ namespace CSETWebCore.Business.Standards
         /// </summary>
         /// <param name="selectedStandards"></param>
         /// <returns></returns>
-        public QuestionRequirementCounts PersistSelectedStandards(int assessmentId, List<string> selectedStandards)
+        public async Task<QuestionRequirementCounts> PersistSelectedStandards(int assessmentId, List<string> selectedStandards)
         {
-            var result = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
+            var result = await _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             _context.AVAILABLE_STANDARDS.RemoveRange(result);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             if (selectedStandards != null)
             {
@@ -186,10 +188,10 @@ namespace CSETWebCore.Business.Standards
                         Selected = true
                     });
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
@@ -205,9 +207,9 @@ namespace CSETWebCore.Business.Standards
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public QuestionRequirementCounts PersistDefaultSelectedStandard(int assessmentId)
+        public async Task<QuestionRequirementCounts> PersistDefaultSelectedStandard(int assessmentId)
         {
-            var result = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId);
+            var result = await _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             _context.AVAILABLE_STANDARDS.RemoveRange(result);
 
             var selectedStandards = GetDefaultStandardsList();
@@ -215,7 +217,7 @@ namespace CSETWebCore.Business.Standards
             {
                 foreach (string std in selectedStandards)
                 {
-                    _context.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                    await _context.AVAILABLE_STANDARDS.AddAsync(new AVAILABLE_STANDARDS()
                     {
                         Assessment_Id = assessmentId,
                         Set_Name = std,
@@ -223,10 +225,10 @@ namespace CSETWebCore.Business.Standards
                     });
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
 
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();

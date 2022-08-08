@@ -7,6 +7,8 @@ using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Nelibur.ObjectMapper;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.User
 {
@@ -28,7 +30,7 @@ namespace CSETWebCore.Business.User
         /// to create a user.
         /// </summary>
         /// <returns></returns>
-        public UserCreateResponse CreateUser(UserDetail userDetail, CSETContext tmpContext)
+        public async Task<UserCreateResponse> CreateUser(UserDetail userDetail, CSETContext context)
         {
             // see if this user already exists
             UserDetail existingUser = this.GetUserDetail(userDetail.Email);
@@ -60,10 +62,10 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = false,
                 PasswordResetRequired = true
             };
-            tmpContext.USERS.Add(u);
+            await context.USERS.AddAsync(u);
             try
             {
-                tmpContext.SaveChanges();
+                await context.SaveChangesAsync();
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
@@ -77,7 +79,7 @@ namespace CSETWebCore.Business.User
 
                 //TODO: Add logging
                 Console.WriteLine(ex);
-                tmpContext.USERS.Remove(u);
+                context.USERS.Remove(u);
             }
 
             UserCreateResponse resp = new UserCreateResponse
@@ -94,11 +96,11 @@ namespace CSETWebCore.Business.User
         /// </summary>
         /// <param name="userid">THIS VALUE SHOULD NEVER COME FROM THE POST OR URL ONLY THE AUTHTOKEN</param>
         /// <param name="user"></param>
-        public void UpdateUser(int userid, string PrimaryEmail, CreateUser user)
+        public async Task UpdateUser(int userid, string PrimaryEmail, CreateUser user)
         {
-            var dbuser = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+            var dbuser = await _context.USERS.Where(x => x.UserId == userid).FirstOrDefaultAsync();
             TinyMapper.Map(user, dbuser);
-            var details = _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == PrimaryEmail).FirstOrDefault();
+            var details = await _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == PrimaryEmail).FirstOrDefaultAsync();
             if (details != null)
                 TinyMapper.Map<CreateUser, USER_DETAIL_INFORMATION>(user, details);
 
@@ -162,7 +164,7 @@ namespace CSETWebCore.Business.User
             //}
             #endregion
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
         }
 

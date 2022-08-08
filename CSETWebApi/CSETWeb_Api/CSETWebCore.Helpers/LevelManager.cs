@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Sal;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -37,21 +39,18 @@ namespace CSETWebCore.Helpers
 
         private Dictionary<String, ASSESSMENT_SELECTED_LEVELS> dictionarySelectedLevels;
 
-        private CSETContext db;
+        private readonly CSETContext _context;
 
         public int Selected_Sal_Level_Order { get; private set; }
 
         private String selectedSalLevel;
 
 
-        public LevelManager(int id, CSETContext db)
+        public LevelManager(int id, CSETContext context)
         {
-            this.db = db;
-            this.dictionarySelectedLevels = new Dictionary<string, ASSESSMENT_SELECTED_LEVELS>();
-            foreach (ASSESSMENT_SELECTED_LEVELS standardLevel in db.ASSESSMENT_SELECTED_LEVELS.Where(x => id == x.Assessment_Id))
-            {
-                dictionarySelectedLevels.Add(standardLevel.Level_Name, standardLevel);
-            }
+            _context = context;
+            this.dictionarySelectedLevels = LoadAssessmentSelectedLevels(id, _context);
+            
         }
 
         public String GetDisplayName(String standardLevel)
@@ -59,12 +58,24 @@ namespace CSETWebCore.Helpers
             return dictionarySpecificLevel[standardLevel].Display_Name;
         }
 
+        public static Dictionary<string, ASSESSMENT_SELECTED_LEVELS>  LoadAssessmentSelectedLevels(int id, CSETContext context)
+        {
+            var dictionarySelectedLevels = new Dictionary<string, ASSESSMENT_SELECTED_LEVELS>();
+            var standardList = context.ASSESSMENT_SELECTED_LEVELS.Where(x => id == x.Assessment_Id).ToList();
+            foreach (ASSESSMENT_SELECTED_LEVELS standardLevel in standardList)
+            {
+                dictionarySelectedLevels.Add(standardLevel.Level_Name, standardLevel);
+            }
+
+            return dictionarySelectedLevels;
+        }
+
         public void Init(STANDARD_SELECTION standard)
         {
             this.standard = standard;
 
 
-            IEnumerable<UNIVERSAL_SAL_LEVEL> sals = db.UNIVERSAL_SAL_LEVEL.ToList();
+            IEnumerable<UNIVERSAL_SAL_LEVEL> sals = _context.UNIVERSAL_SAL_LEVEL.ToList();
             sALLevelWithNoneList = sals.OrderBy(x => x.Sal_Level_Order).ToList();
 
             SALLevelList = sals.Where(x => x.Full_Name_Sal != Constants.Constants.SAL_NONE).OrderBy(x => x.Sal_Level_Order).ToList();
@@ -76,11 +87,11 @@ namespace CSETWebCore.Helpers
             //CreateCSET4SALLevelDictionary(SALLevelList);
         }
 
-        public void SaveOtherLevels(int id, Sals tmpsal)
+        public async Task SaveOtherLevels(int id, Sals tmpsal)
         {
-            this.SaveSelectedLevels(id, CONFIDENCE_LEVEL_CNSSI, tmpsal.CLevel);
-            this.SaveSelectedLevels(id, INTEGRITY_LEVEL_CNSSI, tmpsal.ILevel);
-            this.SaveSelectedLevels(id, AVAILABLILTY_LEVEL_CNSSI, tmpsal.ALevel);
+            await this.SaveSelectedLevels(id, CONFIDENCE_LEVEL_CNSSI, tmpsal.CLevel);
+            await this.SaveSelectedLevels(id, INTEGRITY_LEVEL_CNSSI, tmpsal.ILevel);
+            await this.SaveSelectedLevels(id, AVAILABLILTY_LEVEL_CNSSI, tmpsal.ALevel);
         }
 
         public void RetrieveOtherLevels(Sals tmpsal)
@@ -103,14 +114,14 @@ namespace CSETWebCore.Helpers
         public void InitControl()
         {
             dictionaryUniversalSalLevel = new Dictionary<string, UNIVERSAL_SAL_LEVEL>();
-            foreach (UNIVERSAL_SAL_LEVEL salLevel in db.UNIVERSAL_SAL_LEVEL)
+            foreach (UNIVERSAL_SAL_LEVEL salLevel in _context.UNIVERSAL_SAL_LEVEL)
             {
                 dictionaryUniversalSalLevel[salLevel.Full_Name_Sal] = salLevel;
                 dictionaryShortUniversalSalLevel[salLevel.Universal_Sal_Level1] = salLevel;
             }
 
             dictionarySpecificLevel = new Dictionary<string, STANDARD_SPECIFIC_LEVEL>();
-            foreach (STANDARD_SPECIFIC_LEVEL standardLevel in db.STANDARD_SPECIFIC_LEVEL)
+            foreach (STANDARD_SPECIFIC_LEVEL standardLevel in _context.STANDARD_SPECIFIC_LEVEL)
             {
                 if (standardLevel.Standard == LevelManager.DOD_CONF_STANDARD || standardLevel.Standard == LevelManager.DOD_MIS_STANDARD)
                 {
@@ -236,7 +247,7 @@ namespace CSETWebCore.Helpers
 
         private Tuple<ObservableCollection<string>, string> GetObservableLevel(String standardLevelName)
         {
-            IEnumerable<STANDARD_SPECIFIC_LEVEL> levels = db.STANDARD_SPECIFIC_LEVEL.Where(x => x.Standard == standardLevelName)
+            IEnumerable<STANDARD_SPECIFIC_LEVEL> levels = _context.STANDARD_SPECIFIC_LEVEL.Where(x => x.Standard == standardLevelName)
                        .OrderBy(x => x.Display_Order).ToList();
             string default_conf_dod_Level = levels.Where(x => x.Is_Default_Value).Select(x => x.Display_Name).FirstOrDefault();
             ObservableCollection<string> obDodConf = new ObservableCollection<string>(levels.Select(x => x.Display_Name));
@@ -248,7 +259,7 @@ namespace CSETWebCore.Helpers
             this.dictionarySelectedLevels[selectedLevel.Level_Name] = selectedLevel;
         }
 
-        public void SaveSelectedLevels(int assessment_id, String levelName, String value)
+        public async Task SaveSelectedLevels(int assessment_id, String levelName, String value)
         {
             try
             {
@@ -276,9 +287,9 @@ namespace CSETWebCore.Helpers
                             Level_Name = levelName,
                             Standard_Specific_Sal_Level = storeValue
                         };
-                        db.ASSESSMENT_SELECTED_LEVELS.Add(saveSal);
+                        await _context.ASSESSMENT_SELECTED_LEVELS.AddAsync(saveSal);
                     }
-                    db.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception exc)
@@ -289,13 +300,13 @@ namespace CSETWebCore.Helpers
             }
         }
 
-        public void SaveSALLevel(String salLevel)
+        public async Task SaveSALLevel(String salLevel)
         {
             if (salLevel != null)
             {
                 standard.Selected_Sal_Level = salLevel;
                 SetSalLevel(salLevel);
-                db.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -306,10 +317,10 @@ namespace CSETWebCore.Helpers
             Selected_Sal_Level_Order = salLevelObject.Sal_Level_Order;
         }
 
-        public void SaveSALDetermination(string last_Sal_Determination_Type)
+        public async Task SaveSALDetermination(string last_Sal_Determination_Type)
         {
             standard.Last_Sal_Determination_Type = last_Sal_Determination_Type;
-            db.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -5,17 +5,18 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces
 {
     public interface IDiagramManager
     {
-        void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req);
+        Task SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req);
         DiagramResponse GetDiagram(int assessmentID);
         bool HasDiagram(int assessmentID);
         string GetDiagramImage(int assessmentID, string http);
         List<ComponentSymbolGroup> GetComponentSymbols();
-        string ImportOldCSETDFile(string diagramXml, int assessmentId);
+        Task<string> ImportOldCSETDFile(string diagramXml, int assessmentId);
         List<ComponentSymbol> GetAllComponentSymbols();
         StringReader GetDiagramXml(int assessmentId);
         List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream, int assessment_id);

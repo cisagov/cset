@@ -160,7 +160,7 @@ namespace CSETWebCore.Helpers
                     break;
 
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -172,7 +172,7 @@ namespace CSETWebCore.Helpers
         {
             var standard = await GetStandard();
             standard.Sort_Set_Name = set;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 

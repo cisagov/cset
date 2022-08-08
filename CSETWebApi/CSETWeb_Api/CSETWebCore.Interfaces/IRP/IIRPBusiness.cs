@@ -1,10 +1,11 @@
 ﻿using CSETWebCore.Model.Acet;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.IRP
 {
     public interface IIRPBusiness
     {
-        IRPResponse GetIRPList(int assessmentId);
-        void PersistSelectedIRP(int assessmentId, IRPModel irp);
+        Task<IRPResponse> GetIRPList(int assessmentId);
+        Task PersistSelectedIRP(int assessmentId, IRPModel irp);
     }
 }

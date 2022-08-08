@@ -119,14 +119,14 @@ namespace CSETWebCore.Business.Sal
         public async Task<string> SaveWeightAndCalculate(SaveWeight ws)
         {
             //look up the weight id and save it to the db                
-            var gensal = _context.GENERAL_SAL.Where(x => x.Sal_Name == ws.slidername && x.Assessment_Id == ws.assessmentid).FirstOrDefault();
+            var gensal = await _context.GENERAL_SAL.Where(x => x.Sal_Name == ws.slidername && x.Assessment_Id == ws.assessmentid).FirstOrDefaultAsync();
             if (gensal == null)
                 await _context.GENERAL_SAL.AddAsync(new GENERAL_SAL() { Assessment_Id = ws.assessmentid, Sal_Name = ws.slidername, Slider_Value = ws.Slider_Value });
             else
                 gensal.Slider_Value = ws.Slider_Value;
 
-            _context.SaveChanges();
-            _assessmentUtil.TouchAssessment(ws.assessmentid);
+            await _context.SaveChangesAsync();
+            await _assessmentUtil.TouchAssessment(ws.assessmentid);
             string rval = await GetCurrentSAL(ws.assessmentid);
             return rval;
         }

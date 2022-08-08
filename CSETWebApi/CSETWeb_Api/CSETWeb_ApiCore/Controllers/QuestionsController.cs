@@ -157,7 +157,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 var amd = new AssessmentMode(_context, _token);
                 mode = amd.DetermineDefaultApplicationModeAbbrev();
-                SetMode(mode);
+                await SetMode(mode);
             }
 
             return Ok(mode);
@@ -177,7 +177,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 var amd = new AssessmentMode(_context, _token);
                 mode = amd.DetermineDefaultApplicationModeAbbrev();
-                SetMode(mode);
+                await SetMode(mode);
             }
 
             return mode;
@@ -352,7 +352,7 @@ namespace CSETWebCore.Api.Controllers
             if (Answer_Id == 0)
             {
                 _questionRequirement.AssessmentId = assessmentId;
-                Answer_Id = _questionRequirement.StoreAnswer(new Answer()
+                Answer_Id = await _questionRequirement.StoreAnswer(new Answer()
                 {
                     QuestionId = Question_Id,
                     MarkForReview = false,
@@ -399,7 +399,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = await _token.AssessmentForUser();
             var fm = new FindingsManager(_context, assessmentId);
 
-            var f = fm.GetFinding(finding_Id);
+            var f = await fm.GetFinding(finding_Id);
             fm.DeleteFinding(f);
             return Ok();
         }

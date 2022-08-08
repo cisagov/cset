@@ -201,7 +201,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.STANDARD_SELECTION.Add(sTANDARD_SELECTION);
+            await _context.STANDARD_SELECTION.AddAsync(sTANDARD_SELECTION);
 
             try
             {
@@ -233,7 +233,7 @@ namespace CSETWebCore.Api.Controllers
             NistModel rvalue = new NistModel()
             {
                 models = nistSal.GetInformationTypes(assessmentId),
-                questions = nistSal.GetNistQuestions(assessmentId),
+                questions = await nistSal.GetNistQuestions(assessmentId),
                 specialFactors = nistSal.GetSpecialFactors(assessmentId)
             };
 
@@ -246,7 +246,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
-            return nistSal.UpdateSalValue(updateValue, assessmentId);
+            return await nistSal.UpdateSalValue(updateValue, assessmentId);
 
 
         }
@@ -257,7 +257,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
-            return nistSal.SaveNistQuestions(assessmentId, updateValue);
+            return await nistSal.SaveNistQuestions(assessmentId, updateValue);
         }
 
         [HttpPost]
@@ -266,7 +266,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = await _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
-            return nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
+            return await nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
         }
 
         private async Task<bool> STANDARD_SELECTIONExists(int id)

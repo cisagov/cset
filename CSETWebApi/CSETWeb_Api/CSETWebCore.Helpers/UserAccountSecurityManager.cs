@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Notification;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
@@ -41,7 +42,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        public bool CreateUserSendEmail(CreateUser info)
+        public async Task<bool> CreateUserSendEmail(CreateUser info)
         {
             try
             {
@@ -53,9 +54,9 @@ namespace CSETWebCore.Helpers
                     FirstName = info.FirstName,
                     LastName = info.LastName
                 };
-                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud,_context);
+                UserCreateResponse userCreateResponse = await _userBusiness.CreateUser(ud,_context);
 
-                _context.USER_SECURITY_QUESTIONS.Add(new USER_SECURITY_QUESTIONS()
+                await _context.USER_SECURITY_QUESTIONS.AddAsync(new USER_SECURITY_QUESTIONS()
                 {
                     UserId = userCreateResponse.UserId,
                     SecurityQuestion1 = info.SecurityQuestion1,
@@ -64,7 +65,7 @@ namespace CSETWebCore.Helpers
                     SecurityAnswer2 = info.SecurityAnswer2
                 });
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 // Send the new temp password to the user
                 _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppCode);
@@ -93,18 +94,18 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="changePass"></param>
         /// <returns></returns>
-        public bool ChangePassword(ChangePassword changePass)
+        public async Task<bool> ChangePassword(ChangePassword changePass)
         {
             try
             {
-                var user = _context.USERS.Where(x => x.PrimaryEmail == changePass.PrimaryEmail).FirstOrDefault();
-                var info = _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == user.PrimaryEmail).FirstOrDefault();
+                var user = await _context.USERS.Where(x => x.PrimaryEmail == changePass.PrimaryEmail).FirstOrDefaultAsync();
+                var info = await _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == user.PrimaryEmail).FirstOrDefaultAsync();
 
                 new PasswordHash().HashPassword(changePass.NewPassword, out string hash, out string salt);
                 user.Password = hash;
                 user.Salt = salt;
                 user.PasswordResetRequired = false;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception exc)
@@ -123,7 +124,7 @@ namespace CSETWebCore.Helpers
         /// <param name="subject"></param>
         /// <param name="appCode"></param>
         /// <returns></returns>
-        public bool ResetPassword(string email, string subject, string appCode)
+        public async Task<bool> ResetPassword(string email, string subject, string appCode)
         {
             /**
              * get the user and make sure they exist
@@ -134,7 +135,7 @@ namespace CSETWebCore.Helpers
              */
             try
             {
-                var user = _context.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefault();
+                var user = await _context.USERS.Where(x => x.PrimaryEmail == email).FirstOrDefaultAsync();
 
                 user.PasswordResetRequired = true;
                 var password = UniqueIdGenerator.Instance.GetBase32UniqueId(10);
@@ -155,7 +156,7 @@ namespace CSETWebCore.Helpers
 
                 _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appCode);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }

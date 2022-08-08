@@ -11,6 +11,8 @@ using CSETWebCore.DataLayer.Model;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Business.ModuleIO
@@ -38,7 +40,7 @@ namespace CSETWebCore.Business.ModuleIO
         /// Imports a Module/Standard.
         /// </summary>
         /// <param name="externalStandard"></param>
-        public void ProcessStandard(ExternalStandard externalStandard)
+        public async Task ProcessStandard(ExternalStandard externalStandard)
         {
 
             //     private static readonly log4net.ILog log
@@ -57,12 +59,12 @@ namespace CSETWebCore.Business.ModuleIO
             var set = new SETS();
 
 
-            var existingSet = _context.SETS.FirstOrDefault(s => s.Set_Name == setname);
+            var existingSet = await _context.SETS.FirstOrDefaultAsync(s => s.Set_Name == setname);
             if (existingSet != null)
             {
                 // result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
             }
-            category = _context.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
+            category = await _context.SETS_CATEGORY.FirstOrDefaultAsync(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
             if (category == null)
             {
@@ -88,8 +90,8 @@ namespace CSETWebCore.Business.ModuleIO
 
             set.Standard_ToolTip = externalStandard.summary;
 
-            _context.SETS.Add(set);
-            _context.SaveChanges();
+            await _context.SETS.AddAsync(set);
+            await _context.SaveChangesAsync();
 
 
             try
@@ -108,7 +110,7 @@ namespace CSETWebCore.Business.ModuleIO
         /// </summary>
         /// <param name="set"></param>
         /// <param name="db"></param>
-        private void ProcessRequirements(ExternalStandard externalStandard, SETS set)
+        private async Task ProcessRequirements(ExternalStandard externalStandard, SETS set)
         {
             // var jsonStandard = System.Text.Json.JsonSerializer.Serialize(externalStandard);
             //JsonConvert.SerializeObject(externalStandard, Formatting.Indented);
@@ -127,7 +129,7 @@ namespace CSETWebCore.Business.ModuleIO
                 if (!requirementList.Any(s => s == requirement.identifier.Trim().ToLower() + "|||" + requirement.text.Trim().ToLower()))
                 {
                     reqSequence++;
-                    var requirementResult = SaveRequirement(requirement, set.Set_Name, reqSequence   /*, new ConsoleLogger() */     );
+                    var requirementResult = await SaveRequirement(requirement, set.Set_Name, reqSequence   /*, new ConsoleLogger() */     );
 
 
                     if (requirementResult != null)
@@ -177,7 +179,7 @@ namespace CSETWebCore.Business.ModuleIO
         /// <param name="setName"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public NEW_REQUIREMENT SaveRequirement(ExternalRequirement externalRequirement, string setName,
+        public async Task<NEW_REQUIREMENT> SaveRequirement(ExternalRequirement externalRequirement, string setName,
             int sequence
             /* ILogger logger */
             )
@@ -209,21 +211,23 @@ namespace CSETWebCore.Business.ModuleIO
 
             try
             {
-                questionGroupHeading = _context.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
+                questionGroupHeading = await _context.QUESTION_GROUP_HEADING.FirstOrDefaultAsync(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
                 try
                 {
-                    var subcatId = _context.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
+                    var subCat = await _context.UNIVERSAL_SUB_CATEGORIES
+                        .FirstOrDefaultAsync(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower());
+                    var subcatId =  subCat?.Universal_Sub_Category_Id ?? 0;
                     if (subcatId == 0)
                     {
                         var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.subheading };
-                        _context.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
-                        _context.SaveChanges();
+                        await _context.UNIVERSAL_SUB_CATEGORIES.AddAsync(subcat);
+                        await _context.SaveChangesAsync();
                         subcatId = subcat.Universal_Sub_Category_Id;
                     }
 
                     try
                     {
-                        uschPairing = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
+                        uschPairing = await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefaultAsync(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
                         if (uschPairing == null)
                         {
                             uschPairing = new UNIVERSAL_SUB_CATEGORY_HEADINGS()
@@ -232,8 +236,8 @@ namespace CSETWebCore.Business.ModuleIO
                                 Universal_Sub_Category_Id = subcatId,
                                 Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id
                             };
-                            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(uschPairing);
-                            _context.SaveChanges();
+                            await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.AddAsync(uschPairing);
+                            await _context.SaveChangesAsync();
                         }
                     }
                     catch (Exception exc)
@@ -353,8 +357,8 @@ namespace CSETWebCore.Business.ModuleIO
 
             try
             {
-                _context.NEW_REQUIREMENT.Add(newRequirement);
-                _context.SaveChanges();
+                await _context.NEW_REQUIREMENT.AddAsync(newRequirement);
+                await _context.SaveChangesAsync();
             }
             catch (Exception exc)
             {
@@ -374,7 +378,7 @@ namespace CSETWebCore.Business.ModuleIO
         /// <summary>
         /// 
         /// </summary>
-        public void SaveQuestions(
+        public async Task SaveQuestions(
             string setName,
             ExternalRequirement externalRequirement,
             NEW_REQUIREMENT newRequirement,
@@ -392,7 +396,7 @@ namespace CSETWebCore.Business.ModuleIO
             // get the max Std_Ref_Number for the std_ref
             // each std_ref + std_ref_num must be unique
             int stdRefNum = 1;
-            var fellowQuestions = _context.NEW_QUESTION.Where(x => x.Std_Ref == setName.Replace("_", "")).ToList();
+            var fellowQuestions = await _context.NEW_QUESTION.Where(x => x.Std_Ref == setName.Replace("_", "")).ToListAsync();
             if (fellowQuestions.Count > 0)
             {
                 stdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
@@ -404,7 +408,7 @@ namespace CSETWebCore.Business.ModuleIO
 
 
                 // Look for existing question by question text
-                newQuestion = _context.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
+                newQuestion = await _context.NEW_QUESTION.FirstOrDefaultAsync(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
 
                 if (newQuestion == null)
                 {
@@ -422,8 +426,8 @@ namespace CSETWebCore.Business.ModuleIO
 
                         newQuestion.Heading_Pair_Id = uschPairing.Heading_Pair_Id;
 
-                        _context.NEW_QUESTION.Add(newQuestion);
-                        _context.SaveChanges();
+                        await _context.NEW_QUESTION.AddAsync(newQuestion);
+                        await _context.SaveChangesAsync();
                     }
                     catch (Exception exc)
                     {
@@ -439,10 +443,10 @@ namespace CSETWebCore.Business.ModuleIO
                     Set_Name = setName
                 };
 
-                if (_context.NEW_QUESTION_SETS.Count(x => x.Question_Id == nqs.Question_Id && x.Set_Name == nqs.Set_Name) == 0)
+                if (await _context.NEW_QUESTION_SETS.CountAsync(x => x.Question_Id == nqs.Question_Id && x.Set_Name == nqs.Set_Name) == 0)
                 {
-                    _context.NEW_QUESTION_SETS.Add(nqs);
-                    _context.SaveChanges();
+                    await _context.NEW_QUESTION_SETS.AddAsync(nqs);
+                    await _context.SaveChangesAsync();
 
 
                     // attach question SAL levels
@@ -459,7 +463,7 @@ namespace CSETWebCore.Business.ModuleIO
                             x.Universal_Sal_Level == nql.Universal_Sal_Level
                             && x.New_Question_Set_Id == nqs.New_Question_Set_Id))
                         {
-                            _context.NEW_QUESTION_LEVELS.Add(nql);
+                            await _context.NEW_QUESTION_LEVELS.AddAsync(nql);
                             nqlList.Add(nql);
                         }
                     }
@@ -475,11 +479,11 @@ namespace CSETWebCore.Business.ModuleIO
                         Requirement_Id = newRequirement.Requirement_Id
                     };
 
-                    if (_context.REQUIREMENT_QUESTIONS_SETS.Count(x =>
+                    if (await _context.REQUIREMENT_QUESTIONS_SETS.CountAsync(x =>
                         x.Question_Id == rqs.Question_Id
                         && x.Set_Name == rqs.Set_Name) == 0)
                     {
-                        _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+                        await _context.REQUIREMENT_QUESTIONS_SETS.AddAsync(rqs);
                     }
 
 
@@ -489,13 +493,13 @@ namespace CSETWebCore.Business.ModuleIO
                         Requirement_Id = newRequirement.Requirement_Id
                     };
 
-                    if (_context.REQUIREMENT_QUESTIONS_SETS.Count(x => x.Question_Id == rq.Question_Id
+                    if (await _context.REQUIREMENT_QUESTIONS_SETS.CountAsync(x => x.Question_Id == rq.Question_Id
                         && x.Requirement_Id == rq.Requirement_Id) == 0)
                     {
-                        _context.REQUIREMENT_QUESTIONS.Add(rq);
+                        await _context.REQUIREMENT_QUESTIONS.AddAsync(rq);
                     }
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch (Exception exc)
                 {

@@ -17,10 +17,10 @@ namespace CSETWebCore.Interfaces.Question
         void InitializeApplicationMode();
         void InitializeSalLevel();
         void InitializeStandardsForAssessment();
-        void SetApplicationMode(string mode);
+        Task SetApplicationMode(string mode);
         string GetApplicationMode(int assessmentId);
-        int StoreComponentAnswer(Answer answer);
-        int StoreAnswer(Answer answer);
+        Task<int> StoreComponentAnswer(Answer answer);
+        Task<int> StoreAnswer(Answer answer);
         Task BuildComponentsResponse(QuestionResponse resp);
         void BuildOverridesOnly(QuestionResponse resp);
         void AddResponseComponentOverride(QuestionResponse resp, List<Answer_Components_Base> list, string listname);

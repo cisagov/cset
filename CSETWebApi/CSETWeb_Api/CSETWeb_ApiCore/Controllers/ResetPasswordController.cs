@@ -116,11 +116,11 @@ namespace CSETWebCore.Api.Controllers
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
 
-                bool rval = resetter.ChangePassword(changePass);
+                bool rval = await resetter.ChangePassword(changePass);
                 if (rval)
                 {
                     resp.ResetRequired = false;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok("Created Successfully");
                 }
                 else
@@ -164,7 +164,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
-                bool rval = resetter.CreateUserSendEmail(user);
+                bool rval = await resetter.CreateUserSendEmail(user);
                 if (rval)
                     return Ok("Created Successfully");
                 else
@@ -195,7 +195,7 @@ namespace CSETWebCore.Api.Controllers
                 if (await IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
-                    bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
+                    bool rval = await resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
                     if (rval)
                         return Ok();
                     else
@@ -259,7 +259,7 @@ namespace CSETWebCore.Api.Controllers
                     || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
-                    bool rval = resetter.ResetPassword(email, "Password Reset", appCode);
+                    bool rval = await resetter.ResetPassword(email, "Password Reset", appCode);
 
                     return Ok(new List<SecurityQuestions>());
                 }

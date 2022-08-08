@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Assessment
             }
         }
 
-        public void SaveMode(StandardModeEnum standardMode)
+        public async Task SaveMode(StandardModeEnum standardMode)
         {
             if (standardMode == StandardModeEnum.Question)
             {
@@ -104,14 +104,14 @@ namespace CSETWebCore.Business.Assessment
                 // Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standardMode);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
-        public void SaveSortSet(string set)
+        public async Task SaveSortSet(string set)
         {
             standard.Sort_Set_Name = set;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 

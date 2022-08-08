@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Model.Aggregation;
@@ -69,7 +70,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <summary>
         /// Creates a new Aggregation (Trend or Comparison).
         /// </summary>
-        public CSETWebCore.Model.Aggregation.Aggregation CreateAggregation(string mode)
+        public async Task<CSETWebCore.Model.Aggregation.Aggregation> CreateAggregation(string mode)
         {
             string name = "";
             switch (mode)
@@ -90,7 +91,7 @@ namespace CSETWebCore.Business.Aggregation
             };
 
             // Commit the new assessment
-            int aggregationId = SaveAggregationInformation(0, newAgg);
+            int aggregationId = await SaveAggregationInformation(0, newAgg);
             newAgg.AggregationId = aggregationId;
 
             return newAgg;
@@ -127,10 +128,10 @@ namespace CSETWebCore.Business.Aggregation
         /// 
         /// </summary>
         /// <returns></returns>
-        public int SaveAggregationInformation(int aggregationId, CSETWebCore.Model.Aggregation.Aggregation aggreg)
+        public async Task<int> SaveAggregationInformation(int aggregationId, CSETWebCore.Model.Aggregation.Aggregation aggreg)
         {
 
-            var agg = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+            var agg = await _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefaultAsync();
 
             if (agg == null)
             {
@@ -141,8 +142,8 @@ namespace CSETWebCore.Business.Aggregation
                     Aggregation_Mode = aggreg.Mode
                 };
 
-                _context.AGGREGATION_INFORMATION.Add(agg);
-                _context.SaveChanges();
+                await _context.AGGREGATION_INFORMATION.AddAsync(agg);
+                await _context.SaveChangesAsync();
                 aggregationId = agg.AggregationID;
             }
 
@@ -151,7 +152,7 @@ namespace CSETWebCore.Business.Aggregation
             agg.Aggregation_Date = aggreg.AggregationDate;
 
             _context.AGGREGATION_INFORMATION.Update(agg);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return aggregationId;
         }
@@ -161,7 +162,7 @@ namespace CSETWebCore.Business.Aggregation
         /// 
         /// </summary>
         /// <param name="aggregationId"></param>
-        public void DeleteAggregation(int aggregationId)
+        public async Task DeleteAggregation(int aggregationId)
         {
            _context.AGGREGATION_ASSESSMENT.RemoveRange(
                 _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
@@ -171,7 +172,7 @@ namespace CSETWebCore.Business.Aggregation
                 _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId)
                 );
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -180,10 +181,10 @@ namespace CSETWebCore.Business.Aggregation
         /// The list is in ascending order of assessment date.
         /// </summary>
         /// <param name="aggregationId"></param>
-        public AssessmentListResponse GetAssessmentsForAggregation(int aggregationId)
+        public async Task<AssessmentListResponse> GetAssessmentsForAggregation(int aggregationId)
         {
 
-            var ai = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
+            var ai = await _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefaultAsync();
             var resp = new AssessmentListResponse
             {
                 Aggregation = new CSETWebCore.Model.Aggregation.Aggregation()
@@ -195,12 +196,12 @@ namespace CSETWebCore.Business.Aggregation
             };
 
 
-            var dbAaList = _context.AGGREGATION_ASSESSMENT
+            var dbAaList = await _context.AGGREGATION_ASSESSMENT
                 .Where(x => x.Aggregation_Id == aggregationId)
                 .Include(x => x.Assessment)
                 .ThenInclude(x => x.INFORMATION)
                 .OrderBy(x => x.Assessment.Assessment_Date)
-                .ToList();
+                .ToListAsync();
 
             var l = new List<AggregAssessment>();
 
@@ -224,14 +225,14 @@ namespace CSETWebCore.Business.Aggregation
             }
 
             // Make sure the aliases are persisted
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             resp.Assessments = l;
 
-            IncludeStandards(ref resp);
+            resp = await IncludeStandards( resp);
 
-            resp.Aggregation.QuestionsCompatibility = CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
-            resp.Aggregation.RequirementsCompatibility = CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
+            resp.Aggregation.QuestionsCompatibility = await CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
+            resp.Aggregation.RequirementsCompatibility = await CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
 
 
             return resp;
@@ -269,10 +270,10 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="aggregationId"></param>
         /// <param name="assessmentId"></param>
         /// <param name="selected"></param>
-        public CSETWebCore.Model.Aggregation.Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
+        public async Task<CSETWebCore.Model.Aggregation.Aggregation> SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
         {
 
-            var aa = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+            var aa = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
 
             if (selected)
             {
@@ -284,8 +285,8 @@ namespace CSETWebCore.Business.Aggregation
                         Assessment_Id = assessmentId,
                         Alias = ""
                     };
-                    _context.AGGREGATION_ASSESSMENT.Add(aa);
-                    _context.SaveChanges();
+                    await _context.AGGREGATION_ASSESSMENT.AddAsync(aa);
+                    await _context.SaveChangesAsync();
                 }
             }
             else
@@ -293,14 +294,14 @@ namespace CSETWebCore.Business.Aggregation
                 if (aa != null)
                 {
                     _context.AGGREGATION_ASSESSMENT.Remove(aa);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
 
 
             // Recalculate the compatibility scores and build the response
-            var agg = _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefault();
-            var assessmentIDs = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Select(x => x.Assessment_Id).ToList();
+            var agg = await _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId).FirstOrDefaultAsync();
+            var assessmentIDs = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId).Select(x => x.Assessment_Id).ToListAsync();
 
             var resp = new CSETWebCore.Model.Aggregation.Aggregation()
             {
@@ -310,8 +311,8 @@ namespace CSETWebCore.Business.Aggregation
                 Mode = agg.Aggregation_Mode
             };
 
-            resp.QuestionsCompatibility = CalcCompatibility("Q", assessmentIDs);
-            resp.RequirementsCompatibility = CalcCompatibility("R", assessmentIDs);
+            resp.QuestionsCompatibility = await CalcCompatibility("Q", assessmentIDs);
+            resp.RequirementsCompatibility = await CalcCompatibility("R", assessmentIDs);
             return resp;
         }
 
@@ -320,10 +321,10 @@ namespace CSETWebCore.Business.Aggregation
         /// Saves the specified alias.  If an empty string is submitted,
         /// An alias is assigned to the record and the value is returned to the client.
         /// </summary>
-        public string SaveAssessmentAlias(int aggregationId, int assessmentId, string alias, List<AssessmentSelection> assessList)
+        public async Task<string> SaveAssessmentAlias(int aggregationId, int assessmentId, string alias, List<AssessmentSelection> assessList)
         {
 
-            var aa = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
+            var aa = await _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             if (aa == null)
             {
                 return "";
@@ -335,7 +336,7 @@ namespace CSETWebCore.Business.Aggregation
             }
 
             aa.Alias = alias;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return alias;
         }
@@ -344,7 +345,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <summary>
         /// 
         /// </summary>
-        public void IncludeStandards(ref AssessmentListResponse response)
+        public async Task<AssessmentListResponse> IncludeStandards(AssessmentListResponse response)
         {
             // For each standard, list any assessments that use it.
             Dictionary<string, List<int>> selectedStandards = new Dictionary<string, List<int>>();
@@ -356,7 +357,7 @@ namespace CSETWebCore.Business.Aggregation
 
             foreach (var a in response.Assessments)
             {
-                var info = _context.INFORMATION.Where(x => x.Id == a.AssessmentId).FirstOrDefault();
+                var info = await _context.INFORMATION.Where(x => x.Id == a.AssessmentId).FirstOrDefaultAsync();
 
                 DataRow rowAssess = dt.NewRow();
                 rowAssess["AssessmentId"] = info.Id;
@@ -364,9 +365,9 @@ namespace CSETWebCore.Business.Aggregation
                 rowAssess["Alias"] = a.Alias;
                 dt.Rows.Add(rowAssess);
 
-                List<AVAILABLE_STANDARDS> standards = _context.AVAILABLE_STANDARDS
+                List<AVAILABLE_STANDARDS> standards = await _context.AVAILABLE_STANDARDS
                     .Include(x => x.Set_NameNavigation)
-                    .Where(x => x.Assessment_Id == a.AssessmentId && x.Selected).ToList();
+                    .Where(x => x.Assessment_Id == a.AssessmentId && x.Selected).ToListAsync();
                 foreach (var s in standards)
                 {
                     if (!dt.Columns.Contains(s.Set_NameNavigation.Short_Name))
@@ -404,6 +405,8 @@ namespace CSETWebCore.Business.Aggregation
                     });
                 }
             }
+
+            return response;
         }
 
 
@@ -413,7 +416,7 @@ namespace CSETWebCore.Business.Aggregation
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public float CalcCompatibility(string mode, List<int> assessmentIds)
+        public async Task<float> CalcCompatibility(string mode, List<int> assessmentIds)
         {
             var l = new List<List<int>>();
 
@@ -424,14 +427,15 @@ namespace CSETWebCore.Business.Aggregation
             {
                 if (mode == "Q")
                 {
-                    var listQuestionID = (List<int>)_context.InScopeQuestions(id);
-                    l.Add(listQuestionID);
+                    var listQuestionID = await _context.InScopeQuestions(id);
+
+                    l.AddRange((IEnumerable<List<int>>)listQuestionID.ToList());
                     m.UnionWith(listQuestionID);
                 }
 
                 if (mode == "R")
                 {
-                    var listRequirementID = (List<int>)_context.InScopeRequirements(id);
+                    var listRequirementID = (List<int>) await _context.InScopeRequirements(id);
                     l.Add(listRequirementID);
                     m.UnionWith(listRequirementID);
                 }
@@ -466,7 +470,7 @@ namespace CSETWebCore.Business.Aggregation
         /// Questions and Requirements mode, there will be no common "N" answers.
         /// </summary>
         /// <param name="aggregationId"></param>
-        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
+        public async Task<List<MissedQuestion>> GetCommonlyMissedQuestions(int aggregationId)
         {
             var resp = new List<MissedQuestion>();
 
@@ -474,19 +478,21 @@ namespace CSETWebCore.Business.Aggregation
             var questionsAnsweredNo = new List<List<int>>();
             var requirementsAnsweredNo = new List<List<int>>();
 
-            var assessmentIds = _context.AGGREGATION_ASSESSMENT
-                .Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+            var assessmentList = await _context.AGGREGATION_ASSESSMENT
+                .Where(x => x.Aggregation_Id == aggregationId).ToListAsync();
+
+            var assessmentIds = assessmentList.Select(x => x.Assessment_Id);
 
 
             foreach (int assessmentId in assessmentIds)
             {
-                var answeredNo = _context.Answer_Standards_InScope
-                    .Where(x => x.assessment_id == assessmentId && x.answer_text == "N").ToList();
+                var answeredNo = await _context.Answer_Standards_InScope
+                    .Where(x => x.assessment_id == assessmentId && x.answer_text == "N").ToListAsync();
 
                 // get the assessments 'mode'
-                var assessmentMode = _context.STANDARD_SELECTION
+                var assessmentMode = await _context.STANDARD_SELECTION
                     .Where(x => x.Assessment_Id == assessmentId)
-                    .Select(x => x.Application_Mode).FirstOrDefault();
+                    .Select(x => x.Application_Mode).FirstOrDefaultAsync();
 
                 if (assessmentMode.StartsWith("Q"))
                 {
@@ -504,8 +510,8 @@ namespace CSETWebCore.Business.Aggregation
             }
 
             // Now that the lists are built, analyze for common "N" answers
-            resp.AddRange(BuildQList(questionsAnsweredNo));
-            resp.AddRange(BuildRList(requirementsAnsweredNo));
+            resp.AddRange(await BuildQList(questionsAnsweredNo));
+            resp.AddRange(await BuildRList(requirementsAnsweredNo));
 
             return resp;
         }
@@ -517,7 +523,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="answeredNo"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        public List<MissedQuestion> BuildQList(List<List<int>> answeredNo)
+        public async Task<List<MissedQuestion>> BuildQList(List<List<int>> answeredNo)
         {
             var resp = new List<MissedQuestion>();
 
@@ -542,7 +548,7 @@ namespace CSETWebCore.Business.Aggregation
                          select new { nq, qgh, usc };
 
 
-            foreach (var q in query1.ToList())
+            foreach (var q in await query1.ToListAsync())
             {
                 resp.Add(new MissedQuestion()
                 {
@@ -563,7 +569,7 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="answeredNo"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        public List<MissedQuestion> BuildRList(List<List<int>> answeredNo)
+        public async Task<List<MissedQuestion>> BuildRList(List<List<int>> answeredNo)
         {
             var resp = new List<MissedQuestion>();
 
@@ -583,7 +589,7 @@ namespace CSETWebCore.Business.Aggregation
                          orderby nr.Standard_Category, nr.Standard_Sub_Category, nr.Requirement_Text
                          select nr;
 
-            foreach (var q in query1.ToList())
+            foreach (var q in await query1.ToListAsync())
             {
                 resp.Add(new MissedQuestion()
                 {

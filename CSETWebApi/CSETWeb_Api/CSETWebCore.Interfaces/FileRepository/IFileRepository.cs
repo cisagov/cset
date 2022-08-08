@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.FileRepository
 {
     public interface IFileRepository
     {
-        IEnumerable<FileDescriptionShort> AddFileDescriptions(FileResult fileResult);
+        Task<IEnumerable<FileDescriptionShort>> AddFileDescriptions(FileResult fileResult);
 
         IEnumerable<FileDescriptionShort> GetAllFiles(int assessment_id);
 

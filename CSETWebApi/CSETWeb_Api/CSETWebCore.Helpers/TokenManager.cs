@@ -45,6 +45,11 @@ namespace CSETWebCore.Helpers
             _configuration = configuration;
             _context = context;
 
+            
+        }
+
+        private async Task GetTokenFromHeaderAsyncHack()
+        {
             /* Get the token string from the Authorization header and
                strip off the Bearer prefix if present. */
             if (_httpContext.HttpContext != null)
@@ -53,7 +58,7 @@ namespace CSETWebCore.Helpers
                 if (!string.IsNullOrEmpty(req.Headers["Authorization"]))
                 {
                     _tokenString = req.Headers["Authorization"];
-                    Init(_tokenString);
+                    await Init(_tokenString);
                 }
             }
         }
@@ -63,10 +68,11 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="tokenString"></param>
-        public void SetToken(string tokenString)
+        public async Task SetToken(string tokenString)
         {
+            
             _tokenString = tokenString;
-            Init(tokenString);
+            await Init(tokenString);
         }
 
 
@@ -74,11 +80,12 @@ namespace CSETWebCore.Helpers
         /// Initializes the token if it has not been set but there is
         /// a token string.
         /// </summary>
-        public void Init()
+        public async Task Init()
         {
+            await GetTokenFromHeaderAsyncHack();
             if (_token == null && !String.IsNullOrEmpty(_tokenString))
             {
-                Init(_tokenString);
+                await Init(_tokenString);
             }
         }
 
@@ -348,9 +355,9 @@ namespace CSETWebCore.Helpers
         }
 
 
-        public void GenerateSecret()
+        public async Task GenerateSecret()
         {
-            GetSecret();
+            await GetSecret();
         }
 
 
@@ -402,9 +409,9 @@ namespace CSETWebCore.Helpers
                     Generated_UTC = DateTime.UtcNow,
                     Installation_ID = newInstallID
                 };
-                _context.INSTALLATION.Add(installRec);
+                await _context.INSTALLATION.AddAsync(installRec);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 _secret = newSecret;
                 return newSecret;
             
@@ -435,7 +442,7 @@ namespace CSETWebCore.Helpers
 
         public async Task<int> AssessmentForUser(String tokenString)
         {
-            SetToken(tokenString);
+            await SetToken(tokenString);
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 

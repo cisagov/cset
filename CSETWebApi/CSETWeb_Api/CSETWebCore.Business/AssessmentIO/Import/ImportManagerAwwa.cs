@@ -23,8 +23,7 @@ using System.Data.Common;
 using System.Data.OleDb;
 
 using CsvHelper.Excel;
-
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -67,7 +66,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public string ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
+        public async Task<string> ProcessSpreadsheetImport(byte[] spreadsheet, int assessmentId)
         {
             var stream = new MemoryStream(spreadsheet);
 
@@ -164,7 +163,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                              orderby r.Requirement_Title
                              select new { r.Requirement_Title, r.Requirement_Id, nq.Question_Id };
 
-                var listAwwaReqQuestions = queryAwwaReqQuestions.ToList();
+                var listAwwaReqQuestions = await queryAwwaReqQuestions.ToListAsync();
 
 
                 foreach (var a in mappedAnswers)
@@ -179,9 +178,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     }
 
                     // Insert or update a Requirement answer
-                    var answerR = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                    var answerR = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                         && x.Question_Or_Requirement_Id == mappedQandR.Requirement_Id
-                        && x.Question_Type == "Requirement").FirstOrDefault();
+                        && x.Question_Type == "Requirement").FirstOrDefaultAsync();
 
                     if (answerR == null)
                     {
@@ -195,8 +194,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             Comment = ""
                         };
 
-                        _context.ANSWER.Add(answerR);
-                        _context.SaveChanges();
+                        await _context.ANSWER.AddAsync(answerR);
+                        await _context.SaveChangesAsync();
                     }
 
                     if (answerR.Comment.Length > 0)
@@ -208,14 +207,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         answerR.Comment = a.CsetComment;
                     }
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
 
 
                     // Insert or update a Question answer
-                    var answerQ = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                    var answerQ = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                        && x.Question_Or_Requirement_Id == mappedQandR.Question_Id
-                       && x.Question_Type == "Question").FirstOrDefault();
+                       && x.Question_Type == "Question").FirstOrDefaultAsync();
 
                     if (answerQ == null)
                     {
@@ -229,8 +228,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             Comment = ""
                         };
 
-                        _context.ANSWER.Add(answerQ);
-                        _context.SaveChanges();
+                        await _context.ANSWER.AddAsync(answerQ);
+                        await _context.SaveChangesAsync();
                     }
 
                     if (answerQ.Comment.Length > 0)
@@ -242,7 +241,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         answerQ.Comment = a.CsetComment;
                     }
 
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
 

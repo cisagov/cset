@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
             if (ar != null)
             {
                 ar.IsAcetOnly = value;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return Ok();
@@ -164,7 +164,7 @@ namespace CSETWebCore.Api.Controllers
                     Assessment_Id = assessmentId,
                     DomainId = domainId
                 };
-                _context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
+                await _context.FINANCIAL_DOMAIN_FILTERS.AddAsync(filter);
             }
 
             switch (level)
@@ -186,7 +186,7 @@ namespace CSETWebCore.Api.Controllers
                     break;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             await _assessmentUtil.TouchAssessment(assessmentId);
 
@@ -219,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
                         Assessment_Id = assessmentId,
                         DomainId = domainId
                     };
-                    _context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
+                    await _context.FINANCIAL_DOMAIN_FILTERS.AddAsync(filter);
                 }
 
                 foreach (var s in f.Settings)
@@ -245,7 +245,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             await _assessmentUtil.TouchAssessment(assessmentId);
 
@@ -265,7 +265,7 @@ namespace CSETWebCore.Api.Controllers
 
             var filters = await _context.FINANCIAL_DOMAIN_FILTERS.Where(f => f.Assessment_Id == assessmentID).ToListAsync();
             _context.FINANCIAL_DOMAIN_FILTERS.RemoveRange(filters);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             await _assessmentUtil.TouchAssessment(assessmentID);
 

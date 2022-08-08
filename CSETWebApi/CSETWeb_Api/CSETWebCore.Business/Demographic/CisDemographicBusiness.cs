@@ -3,6 +3,8 @@ using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using CSETWebCore.Model.Assessment;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -20,9 +22,9 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIS_CSI_ORGANIZATION_DEMOGRAPHICS table.
         /// </summary
-        public int SaveOrgDemographics(CisOrganizationDemographics orgDemographics)
+        public async Task<int> SaveOrgDemographics(CisOrganizationDemographics orgDemographics)
         {
-            var dbOrgDemographics = _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == orgDemographics.AssessmentId).FirstOrDefault();
+            var dbOrgDemographics = await _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == orgDemographics.AssessmentId).FirstOrDefaultAsync();
 
             // Creating new Organization Demographics record for this assessment
             if (dbOrgDemographics == null)
@@ -31,8 +33,8 @@ namespace CSETWebCore.Business.Demographic
                 {
                     Assessment_Id = orgDemographics.AssessmentId
                 };
-                _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Add(dbOrgDemographics);
-                _context.SaveChanges();
+                await _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.AddAsync(dbOrgDemographics);
+                await _context.SaveChangesAsync();
             }
 
             dbOrgDemographics.Motivation_CRR = orgDemographics.MotivationCrr;
@@ -63,7 +65,7 @@ namespace CSETWebCore.Business.Demographic
             dbOrgDemographics.Cybersecurity_IT_ICS_Staff_Count = orgDemographics.CybersecurityItIcsStaffCount;
 
             _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Update(dbOrgDemographics);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             orgDemographics.AssessmentId = dbOrgDemographics.Assessment_Id;
 
             _assessmentUtil.TouchAssessment(dbOrgDemographics.Assessment_Id);
@@ -74,9 +76,9 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIS_CSI_SERVICE_DEMOGRAPHICS table.
         /// </summary
-        public int SaveServiceDemographics(CisServiceDemographics serviceDemographics)
+        public async Task<int> SaveServiceDemographics(CisServiceDemographics serviceDemographics)
         {
-            var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefault();
+            var dbServiceDemographics = await _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefaultAsync();
 
             // Creating new Service Demographics record for this assessment
             if (dbServiceDemographics == null)
@@ -85,8 +87,8 @@ namespace CSETWebCore.Business.Demographic
                 {
                     Assessment_Id = serviceDemographics.AssessmentId
                 };
-                _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Add(dbServiceDemographics);
-                _context.SaveChanges();
+                await _context.CIS_CSI_SERVICE_DEMOGRAPHICS.AddAsync(dbServiceDemographics);
+                await _context.SaveChangesAsync();
             }
 
             dbServiceDemographics.Critical_Service_Name = serviceDemographics.CriticalServiceName;
@@ -102,7 +104,7 @@ namespace CSETWebCore.Business.Demographic
             dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count = serviceDemographics.CybersecurityItIcsStaffCount;
 
             _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             serviceDemographics.AssessmentId = dbServiceDemographics.Assessment_Id;
 
             _assessmentUtil.TouchAssessment(dbServiceDemographics.Assessment_Id);
@@ -113,9 +115,9 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIS_CSI_SERVICE_COMPOSITION table.
         /// </summary
-        public int SaveServiceComposition(CisServiceComposition serviceComposition)
+        public async Task<int> SaveServiceComposition(CisServiceComposition serviceComposition)
         {
-            var dbServiceComposition = _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).FirstOrDefault();
+            var dbServiceComposition = await _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).FirstOrDefaultAsync();
 
             // Creating new Service Composition record for this assessment
             if (dbServiceComposition == null)
@@ -124,8 +126,8 @@ namespace CSETWebCore.Business.Demographic
                 {
                     Assessment_Id = serviceComposition.AssessmentId
                 };
-                _context.CIS_CSI_SERVICE_COMPOSITION.Add(dbServiceComposition);
-                _context.SaveChanges();
+                await _context.CIS_CSI_SERVICE_COMPOSITION.AddAsync(dbServiceComposition);
+                await _context.SaveChangesAsync();
             }
 
             dbServiceComposition.Networks_Description = serviceComposition.NetworksDescription;
@@ -136,7 +138,7 @@ namespace CSETWebCore.Business.Demographic
             dbServiceComposition.Other_Defining_System_Description = serviceComposition.OtherDefiningSystemDescription;
             dbServiceComposition.Primary_Defining_System = serviceComposition.PrimaryDefiningSystem;
 
-            var currentSecondaryDefiningSystems = _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).ToList();
+            var currentSecondaryDefiningSystems = await _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == serviceComposition.AssessmentId).ToListAsync();
 
             // Removing un selected secondary defining systems 
             foreach (var item in currentSecondaryDefiningSystems)
@@ -152,7 +154,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 if (!currentSecondaryDefiningSystems.Exists(x => x.Defining_System_Id == systemId)) 
                 {
-                    _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(
+                    await _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.AddAsync(
                         new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
                         {
                             Assessment_Id = serviceComposition.AssessmentId,
@@ -162,7 +164,7 @@ namespace CSETWebCore.Business.Demographic
             }
             
             _context.CIS_CSI_SERVICE_COMPOSITION.Update(dbServiceComposition);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             serviceComposition.AssessmentId = dbServiceComposition.Assessment_Id;
 
             _assessmentUtil.TouchAssessment(dbServiceComposition.Assessment_Id);

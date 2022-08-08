@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> SaveDataAttribute([FromBody] AttributePair attribute)
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            _tabBusiness.SaveDataAttribute(assessmentId, attribute);
+            await _tabBusiness.SaveDataAttribute(assessmentId, attribute);
             return Ok();
         }
     }

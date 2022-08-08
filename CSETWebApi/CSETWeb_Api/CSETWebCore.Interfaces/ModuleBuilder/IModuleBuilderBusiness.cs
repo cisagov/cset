@@ -5,6 +5,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
 
+
 namespace CSETWebCore.Interfaces.ModuleBuilder
 {
     public interface IModuleBuilderBusiness
@@ -17,9 +18,9 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
         SetDetail GetSetDetail(string setName);
         void AddCopyToSet(string sourceSetName, string destinationSetName);
         void DeleteCopyToSet(string setName);
-        SetDetail CloneSet(string setName);
-        BasicResponse DeleteSet(string setName);
-        string SaveSetDetail(SetDetail set);
+        Task<SetDetail> CloneSet(string setName);
+        Task<BasicResponse> DeleteSet(string setName);
+        Task<string> SaveSetDetail(SetDetail set);
         string GenerateNewSetName();
         QuestionListResponse GetQuestionsForSet(string setName);
         List<int> GetMyQuestionsUsedByOtherSets(string setName);
@@ -29,36 +30,36 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
 
         string GetTitle(int questionId, CSETContext db);
         bool ExistsQuestionText(string questionText);
-        void AddCustomQuestion(SetQuestion request);
-        void AddQuestion(SetQuestion request);
-        void RemoveQuestion(SetQuestion request);
-        int GetHeadingPair(int categoryId, string subcatText, string setName);
+        Task AddCustomQuestion(SetQuestion request);
+        Task AddQuestion(SetQuestion request);
+        Task RemoveQuestion(SetQuestion request);
+        Task<int> GetHeadingPair(int categoryId, string subcatText, string setName);
         List<CategoryEntry> GetStandardCategories();
         CategoriesSubcategoriesGroupHeadings GetCategoriesSubcategoriesGroupHeadings();
         List<QuestionDetail> SearchQuestions(QuestionSearch searchParms);
         void SetSalLevel(SalParms salParms);
-        void SetRequirementSalLevel(SalParms salParms);
-        void SetQuestionSalLevel(SalParms salParms);
-        BasicResponse UpdateQuestionText(int questionID, string text);
+        Task SetRequirementSalLevel(SalParms salParms);
+        Task SetQuestionSalLevel(SalParms salParms);
+        Task<BasicResponse> UpdateQuestionText(int questionID, string text);
         bool IsQuestionInUse(int questionID);
-        void UpdateHeadingText(int pairID, string text);
+        Task UpdateHeadingText(int pairID, string text);
         bool IsTextEncrypted(string text);
         ModuleResponse GetModuleStructure(string setName);
-        Requirement CreateRequirement(Requirement parms);
+        Task<Requirement> CreateRequirement(Requirement parms);
         Requirement GetRequirement(string setName, int reqID);
         ReferenceDocLists GetReferencesForRequirement(int reqID);
-        Requirement UpdateRequirement(Requirement parms);
-        void RemoveRequirement(Requirement parms);
+        Task<Requirement> UpdateRequirement(Requirement parms);
+        Task RemoveRequirement(Requirement parms);
         List<ReferenceDoc> GetReferenceDocs(string setName, string filter);
         List<ReferenceDoc> GetReferenceDocsForSet(string setName);
         ReferenceDoc GetReferenceDocDetail(int id);
-        void UpdateReferenceDocDetail(ReferenceDoc doc);
-        void SelectSetFile(SetFileSelection parms);
+        Task UpdateReferenceDocDetail(ReferenceDoc doc);
+        Task SelectSetFile(SetFileSelection parms);
 
-        ReferenceDocLists AddDeleteRefDocToRequirement(int requirementId, int docId, bool isSourceRef, string bookmark,
+        Task<ReferenceDocLists> AddDeleteRefDocToRequirement(int requirementId, int docId, bool isSourceRef, string bookmark,
             bool add);
 
-        int RecordDocInDB(FileUploadStreamResult result);
+        Task<int> RecordDocInDB(FileUploadStreamResult result);
 
 
     }

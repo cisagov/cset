@@ -70,7 +70,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> SetMaturityModel(string modelName)
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+            await new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetDomainRemarks()
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
+            return Ok(await new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
         }
 
         /// <summary>
@@ -95,7 +95,8 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> SetDomainRemarks([FromBody] MaturityDomainRemarks remarks)
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
+            var matBus  =  new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            await matBus.SetDomainRemarks(assessmentId, remarks);
             return Ok();
         }
 
@@ -122,7 +123,8 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            var matbus = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                await matbus.PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -432,7 +434,8 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> SetTargetBand([FromBody] bool value)
         {
             int assessmentId = await _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetTargetBandOnly(assessmentId, value);
+            var matbus = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            await matbus.SetTargetBandOnly(assessmentId, value);
             return Ok();
         }
 
@@ -597,7 +600,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 var MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-                var refText = MaturityBusiness.GetReferenceText(model);
+                var refText = await MaturityBusiness.GetReferenceText(model);
 
                 return Ok(refText);
             }

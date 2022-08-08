@@ -80,14 +80,14 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // save the assessment detail (primarily the UseMaturity setting)
-            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+            await _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
 
 
             // set CRR as the maturity model
             if (assessmentDetail.UseMaturity)
             {
                 var modelName = "CRR";
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                await new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
                 return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
             }
 
@@ -115,14 +115,14 @@ namespace CSETWebCore.Api.Controllers
 
 
             // save the assessment detail (primarily the UseMaturity setting)
-            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+            await _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
 
 
             // set RRA as the maturity model
             if (assessmentDetail.UseMaturity)
             {
                 var modelName = "RRA";
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                await new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
                 return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
             }
 
@@ -144,14 +144,14 @@ namespace CSETWebCore.Api.Controllers
 
 
             // save the assessment detail (primarily the UseMaturity setting)
-            _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
+            await _assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail);
 
 
             // set VADR as the maturity model
             if (assessmentDetail.UseMaturity)
             {
                 var modelName = "VADR";
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
+                await new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
                 return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
             }
 

@@ -90,7 +90,7 @@ namespace CSETWebCore.Api.Controllers
             string app_code = _token.Payload(Constants.Constants.Token_Scope);
 
             // Make sure the user is an admin on this assessment
-            _token.AuthorizeAdminRole();
+            await _token.AuthorizeAdminRole();
 
             newContact.AssessmentId = assessmentId;
             newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
@@ -180,7 +180,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                newList = _contact.RemoveContact(ac.Assessment_Contact_Id);
+                newList = await _contact.RemoveContact(ac.Assessment_Contact_Id);
             }
             catch (Exception)
             {
@@ -241,8 +241,8 @@ namespace CSETWebCore.Api.Controllers
 
                     var invited = await  _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
                     invited.Invited = true;
-                    _context.SaveChanges();
-                    _assessmentUtil.TouchAssessment(invited.Assessment_Id);
+                    await _context.SaveChangesAsync();
+                    await _assessmentUtil.TouchAssessment(invited.Assessment_Id);
 
                     success.Add(invitee, true);
                 }
@@ -381,7 +381,7 @@ namespace CSETWebCore.Api.Controllers
                     ac.PrimaryEmail = userBeingUpdated.PrimaryEmail;
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
 
                 // update security questions/answers
@@ -392,8 +392,8 @@ namespace CSETWebCore.Api.Controllers
                     {
                         UserId = userid
                     };
-                    _context.USER_SECURITY_QUESTIONS.Add(sq);
-                    _context.SaveChanges();
+                    await _context.USER_SECURITY_QUESTIONS.AddAsync(sq);
+                   await _context.SaveChangesAsync();
                 }
                 sq.SecurityQuestion1 = NullIfEmpty(userBeingUpdated.SecurityQuestion1);
                 sq.SecurityAnswer1 = NullIfEmpty(userBeingUpdated.SecurityAnswer1);
@@ -425,7 +425,7 @@ namespace CSETWebCore.Api.Controllers
 
                 try
                 {
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     // Only touch the assessment if the user is currently in one.
                     if (assessmentId >= 0)
                     {

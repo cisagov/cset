@@ -6,6 +6,8 @@ using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Model.Sal;
 using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Sal
 {
@@ -59,7 +61,7 @@ namespace CSETWebCore.Business.Sal
         /// Sets the SAL to Simple Low.  The level can be overridden.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefault(int assessmentId, string level = "Low")
+        public async Task SetDefault(int assessmentId, string level = "Low")
         {
             TextInfo ti = new CultureInfo("en-US", false).TextInfo;
             level = ti.ToTitleCase(level);
@@ -67,7 +69,7 @@ namespace CSETWebCore.Business.Sal
             TinyMapper.Bind<STANDARD_SELECTION, Sals>();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
 
-            STANDARD_SELECTION standardSelection = _context.STANDARD_SELECTION.Find(assessmentId);
+            STANDARD_SELECTION standardSelection = await _context.STANDARD_SELECTION.FindAsync(assessmentId);
 
             Sals sals = new Sals()
             {
@@ -83,7 +85,7 @@ namespace CSETWebCore.Business.Sal
             standardSelection.Application_Mode = _assessmentModeData.DetermineDefaultApplicationMode();
 
             _context.STANDARD_SELECTION.Add(standardSelection);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

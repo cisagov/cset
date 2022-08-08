@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Model.Assessment;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Demographic
 {
@@ -6,6 +7,6 @@ namespace CSETWebCore.Interfaces.Demographic
     {
         Demographics GetDemographics(int assessmentId);
         AnalyticsDemographic GetAnonymousDemographics(int assessmentId);
-        int SaveDemographics(Demographics demographics);
+        Task<int> SaveDemographics(Demographics demographics);
     }
 }

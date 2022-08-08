@@ -201,12 +201,12 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// <summary>
         /// Copies the structure of an existing set into a new one.  
         /// </summary>
-        public SetDetail CloneSet(string setName)
+        public async Task<SetDetail> CloneSet(string setName)
         {
             string newSetName = GenerateNewSetName();
 
             ModuleCloner cloner = new ModuleCloner();
-            bool cloneSuccess = cloner.CloneModule(setName, newSetName);
+            bool cloneSuccess = await cloner.CloneModule(setName, newSetName);
 
             if (cloneSuccess)
             {
@@ -220,11 +220,11 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// <summary>
         /// 
         /// </summary>
-        public BasicResponse DeleteSet(string setName)
+        public async Task<BasicResponse> DeleteSet(string setName)
         {
             BasicResponse resp = new BasicResponse();
 
-            var dbSet = _context.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+            var dbSet = await _context.SETS.Where(x => x.Set_Name == setName).FirstOrDefaultAsync();
 
             if (dbSet == null)
             {
@@ -244,8 +244,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                         where req.Original_Set_Name == setName
                         && rs.Set_Name != req.Original_Set_Name
                         select req;
-
-            if (query.ToList().Count > 0)
+            var requirementList = await query.ToListAsync();
+            if (requirementList.Count() > 0)
             {
                 resp.ErrorMessages.Add("Cannot perform delete. " +
                     "One or more of this Module's requirements " +
@@ -261,25 +261,28 @@ namespace CSETWebCore.Business.ModuleBuilder
                     where rs.Set_Name == setName
                     select req;
 
-            foreach (NEW_REQUIREMENT r in query.ToList())
+            var reqList = await query.ToListAsync();
+
+            foreach (NEW_REQUIREMENT r in reqList)
             {
                 _context.NEW_REQUIREMENT.Remove(r);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             // Delete any questions that were created for this set.
             var queryQ = _context.NEW_QUESTION.Where(x => x.Original_Set_Name == setName);
-            foreach (NEW_QUESTION q in queryQ.ToList())
+            var questionList = await queryQ.ToListAsync();
+            foreach (NEW_QUESTION q in questionList)
             {
                 _context.NEW_QUESTION.Remove(q);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             // This should cascade delete everything else
             _context.SETS.Remove(dbSet);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return resp;
         }
@@ -290,7 +293,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// </summary>
         /// <param name="set"></param>
         /// <returns></returns>
-        public string SaveSetDetail(SetDetail set)
+        public async Task<string> SaveSetDetail(SetDetail set)
         {
             if (string.IsNullOrEmpty(set.FullName))
             {
@@ -304,7 +307,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
             // Add or update the SETS record
-            var dbSet = _context.SETS.Where(x => x.Set_Name == set.SetName).FirstOrDefault();
+            var dbSet = await _context.SETS.Where(x => x.Set_Name == set.SetName).FirstOrDefaultAsync();
             if (dbSet == null)
             {
                 dbSet = new SETS()
@@ -318,7 +321,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Is_Displayed = set.IsDisplayed
                 };
 
-                _context.SETS.Add(dbSet);
+                await _context.SETS.AddAsync(dbSet);
             }
             else
             {
@@ -332,7 +335,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 _context.SETS.Update(dbSet);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return set.SetName;
         }
@@ -537,7 +540,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Creates a new custom question from the supplied text.
         /// </summary>
         /// <param name="request"></param>
-        public void AddCustomQuestion(SetQuestion request)
+        public async Task AddCustomQuestion(SetQuestion request)
         {
             if (string.IsNullOrEmpty(request.CustomQuestionText))
             {
@@ -546,7 +549,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             // get the max Std_Ref_Number for the std_ref
             int newStdRefNum = 1;
-            var fellowQuestions = _context.NEW_QUESTION.Where(x => x.Std_Ref == request.SetName).ToList();
+            var fellowQuestions = await _context.NEW_QUESTION.Where(x => x.Std_Ref == request.SetName).ToListAsync();
             if (fellowQuestions.Count > 0)
             {
                 newStdRefNum = fellowQuestions.Max(x => x.Std_Ref_Number) + 1;
@@ -566,11 +569,11 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Universal_Sal_Level = "L",
                 Weight = 0,
                 Original_Set_Name = request.SetName,
-                Heading_Pair_Id = GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName)
+                Heading_Pair_Id = await GetHeadingPair(request.QuestionCategoryID, request.QuestionSubcategoryText, request.SetName)
             };
 
-            _context.NEW_QUESTION.Add(q);
-            _context.SaveChanges();
+            await _context.NEW_QUESTION.AddAsync(q);
+            await _context.SaveChangesAsync();
 
 
             if (request.RequirementID > 0)
@@ -583,7 +586,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Requirement_Id = request.RequirementID
                 };
 
-                _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+                await _context.REQUIREMENT_QUESTIONS_SETS.AddAsync(rqs);
 
 
                 REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
@@ -592,7 +595,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Requirement_Id = request.RequirementID
                 };
 
-                _context.REQUIREMENT_QUESTIONS.Add(rq);
+                await _context.REQUIREMENT_QUESTIONS.AddAsync(rq);
             }
 
 
@@ -603,9 +606,9 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Set_Name = request.SetName
             };
 
-            _context.NEW_QUESTION_SETS.Add(nqs);
+            await _context.NEW_QUESTION_SETS.AddAsync(nqs);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             // Define SALs
@@ -617,10 +620,10 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Universal_Sal_Level = level
                 };
 
-                _context.NEW_QUESTION_LEVELS.Add(nql);
+                await _context.NEW_QUESTION_LEVELS.AddAsync(nql);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -628,7 +631,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Adds an existing question to a set or requirement.
         /// </summary>
         /// <param name="request"></param>
-        public void AddQuestion(SetQuestion request)
+        public async Task AddQuestion(SetQuestion request)
         {
             if (request.RequirementID > 0)
             {
@@ -640,7 +643,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Requirement_Id = request.RequirementID
                 };
 
-                _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
+                await _context.REQUIREMENT_QUESTIONS_SETS.AddAsync(rqs);
 
 
                 REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
@@ -649,10 +652,10 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Requirement_Id = request.RequirementID
                 };
 
-                _context.REQUIREMENT_QUESTIONS.Add(rq);
+                await _context.REQUIREMENT_QUESTIONS.AddAsync(rq);
 
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
 
@@ -663,17 +666,17 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Set_Name = request.SetName
             };
 
-            _context.NEW_QUESTION_SETS.Add(nqs);
-            _context.SaveChanges();
+            await _context.NEW_QUESTION_SETS.AddAsync(nqs);
+            await _context.SaveChangesAsync();
 
 
             // SAL levels
-            var nqls = _context.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id);
+            var nqls = await _context.NEW_QUESTION_LEVELS.Where(l => l.New_Question_Set_Id == nqs.New_Question_Set_Id).ToListAsync();
             foreach (NEW_QUESTION_LEVELS l in nqls)
             {
                 _context.NEW_QUESTION_LEVELS.Remove(l);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             foreach (string l in request.SalLevels)
             {
@@ -683,9 +686,9 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Universal_Sal_Level = l
                 };
 
-                _context.NEW_QUESTION_LEVELS.Add(nql);
+                await _context.NEW_QUESTION_LEVELS.AddAsync(nql);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -693,22 +696,22 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Detaches the specified question from the Set or Requirement.
         /// </summary>
         /// <param name="request"></param>
-        public void RemoveQuestion(SetQuestion request)
+        public async Task RemoveQuestion(SetQuestion request)
         {
             if (request.RequirementID != 0)
             {
                 // Requirement-related question
-                var rqs = _context.REQUIREMENT_QUESTIONS_SETS
+                var rqs = await _context.REQUIREMENT_QUESTIONS_SETS
                     .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
                 if (rqs != null)
                 {
                     _context.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
                 }
 
-                var rq = _context.REQUIREMENT_QUESTIONS
+                var rq = await _context.REQUIREMENT_QUESTIONS
                     .Where(x => x.Question_Id == request.QuestionID && x.Requirement_Id == request.RequirementID)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
                 if (rq != null)
                 {
                     _context.REQUIREMENT_QUESTIONS.Remove(rq);
@@ -716,15 +719,15 @@ namespace CSETWebCore.Business.ModuleBuilder
             }
 
             // Set-level question
-            var nqs = _context.NEW_QUESTION_SETS
+            var nqs = await _context.NEW_QUESTION_SETS
                 .Where(x => x.Set_Name == request.SetName && x.Question_Id == request.QuestionID)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
             if (nqs != null)
             {
                 _context.NEW_QUESTION_SETS.Remove(nqs);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -733,12 +736,12 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// for the category/subcategory/set.
         /// </summary>
         /// <returns></returns>
-        public int GetHeadingPair(int categoryId, string subcatText, string setName)
+        public async Task<int> GetHeadingPair(int categoryId, string subcatText, string setName)
         {
             int subcatID = 0;
 
             // Either find or create the subcategory
-            var subcat = _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == subcatText).FirstOrDefault();
+            var subcat = await _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == subcatText).FirstOrDefaultAsync();
             if (subcat != null)
             {
                 subcatID = subcat.Universal_Sub_Category_Id;
@@ -750,16 +753,16 @@ namespace CSETWebCore.Business.ModuleBuilder
                 {
                     Universal_Sub_Category = subcatText
                 };
-                _context.UNIVERSAL_SUB_CATEGORIES.Add(sc);
-                _context.SaveChanges();
+                await _context.UNIVERSAL_SUB_CATEGORIES.AddAsync(sc);
+                await _context.SaveChangesAsync();
 
                 subcatID = sc.Universal_Sub_Category_Id;
             }
 
             // See if this pairing exists (regardless of the set name)
-            var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+            var usch = await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
                 .Where(x => x.Question_Group_Heading_Id == categoryId && x.Universal_Sub_Category_Id == subcatID)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (usch != null)
             {
@@ -773,8 +776,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Universal_Sub_Category_Id = subcatID,
                 Set_Name = setName
             };
-            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(usch);
-            _context.SaveChanges();
+            await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.AddAsync(usch);
+            await _context.SaveChangesAsync();
 
             return usch.Heading_Pair_Id;
         }
@@ -955,10 +958,10 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Sets or removes a single SAL level for a requirement.
         /// </summary>
         /// <param name="salParms"></param>
-        public void SetRequirementSalLevel(SalParms salParms)
+        public async Task SetRequirementSalLevel(SalParms salParms)
         {
-            REQUIREMENT_LEVELS level = _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == salParms.RequirementID
-                && x.Standard_Level == salParms.Level).FirstOrDefault();
+            REQUIREMENT_LEVELS level = await _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == salParms.RequirementID
+                && x.Standard_Level == salParms.Level).FirstOrDefaultAsync();
 
             if (salParms.State)
             {
@@ -971,8 +974,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                         Standard_Level = salParms.Level,
                         Level_Type = "NST"
                     };
-                    _context.REQUIREMENT_LEVELS.Add(level);
-                    _context.SaveChanges();
+                    await _context.REQUIREMENT_LEVELS.AddAsync(level);
+                    await _context.SaveChangesAsync();
                 }
             }
             else
@@ -980,8 +983,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 // remove the level
                 if (level != null)
                 {
-                    _context.REQUIREMENT_LEVELS.Remove(level);
-                    _context.SaveChanges();
+                     _context.REQUIREMENT_LEVELS.Remove(level);
+                    await _context.SaveChangesAsync();
                 }
             }
         }
@@ -991,14 +994,14 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Sets or removes a single SAL level for a question.
         /// </summary>
         /// <param name="salParms"></param>
-        public void SetQuestionSalLevel(SalParms salParms)
+        public async Task SetQuestionSalLevel(SalParms salParms)
         {
 
-                NEW_QUESTION_SETS nqs = _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
+                NEW_QUESTION_SETS nqs = await _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefaultAsync();
 
-                NEW_QUESTION_LEVELS nql = _context.NEW_QUESTION_LEVELS.Where(x =>
+                NEW_QUESTION_LEVELS nql = await _context.NEW_QUESTION_LEVELS.Where(x =>
                     x.New_Question_Set_Id == nqs.New_Question_Set_Id
-                    && x.Universal_Sal_Level == salParms.Level).FirstOrDefault();
+                    && x.Universal_Sal_Level == salParms.Level).FirstOrDefaultAsync();
 
                 if (salParms.State)
                 {
@@ -1010,8 +1013,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                             New_Question_Set_Id = nqs.New_Question_Set_Id,
                             Universal_Sal_Level = salParms.Level
                         };
-                        _context.NEW_QUESTION_LEVELS.Add(nql);
-                        _context.SaveChanges();
+                        await _context.NEW_QUESTION_LEVELS.AddAsync(nql);
+                        await _context.SaveChangesAsync();
                     }
                 }
                 else
@@ -1020,7 +1023,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     if (nql != null)
                     {
                         _context.NEW_QUESTION_LEVELS.Remove(nql);
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
         }
@@ -1030,7 +1033,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Updates the question text.  Only questions originally attached
         /// to a 'custom' set can have their text updated.
         /// </summary>
-        public BasicResponse UpdateQuestionText(int questionID, string text)
+        public async Task<BasicResponse> UpdateQuestionText(int questionID, string text)
         {
             BasicResponse resp = new BasicResponse();
             if (text.Length > 7000)
@@ -1042,7 +1045,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                         where q.Question_Id == questionID
                         select s;
 
-            var origSet = query.FirstOrDefault();
+            var origSet = await query.FirstOrDefaultAsync();
 
             // if the question's original set does not exist (this should never happen), do nothing.
             if (origSet == null)
@@ -1059,7 +1062,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Update text.  Try/catch in case they are setting duplicate question text.
             try
             {
-                var question = _context.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefault();
+                var question = await _context.NEW_QUESTION.Where(x => x.Question_Id == questionID).FirstOrDefaultAsync();
                 if (question == null)
                 {
                     resp.ErrorMessages.Add("Question ID is not defined");
@@ -1069,7 +1072,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 question.Simple_Question = text;
 
                 _context.NEW_QUESTION.Update(question);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return resp;
             }
@@ -1107,9 +1110,9 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Updates the question text.  Only questions originally attached
         /// to a 'custom' set can have their text updated.
         /// </summary>
-        public void UpdateHeadingText(int pairID, string text)
+        public async Task UpdateHeadingText(int pairID, string text)
         {
-                var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
+                var usch = await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefaultAsync();
 
                 if (usch == null)
                 {
@@ -1118,7 +1121,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
                 usch.Sub_Heading_Question_Description = string.IsNullOrEmpty(text) ? null : text;
                 _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Update(usch);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
         }
 
 
@@ -1228,31 +1231,31 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Creates a NEW_REQUIREMENT record for the set.  Creates new category/subcategory records as needed.
         /// </summary>
         /// <param name="parms"></param>
-        public Requirement CreateRequirement(Requirement parms)
+        public async Task<Requirement> CreateRequirement(Requirement parms)
         {
             // Create the category if not already defined
-            var existingCategory = _context.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
+            var existingCategory = await _context.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefaultAsync();
             if (existingCategory == null)
             {
                 STANDARD_CATEGORY newCategory = new STANDARD_CATEGORY()
                 {
                     Standard_Category1 = parms.Category
                 };
-                _context.STANDARD_CATEGORY.Add(newCategory);
+                await _context.STANDARD_CATEGORY.AddAsync(newCategory);
             }
 
             // Create the subcategory if not already defined
-            var existingSubcategory = _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefault();
+            var existingSubcategory = await _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefaultAsync();
             if (existingSubcategory == null)
             {
                 UNIVERSAL_SUB_CATEGORIES newSubcategory = new UNIVERSAL_SUB_CATEGORIES()
                 {
                     Universal_Sub_Category = parms.Subcategory
                 };
-                _context.UNIVERSAL_SUB_CATEGORIES.Add(newSubcategory);
+                await _context.UNIVERSAL_SUB_CATEGORIES.AddAsync(newSubcategory);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             NEW_REQUIREMENT req = new NEW_REQUIREMENT
@@ -1265,17 +1268,17 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Original_Set_Name = parms.SetName.Truncate(50)
             };
 
-            _context.NEW_REQUIREMENT.Add(req);
-            _context.SaveChanges();
+            await _context.NEW_REQUIREMENT.AddAsync(req);
+            await _context.SaveChangesAsync();
 
             parms.RequirementID = req.Requirement_Id;
 
 
             // Determine a new sequence number
             int sequence = 1;
-            var seqList = _context.REQUIREMENT_SETS
+            var seqList = await _context.REQUIREMENT_SETS
                 .Where(x => x.Set_Name == parms.SetName)
-                .Select(x => x.Requirement_Sequence).ToList();
+                .Select(x => x.Requirement_Sequence).ToListAsync();
             if (seqList.Count > 0)
             {
                 sequence = seqList.Max() + 1;
@@ -1289,8 +1292,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 Requirement_Sequence = sequence
             };
 
-            _context.REQUIREMENT_SETS.Add(rs);
-            _context.SaveChanges();
+            await _context.REQUIREMENT_SETS.AddAsync(rs);
+            await _context.SaveChangesAsync();
 
             return parms;
         }
@@ -1432,33 +1435,33 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Updates the NEW_REQUIREMENT record for the set.  Creates new category/subcategory records as needed.
         /// </summary>
         /// <param name="parms"></param>
-        public Requirement UpdateRequirement(Requirement parms)
+        public async Task<Requirement> UpdateRequirement(Requirement parms)
         {
             // Create the category if not already defined
-            var existingCategory = _context.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefault();
+            var existingCategory = await _context.STANDARD_CATEGORY.Where(x => x.Standard_Category1 == parms.Category).FirstOrDefaultAsync();
             if (existingCategory == null)
             {
                 STANDARD_CATEGORY newCategory = new STANDARD_CATEGORY()
                 {
                     Standard_Category1 = parms.Category
                 };
-                _context.STANDARD_CATEGORY.Add(newCategory);
+                await _context.STANDARD_CATEGORY.AddAsync(newCategory);
             }
 
             // Create the subcategory if not already defined
-            var existingSubcategory = _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefault();
+            var existingSubcategory = await _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category == parms.Subcategory).FirstOrDefaultAsync();
             if (existingSubcategory == null)
             {
                 UNIVERSAL_SUB_CATEGORIES newSubcategory = new UNIVERSAL_SUB_CATEGORIES()
                 {
                     Universal_Sub_Category = parms.Subcategory
                 };
-                _context.UNIVERSAL_SUB_CATEGORIES.Add(newSubcategory);
+                await _context.UNIVERSAL_SUB_CATEGORIES.AddAsync(newSubcategory);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            NEW_REQUIREMENT req = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+            NEW_REQUIREMENT req = await _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefaultAsync();
             req.Requirement_Title = parms.Title;
             req.Requirement_Text = parms.RequirementText;
             req.Standard_Category = parms.Category;
@@ -1469,7 +1472,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
             _context.NEW_REQUIREMENT.Update(req);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return parms;
         }
@@ -1481,9 +1484,9 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// TODO:  Actually delete the NEW_REQUIREMENT record?
         /// </summary>
         /// <param name="parms"></param>
-        public void RemoveRequirement(Requirement parms)
+        public async Task RemoveRequirement(Requirement parms)
         {
-            var bridge = _context.REQUIREMENT_SETS.Where(x => x.Set_Name == parms.SetName && x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+            var bridge = await _context.REQUIREMENT_SETS.Where(x => x.Set_Name == parms.SetName && x.Requirement_Id == parms.RequirementID).FirstOrDefaultAsync();
             if (bridge == null)
             {
                 return;
@@ -1491,14 +1494,14 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             _context.REQUIREMENT_SETS.Remove(bridge);
 
-            var req = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefault();
+            var req = await _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == parms.RequirementID).FirstOrDefaultAsync();
             if (req == null)
             {
                 return;
             }
 
             _context.NEW_REQUIREMENT.Remove(req);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -1604,9 +1607,9 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// <summary>
         /// 
         /// </summary>
-        public void UpdateReferenceDocDetail(ReferenceDoc doc)
+        public async Task UpdateReferenceDocDetail(ReferenceDoc doc)
         {
-                var dbDoc = _context.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefault();
+                var dbDoc = await _context.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefaultAsync();
                 if (dbDoc == null)
                 {
                     return;
@@ -1624,14 +1627,14 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbDoc.Comments = doc.Comments;
 
                 _context.GEN_FILE.Update(dbDoc);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
         }
 
 
         /// <summary>
         /// Creates or deletes the SET_FILE row tying the document to the set.
         /// </summary>
-        public void SelectSetFile(SetFileSelection parms)
+        public async Task SelectSetFile(SetFileSelection parms)
         {
             if (parms.Doc.Selected)
             {
@@ -1640,15 +1643,15 @@ namespace CSETWebCore.Business.ModuleBuilder
                     SetName = parms.SetName,
                     Gen_File_Id = parms.Doc.ID
                 };
-                _context.SET_FILES.Add(sf);
+                await _context.SET_FILES.AddAsync(sf);
             }
             else
             {
-                var setFile = _context.SET_FILES.Where(x => x.SetName == parms.SetName && x.Gen_File_Id == parms.Doc.ID).FirstOrDefault();
+                var setFile = await _context.SET_FILES.Where(x => x.SetName == parms.SetName && x.Gen_File_Id == parms.Doc.ID).FirstOrDefaultAsync();
                 _context.SET_FILES.Remove(setFile);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -1656,7 +1659,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Either add or delete the reference document to the requirement.
         /// Returns the new list.
         /// </summary>
-        public ReferenceDocLists AddDeleteRefDocToRequirement(int requirementId, int docId, bool isSourceRef, string bookmark, bool add)
+        public async Task<ReferenceDocLists> AddDeleteRefDocToRequirement(int requirementId, int docId, bool isSourceRef, string bookmark, bool add)
         {
             if (bookmark == null)
             {
@@ -1665,8 +1668,8 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (isSourceRef)
             {
-                var reqref = _context.REQUIREMENT_SOURCE_FILES
-                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+                var reqref = await _context.REQUIREMENT_SOURCE_FILES
+                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefaultAsync();
 
                 if (add)
                 {
@@ -1679,8 +1682,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                             Requirement_Id = requirementId,
                             Section_Ref = bookmark.TrimStart('#')
                         };
-                        _context.REQUIREMENT_SOURCE_FILES.Add(reqref);
-                        _context.SaveChanges();
+                        await _context.REQUIREMENT_SOURCE_FILES.AddAsync(reqref);
+                        await _context.SaveChangesAsync();
                     }
                 }
                 else
@@ -1689,14 +1692,14 @@ namespace CSETWebCore.Business.ModuleBuilder
                     if (reqref != null)
                     {
                         _context.REQUIREMENT_SOURCE_FILES.Remove(reqref);
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
             }
             else
             {
-                var reqref = _context.REQUIREMENT_REFERENCES
-                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+                var reqref = await _context.REQUIREMENT_REFERENCES
+                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefaultAsync();
 
                 if (add)
                 {
@@ -1709,8 +1712,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                             Requirement_Id = requirementId,
                             Section_Ref = bookmark.TrimStart('#')
                         };
-                        _context.REQUIREMENT_REFERENCES.Add(reqref);
-                        _context.SaveChanges();
+                        await _context.REQUIREMENT_REFERENCES.AddAsync(reqref);
+                        await _context.SaveChangesAsync();
                     }
                     else
                     {
@@ -1723,7 +1726,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     if (reqref != null)
                     {
                         _context.REQUIREMENT_REFERENCES.Remove(reqref);
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
             }
@@ -1737,7 +1740,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Returns the ID of the new GEN_FILE row.
         /// !!Note that this only processes the first file in the foreach list!!
         /// </summary>
-        public int RecordDocInDB(FileUploadStreamResult result)
+        public async Task<int> RecordDocInDB(FileUploadStreamResult result)
         {
 
             // Determine file type ID.  Store null if not known.
@@ -1745,7 +1748,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             foreach (var file in result.FileResultList)
             {
-                var type = _context.FILE_TYPE.Where(x => x.Mime_Type == file.ContentType).FirstOrDefault();
+                var type = await _context.FILE_TYPE.Where(x => x.Mime_Type == file.ContentType).FirstOrDefaultAsync();
                 if (type != null)
                 {
                     fileType = (int)type.File_Type_Id;
@@ -1762,8 +1765,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Short_Name = "(no short name)",
                     Data = file.FileBytes
                 };
-                _context.GEN_FILE.Add(gf);
-                _context.SaveChanges();
+                await _context.GEN_FILE.AddAsync(gf);
+                await _context.SaveChangesAsync();
 
 
                 SET_FILES sf = new SET_FILES
@@ -1771,8 +1774,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     SetName = result.FormNameValues["setName"],
                     Gen_File_Id = gf.Gen_File_Id
                 };
-                _context.SET_FILES.Add(sf);
-                _context.SaveChanges();
+                await _context.SET_FILES.AddAsync(sf);
+                await _context.SaveChangesAsync();
 
                 return gf.Gen_File_Id;
             }

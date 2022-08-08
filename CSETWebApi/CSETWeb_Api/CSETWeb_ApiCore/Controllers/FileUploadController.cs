@@ -98,7 +98,7 @@ namespace CSETWebCore.Api.Controllers
                 // if no answerId was provided, try to find an answer for this assessment/question
                 if (answerId == 0)
                 {
-                    answerObj = _context.ANSWER.FirstOrDefault(x =>
+                    answerObj = await _context.ANSWER.FirstOrDefaultAsync(x =>
                         x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == questionId);
                 }
 
@@ -118,7 +118,7 @@ namespace CSETWebCore.Api.Controllers
                     else
                     {
                         _answerManager.InitializeManager(assessmentId);
-                        answerId = _answerManager.StoreAnswer(answer);
+                        answerId = await _answerManager.StoreAnswer(answer);
                     }
                 }
                 else

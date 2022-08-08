@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -96,11 +98,13 @@ namespace CSETWebCore.Business.Demographic
         /// </summary>
         /// <param name="demographics"></param>
         /// <returns></returns>
-        public int SaveDemographics(Demographics demographics)
+        public async Task<int> SaveDemographics(Demographics demographics)
         {
             // Convert Size and AssetValue from their keys to the strings they are stored as
-            string assetValue = _context.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
-            string assetSize = _context.DEMOGRAPHICS_SIZE.Where(dav => dav.DemographicId == demographics.Size).FirstOrDefault()?.Size;
+            var demographicAssetValue = await _context.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefaultAsync();
+            string assetValue = demographicAssetValue?.AssetValue;
+            var demographicSize = await _context.DEMOGRAPHICS_SIZE.Where(dav => dav.DemographicId == demographics.Size).FirstOrDefaultAsync();
+            string assetSize = demographicSize?.Size;
 
             // If the user selected nothing for sector or industry, store a null - 0 violates foreign key
             if (demographics.SectorId == 0)
@@ -113,15 +117,15 @@ namespace CSETWebCore.Business.Demographic
                 demographics.IndustryId = null;
             }
 
-            var dbDemographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
+            var dbDemographics = await _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefaultAsync();
             if (dbDemographics == null)
             {
                 dbDemographics = new DEMOGRAPHICS()
                 {
                     Assessment_Id = demographics.AssessmentId
                 };
-                _context.DEMOGRAPHICS.Add(dbDemographics);
-                _context.SaveChanges();
+                await _context.DEMOGRAPHICS.AddAsync(dbDemographics);
+                await _context.SaveChangesAsync();
             }
 
             dbDemographics.IndustryId = demographics.IndustryId;
@@ -137,10 +141,10 @@ namespace CSETWebCore.Business.Demographic
             dbDemographics.OrganizationName = demographics.OrganizationName;            
 
             _context.DEMOGRAPHICS.Update(dbDemographics);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 
-            _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);
 
             return demographics.AssessmentId;
         }
