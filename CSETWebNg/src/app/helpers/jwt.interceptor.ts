@@ -72,7 +72,6 @@ export class JwtInterceptor implements HttpInterceptor {
           }
 
           if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
-            console.log(e.error.ExceptionMessage);
             console.log('JWT Invalid. logging out.');
           }
 

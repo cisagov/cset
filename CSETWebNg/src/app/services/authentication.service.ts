@@ -81,7 +81,7 @@ export class AuthenticationService {
             .toPromise().then(
                 (response: LoginResponse) => {
 
-                    if (response.email === null || response.email === undefined) {
+                    if (response?.email === null || response?.email === undefined) {
                         this.isLocal = false;
                     } else {
                         this.isLocal = true;
@@ -90,7 +90,7 @@ export class AuthenticationService {
 
                     localStorage.setItem('cset.isLocal', (this.isLocal + ''));
 
-                    localStorage.setItem('cset.linkerDate', response.linkerTime);
+                    localStorage.setItem('cset.linkerDate', response?.linkerTime);
                 },
                 error => {
                     console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');

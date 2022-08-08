@@ -533,7 +533,8 @@ namespace CSETWebCore.Helpers
                 Content = new StringContent("User not authorized for assessment"),
                 ReasonPhrase = "The current user is not authorized to access the target assessment"                
             };
-            throw new Exception(resp.Content.ToString());        }
+            throw new Exception(resp.Content.ReadAsStringAsync().Result);        
+        }
 
 
         /// <summary>
