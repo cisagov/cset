@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Standards;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Interfaces.Standards
 {
@@ -10,8 +11,8 @@ namespace CSETWebCore.Interfaces.Standards
         bool GetFramework(int assessmentId);
         bool GetACET(int assessmentId);
         List<string> RecommendedStandards(int assessmentId);
-        QuestionRequirementCounts PersistSelectedStandards(int assessmentId, List<string> selectedStandards);
-        QuestionRequirementCounts PersistDefaultSelectedStandard(int assessmentId);
+        Task<QuestionRequirementCounts> PersistSelectedStandards(int assessmentId, List<string> selectedStandards);
+        Task<QuestionRequirementCounts> PersistDefaultSelectedStandard(int assessmentId);
         List<string> GetDefaultStandardsList();
     }
 }

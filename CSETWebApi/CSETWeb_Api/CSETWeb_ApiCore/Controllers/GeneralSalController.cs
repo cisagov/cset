@@ -66,7 +66,7 @@ namespace CSETWebCore.Api.Controllers
             bool first = true;
             GenSalPairs pair = null;
 
-            foreach (var slider in sliders.ToList())
+            foreach (var slider in await sliders.ToListAsync())
             {
                 GeneralSalDescriptionsWeights s = TinyMapper.Map<GeneralSalDescriptionsWeights>(slider.d);
                 if (first)
@@ -83,7 +83,8 @@ namespace CSETWebCore.Api.Controllers
 
                 s.values = new List<string>();
                 s.Slider_Value = slider.SliderValue ?? 0;
-                foreach (GEN_SAL_WEIGHTS w in _context.GEN_SAL_WEIGHTS.Where(x => String.Equals(x.Sal_Name, slider.d.Sal_Name)))
+                var salWeightsList = await _context.GEN_SAL_WEIGHTS.Where(x => String.Equals(x.Sal_Name, slider.d.Sal_Name)).ToListAsync();
+                foreach (GEN_SAL_WEIGHTS w in salWeightsList)
                 {
                     s.GEN_SAL_WEIGHTS.Add(TinyMapper.Map<GenSalWeights>(w));
                     s.values.Add(" " + w.Display + " ");

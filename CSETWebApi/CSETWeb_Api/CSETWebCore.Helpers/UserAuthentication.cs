@@ -12,6 +12,7 @@ using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Helpers
@@ -103,7 +104,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            using (CSETContext tmpcontext = new CSETContext()) {
+            using (CSETContext context = new CSETContext()) {
                 
 
                 string name = null;
@@ -113,33 +114,33 @@ namespace CSETWebCore.Helpers
 
                 primaryEmailSO = name;
                 //check for legacy default email for local installation and set to new standard
-                var userOrg = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+                var userOrg = await context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefaultAsync();
                 if (userOrg != null)
                 {
                     string tmp = userOrg.PrimaryEmail.Split('@')[0];
                     userOrg.PrimaryEmail = tmp;
-                    if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                        tmpcontext.SaveChanges();
+                    if (await context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefaultAsync() == null)
+                        await context.SaveChangesAsync();
                     primaryEmailSO = userOrg.PrimaryEmail;
                 }
                 else 
                 { 
                     //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
                     string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                    var allUsers = tmpcontext.USERS.ToList();
+                    var allUsers = await context.USERS.ToListAsync();
                     var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
                     if (legacyUser != null)
                     {
                         string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
                         legacyUser.PrimaryEmail = tmp;
-                        if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                            tmpcontext.SaveChanges();
+                        if (await context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefaultAsync() == null)
+                            await context.SaveChangesAsync();
                         primaryEmailSO = legacyUser.PrimaryEmail;
                     }
                 }
 
 
-                var user = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                var user = await context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefaultAsync();
                 if (user == null)
                 {
                     UserDetail ud = new UserDetail()
@@ -148,14 +149,14 @@ namespace CSETWebCore.Helpers
                         FirstName = name,
                         LastName = ""
                     };
-                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud,tmpcontext);
+                    UserCreateResponse userCreateResponse = await _userBusiness.CreateUser(ud,context);
 
-                    tmpcontext.SaveChanges();
+                    await context.SaveChangesAsync();
                     //update the userid 1 to the new user
-                    var tempu = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    var tempu = await context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefaultAsync();
                     if (tempu != null)
                         userIdSO = tempu.UserId;
-                    determineIfUpgradedNeededAndDoSo(userIdSO,tmpcontext);
+                    await DetermineIfUpgradedNeededAndDoSo(userIdSO,context);
                 }
                 else
                 {
@@ -193,22 +194,22 @@ namespace CSETWebCore.Helpers
 
         private bool IsUpgraded = false;
 
-        public void determineIfUpgradedNeededAndDoSo(int newuserID, CSETContext tmpContext)
+        public async Task DetermineIfUpgradedNeededAndDoSo(int newuserID, CSETContext context)
         {
             //look to see if the localuser exists
             //if so then get that user id and changes all 
             if (!IsUpgraded)
             {
-                var user = tmpContext.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefault();
+                var user = await context.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefaultAsync();
                 if (user != null)
                 {
-                    var contacts = tmpContext.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToList();
+                    var contacts = await context.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToListAsync();
                     if(contacts.Any())
                         for (int i = 0; i < contacts.Count(); i++)
                             contacts[i].UserId = newuserID;
                     
-                    tmpContext.ASSESSMENT_CONTACTS.UpdateRange(contacts);
-                    tmpContext.SaveChanges();
+                    context.ASSESSMENT_CONTACTS.UpdateRange(contacts);
+                    await context.SaveChangesAsync();
                 }
             }
             IsUpgraded = true;

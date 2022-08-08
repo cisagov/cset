@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         public async Task<IActionResult> EnableFAA(string set_name)
         {
-            AddNewlyEnabledModules();
+            await AddNewlyEnabledModules();
 
             var response = new { 
                 Message = ""
@@ -73,12 +73,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         private async Task AddNewlyEnabledModules()
         {
-            var sets2 = _context.SETS.Where(s=> s.IsEncryptedModule);
+            var sets2 = await _context.SETS.Where(s=> s.IsEncryptedModule).ToListAsync();
+
             foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

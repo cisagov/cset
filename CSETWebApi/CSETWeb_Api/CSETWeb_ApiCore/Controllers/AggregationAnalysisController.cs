@@ -113,7 +113,7 @@ namespace CSETWebCore.Api.Controllers
             int aggregationID = body.AggregationID;
             var response = new LineChart();
             response.reportType = "Top 5 Most Improved Areas";
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
+            await _trendData.Process(_context, (int?)aggregationID ?? 0, response, "TOP");
 
             return Ok(response);
         }
@@ -131,7 +131,7 @@ namespace CSETWebCore.Api.Controllers
             var response = new LineChart();
             response.reportType = "Top 5 Areas of Concern (Bottom 5)";
 
-            _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
+            await _trendData.Process(_context, (int?)aggregationID ?? 0, response, "BOTTOM");
 
             return Ok(response);
         }

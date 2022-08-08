@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.Api.Interfaces;
 using CSETWebCore.DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Models
 {
@@ -239,7 +241,7 @@ namespace CSETWebCore.Api.Models
 
 
 
-        private void SetProperty(String name, String value)
+        private async Task SetProperty(String name, String value)
         {
             try
             {
@@ -247,23 +249,23 @@ namespace CSETWebCore.Api.Models
                  * performance on this pair of requests is really bad.
                  * putting this into a dictionary to reduce the footprint.
                  */
-                using (var data = new CSETContext())
+                using (var context = new CSETContext())
                 {
 
-                    IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
-
-                    if (query.ToList().Count > 0)
+                    IQueryable<GLOBAL_PROPERTIES> query = context.GLOBAL_PROPERTIES.Where(x => x.Property == name);
+                    var globalPropList = await query.ToListAsync();
+                    if (globalPropList.Count() > 0)
                     {
-                        query.ToList()[0].Property_Value = value;
+                        globalPropList[0].Property_Value = value;
                     }
                     else
                     {
                         GLOBAL_PROPERTIES gp = new GLOBAL_PROPERTIES();
                         gp.Property = name;
                         gp.Property_Value = value;
-                        data.GLOBAL_PROPERTIES.Add(gp);
+                        await context.GLOBAL_PROPERTIES.AddAsync(gp);
                     }
-                    data.SaveChanges();
+                    await context.SaveChangesAsync();
                     if (propertiesDictionary.ContainsKey(name))
                     {
                         propertiesDictionary[name] = value;

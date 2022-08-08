@@ -168,13 +168,13 @@ namespace CSETWebCore.Business.Assessment
 
             if (int.TryParse(_tokenManager.Payload(Constants.Constants.Token_UserId), out tmpUID))
             {
-                USERS user = _context.USERS.Where(x => x.UserId == tmpUID).FirstOrDefault();
+                USERS user = await _context.USERS.Where(x => x.UserId == tmpUID).FirstOrDefaultAsync();
                 if (user != null)
                 {
                     if (user.Id != null)
                     {
                         user.Id = tmpGuid;
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                     else
                     {
@@ -187,7 +187,7 @@ namespace CSETWebCore.Business.Assessment
 
             var resultList = await query.ToListAsync();
             var result = resultList.FirstOrDefault();
-            var modeResult = resultList.Join(_context.STANDARD_SELECTION, x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
+            var modeResult = resultList.Join(await _context.STANDARD_SELECTION.ToListAsync(), x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
                 .FirstOrDefault();
 
             if (result != null)

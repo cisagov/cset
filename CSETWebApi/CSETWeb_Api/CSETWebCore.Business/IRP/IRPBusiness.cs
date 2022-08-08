@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Model.Acet;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.IRP
 {
@@ -16,18 +18,18 @@ namespace CSETWebCore.Business.IRP
             _context = context;
             _assessmentUtil = assessmentUtil;
         }
-        public IRPResponse GetIRPList(int assessmentId)
+        public async Task<IRPResponse> GetIRPList(int assessmentId)
         {
             IRPResponse response = new IRPResponse();
-
-            foreach (IRP_HEADER header in _context.IRP_HEADER)
+            var headerList = await _context.IRP_HEADER.ToListAsync();
+            foreach (IRP_HEADER header in headerList)
             {
                 IRPHeader tempHeader = new IRPHeader()
                 {
                     header = header.Header
                 };
-
-                foreach (DataLayer.Model.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
+                var irpList = await _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToListAsync();
+                foreach (DataLayer.Model.IRP irp in irpList)
                 {
                     IRPModel tempIRP = new IRPModel()
                     {
@@ -44,7 +46,7 @@ namespace CSETWebCore.Business.IRP
                     };
 
                     // Get the existing answer or create a blank 
-                    ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(ans =>
+                    ASSESSMENT_IRP answer = await _context.ASSESSMENT_IRP.FirstOrDefaultAsync(ans =>
                         ans.IRP_Id == irp.IRP_ID &&
                         ans.Assessment.Assessment_Id == assessmentId);
                     if (answer == null)
@@ -57,7 +59,7 @@ namespace CSETWebCore.Business.IRP
                             Comment = ""
                         };
 
-                        _context.ASSESSMENT_IRP.Add(answer);
+                        await _context.ASSESSMENT_IRP.AddAsync(answer);
                     }
                     tempIRP.Response = answer.Response.Value;
                     tempIRP.Comment = answer.Comment;
@@ -66,22 +68,22 @@ namespace CSETWebCore.Business.IRP
 
                 response.headerList.Add(tempHeader);
             }
-            if (_context.SaveChanges() > 0)
+            if (await _context.SaveChangesAsync() > 0)
             {
-                _assessmentUtil.TouchAssessment(assessmentId);
+                await _assessmentUtil.TouchAssessment(assessmentId);
             }
 
 
             return response;
         }
 
-        public void PersistSelectedIRP(int assessmentId, IRPModel irp)
+        public async Task PersistSelectedIRP(int assessmentId, IRPModel irp)
         {
             if (assessmentId == 0) { return; }
             if (irp == null) { return; }
 
 
-            ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(i => i.IRP_Id == irp.IRP_Id &&
+            ASSESSMENT_IRP answer = await _context.ASSESSMENT_IRP.FirstOrDefaultAsync(i => i.IRP_Id == irp.IRP_Id &&
                 i.Assessment.Assessment_Id == assessmentId);
             if (answer != null)
             {
@@ -95,12 +97,12 @@ namespace CSETWebCore.Business.IRP
                     Response = irp.Response,
                     Comment = irp.Comment,
                 };
-                answer.Assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-                _context.ASSESSMENT_IRP.Add(answer);
+                answer.Assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(a => a.Assessment_Id == assessmentId);
+                await _context.ASSESSMENT_IRP.AddAsync(answer);
             }
-            if (_context.SaveChanges() > 0)
+            if (await _context.SaveChangesAsync() > 0)
             {
-                _assessmentUtil.TouchAssessment(assessmentId);
+                await _assessmentUtil.TouchAssessment(assessmentId);
             }
         }
     }

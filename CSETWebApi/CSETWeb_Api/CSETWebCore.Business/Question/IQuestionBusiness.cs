@@ -14,6 +14,6 @@ namespace CSETWebCore.Business.Question
         Task<List<int>> GetActiveAnswerIds();
         Task<QuestionDetails> GetDetails(int questionId, string questionType);
         QuestionResponse BuildResponse();
-        void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
+        Task StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
     }
 }

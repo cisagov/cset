@@ -7,6 +7,7 @@ using CSETWebCore.Interfaces;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CSETWebCore.Helpers
@@ -40,18 +41,18 @@ namespace CSETWebCore.Helpers
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
-            var db = new CSETContext();
+            var context = new CSETContext();
             try
             {
                 var documentImporter = new DocumentImporter();
                 var set = result.Result;
 
-                var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
+                var existingSet = await context.SETS.FirstOrDefaultAsync(s => s.Set_Name == setname);
                 if (existingSet != null)
                 {
                     result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
                 }
-                category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
+                category = await context.SETS_CATEGORY.FirstOrDefaultAsync(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
                 if (category == null)
                 {
@@ -138,7 +139,7 @@ namespace CSETWebCore.Helpers
                 result.LogError("Module could not be added.");
             }
 
-            db.SaveChanges();
+            await context.SaveChangesAsync();
 
             return result;
         }
@@ -159,11 +160,11 @@ namespace CSETWebCore.Helpers
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance
-            using (var db = new CSETContext())
+            using (var context = new CSETContext())
             {
-                //db.Configuration.ProxyCreationEnabled = false;
-                //db.Configuration.AutoDetectChangesEnabled = false;
-                //db.Configuration.LazyLoadingEnabled = false;
+                //context.Configuration.ProxyCreationEnabled = false;
+                //context.Configuration.AutoDetectChangesEnabled = false;
+                //context.Configuration.LazyLoadingEnabled = false;
 
                 var reqs = standard.NEW_REQUIREMENT.ToList();
                 Dictionary<int, List<QuestionAndHeading>> reqQuestions = reqs.Select(s => new
@@ -175,17 +176,17 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                     .ToDictionary(s => s.Requirement_Id, s => s.Questions.ToList());
 
                 var reqHeadingIds = reqs.Select(s => s.Question_Group_Heading_Id).ToList();
-                //var questionHeadings = from a in db.REQUIREMENT_QUESTIONS
-                //                       join b in db.new on a.Question_Id equals b.Question_Id
-                //                       join c in db.NEW_QUESTION_SETS on b.Question_Id equals c.Question_Id
+                //var questionHeadings = from a in context.REQUIREMENT_QUESTIONS
+                //                       join b in context.new on a.Question_Id equals b.Question_Id
+                //                       join c in context.NEW_QUESTION_SETS on b.Question_Id equals c.Question_Id
                 //                       where c.Set_Name == standard.Set_Name
                 //                       select b.question_group_heading_id
                 var questionHeadings = reqQuestions.SelectMany(s => s.Value.Select(t => t.Heading_Pair_Id)).Distinct().ToList();
-                var reqHeadings = db.QUESTION_GROUP_HEADING.Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading1);
-                var headingPairs = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(s => questionHeadings.Contains(s.Heading_Pair_Id));
-                var subcategories = headingPairs.Join(db.UNIVERSAL_SUB_CATEGORIES, s => s.Universal_Sub_Category_Id, s => s.Universal_Sub_Category_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
+                var reqHeadings = context.QUESTION_GROUP_HEADING.Where(s => reqHeadingIds.Contains(s.Question_Group_Heading_Id)).ToDictionary(s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading1);
+                var headingPairs = context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(s => questionHeadings.Contains(s.Heading_Pair_Id));
+                var subcategories = headingPairs.Join(context.UNIVERSAL_SUB_CATEGORIES, s => s.Universal_Sub_Category_Id, s => s.Universal_Sub_Category_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
                               .ToDictionary(s => s.Heading_Pair_Id, s => s.category.Universal_Sub_Category);
-                var headings = headingPairs.Join(db.QUESTION_GROUP_HEADING, s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
+                var headings = headingPairs.Join(context.QUESTION_GROUP_HEADING, s => s.Question_Group_Heading_Id, s => s.Question_Group_Heading_Id, (s, t) => new { s.Heading_Pair_Id, category = t })
                               .ToDictionary(s => s.Heading_Pair_Id, s => s.category.Question_Group_Heading1);
 
                 var reqReferences = reqs.Select(s => new

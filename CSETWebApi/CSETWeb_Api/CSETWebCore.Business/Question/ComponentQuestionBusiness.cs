@@ -362,8 +362,8 @@ namespace CSETWebCore.Business.Question
             {
                 dbAnswer = new ANSWER();                
                 dbAnswer.Assessment_Id = assessmentId;
-                _context.ANSWER.Add(dbAnswer);
-                _context.SaveChanges();
+                await _context.ANSWER.AddAsync(dbAnswer);
+                await _context.SaveChangesAsync();
                 answerId = dbAnswer.Answer_Id;
             }
             else
@@ -387,7 +387,7 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Is_Component = true;
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             await _assessmentUtil.TouchAssessment(assessmentId);
 
@@ -417,8 +417,8 @@ namespace CSETWebCore.Business.Question
                                         where a.Assessment_Id == assessmentId
                                         && a.Component_Guid == guid
                                         select a).ToDictionaryAsync(x => x.Question_Or_Requirement_Id, x => x);
-
-                    foreach (var c in await creates.ToListAsync())
+                    var questions = await creates.ToListAsync();
+                    foreach (var c in questions)
                     {
                         if (!alreadyThere.ContainsKey(c.Question_Id))
                         {
@@ -434,7 +434,7 @@ namespace CSETWebCore.Business.Question
                             });
                         }
                     }
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
@@ -447,7 +447,7 @@ namespace CSETWebCore.Business.Question
                 {
                     _context.ANSWER.Remove(a);
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }

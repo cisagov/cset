@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Helpers;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -76,7 +78,7 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private void StoreAnswerRadio(Model.Question.Answer answer)
+        private async Task StoreAnswerRadio(Model.Question.Answer answer)
         {
             // If this is an unselected radio, do nothing.
             // This method only acts on 
@@ -86,8 +88,8 @@ namespace CSETWebCore.Business.Maturity
             //}
 
             // Find the Maturity Question
-            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
+            var dbOption = await _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefaultAsync();
+            var dbQuestion = await _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefaultAsync();
 
             if (dbQuestion == null)
             {
@@ -95,10 +97,10 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+            ANSWER dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Question_Type == answer.QuestionType
-                && x.Mat_Option_Id != null).FirstOrDefault();
+                && x.Mat_Option_Id != null).FirstOrDefaultAsync();
 
 
             if (dbAnswer == null)
@@ -118,9 +120,9 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(_assessmentId);
+            await _assessmentUtil.TouchAssessment(_assessmentId);
         }
 
 
@@ -133,11 +135,11 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="answer"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private void StoreAnswerCheckbox(Model.Question.Answer answer)
+        private async Task StoreAnswerCheckbox(Model.Question.Answer answer)
         {
             // Find the Maturity Question
-            var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
-            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
+            var dbOption = await _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefaultAsync();
+            var dbQuestion = await _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefaultAsync();
 
             if (dbQuestion == null)
             {
@@ -145,11 +147,11 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+            ANSWER dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
                 && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
                 && x.Mat_Option_Id == answer.OptionId
                 && x.Question_Type == answer.QuestionType
-                && x.Mat_Option_Id != null).FirstOrDefault();
+                && x.Mat_Option_Id != null).FirstOrDefaultAsync();
 
 
             if (dbAnswer == null)
@@ -169,9 +171,9 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Component_Guid = answer.ComponentGuid;
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(_assessmentId);
+            await _assessmentUtil.TouchAssessment(_assessmentId);
         }
 
 
@@ -291,16 +293,16 @@ namespace CSETWebCore.Business.Maturity
         /// Persists the baseline assessment ID.  If no baseline
         /// assessment is selected, it is set to null.
         /// </summary>
-        public void SaveBaseline(int assessmentId, int? baselineId)
+        public async Task SaveBaseline(int assessmentId, int? baselineId)
         {
-            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            var info = await _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefaultAsync();
             if (info == null)
             {
                 return;
             }
 
             info.Baseline_Assessment_Id = baselineId;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
@@ -311,13 +313,13 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="destAssessId"></param>
         /// <param name="sourceAssessId"></param>
-        public void ImportCisAnswers(int destAssessId, int sourceAssessId)
+        public async Task ImportCisAnswers(int destAssessId, int sourceAssessId)
         {
-            var oldAnswers = _context.ANSWER.Where(x => x.Assessment_Id == destAssessId).ToList();
+            var oldAnswers = await _context.ANSWER.Where(x => x.Assessment_Id == destAssessId).ToListAsync();
             _context.ANSWER.RemoveRange(oldAnswers);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            var importedAnswers = _context.ANSWER.Where(x => x.Assessment_Id == sourceAssessId).ToList();
+            var importedAnswers = await _context.ANSWER.Where(x => x.Assessment_Id == sourceAssessId).ToListAsync();
             foreach (var answer in importedAnswers)
             {
                 var dbAnswer = new ANSWER
@@ -339,10 +341,10 @@ namespace CSETWebCore.Business.Maturity
 
                 dbAnswer.Free_Response_Answer = answer.Free_Response_Answer;
 
-                _context.ANSWER.Add(dbAnswer);
+                await _context.ANSWER.AddAsync(dbAnswer);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.ExportCSV
 {
@@ -45,12 +46,12 @@ namespace CSETWebCore.ExportCSV
 
             if (assessment.UseStandard)
             {
-                CreateWorksheetPageStandardAnswers(ref doc);
+                doc = await CreateWorksheetPageStandardAnswers(doc);
             }
 
             if (assessment.UseMaturity)
             {
-                CreateWorksheetPageMaturityAnswers(ref doc);
+                doc = await CreateWorksheetPageMaturityAnswers(doc);
             }
 
             if (assessment.UseDiagram)
@@ -61,7 +62,7 @@ namespace CSETWebCore.ExportCSV
             }
 
 
-            CreateWorksheetPageFrameworkAnswers(ref doc);
+            doc = await CreateWorksheetPageFrameworkAnswers(doc);
             
 
 
@@ -84,20 +85,21 @@ namespace CSETWebCore.ExportCSV
         /// Get Standards answers for the assessment.
         /// </summary>
         /// <param name="doc"></param>
-        private void CreateWorksheetPageStandardAnswers(ref CSETtoExcelDocument doc)
+        private async Task<CSETtoExcelDocument> CreateWorksheetPageStandardAnswers(CSETtoExcelDocument doc)
         {
             IEnumerable<QuestionExport> list;
 
-            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+            await _context.FillEmptyQuestionsForAnalysis(_assessmentId);
 
             // Determine whether the assessment is questions based or requirements based
-            var applicationMode = _context.STANDARD_SELECTION.Where(a => a.Assessment_Id == _assessmentId).FirstOrDefault().Application_Mode;
+            var standardSelectionObj = await _context.STANDARD_SELECTION.Where(a => a.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
+            var applicationMode = standardSelectionObj.Application_Mode;
 
 
             // Questions worksheet
             if (applicationMode.ToLower().Contains("questions"))
             {
-                var questionIds = _context.InScopeQuestions(_assessmentId);
+                var questionIds = await _context.InScopeQuestions(_assessmentId);
                 var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Question" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
                 list = from a in answers
@@ -134,7 +136,7 @@ namespace CSETWebCore.ExportCSV
             // Requirements worksheet
             if (applicationMode.ToLower().Contains("requirements"))
             {
-                var questionIds = _context.InScopeRequirements(_assessmentId);
+                var questionIds = await _context.InScopeRequirements(_assessmentId);
                 var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Requirement" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
                 list = from a in answers
@@ -167,6 +169,8 @@ namespace CSETWebCore.ExportCSV
 
                 doc.AddList<QuestionExport>(rows, "Standard Requirements", QuestionExport.Headings);
             }
+
+            return doc;
         }
 
 
@@ -174,19 +178,19 @@ namespace CSETWebCore.ExportCSV
         /// Get Maturity answers for the assessment.
         /// </summary>
         /// <param name="doc"></param>
-        private void CreateWorksheetPageMaturityAnswers(ref CSETtoExcelDocument doc)
+        private async Task<CSETtoExcelDocument> CreateWorksheetPageMaturityAnswers(CSETtoExcelDocument doc)
         {
-            _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
+            await _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == _assessmentId && x.Selected).FirstOrDefault();
             if (mm == null)
             {
-                return;
+                return doc;
             }
+            var maturityList = await _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == mm.model_id).ToListAsync();
+            var questionIds = maturityList.Select(x => x.Mat_Question_Id);
 
-            var questionIds = _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == mm.model_id).ToList().Select(x => x.Mat_Question_Id);
-
-            var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+            var answers = await _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToListAsync();
 
             IEnumerable<QuestionExport> list = from a in answers
                    join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
@@ -213,6 +217,8 @@ namespace CSETWebCore.ExportCSV
             });
 
             doc.AddList<QuestionExport>(rows, "Maturity Questions", QuestionExport.Headings);
+
+            return doc;
         }
 
 
@@ -224,7 +230,7 @@ namespace CSETWebCore.ExportCSV
         {
             IEnumerable<QuestionExport> list;
 
-            _context.FillNetworkDiagramQuestions(_assessmentId);
+            await _context.FillNetworkDiagramQuestions(_assessmentId);
 
 
             // Components worksheet
@@ -270,9 +276,9 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="answers"></param>
-        private void CreateWorksheetPageFrameworkAnswers(ref CSETtoExcelDocument doc)
+        private async Task<CSETtoExcelDocument> CreateWorksheetPageFrameworkAnswers(CSETtoExcelDocument doc)
         {
-            List<ANSWER> answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId).ToList<ANSWER>();
+            List<ANSWER> answers = await _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId).ToListAsync<ANSWER>();
 
             // Framework worksheet
             var qlist = from a in answers
@@ -297,6 +303,7 @@ namespace CSETWebCore.ExportCSV
                             Answer_Id = a.Answer_Id
                         };
             doc.AddList<QuestionExport>(qlist.ToList<QuestionExport>(), "Framework", QuestionExport.Headings);
+            return doc;
         }
 
 
@@ -327,127 +334,7 @@ namespace CSETWebCore.ExportCSV
             return map;
         }
 
-        //private DataMap BuildNetworkComponents(List<NetworkComponent> list, DataMap map)
-        //{
-        //    DataTable table = map.Table;
-
-        //    foreach (NetworkComponent c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.TextNodeLabel;
-        //        row[1] = c.HasUniqueQuestion;
-        //        row[2] = c.SAL.Selected_Sal_Level;
-        //        row[3] = c.Criticality.ToString();
-        //        row[4] = c.Layer.LayerName;
-        //        row[5] = c.IPAddress;
-        //        row[6] = c.ComponentTypeDisplayName;
-        //        row[7] = c.ComponentZoneLabel;
-        //        row[8] = c.SubnetsDelimited;
-        //        row[9] = c.Description;
-        //        row[10] = c.HostName;
-        //        row[11] = c.IsVisible;
-        //        table.Rows.Add(row);
-        //    }
-        //    return map;
-        //}
-
-        //private void BuildMultipleServiceComponentDataSet(IOrderedEnumerable<MultiServiceComponent> list, DataMap map)
-        //{
-
-        //    DataTable table = map.Table;
-
-        //    foreach (MultiServiceComponent c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.TextNodeLabel;
-        //        row[1] = c.SAL.Selected_Sal_Level;
-        //        row[3] = c.Layer.LayerName;
-        //        row[4] = c.ServiceNamesDelimited;
-        //        row[5] = c.Zone?.TextNodeLabel;
-        //        row[9] = c.IsVisible;
-        //        table.Rows.Add(row);
-        //    }
-        //}
-
-        //private void BuildZoneDataSet(IOrderedEnumerable<NetworkZone> list, DataMap map)
-        //{
-        //    DataTable table = map.Table;
-
-        //    foreach (NetworkZone c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.ZoneType.ZoneTypeDisplayName;
-        //        row[1] = c.TextNodeLabel;
-        //        row[2] = c.ZoneSAL.Selected_Sal_Level;
-        //        row[3] = c.Layer.LayerName;
-        //        row[4] = c.Person;
-        //        row[5] = c.IsVisible;
-        //        table.Rows.Add(row);
-        //    }
-        //}
-
-        //private void BuildNetworkLinkDataSet(IOrderedEnumerable<NetworkLink> list, DataMap map)
-        //{
-
-        //    DataTable table = map.Table;
-
-        //    foreach (NetworkLink c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.Text;
-        //        row[1] = c.SubNet;
-        //        row[2] = c.Security.ToString();
-        //        row[3] = c.Layer.LayerName;
-        //        row[4] = c.TargetCapType.ToString();
-        //        row[5] = c.SourceCapType.ToString();
-        //        row[6] = c.ConnectionType.ToString();
-        //        row[7] = c.StrokeThickness;
-        //        row[8] = c.SelectedColor.ToString();
-        //        row[9] = c.LinkType;
-        //        row[10] = c.IsVisible;
-        //        table.Rows.Add(row);
-        //    }
-        //}
-
-        //private void BuildShapeDataSet(IOrderedEnumerable<NetworkShape> list, DataMap map)
-        //{
-
-        //    DataTable table = map.Table;
-        //    foreach (NetworkShape c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.TextNode.TextNodeLabel;
-        //        row[1] = c.SelectedColor.ToString();
-        //        row[2] = c.Layer.LayerName;
-        //        row[3] = c.IsVisible;
-        //        table.Rows.Add(row);
-        //    }
-        //}
-
-        //private void BuildTextDataSet(IOrderedEnumerable<NetworkText> list, DataMap map)
-        //{
-
-        //    DataTable table = map.Table;
-        //    foreach (NetworkText c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.TextNodeLabel;
-        //        row[1] = c.Layer.LayerName;
-        //        table.Rows.Add(row);
-        //    }
-        //}
-
-        //private void BuildNetworkWarningDataSet(IOrderedEnumerable<IDiagramAnalysisNodeMessage> list, DataMap map)
-        //{
-        //    DataTable table = map.Table;
-        //    foreach (NetworkAnalysisMessage c in list)
-        //    {
-        //        DataRow row = table.NewRow();
-        //        row[0] = c.MessageIdentifier;
-        //        row[1] = c.Message;
-        //        table.Rows.Add(row);
-        //    }
-        //}
+       
     }
 
 

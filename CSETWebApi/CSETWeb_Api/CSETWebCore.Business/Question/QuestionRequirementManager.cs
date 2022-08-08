@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Http;
 using Snickler.EFCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Question
 {
@@ -151,9 +152,9 @@ namespace CSETWebCore.Business.Question
         /// Stores the requested application mode in the STANDARD_SELECTION table.
         /// </summary>
         /// <param name="mode"></param>
-        public void SetApplicationMode(string mode)
+        public async Task SetApplicationMode(string mode)
         {
-            var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefault();
+            var standardSelection = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefaultAsync();
             if (standardSelection != null)
             {
                 var targetString = (mode == "Q") ? "Questions Based" : "Requirements Based";
@@ -161,7 +162,7 @@ namespace CSETWebCore.Business.Question
                 {
                     standardSelection.Application_Mode = targetString;
                     _context.STANDARD_SELECTION.Update(standardSelection);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                     _assessmentUtil.TouchAssessment(AssessmentId);
                 }
@@ -187,9 +188,9 @@ namespace CSETWebCore.Business.Question
             return mode;
         }
 
-        public int StoreComponentAnswer(Answer answer)
+        public async Task<int> StoreComponentAnswer(Answer answer)
         {
-            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
+            var question = await _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefaultAsync();
 
             if (question == null)
             {
@@ -205,9 +206,9 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
+                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+                            && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefaultAsync();
             }
 
 
@@ -231,8 +232,8 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Is_Component = true;
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
-            _assessmentUtil.TouchAssessment(AssessmentId);
+            await _context.SaveChangesAsync();
+            await _assessmentUtil.TouchAssessment(AssessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -241,11 +242,11 @@ namespace CSETWebCore.Business.Question
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public int StoreAnswer(Answer answer)
+        public async Task<int> StoreAnswer(Answer answer)
         {
             // Find the Question or Requirement
-            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
-            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
+            var question = await _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefaultAsync();
+            var requirement = await _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefaultAsync();
 
             if (question == null && requirement == null)
             {
@@ -263,15 +264,15 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
+                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefaultAsync();
             }
             else if (answer != null)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
+                dbAnswer = await  _context.ANSWER.Where(x => x.Assessment_Id == AssessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType).FirstOrDefaultAsync();
             }
 
             if (dbAnswer == null)
@@ -295,8 +296,8 @@ namespace CSETWebCore.Business.Question
 
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
-            _assessmentUtil.TouchAssessment(AssessmentId);
+            await _context.SaveChangesAsync();
+            await _assessmentUtil.TouchAssessment(AssessmentId);
 
             return dbAnswer.Answer_Id;
         }

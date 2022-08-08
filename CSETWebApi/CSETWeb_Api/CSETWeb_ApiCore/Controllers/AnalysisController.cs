@@ -85,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
             _requirement.SetRequirementAssessmentId(assessmentId);
             FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
-            string AssessmentMode = GetAssessmentMode(assessmentId);
+            string AssessmentMode = await GetAssessmentMode(assessmentId);
 
             try
             {
@@ -236,7 +236,7 @@ namespace CSETWebCore.Api.Controllers
 
 
 
-                    string mode = this.GetAssessmentMode(assessmentId);
+                    string mode = await this.GetAssessmentMode(assessmentId);
 
                     string label = c.StatType;
 
@@ -521,14 +521,14 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummarySingle(CSETContext context, int assessmentId)
+        private async Task<ChartData> GetStandardsSummarySingle(CSETContext context, int assessmentId)
         {
             ChartData myChartData = null;
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
+            await context.LoadStoredProc("[usp_getStandardsSummaryPage]")
           .WithSqlParam("assessment_id", assessmentId)
-          .ExecuteStoredProc((handler) =>
+          .ExecuteStoredProcAsync((handler) =>
           {
               results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
@@ -595,7 +595,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private ChartData GetStandardsSummaryMultiple(CSETContext context, int assessmentId)
+        private async Task<ChartData> GetStandardsSummaryMultiple(CSETContext context, int assessmentId)
         {
             ChartData myChartData = new ChartData();
             myChartData.DataRowsPie = new List<DataRowsPie>();
@@ -603,9 +603,9 @@ namespace CSETWebCore.Api.Controllers
 
 
             var results = new StandardSummaryOverallMultiResult();
-            context.LoadStoredProc("[usp_getStandardsSummaryPage]")
+            await context.LoadStoredProc("[usp_getStandardsSummaryPage]")
             .WithSqlParam("assessment_id", assessmentId)
-            .ExecuteStoredProc((handler) =>
+            .ExecuteStoredProcAsync((handler) =>
             {
                 results.Result1 = handler.ReadToList<DataRowsPie>().ToList();
 
@@ -1039,10 +1039,10 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private string GetAssessmentMode(int assessmentId)
+        private async Task<string> GetAssessmentMode(int assessmentId)
         {
-            string applicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
-                .Select(x => x.Application_Mode).FirstOrDefault();
+            string applicationMode = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
+                .Select(x => x.Application_Mode).FirstOrDefaultAsync();
             if (applicationMode == null)
                 return "Q";
             if (applicationMode.ToLower().StartsWith("questions"))

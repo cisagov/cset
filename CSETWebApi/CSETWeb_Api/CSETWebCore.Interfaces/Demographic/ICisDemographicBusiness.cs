@@ -1,12 +1,13 @@
 ﻿using CSETWebCore.Model.Assessment;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Demographic
 {
     public interface ICisDemographicBusiness
     {
-        int SaveOrgDemographics(CisOrganizationDemographics orgDemographics);
-        int SaveServiceDemographics(CisServiceDemographics serviceDemographics);
-        int SaveServiceComposition(CisServiceComposition serviceComposition);
+        Task<int> SaveOrgDemographics(CisOrganizationDemographics orgDemographics);
+        Task<int> SaveServiceDemographics(CisServiceDemographics serviceDemographics);
+        Task<int> SaveServiceComposition(CisServiceComposition serviceComposition);
         CisOrganizationDemographics GetOrgDemographics(int assessmentId);
         CisServiceDemographics GetServiceDemographics(int assessmentId);
         CisServiceComposition GetServiceComposition(int assessmentId);

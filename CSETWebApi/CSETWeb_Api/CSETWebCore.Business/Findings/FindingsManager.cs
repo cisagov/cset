@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Findings
 {
@@ -115,23 +115,24 @@ namespace CSETWebCore.Business.Findings
         /// <param name="findingId"></param>
         /// <param name="answerId"></param>
         /// <returns></returns>
-        public Finding GetFinding(int findingId, int answerId = 0)
+        public async Task<Finding> GetFinding(int findingId, int answerId = 0)
         {
             Finding webF;
 
             if (findingId != 0)
             {
-                FINDING f = _context.FINDING
+                FINDING f = await _context.FINDING
                     .Where(x => x.Finding_Id == findingId)
                     .Include(fc => fc.FINDING_CONTACT)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
-                var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
+                var q = await _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefaultAsync();
 
                 webF = TinyMapper.Map<Finding>(f);
                 webF.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
                 webF.Finding_Contacts = new List<FindingContact>();
-                foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
+                var contactList = await _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).ToListAsync();
+                foreach (var contact in contactList)
                 {
                     FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
                     webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
@@ -141,7 +142,7 @@ namespace CSETWebCore.Business.Findings
             }
             else
             {
-                var q = _context.ANSWER.Where(x => x.Answer_Id == answerId).FirstOrDefault();
+                var q = await _context.ANSWER.Where(x => x.Answer_Id == answerId).FirstOrDefaultAsync();
 
                 FINDING f = new FINDING()
                 {
@@ -149,11 +150,12 @@ namespace CSETWebCore.Business.Findings
                 };
 
 
-                _context.FINDING.Add(f);
-                _context.SaveChanges();
+                await _context.FINDING.AddAsync(f);
+                await _context.SaveChangesAsync();
                 webF = TinyMapper.Map<Finding>(f);
                 webF.Finding_Contacts = new List<FindingContact>();
-                foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
+                var contactList = await _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).ToListAsync();
+                foreach (var contact in contactList)
                 {
                     FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
                     webContact.Finding_Id = f.Finding_Id;

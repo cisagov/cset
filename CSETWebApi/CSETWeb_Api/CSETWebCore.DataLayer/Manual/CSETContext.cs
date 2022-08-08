@@ -732,16 +732,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="aggregation_id"></param>
         /// <returns></returns>
-        public virtual IList<usp_GetTop5Areas_result> usp_GetTop5Areas(Nullable<int> aggregation_id)
+        public virtual async Task<IList<usp_GetTop5Areas_result>> usp_GetTop5Areas(Nullable<int> aggregation_id)
         {
             if (!aggregation_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<usp_GetTop5Areas_result> myrval = null;
-            this.LoadStoredProc("usp_GetTop5Areas")
+            await this.LoadStoredProc("usp_GetTop5Areas")
                      .WithSqlParam("aggregation_id", aggregation_id)
 
-                     .ExecuteStoredProc((handler) =>
+                     .ExecuteStoredProcAsync((handler) =>
                      {
                          myrval = handler.ReadToList<usp_GetTop5Areas_result>();
                      });
@@ -755,16 +755,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<int> InScopeQuestions (Nullable<int> assessment_id)
+        public virtual async Task<IList<int>> InScopeQuestions (Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<int> myrval = null;
-            this.LoadStoredProc("InScopeQuestions")
+            await this.LoadStoredProc("InScopeQuestions")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProc((handler) =>
+                     .ExecuteStoredProcAsync((handler) =>
                      {
                          var myrval2 = handler.ReadToList<Question_Id_result>();
                          myrval = myrval2.Select(x => x.Question_Id).ToList();
@@ -779,16 +779,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public virtual IList<int> InScopeRequirements(Nullable<int> assessment_id)
+        public virtual async Task<IList<int>> InScopeRequirements(Nullable<int> assessment_id)
         {
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
             IList<int> myrval = null;
-            this.LoadStoredProc("InScopeRequirements")
+            await this.LoadStoredProc("InScopeRequirements")
                      .WithSqlParam("assessment_id", assessment_id)
 
-                     .ExecuteStoredProc((handler) =>
+                     .ExecuteStoredProcAsync((handler) =>
                      {
                          var myrval2 = handler.ReadToList<Requirement_Id_result>();
                          myrval = myrval2.Select(x => x.Requirement_Id).ToList();

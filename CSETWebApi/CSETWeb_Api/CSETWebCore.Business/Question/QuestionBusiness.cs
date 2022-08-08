@@ -465,7 +465,7 @@ namespace CSETWebCore.Business.Question
 
 
             _context.ANSWER.Update(dbAnswer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             await _assessmentUtil.TouchAssessment(assessmentId);
 
             return dbAnswer.Answer_Id;
@@ -476,7 +476,7 @@ namespace CSETWebCore.Business.Question
         /// Persists a single answer to the SUB_CATEGORY_ANSWERS table for the 'block answer',
         /// and flips all of the constituent questions' answers.
         /// </summary>
-        public void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock)
+        public async Task StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock)
         {
             if (subCatAnswerBlock == null)
             {
@@ -486,10 +486,10 @@ namespace CSETWebCore.Business.Question
             // SUB_CATEGORY_ANSWERS
 
             // Get the USCH so that we will know the Heading_Pair_Id
-            var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
+            var usch = await _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefaultAsync(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
                                                                            && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId);
 
-            var subCatAnswer = _context.SUB_CATEGORY_ANSWERS.FirstOrDefault(sca => sca.Assessement_Id == _questionRequirement.AssessmentId
+            var subCatAnswer = await _context.SUB_CATEGORY_ANSWERS.FirstOrDefaultAsync(sca => sca.Assessement_Id == _questionRequirement.AssessmentId
                                                                           && sca.Heading_Pair_Id == usch.Heading_Pair_Id);
 
             if (subCatAnswer == null)
@@ -498,7 +498,7 @@ namespace CSETWebCore.Business.Question
                 subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
                 subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
                 subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
-                _context.SUB_CATEGORY_ANSWERS.Add(subCatAnswer);
+                await _context.SUB_CATEGORY_ANSWERS.AddAsync(subCatAnswer);
             }
             else
             {
@@ -508,7 +508,7 @@ namespace CSETWebCore.Business.Question
                 _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 

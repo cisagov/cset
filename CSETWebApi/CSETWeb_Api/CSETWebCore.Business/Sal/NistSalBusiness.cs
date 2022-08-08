@@ -14,6 +14,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Sal
 {
@@ -71,7 +72,7 @@ namespace CSETWebCore.Business.Sal
                 new SqlParameter("@Id", assessmentId));
         }
 
-        public List<NistSalModel> GetInformationTypes(int assessmentId)
+        public  List<NistSalModel> GetInformationTypes(int assessmentId)
         {
             TinyMapper.Bind<NIST_SAL_INFO_TYPES, NistSalModel>();
             CreateInitialList(assessmentId);
@@ -83,17 +84,17 @@ namespace CSETWebCore.Business.Sal
             return rlist;
         }
 
-        public Sals UpdateSalValue(NistSalModel updateValue, int assessmentid)
+        public async Task<Sals> UpdateSalValue(NistSalModel updateValue, int assessmentid)
         {
             TinyMapper.Bind<NistSalModel, NIST_SAL_INFO_TYPES>(config =>
             {
                 config.Ignore(x => x.Assessment_Id);
             });
 
-            NIST_SAL_INFO_TYPES update = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentid && x.Type_Value == updateValue.Type_Value).FirstOrDefault();
+            NIST_SAL_INFO_TYPES update = await _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentid && x.Type_Value == updateValue.Type_Value).FirstOrDefaultAsync();
             TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, update);
-            _context.SaveChanges();
-            return CalculateOveralls(assessmentid);
+            await _context.SaveChangesAsync();
+            return await CalculateOveralls(assessmentid);
         }
 
 
@@ -104,14 +105,15 @@ namespace CSETWebCore.Business.Sal
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public List<NistQuestionsAnswers> GetNistQuestions(int assessmentId)
+        public async Task<List<NistQuestionsAnswers>> GetNistQuestions(int assessmentId)
         {
             // if we don't have answers yet, clone them and default all answers to 'no'
             var existingAnswers = _context.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList();
             if (existingAnswers.Count() == 0)
             {
                 // Create default answer rows based on the question set
-                foreach (var question in _context.NIST_SAL_QUESTIONS.ToList())
+                var questions = await _context.NIST_SAL_QUESTIONS.ToListAsync();
+                foreach (var question in questions)
                 {
                     var ans = new NIST_SAL_QUESTION_ANSWERS()
                     {
@@ -119,10 +121,10 @@ namespace CSETWebCore.Business.Sal
                         Question_Id = question.Question_Id,
                         Question_Answer = "No"
                     };
-                    _context.NIST_SAL_QUESTION_ANSWERS.Add(ans);
+                    await _context.NIST_SAL_QUESTION_ANSWERS.AddAsync(ans);
                 }
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             var rlist = from a in _context.NIST_SAL_QUESTIONS
@@ -130,7 +132,7 @@ namespace CSETWebCore.Business.Sal
                         where b.Assessment_Id == assessmentId
                         orderby a.Question_Number
                         select new NistQuestionsAnswers() { Assessment_Id = b.Assessment_Id, Question_Id = b.Question_Id, Question_Answer = b.Question_Answer, Question_Number = a.Question_Number, Question_Text = a.Question_Text };
-            return rlist.ToList();
+            return await rlist.ToListAsync();
         }
 
 
@@ -140,9 +142,9 @@ namespace CSETWebCore.Business.Sal
         /// <param name="assessmentid"></param>
         /// <param name="answer"></param>
         /// <returns></returns>
-        public Sals SaveNistQuestions(int assessmentid, NistQuestionsAnswers answer)
+        public async Task<Sals> SaveNistQuestions(int assessmentid, NistQuestionsAnswers answer)
         {
-            var dbAnswer = _context.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentid && x.Question_Id == answer.Question_Id).FirstOrDefault();
+            var dbAnswer = await _context.NIST_SAL_QUESTION_ANSWERS.Where(x => x.Assessment_Id == assessmentid && x.Question_Id == answer.Question_Id).FirstOrDefaultAsync();
             if (dbAnswer == null)
             {
                 throw new ApplicationException(String.Format("Question {0} could not be found for assessment {1}!", answer.Question_Number, assessmentid));
@@ -150,8 +152,8 @@ namespace CSETWebCore.Business.Sal
 
             TinyMapper.Bind<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>();
             TinyMapper.Map<NistQuestionsAnswers, NIST_SAL_QUESTION_ANSWERS>(answer, dbAnswer);
-            _context.SaveChanges();
-            return CalculateOveralls(assessmentid);
+            await _context.SaveChangesAsync();
+            return await CalculateOveralls(assessmentid);
         }
 
 
@@ -174,10 +176,10 @@ namespace CSETWebCore.Business.Sal
         /// <param name="assessmentId"></param>
         /// <param name="updateValue"></param>
         /// <returns></returns>
-        public Sals SaveNistSpecialFactor(int assessmentId, NistSpecialFactor updateValue)
+        public async Task<Sals> SaveNistSpecialFactor(int assessmentId, NistSpecialFactor updateValue)
         {
-            updateValue.SaveToDb(assessmentId, _context, _assessmentUtil);
-            return CalculateOveralls(assessmentId);
+            await updateValue.SaveToDb(assessmentId, _context, _assessmentUtil);
+            return await CalculateOveralls(assessmentId);
         }
 
 
@@ -197,14 +199,14 @@ namespace CSETWebCore.Business.Sal
         }
 
 
-        private Sals CalculateOveralls(int assessmentId)
+        private async Task<Sals> CalculateOveralls(int assessmentId)
         {
             Sals rval = CalculatedNist(assessmentId);
-            STANDARD_SELECTION sTANDARD_SELECTION = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             sTANDARD_SELECTION.Selected_Sal_Level = rval.Selected_Sal_Level;
             LevelManager lm = new LevelManager(assessmentId, _context);
             lm.SaveOtherLevels(assessmentId, rval);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return rval;
         }
     }

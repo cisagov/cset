@@ -5,6 +5,7 @@ using System.Linq;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Document
 {
@@ -76,9 +77,9 @@ namespace CSETWebCore.Business.Document
         /// </summary>
         /// <param name="id"></param>
         /// <param name="title"></param>
-        public void RenameDocument(int id, string title)
+        public async Task RenameDocument(int id, string title)
         {
-            var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
+            var doc = await _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefaultAsync();
 
             // if they provided a file ID we don't know about, do nothing.
             if (doc == null)
@@ -89,8 +90,8 @@ namespace CSETWebCore.Business.Document
             doc.Title = title;
 
             _context.DOCUMENT_FILE.Update(doc);
-            _context.SaveChanges();
-            _assessmentUtil.TouchAssessment(doc.Assessment_Id);
+            await _context.SaveChangesAsync();
+            await _assessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 
 
@@ -99,9 +100,9 @@ namespace CSETWebCore.Business.Document
         /// </summary>
         /// <param name="id">The document ID</param>
         /// <param name="answerId">The document ID</param>
-        public void DeleteDocument(int id, int questionId, int assessId)
+        public async Task DeleteDocument(int id, int questionId, int assessId)
         {
-            var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
+            var doc = await _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefaultAsync();
 
             // if they provided a file ID we don't know about, do nothing.
             if (doc == null)
@@ -109,21 +110,21 @@ namespace CSETWebCore.Business.Document
                 return;
             }
 
-            var answer = _context.ANSWER
-                .FirstOrDefault(x => x.Question_Or_Requirement_Id == questionId && x.Assessment_Id == assessId);
+            var answer = await _context.ANSWER
+                .FirstOrDefaultAsync(x => x.Question_Or_Requirement_Id == questionId && x.Assessment_Id == assessId);
             // Detach the document from the Answer
-            doc.DOCUMENT_ANSWERS.Remove(_context.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answer.Answer_Id).FirstOrDefault());
-            _context.SaveChanges();
+            doc.DOCUMENT_ANSWERS.Remove(await _context.DOCUMENT_ANSWERS.Where(ans => ans.Document_Id == id && ans.Answer_Id == answer.Answer_Id).FirstOrDefaultAsync());
+            await _context.SaveChangesAsync();
 
             // If we just detached the document from its only Answer, delete the whole document record
-            var otherAnswersForThisDoc = _context.DOCUMENT_ANSWERS.Where(da => da.Document_Id == id).Count();
+            var otherAnswersForThisDoc = await _context.DOCUMENT_ANSWERS.Where(da => da.Document_Id == id).CountAsync();
             if (otherAnswersForThisDoc == 0)
             {
                 _context.DOCUMENT_FILE.Remove(doc);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
-            _assessmentUtil.TouchAssessment(doc.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(doc.Assessment_Id);
         }
 
 
@@ -156,14 +157,14 @@ namespace CSETWebCore.Business.Document
         /// <param name="answerId"></param>
         /// <param name="File_Upload_Id"></param>
         /// <param name="stream_id">only used if moving away from the blob process</param>
-        public void AddDocument(string title, int answerId, FileUploadStreamResult result)
+        public async Task AddDocument(string title, int answerId, FileUploadStreamResult result)
         {
             foreach (var file in result.FileResultList)
             {
                 // first see if the document already exists on any question in this Assessment, based on the filename and hash
-                var doc = _context.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
+                var doc = await _context.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
                     && f.Name == file.FileName
-                    && f.Assessment_Id == this.assessmentId).FirstOrDefault();
+                    && f.Assessment_Id == this.assessmentId).FirstOrDefaultAsync();
 
                 if (doc == null)
                 {
@@ -185,22 +186,22 @@ namespace CSETWebCore.Business.Document
                     doc.Name = file.FileName;
                 }
 
-                var answer = _context.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
+                var answer = await _context.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefaultAsync();
                 _context.DOCUMENT_FILE.Update(doc);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id };
-                if (_context.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
+                if (await _context.DOCUMENT_ANSWERS.FindAsync(temp.Document_Id, temp.Answer_Id) == null)
                 {
-                    _context.DOCUMENT_ANSWERS.Add(temp);
+                    await _context.DOCUMENT_ANSWERS.AddAsync(temp);
                 }
                 else
                 {
                     _context.DOCUMENT_ANSWERS.Update(temp);
                 }
 
-                _context.SaveChanges();
-                _assessmentUtil.TouchAssessment(doc.Assessment_Id);
+                await _context.SaveChangesAsync();
+                await _assessmentUtil.TouchAssessment(doc.Assessment_Id);
             }
         }
 

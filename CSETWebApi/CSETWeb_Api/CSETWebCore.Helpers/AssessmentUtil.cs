@@ -29,7 +29,7 @@ namespace CSETWebCore.Helpers
             {
                 var assess = await _context.ASSESSMENTS.FirstAsync(a => a.Assessment_Id == assessmentId);
                 assess.LastModifiedDate = nowUTC;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception exc)
             {

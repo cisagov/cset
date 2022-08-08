@@ -106,7 +106,7 @@ namespace CSETWebCore.Api.Controllers
                     // persist the analysis switch setting
                         var assessment = await _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
                         assessment.AnalyzeDiagram = req.AnalyzeDiagram;
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
 
                         XmlDocument xDoc = new XmlDocument();
                         xDoc.LoadXml(req.DiagramXml);
@@ -201,7 +201,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                return _diagram.ImportOldCSETDFile(importRequest.DiagramXml, (int)assessmentId);
+                return await _diagram.ImportOldCSETDFile(importRequest.DiagramXml, (int)assessmentId);
 
             }
             catch (Exception exc)

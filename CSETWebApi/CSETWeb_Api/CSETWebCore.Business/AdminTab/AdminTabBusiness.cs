@@ -80,13 +80,13 @@ namespace CSETWebCore.Business.AdminTab
                 // No answers saved yet.  Build both records.
                 fh = CreateNewFinancialHours(assessmentId, save);
                 fh.ReviewType = "Documentation";
-                _context.FINANCIAL_HOURS.Add(fh);
+                await _context.FINANCIAL_HOURS.AddAsync(fh);
 
                 fh = CreateNewFinancialHours(assessmentId, save);
                 fh.ReviewType = "Interview Process";
-                _context.FINANCIAL_HOURS.Add(fh);
+                await _context.FINANCIAL_HOURS.AddAsync(fh);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             else
             {
@@ -101,7 +101,7 @@ namespace CSETWebCore.Business.AdminTab
 
                         item.OtherSpecifyValue = save.OtherSpecifyValue;
 
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
             }

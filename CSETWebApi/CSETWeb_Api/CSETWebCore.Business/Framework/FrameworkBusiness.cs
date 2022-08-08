@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Framework;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Framework
 {
@@ -97,10 +99,10 @@ namespace CSETWebCore.Business.Framework
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <param name="selectedTier"></param>
-        public void PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier)
+        public async Task PersistSelectedTierAnswer(int assessmentId, TierSelection selectedTier)
         {
             // save to FRAMEWORK_TIER_TYPE_ANSWER table
-            var answer = _context.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId && x.TierType == selectedTier.TierType).FirstOrDefault();
+            var answer = await _context.FRAMEWORK_TIER_TYPE_ANSWER.Where(x => x.Assessment_Id == assessmentId && x.TierType == selectedTier.TierType).FirstOrDefaultAsync();
 
             if (answer == null)
             {
@@ -111,17 +113,17 @@ namespace CSETWebCore.Business.Framework
             answer.TierType = selectedTier.TierType;
             answer.Tier = selectedTier.TierName;
 
-            if (_context.FRAMEWORK_TIER_TYPE_ANSWER.Find(answer.Assessment_Id, answer.TierType) == null)
+            if (await _context.FRAMEWORK_TIER_TYPE_ANSWER.FindAsync(answer.Assessment_Id, answer.TierType) == null)
             {
-                _context.FRAMEWORK_TIER_TYPE_ANSWER.Add(answer);
+                await _context.FRAMEWORK_TIER_TYPE_ANSWER.AddAsync(answer);
             }
             else
             {
                 _context.FRAMEWORK_TIER_TYPE_ANSWER.Update(answer);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
         }
     }
 }

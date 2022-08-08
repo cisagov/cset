@@ -4,6 +4,7 @@ using CSETWebCore.Model.Findings;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Findings
 {
@@ -109,7 +110,7 @@ namespace CSETWebCore.Business.Findings
         /// <summary>
         /// 
         /// </summary>
-        public void Delete()
+        public async Task Delete()
         {
             if (_dbFinding == null)
             {
@@ -118,14 +119,14 @@ namespace CSETWebCore.Business.Findings
 
             _dbFinding.FINDING_CONTACT.ToList().ForEach(s => _context.FINDING_CONTACT.Remove(s));
             _context.FINDING.Remove(_dbFinding);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        public void Save()
+        public async Task Save()
         {
             // safety valve in case this was built without an answerid
             if (this._webFinding.Answer_Id == 0)
@@ -136,7 +137,7 @@ namespace CSETWebCore.Business.Findings
             if (this._webFinding.IsFindingEmpty())
                 return;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             _webFinding.Finding_Id = _dbFinding.Finding_Id;
         }
     }

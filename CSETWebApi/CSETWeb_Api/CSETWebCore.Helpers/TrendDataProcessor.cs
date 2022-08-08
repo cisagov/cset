@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Aggregation;
@@ -8,9 +9,9 @@ namespace CSETWebCore.Helpers
 {
     public class TrendDataProcessor : ITrendDataProcessor
     {
-        public void Process(CSETContext db, int aggregationID, LineChart response, string Type)
+        public async Task Process(CSETContext context, int aggregationID, LineChart response, string Type)
         {
-            var results = db.usp_GetTop5Areas(aggregationID);
+            var results = await context.usp_GetTop5Areas(aggregationID);
             HashSet<int> labels = new HashSet<int>();
 
             Dictionary<string, ChartDataSet> datasets = new Dictionary<string, ChartDataSet>();
