@@ -1,5 +1,18 @@
-<div class="p-0 d-flex flex-column justify-content-start flex-11a">
-    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
-        New Assessment
-    </div>
+<div class="p-2">
+        <swiper class="gallery-slider"
+        [config]="config"
+        (swiper)="onSwiper($event)"
+        (slideChange)="onSlideChange()"
+        #swiper
+      >
+        <ng-template swiperSlide *ngFor="let x of tempArray; let i = index">
+            <div class="card" (mouseover)="onHover(i)" (mouseleave)="onHover(-1)">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" *ngIf="i==hoverIndex" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </ng-template>
+      </swiper>
 </div>

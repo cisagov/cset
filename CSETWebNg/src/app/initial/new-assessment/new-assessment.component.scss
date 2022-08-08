@@ -1,0 +1,32 @@
+:host ::ng-deep .swiper-slide{
+    width: 19rem !important;
+}
+
+:host ::ng-deep .gallery-slider {
+    .swiper-wrapper {
+        padding: 20px 0;
+    }
+
+    .card-text{
+        font-size: 14px !important;
+    }
+
+    .swiper-slide {
+        transition: 250ms all;
+        
+        &:hover {
+            transform: scale(1.2);
+            font-size-adjust: .2;
+            z-index: 1;
+        }
+
+        &:first-child:hover{
+            margin:0 40px;
+        }
+
+        &:last-child:hover{
+            margin:0 -40px;
+        }
+
+    }
+}

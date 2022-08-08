@@ -14,9 +14,13 @@
   <component name="ChangeListManager">
     <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/layout-main/layout-main.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/layout-main/layout-main.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/sass/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/sass/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,19 +144,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Question/QuestionRequirementManager.cs</url>
-          <line>248</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Question/QuestionRequirementManager.cs" initialLine="248" containingFunctionPresentation="method 'StoreAnswer'">
-            <startOffsets>
-              <option value="9211" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9255" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs</url>
