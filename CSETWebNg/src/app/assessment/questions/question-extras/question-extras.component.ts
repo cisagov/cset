@@ -680,7 +680,7 @@ export class QuestionExtrasComponent implements OnInit {
   areNoReferenceDocumentsAvailable() {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
       && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
-      && (!this.tab?.resourceDocumentList || this.tab.resourceDocumentList.length === 0)
+      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
   }
 
 

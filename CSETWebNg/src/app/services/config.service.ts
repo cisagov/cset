@@ -57,6 +57,8 @@ export class ConfigService {
 
   installationMode = '';
 
+  canDeleteCustomModules = false;
+
 
   /**
    * Constructor.
@@ -100,6 +102,8 @@ export class ConfigService {
           this.config = data;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
+
+          this.canDeleteCustomModules = (this.config.canDeleteCustomModules ?? false);
 
           this.populateLabelValues();
 

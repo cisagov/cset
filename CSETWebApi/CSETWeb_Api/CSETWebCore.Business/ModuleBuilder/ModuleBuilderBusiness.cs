@@ -1340,7 +1340,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Get the Reference documents for this requirement
             var allDocs = GetReferencesForRequirement(requirement.RequirementID);
             requirement.SourceDocs = allDocs.SourceDocs;
-            requirement.ResourceDocs = allDocs.ResourceDocs;
+            requirement.AdditionalDocs = allDocs.AdditionalDocs;
 
 
 
@@ -1422,7 +1422,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Package the two lists together
             ReferenceDocLists response = new ReferenceDocLists();
             response.SourceDocs = sourceList;
-            response.ResourceDocs = resourceList;
+            response.AdditionalDocs = resourceList;
             return response;
         }
 
