@@ -217,34 +217,25 @@ export class MergeExaminationsComponent implements OnInit {
           this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
             // Update the assessment with the merge data and send it back
-            details.assessmentName = "Merged ISE " + " " + this.mergeConflicts[0].charter_Number + " " + 
+            details.assessmentName = "Merged ISE " + this.mergeConflicts[0].charter_Number + " " + 
                                       this.datePipe.transform(details.assessmentDate, 'MMddyy') + "_" + this.initialsAsString;
+            details.charter = this.mergeConflicts[0].charter_Number;
+            details.assets = this.mergeConflicts[0].asset_Amount;
             details.isAcetOnly = false;
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");
             this.assessSvc.updateAssessmentDetails(details);
 
-            console.log("this.mergeAnswers.length: " + this.mergeAnswers.length);
-            console.log("this.mergingAssessmentAnswers.length: " + this.mergingAssessmentAnswers.length);
-
             for (let i = 0; i < this.mergeAnswers.length; i++) {
               for (let j = 0; j < this.mergingAssessmentAnswers.length; j++) {
                 if (this.mergeAnswers[i].questionId === this.mergingAssessmentAnswers[j].questionId) {
-                  console.log("question ID's that match: " + this.mergeAnswers[i].questionId);
-                  console.log("this.mergingAssessmentAnswers[j].answerText: " + this.mergingAssessmentAnswers[j].answerText);
-                  console.log("this.mergeAnswers[i].answerText: " + this.mergeAnswers[i].answerText);
-
                   this.mergingAssessmentAnswers[j].answerText = this.mergeAnswers[i].answerText;
                 }
               }
             }
-            
-            console.log("this.mergingAssessmentAnswers: " + JSON.stringify(this.mergingAssessmentAnswers, null, 4));
-            console.log("this.mergeAnswers: " + JSON.stringify(this.mergeAnswers, null, 4));
 
             for (let i = 0; i < this.mergingAssessmentAnswers.length; i++) {
               this.questionSvc.storeAnswer(this.mergingAssessmentAnswers[i]).subscribe((response: any) => {
-                console.log("Nav-ing to home");
                 this.navToHome();
 
               });

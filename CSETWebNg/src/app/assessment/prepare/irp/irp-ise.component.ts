@@ -27,19 +27,21 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
-    selector: 'app-irp',
-    templateUrl: './irp.component.html',
+    selector: 'app-irp-ise',
+    templateUrl: './irp-ise.component.html',
     styleUrls: ['./irp.component.scss']
 })
-export class IRPComponent implements OnInit {
+export class ExamProfileComponent implements OnInit {
     irps: IRPResponse;
     selected: IRP;
 
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
+        public ncuaSvc: NCUAService,
         private irpSvc: IRPService
     ) { }
 
