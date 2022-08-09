@@ -91,6 +91,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    console.log(JSON.stringify(this.myGrouping, null, 4));
+
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
@@ -107,7 +109,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshPercentAnswered();
 
     // set sub questions' titles so that they align with their parent when hidden
-    console.log("my grouping.questions: " + JSON.stringify(this.myGrouping.questions, null, 4));
     this.myGrouping.questions.forEach(q => {
       if (!!q.parentQuestionId) {
         q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;

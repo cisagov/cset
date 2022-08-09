@@ -26,6 +26,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
+import { ACETService } from './acet.service';
+import { AcetDashboard } from '../models/acet-dashboard.model';
 
 let headers = {
     headers: new HttpHeaders()
@@ -34,7 +36,8 @@ let headers = {
 };
 
 /**
- * A service that checks for the NCUA examiner's installation switch.
+ * A service that checks for the NCUA examiner's installation switch,
+ * and manages various ISE examination variables.
  */
  @Injectable({
     providedIn: 'root'
@@ -54,25 +57,27 @@ let headers = {
 
   // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE/CORE+)
   iseAssetSize: string = "0";
-  iseIRP: string = "";
+  iseIRP: string = "SCUEP";
   usingIseOverride: boolean = false;
-  overrideIRP: number = 0;
+  overrideIRP: string = "";
 
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public acetSvc: ACETService
   ) {
     this.init();
   }
 
   async init() {
   this.getSwitchStatus();
-  this.determineIRP();
   }
 
-  // check if it's an examiner using ACET - switch is toggled during installation
+  /*
+  * The master switch for all extra ISE functionality
+  */
   getSwitchStatus() {
     this.http.get(this.configSvc.apiUrl + 'isExaminersModule', headers).subscribe((
       response: boolean) => {
@@ -81,6 +86,10 @@ let headers = {
     );
   }
 
+
+  /*
+  * The assessment merge functionality
+  */
   // Opens merge toggle checkboxes on the assessment selection (landing) page
   prepExaminationMerge() {
     if (this.prepForMerge === false) {
@@ -164,19 +173,37 @@ let headers = {
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }
 
-  determineIRP() {
-    console.log("this.ncuaSvc.overrideIRP: " + this.overrideIRP);
-    if (this.overrideIRP === 0) {
-      if (Number(this.iseAssetSize) > 50000000) {
-        this.iseIRP = 'CORE';
-      } else {
-        this.iseIRP = 'SCUEP';
-      }
-      return this.iseIRP;
-    } else {
-      let data = this.overrideIRP.toString();
-      return data;
-    }
+  /*
+  * Manage the ISE maturity levels.
+  * SCUEP if assets is less than $50 Million. Core otherwise.
+  * Also allows for manual overriding.
+  */
+  updateAssetSize(amount: string) {
+    this.iseAssetSize = amount;
+    this.iseIRP = this.getIRPfromAssets();
   }
+
+  getIRPfromAssets() {
+    let level = "";
+    if (Number(this.iseAssetSize) > 50000000) {
+      level = 'CORE';
+    } else {
+      level = 'SCUEP';
+    }
+
+    return level;
+  }
+
+  getIRPfromOverride() {
+    let level = "";
+    if (this.usingIseOverride === true) {
+      level = this.overrideIRP;
+    } else {
+      level = this.getIRPfromAssets();
+    }
+    
+    return level;
+  }
+
 
 }
