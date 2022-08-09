@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Contact;
@@ -11,7 +8,7 @@ using CSETWebCore.Model.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
-
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.Contact
 {
@@ -22,11 +19,12 @@ namespace CSETWebCore.Business.Contact
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IUserBusiness _userBusiness;
         private readonly IUserAuthentication _userAuthentication;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
         private CSETContext _context;
 
         public ContactBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
             ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness,
-            IUserAuthentication userAuthentication)
+            IUserAuthentication userAuthentication, ILocalInstallationHelper localInstallationHelper)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -34,6 +32,7 @@ namespace CSETWebCore.Business.Contact
             _notificationBusiness = notificationBusiness;
             _userBusiness = userBusiness;
             _userAuthentication = userAuthentication;
+            _localInstallationHelper = localInstallationHelper;
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
@@ -279,7 +278,7 @@ namespace CSETWebCore.Business.Contact
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
-                            if (!_userAuthentication.IsLocalInstallation(appCode))
+                            if (!_localInstallationHelper.IsLocalInstallation())
                             {
                                 _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appCode);
                             }
@@ -301,7 +300,7 @@ namespace CSETWebCore.Business.Contact
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!_userAuthentication.IsLocalInstallation(appCode))
+                if (!_localInstallationHelper.IsLocalInstallation())
                 {
                     _notificationBusiness.InviteToAssessment(newContact);
                 }

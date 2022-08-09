@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
             var mb = new Maturity.MaturityBusiness(context, null, null);
-            var cb = new Contact.ContactBusiness(context, assessmentUtil, token, null, null, null);
+            var cb = new Contact.ContactBusiness(context, assessmentUtil, token, null, null, null, null);
 
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
