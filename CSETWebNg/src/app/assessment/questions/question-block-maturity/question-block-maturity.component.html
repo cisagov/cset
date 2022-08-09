@@ -116,7 +116,7 @@
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
     <div *ngIf="this.assessSvc.assessment.maturityModel.modelName === 'ISE'" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
         <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion" 
-        [class.display-none]="(q.maturityLevelName !== this.ncuaSvc.iseIRP)">
+        [class.display-none]="(!this.ncuaSvc.usingIseOverride && q.maturityLevelName !== this.ncuaSvc.iseIRP || (this.ncuaSvc.usingIseOverride && q.maturityLevelName !== this.ncuaSvc.overrideIRP))">
 
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    

@@ -35,6 +35,8 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { CisService } from '../../../services/cis.service';
 import { NCUAService } from '../../../services/ncua.service';
+import { ACETService } from '../../../services/acet.service';
+import { AcetDashboard } from '../../../models/acet-dashboard.model';
 
 
 @Component({
@@ -68,6 +70,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
     public filterSvc: QuestionFilterService,
     public maturityFilteringSvc: MaturityFilteringService,
     private acetFilteringSvc: AcetFilteringService,
+    private acetSvc: ACETService,
     public navSvc: NavigationService,
     public cisSvc: CisService,
     public ncuaSvc: NCUAService,
@@ -86,7 +89,6 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   ngOnInit() {    
     this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
-    this.statementLevel = this.ncuaSvc.determineIRP();
   }
 
   /**
@@ -106,11 +108,9 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the complete list of questions
   */
-  loadQuestions() {    
+  loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-
-
 
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
@@ -124,6 +124,10 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
+
+        // Check for ISE specific reworkings of IRP levels based on assets and/or IRP summary override.
+        this.checkMaturityISE();
+        this.statementLevel = "- " + this.ncuaSvc.getIRPfromOverride();
 
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {
@@ -190,4 +194,25 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
   }
+
+  checkMaturityISE() {
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        //console.log("data2: " + JSON.stringify(data, null, 4));
+        if (data.override === 1) {
+          console.log("Override is 1 - SCUEP");
+          this.ncuaSvc.overrideIRP = 'SCUEP';
+          this.ncuaSvc.usingIseOverride = true;
+        } else if (data.override === 2) {
+          console.log("Override is 2 - CORE");
+          this.ncuaSvc.overrideIRP = 'CORE';
+          this.ncuaSvc.usingIseOverride = true;
+        } else {
+          console.log("No override");
+          this.ncuaSvc.overrideIRP = "";
+          this.ncuaSvc.usingIseOverride = false;
+        }
+    });
+  }
+  
 }

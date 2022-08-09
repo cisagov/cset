@@ -56,6 +56,7 @@ export class ExamProfileSummaryComponent implements OnInit {
      * 
      */
     ngOnInit() {
+        this.ncuaSvc.getIRPfromAssets();
         this.loadDashboard();
     }
 
@@ -90,18 +91,12 @@ export class ExamProfileSummaryComponent implements OnInit {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                this.overrideLabel = this.getISELabel();
+                this.overrideLabel = this.ncuaSvc.getIRPfromAssets();
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
-    }
-
-    getISELabel() {
-        // SCUEP if assets is less than $50 Million. Core if higher.
-        let riskLevel = this.ncuaSvc.iseIRP;
-        return riskLevel;
     }
 
     changeInfoIrp() {
@@ -113,11 +108,18 @@ export class ExamProfileSummaryComponent implements OnInit {
      * 
      */
     changeInfo() {
+        console.log("this.acetDashboard.override: " + this.acetDashboard.override);
         if (this.acetDashboard.override === 0) {
+            this.ncuaSvc.usingIseOverride = false;
             this.acetDashboard.overrideReason = '';
+            this.ncuaSvc.overrideIRP = "";
+        } else if (this.acetDashboard.override === 1) {
+            this.ncuaSvc.usingIseOverride = true;
+            this.ncuaSvc.overrideIRP = 'SCUEP';
+        } else if (this.acetDashboard.override === 2) {
+            this.ncuaSvc.usingIseOverride = true;
+            this.ncuaSvc.overrideIRP = 'CORE';
         }
-
-        this.ncuaSvc.overrideIRP = this.acetDashboard.override;
 
         this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
             this.loadDashboard();

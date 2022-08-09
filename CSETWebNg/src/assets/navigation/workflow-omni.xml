@@ -17,7 +17,7 @@
         <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="OPTION:STANDARD" />
 
         <!-- ACET-specific screens -->
-        <node displaytext="Inherent Risk Profilessss" id="irp" path="assessment/{:id}/prepare/irp-ise" condition="MATURITY:ACET" />
+        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp-ise" condition="MATURITY:ACET" />
         <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:ACET" />
 
         <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:ISE" />
@@ -104,7 +104,7 @@
 
 
         <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
-        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
+        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
