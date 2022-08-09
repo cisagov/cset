@@ -187,6 +187,10 @@ export class ChartService {
       tempChart.destroy();
     }
 
+    if (!x) {
+      return null;
+    }
+
     // assume that this is an answer distribution pie
     let segmentColors = [];
     let segmentLabels = [];
@@ -407,6 +411,10 @@ export class ChartService {
   * @param x
   */
   calcHbcHeightPixels(x): string {
+    // just throw a value if no data is present
+    if (x.datasets.length == 0) {
+      return '10px';
+    }
     // calculate the number of bars in the graph
     let maxDatasetLength = x.datasets[0].data.length;
     // calculate a good height for the chart's container

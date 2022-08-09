@@ -45,7 +45,7 @@
   <canvas id="canvasStandardsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartStandardsPie }}</canvas>
 </div>
 
-<div class="chart d-flex flex-column flex-00a mb-5">
+<div *ngIf="maturityAnswersExist" class="chart d-flex flex-column flex-00a mb-5">
   <h3>
     Maturity Compliance
   </h3>
@@ -54,15 +54,14 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
-    <h5>{{i.chartName}}</h5>
+  <div *ngFor="let i of chartsMaturityCompliance">
     <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}" 
     style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
   </div>
   
 </div>
 
-<div class="chart d-flex flex-column flex-00a mb-5">
+<div *ngIf="componentsAnswersExist" class="chart d-flex flex-column flex-00a mb-5">
   <h3>
     Components Answers
   </h3>

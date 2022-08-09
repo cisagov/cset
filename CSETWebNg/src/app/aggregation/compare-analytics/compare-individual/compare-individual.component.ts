@@ -38,7 +38,10 @@ export class CompareIndividualComponent implements OnInit {
 
   answerCounts: any[] = null;
   chartOverallComparison: Chart;
+
   chartCategoryPercent: Chart;
+  categoryPercentComparisons = false;
+  
   sals: any;
 
   constructor(
@@ -82,6 +85,10 @@ export class CompareIndividualComponent implements OnInit {
 
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+      if (x.datasets.length > 0) {
+        this.categoryPercentComparisons = true;
+      }
+
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
