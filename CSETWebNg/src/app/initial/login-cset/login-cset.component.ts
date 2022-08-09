@@ -148,7 +148,7 @@ export class LoginCsetComponent implements OnInit {
         // divide by 60 to convert seconds to minutes
         minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
       }
-      console.log(minutesSinceExpiration);
+
       // Only show eject dialog if token has been expired for less than an hour.
       if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
         this.isEjectDialogOpen = true;
