@@ -74,7 +74,7 @@ export class LoginCsetComponent implements OnInit {
       // default the page as 'login'
       this.mode = 'LOGIN';
       this.checkForEjection(this.route.snapshot.queryParams['token']);
-      // clear token query param to make the url look nicer.
+      // Clear token query param to make the url look nicer.
       if (this.route.snapshot.queryParams['token']) {
         this.router.navigate(['.'], { relativeTo: this.route, queryParams: { token: null } });
       }
@@ -141,7 +141,6 @@ export class LoginCsetComponent implements OnInit {
       let minutesSinceExpiration = 0;
 
       if (token) {
-        console.log(token);
         const jwt = new JwtParser();
         const parsedToken = jwt.decodeToken(token);
         const expTimeUnix = parsedToken.exp;
