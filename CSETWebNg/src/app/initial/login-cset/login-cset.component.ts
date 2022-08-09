@@ -74,6 +74,10 @@ export class LoginCsetComponent implements OnInit {
       // default the page as 'login'
       this.mode = 'LOGIN';
       this.checkForEjection(this.route.snapshot.queryParams['token']);
+      // clear token query param to make the url look nicer.
+      if (this.route.snapshot.queryParams['token']) {
+        this.router.navigate(['.'], { relativeTo: this.route, queryParams: { token: null } });
+      }
     }
     if (this.route.snapshot.params['id']) {
       this.assessmentId = +this.route.snapshot.params['id'];
@@ -137,12 +141,13 @@ export class LoginCsetComponent implements OnInit {
       let minutesSinceExpiration = 0;
 
       if (token) {
+        console.log(token);
         const jwt = new JwtParser();
         const parsedToken = jwt.decodeToken(token);
         const expTimeUnix = parsedToken.exp;
         const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
-        // divide by 3600 to convert seconds to hours
-        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 3600;
+        // divide by 60 to convert seconds to minutes
+        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
       }
       console.log(minutesSinceExpiration);
       // Only show eject dialog if token has been expired for less than an hour.
