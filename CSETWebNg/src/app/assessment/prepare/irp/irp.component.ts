@@ -27,7 +27,6 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
     selector: 'app-irp',
@@ -41,7 +40,6 @@ export class IRPComponent implements OnInit {
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
-        public ncuaSvc: NCUAService,
         private irpSvc: IRPService
     ) { }
 
@@ -64,14 +62,6 @@ export class IRPComponent implements OnInit {
     setResponse(irp: IRP, val) {
         irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
-    }
-
-    usingIse() {
-        if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

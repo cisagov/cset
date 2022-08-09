@@ -50,11 +50,13 @@ let headers = {
   prepForMerge: boolean = false;
   assessmentsToMerge: any[] = [];
   mainAssessCharter: string = "";
-  charterWarningShown: boolean = false;
+  backupCharter: string = "";
 
-  // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE)
+  // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE/CORE+)
   iseAssetSize: string = "0";
   iseIRP: string = "";
+  usingIseOverride: boolean = false;
+  overrideIRP: number = 0;
 
 
   constructor(
@@ -67,6 +69,7 @@ let headers = {
 
   async init() {
   this.getSwitchStatus();
+  this.determineIRP();
   }
 
   // check if it's an examiner using ACET - switch is toggled during installation
@@ -90,36 +93,47 @@ let headers = {
   // Adds or removes selected ISE examinations to the list to merge
   modifyMergeList(assessment: any, event: any) {
     let tempCharter = "";
-
-    if (this.mainAssessCharter === "") {
-      for (let i = 4; i < 9; i++) {
-        this.mainAssessCharter += assessment.assessmentName[i];
-      }
-    } else {
-      for (let i = 4; i < 9; i++) {
-        tempCharter += assessment.assessmentName[i];
-      }
-    }
-
     const optionChecked = event.srcElement.checked;
 
-    if (this.mainAssessCharter !== "" && tempCharter !== "" && optionChecked) {
-      if (this.mainAssessCharter !== tempCharter && this.charterWarningShown === false) {
+    if (optionChecked) {
+      tempCharter = this.pullAssessmentCharter(assessment);
+
+      // Used as the new main charter number if the user deselects the first exam that was selected (see line 115)
+      if (this.assessmentsToMerge.length === 1) {
+        this.backupCharter = tempCharter;
+      }
+
+      // check if the merging assessments have matching charter numbers. Shows warning if not
+      if (this.mainAssessCharter === "") {
+        this.mainAssessCharter = tempCharter;
+      } else if (this.mainAssessCharter !== tempCharter) {
         this.openCharterWarning();
       }
-    }
-
-    if (optionChecked) {
+      
       this.assessmentsToMerge.push(assessment.assessmentId);
     } else {
-      const index = this.assessmentsToMerge.indexOf(assessment);
+      const index = this.assessmentsToMerge.indexOf(assessment.assessmentId);
       this.assessmentsToMerge.splice(index, 1);
+
+      if (index === 0) {
+        this.mainAssessCharter = this.backupCharter;
+      }
+
+      if (this.assessmentsToMerge.length === 0) {
+        this.mainAssessCharter = "";
+        this.backupCharter = "";
+      }
+    }
+  }
+
+  pullAssessmentCharter(assessment: any) {
+    // All ISE charters start on the 4th character (after the 'ISE' and space) and are 5 digits long.
+    let charterNum = "";
+    for (let i = 4; i < 9; i++) {
+      charterNum += assessment.assessmentName[i];
     }
 
-    if (this.assessmentsToMerge.length === 0) {
-      this.mainAssessCharter = "";
-      this.charterWarningShown = false;
-    }
+    return charterNum;
   }
 
   openCharterWarning() {
@@ -128,7 +142,6 @@ let headers = {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.charterWarningShown = true;
     });
   }
 
@@ -152,13 +165,17 @@ let headers = {
   }
 
   determineIRP() {
-    console.log("Asset Size: " + this.iseAssetSize);
-    if (Number(this.iseAssetSize) > 50000000) {
-      this.iseIRP = 'CORE';
-      return 'CORE';
+    console.log("this.ncuaSvc.overrideIRP: " + this.overrideIRP);
+    if (this.overrideIRP === 0) {
+      if (Number(this.iseAssetSize) > 50000000) {
+        this.iseIRP = 'CORE';
+      } else {
+        this.iseIRP = 'SCUEP';
+      }
+      return this.iseIRP;
     } else {
-      this.iseIRP = 'SCUEP';
-      return 'SCUEP'
+      let data = this.overrideIRP.toString();
+      return data;
     }
   }
 

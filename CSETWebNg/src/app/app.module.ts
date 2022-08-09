@@ -118,6 +118,7 @@ import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
+import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.component';
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
@@ -456,6 +457,7 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
+import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 
 
 @NgModule({
@@ -594,6 +596,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         FrameworkComponent,
         RequiredDocsComponent,
         IRPComponent,
+        ExamProfileComponent,
         DiagramComponent,
         MatDetailComponent,
         AboutComponent,
@@ -648,6 +651,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         RefDocumentComponent,
         DomainMaturityFilterComponent,
         IrpSummaryComponent,
+        ExamProfileSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
         ComponentsComponent,

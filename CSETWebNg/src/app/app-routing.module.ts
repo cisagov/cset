@@ -173,6 +173,8 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
+import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -323,6 +325,8 @@ const appRoutes: Routes = [
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
+              { path: 'exam-profile', component: ExamProfileComponent },
+              { path: 'exam-profile-summary', component: ExamProfileSummaryComponent },
               {
                 path: 'diagram',
                 component: DiagramComponent,

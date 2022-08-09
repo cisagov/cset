@@ -159,7 +159,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   createAssessmentName() {
     if (this.isAnExamination()) {
-      if (this.assessment.assessmentName.includes("merged")) {
+      // Checks if this is a merged exam, and wont auto update the name. Not a great check - will fix later.
+      if (this.assessment.assessmentName.includes("merged") || this.assessment.assessmentName.includes("Merged")) {
         return;
       }
       
