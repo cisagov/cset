@@ -18,20 +18,18 @@ namespace CSETWebCore.Business.Contact
         private readonly ITokenManager _tokenManager;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IUserBusiness _userBusiness;
-        private readonly IUserAuthentication _userAuthentication;
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private CSETContext _context;
 
         public ContactBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
             ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness,
-            IUserAuthentication userAuthentication, ILocalInstallationHelper localInstallationHelper)
+            ILocalInstallationHelper localInstallationHelper)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _tokenManager = tokenManager;
             _notificationBusiness = notificationBusiness;
             _userBusiness = userBusiness;
-            _userAuthentication = userAuthentication;
             _localInstallationHelper = localInstallationHelper;
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Authentication;
+﻿using CSETWebCore.Model.Authentication;
 
 namespace CSETWebCore.Interfaces.Helpers
 {
