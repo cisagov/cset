@@ -211,7 +211,7 @@
       &laquo; Back to Question List
     </button>
   </div>
-  <div *ngIf="searchHits.length > 0" class="text-right" id="add-qcomp-bottom-button">
+  <div *ngIf="searchHits?.length > 0" class="text-right" id="add-qcomp-bottom-button">
     <button class="btn btn-primary" style="float:right;position:relative; bottom: 55px;" [disabled]="selectedQuestionIds.length === 0"
       (click)="addSelectedQuestions()">Add Selected Questions</button>
   </div>

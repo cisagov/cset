@@ -37,12 +37,17 @@ import { deepStrictEqual } from 'assert';
 export class CompareSummaryComponent implements OnInit {
 
   chartOverallAverage: Chart;
+  
   chartStandardsPie: Chart;
+  
   chartComponentsPie: Chart;
+  componentsAnswersExist = false;
+
   chartCategoryAverage: Chart;
   catAvgHeight: number;
 
   chartsMaturityCompliance: any[];
+  maturityAnswersExist = false;
 
   assessmentColors: Map<string, string>;
 
@@ -85,6 +90,10 @@ export class CompareSummaryComponent implements OnInit {
 
     // Components Answers
     this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
+      if (x.data.reduce((a, b) => a + b) > 0) {
+        this.componentsAnswersExist = true;
+      }
+
       this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
     });
 
@@ -113,6 +122,10 @@ export class CompareSummaryComponent implements OnInit {
 
     // Maturity Compliance By Model/Domain
     this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+      if (resp.length > 0) {
+        this.maturityAnswersExist = true;
+      }
+
       this.chartsMaturityCompliance = resp;
 
       resp.forEach(x => {

@@ -89,7 +89,7 @@
   </div>
 </div>
 
-<div class="chart d-flex flex-column flex-00a">
+<div *ngIf="categoryPercentComparisons" class="chart d-flex flex-column flex-00a">
   <h3>Category Percent Comparisons</h3>
   <div *ngIf="chartCategoryPercent == null">
     <div class="spinner-container" style="margin: 2em auto">
