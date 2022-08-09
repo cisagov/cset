@@ -64,7 +64,7 @@ namespace CSETWebCore.Model.Cis
         public string ReferenceText { get; set; }
 
         public List<CustomDocument> SourceDocuments { get; set; }
-        public List<CustomDocument> ResourceDocuments { get; set; }
+        public List<CustomDocument> AdditionalDocuments { get; set; }
 
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }
