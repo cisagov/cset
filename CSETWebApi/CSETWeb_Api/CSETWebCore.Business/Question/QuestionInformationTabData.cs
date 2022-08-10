@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.Question
         /// Documents that appear in the "Help Documents" section of question details.
         /// These are additional documents that may be helpful.
         /// </summary>
-        public List<CustomDocument> ResourceDocumentList { get; set; }
+        public List<CustomDocument> AdditionalDocumentsList { get; set; }
 
         public List<string> ReferenceTextList { get; set; }
 
@@ -171,10 +171,10 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceList,
-                    out List<CustomDocument> resourceList);
-                SourceDocumentsList = sourceList;
-                ResourceDocumentList = resourceList;
+                    out List<CustomDocument> sourceDocList,
+                    out List<CustomDocument> additionalDocList);
+                SourceDocumentsList = sourceDocList;
+                AdditionalDocumentsList = additionalDocList;
 
                 ReferenceTextList = refBuilder.BuildReferenceTextForRequirement(requirement.Requirement_Id);
             }
@@ -317,10 +317,10 @@ namespace CSETWebCore.Business.Question
 
             var refBuilder = new Helpers.ReferencesBuilder(_context);
             refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceList,
-                    out List<CustomDocument> resourceList);
-            SourceDocumentsList = sourceList;
-            ResourceDocumentList = resourceList;
+                    out List<CustomDocument> sourceDocList,
+                    out List<CustomDocument> additionalDocList);
+            SourceDocumentsList = sourceDocList;
+            AdditionalDocumentsList = additionalDocList;
 
             ReferenceTextList = refBuilder.BuildReferenceTextForRequirement(requirementData.RequirementID);
         }
@@ -384,7 +384,7 @@ namespace CSETWebCore.Business.Question
                     ShowSALLevel = true;
 
                     var refBuilder = new Helpers.ReferencesBuilder(_context);
-                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<CustomDocument> sourceDocList, out List<CustomDocument> resourceDocList);
+                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<CustomDocument> sourceDocList, out List<CustomDocument> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
                 }
@@ -432,10 +432,10 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildReferenceDocuments(reqid, 
-                    out List<CustomDocument> sourceList,
-                    out List<CustomDocument> resourceList);
-                SourceDocumentsList = sourceList;
-                ResourceDocumentList = resourceList;
+                    out List<CustomDocument> sourceDocList,
+                    out List<CustomDocument> additionalDocList);
+                SourceDocumentsList = sourceDocList;
+                AdditionalDocumentsList = additionalDocList;
 
 
                 var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
@@ -497,10 +497,10 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildDocumentsForMaturityQuestion(info.QuestionID,
-                    out List<CustomDocument> sourceList,
-                    out List<CustomDocument> resourceList);
-                SourceDocumentsList = sourceList;
-                ResourceDocumentList = resourceList;
+                    out List<CustomDocument> sourceDocList,
+                    out List<CustomDocument> additionalDocList);
+                SourceDocumentsList = sourceDocList;
+                AdditionalDocumentsList = additionalDocList;
 
 
                 ReferenceTextList = refBuilder.BuildReferenceTextForMaturityQuestion(info.QuestionID);

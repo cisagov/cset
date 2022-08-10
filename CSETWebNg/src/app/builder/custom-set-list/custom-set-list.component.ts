@@ -29,6 +29,7 @@ import { AlertComponent } from "../../dialogs/alert/alert.component";
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-custom-set-list',
@@ -41,9 +42,12 @@ export class SetListComponent implements OnInit {
   setDetailList: SetDetail[];
   setsInUseList: SetDetail[];
 
+  canDeleteCustomModules = false;
+
   constructor(
     public setBuilderSvc: SetBuilderService,
     public authSvc: AuthenticationService,
+    public configSvc: ConfigService,
     private router: Router,
     private dialog: MatDialog) {
   }
@@ -51,6 +55,8 @@ export class SetListComponent implements OnInit {
   ngOnInit() {
     this.getStandards();
     this.getStandardsInUse();
+
+    this.canDeleteCustomModules = this.configSvc.canDeleteCustomModules;
   }
 
   getStandards() {

@@ -168,7 +168,7 @@ namespace CSETWebCore.Helpers
 
                         GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
                         question.SourceDocuments = s;
-                        question.ResourceDocuments = r;
+                        question.AdditionalDocuments = r;
                     }
 
                     grouping.Questions.Add(question);
@@ -219,7 +219,7 @@ namespace CSETWebCore.Helpers
 
                     GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
                     question.SourceDocuments = s;
-                    question.ResourceDocuments = r;
+                    question.AdditionalDocuments = r;
                 }
 
                 qList.Add(question);
@@ -277,7 +277,7 @@ namespace CSETWebCore.Helpers
 
                         GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
                         question.SourceDocuments = s;
-                        question.ResourceDocuments = r;
+                        question.AdditionalDocuments = r;
                     }
 
                     option.Followups.Add(question);
@@ -291,14 +291,14 @@ namespace CSETWebCore.Helpers
 
             
         private void GetReferences(int questionId, out List<CustomDocument> sourceDocs,
-                out List<CustomDocument> resourceDocs)
+                out List<CustomDocument> additionalDocs)
         {
             var refBuilder = new Helpers.ReferencesBuilder(_context);
             refBuilder.BuildDocumentsForMaturityQuestion(questionId, out List<CustomDocument> s,
                 out List<CustomDocument> r);
 
             sourceDocs = s;
-            resourceDocs = r;
+            additionalDocs = r;
         }
 
 
