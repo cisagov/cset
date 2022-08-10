@@ -11,7 +11,7 @@ using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using CSETWebCore.Business.Authorization;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/aggregation/getaggregations")]
-        public async Task<IActionResult> GetAggregations([FromQuery] string mode)
+        public IActionResult GetAggregations([FromQuery] string mode)
         {
             // Get the current userid to set as the Assessment creator and first attached user
             int currentUserId = _token.GetCurrentUserId();
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/create")]
-        public async Task<IActionResult> CreateAggregation([FromQuery] string mode)
+        public IActionResult CreateAggregation([FromQuery] string mode)
         {
             var manager = new AggregationBusiness(_context);
             return Ok(manager.CreateAggregation(mode));
@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/get")]
-        public async Task<IActionResult> GetAggregation()
+        public IActionResult GetAggregation()
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -76,7 +76,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/update")]
-        public async Task<IActionResult> UpdateAggregation([FromBody] Aggregation aggregation)
+        public IActionResult UpdateAggregation([FromBody] Aggregation aggregation)
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/delete")]
-        public async Task<IActionResult> DeleteAggregation([FromQuery] int aggregationId)
+        public IActionResult DeleteAggregation([FromQuery] int aggregationId)
         {
             var manager = new AggregationBusiness(_context);
             manager.DeleteAggregation(aggregationId);
@@ -102,7 +102,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getassessments")]
-        public async Task<IActionResult> GetAssessmentsForAggregation()
+        public IActionResult GetAssessmentsForAggregation()
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -117,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/saveassessmentselection")]
-        public async Task<IActionResult> SaveAssessmentSelection([FromBody] AssessmentSelection request)
+        public IActionResult SaveAssessmentSelection([FromBody] AssessmentSelection request)
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -132,7 +132,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/saveassessmentalias")]
-        public async Task<IActionResult> SaveAssessmentAlias([FromBody] AliasSaveRequest req)
+        public IActionResult SaveAssessmentAlias([FromBody] AliasSaveRequest req)
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -149,7 +149,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getmissedquestions")]
-        public async Task<IActionResult> GetCommonlyMissedQuestions()
+        public IActionResult GetCommonlyMissedQuestions()
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
@@ -169,7 +169,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/aggregation/getanswers")]
-        public async Task<IActionResult> GetAnswers()
+        public IActionResult GetAnswers()
         {
             var aggreg = new AggregationBusiness(_context);
             // return aggreg.GetAnswers(new List<int>() { 4, 5 });
@@ -183,7 +183,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/aggregation/setmergeanswer")]
-        public async Task<IActionResult> SetMergeAnswer([FromQuery] int answerId, [FromQuery] string answerText)
+        public IActionResult SetMergeAnswer([FromQuery] int answerId, [FromQuery] string answerText)
         {
             var aggreg = new AggregationBusiness(_context);
             // aggreg.SetMergeAnswer(answerId, answerText);

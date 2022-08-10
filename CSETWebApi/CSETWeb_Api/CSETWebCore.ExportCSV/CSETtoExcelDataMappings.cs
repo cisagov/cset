@@ -1,4 +1,4 @@
-﻿using CSETWebCore.Business.ReportEngine;
+using CSETWebCore.Business.ReportEngine;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ReportEngine;
 using System;
@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace CSETWebCore.ExportCSV
 {
@@ -37,7 +38,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public async Task ProcessTables(MemoryStream stream)
+        public void ProcessTables(MemoryStream stream)
         {
             CSETtoExcelDocument doc = new CSETtoExcelDocument();
 
@@ -56,9 +57,7 @@ namespace CSETWebCore.ExportCSV
 
             if (assessment.UseDiagram)
             {
-                var rows = await CreateWorksheetPageDiagramAnswers();
-
-                doc.AddList<QuestionExport>(rows, "Component Questions", QuestionExport.Headings);
+                CreateWorksheetPageDiagramAnswers(ref doc);
             }
 
 
@@ -226,7 +225,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="doc"></param>
-        private async Task<List<QuestionExport>> CreateWorksheetPageDiagramAnswers()
+        private void CreateWorksheetPageDiagramAnswers(ref CSETtoExcelDocument doc)
         {
             IEnumerable<QuestionExport> list;
 
@@ -235,7 +234,7 @@ namespace CSETWebCore.ExportCSV
 
             // Components worksheet
 
-            IList<Answer_Components_Default> answers = await _context.usp_Answer_Components_Default(_assessmentId);
+            var answers = _context.usp_Answer_Components_Default(_assessmentId);
 
             // var answer2 = _context.Answer_Components_Exploded
 
@@ -266,7 +265,7 @@ namespace CSETWebCore.ExportCSV
                 q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
             });
 
-            return rows;
+            doc.AddList<QuestionExport>(rows, "Component Questions", QuestionExport.Headings);
         }
 
 

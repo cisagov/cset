@@ -15,7 +15,6 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -47,9 +46,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/contacts")]
-        public async Task<IActionResult> GetContactsForAssessment()
+        public IActionResult GetContactsForAssessment()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             int userId = _token.GetCurrentUserId();
 
             ContactsListResponse resp = new ContactsListResponse
@@ -67,9 +66,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/contacts/getcurrent")]
-        public async Task<IActionResult> GetCurrentUserContact()
+        public IActionResult GetCurrentUserContact()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             int currentUserId = _token.GetUserId();
 
             var resp = _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
@@ -84,9 +83,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/addnew")]
-        public async Task<IActionResult> CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
+        public IActionResult CreateAndAddContactToAssessment([FromBody] ContactCreateParameters newContact)
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             string app_code = _token.Payload(Constants.Constants.Token_Scope);
 
             // Make sure the user is an admin on this assessment
@@ -96,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
             newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
 
             List<ContactDetail> details = new List<ContactDetail>(1);
-            details.Add(await _contact.CreateAndAddContactToAssessment(newContact));
+            details.Add(_contact.CreateAndAddContactToAssessment(newContact));
 
             ContactsListResponse resp = new ContactsListResponse
             {
@@ -112,7 +111,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/contacts/remove")]
-        public async Task<IActionResult> RemoveContactFromAssessment([FromBody] ContactRemoveParameters contactRemove)
+        public IActionResult RemoveContactFromAssessment([FromBody] ContactRemoveParameters contactRemove)
         {
             if (contactRemove == null)
             {
@@ -131,14 +130,14 @@ namespace CSETWebCore.Api.Controllers
             // explicit removal using the ID of the connection 
             if (contactRemove.AssessmentContactId > 0)
             {
-                ac = await _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contactRemove.AssessmentContactId).FirstOrDefaultAsync();
+                ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contactRemove.AssessmentContactId).FirstOrDefault();
 
             }
 
             // implied removal of the current user's connection to the assessment
             if (contactRemove.AssessmentId > 0)
             {
-                ac = await _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == contactRemove.AssessmentId && x.UserId == currentUserId).FirstOrDefaultAsync();
+                ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == contactRemove.AssessmentId && x.UserId == currentUserId).FirstOrDefault();
             }
 
             if (ac == null)
@@ -166,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
 
             // Do not allow the user to remove themself if they are the last Admin on the assessment and there are other users
             if (ac.UserId == currentUserId
-                && await _token.AmILastAdminWithUsers(ac.Assessment_Id))
+                && _token.AmILastAdminWithUsers(ac.Assessment_Id))
             {
                 var err = new HttpResponseMessage(HttpStatusCode.Unauthorized)
                 {
@@ -209,7 +208,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="searchParms">The parameters for searching a contact</param>
         [HttpPost]
         [Route("api/contacts/search")]
-        public async Task<IActionResult> SearchContacts([FromBody] ContactSearchParameters searchParms)
+        public IActionResult SearchContacts([FromBody] ContactSearchParameters searchParms)
         {
             int currentUserId = int.Parse(_token.Payload(Constants.Constants.Token_UserId));
 
@@ -223,9 +222,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/contacts/invite")]
-        public async Task<IActionResult> InviteContacts([FromBody] ContactInviteParameters inviteParms)
+        public IActionResult InviteContacts([FromBody] ContactInviteParameters inviteParms)
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             Dictionary<string, Boolean> success = new Dictionary<string, bool>();
             foreach (string invitee in inviteParms.InviteeList)
             {
@@ -239,7 +238,7 @@ namespace CSETWebCore.Api.Controllers
                         AssessmentId = assessmentId
                     });
 
-                    var invited = await  _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+                    var invited = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == invitee && x.Assessment_Id == assessmentId).FirstOrDefault();
                     invited.Invited = true;
                     await _context.SaveChangesAsync();
                     await _assessmentUtil.TouchAssessment(invited.Assessment_Id);
@@ -263,7 +262,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("api/contacts/allroles")]
-        public async Task<IActionResult> GetAllRoles()
+        public IActionResult GetAllRoles()
         {
             var resp = _contact.GetAllRoles();
             return Ok(resp);
@@ -271,7 +270,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/contacts/GetUserInfo")]
-        public async Task<IActionResult> GetUpdateUser()
+        public IActionResult GetUpdateUser()
         {
             _token.IsAuthenticated();
             int userId = _token.GetUserId();
@@ -286,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/UpdateUser")]
-        public async Task<IActionResult> PostUpdateUser([FromBody] CreateUser userBeingUpdated)
+        public IActionResult PostUpdateUser([FromBody] CreateUser userBeingUpdated)
         {
             int userid = 0;
             if (_token.IsAuthenticated())
@@ -299,7 +298,7 @@ namespace CSETWebCore.Api.Controllers
 
             if (userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
             {
-                var u = await _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefaultAsync();
+                var u = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefault();
                 if (u != null)
                 {
                     userBeingUpdated.UserId = u.UserId;
@@ -310,7 +309,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                assessmentId = await _token.AssessmentForUser();
+                assessmentId = _token.AssessmentForUser();
             }
             catch (Exception exc)
             {
@@ -330,7 +329,7 @@ namespace CSETWebCore.Api.Controllers
 
                     // If there is already a user with the same email as the newly updated email, use that existing user's id to connect them
                     // to the assessment after editing a contact
-                    var existingUser = await _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail).FirstOrDefaultAsync();
+                    var existingUser = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail).FirstOrDefault();
                     if (existingUser != null) 
                     {
                         newUserId = existingUser.UserId;
@@ -355,7 +354,7 @@ namespace CSETWebCore.Api.Controllers
                         EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
                     };
 
-                    await _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
+                    _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
                     _assessmentUtil.TouchAssessment(assessmentId);
 
                     return Ok(updatedContact);
@@ -368,14 +367,14 @@ namespace CSETWebCore.Api.Controllers
                 // Updating myself
 
                 // update user detail                    
-                var user = await _context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefaultAsync();
+                var user = _context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();
                 user.FirstName = userBeingUpdated.FirstName;
                 user.LastName = userBeingUpdated.LastName;
                 user.PrimaryEmail = userBeingUpdated.PrimaryEmail;
 
 
                 // update my email address on any ASSESSMENT_CONTACTS
-                var myACs = await _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userBeingUpdated.UserId).ToListAsync();
+                var myACs = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userBeingUpdated.UserId).ToList();
                 foreach (var ac in myACs)
                 {
                     ac.PrimaryEmail = userBeingUpdated.PrimaryEmail;
@@ -385,7 +384,7 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // update security questions/answers
-                var sq = await _context.USER_SECURITY_QUESTIONS.Where(x => x.UserId == userid).FirstOrDefaultAsync();
+                var sq = _context.USER_SECURITY_QUESTIONS.Where(x => x.UserId == userid).FirstOrDefault();
                 if (sq == null)
                 {
                     sq = new USER_SECURITY_QUESTIONS
@@ -469,10 +468,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/ValidateRemoval")]
-        public async Task<IActionResult> ValidateMyRemoval(int assessmentId)
+        public IActionResult ValidateMyRemoval(int assessmentId)
         {
             _token.IsAuthenticated();
-            if (await _token.AmILastAdminWithUsers(assessmentId))
+            if (_token.AmILastAdminWithUsers(assessmentId))
             {
                 return Ok(false);
             }

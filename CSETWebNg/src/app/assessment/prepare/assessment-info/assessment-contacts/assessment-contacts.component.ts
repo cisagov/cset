@@ -34,6 +34,7 @@ import { ConfigService } from "../../../../services/config.service";
 import { EmailService } from "../../../../services/email.service";
 import { EditableUser } from "../../../../models/editable-user.model";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 
 @Component({
   selector: "app-assessment-contacts",
@@ -50,6 +51,8 @@ export class AssessmentContactsComponent implements OnInit {
   userEmail: string;
   adding: boolean = false;
 
+  handsetPortrait = false;
+
   // all child contact item components
   @ViewChildren(ContactItemComponent) contactItems: ContactItemComponent[];
 
@@ -59,10 +62,15 @@ export class AssessmentContactsComponent implements OnInit {
     private assessSvc: AssessmentService,
     private emailSvc: EmailService,
     private auth: AuthenticationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public boSvc: BreakpointObserver
   ) { }
 
   ngOnInit() {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     if (this.assessSvc.id()) {
       this.assessSvc
         .getAssessmentContacts()
@@ -262,6 +270,8 @@ export class AssessmentContactsComponent implements OnInit {
     }
 
     this.emailDialog = this.dialog.open(EmailComponent, {
+      width: this.handsetPortrait ? '90%' : '',
+      maxWidth: this.handsetPortrait ? '90%' : '',
       data: {
         showContacts: true,
         contacts: invitees,

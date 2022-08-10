@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using CSETWebCore.Model.Contact;
 
 namespace CSETWebCore.Interfaces.Contact

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Framework;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -25,9 +24,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/frameworks")]
-        public async Task<IActionResult> GetFrameworks()
+        public IActionResult GetFrameworks()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             return Ok(_framework.GetFrameworks(assessmentId));
         }
 
@@ -37,7 +36,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/framework")]
-        public async Task<IActionResult> PersistSelectedTierAnswer(TierSelection tier)
+        public IActionResult PersistSelectedTierAnswer(TierSelection tier)
         {
             // In case nothing is sent, bail out gracefully
             if (tier == null)
@@ -45,7 +44,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             _framework.PersistSelectedTierAnswer(assessmentId, tier);
             return Ok();
         }

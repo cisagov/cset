@@ -91,13 +91,13 @@ export interface Requirement {
     salLevels?: string[];
     supplementalInfo?: string;
     sourceDocs?: ReferenceDoc[];
-    resourceDocs?: ReferenceDoc[];
+    additionalDocs?: ReferenceDoc[];
     questions?: Question[];
 }
 
 export interface RefDocLists {
     sourceDocs: ReferenceDoc[];
-    resourceDocs: ReferenceDoc[];
+    additionalDocs: ReferenceDoc[];
 }
 
 export interface ReferenceDoc {

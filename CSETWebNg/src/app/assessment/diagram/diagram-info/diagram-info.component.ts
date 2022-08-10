@@ -24,8 +24,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation.service';
-import { NavTreeNode } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
+import { NavTreeNode } from '../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../services/config.service';
 import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -68,7 +68,7 @@ export class DiagramInfoComponent implements OnInit {
 
     populateTree() {
         localStorage.removeItem('tree');
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
     }
 
     private checkForDiagram(){

@@ -434,6 +434,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_DOMAIN_REMARKS]",
          "ObjectType": 0
       },
@@ -891,6 +895,10 @@
       },
       {
          "Name": "[dbo].[final_data_moves]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Get_Merge_Conflicts]",
          "ObjectType": 1
       },
       {

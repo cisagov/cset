@@ -42,16 +42,16 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/SAL")]
-        public async Task<IActionResult> GetSTANDARD_SELECTION()
+        public IActionResult GetSTANDARD_SELECTION()
         {
             try
             {
-                int asssessmentId = await _token.AssessmentForUser();
+                int asssessmentId = _token.AssessmentForUser();
 
                 TinyMapper.Bind<STANDARD_SELECTION, Sals>();
                 TinyMapper.Bind<Sals, STANDARD_SELECTION>();
 
-                STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.FindAsync(asssessmentId);
+                STANDARD_SELECTION sTANDARD_SELECTION = _context.STANDARD_SELECTION.Find(asssessmentId);
                 Sals rsal;
                 if (sTANDARD_SELECTION == null)
                 {
@@ -66,8 +66,8 @@ namespace CSETWebCore.Api.Controllers
                     sTANDARD_SELECTION = TinyMapper.Map<STANDARD_SELECTION>(rsal);
                     sTANDARD_SELECTION.Assessment_Id = asssessmentId;
                     sTANDARD_SELECTION.Application_Mode = _assessment.DetermineDefaultApplicationMode();
-                    await _context.STANDARD_SELECTION.AddAsync(sTANDARD_SELECTION);
-                    await _context.SaveChangesAsync();
+                    _context.STANDARD_SELECTION.Add(sTANDARD_SELECTION);
+                    _context.SaveChanges();
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                int asssessmentId = await _token.AssessmentForUser();
+                int asssessmentId = _token.AssessmentForUser();
                 STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.FindAsync(asssessmentId);
                 if (sTANDARD_SELECTION != null)
                 {
@@ -120,16 +120,16 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/SAL")]
-        public async Task<IActionResult> PostSAL(Sals tmpsal)
+        public IActionResult PostSAL(Sals tmpsal)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             TinyMapper.Bind<Sals, STANDARD_SELECTION>();
-            STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+            STANDARD_SELECTION sTANDARD_SELECTION = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (sTANDARD_SELECTION != null)
             {
                 sTANDARD_SELECTION = TinyMapper.Map<Sals, STANDARD_SELECTION>(tmpsal, sTANDARD_SELECTION);
@@ -152,7 +152,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 StandardRepository sr = new StandardRepository(_standard, _assessment, _context, _assessmentUtil, _standardRepo);
                 sr.InitializeStandardRepository(assessmentId);
@@ -171,8 +171,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (DbUpdateConcurrencyException dbe)
             {
-                var standExist = await STANDARD_SELECTIONExists(assessmentId);
-                if (!standExist)
+                if (!STANDARD_SELECTIONExists(assessmentId))
                 {
                     return NotFound();
                 }
@@ -211,7 +210,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
-                if (await STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
+                if (STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
                 {
                     return Conflict();
                 }
@@ -226,9 +225,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/SAL/NistData")]
-        public async Task<NistModel> GetNistData()
+        public NistModel GetNistData()
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             NistModel rvalue = new NistModel()
             {
@@ -242,9 +241,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/SAL/NistData")]
-        public async Task<Sals> PostNistData([FromBody] NistSalModel updateValue)
+        public Sals PostNistData([FromBody] NistSalModel updateValue)
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return await nistSal.UpdateSalValue(updateValue, assessmentId);
 
@@ -253,25 +252,25 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/SAL/NistDataQuestions")]
-        public async Task<Sals> PostNistDataQuestions([FromBody] NistQuestionsAnswers updateValue)
+        public Sals PostNistDataQuestions([FromBody] NistQuestionsAnswers updateValue)
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return await nistSal.SaveNistQuestions(assessmentId, updateValue);
         }
 
         [HttpPost]
         [Route("api/SAL/NistDataSpecialFactor")]
-        public async Task<Sals> PostNistDataSpecialFactor([FromBody] NistSpecialFactor updateValue)
+        public Sals PostNistDataSpecialFactor([FromBody] NistSpecialFactor updateValue)
         {
-            int assessmentId = await _token.AssessmentForUser();
+            int assessmentId = _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
             return await nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
         }
 
-        private async Task<bool> STANDARD_SELECTIONExists(int id)
+        private bool STANDARD_SELECTIONExists(int id)
         {
-            return await _context.STANDARD_SELECTION.CountAsync(e => e.Assessment_Id == id) > 0;
+            return _context.STANDARD_SELECTION.Count(e => e.Assessment_Id == id) > 0;
         }
     }
 }

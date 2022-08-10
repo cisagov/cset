@@ -1,4 +1,4 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2022 Battelle Energy Alliance, LLC  
 // 
@@ -7,12 +7,11 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Business.Sal
 {
@@ -44,7 +43,7 @@ namespace CSETWebCore.Business.Sal
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<String> GetCurrentSAL(int assessmentId)
+        public String GetCurrentSAL(int assessmentId)
         {
             //go to the database get the current list of selected weights 
             //pass that to the calculate 
@@ -55,7 +54,7 @@ namespace CSETWebCore.Business.Sal
                           select b;
             List<GEN_SAL_WEIGHTS> materialized = weights.ToList();
             double weight = GetOverallSALWeight(materialized);
-            return await CalculateSAL(weight);
+            return CalculateSAL(weight);
         }
 
 
@@ -95,7 +94,7 @@ namespace CSETWebCore.Business.Sal
         /// Calculates the SAL based on the value of the sliders.
         /// The new calculated level is saved to the database.
         /// </summary>
-        private async Task<string> CalculateSAL(double weight)
+        private string CalculateSAL(double weight)
         {
             string SALToReturn = Constants.Constants.SAL_LOW;
             foreach (double thresholdValue in this.SALThresholdDictionary.Keys)
@@ -107,8 +106,8 @@ namespace CSETWebCore.Business.Sal
             }
 
             // Persist the overall SAL to the database
-            int assessmentId = await _token.AssessmentForUser();
-            STANDARD_SELECTION ss = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+            int assessmentId = _token.AssessmentForUser();
+            STANDARD_SELECTION ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             ss.Selected_Sal_Level = SALToReturn;
             _context.SaveChanges();
 
@@ -116,18 +115,19 @@ namespace CSETWebCore.Business.Sal
         }
 
 
-        public async Task<string> SaveWeightAndCalculate(SaveWeight ws)
+        public string SaveWeightAndCalculate(SaveWeight ws)
         {
             //look up the weight id and save it to the db                
             var gensal = await _context.GENERAL_SAL.Where(x => x.Sal_Name == ws.slidername && x.Assessment_Id == ws.assessmentid).FirstOrDefaultAsync();
             if (gensal == null)
-                await _context.GENERAL_SAL.AddAsync(new GENERAL_SAL() { Assessment_Id = ws.assessmentid, Sal_Name = ws.slidername, Slider_Value = ws.Slider_Value });
+                _context.GENERAL_SAL.Add(new GENERAL_SAL() { Assessment_Id = ws.assessmentid, Sal_Name = ws.slidername, Slider_Value = ws.Slider_Value });
             else
                 gensal.Slider_Value = ws.Slider_Value;
 
             await _context.SaveChangesAsync();
             await _assessmentUtil.TouchAssessment(ws.assessmentid);
             string rval = await GetCurrentSAL(ws.assessmentid);
+
             return rval;
         }
 

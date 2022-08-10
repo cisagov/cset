@@ -15,7 +15,6 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,10 +69,10 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglecrr")]
-        public async Task<IActionResult> ToggleCRR([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult ToggleCRR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -104,10 +103,10 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglerra")]
-        public async Task<IActionResult> ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult ToggleRRA([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -133,10 +132,10 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglevadr")]
-        public async Task<IActionResult> ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult ToggleVADR([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -169,10 +168,10 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/tsa/togglestandard")]
-        public async Task<IActionResult> ToggleStandard([FromBody] AssessmentDetail assessmentDetail)
+        public IActionResult ToggleStandard([FromBody] AssessmentDetail assessmentDetail)
         {
             // validate the assessment for the user
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
@@ -190,17 +189,17 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpPost]
         [Route("api/tsa/standard")]
-        public async Task<IActionResult> PersistSelectedStandards([FromBody] List<string> selectedStandards)
+        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
         [HttpGet]
         [Route("api/tsa/getModelsName")]
-        public async Task<List <TSAModelNames>>  getModelsName()
+        public List <TSAModelNames>  getModelsName()
         {
             List<TSAModelNames> allModelsList = new List<TSAModelNames>();
-           var  allModelsStandard= await (from m in _context.MODES_SETS_MATURITY_MODELS
+           var  allModelsStandard= (from m in _context.MODES_SETS_MATURITY_MODELS
                 join s in _context.SETS on m.Set_Name equals s.Set_Name
                 // join maturity in _context.MATURITY_MODELS on m.Model_Name equals maturity.Model_Name
 
@@ -217,9 +216,8 @@ namespace CSETWebCore.Api.Controllers
                   
                    
 
-                }).ToListAsync();
-
-           var allModelsMaturity = await  (from m in _context.MODES_SETS_MATURITY_MODELS
+                }).ToList();
+           var allModelsMaturity = (from m in _context.MODES_SETS_MATURITY_MODELS
                    join mat in _context.MATURITY_MODELS on m.Model_Name equals mat.Model_Name
                    where m.AppCode=="TSA"
                    select new TSAModelNames()
@@ -232,8 +230,7 @@ namespace CSETWebCore.Api.Controllers
                        Model_Description= mat.Model_Description,
                        Is_Included=m.Is_Included
                    }
-               ).ToListAsync();
-
+               ).ToList();
            foreach (var x in allModelsStandard)
            {
                TSAModelNames cl = new TSAModelNames();
