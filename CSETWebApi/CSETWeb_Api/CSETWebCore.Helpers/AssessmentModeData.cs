@@ -172,8 +172,9 @@ namespace CSETWebCore.Helpers
         /// <param name="set"></param>
         public async Task SaveSortSet(string set)
         {
-            GetStandard().Sort_Set_Name = set;
-            _context.SaveChanges();
+            var standardObj = await GetStandard();
+            standardObj.Sort_Set_Name = set;
+            await _context.SaveChangesAsync();
         }
 
 
