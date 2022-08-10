@@ -35,7 +35,7 @@ namespace CSETWebCore.Business.Assessment
             _context = context;
             _tokenManager = tokenManager;
 
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser().Result;
 
             this.standard = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (this.standard == null)

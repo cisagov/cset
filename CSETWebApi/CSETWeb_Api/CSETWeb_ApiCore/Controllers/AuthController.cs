@@ -4,6 +4,7 @@ using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -28,9 +29,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/auth/login")]
-        public IActionResult Login([FromBody] Login login)
+        public async Task<IActionResult> Login([FromBody] Login login)
         {
-            LoginResponse resp = _userAuthentication.Authenticate(login);
+            LoginResponse resp = await _userAuthentication.Authenticate(login);
             if (resp != null)
             {
                 return Ok(resp);
@@ -45,14 +46,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/auth/login/standalone")]
-        public IActionResult LoginStandalone([FromBody] Login login)
+        public async Task<IActionResult> LoginStandalone([FromBody] Login login)
         {
             try
             {
                 _tokenManager.GenerateSecret();
-                lock (_locker)
-                {
-                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login, _tokenManager);
+                
+                    LoginResponse resp = await _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                     if (resp != null)
                     {
                         return Ok(resp);
@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
                         LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
                     };
                     return Ok(resp);
-                }
+                
             }
             catch (Exception exc)
             {
@@ -80,7 +80,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/auth/islocal")]
-        public IActionResult IsLocalInstallation()
+        public async Task<IActionResult> IsLocalInstallation()
         {
             string scope = _tokenManager.Payload(Constants.Constants.Token_Scope);
             return Ok(_userAuthentication.IsLocalInstallation(scope));
@@ -95,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/auth/token")]
-        public IActionResult IssueToken([FromQuery] int assessmentId = -1, [FromQuery] int aggregationId = -1, [FromQuery] string refresh = "*default*", [FromQuery] int expSeconds = -1)
+        public async Task<IActionResult> IssueToken([FromQuery] int assessmentId = -1, [FromQuery] int aggregationId = -1, [FromQuery] string refresh = "*default*", [FromQuery] int expSeconds = -1)
         {
             int currentUserId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
             int? currentAssessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -127,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // If we make it this far, we can issue the new token with what we know to be current and valid
-            string token = _tokenManager.GenerateToken(
+            string token = await _tokenManager.GenerateToken(
                 currentUserId,
                 _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey),
                 expSeconds,
@@ -148,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Simple endpoint to check if API is running
         /// </summary>
-        public IActionResult IsRunning() 
+        public async Task<IActionResult> IsRunning() 
         {
             return Ok();
         }

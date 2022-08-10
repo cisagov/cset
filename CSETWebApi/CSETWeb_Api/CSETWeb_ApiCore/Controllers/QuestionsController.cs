@@ -25,6 +25,8 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -72,27 +74,27 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/QuestionList")]
-        public IActionResult GetList([FromQuery] string group)
+        public async Task<IActionResult> GetList([FromQuery] string group)
         {
             if (group == null)
             {
                 group = "*";
             }
 
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
+            int assessmentId = await _token.AssessmentForUser();
+            string applicationMode = await GetApplicationMode(assessmentId);
 
 
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-                QuestionResponse resp = qb.GetQuestionList(group);
+                QuestionResponse resp = await qb.GetQuestionList(group);
                 return Ok(resp);
             }
             else
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                QuestionResponse resp = rb.GetRequirementsList();
+                QuestionResponse resp = await rb.GetRequirementsList();
                 return Ok(resp);
             }
         }
@@ -103,10 +105,10 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public IActionResult GetComponentQuestionsList(string group)
+        public async Task<IActionResult> GetComponentQuestionsList(string group)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = manager.GetResponse();
+            QuestionResponse resp = await manager.GetResponse();
             return Ok(resp);
         }
 
@@ -117,7 +119,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/QuestionListComponentOverridesOnly")]
-        public IActionResult GetComponentOverridesList()
+        public async Task<IActionResult> GetComponentOverridesList()
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetOverrideListOnly();
@@ -131,9 +133,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="mode"></param>
         [HttpPost]
         [Route("api/SetMode")]
-        public IActionResult SetMode([FromQuery] string mode)
+        public async Task<IActionResult> SetMode([FromQuery] string mode)
         {
-            _questionRequirement.InitializeManager(_token.AssessmentForUser());
+            _questionRequirement.InitializeManager(await _token.AssessmentForUser());
             _questionRequirement.SetApplicationMode(mode);
             return Ok();
         }
@@ -144,11 +146,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/GetMode")]
-        public IActionResult GetMode()
+        public async Task<IActionResult> GetMode()
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            string mode = GetApplicationMode(assessmentId).Trim().Substring(0, 1);
+            var appMode = await GetApplicationMode(assessmentId);
+            string mode = appMode.Trim().Substring(0, 1);
 
             if (String.IsNullOrEmpty(mode))
             {
@@ -166,9 +169,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        protected string GetApplicationMode(int assessmentId)
+        protected async Task<string> GetApplicationMode(int assessmentId)
         {
-            var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
+            var mode = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefaultAsync();
 
             if (mode == null)
             {
@@ -187,7 +190,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/AnswerQuestion")]
-        public IActionResult StoreAnswer([FromBody] Answer answer)
+        public async Task<IActionResult> StoreAnswer([FromBody] Answer answer)
         {
             if (answer == null)
             {
@@ -206,8 +209,9 @@ namespace CSETWebCore.Api.Controllers
                     answer.QuestionType = "Question";
             }
 
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
+            int assessmentId = await _token.AssessmentForUser();
+            var appMode = await GetApplicationMode(assessmentId);
+            string applicationMode = appMode;
 
             if (answer.Is_Component)
             {
@@ -239,14 +243,14 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/answerquestions")]
-        public IActionResult StoreAnswers([FromBody] List<Answer> answers, [FromQuery] int sectionId = 0)
+        public async Task<IActionResult> StoreAnswers([FromBody] List<Answer> answers, [FromQuery] int sectionId = 0)
         {
             if (answers == null || answers.Count == 0)
             {
                 return Ok(0);
             }
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
 
@@ -290,7 +294,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost, HttpGet]
         [Route("api/Details")]
-        public IActionResult GetDetails([FromQuery] int questionId, [FromQuery] string questionType)
+        public async Task<IActionResult> GetDetails([FromQuery] int questionId, [FromQuery] string questionType)
         {
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             return Ok(qb.GetDetails(questionId, questionType));
@@ -304,9 +308,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="subCatAnswers"></param>
         [HttpPost]
         [Route("api/AnswerSubcategory")]
-        public IActionResult StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
+        public async Task<IActionResult> StoreSubcategoryAnswers([FromBody] SubCategoryAnswers subCatAnswers)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             _questionRequirement.AssessmentId = assessmentId;
 
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
@@ -323,9 +327,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/AnswerAllDiscoveries")]
-        public IActionResult AllDiscoveries([FromQuery] int Answer_Id)
+        public async Task<IActionResult> AllDiscoveries([FromQuery] int Answer_Id)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             var fm = new FindingsManager(_context, assessmentId);
             return Ok(fm.AllFindings(Answer_Id));
@@ -341,9 +345,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/GetFinding")]
-        public IActionResult GetFinding([FromQuery] int Answer_Id, [FromQuery] int Finding_id, [FromQuery] int Question_Id, [FromQuery] string QuestionType)
+        public async Task<IActionResult> GetFinding([FromQuery] int Answer_Id, [FromQuery] int Finding_id, [FromQuery] int Question_Id, [FromQuery] string QuestionType)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             if (Answer_Id == 0)
             {
@@ -367,11 +371,15 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetImportance")]
-        public IActionResult GetImportance()
+        public async Task<IActionResult> GetImportance()
         {
             TinyMapper.Bind<IMPORTANCE, Importance>();
+
             List<Importance> rlist = new List<Importance>();
-            foreach (IMPORTANCE import in _context.IMPORTANCE)
+
+            var importantList = await _context.IMPORTANCE.ToListAsync();
+
+            foreach (IMPORTANCE import in importantList)
             {
                 rlist.Add(TinyMapper.Map<IMPORTANCE, Importance>(import));
             }
@@ -386,9 +394,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="finding_Id"></param>
         [HttpPost]
         [Route("api/DeleteFinding")]
-        public IActionResult DeleteFinding([FromBody] int finding_Id)
+        public async Task<IActionResult> DeleteFinding([FromBody] int finding_Id)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             var fm = new FindingsManager(_context, assessmentId);
 
             var f = await fm.GetFinding(finding_Id);
@@ -403,9 +411,9 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="finding"></param>
         [HttpPost]
         [Route("api/AnswerSaveDiscovery")]
-        public IActionResult SaveDiscovery([FromBody] Finding finding)
+        public async Task<IActionResult> SaveDiscovery([FromBody] Finding finding)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             if (finding.IsFindingEmpty())
             {
@@ -427,11 +435,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetOverrideQuestions")]
-        public IActionResult GetOverrideQuestions([FromQuery] int question_id, [FromQuery] int Component_Symbol_Id)
+        public async Task<IActionResult> GetOverrideQuestions([FromQuery] int question_id, [FromQuery] int Component_Symbol_Id)
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
 
             return Ok(manager.GetOverrideQuestions(assessmentId, question_id, Component_Symbol_Id));
         }
@@ -444,10 +452,10 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="ShouldSave">true means explode and save false is delete these questions</param>
         [HttpGet]
         [Route("api/AnswerSaveComponentOverrides")]
-        public IActionResult SaveComponentOverride([FromQuery] String guid, [FromQuery] Boolean ShouldSave)
+        public async Task<IActionResult> SaveComponentOverride([FromQuery] String guid, [FromQuery] Boolean ShouldSave)
         {
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
+            int assessmentId = await _token.AssessmentForUser();
+            string applicationMode = await GetApplicationMode(assessmentId);
 
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             Guid g = new Guid(guid);
@@ -463,7 +471,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="title">The new title</param>
         [HttpPost]
         [Route("api/RenameDocument")]
-        public IActionResult RenameDocument([FromQuery] int id, [FromQuery] string title)
+        public async Task<IActionResult> RenameDocument([FromQuery] int id, [FromQuery] string title)
         {
             _document.RenameDocument(id, title);
             return Ok();
@@ -477,7 +485,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="answerId">The document ID</param>
         [HttpPost]
         [Route("api/DeleteDocument")]
-        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int questionId, [FromQuery] int assessId)
+        public async Task<IActionResult> DeleteDocument([FromQuery] int id, [FromQuery] int questionId, [FromQuery] int assessId)
         {
             _document.DeleteDocument(id, questionId, assessId);
             return Ok();
@@ -490,7 +498,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="id">The document ID</param>
         [HttpGet]
         [Route("api/QuestionsForDocument")]
-        public IActionResult GetQuestionsForDocument([FromQuery] int id)
+        public async Task<IActionResult> GetQuestionsForDocument([FromQuery] int id)
         {
             return Ok(_document.GetQuestionsForDocument(id));
         }
@@ -502,7 +510,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ParametersForAssessment")]
-        public IActionResult GetDefaultParametersForAssessment()
+        public async Task<IActionResult> GetDefaultParametersForAssessment()
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
@@ -515,11 +523,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/SaveAssessmentParameter")]
-        public ParameterToken SaveAssessmentParameter([FromBody] ParameterToken token)
+        public async Task<ParameterToken> SaveAssessmentParameter([FromBody] ParameterToken token)
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
-            return rm.SaveAssessmentParameter(token.Id, token.Substitution);
+            return await rm.SaveAssessmentParameter(token.Id, token.Substitution);
         }
 
 
@@ -528,11 +536,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/SaveAnswerParameter")]
-        public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
+        public async Task<ParameterToken> SaveAnswerParameter([FromBody] ParameterToken token)
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
 
-            return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
+            return await rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
     }
 }

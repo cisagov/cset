@@ -7,6 +7,8 @@ using System.Linq;
 using System.Xml;
 using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.Constants;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -59,7 +61,7 @@ namespace CSETWebCore.Business.Diagram
         }
 
 
-        public void SaveDifferences(int assessment_id)
+        public async Task SaveDifferences(int assessment_id)
         {
             ///when saving if the parent object is a layer then there is not default zone
             ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
@@ -76,8 +78,8 @@ namespace CSETWebCore.Business.Diagram
 
             foreach (var deleteNode in differences.DeletedNodes)
             {
-                var adc = context.ASSESSMENT_DIAGRAM_COMPONENTS
-                    .FirstOrDefault(x => x.Assessment_Id == assessment_id && x.Component_Guid == deleteNode.Key);
+                var adc = await context.ASSESSMENT_DIAGRAM_COMPONENTS
+                    .FirstOrDefaultAsync(x => x.Assessment_Id == assessment_id && x.Component_Guid == deleteNode.Key);
                 if (adc != null)
                 {
                     context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(adc);
@@ -85,7 +87,7 @@ namespace CSETWebCore.Business.Diagram
             }
             foreach (var layer in differences.DeletedLayers)
             {
-                var adc = context.DIAGRAM_CONTAINER.FirstOrDefault(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key);
+                var adc = await context.DIAGRAM_CONTAINER.FirstOrDefaultAsync(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key);
                 if (adc != null)
                 {
                     context.DIAGRAM_CONTAINER.Remove(adc);
@@ -93,7 +95,7 @@ namespace CSETWebCore.Business.Diagram
             }
             foreach (var zone in differences.DeletedZones)
             {
-                var adc = context.DIAGRAM_CONTAINER.FirstOrDefault(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key);
+                var adc = await context.DIAGRAM_CONTAINER.FirstOrDefaultAsync(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key);
                 if (adc != null)
                 {
                     context.DIAGRAM_CONTAINER.Remove(adc);
@@ -102,10 +104,10 @@ namespace CSETWebCore.Business.Diagram
 
             foreach (var layer in differences.AddedContainers)
             {
-                var l = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefault();
+                var l = await context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefaultAsync();
                 if (l == null)
                 {
-                    context.DIAGRAM_CONTAINER.Add(new DIAGRAM_CONTAINER()
+                    await context.DIAGRAM_CONTAINER.AddAsync(new DIAGRAM_CONTAINER()
                     {
                         Assessment_Id = assessment_id,
                         ContainerType = CONTAINER_TYPE_LAYER,
@@ -125,7 +127,7 @@ namespace CSETWebCore.Business.Diagram
             //case were the only change was a layer visibility change
             foreach (var layer in newDiagram.Layers)
             {
-                var l = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefault();
+                var l = await context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == layer.Key).FirstOrDefaultAsync();
                 if (l != null)
                 {
                     l.Name = layer.Value.LayerName;
@@ -133,8 +135,10 @@ namespace CSETWebCore.Business.Diagram
                 }
             }
 
-            context.SaveChanges();
-            Dictionary<string, int> layerLookup = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id).ToList().ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
+            await context.SaveChangesAsync();
+            var layerLookupList = await context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id)
+                .ToListAsync();
+            Dictionary<string, int> layerLookup = layerLookupList.ToDictionary(x => x.DrawIO_id, x => x.Container_Id);
             int defaultLayer;
             //if we didn't find the default layer then just add it.
             //no sure why we wouldn't but some how that is the case.
@@ -151,13 +155,13 @@ namespace CSETWebCore.Business.Diagram
                     Universal_Sal_Level = "L",
                     Visible = true
                 };
-                context.DIAGRAM_CONTAINER.Add(layer);
+                await context.DIAGRAM_CONTAINER.AddAsync(layer);
                 defaultLayer = layer.Container_Id;
             }
 
             foreach (var zone in newDiagram.Zones)
             {
-                var z = context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefault();
+                var z = await context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessment_id && x.DrawIO_id == zone.Key).FirstOrDefaultAsync();
                 if (z == null)
                 {
                     if (!layerLookup.TryGetValue(zone.Value.Parent_id, out int parent_id))
@@ -174,7 +178,7 @@ namespace CSETWebCore.Business.Diagram
                         Parent_Id = parent_id,
                         Parent_Draw_IO_Id = zone.Value.Parent_id
                     };
-                    context.DIAGRAM_CONTAINER.Add(z);
+                    await context.DIAGRAM_CONTAINER.AddAsync(z);
 
                 }
                 else
@@ -183,10 +187,14 @@ namespace CSETWebCore.Business.Diagram
                     z.Name = zone.Value.ComponentName;
                 }
             }            
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             LayerManager layers = new LayerManager(context, assessment_id);
-            Dictionary<Guid, ASSESSMENT_DIAGRAM_COMPONENTS> adcDictionary = context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessment_id).ToDictionary(x => x.Component_Guid, x => x);
+
+            Dictionary<Guid, ASSESSMENT_DIAGRAM_COMPONENTS> adcDictionary = await context.ASSESSMENT_DIAGRAM_COMPONENTS
+                .Where(x => x.Assessment_Id == assessment_id)
+                .ToDictionaryAsync(x => x.Component_Guid, x => x);
+
             foreach (var newNode in newDiagram.NetworkComponents)
             {
                 ASSESSMENT_DIAGRAM_COMPONENTS adc;
@@ -213,10 +221,10 @@ namespace CSETWebCore.Business.Diagram
                         Layer_Id = null,
                         Zone_Id = null
                     };
-                    context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
+                    await context.ASSESSMENT_DIAGRAM_COMPONENTS.AddAsync(adc);
                 }                
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
 
             //tossing the whole approach and doing something different
@@ -225,16 +233,16 @@ namespace CSETWebCore.Business.Diagram
             var updateList = from a in context.ASSESSMENT_DIAGRAM_COMPONENTS select a;
                              //join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
                              //select new { a, b };
-            var updateListPair = from a in updateList.ToList()
+            var updateListPair = from a in await updateList.ToListAsync()
                 join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key select new { a, b };
             foreach (var pair in updateListPair.ToList())
             {
                 pair.a.Component_Symbol_Id = pair.b.Value.Component_Symbol_Id;
                 pair.a.label = pair.b.Value.ComponentName;
             }
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             layers.UpdateAllLayersAndZones();
-            context.FillNetworkDiagramQuestions(assessment_id);
+            await context.FillNetworkDiagramQuestions(assessment_id);
         }
 
 

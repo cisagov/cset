@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
@@ -308,9 +309,10 @@ namespace CSETWebCore.Business.Question
         /// and then returning
         /// </summary>
         /// <param name="resp"></param>        
-        public void BuildComponentsResponse(QuestionResponse resp)
+        public async Task BuildComponentsResponse(QuestionResponse resp)
         {
-            var list = _context.usp_Answer_Components_Default(this.AssessmentId).Cast<Answer_Components_Base>().ToList();
+            var acList = await _context.usp_Answer_Components_Default(this.AssessmentId);
+            var list = acList.Cast<Answer_Components_Base>().ToList();
             //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
             //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 

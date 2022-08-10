@@ -16,6 +16,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Reports;
 using System.Collections.Generic;
 using CSETWebCore.Model.Question;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -44,9 +45,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/standards")]
-        public IActionResult GetStandards()
+        public async Task<IActionResult> GetStandards()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetStandards(assessmentId));
         }
 
@@ -56,9 +57,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/standard")]
-        public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
+        public async Task<IActionResult> PersistSelectedStandards([FromBody] List<string> selectedStandards)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
 
@@ -68,9 +69,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/basicStandard")]
-        public IActionResult PersistDefaultSelectedStandards()
+        public async Task<IActionResult> PersistDefaultSelectedStandards()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistDefaultSelectedStandard(assessmentId));
         }
 
@@ -79,9 +80,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/standard/IsFramework")]
-        public IActionResult GetFrameworkSelected()
+        public async Task<IActionResult> GetFrameworkSelected()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetFramework(assessmentId));
         }
 
@@ -90,9 +91,9 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/standard/IsACET")]
-        public IActionResult GetACETSelected()
+        public async Task<IActionResult> GetACETSelected()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
             return Ok(_standards.GetACET(assessmentId));
         }
     }

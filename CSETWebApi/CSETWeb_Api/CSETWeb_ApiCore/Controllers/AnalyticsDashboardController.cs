@@ -7,6 +7,7 @@ using CSETWebCore.Model.Dashboard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,9 +27,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/analyticsMaturityDashboard")]
-        public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData([FromQuery] int maturity_model_id, int? sectorId, int? industryId)
+        public async Task<List<AnalyticsMinMaxAvgMedianByGroup>> getMaturityDashboardData([FromQuery] int maturity_model_id, int? sectorId, int? industryId)
         {
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             return _analytics.getMaturityDashboardData(maturity_model_id, sectorId, industryId);
 
         }

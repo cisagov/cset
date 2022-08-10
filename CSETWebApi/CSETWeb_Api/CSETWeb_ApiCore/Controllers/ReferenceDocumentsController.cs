@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -31,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ReferenceDocument/{file}")]
-        public IActionResult GetByName(string file)
+        public async Task<IActionResult> GetByName(string file)
         {
             var hashLocation = file.IndexOf('#');
             if (hashLocation > -1)
@@ -43,13 +44,12 @@ namespace CSETWebCore.Api.Controllers
             if (!int.TryParse(file, out id))
             {
                 // if the identifier is not an int, assume it's the filename, and get his gen_file_id
-                var f = _context.GEN_FILE.Where(f => f.File_Name == file).FirstOrDefault();
+                var f = await _context.GEN_FILE.Where(f => f.File_Name == file).FirstOrDefaultAsync();
                 if (f != null)
                 {
                     id = f.Gen_File_Id;
                 }
             }
-
 
             var files = from a in _context.GEN_FILE
                         join ft1 in _context.FILE_TYPE on a.File_Type_Id equals ft1.File_Type_Id into tt

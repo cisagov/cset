@@ -17,7 +17,7 @@ namespace CSETWebCore.Business.Authorization
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CsetAuthorize : Attribute, IAuthorizationFilter
     {
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public async void OnAuthorization(AuthorizationFilterContext context)
         {
             var svc = context.HttpContext.RequestServices;
             var token = (ITokenManager)svc.GetService(typeof(ITokenManager));
@@ -43,8 +43,8 @@ namespace CSETWebCore.Business.Authorization
 
             if (!string.IsNullOrEmpty(tokenString))
             {
-                
-                if (!token.IsTokenValid(tokenString))
+                var isValid = await token.IsTokenValid(tokenString);
+                if (!isValid)
                 {
                     context.Result = new UnauthorizedResult();
                 }

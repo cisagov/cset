@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
@@ -10,7 +11,7 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
     public interface IModuleBuilderBusiness
     {
         List<SetDetail> GetCustomSetList(bool includeNonCustom = false);
-        List<SetDetail> GetSetsInUseList();
+        Task<List<SetDetail>> GetSetsInUseList();
         void SetBaseSets(String setName, string[] setNames);
         List<String> GetBaseSets(string customSetName);
         List<SetDetail> GetNonCustomSetList(string exceptionList);
