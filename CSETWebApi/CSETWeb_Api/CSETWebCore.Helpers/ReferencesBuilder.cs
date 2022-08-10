@@ -27,14 +27,14 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// Populates sourceList and resourceList with any connections from 
+        /// Populates sourceDocList and additionalDocList with any connections from 
         /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
         /// </summary>
         /// <param name="requirement_ID"></param>
         /// <param name="controlContext"></param>
         public void BuildReferenceDocuments(int requirement_ID,
-            out List<CustomDocument> sourceList,
-            out List<CustomDocument> resourceList)
+            out List<CustomDocument> sourceDocList,
+            out List<CustomDocument> additionalDocList)
         {
             // Build a list of available documents
 
@@ -49,24 +49,24 @@ namespace CSETWebCore.Helpers
             // Source Documents        
             var sourceDocuments = documents.Where(t => t.IsSource)
                 .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            sourceList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
 
 
-            // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource)
+            // Additional Resource Documents
+            var additionalDocuments = documents.Where(t => !t.IsSource)
                 .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            resourceList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
         }
 
 
         /// <summary>
-        /// Builds lists of Source Documents and Help (Resource) Document references for the question.
+        /// Builds lists of Source Documents and Additional Resource) Document references for the question.
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
         public void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID,
-             out List<CustomDocument> sourceList,
-            out List<CustomDocument> resourceList)
+             out List<CustomDocument> sourceDocList,
+            out List<CustomDocument> additionalDocList)
         {
             List<string> availableRefDocs = GetBuildDocuments();
 
@@ -79,14 +79,14 @@ namespace CSETWebCore.Helpers
             var sourceDocuments = documents.Where(t => t.IsSource)
                 .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
                 .ToList();
-            sourceList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
 
 
-            // Help (Resource) Documents
-            var helpDocuments = documents.Where(t => !t.IsSource)
+            // Additional Resource Documents
+            var additionalDocuments = documents.Where(t => !t.IsSource)
                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
                .ToList();
-            resourceList = helpDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
         }
 
 

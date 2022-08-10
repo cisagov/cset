@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -41,13 +39,13 @@ namespace CSETWebCore.Helpers
         /// We can't do this in the constructor because at that point there's
         /// no assessment in play yet.
         /// </summary>
-        private async Task<STANDARD_SELECTION> GetStandard()
+        private STANDARD_SELECTION GetStandard()
         {
             try
             {
-                int assessmentId = await _tokenManager.AssessmentForUser();
+                int assessmentId = _tokenManager.AssessmentForUser();
 
-                this.standard = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
+                this.standard = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             }
             catch (Exception exc)
             {
@@ -71,8 +69,8 @@ namespace CSETWebCore.Helpers
         public bool IsRequirement
         {
             get
-            {               
-                return GetIsRequirement();
+            {
+                return (GetStandard().Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE));
             }
         }
 
@@ -80,7 +78,7 @@ namespace CSETWebCore.Helpers
         {
             get
             {
-                return GetIsQuestion();
+                return (GetStandard().Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE));
             }
         }
 
@@ -88,48 +86,37 @@ namespace CSETWebCore.Helpers
         {
             get
             {
-                return GetIsFramework();
+                return (GetStandard().Application_Mode.Equals(NIST_FRAMEWORK_MODE));
             }
         }
 
-
-        public bool GetIsRequirement()
-        {
-            var standard = GetStandard().Result;
-            return standard.Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE);
-        }
-
-
-        public bool GetIsQuestion()
-        {
-            var standard = GetStandard().Result;
-            return standard.Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE);
-        }
-
-        public bool GetIsFramework()
-        {
-            var standard = GetStandard().Result;
-            return standard.Application_Mode.Equals(NIST_FRAMEWORK_MODE);
-        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<StandardModeEnum> GetAssessmentMode()
+        public StandardModeEnum GetAssessmentMode()
         {
-            var standard = await GetStandard();
 
-            switch(standard.Application_Mode)
+
+            if (GetStandard().Application_Mode.Equals(QUESTIONS_BASED_APPLICATION_MODE))
             {
-                case QUESTIONS_BASED_APPLICATION_MODE:
-                    return StandardModeEnum.Question;                    
-                case REQUIREMENTS_BASED_APPLICATION_MODE:
-                    return StandardModeEnum.Requirement;
-                case NIST_FRAMEWORK_MODE:
-                case NIST_OLD_MODE_ASSESSMENT:
-                    return StandardModeEnum.NISTFramework;
+                return StandardModeEnum.Question;
             }
+            if (GetStandard().Application_Mode.Equals(REQUIREMENTS_BASED_APPLICATION_MODE))
+            {
+                return StandardModeEnum.Requirement;
+            }
+            if (GetStandard().Application_Mode.Equals(NIST_FRAMEWORK_MODE))
+            {
+                return StandardModeEnum.NISTFramework;
+            }
+            if (GetStandard().Application_Mode.Equals(NIST_OLD_MODE_ASSESSMENT))
+            {
+                return StandardModeEnum.NISTFramework;
+            }
+
+            //CSETLogger.Error("Can't determine mode of assessment. ApplicationMode: " + standard.Application_Mode);
             Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standard.Application_Mode);
             return StandardModeEnum.Question;
         }
@@ -139,28 +126,23 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="standardMode"></param>
-        public async Task SaveMode(StandardModeEnum standardMode)
+        public void SaveMode(StandardModeEnum standardMode)
         {
-            var standard = await GetStandard();
-
-            switch(standardMode)
+            if (standardMode == StandardModeEnum.Question)
             {
-                case StandardModeEnum.Question:
-                    standard.Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
-                    break;
-                case StandardModeEnum.Requirement:
-                    standard.Application_Mode = REQUIREMENTS_BASED_APPLICATION_MODE;
-                    break;
-                case StandardModeEnum.NISTFramework:
-                    standard.Application_Mode = NIST_FRAMEWORK_MODE;
-                    break;
-                default:
-                    standard.Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
-                    Debug.Assert(false, "Can't determine mode of assessment. ApplicationMode: " + standardMode);
-                    break;
-
+                GetStandard().Application_Mode = QUESTIONS_BASED_APPLICATION_MODE;
             }
+            else if (standardMode == StandardModeEnum.Requirement)
+            {
+                GetStandard().Application_Mode = REQUIREMENTS_BASED_APPLICATION_MODE;
+            }
+            else if (standardMode == StandardModeEnum.NISTFramework)
+            {
+                GetStandard().Application_Mode = NIST_FRAMEWORK_MODE;
+            }
+
             await _context.SaveChangesAsync();
+
         }
 
 
@@ -168,7 +150,7 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="set"></param>
-        public async Task SaveSortSet(string set)
+        public void SaveSortSet(string set)
         {
             var standard = await GetStandard();
             standard.Sort_Set_Name = set;
@@ -180,10 +162,9 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetSortSet()
+        public string GetSortSet()
         {
-            var standard = await GetStandard();
-            if (standard != null)
+            if (GetStandard() != null)
                 return standard.Sort_Set_Name;
             else
                 return string.Empty;

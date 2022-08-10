@@ -80,11 +80,11 @@
 
 
   <!-- this houses all of the questions -->
-  <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!mySubCategory.expanded">
+  <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
     <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
       [class.display-none]="!q.visible">
 
-      <div class="w-100 d-flex flex-row">
+      <div class="w-100 d-flex flex-row" *ngIf="!handsetPortrait">
         <div class="number-and-text">
           <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
           <div style="width: 100%;">
@@ -122,6 +122,48 @@
             <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
           </div>
         </div>
+      </div>
+
+
+
+      <div class="w-100" *ngIf="handsetPortrait">
+        <div class="">
+          <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
+          <div class="w-100 mb-3">
+            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+              (click)="questionTextClicked(q, $event)">
+            </div>
+            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
+            <label *ngFor="let option of answerOptions" class="btn form-check-label"
+              [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
+              [matTooltip]="configSvc.answerLabels[option]">
+              <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                (click)="storeAnswer(q, option)" [checked]="q.answer === option">
+              {{configSvc.buttonLabels[option]}}
+            </label>
+
+            <!-- Mark For Review Flag  -->
+            <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
+              matTooltip="This control requires further review.">
+              <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                checked="{{q.markForReview === true}}">
+              <span class="cset-icons-flag-dark fs-base"></span>
+            </label>
+          </div>
+
+          <div *ngIf="q.answer === 'A'">
+            <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+              style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
+              (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
+            <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+          </div>
+        </div>
+
       </div>
 
       <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"

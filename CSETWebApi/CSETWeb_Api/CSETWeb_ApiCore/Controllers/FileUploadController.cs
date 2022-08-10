@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
             const string key_title = "title";
             const string key_questionType = "questionType";
 
-            var assessmentId = await _tokenManager.AssessmentForUser();
+            var assessmentId = _tokenManager.AssessmentForUser();
             _documentManager.SetUserAssessmentId(assessmentId);
 
             var keyDict = new Dictionary<string, string>();
@@ -113,7 +113,7 @@ namespace CSETWebCore.Api.Controllers
                     // 
                     if (questionType.ToLower() == "maturity")
                     {                        
-                        answerId = await _maturityBusiness.StoreAnswer(assessmentId, answer);
+                        answerId = _maturityBusiness.StoreAnswer(assessmentId, answer);
                     }
                     else
                     {

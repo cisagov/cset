@@ -23,12 +23,13 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Answer, Question } from '../../../../../models/questions.model';
+import { Answer, Question, IntegrityCheckOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { AssessmentService } from '../../../../../services/assessment.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-question-block-nested',
@@ -41,6 +42,7 @@ export class QuestionBlockNestedComponent implements OnInit {
 
   questionList: Question[];
 
+  handsetPortrait = false;
 
   // temporary debug aid
   showIdTag = false;
@@ -50,13 +52,18 @@ export class QuestionBlockNestedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private configSvc: ConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public boSvc: BreakpointObserver
   ) { }
 
   /**
    *
    */
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }
@@ -123,7 +130,7 @@ export class QuestionBlockNestedComponent implements OnInit {
       return;
     }
 
-    // find the question whose extras were just changed 
+    // find the question whose extras were just changed
     var q = this.questionList.find(q => q.questionId == extras.questionId);
     if (!q) {
       return;
@@ -205,8 +212,28 @@ export class QuestionBlockNestedComponent implements OnInit {
           showMfr: true
         }
       },
-      width: '50%',
-      maxWidth: '50%'
+      width: this.handsetPortrait ? '90%' : '50%',
+      maxWidth: this.handsetPortrait ? '90%' : '50%'
     });
+  }
+
+  /**
+   * Gets the corresponding questions to the given optionIds
+   * and returns an error message for the integrity check.
+   */
+  getIntegrityCheckErrors(inconsistentOptions: IntegrityCheckOption[]) {
+    if (!inconsistentOptions.length) {
+      return null;
+    }
+
+    let integrityCheckErrors = 'This answer is inconsistent with the answer to the following question(s): '
+
+    inconsistentOptions.forEach((option: IntegrityCheckOption) => {
+      if (!integrityCheckErrors.includes(option.parentQuestionText)) {
+        integrityCheckErrors += option.parentQuestionText;
+      }
+    });
+
+    return integrityCheckErrors;
   }
 }

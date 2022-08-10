@@ -29,6 +29,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { groupBy } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-question-block-vadr',
@@ -44,6 +45,8 @@ export class QuestionBlockVadrComponent implements OnInit {
   percentAnswered = 0;
   answerOptions = [];
 
+  handsetPortrait = false;
+
   openendedtext = "Open Ended question";
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
@@ -58,7 +61,8 @@ export class QuestionBlockVadrComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService
+    public acetFilteringSvc: AcetFilteringService,
+    public boSvc: BreakpointObserver
   ) {
 
 
@@ -68,6 +72,10 @@ export class QuestionBlockVadrComponent implements OnInit {
    *
    */
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.handsetPortrait = hp.matches;
+    });
+
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     this.refreshReviewIndicator();

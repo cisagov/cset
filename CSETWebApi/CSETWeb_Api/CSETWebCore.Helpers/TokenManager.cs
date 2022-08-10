@@ -7,7 +7,6 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,7 +16,6 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
@@ -95,7 +93,7 @@ namespace CSETWebCore.Helpers
         /// valid (and not expired) the private JwtSecurityToken is set.
         /// </summary>
         /// <param name="tokenString"></param>
-        public async Task Init(string tokenString)
+        public void Init(string tokenString)
         {
             // If no token was provided, do nothing.
             if (string.IsNullOrEmpty(tokenString))
@@ -108,9 +106,7 @@ namespace CSETWebCore.Helpers
                 tokenString = tokenString.Substring(_bearerToken.Length);
             }
 
-            var isValid = await IsTokenValid(tokenString);
-
-            if (!isValid)
+            if (!IsTokenValid(tokenString))
             {
                 Throw401();
             }
@@ -152,11 +148,11 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
+        public string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
-                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(await GetSecret() + userId));
+                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + userId));
 
             // Build credentials
             var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
@@ -218,7 +214,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="tokenString"></param>
         /// <returns></returns>
-        public async Task<bool> IsTokenValid(string tokenString)
+        public bool IsTokenValid(string tokenString)
         {
             JwtSecurityToken token = null;
 
@@ -235,7 +231,7 @@ namespace CSETWebCore.Helpers
                     RequireExpirationTime = true,
                     ValidAudience = "CSET_AUD",
                     ValidIssuer = "CSET_ISS",
-                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(await GetSecret() + token.Payload[Constants.Constants.Token_UserId]))
+                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]))
                 };
 
                 Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
@@ -297,11 +293,11 @@ namespace CSETWebCore.Helpers
         /// specified assessment.  Throws an HttpResponseException if not.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public async Task AuthorizeUserForAssessment(int assessmentId)
+        public void AuthorizeUserForAssessment(int assessmentId)
         {
             int currentUserId = GetUserId();
-            int countAC = await _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
-                                                                   && ac.UserId == currentUserId).CountAsync();
+            int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
+                                                                   && ac.UserId == currentUserId).Count();
             if (!(countAC > 0))
             {
                 var resp = new HttpResponseMessage(HttpStatusCode.Unauthorized)
@@ -313,12 +309,12 @@ namespace CSETWebCore.Helpers
             }
         }
 
-        public async Task<bool> sCurrentUserOnAssessment(int assessmentId)
+        public bool IsCurrentUserOnAssessment(int assessmentId)
         {
             int currentUserId = GetUserId();
 
-            int countAC = await _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
-                                                                   && ac.UserId == currentUserId).CountAsync();
+            int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
+                                                                   && ac.UserId == currentUserId).Count();
 
             return (countAC > 0);
         }
@@ -370,20 +366,21 @@ namespace CSETWebCore.Helpers
         /// the same record will consistently be read.
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetSecret()
+        public string GetSecret()
         {
             if (_secret != null)
             {
                 return _secret;
             }
 
-            
+            lock (_myLockObject)
+            {
                 if (_secret != null)
                 {
                     return _secret;
                 }
 
-                var inst = await _context.INSTALLATION.OrderBy(i => i.Installation_ID).FirstOrDefaultAsync();
+                var inst = _context.INSTALLATION.OrderBy(i => i.Installation_ID).FirstOrDefault();
                 if (inst != null)
                 {
                     _secret = inst.JWT_Secret;
@@ -414,7 +411,7 @@ namespace CSETWebCore.Helpers
                 await _context.SaveChangesAsync();
                 _secret = newSecret;
                 return newSecret;
-            
+            }
         }
 
 
@@ -430,23 +427,23 @@ namespace CSETWebCore.Helpers
         /// The userid and assessmentid are obtained from the current request token.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> AssessmentForUser()
+        public int AssessmentForUser()
         {
             Init();
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return await AssessmentForUser(userId, assessmentId);
+            return AssessmentForUser(userId, assessmentId);
         }
 
 
-        public async Task<int> AssessmentForUser(String tokenString)
+        public int AssessmentForUser(String tokenString)
         {
             await SetToken(tokenString);
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return await AssessmentForUser(userId, assessmentId);
+            return AssessmentForUser(userId, assessmentId);
         }
 
 
@@ -459,14 +456,14 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="assessmentId"></param>
-        public async Task<int> AssessmentForUser(int userId, int? assessmentId)
+        public int AssessmentForUser(int userId, int? assessmentId)
         {
             if (assessmentId == null)
             {
                 Throw401();
             }
 
-            int hits = await _context.ASSESSMENT_CONTACTS.CountAsync(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId);
+            int hits = _context.ASSESSMENT_CONTACTS.Count(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId);
             if (hits == 0)
             {
                 Throw401();
@@ -480,7 +477,7 @@ namespace CSETWebCore.Helpers
         /// Throws a 401 Unauthorized HTTP exception if the current user is not
         /// an "admin" contact on the current Assessment.
         /// </summary>
-        public async Task AuthorizeAdminRole()
+        public void AuthorizeAdminRole()
         {
             int userId = GetUserId();
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -492,11 +489,11 @@ namespace CSETWebCore.Helpers
             }
 
 
-            var myAdminConnections = await _context.ASSESSMENT_CONTACTS.Where(
+            var myAdminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.UserId == userId
                     && ac.Assessment_Id == assessmentId
                     && ac.AssessmentRoleId == 2)
-                    .ToListAsync();
+                    .ToList();
 
             if (myAdminConnections.Count() == 0)
             {
@@ -511,20 +508,20 @@ namespace CSETWebCore.Helpers
         /// current Assessment and there is at least one User role contact.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> AmILastAdminWithUsers(int assessmentId)
+        public bool AmILastAdminWithUsers(int assessmentId)
         {
             int userId = GetUserId();
 
-            var adminConnections = await _context.ASSESSMENT_CONTACTS.Where(
+            var adminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
                     && ac.AssessmentRoleId == 2)
-                    .ToListAsync();
+                    .ToList();
 
 
-            var userConnections = await _context.ASSESSMENT_CONTACTS.Where(
+            var userConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
                     && ac.AssessmentRoleId == 1)
-                    .ToListAsync();
+                    .ToList();
 
             // Return a boolean indicating whether I am the last Admin and there is more than one User
             return (adminConnections.Count() == 1
@@ -543,7 +540,8 @@ namespace CSETWebCore.Helpers
                 Content = new StringContent("User not authorized for assessment"),
                 ReasonPhrase = "The current user is not authorized to access the target assessment"                
             };
-            throw new Exception(resp.Content.ToString());        }
+            throw new Exception(resp.Content.ReadAsStringAsync().Result);        
+        }
 
 
         /// <summary>

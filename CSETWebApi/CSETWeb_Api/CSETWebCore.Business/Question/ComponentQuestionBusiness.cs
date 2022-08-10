@@ -1,14 +1,13 @@
-﻿using CSETWebCore.DataLayer.Model;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Business.Question
 {
@@ -48,20 +47,20 @@ namespace CSETWebCore.Business.Question
         /// Gathers applicable questions for the assessment's network components as defined the by Diagram.
         /// </summary>
         /// <param name="resp"></param>        
-        public async Task<QuestionResponse> GetResponse()
+        public QuestionResponse GetResponse()
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             var resp = new QuestionResponse();
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
-            var spList = await  _context.usp_Answer_Components_Default(assessmentId);
-            var list = spList.Cast<Answer_Components_Base>().ToList();
+
+            var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
 
             AddResponse(resp, list, "Component Defaults");
-            await BuildOverridesOnly(resp);
+            BuildOverridesOnly(resp);
 
 
             return resp;
@@ -73,15 +72,15 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="resp"></param>
         /// <param name="context"></param>
-        public async Task BuildOverridesOnly(QuestionResponse resp)
+        public void BuildOverridesOnly(QuestionResponse resp)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             // Because these are only override questions and the lists are short, don't bother grouping by group header.  Just subcategory.
             List<Answer_Components_Base> dlist = null;
-            await _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
+            _context.LoadStoredProc("[usp_getAnswerComponentOverrides]")
               .WithSqlParam("assessment_id", assessmentId)
-              .ExecuteStoredProcAsync((handler) =>
+              .ExecuteStoredProc((handler) =>
               {
                   dlist = handler.ReadToList<Answer_Components_Base>()
                     .OrderBy(x => x.Symbol_Name).ThenBy(x => x.ComponentName).ThenBy(x => x.Component_Guid)
@@ -329,12 +328,12 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="answer"></param>
         /// <returns></returns>
-        public async Task<int> StoreAnswer(Answer answer)
+        public int StoreAnswer(Answer answer)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             // Find the Question or Requirement
-            var question = await _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefaultAsync();
+            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
 
             if (question == null)
             {
@@ -352,9 +351,9 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null)
             {
-                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefaultAsync();
+                            && x.Is_Requirement == false && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
             }
 
 
@@ -389,7 +388,7 @@ namespace CSETWebCore.Business.Question
             _context.ANSWER.Update(dbAnswer);
             await _context.SaveChangesAsync();
 
-            await _assessmentUtil.TouchAssessment(assessmentId);
+            _assessmentUtil.TouchAssessment(assessmentId);
 
             return dbAnswer.Answer_Id;
         }
@@ -400,22 +399,23 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="shouldSave"></param>
-        public async Task HandleGuid(Guid guid, bool shouldSave)
+        public void HandleGuid(Guid guid, bool shouldSave)
         {
-            int assessmentId = await _tokenManager.AssessmentForUser();
+            int assessmentId = _tokenManager.AssessmentForUser();
 
             if (shouldSave)
             {
-                var componentName = await _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefaultAsync();
+                var componentName = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Component_Guid == guid).FirstOrDefault();
                 if (componentName != null)
                 {
                     var creates = from a in _context.COMPONENT_QUESTIONS
                                   where a.Component_Symbol_Id == componentName.Component_Symbol_Id
                                   select a;
 
-                    var alreadyThere = await (from a in _context.ANSWER
+                    var alreadyThere = (from a in _context.ANSWER
                                         where a.Assessment_Id == assessmentId
                                         && a.Component_Guid == guid
+
                                         select a).ToDictionaryAsync(x => x.Question_Or_Requirement_Id, x => x);
                     var questions = await creates.ToListAsync();
                     foreach (var c in questions)
@@ -443,7 +443,7 @@ namespace CSETWebCore.Business.Question
             }
             else
             {
-                foreach (var a in await _context.ANSWER.Where(x => x.Component_Guid == guid).ToListAsync())
+                foreach (var a in _context.ANSWER.Where(x => x.Component_Guid == guid).ToList())
                 {
                     _context.ANSWER.Remove(a);
                 }

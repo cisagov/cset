@@ -3,7 +3,6 @@ using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -27,7 +26,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/aggregation/analysis/maturity/compliance")]
-        public async Task<IActionResult> GetComplianceByModelAndDomain([FromQuery] int aggregationId)
+        public IActionResult GetComplianceByModelAndDomain([FromQuery] int aggregationId)
         {
             var amb = new AggregationMaturityBusiness(_context);
             var resp = amb.GetMaturityModels(aggregationId);

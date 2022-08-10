@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<div class="ml-4" *ngFor="let o of optRadio">
+<div [class.ml-2]="handsetPortrait" [class.ml-4]="!handsetPortrait" *ngFor="let o of optRadio">
     <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
         (change)="changeRadio(o, $event)" [checked]="o.selected" (keydown.Space)="catchSpace($event, optionGroupName + '-' + o.optionId)">
     <label class="radio-custom-label" [for]="optionGroupName + '-' + o.optionId">
@@ -38,7 +38,8 @@
         [class.div-shield]="noneChecked(optRadio)" >
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)" class="form-control">
 
-        <div *ngIf="!!o.followups && o.followups.length > 0" class="ml-4 mt-3">
+        <div *ngIf="!!o.followups && o.followups.length > 0" class="mt-3" 
+            [class.ml-2]="handsetPortrait" [class.ml-4]="!handsetPortrait">
             <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
         </div>
 
@@ -50,7 +51,7 @@
 
 
 
-<div class="ml-4" *ngFor="let o of optCheckbox">
+<div [class.ml-2]="handsetPortrait" [class.ml-4]="!handsetPortrait" *ngFor="let o of optCheckbox">
     <input #cb class="checkbox-custom" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
         (change)="changeCheckbox(o, $event, optCheckbox)" [checked]="o.selected" (keydown.Space)="catchSpace($event, optionGroupName + '-cb-' + o.optionId)">
     <label class="checkbox-custom-label" [for]="optionGroupName + '-cb-' + o.optionId">
@@ -78,7 +79,7 @@
 
 
 
-<div *ngFor="let o of optOther" class="ml-4">
+<div *ngFor="let o of optOther" [class.ml-2]="handsetPortrait" [class.ml-4]="!handsetPortrait">
     <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1" maxlength="100"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
