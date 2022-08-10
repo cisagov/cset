@@ -26,8 +26,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
-import { ACETService } from './acet.service';
-import { AcetDashboard } from '../models/acet-dashboard.model';
+import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -66,13 +65,14 @@ let headers = {
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public acetSvc: ACETService
+    public acetFilteringSvc: AcetFilteringService
   ) {
     this.init();
   }
 
   async init() {
-  this.getSwitchStatus();
+    this.getSwitchStatus();
+    this.getIRPfromAssets(true);
   }
 
   /*
@@ -180,17 +180,24 @@ let headers = {
   */
   updateAssetSize(amount: string) {
     this.iseAssetSize = amount;
-    this.iseIRP = this.getIRPfromAssets();
+    this.getIRPfromAssets(false);
   }
 
-  getIRPfromAssets() {
+  getIRPfromAssets(refresh: boolean) {
     let level = "";
     if (Number(this.iseAssetSize) > 50000000) {
       level = 'CORE';
+      if (refresh) {
+        this.refreshGroupList(2);
+      }
     } else {
       level = 'SCUEP';
+      if (refresh) {
+        this.refreshGroupList(1);
+      }
     }
 
+    this.iseIRP = level;
     return level;
   }
 
@@ -198,12 +205,22 @@ let headers = {
     let level = "";
     if (this.usingIseOverride === true) {
       level = this.overrideIRP;
+
+      if (level === 'SCUEP') {
+        this.refreshGroupList(1);
+      } else if (level === 'CORE') {
+        this.refreshGroupList(2);
+      }
     } else {
-      level = this.getIRPfromAssets();
+      level = this.getIRPfromAssets(true);
     }
-    
+
     return level;
   }
 
+  refreshGroupList(level: number) {
+    console.log("refresh group list: " + level);
+    this.acetFilteringSvc.resetDomainFilters(level);
+  }
 
 }

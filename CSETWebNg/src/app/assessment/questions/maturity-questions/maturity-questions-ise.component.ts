@@ -125,10 +125,6 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
 
-        // Check for ISE specific reworkings of IRP levels based on assets and/or IRP summary override.
-        this.checkMaturityISE();
-        this.statementLevel = "- " + this.ncuaSvc.getIRPfromOverride();
-
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {
           this.refreshQuestionVisibility();
@@ -144,6 +140,14 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+
+    if (this.ncuaSvc.usingIseOverride === false) {
+      this.ncuaSvc.getIRPfromAssets(true);
+      this.statementLevel = "Statements - " + this.ncuaSvc.iseIRP;
+    } else {
+      this.ncuaSvc.getIRPfromOverride();
+      this.statementLevel = "Statements - " + this.ncuaSvc.overrideIRP;
+    }
   }
   
   /**
@@ -193,26 +197,6 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
-  }
-
-  checkMaturityISE() {
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        //console.log("data2: " + JSON.stringify(data, null, 4));
-        if (data.override === 1) {
-          console.log("Override is 1 - SCUEP");
-          this.ncuaSvc.overrideIRP = 'SCUEP';
-          this.ncuaSvc.usingIseOverride = true;
-        } else if (data.override === 2) {
-          console.log("Override is 2 - CORE");
-          this.ncuaSvc.overrideIRP = 'CORE';
-          this.ncuaSvc.usingIseOverride = true;
-        } else {
-          console.log("No override");
-          this.ncuaSvc.overrideIRP = "";
-          this.ncuaSvc.usingIseOverride = false;
-        }
-    });
   }
   
 }

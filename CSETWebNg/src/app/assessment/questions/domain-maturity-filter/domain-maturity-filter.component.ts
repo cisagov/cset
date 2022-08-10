@@ -115,7 +115,6 @@ export class DomainMaturityFilterComponent implements OnInit {
       } else {
         this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
       }
-    console.log("this.maturityLevels: " + JSON.stringify(this.maturityLevels, null, 4));
   }
 
 

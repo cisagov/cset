@@ -56,8 +56,8 @@ export class ExamProfileSummaryComponent implements OnInit {
      * 
      */
     ngOnInit() {
-        this.ncuaSvc.getIRPfromAssets();
         this.loadDashboard();
+        this.checkRiskLevel();
     }
 
     /**
@@ -91,7 +91,8 @@ export class ExamProfileSummaryComponent implements OnInit {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                this.overrideLabel = this.ncuaSvc.getIRPfromAssets();
+                //this.assessSvc.assessment.assets.
+                this.overrideLabel = this.ncuaSvc.iseIRP;
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -108,7 +109,6 @@ export class ExamProfileSummaryComponent implements OnInit {
      * 
      */
     changeInfo() {
-        console.log("this.acetDashboard.override: " + this.acetDashboard.override);
         if (this.acetDashboard.override === 0) {
             this.ncuaSvc.usingIseOverride = false;
             this.acetDashboard.overrideReason = '';
@@ -116,9 +116,11 @@ export class ExamProfileSummaryComponent implements OnInit {
         } else if (this.acetDashboard.override === 1) {
             this.ncuaSvc.usingIseOverride = true;
             this.ncuaSvc.overrideIRP = 'SCUEP';
+            this.ncuaSvc.refreshGroupList(1);
         } else if (this.acetDashboard.override === 2) {
             this.ncuaSvc.usingIseOverride = true;
             this.ncuaSvc.overrideIRP = 'CORE';
+            this.ncuaSvc.refreshGroupList(2);
         }
 
         this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
@@ -128,5 +130,13 @@ export class ExamProfileSummaryComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
+    }
+
+    checkRiskLevel() {
+        if (this.ncuaSvc.usingIseOverride === false) {
+            this.ncuaSvc.getIRPfromAssets(true);
+        } else {
+            this.ncuaSvc.getIRPfromOverride();
+        }
     }
 }
