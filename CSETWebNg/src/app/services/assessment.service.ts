@@ -84,7 +84,6 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private ncuaSvc: NCUAService,
     private router: Router
   ) {
     if (!this.initialized) {
