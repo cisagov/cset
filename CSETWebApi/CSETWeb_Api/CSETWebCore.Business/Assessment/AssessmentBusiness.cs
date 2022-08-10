@@ -188,7 +188,7 @@ namespace CSETWebCore.Business.Assessment
 
             var resultList = await query.ToListAsync();
             var result = resultList.FirstOrDefault();
-            var modeResult = resultList.Join(await _context.STANDARD_SELECTION.ToListAsync(), x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y)
+            var modeResult = resultList.Join(await _context.STANDARD_SELECTION.ToListAsync(), x => x.Assessment_Id, y => y.Assessment_Id, (x, y) => y);
 
             if (result != null)
             {
@@ -201,7 +201,7 @@ namespace CSETWebCore.Business.Assessment
                     Assessment_Date = _utilities.UtcToLocal(result.Assessment_Date),
                     Assessment_GUID = result.Assessment_GUID.ToString(),
                     LastModifiedDate = _utilities.UtcToLocal((DateTime)result.LastModifiedDate),
-                    Mode = modeResult?.Application_Mode
+                    Mode =  modeResult?.FirstOrDefault().Application_Mode
                 };
             }
 

@@ -326,9 +326,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/maturity/cis/integritycheck")]
-        public IActionResult GetIntegrityCheckOptions() 
+        public async Task<IActionResult> GetIntegrityCheckOptions() 
         {
-            var assessmentId = _tokenManager.AssessmentForUser();
+            var assessmentId = await _tokenManager.AssessmentForUser();
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
