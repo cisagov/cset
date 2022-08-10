@@ -24,7 +24,7 @@ namespace CSETWebCore.Reports.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/auth/SetSession")]
-        public IActionResult SetSession()
+        public async Task<IActionResult> SetSession()
         {
             var auth = new CsetAuthorize();
             var authHeader = HttpContext.Request.Headers["Authorization"];
@@ -44,9 +44,9 @@ namespace CSETWebCore.Reports.Controllers
                 tokenString = authHeaderValue[0];
             }
 
-            if (_token.IsTokenValid(tokenString))
+            if (await _token.IsTokenValid(tokenString))
             {
-                _token.Init(tokenString);
+                await _token.Init(tokenString);
                 var assessmentId = _token.GetAssessmentId();
                 HttpContext.Session.SetString("assessmentId", assessmentId.ToString());
                 return Ok();

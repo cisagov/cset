@@ -72,18 +72,18 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     foreach (var doc in model.CustomStandardDocs)
                     {
-                        var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
+                        var genFile = await context.GEN_FILE.FirstOrDefaultAsync(s => s.File_Name == doc);
                         if (genFile == null)
                         {
                             StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = ReferenceConverter.ToGenFile(docModel);
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                            genFile.File_Type = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                            genFile.File_Type = await context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefaultAsync();
 
                             try
                             {
-                                context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
+                                await context.FILE_REF_KEYS.AddAsync(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
                                 await context.SaveChangesAsync();
                             }
                             catch (Exception exc)
@@ -93,14 +93,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 throw;
                             }
 
-                            context.GEN_FILE.Add(genFile);
-                            context.SaveChanges();
+                            await context.GEN_FILE.AddAsync(genFile);
+                            await context.SaveChangesAsync();
                         }
                     }
 
                     foreach (var standard in model.CustomStandards)
                     {
-                        var sets = context.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
+                        var sets = await context.SETS.Where(s => s.Set_Name.Contains(standard)).ToListAsync();
                         SETS set = null;
                         StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
                         var setJson = setReader.ReadToEnd();
@@ -132,7 +132,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             var setResult = await setModel.ToSet();
                             if (setResult.IsSuccess)
                             {
-                                context.SETS.Add(setResult.Result);
+                                await context.SETS.AddAsync(setResult.Result);
 
                                 foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
                                 {
@@ -181,13 +181,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
                     Importer import = new Importer();
-                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context, _token, _assessmentUtil);
+                    int newAssessmentId = await import.RunImportManualPortion(model, currentUserId, email, context, _token, _assessmentUtil);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
 
 
                     // Save the diagram
-                    var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
+                    var assessment = await context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefaultAsync();
                     if (!string.IsNullOrEmpty(assessment.Diagram_Markup))
                     {
                         var diagramManager = new DiagramManager(context);
@@ -205,9 +205,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
                     // Clean up any imported standards that are unselected
-                    var unselectedStandards = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToList();
+                    var unselectedStandards = await context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToListAsync();
                     context.AVAILABLE_STANDARDS.RemoveRange(unselectedStandards);
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
 
 
                     //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 

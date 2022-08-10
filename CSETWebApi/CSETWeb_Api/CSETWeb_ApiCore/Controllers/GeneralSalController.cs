@@ -16,6 +16,7 @@ using System.Data;
 using System.Linq;
 using CSETWebCore.Business;
 using CSETWebCore.Business.Sal;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -43,9 +44,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GeneralSal/Descriptions")]
-        public IActionResult GetGeneralSalDescriptionsWeights()
+        public async Task<IActionResult> GetGeneralSalDescriptionsWeights()
         {
-            int assessmentid = _token.AssessmentForUser();
+            int assessmentid = await _token.AssessmentForUser();
 
             //TODO: make this async
             TinyMapper.Bind<GENERAL_SAL_DESCRIPTIONS, GeneralSalDescriptionsWeights>();
@@ -96,18 +97,18 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/GeneralSal/SaveWeight")]
-        public IActionResult PostSaveWeight(SaveWeight ws)
+        public async Task<IActionResult> PostSaveWeight(SaveWeight ws)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            int assessmentid = _token.AssessmentForUser();
+            int assessmentid = await _token.AssessmentForUser();
             ws.assessmentid = assessmentid;
 
             GeneralSalBusiness salManager = new GeneralSalBusiness(_context, _token, _assessmentUtil);
-            string salvalue = salManager.SaveWeightAndCalculate(ws);
+            string salvalue = await salManager.SaveWeightAndCalculate(ws);
 
             return Ok(salvalue);
         }
@@ -115,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/GeneralSal/Value")]
-        public IActionResult GetValue()
+        public async Task<IActionResult> GetValue()
         {
             if (!ModelState.IsValid)
             {
@@ -124,15 +125,15 @@ namespace CSETWebCore.Api.Controllers
 
             GeneralSalBusiness salManager = new GeneralSalBusiness(_context, _token, _assessmentUtil);
 
-            int assessmentId = _token.AssessmentForUser();
+            int assessmentId = await _token.AssessmentForUser();
             string salvalue = salManager.GetSavedSALValue(assessmentId);
             return Ok(salvalue);
         }
 
 
-        private bool GENERAL_SALExists(int id)
+        private async Task<bool> GENERAL_SALExists(int id)
         {
-            return _context.GENERAL_SAL.Count(e => e.Assessment_Id == id) > 0;
+            return await _context.GENERAL_SAL.CountAsync(e => e.Assessment_Id == id) > 0;
         }
     }
 

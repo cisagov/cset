@@ -179,7 +179,7 @@ namespace CSETWebCore.Reports.Controllers
                     }
 
                     // Keeping track of page numbers for each section of the report
-                    ((CrrViewModel)model).PageNumbers[depiction] = pageNumber;
+                    ((CrrViewModel) await model).PageNumbers[depiction] = pageNumber;
 
                     var viewTitle = depiction.ToLower();
                     viewTitle = _viewToTitle.ContainsKey(viewTitle) ? _viewToTitle[viewTitle] : depiction;
@@ -210,9 +210,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/crr/crr")]
-        public IActionResult CrrReport(string token, string security)
+        public async Task<IActionResult> CrrReport(string token, string security)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
               
                return View(CrrHtmlInit(token, security));
@@ -223,9 +223,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/crr/deficiency")]
-        public IActionResult CrrDeficiencyReport(string token, string security)
+        public async Task<IActionResult> CrrDeficiencyReport(string token, string security)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
                 return View(CrrHtmlInit(token, security));
             }
@@ -235,9 +235,9 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("reports/crr/comments")]
-        public IActionResult CrrCommentsMarked(string token, string security)
+        public async Task<IActionResult> CrrCommentsMarked(string token, string security)
         {
-            if (_token.IsTokenValid(token))
+            if (await _token.IsTokenValid(token))
             {
                 return View(CrrHtmlInit(token, security));
             }
@@ -247,18 +247,18 @@ namespace CSETWebCore.Reports.Controllers
 
         [HttpGet]
         [Route("api/report/getCrrModel")]
-        public IActionResult GetCrrModel()
+        public async Task<IActionResult> GetCrrModel()
         {
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = await _token.AssessmentForUser();
             var crrModel = GetCrrModel(assessmentId, "", false);
             return Ok(crrModel);
         }
 
-        private object CrrHtmlInit(string token, string security)
+        private async Task<object> CrrHtmlInit(string token, string security)
         {
-            _token.Init(token);
+            await _token.Init(token);
             Request.Headers.Add("Authorization", token);
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = await _token.AssessmentForUser();
             HttpContext.Session.Set("assessmentId", Encoding.ASCII.GetBytes(assessmentId.ToString()));
             HttpContext.Session.Set("security", Encoding.ASCII.GetBytes(security));
             return GetCrrModel(assessmentId);
@@ -272,10 +272,10 @@ namespace CSETWebCore.Reports.Controllers
         /// <param name="token"></param>
         /// <param name="includeResultsStylesheet"></param>
         /// <returns></returns>
-        private object GetCrrModel(int assessmentId, string token = "", bool includeResultsStylesheet = true)
+        private async Task<object> GetCrrModel(int assessmentId, string token = "", bool includeResultsStylesheet = true)
         {
             _crr.InstantiateScoringHelper(assessmentId);
-            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
+            var detail = await _assessment.GetAssessmentDetail(assessmentId, token);
 
             var demographics = _demographic.GetDemographics(assessmentId);
 
@@ -284,11 +284,11 @@ namespace CSETWebCore.Reports.Controllers
 
             var deficiencyData = new MaturityBasicReportData()
             {
-                Information = _report.GetInformation(),
-                DeficienciesList = _report.GetMaturityDeficiencies(),
-                Comments = _report.GetCommentsList(),
-                MarkedForReviewList = _report.GetMarkedForReviewList(),
-                QuestionsList = _report.GetQuestionsList()
+                Information = await _report.GetInformation(),
+                DeficienciesList = await _report.GetMaturityDeficiencies(),
+                Comments = await _report.GetCommentsList(),
+                MarkedForReviewList = await _report.GetMarkedForReviewList(),
+                QuestionsList =await _report.GetQuestionsList()
             };
             CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
             CrrViewModel viewModel = new CrrViewModel(detail, demographics.CriticalService, _crr, deficiencyData);
@@ -302,7 +302,7 @@ namespace CSETWebCore.Reports.Controllers
         [Route("api/report/getCrrHtml")]
         public async Task<IActionResult> GetCrrHtml(string view)
         {
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = await _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
             var model = GetCrrModel(assessmentId, "", false);
             string baseUrl = UrlStringHelper.GetBaseUrl(Request);
@@ -320,9 +320,9 @@ namespace CSETWebCore.Reports.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/report/widget/milheatmap")]
-        public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
+        public async Task<IActionResult> GetWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
         {
-            var assessmentId = _token.AssessmentForUser();
+            var assessmentId = await _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
 
 
@@ -343,12 +343,12 @@ namespace CSETWebCore.Reports.Controllers
             return Content(heatmap.ToString(), "image/svg+xml");
         }
 
-        private CrrResultsModel GenerateCrrResults()
+        private async Task<CrrResultsModel> GenerateCrrResults()
         {
             MaturityReportData maturityData = new MaturityReportData(_context);
 
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
+            maturityData.MaturityModels = await _report.GetMaturityModelData();
+            maturityData.information = await _report.GetInformation();
             maturityData.AnalyzeMaturityData();
 
 

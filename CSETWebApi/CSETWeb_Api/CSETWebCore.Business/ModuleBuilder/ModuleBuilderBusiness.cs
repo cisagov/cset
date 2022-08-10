@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.ModuleBuilder;
@@ -64,9 +65,9 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// <summary>
         /// Gets the full list of sets that are being used in an assessment.
         /// </summary>
-        public List<SetDetail> GetSetsInUseList() 
+        public async Task<List<SetDetail>> GetSetsInUseList() 
         {
-            List<AVAILABLE_STANDARDS> selectedStandards = _context.AVAILABLE_STANDARDS.Where(x => x.Selected).ToList();
+            List<AVAILABLE_STANDARDS> selectedStandards = await _context.AVAILABLE_STANDARDS.Where(x => x.Selected).ToListAsync();
 
             return GetCustomSetList(true).FindAll(x => selectedStandards.Exists(y => y.Set_Name == x.SetName));
         }

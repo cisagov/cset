@@ -10,11 +10,12 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -67,7 +68,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="primaryEmail"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public int RunImportManualPortion(UploadAssessmentModel model,
+        public async Task<int> RunImportManualPortion(UploadAssessmentModel model,
             int currentUserId, string primaryEmail, CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil)
         {
             //create the new assessment
@@ -82,17 +83,17 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
             AssessmentBusiness man = new AssessmentBusiness(null, token, null, cb, null, mb, assessmentUtil, null, null, context);
-            AssessmentDetail detail = man.CreateNewAssessmentForImport(currentUserId);
+            AssessmentDetail detail = await man.CreateNewAssessmentForImport(currentUserId);
             int _assessmentId = detail.Id;
 
             Dictionary<int, int> oldAnswerId = new Dictionary<int, int>();
             Dictionary<int, ANSWER> oldIdNewAnswer = new Dictionary<int, ANSWER>();
 
-            Dictionary<string, int> oldUserNewUser = context.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
+            Dictionary<string, int> oldUserNewUser = await context.USERS.ToDictionaryAsync(x => x.PrimaryEmail, y => y.UserId);
 
             foreach(var a in model.jASSESSMENTS)
             {
-                var item = context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var item = await context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
                 if (item != null)
                 {
                     item.Diagram_Markup = a.Diagram_Markup;
@@ -105,17 +106,17 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
                     item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false;
 
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
 
             foreach (var a in model.jINFORMATION)
             {
-                var item = context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var item = await context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
                 if (item != null)
                 {
                     item.Assessment_Date = a.Assessment_Date;
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
 
@@ -128,7 +129,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 // Don't create another primary contact, but map its ID
                 if (a.PrimaryEmail == primaryEmail)
                 {
-                    var newPrimaryContact = context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == primaryEmail && x.Assessment_Id == _assessmentId).FirstOrDefault();
+                    var newPrimaryContact = await context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == primaryEmail && x.Assessment_Id == _assessmentId).FirstOrDefaultAsync();
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
@@ -146,8 +147,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.UserId = null;
                 }
 
-                context.ASSESSMENT_CONTACTS.Add(item);
-                context.SaveChanges();
+                await context.ASSESSMENT_CONTACTS.AddAsync(item);
+                await context.SaveChangesAsync();
                 int newId;
                 if (a.Assessment_Contact_Id != 0)
                 {
@@ -170,19 +171,19 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             //
             foreach (var a in model.jUSER_DETAIL_INFORMATION)
             {
-                if (context.USER_DETAIL_INFORMATION.Where(x => x.Id == a.Id).FirstOrDefault() == null)
+                if (await context.USER_DETAIL_INFORMATION.Where(x => x.Id == a.Id).FirstOrDefaultAsync() == null)
                 {
                     var userInfo = TinyMapper.Map<USER_DETAIL_INFORMATION>(a);
                     userInfo.FirstName = String.IsNullOrWhiteSpace(a.FirstName) ? "First Name" : a.FirstName;
                     userInfo.LastName = String.IsNullOrWhiteSpace(a.LastName) ? "Last Name" : a.LastName;
-                    context.USER_DETAIL_INFORMATION.Add(userInfo);
+                    await context.USER_DETAIL_INFORMATION.AddAsync(userInfo);
                     foreach (var b in a.jADDRESSes)
                     {
                         var item = TinyMapper.Map<ADDRESS>(b);
                         item.AddressType = "Imported";
-                        context.ADDRESS.Add(item);
+                        await context.ADDRESS.AddAsync(item);
                     }
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
 

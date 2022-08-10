@@ -32,7 +32,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetCustomSets")]
-        public IActionResult GetCustomSetsList()
+        public async Task<IActionResult> GetCustomSetsList()
         {
             return Ok(_module.GetCustomSetList());
         }
@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/GetAllSets")]
-        public IActionResult GetAllSetsList()
+        public async Task<IActionResult> GetAllSetsList()
         {
             return Ok(_module.GetCustomSetList(true));
         }
@@ -48,22 +48,22 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/GetSetsInUse")]
-        public IActionResult GetSetsInUseList()
+        public async Task<IActionResult> GetSetsInUseList()
         {
-            return Ok(_module.GetSetsInUseList());
+            return Ok(await _module.GetSetsInUseList());
         }
 
 
         [HttpGet]
         [Route("api/builder/GetNonCustomSets")]
-        public IActionResult GetNonCustomSetList(string setName)
+        public async Task<IActionResult> GetNonCustomSetList(string setName)
         {
             return Ok(_module.GetNonCustomSetList(setName));
         }
 
         [HttpPost]
         [Route("api/builder/SetBaseSets")]
-        public IActionResult SetBaseSets(string setName, string[] setNames)
+        public async Task<IActionResult> SetBaseSets(string setName, string[] setNames)
         {
             if (String.IsNullOrWhiteSpace(setName))
                 return Ok();
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/GetBaseSets")]
-        public IActionResult GetBaseSets(string setName)
+        public async Task<IActionResult> GetBaseSets(string setName)
         {
            return Ok(_module.GetBaseSets(setName));
         }
@@ -85,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/GetSetDetail")]
-        public IActionResult GetSetDetail(string setName)
+        public async Task<IActionResult> GetSetDetail(string setName)
         {
             return Ok(_module.GetSetDetail(setName));
         }
@@ -98,7 +98,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/UpdateSetDetail")]
-        public IActionResult UpdateSetDetail([FromBody] SetDetail setDetail)
+        public async Task<IActionResult> UpdateSetDetail([FromBody] SetDetail setDetail)
         {
             return Ok(new { SetName = _module.SaveSetDetail(setDetail) });
         }
@@ -110,7 +110,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/CloneSet")]
-        public IActionResult CloneSet(string setName)
+        public async Task<IActionResult> CloneSet(string setName)
         {
             return Ok(_module.CloneSet(setName));
         }
@@ -121,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/CopyBaseToCustom")]
-        public IActionResult CopyBaseToCustom(string SourceSetName, string DestinationSetName)
+        public async Task<IActionResult> CopyBaseToCustom(string SourceSetName, string DestinationSetName)
         {
             _module.AddCopyToSet(SourceSetName, DestinationSetName);
             return Ok();
@@ -129,7 +129,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/BaseToCustomDelete")]
-        public IActionResult BaseToCustomDelete(string setName)
+        public async Task<IActionResult> BaseToCustomDelete(string setName)
         {
            _module.DeleteCopyToSet(setName);
            return Ok();
@@ -140,7 +140,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/builder/DeleteSet")]
-        public IActionResult DeleteSet([FromBody] string setName)
+        public async Task<IActionResult> DeleteSet([FromBody] string setName)
         {
             return Ok(_module.DeleteSet(setName));
         }
@@ -151,7 +151,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/GetQuestionsForSet")]
-        public IActionResult GetQuestionsForSet(string setName)
+        public async Task<IActionResult> GetQuestionsForSet(string setName)
         {
             QuestionListResponse response = _module.GetQuestionsForSet(setName);
 
@@ -166,7 +166,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="setName"></param>
         [HttpGet]
         [Route("api/builder/GetMyQuestionsUsedByOtherSets")]
-        public IActionResult GetMyQuestionsUsedByOtherSets(string setName)
+        public async Task<IActionResult> GetMyQuestionsUsedByOtherSets(string setName)
         {
             List<int> response = _module.GetMyQuestionsUsedByOtherSets(setName);
 
@@ -176,7 +176,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/ExistsQuestionText")]
-        public IActionResult ExistsQuestionText([FromBody] string questionText)
+        public async Task<IActionResult> ExistsQuestionText([FromBody] string questionText)
         {
             // Don't let null be added as question text
             if (questionText == null)
@@ -194,7 +194,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="request"></param>
         [HttpPost]
         [Route("api/builder/AddCustomQuestion")]
-        public IActionResult AddCustomQuestion([FromBody] SetQuestion request)
+        public async Task<IActionResult> AddCustomQuestion([FromBody] SetQuestion request)
         {
             _module.AddCustomQuestion(request);
             return Ok();
@@ -207,7 +207,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="request"></param>
         [HttpPost]
         [Route("api/builder/AddQuestions")]
-        public IActionResult AddQuestion([FromBody] AddQuestionsRequest request)
+        public async Task<IActionResult> AddQuestion([FromBody] AddQuestionsRequest request)
         {
             foreach (QuestionAdd add in request.QuestionList)
             {
@@ -227,7 +227,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/RemoveQuestion")]
-        public IActionResult RemoveQuestion([FromBody] SetQuestion request)
+        public async Task<IActionResult> RemoveQuestion([FromBody] SetQuestion request)
         {
             _module.RemoveQuestion(request);
             return Ok();
@@ -236,7 +236,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/GetStandardCategories")]
-        public IActionResult GetStandardCategories()
+        public async Task<IActionResult> GetStandardCategories()
         {
             return Ok(_module.GetStandardCategories());
         }
@@ -244,7 +244,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/GetCategoriesSubcategoriesGroupHeadings")]
-        public IActionResult GetCategoriesSubcategoriesGroupHeadings()
+        public async Task<IActionResult> GetCategoriesSubcategoriesGroupHeadings()
         {
             return Ok(_module.GetCategoriesSubcategoriesGroupHeadings());
         }
@@ -252,7 +252,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/SearchQuestions")]
-        public IActionResult SearchQuestions([FromBody] QuestionSearch searchParms)
+        public async Task<IActionResult> SearchQuestions([FromBody] QuestionSearch searchParms)
         {
             return Ok(_module.SearchQuestions(searchParms));
         }
@@ -260,7 +260,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/SetSalLevel")]
-        public IActionResult SetSalLevel([FromBody] SalParms parms)
+        public async Task<IActionResult> SetSalLevel([FromBody] SalParms parms)
         {
             _module.SetSalLevel(parms);
             return Ok();
@@ -269,7 +269,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/UpdateQuestionText")]
-        public IActionResult UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
+        public async Task<IActionResult> UpdateQuestionText([FromBody] QuestionTextUpdateParms parms)
         {
             return Ok(_module.UpdateQuestionText(parms.QuestionID, parms.QuestionText));
         }
@@ -277,7 +277,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/builder/IsQuestionInUse")]
-        public IActionResult IsQuestionInUse(int questionID)
+        public async Task<IActionResult> IsQuestionInUse(int questionID)
         {
             return Ok(_module.IsQuestionInUse(questionID));
         }
@@ -285,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/UpdateHeadingText")]
-        public IActionResult UpdateHeadingText([FromBody] HeadingUpdateParms parms)
+        public async Task<IActionResult> UpdateHeadingText([FromBody] HeadingUpdateParms parms)
         {
             _module.UpdateHeadingText(parms.PairID, parms.HeadingText);
             return Ok();
@@ -297,7 +297,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/GetStandardStructure")]
-        public IActionResult GetStandardStructure(string setName)
+        public async Task<IActionResult> GetStandardStructure(string setName)
         {
             return Ok(_module.GetModuleStructure(setName));
         }
@@ -310,7 +310,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/CreateRequirement")]
-        public IActionResult CreateRequirement([FromBody] Requirement parms)
+        public async Task<IActionResult> CreateRequirement([FromBody] Requirement parms)
         {
             return Ok(_module.CreateRequirement(parms));
         }
@@ -324,7 +324,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetRequirement")]
-        public IActionResult GetRequirement(string setName, int reqID)
+        public async Task<IActionResult> GetRequirement(string setName, int reqID)
         {
             return Ok(_module.GetRequirement(setName, reqID));
         }
@@ -336,7 +336,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/UpdateRequirement")]
-        public IActionResult UpdateRequirement([FromBody] Requirement parms)
+        public async Task<IActionResult> UpdateRequirement([FromBody] Requirement parms)
         {
             return Ok(_module.UpdateRequirement(parms));
         }
@@ -348,7 +348,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/builder/RemoveRequirement")]
-        public IActionResult RemoveRequirement([FromBody] Requirement parms)
+        public async Task<IActionResult> RemoveRequirement([FromBody] Requirement parms)
         {
             _module.RemoveRequirement(parms);
             return Ok();
@@ -361,7 +361,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetReferenceDocs")]
-        public IActionResult GetReferenceDocs(string setName, string filter)
+        public async Task<IActionResult> GetReferenceDocs(string setName, string filter)
         {
             return Ok(_module.GetReferenceDocs(setName, filter));
         }
@@ -373,7 +373,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetReferenceDocsForSet")]
-        public IActionResult GetReferenceDocs(string setName)
+        public async Task<IActionResult> GetReferenceDocs(string setName)
         {
             return Ok(_module.GetReferenceDocsForSet(setName));
         }
@@ -385,7 +385,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/builder/GetReferenceDocDetail")]
-        public IActionResult GetReferenceDocDetail(int id)
+        public async Task<IActionResult> GetReferenceDocDetail(int id)
         {
             return Ok(_module.GetReferenceDocDetail(id));
         }
@@ -393,7 +393,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/builder/UpdateReferenceDocDetail")]
-        public IActionResult UpdateReferenceDocDetail([FromBody] ReferenceDoc doc)
+        public async Task<IActionResult> UpdateReferenceDocDetail([FromBody] ReferenceDoc doc)
         {
             _module.UpdateReferenceDocDetail(doc);
             return Ok();
@@ -407,7 +407,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="parms"></param>
         [HttpPost]
         [Route("api/builder/SelectSetFile")]
-        public IActionResult SelectSetFiles(SetFileSelection parms)
+        public async Task<IActionResult> SelectSetFiles(SetFileSelection parms)
         {
             _module.SelectSetFile(parms);
             return Ok();
@@ -421,7 +421,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/builder/AddDeleteRefDocToRequirement")]
-        public IActionResult AddDeleteRefDocToRequirement(int reqId, int docId, bool isSourceRef, string bookmark, bool add)
+        public async Task<IActionResult> AddDeleteRefDocToRequirement(int reqId, int docId, bool isSourceRef, string bookmark, bool add)
         {
             return Ok(_module.AddDeleteRefDocToRequirement(reqId, docId, isSourceRef, bookmark, add));
         }

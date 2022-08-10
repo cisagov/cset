@@ -5,10 +5,12 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
+using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Question
 {
@@ -136,14 +138,14 @@ namespace CSETWebCore.Business.Question
         /// Returns a list of Questions.
         /// We can find questions for a single group or for all groups (*).
         /// </summary>        
-        public QuestionResponse GetQuestionList(string questionGroupName)
+        public async Task<QuestionResponse> GetQuestionList(string questionGroupName)
         {
-            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
+            _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
 
             IQueryable<QuestionPlusHeaders> query = null;
 
-            string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
-            string assessSalLevelUniversal = _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+            string assessSalLevel = await _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefaultAsync();
+            string assessSalLevelUniversal = await _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).FirstAsync();
 
             if (_questionRequirement.SetNames.Count == 1)
             {
@@ -207,8 +209,8 @@ namespace CSETWebCore.Business.Question
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
 
-            this.questions = query.Distinct().ToList();
-            this.Answers = answers.ToList();
+            this.questions = await query.Distinct().ToListAsync();
+            this.Answers = await answers.ToListAsync();
 
             // Merge the questions and answers into a hierarchy
             return BuildResponse();
@@ -257,9 +259,9 @@ namespace CSETWebCore.Business.Question
         /// multiple copies of the question and answer queries.
         /// </summary>
         /// <returns></returns>
-        public List<int> GetActiveAnswerIds()
+        public async Task<List<int>> GetActiveAnswerIds()
         {
-            QuestionResponse resp = this.GetQuestionList(null);
+            QuestionResponse resp = await this.GetQuestionList(null);
 
             List<int> relevantAnswerIds = this.Answers.Where(ans =>
                 this.questions.Select(q => q.QuestionId).Contains(ans.a.Question_Or_Requirement_Id))
@@ -276,7 +278,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="questionId"></param>
         /// <param name="assessmentid"></param>
         /// <returns></returns>
-        public QuestionDetails GetDetails(int questionId, string questionType)
+        public async Task<QuestionDetails> GetDetails(int questionId, string questionType)
         {
             var qvm = new QuestionDetailsBusiness(
                 new StandardSpecficLevelRepository(_context),
@@ -284,7 +286,7 @@ namespace CSETWebCore.Business.Question
                 _context, _tokenManager, _document
             );
 
-            _questionRequirement.InitializeManager(_tokenManager.AssessmentForUser());
+            _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
             return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, questionType);
         }
 
@@ -405,18 +407,18 @@ namespace CSETWebCore.Business.Question
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public int StoreAnswer(Answer answer)
+        public async Task<int> StoreAnswer(Answer answer)
         {
             // Find the Question or Requirement
-            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
-            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
+            var question = await _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefaultAsync();
+            var requirement = await _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefaultAsync();
 
             if (question == null && requirement == null)
             {
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
 
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = await _tokenManager.AssessmentForUser();
 
             // in case a null is passed, store 'unanswered'
             if (string.IsNullOrEmpty(answer.AnswerText))
@@ -428,15 +430,15 @@ namespace CSETWebCore.Business.Question
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                             && x.Question_Or_Requirement_Id == answer.QuestionId
-                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefault();
+                            && x.Question_Type == answer.QuestionType && x.Component_Guid == answer.ComponentGuid).FirstOrDefaultAsync();
             }
             else if (answer != null)
             {
-                dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                dbAnswer = await _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
                 && x.Question_Or_Requirement_Id == answer.QuestionId
-                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+                && x.Question_Type == answer.QuestionType).FirstOrDefaultAsync();
             }
 
             if (dbAnswer == null)
