@@ -564,7 +564,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = await _token.AssessmentForUser();
             _question.SetQuestionAssessmentId(assessmentId);
-            _questionRequirement.SetApplicationMode(mode);
+            await _questionRequirement.SetApplicationMode(mode);
         }
 
 

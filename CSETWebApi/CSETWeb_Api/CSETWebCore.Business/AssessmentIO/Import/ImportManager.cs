@@ -199,7 +199,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         };
                         var xDocDiagram = new XmlDocument();
                         xDocDiagram.LoadXml(assessment.Diagram_Markup);
-                        diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq);
+                        await diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq);
                     }
 
 
@@ -218,7 +218,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
                         string oldXml = ldr.ReadToEnd();
                         DiagramManager dm = new DiagramManager(context);
-                        dm.ImportOldCSETDFile(oldXml, newAssessmentId);
+                        await dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }
                 catch (Exception exc)

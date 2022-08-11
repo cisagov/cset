@@ -85,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var manager = new AggregationBusiness(_context);
-            manager.SaveAggregationInformation(aggregation.AggregationId, aggregation);
+            await manager.SaveAggregationInformation(aggregation.AggregationId, aggregation);
             return Ok();
         }
 
@@ -95,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> DeleteAggregation([FromQuery] int aggregationId)
         {
             var manager = new AggregationBusiness(_context);
-            manager.DeleteAggregation(aggregationId);
+            await manager.DeleteAggregation(aggregationId);
             return Ok();
         }
 
@@ -141,7 +141,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var aggreg = new AggregationBusiness(_context);
-            aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
+            await aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
 
             return Ok();
         }

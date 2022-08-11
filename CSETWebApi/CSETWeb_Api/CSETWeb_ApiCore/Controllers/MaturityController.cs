@@ -267,7 +267,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = await _tokenManager.AssessmentForUser();
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            biz.SaveBaseline(assessmentId, baselineId);
+            await biz.SaveBaseline(assessmentId, baselineId);
 
             return Ok();
         }
@@ -315,7 +315,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
-            biz.ImportCisAnswers(request.Dest, request.Source);
+            await biz.ImportCisAnswers(request.Dest, request.Source);
             return Ok();
         }
 

@@ -12,13 +12,13 @@ namespace CSETWebCore.Interfaces.Question
         public string StandardLevel { get; set; }
         public List<string> SetNames { get; set; }
         public string ApplicationMode { get; set; }
-        void InitializeManager(int assessmentId);
+        Task InitializeManager(int assessmentId);
         void InitializeSubCategoryAnswers();
-        void InitializeApplicationMode();
+        Task InitializeApplicationMode();
         void InitializeSalLevel();
         void InitializeStandardsForAssessment();
         Task SetApplicationMode(string mode);
-        string GetApplicationMode(int assessmentId);
+        Task<string> GetApplicationMode(int assessmentId);
         Task<int> StoreComponentAnswer(Answer answer);
         Task<int> StoreAnswer(Answer answer);
         Task BuildComponentsResponse(QuestionResponse resp);
@@ -29,7 +29,7 @@ namespace CSETWebCore.Interfaces.Question
 
         string DetermineQuestionType(bool is_requirement, bool is_component, bool is_framework, bool is_maturity);
         string FormatLineBreaks(string s);
-        int NumberOfRequirements();
-        int NumberOfQuestions();
+        Task<int> NumberOfRequirements();
+        Task<int> NumberOfQuestions();
     }
 }

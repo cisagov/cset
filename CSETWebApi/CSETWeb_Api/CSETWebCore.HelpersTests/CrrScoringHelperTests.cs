@@ -89,7 +89,7 @@ namespace CSETWebCore.Helpers.Tests
 
 
             // Now flip one answer in MIL-1 to "N" and MIL-2 thru 5 should turn red
-            SetAnswer("AM:G5.Q6-F", "N");
+            await SetAnswer("AM:G5.Q6-F", "N");
 
             crrScoring.InstantiateScoringHelper(assessmentId);
 
@@ -113,7 +113,7 @@ namespace CSETWebCore.Helpers.Tests
             await context.SaveChangesAsync();
 
             // answer AM:G2.Q4-F as YES
-            SetAnswer("AM:G2.Q4-F", "Y");
+            await SetAnswer("AM:G2.Q4-F", "Y");
 
             crrScoring.InstantiateScoringHelper(assessmentId);
 
@@ -200,7 +200,7 @@ namespace CSETWebCore.Helpers.Tests
             await context.SaveChangesAsync();
 
             // Answer one question in AM MIL-2 YES
-            SetAnswer("AM:MIL2.Q1", "Y");
+            await SetAnswer("AM:MIL2.Q1", "Y");
 
 
             crrScoring.InstantiateScoringHelper(assessmentId);

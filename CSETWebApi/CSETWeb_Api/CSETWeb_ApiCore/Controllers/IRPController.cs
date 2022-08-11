@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             int assessmentId = await _token.AssessmentForUser();
-            _irp.PersistSelectedIRP(assessmentId, reqIRP);
+            await _irp.PersistSelectedIRP(assessmentId, reqIRP);
 
             await _assessmentUtil.TouchAssessment(assessmentId);
 

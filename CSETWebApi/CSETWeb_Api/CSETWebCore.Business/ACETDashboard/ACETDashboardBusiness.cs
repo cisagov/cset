@@ -169,11 +169,11 @@ namespace CSETWebCore.Business.ACETDashboard
             // If no override, use calculated IRP; Storing IRP as maturity level
             if (result.Override == 0)
             {
-                _maturity.PersistMaturityLevel(assessmentId, result.SumRiskLevel);
+                await _maturity.PersistMaturityLevel(assessmentId, result.SumRiskLevel);
             }
             else 
             {
-                _maturity.PersistMaturityLevel(assessmentId, result.Override);
+                await _maturity.PersistMaturityLevel(assessmentId, result.Override);
             }
 
             return result;
@@ -210,7 +210,7 @@ namespace CSETWebCore.Business.ACETDashboard
 
             await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(assessmentId);
+            await _assessmentUtil.TouchAssessment(assessmentId);
         }
     }
 }

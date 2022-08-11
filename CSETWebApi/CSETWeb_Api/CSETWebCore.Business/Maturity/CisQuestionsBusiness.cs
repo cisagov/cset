@@ -49,9 +49,9 @@ namespace CSETWebCore.Business.Maturity
         /// CIS answers are different than normal maturity answers
         /// because Options are involved.  
         /// </summary>
-        public void StoreAnswer(Model.Question.Answer answer)
+        public async Task StoreAnswer(Model.Question.Answer answer)
         {
-            var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
+            var dbOption = await _context.MATURITY_ANSWER_OPTIONS.FirstOrDefaultAsync(x => x.Mat_Option_Id == answer.OptionId);
             if (dbOption == null)
             {
                 return;
@@ -60,12 +60,12 @@ namespace CSETWebCore.Business.Maturity
             // is this a radio or checkbox option
             if (dbOption.Mat_Option_Type == "radio")
             {
-                StoreAnswerRadio(answer);
+                await StoreAnswerRadio(answer);
             }
 
             if (dbOption.Mat_Option_Type == "checkbox" || dbOption.Mat_Option_Type == "text-first")
             {
-                StoreAnswerCheckbox(answer);
+                await StoreAnswerCheckbox(answer);
             }
         }
 

@@ -45,11 +45,11 @@ namespace CSETWebCore.Business.Findings
         /// 
         /// </summary>
         /// <param name="finding"></param>
-        public void DeleteFinding(Finding finding)
+        public async Task DeleteFinding(Finding finding)
         {
             FindingData fm = new FindingData(finding, _context);
-            fm.Delete();
-            fm.Save();
+            await fm.Delete();
+            await fm.Save();
         }
 
 
@@ -57,10 +57,10 @@ namespace CSETWebCore.Business.Findings
         /// 
         /// </summary>
         /// <param name="finding"></param>
-        public void UpdateFinding(Finding finding)
+        public async Task UpdateFinding(Finding finding)
         {
             FindingData fm = new FindingData(finding, _context);
-            fm.Save();
+            await fm.Save();
         }
 
 

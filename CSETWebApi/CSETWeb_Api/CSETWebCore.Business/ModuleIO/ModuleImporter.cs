@@ -96,7 +96,7 @@ namespace CSETWebCore.Business.ModuleIO
 
             try
             {
-                ProcessRequirements(externalStandard, set);
+                await ProcessRequirements(externalStandard, set);
             }
             catch (Exception exc)
             {
@@ -367,7 +367,7 @@ namespace CSETWebCore.Business.ModuleIO
 
 
             // Save any Questions associated with the Requirement
-            SaveQuestions(setName, externalRequirement, newRequirement,
+            await SaveQuestions(setName, externalRequirement, newRequirement,
                 questionGroupHeading, uschPairing);
 
 

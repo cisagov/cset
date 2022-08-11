@@ -35,6 +35,8 @@ namespace CSETWebCore.Api.Models
             }
             set
             {
+                
+                
                 SetProperty("DiagramAutoSaveTimeInterval", value.ToString());
             }
         }
@@ -217,7 +219,7 @@ namespace CSETWebCore.Api.Models
                 SetProperty("LastAggregationName", value);
             }
         }
-        public String Last_Aggregation_File_Path
+        public  String Last_Aggregation_File_Path
         {
             get
             {
@@ -239,9 +241,9 @@ namespace CSETWebCore.Api.Models
         {
         }
 
+       
 
-
-        private async Task SetProperty(String name, String value)
+        private void SetProperty(String name, String value)
         {
             try
             {
@@ -253,7 +255,7 @@ namespace CSETWebCore.Api.Models
                 {
 
                     IQueryable<GLOBAL_PROPERTIES> query = context.GLOBAL_PROPERTIES.Where(x => x.Property == name);
-                    var globalPropList = await query.ToListAsync();
+                    var globalPropList =  query.ToList();
                     if (globalPropList.Count() > 0)
                     {
                         globalPropList[0].Property_Value = value;
@@ -263,9 +265,9 @@ namespace CSETWebCore.Api.Models
                         GLOBAL_PROPERTIES gp = new GLOBAL_PROPERTIES();
                         gp.Property = name;
                         gp.Property_Value = value;
-                        await context.GLOBAL_PROPERTIES.AddAsync(gp);
+                         context.GLOBAL_PROPERTIES.Add(gp);
                     }
-                    await context.SaveChangesAsync();
+                     context.SaveChangesAsync();
                     if (propertiesDictionary.ContainsKey(name))
                     {
                         propertiesDictionary[name] = value;

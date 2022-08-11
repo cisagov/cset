@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Question
         public async Task<QuestionResponse> GetRequirementsList()
         {
             RequirementsPass controls = await GetControls();
-            return BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
+            return await BuildResponse(controls.Requirements.ToList(), controls.Answers.ToList(), controls.DomainAssessmentFactors.ToList());
         }
 
 
@@ -111,7 +111,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="answers"></param>
         /// <param name="domains"></param>
         /// <returns></returns>
-        public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
+        public async Task<QuestionResponse> BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
             var response = new QuestionResponse();
@@ -200,14 +200,14 @@ namespace CSETWebCore.Business.Question
                     TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
                 }
 
-                qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+                qa.ParmSubs = await GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
 
                 subcat.Questions.Add(qa);
             }
 
             response.ApplicationMode = _questionRequirement.ApplicationMode;
-            response.QuestionCount = _questionRequirement.NumberOfQuestions();
-            response.RequirementCount = _questionRequirement.NumberOfRequirements();
+            response.QuestionCount = await _questionRequirement.NumberOfQuestions();
+            response.RequirementCount = await _questionRequirement.NumberOfRequirements();
 
             var j = JsonConvert.SerializeObject(response);
             return response;
@@ -244,7 +244,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="requirements"></param>
         /// <param name="answers"></param>
         /// <returns></returns>
-        public QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
+        public async Task<QuestionResponse> BuildResponseOLD(List<RequirementPlus> requirements,
         List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
@@ -332,7 +332,7 @@ namespace CSETWebCore.Business.Question
                         TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
                     }
 
-                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
+                    qa.ParmSubs = await GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
 
                     sg.Questions.Add(qa);
                 }
@@ -341,11 +341,11 @@ namespace CSETWebCore.Business.Question
                 {
                     Categories = groupList,
                     ApplicationMode = _questionRequirement.ApplicationMode,
-                    QuestionCount = _questionRequirement.NumberOfQuestions(),
-                    RequirementCount = _questionRequirement.NumberOfRequirements()
+                    QuestionCount = await _questionRequirement.NumberOfQuestions(),
+                    RequirementCount = await _questionRequirement.NumberOfRequirements()
                 };
 
-                _questionRequirement.BuildComponentsResponse(resp);
+                await _questionRequirement.BuildComponentsResponse(resp);
 
                 return resp;
             }
@@ -487,14 +487,14 @@ namespace CSETWebCore.Business.Question
         /// <param name="reqId"></param>
         /// <param name="ansId"></param>
         /// <returns></returns>
-        public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId)
+        public async Task<List<ParameterToken>> GetTokensForRequirement(int reqId, int ansId)
         {
             ParameterSubstitution ps = new ParameterSubstitution();
 
             // get the 'base' parameter values (parameter_name) for the requirement
             if (parametersDictionary == null)
             {
-                LoadParametersList();
+                await LoadParametersList();
             }
             
             List<PARAMETERS> qBaseLevel;
@@ -682,7 +682,9 @@ namespace CSETWebCore.Business.Question
 
                 await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
-                return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
+                var tokenListObj = await this.GetTokensForRequirement(requirementId, answerId);
+
+                return tokenListObj.Where(p => p.Id == parameterId).First();
             }
 
 
@@ -714,7 +716,8 @@ namespace CSETWebCore.Business.Question
             await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
             // Return the token that was just updated
-            return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
+            var tokenList = await this.GetTokensForRequirement(requirementId, answerId);
+            return tokenList.Where(p => p.Id == parameterId).First();
         }
 
 
@@ -724,9 +727,9 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="requirementText"></param>
         /// <returns></returns>
-        public string ResolveParameters(int reqId, int ansId, string requirementText)
+        public async Task<string> ResolveParameters(int reqId, int ansId, string requirementText)
         {
-            List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
+            List<ParameterToken> tokens = await  this.GetTokensForRequirement(reqId, ansId);
             foreach (ParameterToken t in tokens)
             {
                 requirementText = requirementText.Replace(t.Token, t.Substitution);
@@ -737,9 +740,9 @@ namespace CSETWebCore.Business.Question
             return requirementText;
         }
 
-        public string RichTextParameters(int reqId, int ansId, string requirementText)
+        public async Task<string> RichTextParameters(int reqId, int ansId, string requirementText)
         {
-            List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
+            List<ParameterToken> tokens = await this.GetTokensForRequirement(reqId, ansId);
             foreach (ParameterToken t in tokens)
             {
                 requirementText = requirementText.Replace(t.Token, t.Substitution);

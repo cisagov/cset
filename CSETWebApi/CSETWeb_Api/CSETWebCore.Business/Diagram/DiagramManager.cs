@@ -567,7 +567,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vertice"></param>
         /// <param name="assessmentId"></param>
-        public void SaveLink(mxGraphModelRootMxCell vertice, int assessmentId)
+        public async Task SaveLink(mxGraphModelRootMxCell vertice, int assessmentId)
         {
             try
             {
@@ -591,7 +591,7 @@ namespace CSETWebCore.Business.Diagram
                     }
                 }
 
-                SaveDiagramXml(assessmentId, diagramXml);
+                await SaveDiagramXml(assessmentId, diagramXml);
             }
             catch (Exception ex)
             {
@@ -609,7 +609,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vertice"></param>
         /// <param name="assessmentId"></param>
-        public void SaveComponent(mxGraphModelRootObject vertice, int assessmentId)
+        public async Task SaveComponent(mxGraphModelRootObject vertice, int assessmentId)
         {
             try
             {
@@ -640,7 +640,7 @@ namespace CSETWebCore.Business.Diagram
                     }
                 }
 
-                SaveDiagramXml(assessmentId, diagramXml);
+                await SaveDiagramXml(assessmentId, diagramXml);
             }
             catch (Exception ex)
             {
@@ -677,7 +677,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vertice"></param>
         /// <param name="assessmentId"></param>
-        public void SaveZone(mxGraphModelRootObject vertice, int assessmentId)
+        public async Task SaveZone(mxGraphModelRootObject vertice, int assessmentId)
         {
             try
             {
@@ -704,7 +704,7 @@ namespace CSETWebCore.Business.Diagram
                     }
                 }
 
-                SaveDiagramXml(assessmentId, diagramXml);
+                await SaveDiagramXml(assessmentId, diagramXml);
             }
             catch (Exception ex)
             {
@@ -722,7 +722,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vertice"></param>
         /// <param name="assessmentId"></param>
-        public void SaveShape(mxGraphModelRootMxCell vertice, int assessmentId)
+        public async Task SaveShape(mxGraphModelRootMxCell vertice, int assessmentId)
         {
             try
             {
@@ -746,7 +746,7 @@ namespace CSETWebCore.Business.Diagram
                     }
                 }
 
-                SaveDiagramXml(assessmentId, diagramXml);
+                await SaveDiagramXml(assessmentId, diagramXml);
             }
             catch (Exception ex)
             {
@@ -757,7 +757,7 @@ namespace CSETWebCore.Business.Diagram
             }
         }
 
-        public void SaveDiagramXml(int assessmentId, mxGraphModel diagramXml)
+        public async Task SaveDiagramXml(int assessmentId, mxGraphModel diagramXml)
         {
             using (var sww = new StringWriter())
             {
@@ -766,11 +766,11 @@ namespace CSETWebCore.Business.Diagram
                     XmlSerializer serializer = new XmlSerializer(typeof(mxGraphModel));
                     serializer.Serialize(writer, diagramXml);
                     string xml = sww.ToString();
-                    var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+                    var assessment = await _context.ASSESSMENTS.FirstOrDefaultAsync(x => x.Assessment_Id == assessmentId);
                     var xDoc = new XmlDocument();
                     xDoc.LoadXml(xml);
                     if (assessment != null)
-                        SaveDiagram(assessmentId, xDoc, new DiagramRequest(){
+                        await SaveDiagram(assessmentId, xDoc, new DiagramRequest(){
                            LastUsedComponentNumber =  assessment.LastUsedComponentNumber,
                             DiagramSvg = assessment.Diagram_Image
                         });

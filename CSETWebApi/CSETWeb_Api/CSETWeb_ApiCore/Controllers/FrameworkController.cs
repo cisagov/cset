@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             int assessmentId = await _token.AssessmentForUser();
-            _framework.PersistSelectedTierAnswer(assessmentId, tier);
+            await _framework.PersistSelectedTierAnswer(assessmentId, tier);
             return Ok();
         }
     }

@@ -43,7 +43,12 @@ namespace CSETWebCore.Api.Controllers
             _requirement = requirement;
 
             _assessmentId = _tokenManager.AssessmentForUser().Result;
-            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+            FillEmptyQuestionsForAnalysis(_context, _assessmentId);
+        }
+
+        public static int FillEmptyQuestionsForAnalysis(CSETContext context, int assessmentId)
+        {
+           return context.FillEmptyQuestionsForAnalysis(assessmentId).Result;
         }
 
 
@@ -70,7 +75,7 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
-                q.QuestionText = _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+                q.QuestionText = await _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
             }
 
             return Ok(rankedQuestionList);
@@ -146,8 +151,8 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (FeedbackQuestion q in feedbackQuestions)
                 {
-                    q.QuestionText = _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
-                    q.Feedback = _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
+                    q.QuestionText = await _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                    q.Feedback = await _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
                     FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.Feedback + "<br/><br/>";
                     FeedbackResult.FeedbackBody += q.QuestionText + "<br/><br/>";
                     FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
@@ -160,8 +165,8 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (FeedbackQuestion q in feedbackQuestions)
                 {
-                    q.QuestionText = _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
-                    q.Feedback = _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
+                    q.QuestionText = await _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                    q.Feedback = await _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
                     FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.Feedback + "%0D%0A";
                     FeedbackResult.FeedbackEmailBody += q.QuestionText + "%0D%0A%0D%0A";
                     FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";

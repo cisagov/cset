@@ -429,7 +429,7 @@ namespace CSETWebCore.Business.Contact
 
             await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(ac.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(ac.Assessment_Id);
 
             return await GetContacts(ac.Assessment_Id);
 

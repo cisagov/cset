@@ -205,7 +205,7 @@ namespace CSETWebCore.Business.Sal
             STANDARD_SELECTION sTANDARD_SELECTION = await _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefaultAsync();
             sTANDARD_SELECTION.Selected_Sal_Level = rval.Selected_Sal_Level;
             LevelManager lm = new LevelManager(assessmentId, _context);
-            lm.SaveOtherLevels(assessmentId, rval);
+            await lm.SaveOtherLevels(assessmentId, rval);
             await _context.SaveChangesAsync();
             return rval;
         }

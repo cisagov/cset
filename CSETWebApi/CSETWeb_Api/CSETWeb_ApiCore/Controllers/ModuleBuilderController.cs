@@ -196,7 +196,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/AddCustomQuestion")]
         public async Task<IActionResult> AddCustomQuestion([FromBody] SetQuestion request)
         {
-            _module.AddCustomQuestion(request);
+            await _module.AddCustomQuestion(request);
             return Ok();
         }
 
@@ -218,7 +218,7 @@ namespace CSETWebCore.Api.Controllers
                     QuestionID = add.QuestionID,
                     SalLevels = add.SalLevels
                 };
-                _module.AddQuestion(r);
+                await _module.AddQuestion(r);
             }
 
             return Ok();
@@ -229,7 +229,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/RemoveQuestion")]
         public async Task<IActionResult> RemoveQuestion([FromBody] SetQuestion request)
         {
-            _module.RemoveQuestion(request);
+            await _module.RemoveQuestion(request);
             return Ok();
         }
 
@@ -262,7 +262,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/SetSalLevel")]
         public async Task<IActionResult> SetSalLevel([FromBody] SalParms parms)
         {
-            _module.SetSalLevel(parms);
+            await _module.SetSalLevel(parms);
             return Ok();
         }
 
@@ -287,7 +287,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/UpdateHeadingText")]
         public async Task<IActionResult> UpdateHeadingText([FromBody] HeadingUpdateParms parms)
         {
-            _module.UpdateHeadingText(parms.PairID, parms.HeadingText);
+            await _module.UpdateHeadingText(parms.PairID, parms.HeadingText);
             return Ok();
         }
 
@@ -350,7 +350,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/RemoveRequirement")]
         public async Task<IActionResult> RemoveRequirement([FromBody] Requirement parms)
         {
-            _module.RemoveRequirement(parms);
+            await _module.RemoveRequirement(parms);
             return Ok();
         }
 
@@ -395,7 +395,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/UpdateReferenceDocDetail")]
         public async Task<IActionResult> UpdateReferenceDocDetail([FromBody] ReferenceDoc doc)
         {
-            _module.UpdateReferenceDocDetail(doc);
+            await _module.UpdateReferenceDocDetail(doc);
             return Ok();
         }
 
@@ -409,7 +409,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/SelectSetFile")]
         public async Task<IActionResult> SelectSetFiles(SetFileSelection parms)
         {
-            _module.SelectSetFile(parms);
+            await _module.SelectSetFile(parms);
             return Ok();
         }
 

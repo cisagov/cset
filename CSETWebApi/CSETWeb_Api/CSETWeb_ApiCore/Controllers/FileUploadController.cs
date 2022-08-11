@@ -117,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                     else
                     {
-                        _answerManager.InitializeManager(assessmentId);
+                        await _answerManager.InitializeManager(assessmentId);
                         answerId = await _answerManager.StoreAnswer(answer);
                     }
                 }
@@ -127,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
+            await _documentManager.AddDocument(result.FormNameValues[key_title], answerId, result);
 
             // returns all documents for the answer to account for updating duplicate docs
             // not the most efficient, but there are lots of shenanigans involved in keeping

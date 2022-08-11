@@ -37,7 +37,7 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
         List<CategoryEntry> GetStandardCategories();
         CategoriesSubcategoriesGroupHeadings GetCategoriesSubcategoriesGroupHeadings();
         List<QuestionDetail> SearchQuestions(QuestionSearch searchParms);
-        void SetSalLevel(SalParms salParms);
+        Task SetSalLevel(SalParms salParms);
         Task SetRequirementSalLevel(SalParms salParms);
         Task SetQuestionSalLevel(SalParms salParms);
         Task<BasicResponse> UpdateQuestionText(int questionID, string text);

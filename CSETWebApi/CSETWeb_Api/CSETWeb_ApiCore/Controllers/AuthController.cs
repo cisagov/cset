@@ -53,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                _tokenManager.GenerateSecret();
+                await _tokenManager.GenerateSecret();
                 
                     LoginResponse resp = await _userAuthentication.AuthenticateStandalone(login, _tokenManager);
                     if (resp != null)
