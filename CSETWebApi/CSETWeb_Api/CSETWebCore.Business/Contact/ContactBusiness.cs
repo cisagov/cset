@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Contact;
@@ -11,7 +8,9 @@ using CSETWebCore.Model.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Contact
 {
@@ -21,19 +20,19 @@ namespace CSETWebCore.Business.Contact
         private readonly ITokenManager _tokenManager;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IUserBusiness _userBusiness;
-        private readonly IUserAuthentication _userAuthentication;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
         private CSETContext _context;
 
         public ContactBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
             ITokenManager tokenManager, INotificationBusiness notificationBusiness, IUserBusiness userBusiness,
-            IUserAuthentication userAuthentication)
+            ILocalInstallationHelper localInstallationHelper)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _tokenManager = tokenManager;
             _notificationBusiness = notificationBusiness;
             _userBusiness = userBusiness;
-            _userAuthentication = userAuthentication;
+            _localInstallationHelper = localInstallationHelper;
         }
 
         public enum ContactRole { RoleUser = 1, RoleAdmin = 2 }
@@ -42,10 +41,10 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public List<ContactDetail> GetContacts(int assessmentId)
+        public async Task<List<ContactDetail>> GetContacts(int assessmentId)
         {
             // Update the user's preferred name on their contact record
-            RefreshContactNameFromUserDetails();
+            await RefreshContactNameFromUserDetails();
 
             List<ContactDetail> list = new List<ContactDetail>();
 
@@ -54,7 +53,9 @@ namespace CSETWebCore.Business.Contact
                          where cc.Assessment_Id == assessmentId
                          select new { cc });
 
-            foreach (var q in query.ToList())
+            var contactDetailList = await query.ToListAsync();
+
+            foreach (var q in contactDetailList)
             {
                 ContactDetail c = new ContactDetail
                 {
@@ -279,7 +280,7 @@ namespace CSETWebCore.Business.Contact
                         // Send this brand-new user an email with their temporary password (if they have an email)
                         if (!string.IsNullOrEmpty(userDetail.Email))
                         {
-                            if (!_userAuthentication.IsLocalInstallation(appCode))
+                            if (!_localInstallationHelper.IsLocalInstallation())
                             {
                                 _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appCode);
                             }
@@ -301,7 +302,7 @@ namespace CSETWebCore.Business.Contact
             // Tell the user that they have been invited to participate in an Assessment (if they have an email) 
             if (!string.IsNullOrEmpty(newContact.PrimaryEmail))
             {
-                if (!_userAuthentication.IsLocalInstallation(appCode))
+                if (!_localInstallationHelper.IsLocalInstallation())
                 {
                     _notificationBusiness.InviteToAssessment(newContact);
                 }
@@ -430,7 +431,7 @@ namespace CSETWebCore.Business.Contact
 
             _assessmentUtil.TouchAssessment(ac.Assessment_Id);
 
-            return GetContacts(ac.Assessment_Id);
+            return await GetContacts(ac.Assessment_Id);
 
         }
 
