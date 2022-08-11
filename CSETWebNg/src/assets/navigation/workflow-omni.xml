@@ -19,7 +19,7 @@
 
         <!-- ACET-specific screens -->
         <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY-ANY(ACET,ISE)" />
-        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summar" condition="MATURITY:ACET" />
+        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:ACET" />
 
 
         <!-- Diagram -->
@@ -50,6 +50,9 @@
         <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
 
         <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NOT:CIS MATURITY-NOT:ACET MATURITY-NOT:ISE" />
+
+        <!-- CSET or TSA skin -> all maturity models except CIS -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-ANY(,TSA) OPTION:MATURITY MATURITY-NOT:CIS" />
 
 
         <node displaytext="CIS Questions" condition="MATURITY:CIS">
