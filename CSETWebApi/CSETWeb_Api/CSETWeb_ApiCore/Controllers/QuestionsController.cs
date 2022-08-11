@@ -122,7 +122,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetComponentOverridesList()
         {
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-            QuestionResponse resp = manager.GetOverrideListOnly();
+            QuestionResponse resp = await manager.GetOverrideListOnly();
             return Ok(resp);
 
         }
@@ -135,8 +135,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SetMode")]
         public async Task<IActionResult> SetMode([FromQuery] string mode)
         {
-            _questionRequirement.InitializeManager(await _token.AssessmentForUser());
-            _questionRequirement.SetApplicationMode(mode);
+            await _questionRequirement.InitializeManager(await _token.AssessmentForUser());
+            await _questionRequirement.SetApplicationMode(mode);
             return Ok();
         }
 
@@ -272,7 +272,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     if (answer.OptionId != null)
                     {
-                        cisBiz.StoreAnswer(answer);                        
+                        await cisBiz.StoreAnswer(answer);                        
                     }
                 }
             }
@@ -314,7 +314,7 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement.AssessmentId = assessmentId;
 
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            qm.StoreSubcategoryAnswers(subCatAnswers);
+            await qm.StoreSubcategoryAnswers(subCatAnswers);
             return Ok();
         }
 
@@ -400,7 +400,7 @@ namespace CSETWebCore.Api.Controllers
             var fm = new FindingsManager(_context, assessmentId);
 
             var f = await fm.GetFinding(finding_Id);
-            fm.DeleteFinding(f);
+            await fm.DeleteFinding(f);
             return Ok();
         }
 
@@ -417,12 +417,12 @@ namespace CSETWebCore.Api.Controllers
 
             if (finding.IsFindingEmpty())
             {
-                DeleteFinding(finding.Finding_Id);
+                await DeleteFinding(finding.Finding_Id);
                 return Ok();
             }
 
             var fm = new FindingsManager(_context, assessmentId);
-            fm.UpdateFinding(finding);
+            await fm.UpdateFinding(finding);
             return Ok();
         }
 
@@ -459,7 +459,7 @@ namespace CSETWebCore.Api.Controllers
 
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             Guid g = new Guid(guid);
-            manager.HandleGuid(g, ShouldSave);
+            await manager.HandleGuid(g, ShouldSave);
             return Ok();
         }
 
@@ -473,7 +473,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/RenameDocument")]
         public async Task<IActionResult> RenameDocument([FromQuery] int id, [FromQuery] string title)
         {
-            _document.RenameDocument(id, title);
+            await _document.RenameDocument(id, title);
             return Ok();
         }
 
@@ -487,7 +487,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/DeleteDocument")]
         public async Task<IActionResult> DeleteDocument([FromQuery] int id, [FromQuery] int questionId, [FromQuery] int assessId)
         {
-            _document.DeleteDocument(id, questionId, assessId);
+            await _document.DeleteDocument(id, questionId, assessId);
             return Ok();
         }
 

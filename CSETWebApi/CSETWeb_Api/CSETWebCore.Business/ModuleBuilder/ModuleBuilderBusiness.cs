@@ -941,15 +941,15 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// Sets or removes a single SAL level for a requirement or question.
         /// </summary>
         /// <param name="salParms"></param>
-        public void SetSalLevel(SalParms salParms)
+        public async Task SetSalLevel(SalParms salParms)
         {
             if (salParms.RequirementID != 0)
             {
-                SetRequirementSalLevel(salParms);
+                await SetRequirementSalLevel(salParms);
             }
             if (salParms.QuestionID != 0)
             {
-                SetQuestionSalLevel(salParms);
+                await SetQuestionSalLevel(salParms);
             }
         }
 

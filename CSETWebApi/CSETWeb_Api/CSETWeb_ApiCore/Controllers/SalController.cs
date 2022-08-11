@@ -143,11 +143,11 @@ namespace CSETWebCore.Api.Controllers
 
             _context.Entry(sTANDARD_SELECTION).State = EntityState.Modified;
             LevelManager lm = new LevelManager(assessmentId, _context);
-            lm.SaveOtherLevels(assessmentId, tmpsal);
+            await lm.SaveOtherLevels(assessmentId, tmpsal);
             lm.Init(sTANDARD_SELECTION);
             if (tmpsal.SelectedSALOverride)
             {
-                lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
+                await lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
             }
 
             try
@@ -164,7 +164,7 @@ namespace CSETWebCore.Api.Controllers
                 if (!tmpsal.SelectedSALOverride)
                 {
                     tmpsal.Selected_Sal_Level = sr.Selected_Sal_Level;
-                    lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
+                    await lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
                 }
 
                 return Ok(tmpsal);

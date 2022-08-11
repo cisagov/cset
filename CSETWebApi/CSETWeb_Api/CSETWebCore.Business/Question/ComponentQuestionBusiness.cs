@@ -56,7 +56,7 @@ namespace CSETWebCore.Business.Question
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?
-            _context.FillNetworkDiagramQuestions(assessmentId);
+            await _context.FillNetworkDiagramQuestions(assessmentId);
             var spList = await  _context.usp_Answer_Components_Default(assessmentId);
             var list = spList.Cast<Answer_Components_Base>().ToList();
 
@@ -308,7 +308,7 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         /// <returns></returns>
-        public QuestionResponse GetOverrideListOnly()
+        public async Task<QuestionResponse> GetOverrideListOnly()
         {
             QuestionResponse resp = new QuestionResponse
             {
@@ -319,7 +319,7 @@ namespace CSETWebCore.Business.Question
             resp.QuestionCount = 0;
             resp.RequirementCount = 0;
 
-            BuildOverridesOnly(resp);
+            await BuildOverridesOnly(resp);
             return resp;
         }
 

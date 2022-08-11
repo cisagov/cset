@@ -40,7 +40,7 @@ namespace CSETWebCore.Business.Standards
         /// list and marked as deprecated.
         /// </summary>
         /// <returns></returns>
-        public StandardsResponse GetStandards(int assessmentId)
+        public async Task<StandardsResponse> GetStandards(int assessmentId)
         {
             StandardsResponse response = new StandardsResponse();
 
@@ -102,8 +102,8 @@ namespace CSETWebCore.Business.Standards
             // Build the response
             response.Categories = categories;
             _questionRequirement.AssessmentId = assessmentId;
-            response.QuestionCount = _questionRequirement.NumberOfQuestions();
-            response.RequirementCount = _questionRequirement.NumberOfRequirements();
+            response.QuestionCount = await _questionRequirement.NumberOfQuestions();
+            response.RequirementCount = await _questionRequirement.NumberOfRequirements();
             return response;
         }
 
@@ -196,8 +196,8 @@ namespace CSETWebCore.Business.Standards
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
             _questionRequirement.AssessmentId = assessmentId;
-            counts.QuestionCount = _questionRequirement.NumberOfQuestions();
-            counts.RequirementCount = _questionRequirement.NumberOfRequirements();
+            counts.QuestionCount = await _questionRequirement.NumberOfQuestions();
+            counts.RequirementCount = await _questionRequirement.NumberOfRequirements();
             return counts;
         }
 
@@ -233,8 +233,8 @@ namespace CSETWebCore.Business.Standards
             // Return the numbers of active Questions and Requirements
             QuestionRequirementCounts counts = new QuestionRequirementCounts();
             _questionRequirement.AssessmentId = assessmentId;
-            counts.QuestionCount = _questionRequirement.NumberOfQuestions();
-            counts.RequirementCount = _questionRequirement.NumberOfRequirements();
+            counts.QuestionCount = await _questionRequirement.NumberOfQuestions();
+            counts.RequirementCount = await _questionRequirement.NumberOfRequirements();
             return counts;
         }
 

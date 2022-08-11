@@ -28,12 +28,12 @@ namespace CSETWebCore.Interfaces
         List<mxGraphModelRootObject> GetDiagramZones(List<mxGraphModelRootObject> vertices);
         List<mxGraphModelRootMxCell> GetDiagramShapes(List<mxGraphModelRootMxCell> vertices);
         List<mxGraphModelRootMxCell> GetDiagramText(List<mxGraphModelRootMxCell> vertices);
-        void SaveLink(mxGraphModelRootMxCell vertice, int assessmentId);
-        void SaveComponent(mxGraphModelRootObject vertice, int assessmentId);
+        Task SaveLink(mxGraphModelRootMxCell vertice, int assessmentId);
+        Task SaveComponent(mxGraphModelRootObject vertice, int assessmentId);
         COMPONENT_SYMBOLS getFromLegacyName(string name);
-        void SaveZone(mxGraphModelRootObject vertice, int assessmentId);
-        void SaveShape(mxGraphModelRootMxCell vertice, int assessmentId);
-        void SaveDiagramXml(int assessmentId, mxGraphModel diagramXml);
+        Task SaveZone(mxGraphModelRootObject vertice, int assessmentId);
+        Task SaveShape(mxGraphModelRootMxCell vertice, int assessmentId);
+        Task SaveDiagramXml(int assessmentId, mxGraphModel diagramXml);
         string SetImage(int Component_Symbol_Id, string style);
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
     }

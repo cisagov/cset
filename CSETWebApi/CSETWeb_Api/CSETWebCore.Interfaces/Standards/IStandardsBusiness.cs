@@ -7,7 +7,7 @@ namespace CSETWebCore.Interfaces.Standards
 {
     public interface IStandardsBusiness
     {
-        StandardsResponse GetStandards(int assessmentId);
+        Task<StandardsResponse> GetStandards(int assessmentId);
         bool GetFramework(int assessmentId);
         bool GetACET(int assessmentId);
         List<string> RecommendedStandards(int assessmentId);

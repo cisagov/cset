@@ -11,21 +11,21 @@ namespace CSETWebCore.Interfaces.Question
         Task<QuestionResponse> GetRequirementsList();
         Task<RequirementsPass> GetControls();
 
-        QuestionResponse BuildResponse(List<RequirementPlus> requirements,
+        Task<QuestionResponse> BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
 
         CategoryContainer BuildDomainResponse(DomainAssessmentFactor domain);
         QuestionGroup BuildCategoryResponse();
         QuestionSubCategory BuildSubcategoryResponse();
-        QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
+        Task<QuestionResponse> BuildResponseOLD(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
         Task<List<int>> GetActiveAnswerIds();
         Task LoadParametersList();
-        public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);
+        public Task<List<ParameterToken>> GetTokensForRequirement(int reqId, int ansId);
         Task<List<ParameterToken>> GetDefaultParametersForAssessment();
         Task<ParameterToken> SaveAssessmentParameter(int parameterId, string newText);
         Task<ParameterToken> SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText);
-        string ResolveParameters(int reqId, int ansId, string requirementText);
-        string RichTextParameters(int reqId, int ansId, string requirementText);
+        Task<string> ResolveParameters(int reqId, int ansId, string requirementText);
+        Task<string> RichTextParameters(int reqId, int ansId, string requirementText);
     }
 }

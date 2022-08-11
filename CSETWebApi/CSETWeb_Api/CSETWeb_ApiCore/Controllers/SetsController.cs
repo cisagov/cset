@@ -55,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
                     try
                     {
                         var mp = new ModuleImporter(_context);
-                        mp.ProcessStandard(externalStandard);
+                        await mp.ProcessStandard(externalStandard);
                     }
                     catch (Exception exc)
                     {

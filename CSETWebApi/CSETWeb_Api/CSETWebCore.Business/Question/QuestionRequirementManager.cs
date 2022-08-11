@@ -66,10 +66,10 @@ namespace CSETWebCore.Business.Question
             _assessmentMode = assessmentMode;
         }
 
-        public void InitializeManager(int assessmentId)
+        public async Task InitializeManager(int assessmentId)
         {
             AssessmentId = assessmentId;
-            InitializeApplicationMode();
+            await InitializeApplicationMode();
             InitializeSalLevel();
             InitializeStandardsForAssessment();
             InitializeSubCategoryAnswers();
@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Question
         /// Sets a Q or R that is returned to the client.
         /// </summary>
         /// <returns></returns>
-        public void InitializeApplicationMode()
+        public async Task InitializeApplicationMode()
         {
             ApplicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
@@ -106,7 +106,7 @@ namespace CSETWebCore.Business.Question
             if (ApplicationMode == null)
             {
                 ApplicationMode = "Q";
-                SetApplicationMode(ApplicationMode);
+                await SetApplicationMode(ApplicationMode);
             }
             else if (ApplicationMode.ToLower().StartsWith("questions"))
             {
@@ -164,7 +164,7 @@ namespace CSETWebCore.Business.Question
                     _context.STANDARD_SELECTION.Update(standardSelection);
                     await _context.SaveChangesAsync();
 
-                    _assessmentUtil.TouchAssessment(AssessmentId);
+                    await _assessmentUtil.TouchAssessment(AssessmentId);
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public string GetApplicationMode(int assessmentId)
+        public async Task<string> GetApplicationMode(int assessmentId)
         {
            
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
@@ -182,7 +182,7 @@ namespace CSETWebCore.Business.Question
             if (mode == null)
             {
                 mode = _assessmentMode.DetermineDefaultApplicationModeAbbrev();
-                SetApplicationMode(mode);
+                await SetApplicationMode(mode);
             }
 
             return mode;
@@ -549,9 +549,9 @@ namespace CSETWebCore.Business.Question
         /// that can be used for full queries or counts or whatever.
         /// </summary>
         /// <returns></returns>
-        public int NumberOfRequirements()
+        public async Task<int> NumberOfRequirements()
         {
-            InitializeManager(_assessmentID);
+            await InitializeManager(_assessmentID);
 
             var q = from rs in _context.REQUIREMENT_SETS
                     from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
@@ -560,7 +560,7 @@ namespace CSETWebCore.Business.Question
                           && rl.Standard_Level == StandardLevel
                     select new { r, rs };
 
-            return q.Distinct().Count();
+            return await q.Distinct().CountAsync();
         }
         
 
@@ -574,11 +574,11 @@ namespace CSETWebCore.Business.Question
         /// that can be used for both full data queries and counts in an efficient way.
         /// </summary>
         /// <returns></returns>
-        public int NumberOfQuestions()
+        public async Task<int> NumberOfQuestions()
         {
-            InitializeManager(_assessmentID);
+            await InitializeManager(_assessmentID);
 
-            string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+            string selectedSalLevel = await _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefaultAsync();
 
             if (SetNames.Count == 1)
             {
@@ -592,7 +592,7 @@ namespace CSETWebCore.Business.Question
                                 && l.Universal_Sal_Level == usl.Universal_Sal_Level1
                              select q.Question_Id;
 
-                return query1.Distinct().Count();
+                return await query1.Distinct().CountAsync();
             }
             else
             {

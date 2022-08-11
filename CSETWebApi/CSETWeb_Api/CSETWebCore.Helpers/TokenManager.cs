@@ -435,7 +435,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public async Task<int> AssessmentForUser()
         {
-            Init();
+            await Init();
             int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 

@@ -84,12 +84,12 @@ namespace CSETWebCore.Api.Controllers
         private async Task<List<AnalyticsQuestionAnswer>> GetQuestionsAnswers()
         {
             int assessmentId = await _token.AssessmentForUser();
-            string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
+            string applicationMode = await _questionRequirement.GetApplicationMode(assessmentId);
            
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 _question.SetQuestionAssessmentId(assessmentId);
-                QuestionResponse resp = _question.GetQuestionListWithSet("*");
+                QuestionResponse resp = await _question.GetQuestionListWithSet("*");
                 return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
             }
             else

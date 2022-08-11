@@ -325,7 +325,7 @@ namespace CSETWebCore.Api.Controllers
                 if (assessmentId >= 0)
                 {
                     // Updating a Contact in the context of the current Assessment.  
-                    (_token).AuthorizeAdminRole();
+                    await (_token).AuthorizeAdminRole();
 
                     int newUserId = userBeingUpdated.UserId;
 
@@ -357,7 +357,7 @@ namespace CSETWebCore.Api.Controllers
                     };
 
                     await _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
-                    _assessmentUtil.TouchAssessment(assessmentId);
+                    await _assessmentUtil.TouchAssessment(assessmentId);
 
                     return Ok(updatedContact);
                 }
@@ -430,7 +430,7 @@ namespace CSETWebCore.Api.Controllers
                     // Only touch the assessment if the user is currently in one.
                     if (assessmentId >= 0)
                     {
-                        _assessmentUtil.TouchAssessment(assessmentId);
+                        await _assessmentUtil.TouchAssessment(assessmentId);
                     }
                 }
                 catch (DbUpdateConcurrencyException exc)

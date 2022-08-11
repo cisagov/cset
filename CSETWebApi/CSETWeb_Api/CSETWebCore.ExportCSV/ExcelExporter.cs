@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
@@ -41,7 +42,7 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public MemoryStream ExportToCSV(int assessment_id)
+        public async Task<MemoryStream> ExportToCSV(int assessment_id)
         {
 
             var stream = new MemoryStream();
@@ -49,7 +50,7 @@ namespace CSETWebCore.ExportCSV
             if (answerslist.Count() <= 0)
                 return stream;
             CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling);
-            export.ProcessTables(stream);
+            await export.ProcessTables(stream);
             return stream;
         }
 
@@ -60,21 +61,21 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public MemoryStream ExportToExcelNCUA(int assessmentID)
+        public async Task<MemoryStream> ExportToExcelNCUA(int assessmentID)
         {
             var stream = new MemoryStream();
             CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
-            export.ProcessAssessment(assessmentID, stream);
+            await export.ProcessAssessment(assessmentID, stream);
             return stream;
 
         }
 
 
-        public MemoryStream ExportToExcelAllNCUA(int userID)
+        public async Task<MemoryStream> ExportToExcelAllNCUA(int userID)
         {
             var stream = new MemoryStream();
             CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
-            export.ProcessAllAssessmentsForUser(userID, stream);
+            await export.ProcessAllAssessmentsForUser(userID, stream);
             return stream;
         }
 

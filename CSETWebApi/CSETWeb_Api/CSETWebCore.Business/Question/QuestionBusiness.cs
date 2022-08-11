@@ -53,12 +53,12 @@ namespace CSETWebCore.Business.Question
         /// Returns a list of Questions.
         /// We can find questions for a single group or for all groups (*).
         /// </summary>        
-        public QuestionResponse GetQuestionListWithSet(string questionGroupName)
+        public async Task<QuestionResponse> GetQuestionListWithSet(string questionGroupName)
         {
             IQueryable<QuestionPlusHeaders> query = null;
 
-            string assessSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
-            string assessSalLevelUniversal = _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).First();
+            string assessSalLevel = await _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == _questionRequirement.AssessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefaultAsync();
+            string assessSalLevelUniversal = await _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == assessSalLevel).Select(x => x.Universal_Sal_Level1).FirstAsync();
 
             if (_questionRequirement.SetNames.Count == 1)
             {
@@ -126,11 +126,11 @@ namespace CSETWebCore.Business.Question
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
 
-            this.questions = query.Distinct().ToList();
-            this.Answers = answers.ToList();
+            this.questions = await query.Distinct().ToListAsync();
+            this.Answers = await answers.ToListAsync();
 
             // Merge the questions and answers into a hierarchy
-            return BuildResponse();
+            return await BuildResponse();
 
         }
 
@@ -140,7 +140,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>        
         public async Task<QuestionResponse> GetQuestionList(string questionGroupName)
         {
-            _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
+            await _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
 
             IQueryable<QuestionPlusHeaders> query = null;
 
@@ -213,7 +213,7 @@ namespace CSETWebCore.Business.Question
             this.Answers = await answers.ToListAsync();
 
             // Merge the questions and answers into a hierarchy
-            return BuildResponse();
+            return await BuildResponse();
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace CSETWebCore.Business.Question
                 _context, _tokenManager, _document
             );
 
-            _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
+            await _questionRequirement.InitializeManager(await _tokenManager.AssessmentForUser());
             return qvm.GetQuestionDetails(questionId, _questionRequirement.AssessmentId, questionType);
         }
 
@@ -295,7 +295,7 @@ namespace CSETWebCore.Business.Question
         /// Constructs a response containing the applicable questions with their answers.
         /// </summary>
         /// <returns></returns>
-        public QuestionResponse BuildResponse()
+        public async Task<QuestionResponse> BuildResponse()
         {
             List<QuestionGroup> groupList = new List<QuestionGroup>();
             QuestionGroup qg = new QuestionGroup();
@@ -395,9 +395,9 @@ namespace CSETWebCore.Business.Question
             };
 
 
-            resp.QuestionCount = _questionRequirement.NumberOfQuestions();
+            resp.QuestionCount = await _questionRequirement.NumberOfQuestions();
             _questionRequirement.AssessmentId = _questionRequirement.AssessmentId;
-            resp.RequirementCount = _questionRequirement.NumberOfRequirements();
+            resp.RequirementCount = await _questionRequirement.NumberOfRequirements();
 
             return resp;
         }
@@ -511,7 +511,7 @@ namespace CSETWebCore.Business.Question
 
             await _context.SaveChangesAsync();
 
-            _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
+            await _assessmentUtil.TouchAssessment(_questionRequirement.AssessmentId);
 
             // loop and store all of the subcategory's answers
             foreach (Answer ans in subCatAnswerBlock.Answers)
@@ -521,7 +521,7 @@ namespace CSETWebCore.Business.Question
                 {
                     ans.QuestionType = _questionRequirement.DetermineQuestionType(ans.Is_Requirement, ans.Is_Component, false, ans.Is_Maturity);
                 }
-                _questionRequirement.StoreAnswer(ans);
+                await _questionRequirement.StoreAnswer(ans);
             }
         }
     }

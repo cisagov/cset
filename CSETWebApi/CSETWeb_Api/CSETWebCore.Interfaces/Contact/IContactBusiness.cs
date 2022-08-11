@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSETWebCore.Model.Contact;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Interfaces.Contact

@@ -68,7 +68,7 @@ namespace CSETWebCore.Business.Demographic
             await _context.SaveChangesAsync();
             orgDemographics.AssessmentId = dbOrgDemographics.Assessment_Id;
 
-            _assessmentUtil.TouchAssessment(dbOrgDemographics.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(dbOrgDemographics.Assessment_Id);
 
             return orgDemographics.AssessmentId;
         }
@@ -107,7 +107,7 @@ namespace CSETWebCore.Business.Demographic
             await _context.SaveChangesAsync();
             serviceDemographics.AssessmentId = dbServiceDemographics.Assessment_Id;
 
-            _assessmentUtil.TouchAssessment(dbServiceDemographics.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(dbServiceDemographics.Assessment_Id);
 
             return serviceDemographics.AssessmentId;
         }
@@ -167,7 +167,7 @@ namespace CSETWebCore.Business.Demographic
             await _context.SaveChangesAsync();
             serviceComposition.AssessmentId = dbServiceComposition.Assessment_Id;
 
-            _assessmentUtil.TouchAssessment(dbServiceComposition.Assessment_Id);
+            await _assessmentUtil.TouchAssessment(dbServiceComposition.Assessment_Id);
 
             return serviceComposition.AssessmentId;
         }

@@ -38,11 +38,11 @@ namespace CSETWebCore.Business.Sal
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefaultSAL_IfNotSet(int assessmentId)
+        public async Task SetDefaultSAL_IfNotSet(int assessmentId)
         {
             if (_context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault() == null)
             {
-                SetDefault(assessmentId);
+                await SetDefault(assessmentId);
             }
         }
 
@@ -51,9 +51,9 @@ namespace CSETWebCore.Business.Sal
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefaultSALs(int assessmentId, string level = "Low")
+        public async Task SetDefaultSALs(int assessmentId, string level = "Low")
         {
-            SetDefault(assessmentId, level);
+            await SetDefault(assessmentId, level);
         }
 
 

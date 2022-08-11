@@ -81,7 +81,7 @@ namespace CSETWebCore.Business.Assessment
             newAssessment.Id = assessment_id;
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
+            await _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
 
 
             string defaultSal = "Low";
@@ -89,14 +89,14 @@ namespace CSETWebCore.Business.Assessment
             {
                 defaultSal = SalBusiness.DefaultSalTsa;
             }
-            _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
+            await _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
 
 
-            _standardsBusiness.PersistSelectedStandards(assessment_id, null);
+            await _standardsBusiness.PersistSelectedStandards(assessment_id, null);
 
             if (newAssessment.Workflow == "TSA")
             {
-                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
+                await _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
             }
 
 
@@ -125,7 +125,7 @@ namespace CSETWebCore.Business.Assessment
 
 
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
+            await _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
             return newAssessment;
         }
 

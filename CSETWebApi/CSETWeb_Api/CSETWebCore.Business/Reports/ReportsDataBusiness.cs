@@ -459,7 +459,7 @@ namespace CSETWebCore.Business.Reports
         public async Task<List<BasicReportData.RequirementControl>> GetControls(string applicationMode)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
-            _questionRequirement.InitializeManager(_assessmentId);
+            await _questionRequirement.InitializeManager(_assessmentId);
 
             await _context.FillEmptyQuestionsForAnalysis(_assessmentId);
 
@@ -903,7 +903,7 @@ namespace CSETWebCore.Business.Reports
             rankedQuestionList.AddRange(qList);
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
-                q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+                q.QuestionText = await rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
 
                 list.Add(new RankedQuestions()
                 {

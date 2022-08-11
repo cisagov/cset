@@ -56,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = await _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
-            var stream = _exporter.ExportToCSV(assessmentId);
+            var stream = await _exporter.ExportToCSV(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
@@ -73,11 +73,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ExcelExportNCUA")]
         public async Task<IActionResult> GetExcelExportNCUA(string token)
         {
-            _token.SetToken(token);
+            await _token.SetToken(token);
             int assessmentId = await _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
-            var stream = _exporter.ExportToExcelNCUA(assessmentId);
+            var stream = await _exporter.ExportToExcelNCUA(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
@@ -95,10 +95,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ExcelExportAllNCUA")]
         public async Task<IActionResult> GetExcelExportAllNCUA(string token)
         {
-            _token.SetToken(token);
+            await _token.SetToken(token);
             int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
 
-            var stream = _exporter.ExportToExcelAllNCUA(currentUserId);
+            var stream = await _exporter.ExportToExcelAllNCUA(currentUserId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 

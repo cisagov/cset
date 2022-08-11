@@ -38,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessment/export")]
         public async Task<IActionResult> ExportAssessment(string token)
         {
-            _token.SetToken(token);
+            await _token.SetToken(token);
             int assessmentId = await _token.AssessmentForUser(token);
             int currentUserId = int.Parse(_token.Payload(Constants.Constants.Token_UserId));
 
