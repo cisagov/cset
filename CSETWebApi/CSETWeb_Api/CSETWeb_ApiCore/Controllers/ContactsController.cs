@@ -54,7 +54,7 @@ namespace CSETWebCore.Api.Controllers
 
             ContactsListResponse resp = new ContactsListResponse
             {
-                ContactList = _contact.GetContacts(assessmentId),
+                ContactList = await _contact.GetContacts(assessmentId),
                 CurrentUserRole = _contact.GetUserRoleOnAssessment(userId, assessmentId) ?? 0
             };
             return Ok(resp);
@@ -71,8 +71,9 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = await _token.AssessmentForUser();
             int currentUserId = _token.GetUserId();
+            var contactList = await _contact.GetContacts(assessmentId);
 
-            var resp = _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
+            var resp = contactList.Find(c => c.UserId == currentUserId);
             return Ok(resp);
         }
 
@@ -195,7 +196,7 @@ namespace CSETWebCore.Api.Controllers
 
             ContactsListResponse resp = new ContactsListResponse
             {
-                ContactList = _contact.GetContacts(ac.Assessment_Id),
+                ContactList = await _contact.GetContacts(ac.Assessment_Id),
                 CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0
             };
 
