@@ -37,17 +37,18 @@ export class PageVisibilityService {
   showPage(page: HTMLElement): boolean {
     // look for a condition on the current page or its nearest parent
     let nnnn = page.closest('[condition]');
-    let conditionAttrib = nnnn?.attributes['condition']?.value;
+    let conditionAttrib = nnnn?.attributes['condition']?.value.trim();
 
-    // if no conditions are applicable, show the page
+    // if no conditions are specified, show the page
     if (!conditionAttrib || conditionAttrib.length === 0) {
       return true;
     }
 
-    let show = true;
-
-    // All conditions must be true (AND).  
+    
+    // Conditions are separated by spaces and a condition cannot contain
+    // any internal spaces.  For the page to show, all conditions must be true.  
     // Start with true and if any fail, result is false.
+    let show = true;
     let conditions = conditionAttrib.toUpperCase().split(' ');
     conditions.forEach(c => {
 
@@ -57,118 +58,44 @@ export class PageVisibilityService {
       }
 
 
-      // SOURCE checks the assessment's 'workflow' value (the skin it was born in)
-      if (c.startsWith('SOURCE:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.assessSvc.assessment?.workflow == target);
+      // "Source" checks the assessment's 'workflow' value (the skin it was born in)
+      if (c.startsWith('SOURCE:') || c.startsWith('SOURCE-ANY(')) {
+        show = show && this.sourceAny(c);;
       }
 
-      if (c.startsWith('SOURCE-NOT:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.assessSvc.assessment?.workflow !== target);
+      if (c.startsWith('SOURCE-NOT:') || c.startsWith('SOURCE-NONE(')) {
+        show = show && !this.sourceAny(c);
       }
 
-      if (c.startsWith('SOURCE-ANY(')) {
-        let found = false;
-        let p1 = c.indexOf('(');
-        let p2 = c.indexOf(')');
-        let targetText = c.substring(p1 + 1, p2);
-        var targets = targetText.split(',');
-        targets.forEach(t => {
-          found = found || (this.assessSvc.assessment?.workflow == t);
-        });
-        show = show && found;
+
+
+      // Installation Mode / current skin
+      if (c.startsWith('INSTALL-MODE:') || c.startsWith('INSTALL-MODE-ANY(')) {
+        show = show && this.skinAny(c);
       }
 
-      
-      // Installation Mode
-      if (c.startsWith('INSTALL-MODE:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.configSvc.installationMode == target);
+      if (c.startsWith('INSTALL-MODE-NOT:') || c.startsWith('INSTALL-MODE-NONE(')) {        
+        show = show && !this.skinAny(c);
       }
 
-      if (c.startsWith('INSTALL-MODE-NOT:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-        show = show && (this.configSvc.installationMode !== target);
-      }
-
-      if (c.startsWith('OPTION-ANY(')) {
-        let found = false;
-        let p1 = c.indexOf('(');
-        let p2 = c.indexOf(')');
-        let targetText = c.substring(p1 + 1, p2);
-        var targets = targetText.split(',');
-        targets.forEach(t => {
-          switch (t.toUpperCase()) {
-            case 'MATURITY':
-              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useMaturity;
-              break;
-            case 'STANDARD':
-              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useStandard;
-              break;
-            case 'DIAGRAM':
-              found = found || !!this.assessSvc.assessment && this.assessSvc.assessment.useDiagram;
-              break;
-          }
-        });
-        show = show && found;
-      }
 
 
       // OPTION is which features are included in the assessment: maturity, standard or diagram
-      if (c === 'OPTION:MATURITY') {
-        show = show && (
-          !!this.assessSvc.assessment
-          && this.assessSvc.assessment.useMaturity);
+      if (c.startsWith('OPTION:') || c.startsWith('OPTION-ANY(')) {
+        show = show && this.optionAny(c);
       }
 
-      if (c === 'OPTION:STANDARD') {
-        show = show && (
-          !!this.assessSvc.assessment
-          && this.assessSvc.assessment.useStandard);
-      }
-
-      if (c === 'OPTION:DIAGRAM') {
-        show = show && (
-          !!this.assessSvc.assessment
-          && this.assessSvc.assessment.useDiagram);
-      }
 
 
       // look for the specified maturity model
-      if (c.startsWith('MATURITY:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-
-        show = show && (
-          !!this.assessSvc.assessment
-          && this.assessSvc.assessment.useMaturity
-          && this.assessSvc.usesMaturityModel(target));
+      if (c.startsWith('MATURITY:') || c.startsWith('MATURITY-ANY(')) {
+        show = show && this.maturityAny(c);
       }
 
-      if (c.startsWith('MATURITY-NOT:')) {
-        let target = c.substring(c.indexOf(':') + 1);
-
-        show = show && (
-          !!this.assessSvc.assessment
-          && this.assessSvc.assessment.useMaturity
-          && !this.assessSvc.usesMaturityModel(target));
+      if (c.startsWith('MATURITY-NOT:') || c.startsWith('MATURITY-NONE(')) {
+        show = show && !this.maturityAny(c);
       }
 
-      if (c.startsWith('MATURITY-ANY(')) {
-        let found = false;
-        let p1 = c.indexOf('(');
-        let p2 = c.indexOf(')');
-        let targetText = c.substring(p1 + 1, p2);
-        var targets = targetText.split(',');
-        targets.forEach(t => {
-          found = found || (
-            !!this.assessSvc.assessment
-            && this.assessSvc.assessment.useMaturity
-            && this.assessSvc.usesMaturityModel(t.trim()));
-        });
-
-        show = show && found;
-      }
 
 
       // Look for a maturity target level greater than X
@@ -176,6 +103,7 @@ export class PageVisibilityService {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
       }
+
 
 
       if (c == 'SHOW-EXEC-SUMMARY') {
@@ -187,6 +115,96 @@ export class PageVisibilityService {
     return show;
   }
 
+
+  /**
+   * Returns true if any of the specified installation modes 
+   * matches the currently-running installation mode (skin).
+   */
+  skinAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+
+    // if 'CSET' is specified in the rule, also look for an empty installation mode,
+    // which also indicates "vanilla CSET".
+    if (targets.find(x => x == 'CSET')) {
+      targets.push('');
+    }
+
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has || (this.configSvc.installationMode == t);
+    });
+    return has;
+  }
+
+  /**
+   * "Source" is a synomym for the original skin that the assessment
+   * was created under.  It is stored in the "Workflow" column of the 
+   * INFORMATION database table. 
+   */
+  sourceAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has || (this.assessSvc.assessment?.workflow == t);
+    });
+    return has;
+  }
+
+  /**
+   * Returns true if any of the specified sources/features
+   * are currently selected for the assessment.
+   */
+  optionAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      switch (t.toUpperCase()) {
+        case 'MATURITY':
+          has = has || this.assessSvc.assessment?.useMaturity;
+          break;
+        case 'STANDARD':
+          has = has || this.assessSvc.assessment?.useStandard;
+          break;
+        case 'DIAGRAM':
+          has = has || this.assessSvc.assessment?.useDiagram;
+          break;
+      }
+    });
+    return has;
+  }
+
+  /**
+   * 
+   * @param rule 
+   * @returns 
+   */
+  maturityAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has ||
+      (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModel(t.trim()))
+    });
+    return has;
+  }
+
+  /**
+   * Parses the value(s) following the first colon or open paren
+   * and returns a list of them.
+   * @param c 
+   */
+  getTargets(c: string): string[] {
+    let pC = c.indexOf(':');
+    if (pC >= 0) {
+      return [c.substring(c.indexOf(':') + 1)];
+    }
+
+    let p1 = c.indexOf('(');
+    let p2 = c.indexOf(')');
+    let targetText = c.substring(p1 + 1, p2);
+    var targets = targetText.split(',');
+    return targets;
+  }
 
   /**
    * Indicates when the Executive Summary page should be included in the navigation.
