@@ -32,6 +32,7 @@ import { CyberStandard } from "./../../../models/standards.model";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
 import { NavigationService } from "../../../services/navigation/navigation.service";
 import { EnableFeatureService } from "../../../services/enable-feature.service";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 
 @Component({
   selector: "app-standards",
@@ -45,16 +46,23 @@ export class StandardsComponent implements OnInit {
   dialogRef: MatDialogRef<OkayComponent>;
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
+  hp = false;
+
   constructor(
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
     public navSvc: NavigationService,
     private enableFeatureSvc: EnableFeatureService,
+    private boSvc: BreakpointObserver,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
+
     this.loadStandards();
 
     // refresh the list if the protected features are ever enabled

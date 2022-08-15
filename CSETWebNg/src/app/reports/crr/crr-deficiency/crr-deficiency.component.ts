@@ -14,6 +14,8 @@ export class CrrDeficiencyComponent implements OnInit {
 
   response: any;
 
+  loading: boolean = false;
+
   constructor(
     public analysisSvc: ReportAnalysisService,
       public reportSvc: ReportService,
@@ -23,11 +25,13 @@ export class CrrDeficiencyComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+      this.loading = true;
       this.titleService.setTitle("Deficiency Report - CRR");
 
       this.maturitySvc.getMaturityDeficiency("CRR").subscribe(
         (r: any) => {
           this.response = r;
+          this.loading = false
         },
         error => console.log('Error loading CRR Deficiency Report: ' + (<Error>error).message)
       );
