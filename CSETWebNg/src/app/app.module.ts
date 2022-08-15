@@ -457,7 +457,7 @@ import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr
 import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
 import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
 import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
-import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';import { CrrPercentagesOfPracticesComponent } from './reports/crr/crr-report/crr-percentages-of-practices/crr-percentages-of-practices.component';
+import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';
 import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
 import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
 import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
