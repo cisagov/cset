@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   Component,
   EventEmitter,
@@ -54,7 +55,7 @@ export class AssessmentComponent implements AfterContentChecked {
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
    */
-  expandNav = true;
+  expandNav = false;
 
   /**
    * Indicates whether the nav stays visible (true)
@@ -64,6 +65,12 @@ export class AssessmentComponent implements AfterContentChecked {
 
   minWidth = 960;
   scrollTop = 0;
+
+  /**
+   * handsetPortrait
+   */
+  hp = false;
+
 
   @Output() navSelected = new EventEmitter<string>();
   @ViewChild('sNav')
@@ -89,8 +96,13 @@ export class AssessmentComponent implements AfterContentChecked {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public boSvc: BreakpointObserver
   ) {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
+
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.assessSvc.currentTab = 'prepare';
@@ -112,6 +124,22 @@ export class AssessmentComponent implements AfterContentChecked {
     return this.assessSvc.currentTab === tab;
   }
 
+  /**
+   * Determines how to display the sidenav.
+   */
+  sidenavMode() {
+    if (this.hp) {
+      this.lockNav = false;
+      return 'over';
+    }
+
+    return innerWidth < 960 ? 'over' : 'side';
+  }
+
+  /**
+   * Called when the user clicks an item
+   * in the nav.  
+   */
   selectNavItem(target: string) {
     if (!this.lockNav) {
       this.expandNav = false;
