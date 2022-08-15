@@ -29,7 +29,7 @@ export class CrrDeficiencyComponent implements OnInit {
         (r: any) => {
           this.response = r;
         },
-        error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+        error => console.log('Error loading CRR Deficiency Report: ' + (<Error>error).message)
       );
     }
 }
