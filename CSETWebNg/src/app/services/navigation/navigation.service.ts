@@ -96,15 +96,6 @@ export class NavigationService {
     return this.navTreeSvc.magic;
   }
 
-
-  callTestAsyncText(method: string, speed: string) {
-    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed, {responseType: 'text'});
-  }
-
-  callTestAsyncJson(method: string, speed: string) {
-    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed);
-  }
-
   /**
    *
    */
@@ -293,5 +284,17 @@ export class NavigationService {
    */
   setCurrentPage(id: string) {
     this.navTreeSvc.setCurrentPage(id);
+  }
+
+
+
+  /// DIAGNOSTIC CODE----
+  callTestAsyncText(method: string, speed: string) {
+    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed, { responseType: 'text' });
+  }
+
+  /// DIAGNOSTIC CODE----
+  callTestAsyncJson(method: string, speed: string) {
+    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed);
   }
 }
