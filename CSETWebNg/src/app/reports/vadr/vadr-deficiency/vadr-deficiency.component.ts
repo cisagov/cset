@@ -15,6 +15,8 @@ export class VadrDeficiencyComponent implements OnInit {
 
   response: any;
 
+  loading: boolean = false;
+
   colorSchemeRed = { domain: ['#DC3545'] };
   xAxisTicks = [0, 25, 50, 75, 100];
 
@@ -30,6 +32,7 @@ export class VadrDeficiencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.titleService.setTitle("Validated Architecture Design Review Report - VADR");
 
     this.maturitySvc.getMaturityDeficiency("VADR").subscribe(
@@ -38,6 +41,7 @@ export class VadrDeficiencyComponent implements OnInit {
 
         // remove any child questions - they are not Y/N
         this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
+        this.loading = false;
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );
