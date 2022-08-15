@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { SalService } from '../../../services/sal.service';
 import { Sal } from '../../../models/sal.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-sals',
@@ -37,13 +38,21 @@ export class SalsComponent implements OnInit {
 
   sal_Levels: Sal;
 
+  hp = false;
+
 
   constructor(
     public salsSvc: SalService,
-    public navSvc: NavigationService) {
+    public navSvc: NavigationService,
+    public boSvc: BreakpointObserver
+    ) {
   }
 
   ngOnInit() {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
+
     this.salsSvc.selectedSAL = new Sal();
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
