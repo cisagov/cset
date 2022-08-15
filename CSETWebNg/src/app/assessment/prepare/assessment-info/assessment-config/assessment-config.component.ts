@@ -72,15 +72,6 @@ export class AssessmentConfigComponent implements OnInit {
 
   }
 
-  /// DIAGNOSTIC CODE --------------------------------------------
-  callTestAsync(method: string, speed: string) {
-    this.navSvc.callTestAsyncJson(method, speed).subscribe((resp: any) => {
-      console.log(method + ' - ' + speed);
-    });
-  }
-
-
-
   /**
    *
    */
@@ -90,22 +81,6 @@ export class AssessmentConfigComponent implements OnInit {
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;
-
-
-
-    /// DIAGNOSTIC CODE --------------------------------------
-    for (let i = 0; i < 15; i++) {
-      this.callTestAsync('async_task', 'Q');
-      this.callTestAsync('regular', 'Q');
-    }
-
-    // for (let i = 0; i < 10; i++) {
-    //   this.callTestAsync('regular', 'LONG');
-    // }
-    // for (let i = 0; i < 10; i++) {
-    //   this.callTestAsync('regular', 'SHORT');
-    // }
-
   }
 
 
@@ -114,7 +89,8 @@ export class AssessmentConfigComponent implements OnInit {
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    switch (this.configSvc.installationMode || '') {
+    switch(this.configSvc.installationMode || '')
+    {
       case "ACET":
         return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         break;
