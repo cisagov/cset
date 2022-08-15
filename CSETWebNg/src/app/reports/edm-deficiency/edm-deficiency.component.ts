@@ -26,7 +26,6 @@ export class EdmDeficiencyComponent implements OnInit {
     ngOnInit() {
       this.loading = true;
       this.titleService.setTitle("Deficiency Report - EDM");
-      console.log('TEST')
 
       this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
         (r: any) => {
