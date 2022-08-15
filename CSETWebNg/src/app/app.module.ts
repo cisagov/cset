@@ -449,6 +449,24 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
+import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
+import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
+import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
+import { CrrIntroAboutComponent } from './reports/crr/crr-report/crr-intro-about/crr-intro-about.component';
+import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr-mil1-performance-summary/crr-mil1-performance-summary.component';
+import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
+import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
+import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
+import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';import { CrrPercentagesOfPracticesComponent } from './reports/crr/crr-report/crr-percentages-of-practices/crr-percentages-of-practices.component';
+import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
+import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
+import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
+import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-contact-information/crr-contact-information.component';
+import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
+import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
+import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 
 
 @NgModule({
@@ -855,7 +873,25 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         McQuestionComponent,
         McOptionComponent,
         GuidanceBlockComponent,
-        ReferencesBlockComponent
+        ReferencesBlockComponent,
+        CrrReportComponent,
+        CrrCoverSheetComponent,
+        CrrCoverSheet2Component,
+        CrrIntroAboutComponent,
+        CrrMil1PerformanceSummaryComponent,
+        CrrPerformanceSummaryComponent,
+        CrrNistCsfSummaryComponent,
+        CrrMil1PerformanceComponent,
+        CrrResultsSummaryComponent,
+        CrrPercentageOfPracticesComponent,
+        CrrDomainDetailComponent,
+        CrrResourcesComponent,
+        CrrContactInformationComponent,
+        CrrAppendixACoverComponent,
+        CrrPerformanceAppendixAComponent,
+        CrrNistCsfCatSummaryComponent,
+        CrrNistCsfCatPerformanceComponent,
+        CrrSideTocComponent,
     ],
     providers: [
         ConfigService,
