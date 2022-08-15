@@ -97,6 +97,13 @@ export class NavigationService {
   }
 
 
+  callTestAsyncText(method: string, speed: string) {
+    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed, {responseType: 'text'});
+  }
+
+  callTestAsyncJson(method: string, speed: string) {
+    return this.http.get(this.configSvc.apiUrl + method + '?speed=' + speed);
+  }
 
   /**
    *
