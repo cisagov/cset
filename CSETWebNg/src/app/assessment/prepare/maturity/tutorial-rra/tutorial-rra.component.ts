@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -13,9 +14,19 @@ export class TutorialRraComponent implements OnInit {
   @Input()
   showNav: boolean = true;
 
-  constructor() { }
+  /**
+   * handsetPortrait
+   */
+   hp = false;
+
+  constructor(
+    public boSvc: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
   }
 
 }
