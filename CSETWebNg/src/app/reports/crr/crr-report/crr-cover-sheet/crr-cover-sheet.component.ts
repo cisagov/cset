@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from './../../../../services/config.service';
+import { CrrReportModel } from './../../../../models/report.model';
 
 @Component({
   selector: 'app-crr-cover-sheet',
@@ -8,7 +9,7 @@ import { ConfigService } from './../../../../services/config.service';
 })
 export class CrrCoverSheetComponent implements OnInit {
 
-  @Input() model: any;
+  @Input() model: CrrReportModel;
 
   headerUrl: string;
   bannerUrl: string = 'assets/images/CRR/report-header.jpg';

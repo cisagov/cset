@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CrrReportModel } from '../../../../models/report.model';
 
 @Component({
   selector: 'app-crr-performance-summary',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrPerformanceSummaryComponent implements OnInit {
+
+  @Input() model: CrrReportModel;
 
   constructor() { }
 
