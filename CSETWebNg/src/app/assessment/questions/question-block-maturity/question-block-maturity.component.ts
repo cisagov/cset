@@ -58,7 +58,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
-  handsetPortrait = false;
+  /**
+   * handsetPortrait
+   */
+  hp = false;
 
   /**
    * Constructor.
@@ -80,7 +83,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    */
   ngOnInit(): void {
     this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
+      this.hp = hp.matches;
     });
 
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
