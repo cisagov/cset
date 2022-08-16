@@ -37,7 +37,7 @@ export interface CrrReportModel {
   crrResultsData: any;
   assessmentDetails: AssessmentDetail;
   parentScores: any[];
-  cRRScores: any;
+  crrScores: any;
   reportChart: { labels: string[]; values: number[] };
   criticalService: string;
   reportData: MaturityBasicReportData;
