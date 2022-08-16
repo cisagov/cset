@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-tutorial-cmmc2',
@@ -7,9 +8,20 @@ import { ConfigService } from '../../../../services/config.service';
 })
 export class TutorialCmmc2Component implements OnInit {
 
-  constructor(public configSvc: ConfigService) { }
+  /**
+   * handsetPortrait
+   */
+  hp = false;
+
+  constructor(
+    public configSvc: ConfigService,
+    public boSvc: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
   }
 
   documentURL(documentName: string) {
