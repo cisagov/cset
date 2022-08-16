@@ -45,7 +45,10 @@ export class QuestionBlockVadrComponent implements OnInit {
   percentAnswered = 0;
   answerOptions = [];
 
-  handsetPortrait = false;
+  /**
+   * handsetPortrait
+   */
+  hp = false;
 
   openendedtext = "Open Ended question";
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
@@ -73,7 +76,7 @@ export class QuestionBlockVadrComponent implements OnInit {
    */
   ngOnInit(): void {
     this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
+      this.hp = hp.matches;
     });
 
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
