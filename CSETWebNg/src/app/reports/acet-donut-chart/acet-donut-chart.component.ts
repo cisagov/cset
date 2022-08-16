@@ -23,6 +23,7 @@
 // adding comp:     <app-acet-donut-chart [donutData]="donutData"></app-acet-donut-chart>
 // donutData format => donutData = [{"name": "coolness", "value": 50 }]
 ////////////////////////////////
+
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, } from '@angular/core';
 
@@ -61,6 +62,7 @@ export class AcetDonutChartComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    // using the observable so that we have an event to reevaluate
     this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
       this.hp = hp.matches;
 

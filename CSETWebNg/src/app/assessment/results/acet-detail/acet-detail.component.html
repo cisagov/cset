@@ -52,7 +52,7 @@
                 <div class="row">
                     <h5>Domain</h5>
                 </div>
-                <div class="row" *ngIf="!hp">
+                <div class="row" *ngIf="!layoutSvc.hp">
                     <div class="col-8 my-auto">
                         <h6>{{domain.domainName}}</h6>
                     </div>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="hp">
+                <div class="row" *ngIf="layoutSvc.hp">
                     <h6>{{domain.domainName}}</h6>
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)" style="float:right; width:300px;">
                         <div class="row">
@@ -96,7 +96,7 @@
                             <mat-accordion multi="true">
 
                                 <mat-expansion-panel [expanded]="expanded">
-                                    <mat-expansion-panel-header *ngIf="!hp">
+                                    <mat-expansion-panel-header *ngIf="!layoutSvc.hp">
                                         <mat-panel-title>
                                             <h6>{{factor.assessmentFactor}}</h6>
                                         </mat-panel-title>
@@ -109,7 +109,7 @@
                                         </mat-panel-description>
                                     </mat-expansion-panel-header>
 
-                                    <mat-expansion-panel-header *ngIf="hp">
+                                    <mat-expansion-panel-header *ngIf="layoutSvc.hp">
                                         <div class="flex-column">
                                             <h6 class="text-center mt-2">{{factor.assessmentFactor}}</h6>
                                             <div class="alert"
@@ -127,7 +127,7 @@
                                             <div class="row">
                                                 <div class="mt-3 mb-3 item-table">
 
-                                                    <div *ngIf="!hp" class="row">
+                                                    <div *ngIf="!layoutSvc.hp" class="row">
                                                         <div class="col-8 my-auto">
                                                             <h1 class="item-title m-0">{{comp.name}}</h1>
                                                         </div>
@@ -140,7 +140,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="hp" class="d-flex flex-column align-items-center">
+                                                    <div *ngIf="layoutSvc.hp" class="d-flex flex-column align-items-center">
                                                         <div class="pt-2">
                                                             <h1 class="item-title" style="text-indent: 0">{{comp.name}}
                                                             </h1>

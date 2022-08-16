@@ -1,5 +1,6 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-tutorial-rra',
@@ -14,19 +15,13 @@ export class TutorialRraComponent implements OnInit {
   @Input()
   showNav: boolean = true;
 
-  /**
-   * handsetPortrait
-   */
-   hp = false;
 
   constructor(
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit(): void {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.hp = hp.matches;
-    });
+
   }
 
 }
