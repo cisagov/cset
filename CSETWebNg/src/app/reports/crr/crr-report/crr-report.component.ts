@@ -15,6 +15,7 @@ export class CrrReportComponent implements OnInit {
   ngOnInit(): void {
     this.crrSvc.getCrrModel().subscribe((data: any) => {
       this.crrModel = data
+      console.log(this.crrModel);
     },
     error => console.log('Error loading CRR report: ' + (<Error>error).message)
     );
