@@ -1,4 +1,3 @@
-import { AssessmentDetail } from './assessment-info.model';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -22,6 +21,8 @@ import { AssessmentDetail } from './assessment-info.model';
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { AssessmentDetail } from './assessment-info.model';
+
 export interface MaturityBasicReportData {
   deficienciesList: any[];
   information: any;
