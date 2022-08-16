@@ -41,11 +41,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/GetCrrModel")]
-        public IActionResult GetCrrModel(string token, bool includeResultsStylesheet = true)
+        public IActionResult GetCrrModel(bool includeResultsStylesheet = true)
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
-            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
+            var detail = _assessment.GetAssessmentDetail(assessmentId);
             var demographics = _demographic.GetDemographics(assessmentId);
             _report.SetReportsAssessmentId(assessmentId);
             var deficiencyData = new MaturityBasicReportData()
