@@ -473,17 +473,6 @@ namespace CSETWebCore.Api.Controllers
                     Information = _reports.GetInformation()
                 };
 
-
-                // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-                data.DeficienciesList.ForEach(d =>
-                {
-                    d.ANSWER.Assessment = null;
-                    d.Mat.Maturity_Model = null;
-                    d.Mat.Maturity_LevelNavigation = null;
-                    d.Mat.Parent_Question = null;
-                });
-
-
                 return Ok(data);
             }
             catch (Exception exc)
@@ -512,26 +501,6 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
-
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            data.Comments.ForEach(d =>
-            {
-                d.ANSWER.Assessment = null;
-                d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
-                d.Mat.InverseParent_Question = null;
-                d.Mat.Parent_Question = null;
-            });
-
-            data.MarkedForReviewList.ForEach(d =>
-            {
-                d.ANSWER.Assessment = null;
-                d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
-                d.Mat.InverseParent_Question = null;
-                d.Mat.Parent_Question = null;
-            });
 
             return Ok(data);
         }

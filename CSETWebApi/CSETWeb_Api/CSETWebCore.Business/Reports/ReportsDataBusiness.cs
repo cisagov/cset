@@ -172,6 +172,16 @@ namespace CSETWebCore.Business.Reports
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
 
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            foreach (MatRelevantAnswers d in responseList) 
+            {
+                d.ANSWER.Assessment = null;
+                d.Mat.Maturity_Model = null;
+                d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
+            }
+
             return responseList;
         }
 
@@ -184,6 +194,16 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetCommentsList()
         {
             var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            foreach (MatRelevantAnswers d in responseList)
+            {
+                d.ANSWER.Assessment = null;
+                d.Mat.Maturity_Model = null;
+                d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
+            }
 
             return responseList;
         }
