@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialEdmComponent implements OnInit {
 
-  constructor() { }
+  /**
+   * handsetPortrait
+   */
+  hp = false;
+
+  constructor(
+    public boSvc: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+    });
   }
 
 }
