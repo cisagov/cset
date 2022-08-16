@@ -29,7 +29,7 @@
                 {{ myGrouping.title }}
             </div>
 
-            <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!hp">
+            <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
                     matTooltip="One or more controls in this category requires further review.">
@@ -40,7 +40,7 @@
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
 
-            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="hp">
+            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
                 <div>
                     <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                     <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
@@ -63,7 +63,7 @@
         <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column"
             [class.pb-3]="q.isParentQuestion" [class.display-none]="!q.visible">
 
-            <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!hp">
+            <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!layoutSvc.hp">
                 <div class="number-and-text">
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="w-100" *ngIf="hp">
+            <div class="w-100" *ngIf="layoutSvc.hp">
                 <div>
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         class="d-flex align-items-center mt-3 mb-2 text-nowrap">

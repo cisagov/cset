@@ -28,7 +28,8 @@ import { MatDetailResponse, MaturityDomain, MaturityAssessment, MaturityComponen
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
     selector: 'app-mat-detail',
@@ -57,22 +58,16 @@ export class AcetDetailComponent implements OnInit {
     sortedDomainList: any = [];
 
     /**
-     * handsetPortrait
+     * 
      */
-    hp = false;
-
     constructor(private router: Router,
         private assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public boSvc: BreakpointObserver
+        public layoutSvc: LayoutService
     ) { }
 
     ngOnInit() {
-        this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-            this.hp = hp.matches;
-          });
-
         this.expand = this.collapseAll;
         this.expanded = true;
         this.loadMatDetails();
