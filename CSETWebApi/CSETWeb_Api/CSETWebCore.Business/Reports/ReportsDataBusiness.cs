@@ -183,7 +183,7 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetCommentsList()
         {
-            var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            var responseList = GetQuestionsList().Where(x => x.ANSWER?.Answer_Text != "U" && !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }
