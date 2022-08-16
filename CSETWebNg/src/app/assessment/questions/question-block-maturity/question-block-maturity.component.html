@@ -187,7 +187,7 @@
 
             <button *ngIf="showCorePlusButton(q.questionId)"
                 class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide Core+'}}</button>
+                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}</button>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
