@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CrrService } from './../../../services/crr.service';
+import { CrrReportModel } from './../../../models/report.model';
 
 @Component({
   selector: 'app-crr-report',
@@ -8,7 +9,7 @@ import { CrrService } from './../../../services/crr.service';
 })
 export class CrrReportComponent implements OnInit {
 
-  crrModel: any;
+  crrModel: CrrReportModel;
 
   constructor(private crrSvc: CrrService) { }
 
