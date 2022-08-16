@@ -25,7 +25,7 @@
         <h4>Inherent Risk Profile Summary</h4>
         <app-inherent-risk-profile [acetDashboard]="acetDashboard" class="mb-5"></app-inherent-risk-profile>
 
-        <div *ngIf="!hp" class="d-table w-100">
+        <div *ngIf="!layoutSvc.hp" class="d-table w-100">
             <div class="d-table-row">
                 <div class="d-table-cell pl-3 pb-3">
                     Overall Risk Level is &quot;<span class="blue-text font-weight-bold">{{ overrideLabel }}&quot;</span>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div *ngIf="hp" class="ml-3 w-100">
+        <div *ngIf="layoutSvc.hp" class="ml-3 w-100">
             <div class="pb-3">
                 Overall Risk Level is &quot;<span class="blue-text font-weight-bold">{{ overrideLabel }}&quot;</span>
             </div>

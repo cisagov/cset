@@ -29,7 +29,8 @@ import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inli
 import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LayoutService } from '../../../services/layout.service';
+
 
 /**
  * Represents the display container of a single subcategory with its member questions.
@@ -60,10 +61,6 @@ export class QuestionBlockComponent implements OnInit {
 
   showQuestionIds = false;
 
-  /**
-   * handsetPortrait
-   */
-  hp = false;
 
   /**
    *
@@ -79,7 +76,7 @@ export class QuestionBlockComponent implements OnInit {
     private dialog: MatDialog,
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
     ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
@@ -92,10 +89,6 @@ export class QuestionBlockComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.hp = hp.matches;
-    });
-
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();

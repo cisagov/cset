@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import {
   Component,
   EventEmitter,
@@ -37,6 +37,7 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
+import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 
@@ -66,11 +67,6 @@ export class AssessmentComponent implements AfterContentChecked {
   minWidth = 960;
   scrollTop = 0;
 
-  /**
-   * handsetPortrait
-   */
-  hp = false;
-
 
   @Output() navSelected = new EventEmitter<string>();
   @ViewChild('sNav')
@@ -97,12 +93,8 @@ export class AssessmentComponent implements AfterContentChecked {
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     private cd: ChangeDetectorRef,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.hp = hp.matches;
-    });
-
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.assessSvc.currentTab = 'prepare';
@@ -128,7 +120,7 @@ export class AssessmentComponent implements AfterContentChecked {
    * Determines how to display the sidenav.
    */
   sidenavMode() {
-    if (this.hp) {
+    if (this.layoutSvc.hp) {
       this.lockNav = false;
       return 'over';
     }
