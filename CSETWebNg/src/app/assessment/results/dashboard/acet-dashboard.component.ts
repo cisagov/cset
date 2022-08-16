@@ -33,7 +33,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
     templateUrl: './acet-dashboard.component.html',
     styleUrls: ['./acet-dashboard.component.scss']
 })
-export class ACETDashboardComponent implements OnInit {
+export class AcetDashboardComponent implements OnInit {
     acetDashboard: AcetDashboard;
 
     overrideLabel: string;
