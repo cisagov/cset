@@ -115,8 +115,8 @@
 
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
     <div *ngIf="this.assessSvc.assessment.maturityModel.modelName === 'ISE'" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion" 
-        [class.display-none]="(!this.ncuaSvc.usingIseOverride && q.maturityLevelName !== this.ncuaSvc.iseIRP || (this.ncuaSvc.usingIseOverride && q.maturityLevelName !== this.ncuaSvc.overrideIRP))">
+        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
+        [class.display-none]="q.maturityLevelName === 'CORE+' && this.showCorePlus === false">
 
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
@@ -185,10 +185,9 @@
             </div>
             <hr>
 
-            <button *ngIf="!!isLastCoreQuestion(q.questionId) && q.maturityLevelName === 'CORE'" 
-                    class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                    (click)="updateCorePlusStatus()">
-                    Expand CORE+</button>
+            <button *ngIf="showCorePlusButton(q.questionId)"
+                class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide Core+'}}</button>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">

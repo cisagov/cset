@@ -59,6 +59,7 @@ let headers = {
   iseIRP: string = "SCUEP";
   usingIseOverride: boolean = false;
   overrideIRP: string = "";
+  showCorePlus: boolean = false;
 
 
   constructor(
@@ -188,7 +189,7 @@ let headers = {
     if (Number(this.iseAssetSize) > 50000000) {
       level = 'CORE';
       if (refresh) {
-        this.refreshGroupList(2);
+        this.refreshGroupList(3);
       }
     } else {
       level = 'SCUEP';
@@ -209,7 +210,7 @@ let headers = {
       if (level === 'SCUEP') {
         this.refreshGroupList(1);
       } else if (level === 'CORE') {
-        this.refreshGroupList(2);
+        this.refreshGroupList(3);
       }
     } else {
       level = this.getIRPfromAssets(true);
