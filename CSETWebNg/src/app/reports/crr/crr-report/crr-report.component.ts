@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrrService } from './../../../services/crr.service';
 import { CrrReportModel } from './../../../models/report.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-crr-report',
@@ -11,10 +12,11 @@ export class CrrReportComponent implements OnInit {
 
   crrModel: CrrReportModel;
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private crrSvc: CrrService, private titleSvc: Title) { }
 
   ngOnInit(): void {
-    this.crrSvc.getCrrModel().subscribe((data: any) => {
+    this.titleSvc.setTitle('CRR Report - CSET');
+    this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
       this.crrModel = data
       console.log(this.crrModel);
     },

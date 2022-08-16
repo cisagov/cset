@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfigService } from '../../../../services/config.service';
 import { CrrReportModel } from './../../../../models/report.model';
 
 @Component({
@@ -10,9 +11,16 @@ export class CrrCoverSheet2Component implements OnInit {
 
   @Input() model: CrrReportModel;
 
-  constructor() { }
+  logoUrl: string;
+
+  constructor(private configSvc: ConfigService) { }
 
   ngOnInit(): void {
+    if (this.configSvc.installationMode === 'TSA') {
+      this.logoUrl = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
+    } else {
+      this.logoUrl = 'assets/images/CISA_Logo_1831px.png'
+    }
   }
 
 }
