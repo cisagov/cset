@@ -40,10 +40,10 @@ export class CrrService {
    * Retrieves the list of frameworks.
    */
   getCrrHtml(view:string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrHtml?view='+view);
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrHtml?view='+view);
   }
 
   getCrrModel(){
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrModel');
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 }

@@ -82,7 +82,7 @@ export class ReportService {
     }
     /**
      * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
-     * @returns 
+     * @returns
      */
     getAltList() {
         return this.http.get(this.apiUrl + 'reports/getAltList', headers);
@@ -99,7 +99,6 @@ export class ReportService {
      *
      */
     getCRRSummary(): any {
-        console.log("test")
         this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }

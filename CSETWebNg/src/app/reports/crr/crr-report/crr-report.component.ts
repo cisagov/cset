@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CrrService } from './../../../services/crr.service';
 
 @Component({
   selector: 'app-crr-report',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrrReportComponent implements OnInit {
 
-  constructor() { }
+  crrModel: any;
+
+  constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
+    this.crrSvc.getCrrModel().subscribe((data: any) => {
+      this.crrModel = data
+    },
+    error => console.log('Error loading CRR report: ' + (<Error>error).message)
+    );
   }
 
 }

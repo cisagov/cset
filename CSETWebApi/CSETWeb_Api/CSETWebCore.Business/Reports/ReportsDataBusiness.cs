@@ -113,6 +113,7 @@ namespace CSETWebCore.Business.Reports
                 responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
             }
 
+            NullOutNavigationPropeties(responseList);
 
             return responseList;
         }
@@ -172,15 +173,7 @@ namespace CSETWebCore.Business.Reports
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
 
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            foreach (MatRelevantAnswers d in responseList) 
-            {
-                d.ANSWER.Assessment = null;
-                d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
-                d.Mat.InverseParent_Question = null;
-                d.Mat.Parent_Question = null;
-            }
+            NullOutNavigationPropeties(responseList);
 
             return responseList;
         }
@@ -195,15 +188,7 @@ namespace CSETWebCore.Business.Reports
         {
             var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            foreach (MatRelevantAnswers d in responseList)
-            {
-                d.ANSWER.Assessment = null;
-                d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
-                d.Mat.InverseParent_Question = null;
-                d.Mat.Parent_Question = null;
-            }
+            NullOutNavigationPropeties(responseList);
 
             return responseList;
         }
@@ -218,6 +203,7 @@ namespace CSETWebCore.Business.Reports
         {
             var questionList = GetQuestionsList();
             var responseList = questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
+            NullOutNavigationPropeties(responseList);
             return responseList;
         }
 
@@ -229,6 +215,7 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetAlternatesList()
         {
             var responseList = GetQuestionsList().Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
+            NullOutNavigationPropeties(responseList);
             return responseList;
         }
 
@@ -1386,6 +1373,22 @@ namespace CSETWebCore.Business.Reports
         public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
         {
             return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
+        }
+
+        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list) 
+        {
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            foreach (MatRelevantAnswers a in list)
+            {
+                a.ANSWER.Assessment = null;
+                a.Mat.Maturity_Model = null;
+                a.Mat.Maturity_LevelNavigation = null;
+                a.Mat.InverseParent_Question = null;
+                a.Mat.Parent_Question = null;
+                a.Mat.Grouping.Maturity_Model = null;
+                a.Mat.Grouping.MATURITY_QUESTIONS = null;
+                a.Mat.Grouping.Type = null;
+            }
         }
     }
 }
