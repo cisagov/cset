@@ -75,6 +75,7 @@
     "ng2-tooltip-directive": "^2.10.3",
     "ngx-autosize": "^1.8.7",
     "ngx-csv": "^0.3.2",
+    "ngx-device-detector": "^3.0.0",
     "ngx-textarea-autosize": "^2.0.3",
     "request": "^2.88.2",
     "rxjs": "^6.6.3",
