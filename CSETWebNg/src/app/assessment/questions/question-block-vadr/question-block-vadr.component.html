@@ -30,7 +30,7 @@
                 {{ myGrouping.title }}
             </div>
 
-            <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!hp">
+            <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
                     matTooltip="One or more controls in this category requires further review.">
@@ -41,7 +41,7 @@
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
 
-            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="hp">
+            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
                 <div>
                     <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                     <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
@@ -68,7 +68,7 @@
     <!-- this houses all of the questions -->
     <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!myGrouping.expanded">
 
-        <ng-template [ngIf]="!hp">
+        <ng-template [ngIf]="!layoutSvc.hp">
             <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column"
                 [class.pb-3]="q.isParentQuestion"
                 [class.border-bottom]="!q.isParentQuestion || q.parentQuestionId !==null"
@@ -144,7 +144,7 @@
         </ng-template>
 
 
-        <ng-template [ngIf]="hp">
+        <ng-template [ngIf]="layoutSvc.hp">
             <div *ngFor="let q of myGrouping.questions" class="rkw question-row d-flex flex-column"
                 [class.pb-3]="q.isParentQuestion"
                 [class.border-bottom]="!q.isParentQuestion || q.parentQuestionId !==null"

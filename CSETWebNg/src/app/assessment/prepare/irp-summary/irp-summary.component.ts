@@ -28,7 +28,8 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
     selector: 'app-irp-summary',
@@ -41,11 +42,6 @@ export class IrpSummaryComponent implements OnInit {
     overrideLabel: string;
 
     /**
-     * handsetPortrait
-     */
-    hp = false;
-
-    /**
      * 
      */
     constructor(
@@ -54,17 +50,13 @@ export class IrpSummaryComponent implements OnInit {
         public navSvc: NavigationService,
         public acetSvc: ACETService,
         public acetFilteringSvc: AcetFilteringService,
-        public boSvc: BreakpointObserver
+        public layoutSvc: LayoutService
     ) { }
 
     /**
      * 
      */
     ngOnInit() {
-        this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-            this.hp = hp.matches;
-        });
-
         this.loadDashboard();
     }
 

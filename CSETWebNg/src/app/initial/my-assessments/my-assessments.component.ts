@@ -43,6 +43,7 @@ import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { LayoutService } from "../../services/layout.service";
 
 
 interface UserAssessment {
@@ -83,10 +84,6 @@ export class MyAssessmentsComponent implements OnInit {
   exportExtension: string;
   importExtensions: string;
 
-  /**
-   * Indicates if the app is running in 'handsetPortrait'
-   */
-  hp = false;
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
@@ -104,14 +101,10 @@ export class MyAssessmentsComponent implements OnInit {
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
     private tsaanalyticSvc :TsaAnalyticsService,
-    private boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit() {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.hp = hp.matches;
-    });
-
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
