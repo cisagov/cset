@@ -450,6 +450,7 @@ import { McOptionComponent } from './reports/module-content/model/mc-option/mc-o
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { SwiperModule } from 'swiper/angular';
+import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 
 @NgModule({
     imports: [
@@ -856,7 +857,8 @@ import { SwiperModule } from 'swiper/angular';
         McQuestionComponent,
         McOptionComponent,
         GuidanceBlockComponent,
-        ReferencesBlockComponent
+        ReferencesBlockComponent,
+        NewAssessmentDialogComponent
     ],
     providers: [
         ConfigService,

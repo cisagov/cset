@@ -1,4 +1,7 @@
-<div class="p-2">
+<div class="p-4">
+    <div>
+        <h3>Header for Cards</h3>
+    </div>
         <swiper class="gallery-slider"
         [config]="config"
         (swiper)="onSwiper($event)"
@@ -10,7 +13,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" *ngIf="i==hoverIndex" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="card-body" style="text-align:right;">
+                    <button *ngIf="i==hoverIndex" class="btn btn-outline-primary" (click)="openDialog()" style="margin-right:5px;"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
+                    <button *ngIf="i==hoverIndex" class="btn btn-primary"><i class="fa-solid fa-play" style="font-size: 18px;"></i></button>
                 </div>
             </div>
         </ng-template>
