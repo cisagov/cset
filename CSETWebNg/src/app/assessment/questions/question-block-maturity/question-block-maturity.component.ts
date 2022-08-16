@@ -59,18 +59,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
-  iseIRP: string = '';
   showCorePlus: boolean = false;
+  endOfCore: number[] = [7235, 7240, 7248, 7253, 7260, 7267, 
+                         7270, 7273, 7279, 7285, 7289, 7293, 
+                         7296, 7299, 7304, 7311];
+  coreChecked: boolean = false;
 
-  iseParentStatements = [];
-
-
-  showSubOne: boolean; showSubTwo: boolean; showSubThree: boolean;
-  showSubFour: boolean; showSubFive: boolean; showSubSix: boolean;
-  showSubSeven: boolean;
-
-  statementOne = []; statementTwo= []; statementThree = []; statementFour = [];
-  statementFive = []; statementSix = []; statementSeven = [];
 
   /**
    * Constructor.
@@ -91,6 +85,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    if (this.myGrouping.groupingID === 2349) {
+      console.log(JSON.stringify(this.myGrouping, null, 4));
+    }
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
@@ -100,8 +97,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.configSvc.buttonLabels['A'] = "Yes(C)";
       this.configSvc.answerLabels['A'] = "Yes Compensating Control"
     }
-
-    this.iseIRP = this.ncuaSvc.iseIRP
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
@@ -125,11 +120,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
-
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      this.setParentQuestions();
-      this.setSubQuestions();
-    }
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
@@ -176,15 +166,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
-    }
-
-    // Update ISE child/parent drop down statements
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      if (q.questionId == 7189 || q.questionId == 7197 || q.questionId == 7203 ||
-          q.questionId == 7211 || q.questionId == 7216 || q.questionId == 7221 ||
-          q.questionId == 7224) {
-            this.shouldIShow(q);
-      }
     }
 
     q.answer = newAnswerValue;
@@ -315,122 +296,29 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   }
 
-  setParentQuestions() {
-    if (this.iseParentStatements.length === 0) {
-      for (let i = 0; i < this.myGrouping.questions.length; i++) {
-        if (this.myGrouping.questions[i].isParentQuestion) {
-          this.iseParentStatements.push(this.myGrouping.questions[i].questionId);
-        }
-      }
-    }
-  }
-
-  setSubQuestions() {
-    for (let i = 0; i < this.myGrouping.questions.length; i++) {
-      if (this.myGrouping.questions[i].isParentQuestion) {
-        this.iseParentStatements.push(this.myGrouping.questions[i].questionId);
-      }
-    }
-  }
-
-  shouldIShow(q: Question) {
-    if (this.iseParentStatements.includes(q.questionId) && q.answer === 'Y') {
-      this.showSubQuestions(q.questionId);
-    } else if (this.iseParentStatements.includes(q.questionId) && q.answer !== 'Y') {
-      this.hideSubQuestions(q.questionId);
-    }
-
-    if (this.iseParentStatements.includes(q.questionId) ||
-      this.showSubOne && this.statementOne.includes(q.questionId) ||
-      this.showSubTwo && this.statementTwo.includes(q.questionId) ||
-      this.showSubThree && this.statementThree.includes(q.questionId) ||
-      this.showSubFour && this.statementFour.includes(q.questionId) ||
-      this.showSubFive && this.statementFive.includes(q.questionId) ||
-      this.showSubSix && this.statementSix.includes(q.questionId) ||
-      this.showSubSeven && this.statementSeven.includes(q.questionId)) 
-      {
+  showCorePlusButton(id: number) {
+    switch(id) {
+      case (7235): case (7240): case (7248):
+      case (7253): case (7260): case (7267):
+      case (7273): case (7279): case (7285): 
+      case (7289): case (7293): case (7296): 
+      case (7299): case (7304): case (7311):
         return true;
     }
   }
 
-  showSubQuestions(id: number) {
-    
-    switch (id) {
-      case 7189:
-        this.showSubOne = true;
-        break;
-      case 7197:
-        this.showSubTwo = true;
-        break;
-      case 7203:
-        this.showSubThree = true;
-        break;
-      case 7211:
-        this.showSubFour = true;
-        break;
-      case 7216:
-        this.showSubFive = true;
-        break;
-      case 7221:
-        this.showSubSix = true;
-        break;
-      case 7224:
-        this.showSubSeven = true;
-        break;
-    }
-  }
-
-  hideSubQuestions(id: number) {
-    switch (id) {
-      case 7189:
-        this.showSubOne = false;
-        break;
-      case 7197:
-        this.showSubTwo = false;
-        break;
-      case 7203:
-        this.showSubThree = false;
-        break;
-      case 7211:
-        this.showSubFour = false;
-        break;
-      case 7216:
-        this.showSubFive = false;
-        break;
-      case 7221:
-        this.showSubSix = false;
-        break;
-      case 7224:
-        this.showSubSeven = false;
-        break;
-    }
-  }
-  
-
-  isLastCoreQuestion(id: number) {
-    switch (id) {
-      case 7427:
-      case 7290:
-      case 7439:
-      case 7443:
-      case 7302:
-      case 7311:
-      case 7226:
-      case 7231:
-      case 7237:
-      case 7243:
-      case 7247:
-      case 7251:
-      case 7254:
-      case 7257:
-      case 7262:
-      case 7269:
-        return true;
-    }
-  }
-
-  updateCorePlusStatus() {
+  updateCorePlusStatus(q: Question) {
+    console.log(JSON.stringify(q, null, 4));
     this.showCorePlus = !this.showCorePlus
+
+    if (this.showCorePlus) {
+      this.ncuaSvc.showCorePlus = true;
+    } else if (!this.showCorePlus) {
+      this.ncuaSvc.showCorePlus = false;
+    }
+
+    console.log("this.showCorePlus: " + this.showCorePlus);
+    console.log("this.ncuaSvc.showCorePlus: " + this.ncuaSvc.showCorePlus);
   }
 
   

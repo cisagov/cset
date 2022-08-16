@@ -120,7 +120,7 @@ export class ExamProfileSummaryComponent implements OnInit {
         } else if (this.acetDashboard.override === 2) {
             this.ncuaSvc.usingIseOverride = true;
             this.ncuaSvc.overrideIRP = 'CORE';
-            this.ncuaSvc.refreshGroupList(2);
+            this.ncuaSvc.refreshGroupList(3);
         }
 
         this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
