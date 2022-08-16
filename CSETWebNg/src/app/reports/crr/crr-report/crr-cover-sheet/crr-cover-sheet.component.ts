@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ConfigService } from './../../../../services/config.service';
 
 @Component({
   selector: 'app-crr-cover-sheet',
   templateUrl: './crr-cover-sheet.component.html',
-  styleUrls: ['./crr-cover-sheet.component.scss']
+  styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrCoverSheetComponent implements OnInit {
 
-  constructor() { }
+  @Input() model: any;
+
+  headerUrl: string;
+  bannerUrl: string = 'assets/images/CRR/report-header.jpg';
+
+  constructor(private configSvc: ConfigService) { }
 
   ngOnInit(): void {
+    if (this.configSvc.installationMode === 'TSA') {
+      this.headerUrl = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
+    } else {
+      this.headerUrl = 'assets/images/CISA_Logo_1831px.png'
+    }
   }
 
 }

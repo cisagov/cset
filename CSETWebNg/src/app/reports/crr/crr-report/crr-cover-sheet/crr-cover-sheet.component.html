@@ -1,1 +1,15 @@
-<p>crr-cover-sheet works!</p>
+<div>
+    <img [src]="headerUrl" style="padding: 2rem; height: 125px;">
+    <br />
+    <img [src]="bannerUrl" class="banner" style="width: 100%;">
+
+    <div class="coversheet-text">
+        <h1>
+            CYBER RESILIENCE <br /> REVIEW (CRR)
+        </h1>
+        <hr style="height: 2px; color: black !important;" />
+        <h2>Self-Assessment Package</h2>
+        <br />
+        <h4>{{ model?.assessmentDetails.assessmentDate | date:'MMMM yyyy' }}</h4>
+    </div>
+</div>
