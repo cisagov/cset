@@ -72,8 +72,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     let swiperPrev = document.querySelector('.swiper-button-prev');
     let swiperNext = document.querySelector('.swiper-button-next');
     if(window.innerWidth < 620){
-      console.log('success', window.innerWidth)
-      console.log(swiperPrev);
+     
       if(swiperPrev != null && swiperNext != null){
         swiperPrev.setAttribute('style','display:none');
         swiperNext.setAttribute('style','display:none');
