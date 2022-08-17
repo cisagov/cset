@@ -107,11 +107,15 @@ namespace CSETWebCore.Api.Controllers
 
         public IActionResult getMil1AnswerDistribHtml()
         {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
             var totalDistribution = _crr.MIL1FullAnswerDistrib();
             var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
             totalBarChartInput.AnswerCounts = new List<int>
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
-            return Ok(new ScoreBarChart(totalBarChartInput).ToString());
+            ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
+            var html = new CrrHtml() { Html = barChart.ToString() };
+            return Ok(html);
         }
 
         private CrrResultsModel GenerateCrrResults()
@@ -151,5 +155,10 @@ namespace CSETWebCore.Api.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+    }
+
+    public class CrrHtml
+    {
+        public string Html { get; set; }
     }
 }

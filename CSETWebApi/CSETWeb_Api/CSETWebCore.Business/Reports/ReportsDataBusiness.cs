@@ -1385,9 +1385,12 @@ namespace CSETWebCore.Business.Reports
                 a.Mat.Maturity_LevelNavigation = null;
                 a.Mat.InverseParent_Question = null;
                 a.Mat.Parent_Question = null;
-                a.Mat.Grouping.Maturity_Model = null;
-                a.Mat.Grouping.MATURITY_QUESTIONS = null;
-                a.Mat.Grouping.Type = null;
+                if (a.Mat.Grouping != null) 
+                { 
+                    a.Mat.Grouping.Maturity_Model = null;
+                    a.Mat.Grouping.MATURITY_QUESTIONS = null;
+                    a.Mat.Grouping.Type = null;
+                }
             }
         }
     }
