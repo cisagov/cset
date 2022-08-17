@@ -29,7 +29,8 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { AssessmentService } from '../../../../../services/assessment.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LayoutService } from '../../../../../services/layout.service';
+
 
 @Component({
   selector: 'app-question-block-nested',
@@ -42,8 +43,6 @@ export class QuestionBlockNestedComponent implements OnInit {
 
   questionList: Question[];
 
-  handsetPortrait = false;
-
   // temporary debug aid
   showIdTag = false;
 
@@ -53,17 +52,13 @@ export class QuestionBlockNestedComponent implements OnInit {
     public cisSvc: CisService,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) { }
 
   /**
    *
    */
   ngOnInit(): void {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
-    });
-
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }
@@ -212,8 +207,8 @@ export class QuestionBlockNestedComponent implements OnInit {
           showMfr: true
         }
       },
-      width: this.handsetPortrait ? '90%' : '50%',
-      maxWidth: this.handsetPortrait ? '90%' : '50%'
+      width: this.layoutSvc.hp ? '90%' : '50%',
+      maxWidth: this.layoutSvc.hp ? '90%' : '50%'
     });
   }
 

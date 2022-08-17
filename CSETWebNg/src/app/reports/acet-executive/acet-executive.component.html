@@ -128,7 +128,7 @@
         <div *ngFor="let factor of domain.graphdata; index as i">
             <div class="row">
                 <div class="col-8 my-auto">
-                    <h1 class="data-title m-0">{{factor.asseessmentFactor}}</h1>
+                    <h1 class="data-title m-0">{{factor.assessmentFactor}}</h1>
                 </div>
                 <div class="col-4 my-auto">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
@@ -155,7 +155,7 @@
                             <tbody>
                                 <tr class="item-row">
                                     <td >
-                                        <app-charts-donut [donutData]="comp.data" [range]="matRange"></app-charts-donut>
+                                        <app-acet-donut-chart [donutData]="comp.data" [range]="matRange"></app-acet-donut-chart>
                                     </td>
                                 </tr>
                             </tbody>

@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-tutorial-edm',
@@ -6,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TutorialEdmComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(
+    public layoutSvc: LayoutService
+  ) { }
 
   ngOnInit(): void {
   }
