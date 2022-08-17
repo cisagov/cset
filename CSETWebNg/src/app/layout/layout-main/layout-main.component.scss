@@ -27,6 +27,9 @@ SOFTWARE.
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "../../../sass/cset-font-styles.css";
 @import "../../../sass/cset2-font-styles.css";
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
 
 $white: #ffffff;
 $black: #000000;
@@ -713,6 +716,17 @@ table.td-align-top td {
   background-color: $primary-color;
   border-color: $secondary-color;
   color: $active-text-color;
+}
+
+.btn-outline-primary{
+  border-color: $secondary-color;
+  color: $secondary-color;
+}
+
+.btn-outline-primary:hover{
+  background-color: $primary-color;
+  border-color: $secondary-color;
+  color: $gray-100 !important;
 }
 
 .btn.disabled.btn-primary,
@@ -3499,4 +3513,67 @@ h6.dropdown-header {
   opacity: .5;
 }
 
+///////////// Gallery //////////////////////
+.new-assessment-dialog-responsive {
+  width: 60% !important;
+  height:60% !important;
+  min-width: 300px;
+  min-height: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .new-assessment-dialog-responsive {
+      width: 80%;
+      height:80%;
+  }
+}
+.swiper-button-prev, .swiper-button-next {
+  z-index: 10 !important;
+  height: 220px !important;
+  /* text-align: center; */
+  /* vertical-align: middle; */
+  top: 20px !important;
+  background-color: black !important;
+  opacity: 30% !important;
+  padding: 0px 20px !important;  
+}
+.swiper-button-prev{
+  left: 0 !important;
+}
+.swiper-button-next{
+  right: 0 !important;
+}
+.swiper-button-prev::after, .swiper-button-next::after{
+  color:#fff !important;
+  opacity: 100% !important;
+}
+.swiper-wrapper {
+  padding: 20px 0;
+}
+
+.card-text{
+  font-size: 14px !important;
+}
+
+.swiper-slide {
+  transition: 250ms all;
+  min-width:230px;
+
+  &:hover {
+    
+      z-index: 1;
+      box-shadow: 0 0px 8px 0 rgb(0 0 0 / 15%);
+  }
+   &:hover .card .card-body{
+      
+  }
+
+  &:first-child:hover{
+      
+  }
+
+  &:last-child:hover{
+     
+  }
+}
 
