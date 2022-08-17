@@ -905,7 +905,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
         ReferencesBlockComponent,
-        NewAssessmentDialogComponent
+        NewAssessmentDialogComponent,
         Crrdd1AmComponent,
         Crrdd2CmComponent,
         Crrdd3CcmComponent,

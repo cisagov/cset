@@ -159,7 +159,7 @@ export class ChartService {
               + (<Number>context.dataset.data[context.dataIndex]).toFixed() + percent )
           }
         },
-       
+
       }
     };
 
@@ -372,6 +372,51 @@ export class ChartService {
               label: ((context) =>
                 context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                 + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
+            }
+          }
+        }
+      }
+    });
+  }
+
+  /**
+  *
+  */
+  buildCrrPercentagesOfPracticesBarChart(canvasId: string, x: any) {
+    let tempChart = Chart.getChart(canvasId);
+    if (tempChart) {
+      tempChart.destroy();
+    }
+    return new Chart(canvasId, {
+      type: 'bar',
+      data: {
+        labels: x.labels,
+        datasets: [{
+          data: x.values,
+          backgroundColor: "rgb(21, 124, 142)",
+          borderColor: "rgb(21,124,142)",
+          borderWidth: 0
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        hover: { mode: null },
+        events: [],
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            min: 0,
+            max: 100,
+            beginAtZero: true,
+            ticks: {
+              stepSize: 10,
+              callback: function (value) {
+                return value + "%";
+              }
             }
           }
         }
