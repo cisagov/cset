@@ -449,7 +449,8 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
-
+import { SwiperModule } from 'swiper/angular';
+import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 
 @NgModule({
     imports: [
@@ -545,6 +546,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         NgbModule,
         NgxChartsModule,
         TooltipModule,
+        SwiperModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -855,7 +857,8 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
         McQuestionComponent,
         McOptionComponent,
         GuidanceBlockComponent,
-        ReferencesBlockComponent
+        ReferencesBlockComponent,
+        NewAssessmentDialogComponent
     ],
     providers: [
         ConfigService,
