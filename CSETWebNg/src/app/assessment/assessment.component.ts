@@ -48,7 +48,7 @@ import { NavigationService } from '../services/navigation/navigation.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AssessmentComponent implements AfterContentChecked {
+export class AssessmentComponent implements OnInit, AfterContentChecked {
   innerWidth: number;
   innerHeight: number;
 
@@ -64,26 +64,18 @@ export class AssessmentComponent implements AfterContentChecked {
    */
   lockNav = true;
 
-  minWidth = 960;
+  widthBreakpoint = 960;
   scrollTop = 0;
 
 
   @Output() navSelected = new EventEmitter<string>();
+
   @ViewChild('sNav')
   sideNav: MatSidenav;
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.innerHeight = window.innerHeight;
-
-    // show/hide lock/unlock the nav drawer based on available width
-    if (this.innerWidth < this.minWidth) {
-      this.expandNav = false;
-      this.lockNav = false;
-    } else {
-      this.expandNav = true;
-      this.lockNav = true;
-    }
+    this.evaluateWindowSize();
   }
 
   constructor(
@@ -102,6 +94,10 @@ export class AssessmentComponent implements AfterContentChecked {
     if (localStorage.getItem('tree')) {
       this.navSvc.buildTree();
     }
+  }
+
+  ngOnInit(): void {
+    this.evaluateWindowSize();
   }
 
   ngAfterContentChecked() {
@@ -125,7 +121,24 @@ export class AssessmentComponent implements AfterContentChecked {
       return 'over';
     }
 
-    return innerWidth < 960 ? 'over' : 'side';
+    return this.innerWidth < this.widthBreakpoint ? 'over' : 'side';
+  }
+
+  /**
+   * Evaluates sidenav drawer behavior based on window size
+   */
+  evaluateWindowSize() {
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.innerHeight;
+
+    // show/hide lock/unlock the nav drawer based on available width
+    if (this.innerWidth < this.widthBreakpoint) {
+      this.expandNav = false;
+      this.lockNav = false;
+    } else {
+      this.expandNav = true;
+      this.lockNav = true;
+    }
   }
 
   /**

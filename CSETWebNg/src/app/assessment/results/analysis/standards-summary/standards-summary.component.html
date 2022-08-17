@@ -20,11 +20,6 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 --------------------------> 
-<style>
-  .text-size-80 {
-    font-size: .8rem !important;
-  }
-</style>
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
   <h3>Standards Summary</h3>
   <div id="chart" class="mb-3">
@@ -36,7 +31,7 @@
     </div>
   </div>
   <div class="data" [hidden]="!initialized">
-    <table class="table" [class.text-size-80]="layoutSvc.hp">
+    <table class="table" [class.fs-smaller]="layoutSvc.hp">
       <th *ngIf="dataSets?.length > 1">Standard</th>
       <th>Answer </th>
       <th class="align-right">Number</th>
