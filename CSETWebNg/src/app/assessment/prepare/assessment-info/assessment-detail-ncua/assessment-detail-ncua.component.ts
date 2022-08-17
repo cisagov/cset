@@ -29,6 +29,9 @@ import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NCUAService } from '../../../../services/ncua.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -45,6 +48,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   contactInitials: string = "";
 
+
+  myControl = new FormControl('');
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
+
   /**
    * 
    */
@@ -60,8 +68,18 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+    
   isAnExamination() {
     if (this.assessment.maturityModel?.modelName === 'ISE') {
       return true;
