@@ -68,13 +68,18 @@
         </div>
     </ng-container>
 
-
-
     <div class="form-group">
         <label class="mb-1" for="creditUnion">Credit Union Name</label>
-        <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-            (change)="update($event)" tabindex="0">
+        <input type="text" maxlength="100" class="form-control" 
+               id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+               [formControl]="myControl" [matAutocomplete]="auto" (change)="update($event)" tabindex="0">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+            </mat-option>
+        </mat-autocomplete>
     </div>
+
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="citySite">City Or Site Name</label>
