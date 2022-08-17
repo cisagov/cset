@@ -147,7 +147,7 @@
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
 
         <!-- table for larger layouts -->
-        <table *ngIf="!hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
             <th *ngIf="isTSA" style="width: 5%;">Source</th>
@@ -210,11 +210,11 @@
         </table>
 
         <!-- table for handset portrait -->
-        <table *ngIf="hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>            
             <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>           
-            <th aria-label="Actions" style="width: 5%" *ngIf="hp"></th>
+            <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
             <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
                 <td>
                     <button tabindex="0"

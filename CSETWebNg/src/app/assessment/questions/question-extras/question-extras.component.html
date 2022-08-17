@@ -157,7 +157,7 @@
 
     <app-in-view *ngIf="autoLoadSupplemental()" (inView$)="forceLoadSupplemental()"></app-in-view>
 
-    <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="handsetPortrait">
+    <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="layoutSvc.hp">
 
         <div *ngIf="extras == null">
             <div class="spinner-container" style="margin: .5em auto">

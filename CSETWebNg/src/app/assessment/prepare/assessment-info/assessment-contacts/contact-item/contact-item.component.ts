@@ -32,6 +32,7 @@ import { AssessmentService, Role } from "../../../../../services/assessment.serv
 import { AuthenticationService } from "../../../../../services/authentication.service";
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
+import { LayoutService } from "../../../../../services/layout.service";
 
 @Component({
   selector: "app-contact-item",
@@ -66,7 +67,6 @@ export class ContactItemComponent implements OnInit {
   roles: Role[];
   editMode: boolean;
 
-  handsetPortrait = false;
 
   constructor(
     private configSvc: ConfigService,
@@ -74,16 +74,12 @@ export class ContactItemComponent implements OnInit {
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) {
     this.editMode = true;
   }
 
   ngOnInit() {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
-    });
-
     if (this.roles == null) {
       this.assessSvc.refreshRoles().subscribe((response: Role[]) => {
         this.assessSvc.roles = response;
@@ -112,8 +108,8 @@ export class ContactItemComponent implements OnInit {
     const body = this.configSvc.config.defaultInviteTemplate;
 
     this.emailDialog = this.dialog.open(EmailComponent, {
-      width: this.handsetPortrait ? '90%' : '',
-      maxWidth: this.handsetPortrait ? '90%' : '',
+      width: this.layoutSvc.hp ? '90%' : '',
+      maxWidth: this.layoutSvc.hp ? '90%' : '',
       data: {
         showContacts: false,
         contacts: [this.contact],

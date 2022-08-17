@@ -214,8 +214,8 @@ import { StandardDocumentsComponent } from './builder/standard-documents/standar
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { RequiredDocumentService } from './services/required-document.service';
 import { IRPService } from './services/irp.service';
-import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
-import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
+import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
@@ -292,7 +292,7 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
-import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
+import { AcetDonutChartComponent } from './reports/acet-donut-chart/acet-donut-chart.component';
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
@@ -449,6 +449,8 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
+import { SwiperModule } from 'swiper/angular';
+import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -477,7 +479,6 @@ import { Crrdd7RmComponent } from './reports/crr/crr-report/crr-domain-detail/cr
 import { Crrdd8EdmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd8-edm/crrdd8-edm/crrdd8-edm.component';
 import { Crrdd9TaComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd9-ta/crrdd9-ta/crrdd9-ta.component';
 import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd10-sa/crrdd10-sa/crrdd10-sa.component';
-
 
 @NgModule({
     imports: [
@@ -573,6 +574,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         NgbModule,
         NgxChartsModule,
         TooltipModule,
+        SwiperModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -615,7 +617,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         RequiredDocsComponent,
         IRPComponent,
         DiagramComponent,
-        MatDetailComponent,
+        AcetDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -654,7 +656,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         UploadExportComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        ACETDashboardComponent,
+        AcetDashboardComponent,
         AdminComponent,
         SetListComponent,
         CustomSetComponent,
@@ -733,7 +735,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         CsetOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
-        ChartsDonutComponent,
+        AcetDonutChartComponent,
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,
@@ -902,6 +904,8 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
+        ReferencesBlockComponent,
+        NewAssessmentDialogComponent
         Crrdd1AmComponent,
         Crrdd2CmComponent,
         Crrdd3CcmComponent,
