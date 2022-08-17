@@ -1,18 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { CrrReportModel } from '../../../../models/report.model';
+import { ChartService } from './../../../../services/chart.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-crr-percentage-of-practices',
   templateUrl: './crr-percentage-of-practices.component.html',
   styleUrls: ['./../crr-report.component.scss']
 })
-export class CrrPercentageOfPracticesComponent implements OnInit {
+export class CrrPercentageOfPracticesComponent implements OnChanges {
 
   @Input() model: CrrReportModel;
 
-  constructor() { }
+  chart: Chart;
 
-  ngOnInit(): void {
+  constructor(private chartSvc: ChartService) { }
+
+  ngOnChanges(): void {
+    if (this.model) {
+      this.chart = this.chartSvc.buildCrrPercentagesOfPracticesBarChart('barChart', this.model.reportChart);
+    }
   }
-
 }
