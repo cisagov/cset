@@ -193,7 +193,7 @@ export class MaturityService {
    * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
    * the response to a specific domain.
    */
-  getStructure(domainAbbrev: string) {
+  getStructure(domainAbbrev: string = '') {
     var url = this.configSvc.apiUrl + 'MaturityStructure'
     if (domainAbbrev != '') {
       url = url + '?domainAbbrev=' + domainAbbrev;
@@ -276,7 +276,7 @@ export class MaturityService {
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
       { responseType: 'text' }
     );
   }
