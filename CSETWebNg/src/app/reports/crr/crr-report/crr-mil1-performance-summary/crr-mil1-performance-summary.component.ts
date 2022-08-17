@@ -10,13 +10,18 @@ import { CrrService } from '../../../../services/crr.service';
 export class CrrMil1PerformanceSummaryComponent implements OnInit {
 
   @Input() model: CrrReportModel;
-  mil1FullAnswerDistribChartHtml = '';
+  mil1FullAnswerDistribChartHtml: string = '';
+  legend: string = '';
 
   constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getMil1AnswerDistribHtml().subscribe((resp: any) => {
+    this.crrSvc.getMil1FullAnswerDistribHtml().subscribe((resp: any) => {
       this.mil1FullAnswerDistribChartHtml = resp.html;
+    })
+
+    this.crrSvc.getMil1PerformanceSummaryLegend().subscribe((resp: any) => {
+      this.legend = resp.html;
     })
   }
 

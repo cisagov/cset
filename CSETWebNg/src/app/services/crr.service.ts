@@ -47,7 +47,11 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 
-  getMil1AnswerDistribHtml() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/mil1AnswerDistribHtml');
+  getMil1FullAnswerDistribHtml() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/mil1FullAnswerDistribHtml');
+  }
+
+  getMil1PerformanceSummaryLegend() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/mil1PerformanceSummaryLegend');
   }
 }
