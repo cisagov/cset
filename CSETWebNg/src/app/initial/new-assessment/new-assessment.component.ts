@@ -24,11 +24,12 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
   tempArray=[,,,,,,,,,];
   config: SwiperOptions = {
-    slidesPerView: 5,
+    slidesPerView: 1,
     spaceBetween: 5,
     slidesPerGroup: 1, 
     centeredSlides:true,
     loop:true, 
+    navigation:true,
     breakpoints: {
       200: {
         slidesPerView:1,
@@ -36,22 +37,20 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       },
       620:{
         slidesPerView:2,
-        centeredSlides: true, 
-        spaceBetween: 20
+        centeredSlides: true
       },
       800: {
         slidesPerView: 3, 
         centeredSlides:true
-       
-      },
-      920: {
-        slidesPerView:4,
-        navigation: true
       },
       1220:{
         slidesPerView:5,
-        centeredSlides: true, 
-        navigation: true
+        centeredSlides: true
+      }
+    }, 
+    on: {
+      resize: ()=>{
+        this.checkNavigation();
       }
     }
   };
@@ -60,10 +59,33 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.checkNavigation();
+    });
+    
   }
   ngAfterViewInit(): void {
-    console.log(this.swiper.swiperRef)
+    this.checkNavigation();
   }
+
+  checkNavigation(){
+    let swiperPrev = document.querySelector('.swiper-button-prev');
+    let swiperNext = document.querySelector('.swiper-button-next');
+    if(window.innerWidth < 620){
+      console.log('success', window.innerWidth)
+      console.log(swiperPrev);
+      if(swiperPrev != null && swiperNext != null){
+        swiperPrev.setAttribute('style','display:none');
+        swiperNext.setAttribute('style','display:none');
+      }
+    } else {
+      if(swiperPrev != null && swiperNext != null){
+        swiperPrev.removeAttribute('style');
+        swiperNext.removeAttribute('style');
+      }
+    }
+  }
+
   onSwiper([swiper]){
     console.log(this.swiper);
   }
