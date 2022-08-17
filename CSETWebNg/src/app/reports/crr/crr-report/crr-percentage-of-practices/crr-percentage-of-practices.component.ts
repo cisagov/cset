@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/report.model';
+import { CrrReportModel } from '../../../../models/reports.model';
 import { ChartService } from './../../../../services/chart.service';
 import { Chart } from 'chart.js';
 

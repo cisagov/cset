@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CrrService } from './../../../services/crr.service';
-import { CrrReportModel } from './../../../models/report.model';
+import { CrrReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 
 @Component({

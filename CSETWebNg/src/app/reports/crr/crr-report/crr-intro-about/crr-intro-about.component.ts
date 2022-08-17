@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/report.model';
+import { CrrReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-intro-about',

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
-import { CrrReportModel } from './../../../../models/report.model';
+import { CrrReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-cover-sheet2',
