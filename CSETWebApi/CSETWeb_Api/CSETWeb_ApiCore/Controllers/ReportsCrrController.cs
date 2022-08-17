@@ -11,6 +11,7 @@ using System.Xml.XPath;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers.ReportWidgets;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -95,6 +96,22 @@ namespace CSETWebCore.Api.Controllers
 
             // return the svg
             return Content(heatmap.ToString(), "image/svg+xml");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/mil1AnswerDistribHtml")]
+
+        public IActionResult getMil1AnswerDistribHtml()
+        {
+            var totalDistribution = _crr.MIL1FullAnswerDistrib();
+            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+            totalBarChartInput.AnswerCounts = new List<int>
+                                        { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+            return Ok(new ScoreBarChart(totalBarChartInput).ToString());
         }
 
         private CrrResultsModel GenerateCrrResults()
