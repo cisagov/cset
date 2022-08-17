@@ -13,6 +13,8 @@ import { MaturityService } from '../../services/maturity.service';
 export class EdmDeficiencyComponent implements OnInit {
   response: any;
 
+  loading: boolean = false;
+
   constructor(
     public analysisSvc: ReportAnalysisService,
       public reportSvc: ReportService,
@@ -20,13 +22,15 @@ export class EdmDeficiencyComponent implements OnInit {
       private titleService: Title,
       public maturitySvc: MaturityService
     ) { }
-  
+
     ngOnInit() {
+      this.loading = true;
       this.titleService.setTitle("Deficiency Report - EDM");
-  
+
       this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
         (r: any) => {
-          this.response = r;        
+          this.response = r;
+          this.loading = false;
         },
         error => console.log('Deficiency Report Error: ' + (<Error>error).message)
       );

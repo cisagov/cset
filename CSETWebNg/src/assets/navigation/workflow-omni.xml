@@ -11,8 +11,7 @@
         <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM)" />
 
         <!-- model select (this will be going away when the Gallery Interface is ready, but will still be needed for other skins?) -->
-        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" 
-            condition="OPTION:MATURITY MATURITY-NOT:ISE SOURCE-NOT:TSA" />
+        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" condition="OPTION:MATURITY MATURITY-NOT:ISE SOURCE-NOT:TSA" />
 
         <!-- Standards selection screen -->
         <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="OPTION:STANDARD" />
@@ -49,12 +48,17 @@
     <node displaytext="Assessment" id="phase-assessment">
         <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
 
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NOT:CIS MATURITY-NOT:ACET MATURITY-NOT:ISE" />
 
-        <!-- CSET or TSA skin -> all maturity models except CIS -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-ANY(,TSA) OPTION:MATURITY MATURITY-NOT:CIS" />
+        <!-- The scenario that will normally show -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS)" />
 
+        <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
 
+        <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
+        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY-ANY(ACET,ISE) " />
+
+        <!-- CIS questions displayed in tree structure -->
         <node displaytext="CIS Questions" condition="MATURITY:CIS">
             <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management">
                 <node id="maturity-questions-nested-2306" path="assessment/{:id}/maturity-questions-nested/2306" displaytext="1. Cybersecurity Leadership" />
@@ -105,7 +109,6 @@
         </node>
 
 
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY-ANY(ACET,ISE) " />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
@@ -170,7 +173,7 @@
 
 
         <!-- Results - ACET -->
-        <node displaytext="ACET Maturity Results" id="acet-maturity" path="assessment/{:id}/results/acet-maturity" condition="MATURITY:ACET" />
+        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:ACET" />
         <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:ACET" />
 
 
@@ -195,7 +198,7 @@
 
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:" />
+        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:CSET" />
 
         <node displaytext="Share Assessment With CISA" id="analytics" path="assessment/{:id}/results/analytics" condition="HIDE" />
 

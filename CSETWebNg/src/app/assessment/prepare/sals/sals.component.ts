@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { SalService } from '../../../services/sal.service';
 import { Sal } from '../../../models/sal.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
   selector: 'app-sals',
@@ -40,7 +42,9 @@ export class SalsComponent implements OnInit {
 
   constructor(
     public salsSvc: SalService,
-    public navSvc: NavigationService) {
+    public navSvc: NavigationService,
+    public layoutSvc: LayoutService
+    ) {
   }
 
   ngOnInit() {

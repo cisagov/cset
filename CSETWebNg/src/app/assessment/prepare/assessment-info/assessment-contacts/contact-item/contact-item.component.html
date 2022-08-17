@@ -24,7 +24,7 @@
 <div class="d-flex align-items-center flex-11a">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div *ngIf="!handsetPortrait" class="d-flex my-2 pr-2 br-standard align-items-center"
+    <div *ngIf="!layoutSvc.hp" class="d-flex my-2 pr-2 br-standard align-items-center"
       [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
@@ -80,7 +80,7 @@
         /* border: 1px solid pink; */
       }
     </style>
-    <div *ngIf="handsetPortrait" class="rkw d-flex flex-row justify-content-between my-2 p-2 br-standard"
+    <div *ngIf="layoutSvc.hp" class="rkw d-flex flex-row justify-content-between my-2 p-2 br-standard"
     [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start">
