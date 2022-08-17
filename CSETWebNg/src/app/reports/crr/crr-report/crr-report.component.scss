@@ -390,7 +390,7 @@ div.widget {
 }
 
 /* VARIABLES  */
-:root {
+:host {
   --page-width: 792px;
   --table-margin: 0px;
   --table-width: calc(var(--page-width) - calc(var(--table-margin)*2));
