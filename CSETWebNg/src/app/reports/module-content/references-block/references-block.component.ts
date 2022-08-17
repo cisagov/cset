@@ -11,7 +11,7 @@ export class ReferencesBlockComponent implements OnInit {
   sourceDocs: any[];
 
   @Input()
-  resourceDocs: any[];
+  additionalDocs: any[];
 
   @Input()
   referenceText: string;
@@ -23,8 +23,8 @@ export class ReferencesBlockComponent implements OnInit {
       this.sourceDocs = [];
     }
 
-    if (this.resourceDocs == null) {
-      this.resourceDocs = [];
+    if (this.additionalDocs == null) {
+      this.additionalDocs = [];
     }
   }
 

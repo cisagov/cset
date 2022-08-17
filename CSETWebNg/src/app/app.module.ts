@@ -214,8 +214,8 @@ import { StandardDocumentsComponent } from './builder/standard-documents/standar
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { RequiredDocumentService } from './services/required-document.service';
 import { IRPService } from './services/irp.service';
-import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
-import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
+import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
@@ -292,7 +292,7 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
-import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
+import { AcetDonutChartComponent } from './reports/acet-donut-chart/acet-donut-chart.component';
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
@@ -313,7 +313,7 @@ import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-com
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
@@ -589,7 +589,7 @@ import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/ne
         RequiredDocsComponent,
         IRPComponent,
         DiagramComponent,
-        MatDetailComponent,
+        AcetDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -628,7 +628,7 @@ import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/ne
         UploadExportComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        ACETDashboardComponent,
+        AcetDashboardComponent,
         AdminComponent,
         SetListComponent,
         CustomSetComponent,
@@ -707,7 +707,7 @@ import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/ne
         CsetOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
-        ChartsDonutComponent,
+        AcetDonutChartComponent,
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,

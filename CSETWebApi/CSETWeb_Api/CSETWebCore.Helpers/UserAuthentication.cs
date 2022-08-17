@@ -19,17 +19,17 @@ namespace CSETWebCore.Helpers
     {
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _transactionSecurity;
-        private readonly IHostingEnvironment _hostingEnvironment;
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
-            ITokenManager transactionSecurity, IHostingEnvironment hostingEnvironment, CSETContext context)
+            ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity, CSETContext context)
         {
             _password = password;
             _transactionSecurity = transactionSecurity;
             _userBusiness = userBusiness;
-            _hostingEnvironment = hostingEnvironment;
+            _localInstallationHelper = localInstallationHelper;
             _context = context;
         }
 
@@ -97,7 +97,7 @@ namespace CSETWebCore.Helpers
             string primaryEmailSO = "";
 
             // Read the file system for the LOCAL-INSTALLATION file put there at install time
-            if (!IsLocalInstallation(login.Scope))
+            if (!_localInstallationHelper.IsLocalInstallation())
             {
                 return null;
             }
@@ -154,7 +154,7 @@ namespace CSETWebCore.Helpers
                     var tempu = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                     if (tempu != null)
                         userIdSO = tempu.UserId;
-                    determineIfUpgradedNeededAndDoSo(userIdSO,tmpcontext);
+                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO,tmpcontext);
                 }
                 else
                 {
@@ -188,46 +188,6 @@ namespace CSETWebCore.Helpers
 
                 return resp;
             }
-        }
-
-        private bool IsUpgraded = false;
-
-        public void determineIfUpgradedNeededAndDoSo(int newuserID, CSETContext tmpContext)
-        {
-            //look to see if the localuser exists
-            //if so then get that user id and changes all 
-            if (!IsUpgraded)
-            {
-                var user = tmpContext.USERS.Where(x => x.PrimaryEmail == "localuser").FirstOrDefault();
-                if (user != null)
-                {
-                    var contacts = tmpContext.ASSESSMENT_CONTACTS.Where(x => x.UserId == user.UserId).ToList();
-                    if(contacts.Any())
-                        for (int i = 0; i < contacts.Count(); i++)
-                            contacts[i].UserId = newuserID;
-                    
-                    tmpContext.ASSESSMENT_CONTACTS.UpdateRange(contacts);
-                    tmpContext.SaveChanges();
-                }
-            }
-            IsUpgraded = true;
-        }
-
-        /// <summary>
-        /// Returns 'true' if the installation is 'local' (self-contained using Windows identity).
-        /// The local installer will place an empty file (LOCAL-INSTALLATION) in the website folder
-        /// and the existence of the file indicates if the installation is local.
-        /// </summary>
-        /// <param name="app_code"></param>
-        /// <returns></returns>
-        public bool IsLocalInstallation(String app_code)
-        {
-            string physicalAppPath = _hostingEnvironment.ContentRootPath;
-
-            return File.Exists(Path.Combine(physicalAppPath, "LOCAL-INSTALLATION"));
-        }
-
-
-        
+        }        
     }
 }
