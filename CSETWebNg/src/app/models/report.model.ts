@@ -22,6 +22,10 @@
 //
 ////////////////////////////////
 import { AssessmentDetail } from './assessment-info.model';
+import { CrrResultsModel } from './CrrResultsModel';
+import { CrrScoringHelper } from './CrrScoringHelper';
+import { EdmScoreParent } from './EdmScoreParent';
+import { CrrReportChart } from './CrrReportChart';
 
 export interface MaturityBasicReportData {
   deficienciesList: any[];
@@ -34,14 +38,14 @@ export interface MaturityBasicReportData {
 }
 
 export interface CrrReportModel {
-  crrResultsData: any;
+  crrResultsData: CrrResultsModel;
   assessmentDetails: AssessmentDetail;
-  parentScores: any[];
-  crrScores: any;
-  reportChart: { labels: string[]; values: number[] };
+  parentScores: EdmScoreParent[];
+  crrScores: CrrScoringHelper;
+  reportChart: CrrReportChart;
   criticalService: string;
   reportData: MaturityBasicReportData;
-  pageNumbers: any;
+  pageNumbers: {[key:string]: number};
   includeResultsStylesheet: boolean;
 }
 
