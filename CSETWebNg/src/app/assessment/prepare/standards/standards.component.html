@@ -36,8 +36,8 @@
       </div>
     </div>
 
-    <div class="d-flex" [ngClass]="{'flex-row': !hp, 'flex-column': hp }">
-      <div class="quick-info-container p-2" [class.mr-2]="!hp" [class.mb-2]="hp">
+    <div class="d-flex" [ngClass]="{'flex-row': !layoutSvc.hp, 'flex-column': layoutSvc.hp }">
+      <div class="quick-info-container p-2" [class.mr-2]="!layoutSvc.hp" [class.mb-2]="layoutSvc.hp">
         <div class="text-nowrap text-center">Requirements</div>
         <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
           standards?.requirementCount }}</div>

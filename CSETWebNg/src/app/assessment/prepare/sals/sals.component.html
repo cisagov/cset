@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedSal != 'GENERAL'">
-        <div [class.ml-2]="!hp" class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
+        <div [class.ml-2]="!layoutSvc.hp" class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
           <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">Confidentiality</div>
           <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">{{
             this.salsSvc.selectedSAL.cLevel }}</div>

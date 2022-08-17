@@ -21,12 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer, Question, Option, InconsistentOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
+import { LayoutService } from '../../../../../services/layout.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
@@ -46,7 +47,6 @@ export class OptionBlockNestedComponent implements OnInit {
   optionGroupName = '';
   sectionId = 0;
 
-  handsetPortrait = false;
 
   // temporary debug aids
   showIdTag = this.configSvc.showQuestionAndRequirementIDs();
@@ -58,7 +58,7 @@ export class OptionBlockNestedComponent implements OnInit {
     private utilSvc: Utilities,
     private configSvc: ConfigService,
     private route: ActivatedRoute,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
   ) {
 
   }
@@ -67,10 +67,6 @@ export class OptionBlockNestedComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
-    });
-
     this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
     this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
