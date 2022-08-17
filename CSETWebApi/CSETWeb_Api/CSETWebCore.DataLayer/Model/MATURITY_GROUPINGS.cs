@@ -21,7 +21,7 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         public int Grouping_Id { get; set; }
-        [StringLength(200)]
+        [StringLength(500)]
         [Unicode(false)]
         public string Title { get; set; }
         [StringLength(2000)]
