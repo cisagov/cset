@@ -34,7 +34,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        public virtual DbSet<ASSESSMENT_ICONS> ASSESSMENT_ICONS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
@@ -117,6 +116,11 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<FRAMEWORK_TIER_TYPE> FRAMEWORK_TIER_TYPE { get; set; }
         public virtual DbSet<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         public virtual DbSet<FiltersNormalized> FiltersNormalized { get; set; }
+        public virtual DbSet<GALLERY_GROUP> GALLERY_GROUP { get; set; }
+        public virtual DbSet<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
+        public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
+        public virtual DbSet<GALLERY_LAYOUT> GALLERY_LAYOUT { get; set; }
+        public virtual DbSet<GALLERY_ROWS> GALLERY_ROWS { get; set; }
         public virtual DbSet<GENERAL_SAL> GENERAL_SAL { get; set; }
         public virtual DbSet<GENERAL_SAL_DESCRIPTIONS> GENERAL_SAL_DESCRIPTIONS { get; set; }
         public virtual DbSet<GEN_FILE> GEN_FILE { get; set; }
@@ -1506,6 +1510,43 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of FiltersNormalized records");
             });
 
+            modelBuilder.Entity<GALLERY_GROUP>(entity =>
+            {
+                entity.HasKey(e => e.Group_Id)
+                    .HasName("PK_GALLERY_GROUP_1");
+            });
+
+            modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
+            {
+                entity.HasKey(e => new { e.Group_Id, e.Column_Index });
+
+                entity.HasOne(d => d.Gallery_Item)
+                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
+                    .HasForeignKey(d => d.Gallery_Item_Id)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
+            });
+
+            modelBuilder.Entity<GALLERY_ROWS>(entity =>
+            {
+                entity.HasKey(e => new { e.Layout_Name, e.Row_Index });
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GALLERY_ROWS)
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_GROUP");
+
+                entity.HasOne(d => d.Layout_NameNavigation)
+                    .WithMany(p => p.GALLERY_ROWS)
+                    .HasForeignKey(d => d.Layout_Name)
+                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_LAYOUT");
+            });
+
             modelBuilder.Entity<GENERAL_SAL>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Sal_Name })
@@ -1862,11 +1903,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Analytics_Rollup_Level)
                     .HasDefaultValueSql("((1))")
                     .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
-
-                entity.HasOne(d => d.Icon)
-                    .WithMany(p => p.MATURITY_MODELS)
-                    .HasForeignKey(d => d.Icon_Id)
-                    .HasConstraintName("FK_MATURITY_MODELS_ASSESSMENT_ICONS");
             });
 
             modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>
@@ -2786,11 +2822,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
 
                 entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
-
-                entity.HasOne(d => d.Icon)
-                    .WithMany(p => p.SETS)
-                    .HasForeignKey(d => d.Icon_Id)
-                    .HasConstraintName("FK_SETS_ASSESSMENT_ICONS");
 
                 entity.HasOne(d => d.Set_Category)
                     .WithMany(p => p.SETS)
