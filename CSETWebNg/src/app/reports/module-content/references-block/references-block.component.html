@@ -7,10 +7,10 @@
         </svg>
     </div>
 
-    <div *ngIf="sourceDocs.length > 0" class="mb-3">
+    <div class="mb-3">
         <table class="resource-table w-100">
-            <tr>
-                <td>
+            <tr *ngIf="sourceDocs.length > 0">
+                <td class="w-75">
                     <strong>Source Documents</strong>
                 </td>
                 <td class="pl-3">
@@ -25,20 +25,15 @@
                     {{d.sectionRef}}{{d.section_Ref}}
                 </td>
             </tr>
-        </table>
-    </div>
-
-    <div *ngIf="resourceDocs.length > 0" class="mb-3">
-        <table class="resource-table w-100">
-            <tr>
-                <td>
-                    <strong>Help Documents</strong>
+            <tr *ngIf="additionalDocs.length > 0">
+                <td class="w-75" [class.pt-4]="sourceDocs.length > 0">
+                    <strong>Additional Documents</strong>
                 </td>
-                <td class="pl-3">
+                <td class="pl-3" [class.pt-4]="sourceDocs.length > 0">
                     <strong>Section</strong>
                 </td>
             </tr>
-            <tr *ngFor="let d of resourceDocs">
+            <tr *ngFor="let d of additionalDocs">
                 <td class="align-top">
                     {{d.title}}
                 </td>
@@ -55,7 +50,7 @@
     </div>
 
     <div style="font-style: italic"
-        *ngIf="sourceDocs.length === 0 && resourceDocs.length === 0 && (!referenceText || referenceText.length === 0)">
+        *ngIf="sourceDocs.length === 0 && additionalDocs.length === 0 && (!referenceText || referenceText.length === 0)">
         (No reference documents or reference text defined)
     </div>
 </div>

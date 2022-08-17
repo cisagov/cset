@@ -32,6 +32,7 @@ import { CyberStandard } from "./../../../models/standards.model";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
 import { NavigationService } from "../../../services/navigation/navigation.service";
 import { EnableFeatureService } from "../../../services/enable-feature.service";
+import { LayoutService } from "../../../services/layout.service";
 
 @Component({
   selector: "app-standards",
@@ -45,12 +46,14 @@ export class StandardsComponent implements OnInit {
   dialogRef: MatDialogRef<OkayComponent>;
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
+
   constructor(
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
     public navSvc: NavigationService,
     private enableFeatureSvc: EnableFeatureService,
+    public layoutSvc: LayoutService,
     public dialog: MatDialog
   ) { }
 

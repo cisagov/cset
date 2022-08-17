@@ -14,7 +14,7 @@ namespace CSETWebCore.Model.Set
         public List<string> SalLevels { get; set; } = new List<string>();
         public string SupplementalInfo { get; set; }
         public List<ReferenceDoc> SourceDocs { get; set; } = new List<ReferenceDoc>();
-        public List<ReferenceDoc> ResourceDocs { get; set; } = new List<ReferenceDoc>();
+        public List<ReferenceDoc> AdditionalDocs { get; set; } = new List<ReferenceDoc>();
         public List<QuestionDetail> Questions { get; set; } = new List<QuestionDetail>();
     }
 }

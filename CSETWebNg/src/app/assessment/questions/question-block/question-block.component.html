@@ -30,7 +30,7 @@
       <div class="sub-head-2">
         <span *ngIf="mySubCategory.subCategoryHeadingText != ''">{{ mySubCategory.subCategoryHeadingText }}</span>
       </div>
-      <div class="d-flex justify-content-end align-items-center flex-00a">
+      <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
         <span [class.display-hidden]="!mySubCategory.hasReviewItems"
           class="d-flex justify-content-center align-items-center flex-00a"
           matTooltip="One or more controls in this category requires further review.">
@@ -39,6 +39,18 @@
         </span>
         <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
         <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
+      </div>
+
+      <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
+        <div>
+          <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+          <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
+        </div>
+        <span [class.display-hidden]="!mySubCategory.hasReviewItems"
+          class="d-flex justify-content-center align-items-center flex-00a"
+          matTooltip="One or more controls in this category requires further review.">
+          <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+        </span>
       </div>
     </div>
     <div class="header-question" *ngIf="mySubCategory.headerQuestionText !== null
@@ -80,11 +92,11 @@
 
 
   <!-- this houses all of the questions -->
-  <div class="subcat-question-list" style="padding: 1em;" [class.display-none]="!mySubCategory.expanded">
+  <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
     <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
       [class.display-none]="!q.visible">
 
-      <div class="w-100 d-flex flex-row" *ngIf="!handsetPortrait">
+      <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
         <div class="number-and-text">
           <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
           <div style="width: 100%;">
@@ -126,7 +138,7 @@
 
 
 
-      <div class="w-100" *ngIf="handsetPortrait">
+      <div class="w-100" *ngIf="layoutSvc.hp">
         <div class="">
           <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
           <div class="w-100 mb-3">

@@ -16,6 +16,8 @@ import { MaturityService } from '../../services/maturity.service';
 export class AcetDeficencyComponent implements OnInit {
   response: any;
 
+  loading: boolean = false;
+
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
@@ -25,11 +27,13 @@ export class AcetDeficencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.titleService.setTitle("Gap Report - ACET");
 
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
+        this.loading = false;
       },
       error => console.log('Gap Report Error: ' + (<Error>error).message)
     );
