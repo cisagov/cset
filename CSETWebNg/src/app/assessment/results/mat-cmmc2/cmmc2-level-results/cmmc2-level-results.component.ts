@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit, HostListener } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
@@ -43,6 +43,12 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
   dataError: boolean;
   cmmcModel: any;
 
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.evaluateWindowSize();
+  }
+
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
@@ -57,17 +63,22 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
+    this.refreshChart();
+  }
+
+  evaluateWindowSize() {
+    this.refreshChart();
+  }
+
+  refreshChart() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.response = r;
-
       this.response.reverse();
 
       r.forEach(level => {
-
         let g = level.answerDistribution.find(a => a.value == 'Y');
         level.compliancePercent = !!g ? g.percent.toFixed() : 0;
         level.nonCompliancePercent = 100 - level.compliancePercent;
-
 
         // build the data object for Chart
         var x: any = {};

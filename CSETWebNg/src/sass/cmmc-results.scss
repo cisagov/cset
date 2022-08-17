@@ -52,6 +52,12 @@ SOFTWARE.
   --grid-background-highlight: rgba(0, 0, 0, .08)
 }
 
+$cmmc-blue-1: #1f5284;
+
+
+.w-500px {
+  width: 500px !important;
+}
 
 .piechart {
   background-image: conic-gradient(gray 360deg)
@@ -96,7 +102,7 @@ body,
   display: flex;
 }
 
-.levelIndicatorContainer {
+.level-indicator-container {
   background: linear-gradient(5deg, #1f5284 0%, rgba(58, 128, 194, 1) 100%);
   color: white;
   border-radius: 5%;
@@ -110,14 +116,14 @@ body,
   justify-content: center;
 }
 
-.levelIndicatorContainer .rbTitle {
+.level-indicator-container .rbTitle {
   margin-top: 0.4em;
   line-height: 1.2em;
   font-size: 2em;
   text-align: center;
 }
 
-.levelIndicatorContainer .rbLevel {
+.level-indicator-container .rbLevel {
   font-size: 4em;
   font-weight: 900;
   text-align: center;
@@ -126,18 +132,19 @@ body,
 
 .level-indicator-container-hp {
   display: none !important;
-  background-color: #1f5284;
+  background-color: $cmmc-blue-1;
   border-radius: .25rem;
   padding: .3rem;
   color: #fff;
 }
 
-.level-indicator-container-hp .rbTitle {
 
-}
-
-.level-indicator-container-hp .rbLevel {
-
+.domain-row td {
+  background-color: #fff;
+  font-weight: bold;
+  padding-top: 2rem;
+  border-bottom: 1px solid #000;
+  vertical-align: bottom;
 }
 
 .pieChartLabelContainer {
@@ -240,7 +247,6 @@ body,
 }
 
 .gridGraphLabels {
-  /* background: rgba(0,150,0,.5); */
   display: flex;
   flex-shrink: 1;
   flex-direction: column;
@@ -251,6 +257,11 @@ body,
   align-self: flex-end;
   margin-right: 1em;
   align-items: center;
+}
+
+.gridGraphLabelHp {
+  align-self: unset;
+  line-height: 1;
 }
 
 .gridGraphDataContainer {
@@ -322,7 +333,7 @@ body,
 .targetAndAchievedLevels div {}
 
 
-.levelIndicatorContainer {
+.level-indicator-container {
   background: linear-gradient(5deg, rgba(31, 82, 132, 1) 0%, rgba(58, 128, 194, 1) 100%);
   color: white;
   border-radius: 5%;
@@ -332,14 +343,14 @@ body,
   margin: 0 2em;
 }
 
-.levelIndicatorContainer .rbTitle {
+.level-indicator-container .rbTitle {
   margin-top: 0.4em;
   line-height: 1.2em;
   font-size: 2em;
   text-align: center;
 }
 
-.levelIndicatorContainer .rbLevel {
+.level-indicator-container .rbLevel {
   font-size: 4em;
   font-weight: 900;
   text-align: center;

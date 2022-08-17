@@ -30,70 +30,41 @@
     </div>
 
     <div class="d-flex flex-column flex-11a mt-3" [class.d-none]="!initialized">
-        <div *ngIf="initialized && !dataError">
-            <h4>CMMC Bar Chart</h4>
+        <div *ngIf="initialized && !dataError" class="mb-4">
+            <h4>Compliance by Level</h4>
         </div>
-        <div *ngIf="initialized && !dataError" class="mb-3">
-            <div class="flex flex-container barChartRowContainer">
-                <div [class.levelIndicatorContainer]="!layoutSvc.hp" [class.level-indicator-container-hp]="layoutSvc.hp">
-                    <div class="roundedBox">
-                        <div class="rbTitle">
-                            Target Level
-                        </div>
-                        <div class="rbLevel">
-                            {{cmmcModel?.targetLevel}}
-                        </div>
+        <div *ngIf="initialized && !dataError" class="mb-5">
+            <div class="d-flex" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp">
+                <div class="d-flex align-items-center justify-content-center" [class.mr-5]="!layoutSvc.hp" [class.mb-3]="layoutSvc.hp">
+                    <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
+                        [class.p-2]="layoutSvc.hp">
+                        {{'Target Level ' + cmmcModel?.targetLevel}}
                     </div>
                 </div>
-                <div class="flex barChartContainer">
-                    <div *ngFor="let i of statsByLevel" class="barChartRow">
-                        <div class="barChartLabel">Level {{i?.modelLevel}}</div>
-                        <div class="barChartBar">
-                            <div class="barAnswered" [ngStyle]="getBarSettings(i)">
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="barChartLabels">
-                        <div class="barChartHorizontalLabel"> 0 </div>
-                        <div class="barChartHorizontalLabel"> 25 </div>
-                        <div class="barChartHorizontalLabel"> 50 </div>
-                        <div class="barChartHorizontalLabel"> 75 </div>
-                        <div class="barChartHorizontalLabel"> 100 </div>
-                    </div>
+                <div class="chart-container" [class.w-500px]="!layoutSvc.hp" [class.w-100]="layoutSvc.hp">
+                    <canvas id="canvasLevelScores">{{chartLevelScores}}</canvas>
                 </div>
             </div>
         </div>
-        <div *ngIf="initialized && !dataError">
-            <h4>CMMC Pie Charts</h4>
+
+        <div *ngIf="initialized && !dataError" class="mb-4">
+            <h4>Compliance Detail</h4>
         </div>
-        <div *ngFor="let i of statsByLevel">
-            <div *ngIf="isWithinModelLevel(i)" class="pieChartRowTitle" [innerHTML]="levelDescriptions[i.modelLevel]">
-                Test
-            </div>
-            <div *ngIf="isWithinModelLevel(i)" class="flex-container pieChartRow">
-                <div class="levelIndicatorContainer">
-                    <div class="roundedBox">
-                        <div class="rbTitle px-3">
-                            Level
-                        </div>
-                        <div class="rbLevel">
-                            {{i?.modelLevel}}
-                        </div>
+        <div *ngFor="let l of statsByLevel">
+            <!-- pie charts for compliance at each level -->
+            <h5 *ngIf="isWithinModelLevel(l)" [innerHTML]="levelDescriptions[l.modelLevel]"></h5>
+            <div *ngIf="isWithinModelLevel(l)" class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp"
+                [class.flex-column]="layoutSvc.hp">
+                <div class="d-flex align-items-center justify-content-center" [class.mr-5]="!layoutSvc.hp" [class.mb-3]="layoutSvc.hp">
+                    <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
+                        [class.p-2]="layoutSvc.hp">
+                        {{'Level ' + l.modelLevel}}
                     </div>
                 </div>
-
-                <div style="max-width: 300px">
-                    <canvas id="{{'level' + i?.modelLevel }}">{{ i.chart }}</canvas>
-                </div>
-
-                <div class="pieChartLabelContainer font-weight-bold align-content-center align-middle">
-                    <div>
-                        Compliant {{(i.questionAnswered / i.questionCount) | percent:'1.2'}}
-                    </div>
-                    <div *ngIf="i.questionUnAnswered">
-                        Non-Compliant {{(i.questionUnAnswered / i.questionCount) | percent:'1.2'}}
-                    </div>
+                <div id="chart" class="mb-3">
+                    <canvas id="{{'level' + l?.modelLevel }}"
+                        style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
                 </div>
             </div>
         </div>

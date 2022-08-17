@@ -33,7 +33,7 @@
         <p>
             This page shows the answer distribution by level.
         </p>
-        <div class="d-flex" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp"
+        <div class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp"
             *ngFor="let l of response">
             <!-- pie charts for compliance at each level -->
             <div class="d-flex" [class.mr-5]="!layoutSvc.hp" [class.mb-3]="layoutSvc.hp"
@@ -46,10 +46,6 @@
             </div>
             <div id="chart" class="mb-3">
                 <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
-            </div>
-            <div class="d-none">
-                <div>Compliant: {{l.compliancePercent}}%</div>
-                <div>Non Compliant {{l.nonCompliancePercent}}%</div>
             </div>
         </div>
     </div>
