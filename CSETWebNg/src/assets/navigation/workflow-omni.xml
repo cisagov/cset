@@ -173,7 +173,7 @@
 
 
         <!-- Results - ACET -->
-        <node displaytext="ACET Maturity Results" id="acet-maturity" path="assessment/{:id}/results/acet-maturity" condition="MATURITY:ACET" />
+        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:ACET" />
         <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:ACET" />
 
 

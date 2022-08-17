@@ -38,7 +38,8 @@ import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { MaturityService } from '../../../services/maturity.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
   selector: 'app-question-extras',
@@ -68,8 +69,6 @@ export class QuestionExtrasComponent implements OnInit {
 
   showQuestionIds = false;
 
-  handsetPortrait = false;
-
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
    */
@@ -84,16 +83,12 @@ export class QuestionExtrasComponent implements OnInit {
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
-    public boSvc: BreakpointObserver
+    public layoutSvc: LayoutService
     ) {
   }
 
 
   ngOnInit() {
-    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
-      this.handsetPortrait = hp.matches;
-    });
-
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
     if (!!this.myOptions) {
@@ -110,8 +105,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: this.handsetPortrait ? '90%' : '600px',
-      maxWidth: this.handsetPortrait ? '90%' : '600px',
+      width: this.layoutSvc.hp ? '90%' : '600px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
       height: '800px',
       data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
@@ -348,8 +343,8 @@ export class QuestionExtrasComponent implements OnInit {
     this.dialog.open(FindingsComponent, { 
         data: find, 
         disableClose: true,
-        width: this.handsetPortrait ? '90%' : '600px',
-        maxWidth: this.handsetPortrait ? '90%' : '600px'
+        width: this.layoutSvc.hp ? '90%' : '600px',
+        maxWidth: this.layoutSvc.hp ? '90%' : '600px'
       })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
