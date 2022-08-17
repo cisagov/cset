@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartService } from './../../../../services/chart.service';
+import { Component, OnInit } from '@angular/core';
 import { CrrService } from '../../../../services/crr.service';
+import { CrrReportModel } from './../../../../models/report.model';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../../services/config.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -19,6 +21,7 @@ export class CrrSummaryResultsComponent implements OnInit {
 
   constructor(
     private crrSvc: CrrService,
+    private chartSvc: ChartService,
     private configSvc: ConfigService,
     private domSanitizer: DomSanitizer
     ) {
@@ -27,8 +30,8 @@ export class CrrSummaryResultsComponent implements OnInit {
   ngOnInit(): void {
     this.stylesheetUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.configSvc.reportsUrl + 'css/CRRResults.css');
 
-    this.crrSvc.getCrrModel().subscribe((data: any) => {
-      this.setupChart(data.reportChart)
+    this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
+      this.chart = this.chartSvc.buildCrrPercentagesOfPracticesBarChart('percentagePractices', data.reportChart)
       this.chartLoaded = true;
     });
 
@@ -36,47 +39,5 @@ export class CrrSummaryResultsComponent implements OnInit {
       this.summaryResult = data.html;
       this.summaryResultLoaded = true;
     })
-  }
-
-  setupChart(x: any) {
-    let tempChart = Chart.getChart('percentagePractices');
-    if (tempChart) {
-      tempChart.destroy();
-    }
-    this.chart = new Chart('percentagePractices', {
-      type: 'bar',
-      data: {
-        labels: x.labels.$values,
-        datasets: [{
-          data: x.values.$values,
-          backgroundColor: "rgb(21, 124, 142)",
-          borderColor: "rgb(21,124,142)",
-          borderWidth: 0
-        }],
-      },
-      options: {
-        indexAxis: 'y',
-        hover: { mode: null },
-        events: [],
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          x: {
-            min: 0,
-            max: 100,
-            beginAtZero: true,
-            ticks: {
-              stepSize: 10,
-              callback: function (value, index, values) {
-                return value + "%";
-              }
-            }
-          }
-        }
-      }
-    });
   }
 }
