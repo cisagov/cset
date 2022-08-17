@@ -27,6 +27,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';
 import { AnyRecord } from 'dns';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-cmmc-level-drilldown',
@@ -59,6 +60,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
     public maturitySvc: MaturityService,
     public chartSvc: ChartService,
     private titleService: Title,
+    public layoutSvc: LayoutService
   ) { }
 
 

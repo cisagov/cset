@@ -26,6 +26,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-cmmc2-level-results',
@@ -47,7 +48,8 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
     public maturitySvc: MaturityService,
     private titleService: Title,
     private elementRef: ElementRef,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit(): void {

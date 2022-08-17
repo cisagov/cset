@@ -35,7 +35,7 @@
         </div>
         <div *ngIf="initialized && !dataError" class="mb-3">
             <div class="flex flex-container barChartRowContainer">
-                <div class="flex levelIndicatorContainer">
+                <div [class.levelIndicatorContainer]="!layoutSvc.hp" [class.level-indicator-container-hp]="layoutSvc.hp">
                     <div class="roundedBox">
                         <div class="rbTitle">
                             Target Level
