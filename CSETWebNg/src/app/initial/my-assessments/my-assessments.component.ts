@@ -42,6 +42,8 @@ import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { LayoutService } from "../../services/layout.service";
 
 
 interface UserAssessment {
@@ -82,6 +84,7 @@ export class MyAssessmentsComponent implements OnInit {
   exportExtension: string;
   importExtensions: string;
 
+
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   constructor(
@@ -97,7 +100,8 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
-    private tsaanalyticSvc :TsaAnalyticsService
+    private tsaanalyticSvc :TsaAnalyticsService,
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit() {

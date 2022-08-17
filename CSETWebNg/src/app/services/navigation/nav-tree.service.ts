@@ -31,7 +31,6 @@ export class NavTreeService {
      this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
      this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
      this.dataChange.subscribe(data => {
-      console.log(data);
        this.dataSource.data = data;
        this.tocControl.dataNodes = data;
        this.tocControl.expandAll();

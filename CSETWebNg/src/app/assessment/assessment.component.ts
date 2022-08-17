@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+
 import {
   Component,
   EventEmitter,
@@ -36,6 +37,7 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
+import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 
@@ -54,7 +56,7 @@ export class AssessmentComponent implements AfterContentChecked {
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
    */
-  expandNav = true;
+  expandNav = false;
 
   /**
    * Indicates whether the nav stays visible (true)
@@ -64,6 +66,7 @@ export class AssessmentComponent implements AfterContentChecked {
 
   minWidth = 960;
   scrollTop = 0;
+
 
   @Output() navSelected = new EventEmitter<string>();
   @ViewChild('sNav')
@@ -89,7 +92,8 @@ export class AssessmentComponent implements AfterContentChecked {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public layoutSvc: LayoutService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -112,6 +116,22 @@ export class AssessmentComponent implements AfterContentChecked {
     return this.assessSvc.currentTab === tab;
   }
 
+  /**
+   * Determines how to display the sidenav.
+   */
+  sidenavMode() {
+    if (this.layoutSvc.hp) {
+      this.lockNav = false;
+      return 'over';
+    }
+
+    return innerWidth < 960 ? 'over' : 'side';
+  }
+
+  /**
+   * Called when the user clicks an item
+   * in the nav.  
+   */
   selectNavItem(target: string) {
     if (!this.lockNav) {
       this.expandNav = false;
