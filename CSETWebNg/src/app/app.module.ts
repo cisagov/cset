@@ -469,16 +469,6 @@ import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-p
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
-import { Crrdd1AmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd1-am/crrdd1-am/crrdd1-am.component';
-import { Crrdd2CmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd2-cm/crrdd2-cm/crrdd2-cm.component';
-import { Crrdd3CcmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd3-ccm/crrdd3-ccm/crrdd3-ccm.component';
-import { Crrdd4VmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd4-vm/crrdd4-vm/crrdd4-vm.component';
-import { Crrdd5ImComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd5-im/crrdd5-im/crrdd5-im.component';
-import { Crrdd6ScmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd6-scm/crrdd6-scm/crrdd6-scm.component';
-import { Crrdd7RmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd7-rm/crrdd7-rm/crrdd7-rm.component';
-import { Crrdd8EdmComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd8-edm/crrdd8-edm/crrdd8-edm.component';
-import { Crrdd9TaComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd9-ta/crrdd9-ta/crrdd9-ta.component';
-import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/crrdd10-sa/crrdd10-sa/crrdd10-sa.component';
 
 @NgModule({
     imports: [
@@ -905,17 +895,7 @@ import { Crrdd10SaComponent } from './reports/crr/crr-report/crr-domain-detail/c
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
         ReferencesBlockComponent,
-        NewAssessmentDialogComponent,
-        Crrdd1AmComponent,
-        Crrdd2CmComponent,
-        Crrdd3CcmComponent,
-        Crrdd4VmComponent,
-        Crrdd5ImComponent,
-        Crrdd6ScmComponent,
-        Crrdd7RmComponent,
-        Crrdd8EdmComponent,
-        Crrdd9TaComponent,
-        Crrdd10SaComponent,
+        NewAssessmentDialogComponent
     ],
     providers: [
         ConfigService,

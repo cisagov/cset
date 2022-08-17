@@ -9,10 +9,10 @@
         </div>
 
         <div class="my-5">
-            <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-            <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+          <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+          <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
         </div>
 
         <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>

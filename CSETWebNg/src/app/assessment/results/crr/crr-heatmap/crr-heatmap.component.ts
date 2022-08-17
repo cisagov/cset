@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { identity } from 'rxjs';
 import { MaturityService } from '../../../../services/maturity.service';
 
@@ -6,7 +6,7 @@ import { MaturityService } from '../../../../services/maturity.service';
   selector: 'app-crr-heatmap',
   templateUrl: './crr-heatmap.component.html'
 })
-export class CrrHeatmapComponent implements OnInit {
+export class CrrHeatmapComponent implements OnChanges {
 
   @Input()
   domainAbbrev: string;
@@ -15,21 +15,21 @@ export class CrrHeatmapComponent implements OnInit {
 
 
   /**
-   * 
-   * @param maturitySvc 
+   *
+   * @param maturitySvc
    */
   constructor(
     public maturitySvc: MaturityService
   ) {  }
 
   /**
-   * 
+   *
    */
-  ngOnInit(): void {
+  ngOnChanges(): void {
     if (!this.domainAbbrev) {
       return;
     }
-    
+
     for (var i = 1; i <= 5; i++) {
       this.maturitySvc.getMilHeatmapWidget(this.domainAbbrev, "MIL-" + i).subscribe((svg: string) => {
 
@@ -44,9 +44,9 @@ export class CrrHeatmapComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param i 
-   * @returns 
+   *
+   * @param i
+   * @returns
    */
   show(i: string): string {
     if (!this.milHeatmaps) {
@@ -57,7 +57,7 @@ export class CrrHeatmapComponent implements OnInit {
     if (!h) {
       return "";
     }
-    
+
     return h.svg;
   }
 }
