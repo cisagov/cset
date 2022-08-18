@@ -84,6 +84,11 @@ export class IrpSummaryComponent implements OnInit {
                     let acetRisk = this.acetDashboard.sumRisk;
                     let result = acetRisk.map((item, index) => item - iseRisk[index]);
                     this.acetDashboard.sumRisk = result;
+                    console.log("sumRisk: " + this.acetDashboard.sumRisk);
+
+                    let highest = Math.max(...this.acetDashboard.sumRisk);
+                    let index = this.acetDashboard.sumRisk.indexOf(highest);
+                    this.acetDashboard.sumRiskLevel = (index + 1);
 
                     // Remove the ISE irp from ACET IRP's results table.
                     this.acetDashboard.irps.pop();
@@ -93,6 +98,7 @@ export class IrpSummaryComponent implements OnInit {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
+                console.log("sumRiskLevel: " + this.acetDashboard.sumRiskLevel);
                 this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.sumRiskLevel);
             },
             error => {
