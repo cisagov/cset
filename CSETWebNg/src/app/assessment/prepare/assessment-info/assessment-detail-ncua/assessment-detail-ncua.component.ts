@@ -32,6 +32,7 @@ import { NCUAService } from '../../../../services/ncua.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 
 
 @Component({
@@ -48,10 +49,13 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   contactInitials: string = "";
 
-
-  myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  assessmentControl = new FormControl('');
+  creditUnionOptions: CreditUnionDetails[] = [
+    {name: "My Credit Union", cityOrSite: "Idaho Falls", stateProvinceRegion: "Idaho", charter: '11111', assets: '600000000'}, 
+    {name: "Poor Credit Union", cityOrSite: "Seattle", stateProvinceRegion: "Washington", charter: '33333', assets: '75000'},
+    {name: "Big Bank", cityOrSite: "New York City", stateProvinceRegion: "New York", charter: '55555', assets: '1000000000'}
+  ];
+  filteredOptions: Observable<CreditUnionDetails[]>;
 
   /**
    * 
@@ -69,15 +73,21 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.getAssessmentDetail();
     }
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
+    this.filteredOptions = this.assessmentControl.valueChanges.pipe(
+      startWith(''), map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filter(name as string) : this.creditUnionOptions.slice();
+      }),
     );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  displayFn(creditUnion: CreditUnionDetails): string {
+    return creditUnion.name && creditUnion.name ? creditUnion.name : '';
+  }
+
+  private _filter(name: string): CreditUnionDetails[] {
+    const filterValue = name.toLowerCase();
+    return this.creditUnionOptions.filter(option => option.name.toLowerCase().includes(filterValue));
   }
     
   isAnExamination() {
@@ -142,6 +152,16 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (!!this.assessment) {
       if (this.assessment.assessmentName.trim().length === 0) {
         this.assessment.assessmentName = "(Untitled Assessment)";
+      }
+    }
+
+    //console.log("event.target.value: " + e.target.value);
+    for (let i = 0; i < this.creditUnionOptions.length; i++) {
+      if (e.target.value === this.creditUnionOptions[i].name) {
+        this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
+        this.assessment.stateProvRegion = this.creditUnionOptions[i].stateProvinceRegion;
+        this.assessment.charter = this.creditUnionOptions[i].charter;
+        this.assessment.assets = this.creditUnionOptions[i].assets;
       }
     }
 
