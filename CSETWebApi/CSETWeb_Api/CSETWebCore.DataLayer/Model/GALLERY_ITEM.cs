@@ -35,5 +35,9 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("Gallery_Item")]
         public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
+        
+        [StringLength(200)]
+        [Unicode(false)]
+        public string Title { get; set; }
     }
 }
