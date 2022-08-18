@@ -279,23 +279,25 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-    let bracketContact = '[' + this.contactInitials + ']';
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      let bracketContact = '[' + this.contactInitials + ']';
 
-    if (q.altAnswerText.indexOf(bracketContact) !== 0) {
-      if (!!q.altAnswerText) {
-        if (q.altAnswerText.indexOf('[') !== 0) {
-          this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
-          q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
-        }
+      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
+        if (!!q.altAnswerText) {
+          if (q.altAnswerText.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
+            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
+          }
 
-        else {
-          let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-          
-          if (previousContactInitials !== this.contactInitials) {
-            let oldComments = q.altAnswerText.substring(0, q.altAnswerText.lastIndexOf(this.convoBuffer)+this.convoBuffer.length);
-            let newComment = q.altAnswerText.substring(oldComments.length);
+          else {
+            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+            
+            if (previousContactInitials !== this.contactInitials) {
+              let oldComments = q.altAnswerText.substring(0, q.altAnswerText.lastIndexOf(this.convoBuffer)+this.convoBuffer.length);
+              let newComment = q.altAnswerText.substring(oldComments.length);
 
-            q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+            }
           }
         }
       }
