@@ -12,6 +12,8 @@ export class CrrMil1PerformanceSummaryComponent implements OnInit {
   @Input() model: CrrReportModel;
   mil1FullAnswerDistribChart: string = '';
   legend: string = '';
+  scoreBarCharts: string[] = [];
+  stackedBarCharts: any[] = [];
 
   constructor(private crrSvc: CrrService) { }
 
@@ -23,6 +25,27 @@ export class CrrMil1PerformanceSummaryComponent implements OnInit {
     this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: any) => {
       this.legend = resp;
     })
+
+    this.crrSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
+      console.log(resp);
+      this.scoreBarCharts = resp.scoreBarCharts;
+      this.stackedBarCharts = resp.stackedBarCharts;
+    })
   }
 
+    // This function splits strings like
+    // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+    // and
+    // "Goal 3-Risks are identified."
+    stringSplitter(str: string) {
+      return str.split(" - ")[1] ?? str.split("-")[1];
+    }
+
+    getStackedBarChart(goalTitle: string) {
+      return this.stackedBarCharts.find(c => c.title === goalTitle).chart;
+    }
+
+    filterMilDomainGoals(goals) {
+      return goals.filter(g => !g.title.startsWith('MIL'));
+    }
 }

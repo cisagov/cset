@@ -56,4 +56,8 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
     { responseType: 'text'});
   }
+
+  getMil1PerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
+  }
 }

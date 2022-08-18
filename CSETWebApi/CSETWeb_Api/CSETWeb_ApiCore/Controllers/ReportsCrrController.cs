@@ -15,6 +15,7 @@ using CSETWebCore.Helpers.ReportWidgets;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Interfaces.AdminTab;
 using Newtonsoft.Json;
+using System.Xml.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -78,6 +79,49 @@ namespace CSETWebCore.Api.Controllers
             viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(x.Root));
    
             return Ok(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        /// <param name="includeResultsStylesheet"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/getCrrMil1PerformanceSummaryBodyCharts")]
+        public IActionResult GetMil1PerformanceSummaryBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var XDocument = _crr.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> stackedBarCharts = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _crr.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                // This explicit iterator is used to style each goal block, except the last one
+                int i = 1;
+                foreach (XElement goal in goals)
+                {
+                    var goalScores = _crr.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
+                    goal.Attribute("abbreviation").Value);
+                    var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
+                    stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
+
+                    stackedBarCharts.Add(new { Title = goal.Attribute("title").Value, Chart = new ScoreStackedBarChart(stackedBarChartInput).ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
         }
 
         /// <summary>
