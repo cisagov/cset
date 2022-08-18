@@ -460,6 +460,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { GalleryService } from './services/gallery.service';
 
 @NgModule({
     imports: [
@@ -935,6 +936,7 @@ import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/ne
         CrrService,
         Utilities,
         NCUAService,
+        GalleryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

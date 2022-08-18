@@ -4,18 +4,13 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using CSETWebCore.Model.Standards;
-using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Standards;
-using CSETWebCore.Interfaces.Question;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Interfaces.Question;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Api.Controllers
 {
