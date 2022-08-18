@@ -58,7 +58,8 @@
         <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
 
         <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY-ANY(ACET,ISE) " />
+        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
+        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
 
         <!-- CIS questions displayed in tree structure -->
         <node displaytext="CIS Questions" condition="MATURITY:CIS">
@@ -109,9 +110,6 @@
                 <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" />
             </node>
         </node>
-
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
-        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
