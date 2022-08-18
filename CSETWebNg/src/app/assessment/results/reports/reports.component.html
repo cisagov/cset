@@ -29,7 +29,7 @@
   </p>
 
   <div class="d-flex flex-column justify-content-start align-items-start mb-4">
-    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
   </div>
@@ -39,19 +39,19 @@
       (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram)
     " class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Standards and Diagram</h4>
-    <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Executive Summary
     </button>
 
-    <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Site Summary Report
     </button>
 
-    <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Site Cybersecurity Plan
     </button>
 
-    <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Site Detail Report
     </button>
   </div>
@@ -60,23 +60,23 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
 
-    <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       CMMC Executive Summary
     </button>
 
-    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       CMMC Site Summary Report
     </button>
 
-    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark text-left">
       CMMC Deficiency Report
     </button>
 
-    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark text-left">
       CMMC Comments and Marked for Review
     </button>
 
-    <button tabindex="0" (click)="clickReportLink2('cmmc/alt')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink2('cmmc/alt')" class="btn btn-link btn-link-dark text-left">
       CMMC Alternate Justifications
     </button>
   </div>
@@ -85,15 +85,15 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
-    <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       CMMC 2.0 - Executive Summary
     </button>
 
-    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink2('cmmc/deficiency')" class="btn btn-link btn-link-dark text-left">
       CMMC 2.0 - Deficiency Report
     </button>
 
-    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink2('cmmc/comments')" class="btn btn-link btn-link-dark text-left">
       CMMC 2.0 - Comments and Marked for Review
     </button>
 
@@ -104,21 +104,21 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark text-left">
         EDM Report
       </button>
 
-      <button class="btn btn-link btn-link-dark" (click)="clickReportLink('edm', true)"
+      <button class="btn btn-link btn-link-dark text-left" (click)="clickReportLink('edm', true)"
         matTooltip="Select Print to PDF to save as a PDF">
         Print EDM Report
       </button>
     </div>
 
-    <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
       EDM Deficiency Report
     </button>
 
-    <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark">
+    <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark text-left">
       EDM Comments and Marked for Review
     </button>
   </div>
@@ -157,18 +157,18 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Ransomware Readiness Assessment</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark text-left">
         RRA Report
       </button>
     </div>
 
     <div>
-      <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
         RRA Deficiency Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
         Comments and Marked for Review
       </button>
     </div>
@@ -196,22 +196,22 @@
       </span>
     </div>
     <p *ngIf="disableAcetReportLinks"></p>
-    <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark"
+    <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableAcetReportLinks">
       ACET Executive Summary
     </button>
-    <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark"
+    <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableAcetReportLinks">
       ACET Gap Report
     </button>
-    <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark"
+    <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableAcetReportLinks">
       ACET Comments and Marked for Review
     </button>
-    <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark">
+    <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       ACET Answered Statements
     </button>
-    <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark"
+    <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableAcetReportLinks">
       ACET Compensating Controls
     </button>
@@ -223,22 +223,22 @@
     <h4>Cyber Infrastructure Survey (CIS)</h4>
 
     <div>
-      <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark text-left">
         Survey Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')" class="btn btn-link btn-link-dark text-left">
         Section Scoring Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
         Deficiency Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')" class="btn btn-link btn-link-dark text-left">
         Comments and Marked for Review
       </button>
     </div>
@@ -248,17 +248,17 @@
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Validated Architecture Design Review (VADR)</h4>
     <div>
-      <button tabindex="0" (click)="clickReportLink('vadrReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('vadrReport')" class="btn btn-link btn-link-dark text-left">
         VADR Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
         VADR Deficiency Report
       </button>
     </div>
     <div>
-      <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')" class="btn btn-link btn-link-dark">
+      <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')" class="btn btn-link btn-link-dark text-left">
         VADR Open Ended Questions Report
       </button>
     </div>

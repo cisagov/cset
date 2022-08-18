@@ -666,7 +666,7 @@ body,
   display: flex;
 }
 
-.levelIndicatorContainer {
+.level-indicator-container {
   background: linear-gradient(5deg, rgba(31, 82, 132, 1) 0%, rgba(58, 128, 194, 1) 100%);
   color: white;
   border-radius: 5%;
@@ -680,21 +680,21 @@ body,
   justify-content: center;
 }
 
-.levelIndicatorContainer .rbTitle {
+.level-indicator-container .rbTitle {
   margin-top: 0.4em;
   line-height: 1.2em;
   font-size: 2em;
   text-align: center;
 }
 
-.levelIndicatorContainer .rbLevel {
+.level-indicator-container .rbLevel {
   font-size: 4em;
   font-weight: 900;
   text-align: center;
   text-shadow: 1px 1px black;
 }
 
-.levelIndicatorContainer .rbLevelRAA {
+.level-indicator-container .rbLevelRAA {
   font-size: 2em;
   font-weight: 900;
   text-align: center;

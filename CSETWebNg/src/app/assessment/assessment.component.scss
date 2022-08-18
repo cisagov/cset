@@ -1,7 +1,6 @@
 li.active {
     position:relative;
     bottom:6px !important;
-    border-right: outset 2px rgba(0,0,0,.7);
     border-radius: 5px 5px 0 0;
 }
 .btn{
@@ -15,7 +14,9 @@ ul.nav-tabs li.active button{
     font-size:1rem !important;
 }
 
-
+ul.nav-tabs li {
+    padding-top:2px;
+}
 
 li.active button span{
     padding-bottom:0;
