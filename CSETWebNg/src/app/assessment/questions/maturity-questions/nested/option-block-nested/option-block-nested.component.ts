@@ -21,11 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Answer, Question, Option, InconsistentOption } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
+import { LayoutService } from '../../../../../services/layout.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 
@@ -45,6 +47,7 @@ export class OptionBlockNestedComponent implements OnInit {
   optionGroupName = '';
   sectionId = 0;
 
+
   // temporary debug aids
   showIdTag = this.configSvc.showQuestionAndRequirementIDs();
   showWeightTag = false;
@@ -55,6 +58,7 @@ export class OptionBlockNestedComponent implements OnInit {
     private utilSvc: Utilities,
     private configSvc: ConfigService,
     private route: ActivatedRoute,
+    public layoutSvc: LayoutService
   ) {
 
   }
@@ -283,7 +287,7 @@ export class OptionBlockNestedComponent implements OnInit {
     this.q.options.forEach((o: Option) => {
       const integrityCheckOption = this.cisSvc.integrityCheckOptions.find(option => option.optionId === o.optionId);
 
-      if (integrityCheckOption?.optionId === o.optionId) {
+      if (integrityCheckOption) {
         integrityCheckOption.selected = o.selected;
       }
 

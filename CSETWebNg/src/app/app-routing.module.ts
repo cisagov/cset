@@ -60,8 +60,8 @@ import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
 import { ImportComponent } from './import/import.component';
-import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
-import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
+import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -400,8 +400,8 @@ const appRoutes: Routes = [
               { path: 'crr-domain-ta', component: CrrResultsPage },
               { path: 'crr-domain-sa', component: CrrResultsPage },
 
-              { path: 'acet-maturity', component: MatDetailComponent },
-              { path: 'acet-dashboard', component: ACETDashboardComponent },
+              { path: 'acet-detail', component: AcetDetailComponent },
+              { path: 'acet-dashboard', component: AcetDashboardComponent },
 
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },

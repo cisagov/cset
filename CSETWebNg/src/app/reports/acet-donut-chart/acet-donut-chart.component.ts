@@ -20,17 +20,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-// adding comp:     <app-charts-donut [donutData]="donutData"></app-charts-donut>
+// adding comp:     <app-acet-donut-chart [donutData]="donutData"></app-acet-donut-chart>
 // donutData format => donutData = [{"name": "coolness", "value": 50 }]
 ////////////////////////////////
+
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, } from '@angular/core';
 
 @Component({
-  selector: 'app-charts-donut',
-  templateUrl: './charts-donut.component.html',
+  selector: 'app-acet-donut-chart',
+  templateUrl: './acet-donut-chart.component.html',
   styleUrls: ['../reports.scss']
 })
-export class ChartsDonutComponent implements OnInit, OnChanges {
+export class AcetDonutChartComponent implements OnInit, OnChanges {
   @Input()
   donutData: any;
 
@@ -50,10 +52,23 @@ export class ChartsDonutComponent implements OnInit, OnChanges {
     domain: ['#888888', '#888888', '#888888', '#888888', '#888888', '#888888']
   };
 
+  /**
+   * handsetPortrait
+   */
+  hp = false;
+
   constructor(
+    public boSvc: BreakpointObserver
   ) { }
 
   ngOnInit() {
+    // using the observable so that we have an event to reevaluate
+    this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
+      this.hp = hp.matches;
+
+      // reevaluate the chart dimensions
+      this.view = this.hp ? [200, 600] : [600, 200];
+    });
   }
 
   onSelect(event) {
@@ -69,10 +84,10 @@ export class ChartsDonutComponent implements OnInit, OnChanges {
     if (!this.range) {
       return;
     }
-    
+
     let donutColors = this.getDonutColors(this.donutData);
     this.colorScheme.domain = donutColors;
-    this.colorScheme = {...this.colorScheme};
+    this.colorScheme = { ...this.colorScheme };
   }
 
 
@@ -117,7 +132,7 @@ export class ChartsDonutComponent implements OnInit, OnChanges {
     if (!this.range) {
       return false;
     }
-    const rangeTop = this.levelNames.indexOf(this.range[this.range.length-1].toLowerCase());
+    const rangeTop = this.levelNames.indexOf(this.range[this.range.length - 1].toLowerCase());
     const rangeMe = this.levelNames.indexOf(level.toLowerCase());
     return rangeMe > rangeTop;
   }

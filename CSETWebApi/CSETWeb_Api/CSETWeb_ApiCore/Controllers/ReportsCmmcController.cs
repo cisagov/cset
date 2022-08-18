@@ -1,0 +1,69 @@
+﻿using CSETWebCore.Business.Reports;
+using CSETWebCore.Interfaces.Assessment;
+using CSETWebCore.Interfaces.Demographic;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Reports;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace CSETWebCore.Api.Controllers
+{
+    [ApiController]
+    public class ReportsCmmcController : ControllerBase
+    {
+        private readonly ITokenManager _token;
+        private readonly IAssessmentBusiness _assessment;
+        private readonly IDemographicBusiness _demographic;
+        private readonly IReportsDataBusiness _report;
+
+        public ReportsCmmcController(ITokenManager token, IAssessmentBusiness assessment, IDemographicBusiness demographic, IReportsDataBusiness report)
+        {
+            _token = token;
+            _assessment = assessment;
+            _demographic = demographic;
+            _report = report;
+        }
+
+        [HttpGet]
+        [Route("api/reportscmmc/maturitymodel")]
+        public IActionResult GetMaturityModel(string token)
+        {
+            _token.Init(token);
+            int assessmentId = _token.AssessmentForUser(token);
+            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
+
+            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
+            var demographics = _demographic.GetDemographics(assessmentId);
+
+            _report.SetReportsAssessmentId(assessmentId);
+
+            var reportData = new MaturityBasicReportData()
+            {
+                Information = _report.GetInformation(),
+                QuestionsList = _report.GetQuestionsList(),
+                DeficienciesList = _report.GetMaturityDeficiencies(),
+                Comments = _report.GetCommentsList(),
+                MarkedForReviewList = _report.GetMarkedForReviewList(),
+                AlternateList = _report.GetAlternatesList()
+            };
+
+            var viewModel = new ReportVM(detail, reportData);
+            
+            return Ok(viewModel);
+        }
+
+        [HttpGet]
+        [Route("api/reportscmmc/widget/sprs")]
+        public IActionResult GetWidget([FromQuery] int score, [FromQuery] double? scale = null)
+        {
+            //var assessmentId = _token.AssessmentForUser();
+
+            var sprsGauge = new Helpers.ReportWidgets.SprsScoreGauge(score, 500, 50);
+            return Content(sprsGauge.ToString(), "image/svg+xml");
+        }
+    }
+}
