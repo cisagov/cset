@@ -108,7 +108,6 @@ export class DomainMaturityFilterComponent implements OnInit {
 
   determineIseFilter() {
     this.iseIRPSetting = this.ncuaSvc.getIRPfromOverride();
-    console.log("this.iseIRPSetting: " + this.iseIRPSetting);
     
     if (this.iseIRPSetting === 'SCUEP') {
       this.maturityLevels = [{"level": "1", "label": "SCUEP", "applicable": true}];
