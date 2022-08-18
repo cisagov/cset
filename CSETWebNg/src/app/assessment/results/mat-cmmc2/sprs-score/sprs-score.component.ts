@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { LayoutService } from '../../../../services/layout.service';
 import { MaturityService } from '../../../../services/maturity.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
@@ -17,6 +18,7 @@ export class SprsScoreComponent implements OnInit {
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
     private titleService: Title,
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit(): void {
