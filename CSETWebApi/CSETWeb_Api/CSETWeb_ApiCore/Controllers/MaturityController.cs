@@ -480,6 +480,7 @@ namespace CSETWebCore.Api.Controllers
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
                     d.Mat.Maturity_LevelNavigation = null;
+                    d.Mat.Parent_Question = null;
                 });
 
 
@@ -520,6 +521,7 @@ namespace CSETWebCore.Api.Controllers
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
             });
 
             data.MarkedForReviewList.ForEach(d =>
@@ -528,6 +530,7 @@ namespace CSETWebCore.Api.Controllers
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
             });
 
             return Ok(data);

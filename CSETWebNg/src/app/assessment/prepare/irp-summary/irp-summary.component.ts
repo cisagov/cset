@@ -29,6 +29,8 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 import { ACETService } from '../../../services/acet.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
     selector: 'app-irp-summary',
@@ -49,7 +51,8 @@ export class IrpSummaryComponent implements OnInit {
         public navSvc: NavigationService,
         public acetSvc: ACETService,
         public acetFilteringSvc: AcetFilteringService,
-        public ncuaSvc: NCUAService
+        public ncuaSvc: NCUAService,
+        public layoutSvc: LayoutService
     ) { }
 
     /**

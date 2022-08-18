@@ -10,7 +10,7 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 @Component({
   selector: 'app-acet-executive',
   templateUrl: './acet-executive.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../assessment/results/mat-detail/mat-detail.component.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../assessment/results/acet-detail/acet-detail.component.scss']
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;
@@ -80,7 +80,7 @@ export class AcetExecutiveComponent implements OnInit {
           }
           domain.assessments.forEach((assignment: MaturityAssessment) => {
             var assesmentData = {
-              "asseessmentFactor": assignment.assessmentFactor,
+              "assessmentFactor": assignment.assessmentFactor,
               "domainMaturity": this.updateMaturity(assignment.assessmentFactorMaturity),
               "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(assignment.assessmentFactorMaturity)),
               "sections": []
