@@ -35,7 +35,8 @@
 
         <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
             <div class="gridGraphLabels">
-                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" 
+                    class="gridGraphLabel graphDataRow" [class.gridGraphLabelHp]="layoutSvc.hp">
                     {{dataRow.domainName}}</div>
             </div>
             <div class="gridGraphDataContainer" #gridChartDataDiv>
@@ -56,49 +57,54 @@
             </div>
         </div>
 
-        <div *ngIf="initialized && !dataError" class="questionsByDomainTable">
-            <div class="questionsByDomainTableHeader DomainTableRow questionsByDomainTableRow">
-                <div></div>
-                <div>Compliant</div>
-                <div>Not Compliant</div>
-                <div>Total Controls</div>
-                <div>Percent Complete</div>
+        <div *ngIf="initialized && !dataError">
+            <div *ngIf="layoutSvc.hp" class="rounded border-light">
+                <ul>
+                    <li>Y = Total Compliant</li>
+                    <li>N = Total Not Compliant</li>
+                    <li>Tot = Total Controls</li>
+                    <li>% = Percent Complete</li>
+                </ul>
             </div>
-            <div *ngFor="let domainRow of statsByDomain" class="questionsByDomainTableDomainSection"
-                [class.mb-5]="domainRow.questionCount > 0">
-                <div *ngIf="domainRow.questionCount > 0" class="questionsByDomainTableRow DomainTableRow domain">
-                    <div>
-                        {{domainRow?.domainName}}
-                    </div>
-                    <div>
-                        {{domainRow?.questionAnswered}}
-                    </div>
-                    <div>
-                        {{domainRow?.questionUnAnswered}}
-                    </div>
-                    <div>{{domainRow.questionCount}}</div>
-                    <div>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</div>
-                </div>
-                <div *ngFor="let questionRow of domainRow.domainQuestions"
-                    class="questionsByDomainTableRow DomainTableRow question">
-                    <div>
-                        {{questionRow?.question_Text}}
-                    </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
-                        1
-                    </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
-                        0
-                    </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U'">
-                        1
-                    </div>
-                    <div *ngIf="questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A'">
-                        0
-                    </div>
-                </div>
-            </div>
+            <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">
+                <tr>
+                    <th></th>
+                    <th>{{ layoutSvc.hp ? 'Y' : 'Compliant' }}</th>
+                    <th>{{ layoutSvc.hp ? 'N' : 'Not Compliant' }}</th>
+                    <th>{{ layoutSvc.hp ? 'Tot' : 'Total Controls' }}</th>
+                    <th>{{ layoutSvc.hp ? '%' : 'Percent Complete' }}</th>
+                </tr>
+                <ng-template ngFor let-domainRow [ngForOf]="statsByDomain">
+                    <tr *ngIf="domainRow.questionCount > 0" class="domain-row">
+                        <td>
+                            {{domainRow?.domainName}}
+                        </td>
+                        <td>
+                            {{domainRow?.questionAnswered}}
+                        </td>
+                        <td>
+                            {{domainRow?.questionUnAnswered}}
+                        </td>
+                        <td>{{domainRow.questionCount}}</td>
+                        <td>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</td>
+                    </tr>
+                    <tr *ngFor="let questionRow of domainRow.domainQuestions">
+                        <td>
+                            {{questionRow?.question_Text}}
+                        </td>
+                        <td> {{ (questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A') ?
+                            '1' : '0' }}
+                        </td>
+                        <td> {{ (questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U') ?
+                            '1' : '0' }}
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </table>
         </div>
+
         <div *ngIf="initialized && dataError">
             <h1>Error Loading Data</h1>
             <p>There was an error retreiving the data for this page. Please reload the page.</p>
