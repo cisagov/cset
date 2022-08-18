@@ -34,6 +34,7 @@ export interface MaturityBasicReportData {
 }
 
 export interface CrrReportModel {
+  structure: any;
   crrResultsData: CrrResultsModel;
   assessmentDetails: AssessmentDetail;
   parentScores: EdmScoreParent[];
@@ -67,8 +68,8 @@ export interface CrrMaturityLevelStats {
 export interface CrrScoringHelper {
   assessmentId: number;
   crrModelId: number;
-  xDoc: string;
-  xCsf: string;
+  xDoc: any;
+  xCsf: any;
   csfFunctionColors: { [key: string]: string; };
 }
 

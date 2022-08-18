@@ -12,6 +12,9 @@ using System.Linq;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers.ReportWidgets;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.Interfaces.AdminTab;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -21,23 +24,29 @@ namespace CSETWebCore.Api.Controllers
         private readonly ICrrScoringHelper _crr;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
 
-        public ReportsCrrController(ITokenManager token, ICrrScoringHelper crr, IAssessmentBusiness assessment, IDemographicBusiness demographic, IReportsDataBusiness report, CSETContext context)
+        public ReportsCrrController(ITokenManager token, ICrrScoringHelper crr, IAssessmentBusiness assessment, 
+            IDemographicBusiness demographic, IReportsDataBusiness report,
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
         {
             _token = token;
             _crr = crr;
             _assessment = assessment;
             _demographic = demographic;
             _report = report;
+            _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = admin;
             _context = context;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="token"></param>
+  
         /// <param name="includeResultsStylesheet"></param>
         /// <returns></returns>
         [HttpGet]
@@ -49,6 +58,10 @@ namespace CSETWebCore.Api.Controllers
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var demographics = _demographic.GetDemographics(assessmentId);
             _report.SetReportsAssessmentId(assessmentId);
+
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructure(assessmentId);
+
             var deficiencyData = new MaturityBasicReportData()
             {
                 Information = _report.GetInformation(),
@@ -62,8 +75,11 @@ namespace CSETWebCore.Api.Controllers
             viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
+            viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(x.Root));
+   
             return Ok(viewModel);
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -71,7 +87,6 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="mil"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-
         [HttpGet]
         [Route("api/reportscrr/widget/milheatmap")]
 
@@ -168,10 +183,5 @@ namespace CSETWebCore.Api.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
-    }
-
-    public class CrrHtml
-    {
-        public string Html { get; set; }
     }
 }
