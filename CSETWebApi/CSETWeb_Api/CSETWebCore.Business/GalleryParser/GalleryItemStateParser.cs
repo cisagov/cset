@@ -12,14 +12,14 @@ using System.Text.Json.Serialization;
 namespace CSETWebCore.Business.GalleryParser
 {
 
-    public class GalleryItemStateParser:IGalleryStateParser
+    public class GalleryState:IGalleryState
     {
         private CSETContext _context;
         private IMaturityBusiness _maturity_business;
         private IStandardsBusiness _standardsBusiness;
         private IQuestionRequirementManager _questionRequirementMananger;
 
-        public GalleryItemStateParser(CSETContext context, IMaturityBusiness maturityBusiness
+        public GalleryState(CSETContext context, IMaturityBusiness maturityBusiness
             ,IStandardsBusiness standardsBusiness
             ,IQuestionRequirementManager questionRequirementManager)
         {
@@ -91,6 +91,42 @@ namespace CSETWebCore.Business.GalleryParser
                 _questionRequirementMananger.SetApplicationMode(gallery.QuestionMode);
             }
 
+        }
+
+        public GalleryBoardData GetGalleryBoard(string layout_name)
+        {
+             var data = from r in _context.GALLERY_ROWS
+                        join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
+                        join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
+                        join i in _context.GALLERY_ITEM on d.Gallery_Item_Id equals i.Gallery_Item_Id                
+                where r.Layout_Name == layout_name
+                orderby r.Row_Index, d.Column_Index
+                        select new {r,g,d,i};
+            var rvalue= new GalleryBoardData();
+             
+            //some how I did this wrong 
+            //I have not had to do this kind of indexing in a long time
+            //oh well not going to change it now
+            int row = -1; 
+            GalleryGroup galleryGroup = null;
+            foreach(var item in data)
+            {
+                if (row != item.r.Row_Index) {
+                    rvalue.Layout_Name = item.r.Layout_Name;
+                    galleryGroup = new GalleryGroup();
+                    galleryGroup.Group_Title = item.g.Group_Title;
+                    galleryGroup.Group_Id = item.g.Group_Id;
+                    rvalue.Rows.Add(galleryGroup);
+                    row = item.r.Row_Index;
+                }
+                else
+                {
+                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+                }
+            }
+
+
+            return rvalue;
         }
     }
     public class GalleryConfig

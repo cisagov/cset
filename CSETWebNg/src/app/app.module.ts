@@ -451,6 +451,7 @@ import { GuidanceBlockComponent } from './reports/module-content/guidance-block/
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { GalleryService } from './services/gallery.service';
 
 @NgModule({
     imports: [
@@ -917,6 +918,7 @@ import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/ne
         RraFilteringService,
         CrrService,
         Utilities,
+        GalleryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

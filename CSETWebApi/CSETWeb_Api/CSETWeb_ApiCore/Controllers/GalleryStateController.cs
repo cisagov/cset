@@ -16,28 +16,43 @@ namespace CSETWebCore.Api.Controllers
     public class GalleryStateController : ControllerBase
     {
         private ITokenManager _tokenManager;
-        private IGalleryStateParser _parser;
+        private IGalleryState _stateManager;
 
-        public GalleryStateController(ITokenManager tokenManager, IGalleryStateParser parser
+        public GalleryStateController(ITokenManager tokenManager, 
+            IGalleryState parser            
            )
         {
             _tokenManager = tokenManager;
-            _parser = parser;
+            _stateManager = parser;
           
+        }
+
+        [HttpGet]
+        [Route("api/gallery/getboard")]
+        public IActionResult GetBoard(string Layout_Name)
+        {
+            try
+            {   
+                return Ok(_stateManager.GetGalleryBoard(Layout_Name));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         /// <summary>
         /// Persists the current Standards selection in the database.
         /// </summary>
         [HttpPost]
-        [Route("api/cardid/setstate")]
+        [Route("api/gallery/setstate")]
         public IActionResult PersistSelectedStandards([FromBody] int GalleryItemId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             try
             {
-                _parser.ProcessParserState(assessmentId, GalleryItemId);
+                _stateManager.ProcessParserState(assessmentId, GalleryItemId);
                 return Ok();
             }
             catch (Exception e)
