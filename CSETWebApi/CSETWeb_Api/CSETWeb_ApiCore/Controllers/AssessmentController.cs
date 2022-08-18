@@ -147,16 +147,5 @@ namespace CSETWebCore.Api.Controllers
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
 
-
-        /// <summary>
-        /// Gets all of the assessment icons to be used on the asessment type selection screen
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/assessmenticons")]
-        public IActionResult GetAssessmentIcons()
-        {
-            return Ok(_assessmentBusiness.GetAllAssessmentIcons());
-        }
     }
 }

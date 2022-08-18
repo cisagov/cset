@@ -9,6 +9,7 @@ import {
   BreakpointState
 } from '@angular/cdk/layout';
 import { SwiperComponent } from 'swiper/angular';
+import { GalleryService } from '../../services/gallery.service';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -21,8 +22,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
 
-  hoverIndex = -1;
-  tempArray=[,,,,,,,,,];
+  hoverIndex = -1;  
   config: SwiperOptions = {
     slidesPerView: 1,
     spaceBetween: 5,
@@ -54,11 +54,24 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       }
     }
   };
-  constructor(public dialog:MatDialog, public breakpointObserver: BreakpointObserver, private zone: NgZone) { 
+
+  galleryData: any;
+  rows: any;
+
+  constructor(public dialog:MatDialog, 
+    public breakpointObserver: BreakpointObserver, 
+    public gallerySvc: GalleryService,
+    private zone: NgZone) { 
     
   }
 
   ngOnInit(): void {
+    this.gallerySvc.getGalleryItems("CSET").subscribe(
+      (resp: any) => {
+        this.galleryData = resp;
+        this.rows = this.galleryData.rows;
+      }
+    );
     setTimeout(() => {
       this.checkNavigation();
     });
@@ -85,8 +98,8 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSwiper([swiper]){
-    console.log(this.swiper);
+   onSwiper([swiper]){
+      console.log(swiper);
   }
   onHover(i:number){
     this.hoverIndex = i;
