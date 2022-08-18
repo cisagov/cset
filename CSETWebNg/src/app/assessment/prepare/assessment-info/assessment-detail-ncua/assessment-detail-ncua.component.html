@@ -72,10 +72,10 @@
         <label class="mb-1" for="creditUnion">Credit Union Name</label>
         <input type="text" maxlength="100" class="form-control" 
                id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-               [formControl]="myControl" [matAutocomplete]="auto" (change)="update($event)" tabindex="0">
+               [formControl]="assessmentControl" [matAutocomplete]="auto" (change)="update($event)" tabindex="0">
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{ option }}
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+                {{ option.name }}
             </mat-option>
         </mat-autocomplete>
     </div>
