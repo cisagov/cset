@@ -103,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reportscrr/mil1FullAnswerDistribHtml")]
+        [Route("api/reportscrr/widget/mil1FullAnswerDistrib")]
 
         public IActionResult getMil1FullAnswerDistribHtml()
         {
@@ -114,8 +114,7 @@ namespace CSETWebCore.Api.Controllers
             totalBarChartInput.AnswerCounts = new List<int>
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
             ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
-            var html = new CrrHtml() { Html = barChart.ToString() };
-            return Ok(html);
+            return Content(barChart.ToString(), "text/html");
         }
 
 
@@ -124,13 +123,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reportscrr/mil1PerformanceSummaryLegend")]
+        [Route("api/reportscrr/widget/mil1PerformanceSummaryLegend")]
 
         public IActionResult getMil1PerformanceSummaryLegend()
         {
             var legend = new MIL1PerformanceSummaryLegend();
-            var html = new CrrHtml() { Html = legend.ToString() };
-            return Ok(html);
+            return Content(legend.ToString(), "text/html");
         }
 
         private CrrResultsModel GenerateCrrResults()

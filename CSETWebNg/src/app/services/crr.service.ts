@@ -47,11 +47,13 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 
-  getMil1FullAnswerDistribHtml() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/mil1FullAnswerDistribHtml');
+  getMil1FullAnswerDistribWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1FullAnswerDistrib',
+    { responseType: 'text' });
   }
 
-  getMil1PerformanceSummaryLegend() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/mil1PerformanceSummaryLegend');
+  getMil1PerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
+    { responseType: 'text'});
   }
 }
