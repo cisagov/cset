@@ -26,8 +26,7 @@
 
         <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
             <div class="d-flex align-items-start flex-11a">
-                <button class="btn btn-primary m-0 questions-header-collapse-button-radius" 
-                    (click)="expandAll(false)"
+                <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
                     matTooltip="Collapse All" aria-label="Collapse All"><i class="fas fa-compress-alt"></i></button>
                 <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
                     aria-label="Expand All">
@@ -56,12 +55,10 @@
         </div>
     
 
-
         <!-- top level (Domains) -->
         <div *ngFor="let g of groupings" class="w-100 mb-5">
             <app-domain-maturity-filter [domain]="g" [maturityLevels]="maturityLevels"
                 (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>
-
             <app-grouping-block [grouping]="g"></app-grouping-block>
         </div>
 

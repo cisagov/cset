@@ -86,9 +86,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    if (this.myGrouping.groupingID === 2349) {
-      console.log(JSON.stringify(this.myGrouping, null, 4));
-    }
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {

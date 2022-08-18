@@ -28,7 +28,7 @@
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
 
-    "installationMode": "ACET",
+    "installationMode": "",
 
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
