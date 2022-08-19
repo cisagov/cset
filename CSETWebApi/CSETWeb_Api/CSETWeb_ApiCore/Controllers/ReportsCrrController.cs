@@ -82,10 +82,8 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Gets the charts for Mil1 Performance Summary a returns them in a list of raw HTML strings.
         /// </summary>
-
-        /// <param name="includeResultsStylesheet"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/getCrrMil1PerformanceSummaryBodyCharts")]
@@ -125,6 +123,47 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        /// Gets the heatmaps for CRR Performance Summary a returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/getCrrPerformanceSummaryBodyCharts")]
+        public IActionResult GetCrrPerformanceSummaryBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var XDocument = _crr.XDoc;
+
+            List<object> charts = new List<object>();
+
+            int i = 1;
+            foreach (XElement domain in XDocument.Root.Elements()) 
+            {
+                XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                    el.Attribute("label").Value == "MIL-" + i);
+
+                if (mil == null) 
+                {
+                    i = 1;
+                    continue;
+                }
+
+                if (i == 1)
+                {
+                    charts.Add(new GoalsHeatMap(mil, 26).ToString());
+                }
+                else 
+                {
+                    var milGoals = mil.Descendants("Goal").FirstOrDefault();
+                    charts.Add(new { Title = domain.Attribute("title").Value, Chart = new QuestionsHeatMap(milGoals, true, 26).ToString() });
+                }
+                i++;
+            }
+        
+            return Ok(charts);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="domain"></param>
@@ -133,7 +172,6 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/milheatmap")]
-
         public IActionResult GetWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
         {
             var assessmentId = _token.AssessmentForUser();
@@ -163,7 +201,6 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/mil1FullAnswerDistrib")]
-
         public IActionResult getMil1FullAnswerDistribHtml()
         {
             var assessmentId = _token.AssessmentForUser();
@@ -176,6 +213,16 @@ namespace CSETWebCore.Api.Controllers
             return Content(barChart.ToString(), "text/html");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/widget/performanceLegend")]
+        public IActionResult getCrrPerformanceLegend()
+        {
+            return Content(new CRRPerformanceLegend().ToString(), "text/html");
+        }
 
         /// <summary>
         /// 
@@ -183,11 +230,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/mil1PerformanceSummaryLegend")]
-
         public IActionResult getMil1PerformanceSummaryLegend()
         {
-            var legend = new MIL1PerformanceSummaryLegend();
-            return Content(legend.ToString(), "text/html");
+            return Content(new MIL1PerformanceSummaryLegend().ToString(), "text/html");
         }
 
         private CrrResultsModel GenerateCrrResults()

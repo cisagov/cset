@@ -60,4 +60,13 @@ export class CrrService {
   getMil1PerformanceSummaryBodyCharts() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
   }
+
+  getCrrPerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
+  }
+
+  getCrrPerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
+    { responseType: 'text'});
+  }
 }
