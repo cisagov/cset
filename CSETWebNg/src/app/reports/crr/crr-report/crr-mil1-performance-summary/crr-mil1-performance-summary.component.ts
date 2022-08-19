@@ -18,16 +18,15 @@ export class CrrMil1PerformanceSummaryComponent implements OnInit {
   constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: any) => {
+    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
       this.mil1FullAnswerDistribChart = resp;
     })
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: any) => {
+    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     })
 
     this.crrSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
-      console.log(resp);
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
     })
