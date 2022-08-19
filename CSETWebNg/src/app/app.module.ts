@@ -452,6 +452,7 @@ import { ReferencesBlockComponent } from './reports/module-content/references-bl
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
+import { EllipsisModule } from 'ngx-ellipsis';
 
 @NgModule({
     imports: [
@@ -548,6 +549,7 @@ import { GalleryService } from './services/gallery.service';
         NgxChartsModule,
         TooltipModule,
         SwiperModule,
+        EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
