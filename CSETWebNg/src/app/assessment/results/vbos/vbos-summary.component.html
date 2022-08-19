@@ -1,0 +1,270 @@
+<h3>#1</h3>
+
+	<div>
+		<canvas id="bar-chart-horizontal" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="false"></canvas>
+	</div>
+
+	<div>
+		<canvas id="bar-chart-horizontal" chart-labels="labels" width="800" height="500"></canvas>
+	</div>
+
+	<h3>Failed Load Spinner</h3>
+
+    <!-- <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        	<div style="max-width: ?px; max-height: ?px;"></div>
+        </div>
+    </div> -->
+
+
+    <hr>
+    <h3>#1</h3>
+
+	<div style="text-align: center;">
+		<h2>VBOS Results</h2>
+	</div>
+
+	<div class="card" style="width: 27%;">
+		<h3>Achieved Level </h3>
+	   		<p> Achieved Level = 3</p>
+			{{achievedLevelList}}
+	    	<!-- {{achievedLevel()}}  -->
+	</div>
+
+	<hr>
+    <h3>#2</h3>
+
+    <div class="horizontalBarchart">
+    	<div class="chartHeader"></div>
+    	<div class="leftLabels">
+    		<!-- {{categoriesList}} -->
+    	</div>
+    	<div class="chartBody">
+    		{{statsByCategoryList}}
+    	</div>
+    </div>
+
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h3></h3>
+
+                    horizontalBarchart here
+                    <div>
+                        <canvas id="bar-chart-horizontal" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="false"></canvas>
+                        </div>
+                        <div>
+                        <canvas id="bar-chart-horizontal" chart-labels="labels" width="800" height="500"></canvas>
+                        </div>
+
+                    <!-- <app-vbos_results></app-vbos_results> -->
+                </div>
+            </div>     
+        </div>
+    </div>
+        
+        
+	<hr>   
+
+    <h3>#3</h3>
+		
+	<div class="white-panel d-flex flex-column flex-11a">
+    	<h3 class="d-flex flex-column flex-00a">
+    	<!--{{title}}-->
+    		Title
+    	</h3>
+	    	<p>
+	        These charts represent the answer distribution overall and across all tiers.
+	    	</p>
+    </div>
+    <div class="container">
+        <div class="row">
+             <div class="col-6"><app-vbos-summary [title]="'Overall'"></app-vbos-summary></div> 
+             <div class="col-6"><app-vbos-summary [title]="'Basic'" ></app-vbos-summary></div> 
+        </div>
+        <div class="row" style="margin-top:45px;">
+            <div class="col-6"><app-vbos-summary [title]="'Intermediate'"></app-vbos-summary></div>
+            <div class="col-6"><app-vbos-summary [title]="'Advanced'"></app-vbos-summary></div>
+        </div>
+    </div>
+
+    <hr>
+      <h3>#4</h3>
+
+    <!-- <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>VBOS Performance by Goal</h5>
+                    <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+                        <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="maxLevel" [xAxisTicks]="sAxisTicks" [legend]="'true'"
+                            [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'" >
+                        </ngx-charts-bar-horizontal-stacked>
+                	</div>            
+            	</div>
+            </div>
+        </div>
+    </div> -->
+
+	<hr>
+	<h3>#5</h3>
+
+    <!-- <div>
+        <ngx-charts-bar-horizontal [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+	        <ng-template #tooltipTemplate let-model="model">
+	            <div class="p-1">
+	                {{model.value}}
+	            </div>
+	        </ng-template>
+    	</ngx-charts-bar-horizontal>
+    </div>  -->
+    
+    <app-nav-back-next [page]="'vbos-summary'"></app-nav-back-next> 
+
+
+	<hr>
+	<h3>OLD HTML</h3>
+
+    <!--OLD HTML-->
+    <div>
+        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+            <h3>Achieved Level</h3>
+
+            <!--
+            <div *ngIf="!initialized">
+                <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+                    <div style="max-width:100%; max-height: 20rem;"></div>
+                </div>
+            </div>
+        --> 
+
+            <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+                <div clas="container">
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5>VBOS Performance by Goal</h5>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+
+
+<app-nav-back-next [page]="'vbos-summary'"></app-nav-back-next>
+
+<script type="text/javascript">
+
+	var chartItems =
+{
+	"labels": [
+		"Asset Management", 
+		"Configuration Management", 
+		"Access Control", 
+		"Flaw Remediation", 
+		"Malicious Code Detection", 
+		"System Integrity",
+		"Continuous Monitoring", 
+		"Incident Response and Recovery Planning", 
+		"Architecture and Development", 
+		"Supply Chain Risk Management"
+	],
+	"data": [
+		3,
+		2,
+		2,
+		1,
+		3,
+		2,
+		3,
+		1,
+		2,
+		1
+	]
+} 
+
+var categories = ["Asset Management", "Configuration Management", "Access Control", "Flaw Remediation", "Malicious Code Detection", "System Integrity",
+"Continuous Monitoring", "Incident Response and Recovery Planning", "Architecture and Development", "Supply Chain Risk Management"]
+
+
+horizBarChartLabels = {
+	1: "1",
+	2: "2"
+}
+
+var categories = ["Risk Framing", "Risk Assessment", "Risk Response", "Risk Monitoring"]
+
+</script>
+        
+
+<!-- <div class="white-panel d-flex flex-column flex-11a">
+    <h3 class="d-flex flex-column flex-00a">{{title}}</h3>
+    <p>
+        These charts represent the answer distribution overall and across all tiers.
+    </p>
+    </div> -->
+    <!-- <div class="container">
+        <div class="row">
+             <div class="col-6"><app-vbos-summary [title]="'Overall'"></app-vbos-summary></div> 
+             <div class="col-6"><app-vbos-summary [title]="'Basic'" ></app-vbos-summary></div> 
+        </div>
+        <div class="row" style="margin-top:45px;">
+            <div class="col-6"><app-vbos-summary [title]="'Intermediate'"></app-vbos-summary></div>
+            <div class="col-6"><app-vbos-summary [title]="'Advanced'"></app-vbos-summary></div>
+        </div>
+    </div> -->
+
+     <!-- <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>VBOS Performance by Goal</h5>
+                    <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+                        <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="maxLevel" [xAxisTicks]="sAxisTicks" [legend]="'true'"
+                            [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'" >
+                        </ngx-charts-bar-horizontal-stacked>
+                    </div>            
+                    </div>
+
+     <div>
+        <ngx-charts-bar-horizontal [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+        <ng-template #tooltipTemplate let-model="model">
+            <div class="p-1">
+                {{model.value}}
+            </div>
+        </ng-template>
+    </ngx-charts-bar-horizontal>
+    </div> 
+    
+    <app-nav-back-next *ngIf="showNav" [page]="'vbos-summary'"></app-nav-back-next> -->
+
+    <!--            OLD HTML
+    <div>
+        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+            <h3>Achieved Level</h3>
+            <div *ngIf="!initialized">
+                <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+                    <div style="max-width:100%; max-height: 20rem;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+                <div clas="container">
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <h5>VBOS Performance by Goal</h5>
+                        </div>
+                    </div>
+                </div>
+                <app-nav-back-next *mgIf="showNav" [page]="'vbos-summary'"></app-nav-back-next>
+</div>
+-->
+
+ <!--[filter]="'Intermediate'"
+ [filter]="'Advanced'"-->

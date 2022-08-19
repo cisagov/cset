@@ -247,7 +247,7 @@ namespace CSETWebCore.Api.Controllers
         // VBOS Controllers
         //--------------------------------
         [HttpGet]
-        [Route("api/results/vbosdetail")]
+        [Route("api/reports/vbosSiteSummary")]
         public IActionResult GetVBOSDetailReport()
         {
             int assessmentId = _token.AssessmentForUser();

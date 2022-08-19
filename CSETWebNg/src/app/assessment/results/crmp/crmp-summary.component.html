@@ -1,0 +1,118 @@
+<div class="white-panel d-flex flex-column flex-11a">
+    <h3 class="d-flex flex-column flex-00a">{{title}}</h3>
+    <p>
+        These charts represent the answer distribution overall and across all tiers.
+    </p>
+
+    <!-- <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div> -->
+
+    <!--
+                                                ANSWER BY LEVEL - Orange and Grey Chart
+
+        <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>CRMP Performance by Goal</h5>
+                    <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
+                        <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="maxLevel" [xAxisTicks]="sAxisTicks" [legend]="'true'"
+                            [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'" >
+                        </ngx-charts-bar-horizontal-stacked>
+                    </div>            
+                    </div>
+
+     <div>
+        <ngx-charts-bar-horizontal [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
+        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
+        <ng-template #tooltipTemplate let-model="model">
+            <div class="p-1">
+                {{model.value}}%
+            </div>
+        </ng-template>
+    </ngx-charts-bar-horizontal>
+    </div>  
+                                        ANSWER BY LEVEL - Orange and Grey Chart
+-->
+
+
+<!--                             RRA Horizontal chart?
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+        <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
+            <div class="gridGraphLabels">
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">
+                    thing1</div>
+                     {{dataRow.domainName}} 
+            </div>
+            <div class="gridGraphDataContainer" #gridChartDataDiv>
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                    <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                    </div>
+                    <div class="gridGraphBackground  graphDataRow">
+                        <div *ngFor="let grid of gridColumns" class="gridCell"></div>
+                    </div>
+                </div>
+                <div class="gridGraphData graphDataRow">
+                    <div class="gridGraphBackgroundLabels graphDataRow">
+                        <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i /
+                            this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <span style="width:0">100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                        Horizontal Blue chart?
+    -->
+
+        <!-- <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+            <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
+                <div class="gridGraphLabels">
+                    <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow">
+                        {{dataRow.domainName}}</div>
+                </div>
+                <div class="gridGraphDataContainer" #gridChartDataDiv>
+                    <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                        <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                        </div>
+                        <div class="gridGraphBackground  graphDataRow">
+                            <div *ngFor="let grid of gridColumns" class="gridCell"></div>
+                        </div>
+                    </div>
+                    <div class="gridGraphData graphDataRow">
+                        <div class="gridGraphBackgroundLabels graphDataRow">
+                            <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i /
+                                this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                            <span style="width:0">100</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="levelIndicatorContainer pyramidGraphLevelIndicator">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Achieved Level
+                    </div>
+                    <div class="rbLevel">
+                        {{crmpModel?.acheivedLevel}}
+                        {{crmpSummary.statsByDomainAtUnderTarget}}
+                    </div>
+                </div>
+              </div>
+            </div>
+
+    <app-nav-back-next *ngIf="showNav" [page]="'crmp-summary'"></app-nav-back-next>
+

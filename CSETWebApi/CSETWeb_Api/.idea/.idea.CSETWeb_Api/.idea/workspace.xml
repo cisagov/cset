@@ -12,12 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="Added vbos questions to DB&#10;Added CRMP DB Relations">
-      <change afterPath="$PROJECT_DIR$/CSETWebCore.Business/Reports/CrmpSummary.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CSETWebCore.Business/Reports/VbosSummary.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Manual/CrmpStoredProcModels.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CSETWebCore.DataLayer/Manual/VbosStoredProcModels.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/CSETWeb11010.mjNEng/schema/INFORMATION_SCHEMA.NBgcMw.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/CSETWeb11010.mjNEng/schema/INFORMATION_SCHEMA.NBgcMw.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/CSETWeb11010.mjNEng/schema/db_accessadmin.KqpDJg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/CSETWeb11010.mjNEng/schema/db_accessadmin.KqpDJg.meta" afterDir="false" />
@@ -82,12 +77,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/tempdb.Uqu0yw/schema/guest.2C3iBQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/tempdb.Uqu0yw/schema/guest.2C3iBQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/tempdb.Uqu0yw/schema/sys.zb4BAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/dataSources/93f8825d-1a01-4353-9840-04ca07a4b31e/storage_v2/_src_/database/tempdb.Uqu0yw/schema/sys.zb4BAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Reports/MaturityReportData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Reports/MaturityReportData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Reports/MaturityReportDetailData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Reports/MaturityReportDetailData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ReportsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ReportsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +121,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\JetBrains Rider 2021.3.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -179,7 +170,8 @@
       <workItem from="1654272130860" duration="800000" />
       <workItem from="1654637110008" duration="652000" />
       <workItem from="1656686098000" duration="16641000" />
-      <workItem from="1658761580701" duration="785000" />
+      <workItem from="1658761580701" duration="13698000" />
+      <workItem from="1660229451109" duration="4834000" />
     </task>
     <task id="LOCAL-00001" summary="Db Setup - Added Our Maturity Levels/Models to table">
       <created>1647640063663</created>
@@ -209,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649967963933</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |">
+      <created>1658768752530</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1658768752530</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,7 +244,8 @@
     <MESSAGE value="Db Setup - Added Our Maturity Levels/Models to table" />
     <MESSAGE value="Db Setup - Added Questions to the table" />
     <MESSAGE value="Added vbos questions to DB&#10;Added CRMP DB Relations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added vbos questions to DB&#10;Added CRMP DB Relations" />
+    <MESSAGE value="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
