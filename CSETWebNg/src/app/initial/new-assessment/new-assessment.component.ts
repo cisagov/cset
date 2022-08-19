@@ -27,25 +27,20 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     slidesPerView: 1,
     spaceBetween: 5,
     slidesPerGroup: 1, 
-    centeredSlides:true,
-    loop:true, 
+    //loop:true, 
     navigation:true,
     breakpoints: {
       200: {
         slidesPerView:1,
-        centeredSlides:true
       },
       620:{
         slidesPerView:2,
-        centeredSlides: true
       },
       800: {
         slidesPerView: 3, 
-        centeredSlides:true
       },
       1220:{
         slidesPerView:5,
-        centeredSlides: true
       }
     }, 
     on: {
@@ -57,11 +52,10 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   galleryData: any;
   rows: any;
-
+  testRow: any;
   constructor(public dialog:MatDialog, 
     public breakpointObserver: BreakpointObserver, 
-    public gallerySvc: GalleryService,
-    private zone: NgZone) { 
+    public gallerySvc: GalleryService) { 
     
   }
 
@@ -70,6 +64,9 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       (resp: any) => {
         this.galleryData = resp;
         this.rows = this.galleryData.rows;
+        this.testRow = this.rows[1];
+        console.log(this.testRow);
+        console.log(this.rows);
       }
     );
     setTimeout(() => {
