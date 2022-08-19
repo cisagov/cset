@@ -96,10 +96,10 @@ export class AssessmentService {
           AssessmentService.allMaturityModels = data;
         });
 
-        this.http.get(this.apiUrl + "assessmenticons")
-        .subscribe((data: AssessmentIcon[]) => {
-          AssessmentService.assessmentIcons = data;
-        });
+        //this.http.get(this.apiUrl + "assessmenticons")
+        //.subscribe((data: AssessmentIcon[]) => {
+        //  AssessmentService.assessmentIcons = data;
+        //});
 
       this.initialized = true;
     }
