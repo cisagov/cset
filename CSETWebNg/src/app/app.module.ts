@@ -451,6 +451,8 @@ import { GuidanceBlockComponent } from './reports/module-content/guidance-block/
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { GalleryService } from './services/gallery.service';
+import { EllipsisModule } from 'ngx-ellipsis';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -565,6 +567,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         NgxChartsModule,
         TooltipModule,
         SwiperModule,
+        EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -954,6 +957,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         RraFilteringService,
         CrrService,
         Utilities,
+        GalleryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

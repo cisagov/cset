@@ -159,6 +159,7 @@ namespace CSETWebCore.Reports
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
