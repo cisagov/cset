@@ -156,7 +156,9 @@ export class TopMenusComponent implements OnInit {
     }));
     // Keyboard Shortcuts
     this._hotkeysService.add(new Hotkey('?', (event: KeyboardEvent): boolean => {
-      this.showKeyboardShortcuts();
+      if (!this.configSvc.isMobile()) {
+        this.showKeyboardShortcuts();
+      }
       return false; // Prevent bubbling
     }));
 
@@ -204,7 +206,8 @@ export class TopMenusComponent implements OnInit {
   }
 
   showResourceLibraryLink() {
-    return this.router.url !== '/resource-library'
+    return !this.configSvc.isMobile()
+      && this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
       && !this.isModuleBuilder(this.router.url);
   }
