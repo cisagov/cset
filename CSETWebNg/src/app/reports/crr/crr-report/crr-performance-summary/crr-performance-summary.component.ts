@@ -27,8 +27,8 @@ export class CrrPerformanceSummaryComponent implements OnInit {
     });
   }
 
-  getChart(domainTitle: string) {
-    return this.charts.find(c => c.title === domainTitle)?.chart;
+  getChart(i, j) {
+    return this.charts[i][j];
   }
 
 }
