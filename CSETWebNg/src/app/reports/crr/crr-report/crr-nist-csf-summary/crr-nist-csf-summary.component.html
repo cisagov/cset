@@ -51,68 +51,35 @@
     </div>
 </div>
 
-<!-- @foreach (var func in xDoc.Descendants("Function"))
-{ -->
-
-    <!-- one function super row -->
-    <div *ngFor="let e of bodyData" class="row" style="border-top: 1px solid black;">
-        <div class="col-3">
-            <div class="row" style="height: 95%;">
-                <div style="height: 100%; margin: 0.25rem 0.75rem 0.25rem 0; width: 10%"
-                [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
-                    <div style="height: 145px;"></div>
+<div *ngFor="let e of bodyData" class="row" style="border-top: 1px solid black;">
+    <div class="col-3">
+        <div class="row" style="height: 95%;">
+            <div style="height: 100%; margin: 0.25rem 0.75rem 0.25rem 0; width: 10%"
+            [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
+                <div style="height: 145px;"></div>
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    <p style="font-size: 0.75rem; font-weight: bold;">
+                        {{ e.function.Function.name }} ({{ e.function.Function.code }})
+                    </p>
                 </div>
-                <div class="col-10">
-                    <div class="row">
-                        <p style="font-size: 0.75rem; font-weight: bold;">
-                            {{ e.function.Function.name }} ({{ e.function.Function.code }})
-                        </p>
-                    </div>
-                    <div class="row" style="vertical-align: middle;" [innerHtml]="e.chart | safe">
-
-                        <!-- @{
-                            var distFunc = Model.CRRScores.CrrReferenceAnswerDistrib(func);
-
-                            var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
-                            bciFunc.IncludePercentFirstBar = true;
-                            bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
-                            var chartFunc = new ScoreBarChart(bciFunc);
-                        }
-                        @Html.Raw(chartFunc) -->
-
-                    </div>
+                <div class="row" style="vertical-align: middle;" [innerHtml]="e.chart | safe">
                 </div>
             </div>
         </div>
-
-
-        <div class="col-9">
-
-            <!-- @foreach (var cat in func.Elements())
-            { -->
-                <!-- each category -->
-                <!-- var s1 = "";
-                if (!cat.Equals(func.Elements().Last()))
-                {
-                    s1 = "border-bottom: solid 0.5px black;";
-                } -->
-
-                <div *ngFor="let cat of e.cats; let i = index" class="row"
-                [style.border-bottom]="i != (e.cats.length - 1) ? 'solid 0.5px black' : 'none'">
-                    <div class="col-4" style="font-size: 8px; padding: .25rem 0">
-                        <div style="font-weight: bold;">
-                            <!-- @cat.Parent.Attribute("code").Value.@cat.Attribute("code").Value -->
-                            {{ cat.parentCode }}.{{ cat.code }}
-                        </div>
-                        {{ cat.name }}
-                    </div>
-                    <div class="col-8" style="align-items: center; padding: 0.25rem;" [innerHtml]="cat.catChart | safe">
-                    </div>
+    </div>
+    <div class="col-9">
+        <div *ngFor="let cat of e.cats; let i = index" class="row"
+        [style.border-bottom]="i != (e.cats.length - 1) ? 'solid 0.5px black' : 'none'">
+            <div class="col-4" style="font-size: 8px; padding: .25rem 0">
+                <div style="font-weight: bold;">
+                    {{ cat.parentCode }}.{{ cat.code }}
                 </div>
-            <!-- } -->
-
-
+                {{ cat.name }}
+            </div>
+            <div class="col-8" style="align-items: center; padding: 0.25rem;" [innerHtml]="cat.catChart | safe">
+            </div>
         </div>
     </div>
-
-<!-- } -->
+</div>
