@@ -124,6 +124,7 @@ namespace CSETWebCore.Api.Controllers
 
         /// <summary>
         /// Gets the heatmaps for CRR Performance Summary a returns them in a list of raw HTML strings.
+        /// these are returned as a list of lists, (10 lists, one for each domain, each containing five heatmaps).
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -134,30 +135,29 @@ namespace CSETWebCore.Api.Controllers
             _crr.InstantiateScoringHelper(assessmentId);
             var XDocument = _crr.XDoc;
 
-            List<object> charts = new List<object>();
-
-            int i = 1;
+            List<List<object>> charts = new List<List<object>>();
             foreach (XElement domain in XDocument.Root.Elements()) 
             {
-                XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                List<object> chartList = new List<object>();
+
+                for (int i = 1; i <= 5; i++) 
+                {
+                    XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                     el.Attribute("label").Value == "MIL-" + i);
 
-                if (mil == null) 
-                {
-                    i = 1;
-                    continue;
+
+                    if (i == 1)
+                    {
+                        chartList.Add( new GoalsHeatMap(mil, 26).ToString());
+                    }
+                    else
+                    {
+                        var milGoals = mil.Descendants("Goal").FirstOrDefault();
+                        chartList.Add(new QuestionsHeatMap(milGoals, true, 26).ToString());
+                    }
                 }
 
-                if (i == 1)
-                {
-                    charts.Add(new GoalsHeatMap(mil, 26).ToString());
-                }
-                else 
-                {
-                    var milGoals = mil.Descendants("Goal").FirstOrDefault();
-                    charts.Add(new { Title = domain.Attribute("title").Value, Chart = new QuestionsHeatMap(milGoals, true, 26).ToString() });
-                }
-                i++;
+                charts.Add(chartList);
             }
         
             return Ok(charts);

@@ -1,7 +1,5 @@
 <div class="container-fluid landscape" style="font-family: Verdana, sans-serif;">
-    <div>
-      <h3 class="depiction-title">CRR Performance Summary</h3>
-    </div>
+    <h3 class="depiction-title" style="margin-left: -15px; margin-bottom: 5px;">CRR Performance Summary</h3>
 
     <div class="row header crr-performance">
       <div style="width: 9%; padding: 0;">
@@ -47,18 +45,20 @@
 
     <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row domain">
       <div class="domain-label" style="width: 9%; padding: 0;">{{  domain.title  }}</div>
-          <div style="width: 27%; padding: 0;" [innerHtml]="getChart(domain.title) | safe">
+          <div *ngFor="let chart of charts[i]; let j = index" style="padding: 0"
+          [style.width]="j == 0 ? '27%' : (j == 4 || j == 3 ? '14%' : '18%')"
+          [innerHtml]="getChart(i, j) | safe">
           </div>
     </div>
 </div>
 
-<div class="row" style="padding: 0.25rem;" [innerHtml]="legend | safe"></div>
+<div class="row" style="padding: 0.25rem; margin-left: 15px" [innerHtml]="legend | safe"></div>
 
 <style>
 
   @media print {
     @page {
-      size: A4 landscape
+        size: A4 landscape
       }
     }
 
