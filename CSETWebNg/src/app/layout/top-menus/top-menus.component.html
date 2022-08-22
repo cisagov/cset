@@ -31,7 +31,7 @@
         </button>
 
         <mat-menu #tools="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="enableProtectedFeature()">
+            <button mat-menu-item (click)="enableProtectedFeature()" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-key-shield fs-base mr-2 align-middle"></span>
                 <span>Enable Protected Features</span>
             </button>
@@ -43,7 +43,8 @@
                 <span class="cset-icons-books-stack-1 fs-base mr-2 align-middle"></span>
                 <span>Assessment Documents</span>
             </button>
-            <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
+            <button mat-menu-item [disabled]="!inAssessment()" *ngIf="!configSvc.isMobile()"
+                [ngClass]="{'disabled-menu-item' : !inAssessment()}"
                 (click)="editParameters()">
                 <span class="cset-icons-puzzle fs-base mr-2 align-middle"></span>
                 <span>Parameter Editor</span>
@@ -56,23 +57,23 @@
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [routerLink]="['/importModule']">
+            <button mat-menu-item [routerLink]="['/importModule']" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
                 <span>Import Modules</span>
             </button>
-            <button mat-menu-item [routerLink]="['/set-list']">
+            <button mat-menu-item [routerLink]="['/set-list']" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
                 <span>Module Builder</span>
             </button>
-            <button mat-menu-item [routerLink]="['/module-content-launch']">
+            <button mat-menu-item [routerLink]="['/module-content-launch']" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
                 <span>Module Content Report</span>
             </button>
-            <button mat-menu-item (click)="navigateTrend()">
+            <button mat-menu-item (click)="navigateTrend()" *ngIf="!configSvc.isMobile()">
                 <span class="cset2-icons-trend fs-base mr-2 align-middle"></span>
                 <span>Trend</span>
             </button>
-            <button mat-menu-item (click)="navigateCompare()">
+            <button mat-menu-item (click)="navigateCompare()" *ngIf="!configSvc.isMobile()">
                 <span class="cset2-icons-compare fs-base mr-2 align-middle"></span>
                 <span>Compare</span>
             </button>
@@ -110,7 +111,7 @@
               <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
               <span>TSA User Guide</span>
           </a>
-            <button mat-menu-item [matMenuTriggerFor]="userguides">User Guides</button>
+            <button mat-menu-item [matMenuTriggerFor]="userguides" *ngIf="!configSvc.isMobile()">User Guides</button>
 
             <hr class="menu-divider" />
 
@@ -118,7 +119,7 @@
                 <span class="cset-icons-cset-lock fs-base mr-2 align-middle"></span>
                 <span>About</span>
             </button>
-            <button mat-menu-item (click)="showKeyboardShortcuts()">
+            <button mat-menu-item (click)="showKeyboardShortcuts()" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2 align-middle"></span>
                 <span>Keyboard Shortcuts</span>
             </button>
