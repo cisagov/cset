@@ -47,7 +47,6 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-  
         /// <param name="includeResultsStylesheet"></param>
         /// <returns></returns>
         [HttpGet]
@@ -61,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId);
+            var crrStructure = biz.GetMaturityStructure(assessmentId);
 
             var deficiencyData = new MaturityBasicReportData()
             {
@@ -76,7 +75,7 @@ namespace CSETWebCore.Api.Controllers
             viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
-            viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(x.Root));
+            viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(crrStructure.Root));
    
             return Ok(viewModel);
         }
@@ -211,6 +210,24 @@ namespace CSETWebCore.Api.Controllers
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
             ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
             return Content(barChart.ToString(), "text/html");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/widget/nistCsfSummaryChart")]
+        public IActionResult getNistCsfSummaryChart()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var distAll = _crr.CrrReferenceAnswerDistrib(_crr.XCsf.Root);
+
+            var bciAll = new BarChartInput() { Height = 80, Width = 100 };
+            bciAll.IncludePercentFirstBar = true;
+            bciAll.AnswerCounts = new List<int> { distAll.Green, distAll.Yellow, distAll.Red };
+            return Content(new ScoreBarChart(bciAll).ToString(), "text/html");
         }
 
         /// <summary>

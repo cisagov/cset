@@ -23,7 +23,6 @@ export class CrrPerformanceSummaryComponent implements OnInit {
 
     this.crrSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
       this.charts = resp;
-      console.log(resp);
     });
   }
 

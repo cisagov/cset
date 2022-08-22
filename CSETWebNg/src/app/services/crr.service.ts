@@ -69,4 +69,9 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
     { responseType: 'text'});
   }
+
+  getNistCsfSummaryChartWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
+    { responseType: 'text'});
+  }
 }
