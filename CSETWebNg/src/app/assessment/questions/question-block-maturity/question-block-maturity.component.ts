@@ -97,7 +97,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
       this.configSvc.buttonLabels['A'] = "Issue(N)";
-      this.configSvc.answerLabels['A'] = "No with Issues";
+      this.configSvc.answerLabels['A'] = "No with Issue(s)";
     } else {
       this.configSvc.buttonLabels['A'] = "Yes(C)";
       this.configSvc.answerLabels['A'] = "Yes Compensating Control"
