@@ -27,6 +27,7 @@
 
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
+    "mobileEnvironment": "iOS",
 
     "installationMode": "",
 
