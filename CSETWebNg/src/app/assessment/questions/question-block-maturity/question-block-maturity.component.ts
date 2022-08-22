@@ -55,11 +55,11 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
 
   contactInitials = "";
   altAnswerSegment = "";
-  convoBuffer = '\n- - End of Note - -\n';
+  convoBuffer = '\n- - End of Issue - -\n';
   // altAnswerConversation = [];
 
   showQuestionIds = false;
@@ -96,8 +96,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      this.configSvc.buttonLabels['A'] = "Notes(N)";
-      this.configSvc.answerLabels['A'] = "Notes or Issues";
+      this.configSvc.buttonLabels['A'] = "Issue(N)";
+      this.configSvc.answerLabels['A'] = "No with Issues";
     } else {
       this.configSvc.buttonLabels['A'] = "Yes(C)";
       this.configSvc.answerLabels['A'] = "Yes Compensating Control"
@@ -291,12 +291,14 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
           else {
             let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-            
+            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
             if (previousContactInitials !== this.contactInitials) {
-              let oldComments = q.altAnswerText.substring(0, q.altAnswerText.lastIndexOf(this.convoBuffer)+this.convoBuffer.length);
-              let newComment = q.altAnswerText.substring(oldComments.length);
+              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
+                let newComment = q.altAnswerText.substring(oldComments.length);
 
-              q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              // }
             }
           }
         }

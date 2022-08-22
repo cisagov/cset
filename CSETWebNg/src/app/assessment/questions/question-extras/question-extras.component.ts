@@ -343,7 +343,7 @@ export class QuestionExtrasComponent implements OnInit {
           (response: Finding[]) => {
             this.extras.findings = response;
             this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
-            this.myQuestion.answer_Id = find.answer_Id
+            this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -357,12 +357,16 @@ export class QuestionExtrasComponent implements OnInit {
   deleteDiscovery(findingToDelete) {
 
     // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete observation '"
+    let msg = "Are you sure you want to delete "
+      + this.observationOrIssue().toLowerCase()
+      + " '"
       + findingToDelete.summary
       + "?'";
 
     if (findingToDelete.summary === null) {
-      msg = "Are you sure you want to delete this observation?";
+      msg = "Are you sure you want to delete this "
+      + this.observationOrIssue().toLowerCase()
+      + "?";
     }
 
 
@@ -667,6 +671,27 @@ export class QuestionExtrasComponent implements OnInit {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
       && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
       && (!this.tab?.resourceDocumentList || this.tab.resourceDocumentList.length === 0)
+  }
+
+  /**
+   * Determines if the assessment is ISE or not
+   */
+  isISE () {
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      return true;
+    }
+  }
+
+  /**
+   * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
+   */
+   observationOrIssue () {
+    if (this.isISE()) {
+      return 'Issue';
+    }
+    else {
+      return 'Observation';
+    }
   }
 
 
