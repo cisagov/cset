@@ -200,7 +200,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/mil1FullAnswerDistrib")]
-        public IActionResult getMil1FullAnswerDistribHtml()
+        public IActionResult GetMil1FullAnswerDistribHtml()
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
@@ -218,7 +218,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/nistCsfSummaryChart")]
-        public IActionResult getNistCsfSummaryChart()
+        public IActionResult GetNistCsfSummaryChart()
         {
             var assessmentId = _token.AssessmentForUser();
             _crr.InstantiateScoringHelper(assessmentId);
@@ -235,8 +235,60 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("api/reportscrr/getNistCsfReportBodyData")]
+        public IActionResult GetNistCsfReportBodyData()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+
+            List<object> funcs = new List<object>();
+
+            foreach (var func in _crr.XCsf.Descendants("Function")) 
+            {
+                var distFunc = _crr.CrrReferenceAnswerDistrib(func);
+
+                var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
+                bciFunc.IncludePercentFirstBar = true;
+                bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
+                var chartFunc = new ScoreBarChart(bciFunc);
+
+                List<object> cats = new List<object>();
+                foreach (var cat in func.Elements()) 
+                {
+                    var distCat = _crr.CrrReferenceAnswerDistrib(cat);
+
+                    var bciCat = new BarChartInput() { Height = 15, Width = 360 };
+                    bciCat.IncludePercentFirstBar = true;
+                    bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
+                    var chartCat = new ScoreStackedBarChart(bciCat);
+
+                    cats.Add(new 
+                        { 
+                            Name = cat.Attribute("name").Value, 
+                            ParentCode = cat.Parent.Attribute("code").Value, 
+                            Code = cat.Attribute("code").Value,
+                            CatChart = chartCat.ToString() 
+                        });
+                }
+
+                funcs.Add(new 
+                    { 
+                        Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)), 
+                        Chart = chartFunc.ToString(),
+                        Cats = cats
+                    });
+            }
+
+            return Ok(funcs);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         [Route("api/reportscrr/widget/performanceLegend")]
-        public IActionResult getCrrPerformanceLegend()
+        public IActionResult GetCrrPerformanceLegend()
         {
             return Content(new CRRPerformanceLegend().ToString(), "text/html");
         }
@@ -247,7 +299,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/mil1PerformanceSummaryLegend")]
-        public IActionResult getMil1PerformanceSummaryLegend()
+        public IActionResult GetMil1PerformanceSummaryLegend()
         {
             return Content(new MIL1PerformanceSummaryLegend().ToString(), "text/html");
         }

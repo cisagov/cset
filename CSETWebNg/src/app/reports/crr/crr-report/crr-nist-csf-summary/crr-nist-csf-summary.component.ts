@@ -12,10 +12,16 @@ export class CrrNistCsfSummaryComponent implements OnInit {
   @Input() model: CrrReportModel;
   chartAll: string = '';
   legend: string = '';
+  bodyData: any[] = [];
 
   constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
+
+    this.crrSvc.getNistCsfSummaryReportBodyData().subscribe((resp: any[]) => {
+      this.bodyData = resp;
+      console.log(this.bodyData)
+    })
 
     this.crrSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {
       this.chartAll = resp;

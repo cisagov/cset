@@ -74,4 +74,8 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
     { responseType: 'text'});
   }
+
+  getNistCsfSummaryReportBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfReportBodyData');
+  }
 }
