@@ -49,46 +49,46 @@
   </mat-card>
 
   <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
-  (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
-  [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
-  <div>
-    <h4>{{getModelTitle('CMMC2')}}</h4>
-  </div>
-  <div class="d-flex flex-row">
-    <div style="max-width: 100%" [innerHTML]="getModelDescription('CMMC2') | safe"></div>
-    <div style="max-width: 50%" class="text-center pl-3">
-      <img src="assets/images/CMMC/Levels_cmmc2_200px.png" alt="CMMC levels" style="height: 210px; width: auto" />
+    (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
+    <div>
+      <h4>{{getModelTitle('CMMC2')}}</h4>
     </div>
-  </div>
-</mat-card>
-
-<mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
-(keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
-[ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
-<h4>{{getModelTitle('CRR')}}</h4>
-<div class="d-flex flex-row">
-  <div class="w-100" [innerHTML]="getModelDescription('CRR') | safe"></div>
-  <div style="max-width: 50%" class="text-center pl-3">
-    <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
-  </div>
-</div>
-</mat-card>
-
-<mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
-  [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
-  <h4>{{getModelTitle('EDM')}}</h4>
-  <div class="d-flex flex-row">
-    <div class="w-100" [innerHTML]="getModelDescription('EDM') | safe"></div>
-    <div style="max-width: 50%" class="text-center pl-3">
-      <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
+    <div class="d-flex flex-row">
+      <div style="max-width: 100%" [innerHTML]="getModelDescription('CMMC2') | safe"></div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/CMMC/Levels_cmmc2_200px.png" alt="CMMC levels" style="height: 210px; width: auto" />
+      </div>
     </div>
-  </div>
-</mat-card>
+  </mat-card>
 
-<h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
-<hr class="w-100 mt-0 mb-3 hr-sal">
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
+    (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
+    <h4>{{getModelTitle('CRR')}}</h4>
+    <div class="d-flex flex-row">
+      <div class="w-100" [innerHTML]="getModelDescription('CRR') | safe"></div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/CRR/CRR_logo.png" alt="CRR logo" style="width: 100%" />
+      </div>
+    </div>
+  </mat-card>
 
-<mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
+    <h4>{{getModelTitle('EDM')}}</h4>
+    <div class="d-flex flex-row">
+      <div class="w-100" [innerHTML]="getModelDescription('EDM') | safe"></div>
+      <div style="max-width: 50%" class="text-center pl-3">
+        <img src="assets/images/EDM/EDM_logo.png" alt="EDM logo" style="width: 100%" />
+      </div>
+    </div>
+  </mat-card>
+
+  <h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
+  <hr class="w-100 mt-0 mb-3 hr-sal">
+
+  <mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
     (keydown.enter)="changeSelection($event, 'CIS')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIS') }">
     <h4>{{getModelTitle('CIS')}}</h4>
@@ -109,7 +109,18 @@
     <div>
       <img src="assets/images/RRA/RRA_logo.png" alt="Ransomware Readiness logo"
         style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
-        <div [innerHTML]="getModelDescription('RRA') | safe"></div>
+      <div [innerHTML]="getModelDescription('RRA') | safe"></div>
+    </div>
+  </mat-card>
+
+
+  <!-- Quick card to allow MVRA to be selected -->
+  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'MVRA')"
+    (keydown.enter)="changeSelection($event, 'MVRA')" tabindex="0"
+    [ngClass]="{ 'mat-elevation-z8': getSelection('MVRA') }">
+    <h4>{{getModelTitle('MVRA')}}</h4>
+    <div>
+      <div [innerHTML]="getModelDescription('MVRA') | safe"></div>
     </div>
   </mat-card>
 
