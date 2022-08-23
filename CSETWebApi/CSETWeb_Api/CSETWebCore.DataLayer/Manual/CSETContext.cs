@@ -819,5 +819,16 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+
+        public virtual IList<Get_Assess_Detail_Filter_DataResult>Get_Assess_Detail_Filters(string model) {
+            IList<Get_Assess_Detail_Filter_DataResult> myrval = null;
+            this.LoadStoredProc("Get_Assess_Detail_Filter_Data")
+                .WithSqlParam("@model", model)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<Get_Assess_Detail_Filter_DataResult>();
+                });
+            return myrval;
+        }
     }
 }
