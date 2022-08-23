@@ -20,7 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngFor="let q of questionList" class="mb-3">
+<div *ngFor="let q of questionList" class="mb-5">
+    <div class="d-flex flex-row">
+        <div *ngIf="q.displayNumber?.length > 0" class="font-weight-bold mr-4">
+            {{q.displayNumber}}
+        </div>
+        <div *ngIf="showQuestionLevel">
+            <span class="question-mat-level-name">
+                {{ q.maturityLevelName }}
+            </span>
+        </div>
+    </div>
     <div class="mb-2">
         <span style="white-space: normal;">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
