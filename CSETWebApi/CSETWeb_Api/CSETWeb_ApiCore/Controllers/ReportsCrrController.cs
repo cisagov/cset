@@ -81,7 +81,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// Gets the charts for Mil1 Performance Summary a returns them in a list of raw HTML strings.
+        /// Gets the charts for Mil1 Performance Summary and returns them in a list of raw HTML strings.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -105,8 +105,6 @@ namespace CSETWebCore.Api.Controllers
 
                 var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
 
-                // This explicit iterator is used to style each goal block, except the last one
-                int i = 1;
                 foreach (XElement goal in goals)
                 {
                     var goalScores = _crr.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
@@ -119,6 +117,43 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
+        }
+
+        /// <summary>
+        /// Gets the charts for Mil1 Performance and returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/getCrrMil1PerformanceBodyCharts")]
+        public IActionResult GetMil1PerformanceBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var XDocument = _crr.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> heatMaps = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _crr.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                foreach (XElement goal in goals)
+                {
+                    var questionsHeatMap = new QuestionsHeatMap(goal, false, 12);
+                    questionsHeatMap.Scale(1.2);
+
+                    heatMaps.Add(new { Title = goal.Attribute("title").Value, Chart = questionsHeatMap.ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, HeatMaps = heatMaps });
         }
 
         /// <summary>
@@ -302,6 +337,18 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMil1PerformanceSummaryLegend()
         {
             return Content(new MIL1PerformanceSummaryLegend().ToString(), "text/html");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/widget/mil1PerformanceLegend")]
+        public IActionResult GetMil1PerformanceLegend()
+        {
+            return Content(new MIL1PerformanceLegend().ToString(), "text/html");
         }
 
         private CrrResultsModel GenerateCrrResults()

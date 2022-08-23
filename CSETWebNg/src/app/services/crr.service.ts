@@ -78,4 +78,13 @@ export class CrrService {
   getNistCsfSummaryReportBodyData() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfReportBodyData');
   }
+
+  getMil1PerformanceLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
+    { responseType: 'text'});
+  }
+
+  getMil1PerformanceBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceBodyCharts');
+  }
 }

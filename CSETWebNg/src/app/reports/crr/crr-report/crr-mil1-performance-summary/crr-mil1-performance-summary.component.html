@@ -50,7 +50,7 @@
             <div class="row" [innerHtml]="scoreBarCharts[i] | safe">
             </div>
         </div>
-        <div class="col-1" style="width: 85%; padding: 0 0 0 0.5rem;">
+        <div class="col-1" style="width: 85%; padding: 0 0 0 0.75rem;">
             <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow" style="margin-right: 0.05rem"
             [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
                 <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
