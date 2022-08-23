@@ -56,12 +56,10 @@ export class IRPComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
-            
     }
 
     setResponse(irp: IRP, val) {
         irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
     }
-
 }

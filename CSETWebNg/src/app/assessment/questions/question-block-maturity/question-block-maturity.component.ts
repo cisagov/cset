@@ -40,7 +40,7 @@ import { LayoutService } from '../../../services/layout.service';
  */
 @Component({
   selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html', 
+  templateUrl: './question-block-maturity.component.html',
   styleUrls: ['./question-block-maturity.component.scss']
 })
 export class QuestionBlockMaturityComponent implements OnInit {
@@ -74,12 +74,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   /**
    * Constructor.
-   * @param configSvc 
+   * @param configSvc
    */
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public assessSvc: AssessmentService, 
+    public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public ncuaSvc: NCUAService
@@ -88,7 +88,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
@@ -137,7 +137,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * Toggles the Expanded property of the question block.
    */
   toggleExpansion() {
-    // dispatch a 'mouseleave' event to all child elements to clear 
+    // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
     const evt = new MouseEvent('mouseleave');
     this.groupingDescription?.para.nativeElement.childNodes.forEach(n => {
@@ -159,8 +159,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param ans 
+   *
+   * @param ans
    */
   showThisOption(ans: string) {
     return true;
@@ -205,7 +205,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   saveMFR(q) {
     this.questionsSvc.saveMFR(q);
@@ -234,7 +234,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   /**
    * Calculates the percentage of answered questions for this subcategory.
    * The percentage for maturity questions is calculated using questions
-   * that are within the assessment's target level.  
+   * that are within the assessment's target level.
    * If a maturity model doesn't support target levels, we use a dummy
    * target level of 100 to make the math work.
    */
@@ -247,20 +247,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
         return;
       }
       if (q.visible) {
-        
+
           totalCount++;
           if (q.answer && q.answer !== "U") {
             answeredCount++;
           }
-        
-      } 
+
+      }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
 
 
   /**
-   * For ACET installations, alt answers require 3 or more characters of 
+   * For ACET installations, alt answers require 3 or more characters of
    * justification.
    */
   isAltTextRequired(q: Question) {
@@ -302,6 +302,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
         }
       }
     }
+    // Matt's work in progress for adding contact initials to comments
     // else{
 
     // }
@@ -359,17 +360,15 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showCorePlusButton(id: number) {
     switch(id) {
-      case (7235): case (7240): case (7248):
-      case (7253): case (7260): case (7267):
-      case (7273): case (7279): case (7285): 
-      case (7289): case (7293): case (7296): 
-      case (7299): case (7304): case (7311):
+      case (7233): case (7238): case (7244): case (7249): 
+      case (7256): case (7265): case (7273): case (7276): 
+      case (7281): case (7285): case (7293): case (7296): 
+      case (7301): case (7304):
         return true;
     }
   }
 
   updateCorePlusStatus(q: Question) {
-    console.log(JSON.stringify(q, null, 4));
     this.showCorePlus = !this.showCorePlus
 
     if (this.showCorePlus) {
@@ -377,9 +376,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     } else if (!this.showCorePlus) {
       this.ncuaSvc.showCorePlus = false;
     }
-
-    console.log("this.showCorePlus: " + this.showCorePlus);
-    console.log("this.ncuaSvc.showCorePlus: " + this.ncuaSvc.showCorePlus);
   }
 
   

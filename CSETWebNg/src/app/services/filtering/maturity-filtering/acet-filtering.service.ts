@@ -301,13 +301,12 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
-        // set all true up to the level they hit, then all false above that        
+        // set all true up to the level they hit, then all false above that
         this.domainFilters
             .find(f => f.domainName == domainName)
             .settings.forEach(s => {
                 s.value = s.level <= f;
             });
-
         this.saveFilters(this.domainFilters).subscribe(() => {
             this.filterAcet.emit(true);
         });
