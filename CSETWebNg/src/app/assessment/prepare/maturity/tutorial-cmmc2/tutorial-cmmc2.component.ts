@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
+import { LayoutService } from '../../../../services/layout.service';
+
 
 @Component({
   selector: 'app-tutorial-cmmc2',
@@ -7,7 +9,10 @@ import { ConfigService } from '../../../../services/config.service';
 })
 export class TutorialCmmc2Component implements OnInit {
 
-  constructor(public configSvc: ConfigService) { }
+  constructor(
+    public configSvc: ConfigService,
+    public layoutSvc: LayoutService
+  ) { }
 
   ngOnInit(): void {
   }

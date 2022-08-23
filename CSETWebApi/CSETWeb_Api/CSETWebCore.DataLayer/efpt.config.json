@@ -70,10 +70,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ASSESSMENT_ICONS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[ASSESSMENT_IRP]",
          "ObjectType": 0
       },
@@ -359,6 +355,26 @@
       },
       {
          "Name": "[dbo].[FRAMEWORK_TIERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GALLERY_GROUP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GALLERY_GROUP_DETAILS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GALLERY_ITEM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GALLERY_LAYOUT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[GALLERY_ROWS]",
          "ObjectType": 0
       },
       {

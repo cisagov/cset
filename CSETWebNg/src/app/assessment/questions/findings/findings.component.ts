@@ -31,7 +31,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-findings',
-  templateUrl: './findings.component.html'
+  templateUrl: './findings.component.html',
+  host: {
+    'style': 'max-width: 100%'
+  }
 })
 export class FindingsComponent implements OnInit {
 

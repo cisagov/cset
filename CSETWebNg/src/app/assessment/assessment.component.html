@@ -41,24 +41,24 @@
 
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
-            <span class="tab-icon cset-icons-clipboard-pencil mr-2" id="prepareIcon"></span>
-            <span class="nav-tab-text">Prepare</span>
+            <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
+            <span class="nav-tab-text ml-2">Prepare</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
           (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
-            <span class="tab-icon cset-icons-question-mark mr-2" id="questionsIcon"></span>
-            <span class="nav-tab-text">Assessment</span>
+            <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
+            <span class="nav-tab-text ml-2">Assessment</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
           (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
-            <span class="tab-icon cset-icons-results mr-2"></span>
-            <span class="nav-tab-text">Results</span>
+            <span class="tab-icon cset-icons-results"></span>
+            <span class="nav-tab-text ml-2">Results</span>
           </button>
         </li>
       </ul>
@@ -68,7 +68,7 @@
   <!-- Content -->
   <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
     <mat-sidenav-container autosize id="sidenav-container" class="d-flex flex-column flex-11a">
-      <mat-sidenav #sNav mode="{{innerWidth<960 ? 'over' : 'side'}}" [opened]="expandNav" id="sidenav"
+      <mat-sidenav #sNav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav"
         (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
 
         <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">

@@ -29,6 +29,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
+import { LayoutService } from '../../../services/layout.service';
 
 
 /**
@@ -80,19 +81,16 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService, 
     public acetFilteringSvc: AcetFilteringService,
+    public layoutSvc: LayoutService,
     public ncuaSvc: NCUAService
   ) { 
     
-
   }
 
   /**
    * 
    */
   ngOnInit(): void {
-    if (this.myGrouping.groupingID === 2349) {
-      console.log(JSON.stringify(this.myGrouping, null, 4));
-    }
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {

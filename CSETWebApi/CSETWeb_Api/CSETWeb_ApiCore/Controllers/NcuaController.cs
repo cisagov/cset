@@ -55,5 +55,12 @@ namespace CSETWebCore.Api.Controllers
             // if true
             return _context.Get_Merge_Conflicts(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10); 
         }
+
+        [HttpGet]
+        [Route("api/getCreditUnionData")]
+        public IList<Assess_Detail_Filter_Data> GetCreditUnionData([FromQuery] string model) 
+        {
+            return _context.GetAssessFilterData(model);
+        }
     } 
 }
