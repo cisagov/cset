@@ -32,19 +32,19 @@ export class CrrMil1PerformanceSummaryComponent implements OnInit {
     })
   }
 
-    // This function splits strings like
-    // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
-    // and
-    // "Goal 3-Risks are identified."
-    stringSplitter(str: string) {
-      return str.split(" - ")[1] ?? str.split("-")[1];
-    }
+  // This function splits strings like
+  // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+  // and
+  // "Goal 3-Risks are identified."
+  stringSplitter(str: string) {
+    return str.split(" - ")[1] ?? str.split("-")[1];
+  }
+  
+  getStackedBarChart(goalTitle: string) {
+    return this.stackedBarCharts.find(c => c.title === goalTitle).chart;
+  }
 
-    getStackedBarChart(goalTitle: string) {
-      return this.stackedBarCharts.find(c => c.title === goalTitle).chart;
-    }
-
-    filterMilDomainGoals(goals) {
-      return goals.filter(g => !g.title.startsWith('MIL'));
-    }
+  filterMilDomainGoals(goals) {
+    return goals.filter(g => !g.title.startsWith('MIL'));
+  }
 }

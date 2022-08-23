@@ -1,14 +1,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-1" style="width: 15%;">
-            <div class="row tinytext" style="padding: 0; height: auto; min-width: 130px;">
-                <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px;">
+            <div class="row" style="padding: 0; height: auto; min-width: 130px;">
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px;">
                     Total number of practices performed
                 </div>
-                <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
                     Total number of practices incompletely performed
                 </div>
-                <div class="col-4" style="width: 36.67px; padding: 0.1rem; font-size: 6px; ">
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
                     Total number of practices not performed
                 </div>
             </div>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="col-1" style="width: 85%; padding: 0 0 0 0.5rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow"
+            <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow" style="margin-right: 0.05rem"
             [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
                 <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
                   <div class="goalrow-text"><b>{{ goal.title.split('-')[0] }} -</b></div>
