@@ -154,6 +154,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -205,6 +207,8 @@ namespace CSETWebCore.Helpers
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
+                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -263,6 +267,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
