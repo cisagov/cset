@@ -358,7 +358,6 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -788,7 +787,6 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
-        CrrExecutiveComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,
         RraLevelResultsComponent,
