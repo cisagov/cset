@@ -1,4 +1,4 @@
-<div *ngFor="let row of rows"  class="p-4">
+<div *ngFor="let row of rows"  class="m-4" style="height:281px;">
     <div>
         <h3>{{row.group_Title}}</h3>
     </div>
@@ -10,13 +10,13 @@
     >
         <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
             <div class="card" (mouseover)="onHover(c.gallery_Item_Id)" (mouseleave)="onHover(-1)">
-                <div class="card-body" style="min-height:200px; max-height:200px;">
-                    <h5 class="card-title">{{c.title}}</h5>
+                <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px;">
+                    <h6 class="card-title" ellipsis [ellipsis-content]="c.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                     <p class="card-text" ellipsis [ellipsis-content]="c.description" style="max-height:80px; min-height:80px;"></p>
                 </div>
-                <div class="card-body" style="text-align:right;" *ngIf="c.gallery_Item_Id==hoverIndex">
+                <div class="card-body gallery-card-body-buttons" style="text-align:right;" [@enterAnimation]="c.gallery_Item_Id==hoverIndex">
                     <button  class="btn btn-outline-primary" (click)="openDialog(c)" style="margin-right:5px;"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-                    <button  class="btn btn-primary"><i class="fa-solid fa-play" style="font-size: 18px;"></i></button>
+                    <button  class="btn btn-primary" ><i class="fa-solid fa-play" style="font-size: 18px;"></i></button>
                 </div>
             </div>
         </ng-template>

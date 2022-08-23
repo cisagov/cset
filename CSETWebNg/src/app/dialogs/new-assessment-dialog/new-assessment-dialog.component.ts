@@ -8,7 +8,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class NewAssessmentDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<NewAssessmentDialogComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<NewAssessmentDialogComponent>) { 
+    console.log(data)
+  }
 
   ngOnInit(): void {
   }
