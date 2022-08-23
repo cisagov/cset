@@ -67,7 +67,7 @@ export class IrpSummaryComponent implements OnInit {
      */
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
-            (data: AcetDashboard) => {           
+            (data: AcetDashboard) => {
                 this.acetDashboard = data;
 
                 if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {
@@ -98,7 +98,6 @@ export class IrpSummaryComponent implements OnInit {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                console.log("sumRiskLevel: " + this.acetDashboard.sumRiskLevel);
                 this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.sumRiskLevel);
             },
             error => {

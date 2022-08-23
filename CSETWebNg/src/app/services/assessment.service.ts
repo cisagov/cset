@@ -346,6 +346,7 @@ export class AssessmentService {
         (response: any) => {
           // set the brand new flag
           this.isBrandNew = true;
+          
           this.loadAssessment(response.id);
         },
         error =>
@@ -392,7 +393,7 @@ export class AssessmentService {
   /**
    * Reset things to ACET defaults
    */
-   setAcetDefaults() {
+  setAcetDefaults() {
     if (!!this.assessment) {
       this.assessment.useMaturity = true;
       this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
@@ -491,7 +492,7 @@ export class AssessmentService {
   }
 
   /**
-   * Sets the maturity model name on the local assessment model.  
+   * Sets the maturity model name on the local assessment model.
    * @param modelName
    */
   setModel(modelName: string) {
@@ -507,7 +508,7 @@ export class AssessmentService {
     }
     return this.assessment?.standards.some(s => s.toLowerCase() == setName.toLowerCase());
   }
-  
+
   /**
    * Converts linebreak characters to HTML <br> tag.
    */

@@ -16,7 +16,7 @@ export class AssessmentInfo2TsaComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     private demoSvc: DemographicService,
-    public configSvc: ConfigService,
+    public configSvc: ConfigService
   ) { }
 
   @ViewChild('demographics') demographics: AssessmentDemographicsComponent;

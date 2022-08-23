@@ -37,11 +37,7 @@
     </div>
     
     <div *ngFor="let iHeader of irps?.headerList">
-        <div *ngIf="!(iHeader.header == 'Technologies and Connection Types' || 
-                      iHeader.header == 'Delivery Channels' ||
-                      iHeader.header == 'Online/Mobile Products and Technology Services' || 
-                      iHeader.header == 'Organizational Characteristics' || 
-                      iHeader.header == 'External Threats')">
+        <div *ngIf="(iHeader.header === 'Activities / Services / Products')">
             <h4 class="irp-header"> {{ iHeader.header }}</h4>
             <hr>
         </div>

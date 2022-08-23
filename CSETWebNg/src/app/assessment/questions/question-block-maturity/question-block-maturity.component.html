@@ -60,10 +60,10 @@
 
     <!-- this houses all of the questions -->
     <div *ngIf="this.assessSvc.assessment.maturityModel.modelName !== 'ISE'" class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column" 
-        [class.pb-3]="q.isParentQuestion" [class.display-none]="!q.visible">
+        <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column"
+            [class.pb-3]="q.isParentQuestion" [class.display-none]="!q.visible">
 
-            <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
+            <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!layoutSvc.hp">
                 <div class="number-and-text">
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">

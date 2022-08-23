@@ -33,7 +33,6 @@ export class GroupingBlockComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   /**
    *
    */
@@ -91,5 +90,4 @@ export class GroupingBlockComponent implements OnInit {
     }
     return false;
   }
-
 }
