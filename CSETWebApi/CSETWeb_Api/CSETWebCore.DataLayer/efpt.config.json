@@ -66,6 +66,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ASSESSMENT_DETAIL_FILTER_DATA]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ASSESSMENT_DIAGRAM_COMPONENTS]",
          "ObjectType": 0
       },
@@ -874,6 +878,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[analytics_selectedStandardList]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[analytics_setup_maturity_groupings]",
          "ObjectType": 1
       },
@@ -1091,6 +1099,10 @@
       },
       {
          "Name": "[dbo].[usp_getFirstPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getGenericModelSummaryByGoal]",
          "ObjectType": 1
       },
       {

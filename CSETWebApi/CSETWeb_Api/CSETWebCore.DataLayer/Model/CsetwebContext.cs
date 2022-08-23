@@ -33,6 +33,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+        public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
