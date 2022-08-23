@@ -607,7 +607,8 @@ export class QuestionExtrasComponent implements OnInit {
     // EDM
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
-        || this.assessSvc.usesMaturityModel('CRR'))) {
+        || this.assessSvc.usesMaturityModel('CRR')
+        || this.isISE())) {
       if (mode == 'DETAIL') {
         return false;
       }
