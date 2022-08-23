@@ -10,7 +10,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MergeOptionsComponent } from '../../dialogs/ise-merge-options/merge-options-dialog.component';
 
 @Component({
   selector: 'merge-examinations',
@@ -40,7 +39,6 @@ export class MergeExaminationsComponent implements OnInit {
 
   // The returned merged assessment
   mergedAssessment: AssessmentDetail = {};
-  optionsDialog: MatDialogRef<MergeOptionsComponent>;
   attemptingToMerge: boolean = false;
 
   // "Temp" variables to help the merge track when it needs to do certain things.
@@ -150,15 +148,6 @@ export class MergeExaminationsComponent implements OnInit {
         }
       )
     }
-  }
-
-  showMergeOptions() {
-    this.optionsDialog = this.dialog.open(MergeOptionsComponent, {});
-
-    this.optionsDialog
-    .afterClosed()
-    .subscribe(() => {
-    });
   }
 
   navToHome() {
