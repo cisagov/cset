@@ -70,7 +70,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   constructor(public dialog:MatDialog, 
     public breakpointObserver: BreakpointObserver, 
     public gallerySvc: GalleryService) { 
-    
   }
 
   ngOnInit(): void {
@@ -83,35 +82,34 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         console.log(this.rows);
       }
     );
-    setTimeout(() => {
-      this.checkNavigation();
-    });
-    
+   
+    this.checkNavigation();
   }
   ngAfterViewInit(): void {
     this.checkNavigation();
   }
 
   checkNavigation(){
-    let swiperPrev = document.querySelector('.swiper-button-prev');
-    let swiperNext = document.querySelector('.swiper-button-next');
+    let swiperPrev = document.getElementsByClassName('swiper-button-prev');
+    let swiperNext = document.getElementsByClassName('swiper-button-next');
     if(window.innerWidth < 620){
      
       if(swiperPrev != null && swiperNext != null){
-        swiperPrev.setAttribute('style','display:none');
-        swiperNext.setAttribute('style','display:none');
+        for(var i = 0; i < swiperPrev.length; i++){
+          swiperPrev[i].setAttribute('style', 'display:none');
+          swiperNext[i].setAttribute('style','display:none');
+        }
       }
     } else {
       if(swiperPrev != null && swiperNext != null){
-        swiperPrev.removeAttribute('style');
-        swiperNext.removeAttribute('style');
+        for(var i = 0; i < swiperPrev.length; i++){
+          swiperPrev[i].removeAttribute('style');
+          swiperNext[i].removeAttribute('style');
+        }
       }
     }
   }
 
-   onSwiper([swiper]){
-      console.log(swiper);
-  }
   onHover(i:number){
     this.hoverIndex = i;
   }
