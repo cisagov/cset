@@ -32,7 +32,7 @@
             </svg>
         </button>
 
-      <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component && this.assessSvc.assessment.maturityModel.modelName !== 'ISE'" class="extras-button cursor-pointer"
+      <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component && !isISE()" class="extras-button cursor-pointer"
           [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
           [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Exam Step' : 'Details/Standard'"
           matTooltipPosition="above">
@@ -69,7 +69,7 @@
             </svg>
         </button>
 
-      <button *ngIf="this.assessSvc.assessment.maturityModel.modelName !== 'ISE'" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
+      <button *ngIf="!isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
           [matTooltip]="has('CMNT')==='inline' ? 'Comments with content':'Comment'" matTooltipPosition="above">
           <svg viewBox="0 0 32 32"
               style="height: 31px; width: 32px; margin: auto; margin-top: 5px; margin-left: -2px;">
@@ -100,16 +100,16 @@
             </svg>
         </button>
 
-        <button *ngIf="displayIcon('DISC')" class="extras-button cursor-pointer" [class.active]="mode == 'DISC'"
-            (click)="toggleExtras('DISC')"
-            [matTooltip]="has('DISC')==='inline'?'Observations with content':'Observations'" matTooltipPosition="above">
-            <svg viewBox="0 0 25 35" xmlns="http://www.w3.org/2000/svg"
-                style="height: 31px; width: 31px; margin: auto; margin-top: 5px;">
-                <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.8)"
-                    d="M17.479,17.533L17.118,17.717C16.347,18.107,15.869,18.82,15.869,19.575L15.869,19.924 15.85,19.924 15.85,26.23 8.852,26.23 8.852,19.453C8.852,18.707,8.403,18.023,7.657,17.624L7.304,17.438C4.463,15.923 2.763,13.335 2.763,10.511 2.763,8.331 3.774,6.279 5.615,4.729 7.453,3.177 9.894,2.328 12.487,2.328 15.077,2.328 17.517,3.177 19.355,4.727 21.195,6.276 22.203,8.329 22.203,10.511 22.203,13.411 20.439,16.037 17.479,17.533 M17.047,10.111L14.794,11.241C14.76,11.177 13.964,9.66 12.343,9.66 10.71,9.66 9.879,11.19 9.844,11.254L7.604,10.093C7.668,9.973 9.152,7.13 12.343,7.13 15.546,7.13 16.986,9.986 17.047,10.111 M21.307,3.081C18.948,1.093 15.814,0 12.487,0 5.601,0 0,4.716 0,10.511 0,14.137 2.179,17.462 5.829,19.406 5.829,19.406 5.987,19.489 6.086,19.543L6.086,19.924 6.019,19.924 6.019,31.583C6.019,32.084,6.424,32.49,6.925,32.49L8.168,32.49 8.803,32.49 9.172,32.49 9.172,34.093C9.172,34.594,9.578,35,10.079,35L14.891,35C15.392,35,15.798,34.594,15.798,34.093L15.798,32.49 15.85,32.49 17.728,32.49C18.228,32.49,18.634,32.084,18.634,31.583L18.634,26.654 18.634,19.924 18.634,19.667C18.737,19.613 18.904,19.532 18.904,19.532 22.702,17.607 24.97,14.236 24.97,10.511 24.97,7.708 23.668,5.066 21.307,3.081" />
-                <circle cx="22" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="has('DISC')" />
-            </svg>
-        </button>
+      <button *ngIf="displayIcon('DISC')" class="extras-button cursor-pointer" [class.active]="mode == 'DISC' "
+          (click)="toggleExtras('DISC')"
+          [matTooltip]="has('DISC')==='inline'?observationOrIssue()+'s with content': observationOrIssue()+'s'" matTooltipPosition="above">
+          <svg viewBox="0 0 25 35" xmlns="http://www.w3.org/2000/svg"
+              style="height: 31px; width: 31px; margin: auto; margin-top: 5px;">
+              <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.8)"
+                  d="M17.479,17.533L17.118,17.717C16.347,18.107,15.869,18.82,15.869,19.575L15.869,19.924 15.85,19.924 15.85,26.23 8.852,26.23 8.852,19.453C8.852,18.707,8.403,18.023,7.657,17.624L7.304,17.438C4.463,15.923 2.763,13.335 2.763,10.511 2.763,8.331 3.774,6.279 5.615,4.729 7.453,3.177 9.894,2.328 12.487,2.328 15.077,2.328 17.517,3.177 19.355,4.727 21.195,6.276 22.203,8.329 22.203,10.511 22.203,13.411 20.439,16.037 17.479,17.533 M17.047,10.111L14.794,11.241C14.76,11.177 13.964,9.66 12.343,9.66 10.71,9.66 9.879,11.19 9.844,11.254L7.604,10.093C7.668,9.973 9.152,7.13 12.343,7.13 15.546,7.13 16.986,9.986 17.047,10.111 M21.307,3.081C18.948,1.093 15.814,0 12.487,0 5.601,0 0,4.716 0,10.511 0,14.137 2.179,17.462 5.829,19.406 5.829,19.406 5.987,19.489 6.086,19.543L6.086,19.924 6.019,19.924 6.019,31.583C6.019,32.084,6.424,32.49,6.925,32.49L8.168,32.49 8.803,32.49 9.172,32.49 9.172,34.093C9.172,34.594,9.578,35,10.079,35L14.891,35C15.392,35,15.798,34.594,15.798,34.093L15.798,32.49 15.85,32.49 17.728,32.49C18.228,32.49,18.634,32.084,18.634,31.583L18.634,26.654 18.634,19.924 18.634,19.667C18.737,19.613 18.904,19.532 18.904,19.532 22.702,17.607 24.97,14.236 24.97,10.511 24.97,7.708 23.668,5.066 21.307,3.081" />
+              <circle cx="22" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="has('DISC')" />
+          </svg>
+      </button>
 
         <button *ngIf="showFeedbackIcon()" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'"
             (click)="toggleExtras('FDBK')" [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'"
@@ -331,36 +331,70 @@
             </table>
         </div>
 
-        <div *ngIf="extras !== null && mode === 'DISC'">
-            <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
-                <tr>
-                    <th>Observation Title</th>
-                    <th>Importance</th>
-                    <th style="width:5%;"></th>
-                    <th style="width:5%;"></th>
-                </tr>
-                <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
-                    <td style="height:20px">
-                        <div>{{find.summary}}</div>
-                    </td>
-                    <td>
-                        <div>{{find.importance?.value}}</div>
-                    </td>
-                    <td>
-                        <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                            (click)="addEditDiscovery(find.finding_Id)">
-                            <span class="mr-1 cset-icons-pencil"></span>
-                        </button>
-                    </td>
-                    <td>
-                        <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                            (click)="deleteDiscovery(find)">
-                            <span class="mr-1 cset-icons-trash-can"></span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-            <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Observation</button>
-        </div>
-    </div>
+      <div *ngIf="extras !== null && mode === 'DISC'">
+            <div *ngIf="!isISE()">
+                <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
+                    <tr>
+                        <th>Observation Title</th>
+                        <th>Importance</th>
+                        <th style="width:5%;"></th>
+                        <th style="width:5%;"></th>
+                    </tr>
+                    <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
+                        <td style="height:20px">
+                            <div>{{find.summary}}</div>
+                        </td>
+                        <td>
+                            <div>{{find.importance?.value}}</div>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                                (click)="addEditDiscovery(find.finding_Id)">
+                                <span class="mr-1 cset-icons-pencil"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                (click)="deleteDiscovery(find)">
+                                <span class="mr-1 cset-icons-trash-can"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Observation</button>
+            </div>
+
+            <div *ngIf="!!isISE()">
+                <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
+                    <tr>
+                        <th>Issue Title</th>
+                        <th>Importance</th>
+                        <th style="width:5%;"></th>
+                        <th style="width:5%;"></th>
+                    </tr>
+                    <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
+                        <td style="height:20px">
+                            <div>{{find.summary}}</div>
+                        </td>
+                        <td>
+                            <div>{{find.importance?.value}}</div>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                                (click)="addEditDiscovery(find.finding_Id)">
+                                <span class="mr-1 cset-icons-pencil"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                (click)="deleteDiscovery(find)">
+                                <span class="mr-1 cset-icons-trash-can"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Issue</button>
+            </div>
+      </div>
+  </div>
 </div>
