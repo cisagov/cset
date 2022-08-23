@@ -44,6 +44,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<clean_out_requirements_modeResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<DeleteUserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<final_data_movesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Assess_Detail_Filter_DataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_Merge_ConflictsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
@@ -137,6 +138,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<int> FillEmptyQuestionsForAnalysisAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> FillNetworkDiagramQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<final_data_movesResult>> final_data_movesAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Get_Merge_ConflictsResult>> Get_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Get_RecommendationsResult>> Get_RecommendationsAsync(int? value, int? industry, string organization, string assetvalue, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> GetApplicationModeDefaultAsync(int? Assessment_Id, OutputParameter<string> Application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -692,6 +694,33 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<final_data_movesResult>("EXEC @returnValue = [dbo].[final_data_moves]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "model",
+                    Size = 100,
+                    Value = model ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Get_Assess_Detail_Filter_DataResult>("EXEC @returnValue = [dbo].[Get_Assess_Detail_Filter_Data] @model", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
