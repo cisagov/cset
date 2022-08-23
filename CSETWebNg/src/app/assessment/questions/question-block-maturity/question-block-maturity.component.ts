@@ -56,7 +56,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
+
+  contactInitials = "";
+  altAnswerSegment = "";
+  convoBuffer = '\n- - End of Issue - -\n';
+  // altAnswerConversation = [];
 
   showQuestionIds = false;
 
@@ -89,8 +94,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
     if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      this.configSvc.buttonLabels['A'] = "Notes(N)";
-      this.configSvc.answerLabels['A'] = "Notes or Issues";
+      this.configSvc.buttonLabels['A'] = "Issue(N)";
+      this.configSvc.answerLabels['A'] = "No with Issue(s)";
     } else {
       this.configSvc.buttonLabels['A'] = "Yes(C)";
       this.configSvc.answerLabels['A'] = "Yes Compensating Control"
@@ -120,6 +125,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
     });
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+      this.contactInitials = firstInitial + lastInitial;
+    });
   }
 
   /**
@@ -266,6 +277,58 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
+        if (!!q.altAnswerText) {
+          if (q.altAnswerText.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
+            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
+          }
+
+          else {
+            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
+                let newComment = q.altAnswerText.substring(oldComments.length);
+
+                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              // }
+            }
+          }
+        }
+      }
+    }
+    // else{
+
+    // }
+
+
+
+    // if (q.altAnswerText.charAt(0) !== "[") {
+    //   this.altAnswerSegment = '[' + this.contactInitials + '] ' + q.altAnswerText + this.convoBuffer;
+    //   this.altAnswerConversation.push(this.altAnswerSegment);
+    // }
+
+    // else {
+    //   let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+    //   let newTextStart = q.altAnswerText.lastIndexOf(this.convoBuffer);
+
+    //   this.altAnswerSegment = q.altAnswerText.substring(newTextStart);
+
+    //   if (previousContactInitials !== this.contactInitials) {
+    //     this.altAnswerSegment = '[' + this.contactInitials + '] ' + this.altAnswerSegment + this.convoBuffer;
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+    //   }
+    //   else {
+    //     this.altAnswerConversation.pop();
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+
+    //   }
+    // }
 
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
