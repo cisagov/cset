@@ -31,6 +31,12 @@ namespace CSETWebCore.DataLayer.Model
         public string Model_Name { get; set; }
         [Key]
         public int Maturity_Model_Id { get; set; }
+        [StringLength(1500)]
+        [Unicode(false)]
+        public string Model_Description { get; set; }
+        [StringLength(200)]
+        [Unicode(false)]
+        public string Model_Title { get; set; }
         [StringLength(20)]
         [Unicode(false)]
         public string Questions_Alias { get; set; }
@@ -41,17 +47,8 @@ namespace CSETWebCore.DataLayer.Model
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>
         public int Analytics_Rollup_Level { get; set; }
-        [StringLength(1500)]
-        [Unicode(false)]
-        public string Model_Description { get; set; }
-        [StringLength(200)]
-        [Unicode(false)]
-        public string Model_Title { get; set; }
         public int? Icon_Id { get; set; }
 
-        [ForeignKey("Icon_Id")]
-        [InverseProperty("MATURITY_MODELS")]
-        public virtual ASSESSMENT_ICONS Icon { get; set; }
         [InverseProperty("Maturity_Model")]
         public virtual ICollection<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
         [InverseProperty("Maturity_Model")]

@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="data" [hidden]="!initialized">
-    <table class="table">
+    <table class="table" [class.fs-smaller]="layoutSvc.hp">
       <th *ngIf="dataSets?.length > 1">Standard</th>
       <th>Answer </th>
       <th class="align-right">Number</th>

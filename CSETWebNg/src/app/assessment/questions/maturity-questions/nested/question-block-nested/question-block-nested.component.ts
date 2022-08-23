@@ -29,6 +29,8 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { AssessmentService } from '../../../../../services/assessment.service';
+import { LayoutService } from '../../../../../services/layout.service';
+
 
 @Component({
   selector: 'app-question-block-nested',
@@ -41,7 +43,6 @@ export class QuestionBlockNestedComponent implements OnInit {
 
   questionList: Question[];
 
-
   // temporary debug aid
   showIdTag = false;
 
@@ -50,7 +51,8 @@ export class QuestionBlockNestedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private configSvc: ConfigService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public layoutSvc: LayoutService
   ) { }
 
   /**
@@ -205,8 +207,8 @@ export class QuestionBlockNestedComponent implements OnInit {
           showMfr: true
         }
       },
-      width: '50%',
-      maxWidth: '50%'
+      width: this.layoutSvc.hp ? '90%' : '50%',
+      maxWidth: this.layoutSvc.hp ? '90%' : '50%'
     });
   }
 

@@ -53,8 +53,9 @@ let headers = {
   assessmentsToMerge: any[] = [];
   mainAssessCharter: string = "";
   backupCharter: string = "";
+  hasShownCharterWarning: boolean = false;
 
-  // Used (per customer request) to determine which kind of ISE exam is needed (SCUEP or CORE/CORE+)
+  // Used to determine which kind of ISE exam is needed (SCUEP or CORE/CORE+)
   iseAssetSize: string = "0";
   iseIRP: string = "SCUEP";
   usingIseOverride: boolean = false;
@@ -96,6 +97,10 @@ let headers = {
     if (this.prepForMerge === false) {
       this.prepForMerge = true;
     } else if (this.prepForMerge === true) {
+      this.assessmentsToMerge = [];
+      this.mainAssessCharter = "";
+      this.backupCharter = "";
+      this.hasShownCharterWarning = false;
       this.prepForMerge = false;
     }
   }
@@ -108,15 +113,16 @@ let headers = {
     if (optionChecked) {
       tempCharter = this.pullAssessmentCharter(assessment);
 
-      // Used as the new main charter number if the user deselects the first exam that was selected (see line 115)
+      // Used as the new main charter number if the user deselects the first exam that was selected (see line 130)
       if (this.assessmentsToMerge.length === 1) {
         this.backupCharter = tempCharter;
       }
 
-      // check if the merging assessments have matching charter numbers. Shows warning if not
       if (this.mainAssessCharter === "") {
         this.mainAssessCharter = tempCharter;
-      } else if (this.mainAssessCharter !== tempCharter) {
+      } 
+      
+      if (this.mainAssessCharter !== tempCharter && this.hasShownCharterWarning === false) {
         this.openCharterWarning();
       }
       
@@ -152,6 +158,7 @@ let headers = {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.hasShownCharterWarning = true;
     });
   }
 
@@ -173,6 +180,15 @@ let headers = {
 
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }
+
+  /*
+  * Pull Credit Union filter data
+  */
+ getCreditUnionData() {
+   headers.params = headers.params.set('model', 'ISE');
+
+   return this.http.get(this.configSvc.apiUrl + 'getCreditUnionData', headers);
+ }
 
   /*
   * Manage the ISE maturity levels.

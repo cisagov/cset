@@ -151,9 +151,10 @@
     </div>
 
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
+        <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
 
-
-        <table *ngIf="!this.ncuaSvc.prepForMerge" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        <!-- table for larger layouts -->
+        <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
             <th *ngIf="isTSA" style="width: 5%;">Source</th>
@@ -210,11 +211,42 @@
                 </td>
                 <td *ngIf="isTSA || isCSET">
                   <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                  <a  routerLinkActive="active"   style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
-                </td>
-
+                  <a routerLinkActive="active" style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
+                </td>               
             </tr>
         </table>
+
+        <!-- table for handset portrait -->
+        <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+            class="assessment-summary" style="overflow-x:auto">
+            <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>            
+            <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>           
+            <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+            <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
+                <td>
+                    <button tabindex="0"
+                        class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                        (click)="this.assessSvc.loadAssessment(assessment.assessmentId)">
+                        {{assessment.assessmentName}}
+                    </button>
+                </td>                
+                <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
+                <td class="text-nowrap pl-1">
+                    <button tabindex="0"
+                        class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                        (click)="removeAssessment(assessment, i)" matTooltip="Permanently remove this assessment.">
+                        <span class="cset-icons-trash-x fs-base-2"></span>                        
+                    </button>
+                    <button tabindex="0"
+                        class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                        (click)="clickDownloadLink(assessment.assessmentId)"
+                        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+                        <span class="cset-icons-export-up fs-base-2"></span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        </ng-container>
 
         <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
         class="assessment-summary" style="overflow-x:auto">
@@ -272,4 +304,3 @@
         <p>There are no assessments available.</p>
     </div> -->
 </div>
-<!-- </div> -->

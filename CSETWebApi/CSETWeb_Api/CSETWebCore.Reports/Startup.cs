@@ -144,6 +144,7 @@ namespace CSETWebCore.Reports
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
@@ -158,6 +159,7 @@ namespace CSETWebCore.Reports
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

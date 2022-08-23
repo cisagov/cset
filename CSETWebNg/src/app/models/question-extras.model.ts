@@ -65,7 +65,7 @@ export interface QuestionInformationTabData {
   showRequirementFrameworkTitle: boolean;
   question_or_Requirement_Id: number;
   requirementsData: RequirementTabData;
-  resourceDocumentList: CustomDocument[];
+  additionalDocumentsList: CustomDocument[];
   sourceDocumentsList: CustomDocument[];
   referenceTextList: string[];
   references: string;

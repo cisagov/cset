@@ -28,13 +28,15 @@ import { MatDetailResponse, MaturityDomain, MaturityAssessment, MaturityComponen
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
     selector: 'app-mat-detail',
-    templateUrl: './mat-detail.component.html',
-    styleUrls: ['./mat-detail.component.scss', '../../../reports/acet-reports.scss']
+    templateUrl: './acet-detail.component.html',
+    styleUrls: ['./acet-detail.component.scss', '../../../reports/acet-reports.scss']
 })
-export class MatDetailComponent implements OnInit {
+export class AcetDetailComponent implements OnInit {
     readonly expandAll = "Expand All";
     readonly collapseAll = "Collapse All";
     matDetails: any;
@@ -53,12 +55,16 @@ export class MatDetailComponent implements OnInit {
         "External Dependency Management",
         "Cyber Incident Management and Resilience"]
 
-    sortedDomainList: any = []
+    sortedDomainList: any = [];
 
+    /**
+     * 
+     */
     constructor(private router: Router,
         private assessSvc: AssessmentService,
         public navSvc: NavigationService,
-        public acetSvc: ACETService
+        public acetSvc: ACETService,
+        public layoutSvc: LayoutService
     ) { }
 
     ngOnInit() {
@@ -83,7 +89,7 @@ export class MatDetailComponent implements OnInit {
                     }
                     domain.assessments.forEach((assignment: MaturityAssessment) => {
                         var assesmentData = {
-                            "asseessmentFactor": assignment.assessmentFactor,
+                            "assessmentFactor": assignment.assessmentFactor,
                             "domainMaturity": this.updateMaturity(assignment.assessmentFactorMaturity),
                             "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(assignment.assessmentFactorMaturity)),
                             "sections": []

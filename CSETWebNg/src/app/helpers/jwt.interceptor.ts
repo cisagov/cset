@@ -72,12 +72,12 @@ export class JwtInterceptor implements HttpInterceptor {
           }
 
           if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
-            console.log(e.error.ExceptionMessage);
             console.log('JWT Invalid. logging out.');
           }
 
+          const userToken = localStorage.getItem('userToken')
           localStorage.clear();
-          this.router.navigateByUrl('/home/login/eject');
+          this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
 
           return of({});
         }
