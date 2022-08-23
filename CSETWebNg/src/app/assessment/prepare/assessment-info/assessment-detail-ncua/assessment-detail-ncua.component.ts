@@ -50,11 +50,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   contactInitials: string = "";
 
   assessmentControl = new FormControl('');
-  creditUnionOptions: CreditUnionDetails[] = [
-    {name: "My Credit Union", cityOrSite: "Idaho Falls", stateProvinceRegion: "Idaho", charter: '11111', assets: '600000000'}, 
-    {name: "Poor Credit Union", cityOrSite: "Seattle", stateProvinceRegion: "Washington", charter: '33333', assets: '75000'},
-    {name: "Big Bank", cityOrSite: "New York City", stateProvinceRegion: "New York", charter: '55555', assets: '1000000000'}
-  ];
+  assessmentCharterControl = new FormControl('');
+  creditUnionOptions: CreditUnionDetails[] = [];
   filteredOptions: Observable<CreditUnionDetails[]>;
 
   /**
@@ -69,6 +66,13 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.ncuaSvc.getCreditUnionData().subscribe(
+      (response: any) => {
+        this.creditUnionOptions = response;
+        console.log("this.creditUnionOptions: " + JSON.stringify(this.creditUnionOptions, null, 4));
+      });
+
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
@@ -81,7 +85,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     );
   }
 
-  displayFn(creditUnion: CreditUnionDetails): string {
+  displayOptions(creditUnion: CreditUnionDetails): string {
     return creditUnion.name && creditUnion.name ? creditUnion.name : '';
   }
 
@@ -101,16 +105,16 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
+
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+      this.contactInitials = firstInitial + lastInitial;
+    });
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       this.assessSvc.setNcuaDefaults();
-
-      this.assessSvc.getAssessmentContacts().then((response: any) => {
-        let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-        let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-        this.contactInitials = firstInitial + lastInitial;
-      });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
@@ -155,13 +159,15 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
-    //console.log("event.target.value: " + e.target.value);
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
       if (e.target.value === this.creditUnionOptions[i].name) {
         this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
         this.assessment.stateProvRegion = this.creditUnionOptions[i].stateProvinceRegion;
         this.assessment.charter = this.creditUnionOptions[i].charter;
-        this.assessment.assets = this.creditUnionOptions[i].assets;
+      } else if (e.target.value === this.creditUnionOptions[i].charter.toString()) {
+        this.assessment.creditUnion = this.creditUnionOptions[i].name;
+        this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
+        this.assessment.stateProvRegion = this.creditUnionOptions[i].stateProvinceRegion;
       }
     }
 
