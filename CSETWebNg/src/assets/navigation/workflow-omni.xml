@@ -21,7 +21,6 @@
         <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:ACET" />
 
         <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:ISE" />
-        <node displaytext="Exam Profile Summary" id="irp-ise-summary" path="assessment/{:id}/prepare/exam-profile-summary" condition="MATURITY:ISE" />
 
         <!-- Diagram -->
         <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" condition="OPTION:DIAGRAM" />
