@@ -922,6 +922,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Get_Assess_Detail_Filter_Data]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Get_Merge_Conflicts]",
          "ObjectType": 1
       },
@@ -1195,6 +1199,26 @@
       },
       {
          "Name": "[dbo].[usp_GetTop5Areas]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryByGoal]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryByGoalOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryPage]",
          "ObjectType": 1
       },
       {
