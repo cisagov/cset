@@ -27,10 +27,7 @@ namespace CSETWebCore.Api.Controllers
         {
             string currentDir = Directory.GetCurrentDirectory();
             string fileLocation = Path.Combine(currentDir, @"NCUA-EXAMINER-TOOL");
-            if (System.IO.File.Exists(fileLocation)) {
-
-            }
-
+                
             return Ok(System.IO.File.Exists(fileLocation));
         }
 
