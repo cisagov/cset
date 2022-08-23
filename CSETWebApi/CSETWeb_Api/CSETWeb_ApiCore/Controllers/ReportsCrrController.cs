@@ -219,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             // populate the widget with the MIL strip and collapse any hidden goal strips
-            var heatmap = new Helpers.ReportWidgets.MilHeatMap(xMil, true, true);
+            var heatmap = new MilHeatMap(xMil, true, false);
             if (scale != null)
             {
                 heatmap.Scale((double)scale);
