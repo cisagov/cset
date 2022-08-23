@@ -20,7 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngFor="let q of questionList" class="mb-3">
+<div *ngFor="let q of questionList" class="mb-5">
+    <div class="d-flex flex-row">
+        <div *ngIf="q.displayNumber?.length > 0" class="font-weight-bold mr-4">
+            {{ q.displayNumber }}
+        </div>
+        <div *ngIf="showQuestionLevel" class="question-mat-level-name">
+            {{ q.maturityLevelName }}
+        </div>
+    </div>
     <div class="mb-2">
         <span style="white-space: normal;">
             <span [innerHTML]="q.questionText | safe: 'html'"></span>
@@ -34,7 +42,8 @@
             </svg>
         </span>
         <span *ngIf="q.failedIntegrityCheckOptions?.length" class="ml-1 fs-base-8 cset-icons-exclamation-triangle"
-            style="vertical-align: middle; color: #856404;" [matTooltip]="getIntegrityCheckErrors(q.failedIntegrityCheckOptions)"></span>
+            style="vertical-align: middle; color: #856404;"
+            [matTooltip]="getIntegrityCheckErrors(q.failedIntegrityCheckOptions)"></span>
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
         <div *ngIf="q.questionType == 'memo'">

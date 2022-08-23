@@ -41,6 +41,8 @@ import { Subscription } from 'rxjs';
 })
 export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
 
+  modelName: string;
+
   section: QuestionGrouping;
   sectionId: Number;
   title: string;
@@ -82,6 +84,8 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.assessSvc.currentTab = 'questions';
 
+    this.modelName = this.assessSvc.assessment.maturityModel.modelName;
+
     // Initialize integrity check options for CIS assessment
     if (!this.cisSvc.integrityCheckOptions.length) {
       this.cisSvc.getIntegrityCheckOptions().subscribe((response: IntegrityCheckOption[]) => {
@@ -92,10 +96,12 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
     }
 
     // listen for score changes caused by questions being answered
-    this.cisSvc.cisScore.subscribe((s) => {
-      this.sectionScore = s;
-      this.updateChart();
-    });
+    if (this.maturitySvc.showChartOnNestedQPage()) {
+      this.cisSvc.cisScore.subscribe((s) => {
+        this.sectionScore = s;
+        this.updateChart();
+      });
+    }
   }
 
   ngOnDestroy(): void {
