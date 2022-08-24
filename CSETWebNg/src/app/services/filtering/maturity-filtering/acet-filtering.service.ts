@@ -108,8 +108,8 @@ export class AcetFilteringService {
                     return [1, 2, 3]; // Baseline, Evolving, Intermediate
                 case 5:
                     return [1, 2, 3, 4]; // Baseline, Evolving, Intermediate, Advanced
+            }
         }
-    }
     }
 
     /**

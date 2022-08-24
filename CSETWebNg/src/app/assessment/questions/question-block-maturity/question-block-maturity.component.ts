@@ -362,8 +362,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     switch(id) {
       case (7233): case (7238): case (7244): case (7249): 
       case (7256): case (7265): case (7273): case (7276): 
-      case (7281): case (7285): case (7293): case (7296): 
-      case (7301): case (7304):
+      case (7281): case (7285): case (7289): case (7293): 
+      case (7296): case (7301): case (7304):
         return true;
     }
   }
