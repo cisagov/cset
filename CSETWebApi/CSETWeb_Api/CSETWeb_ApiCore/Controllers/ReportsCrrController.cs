@@ -73,6 +73,8 @@ namespace CSETWebCore.Api.Controllers
             };
             CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
             CrrVM viewModel = new CrrVM(detail, demographics.CriticalService, _crr, deficiencyData);
+            viewModel.ReportData.Comments = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.Comments);
+            viewModel.ReportData.MarkedForReviewList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.MarkedForReviewList);
             viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
@@ -334,6 +336,17 @@ namespace CSETWebCore.Api.Controllers
         {
            
             return Content(GetMil1PerformanceSummaryLegendData(), "text/html");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reportscrr/widget/mil1PerformanceLegend")]
+        public IActionResult GetMil1PerformanceLegend()
+        {
+            return Content(new MIL1PerformanceLegend().ToString(), "text/html");
         }
 
         [HttpGet]
