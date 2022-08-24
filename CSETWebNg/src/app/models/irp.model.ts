@@ -42,6 +42,7 @@ export class IRP {
     validation_Approach: string;
     response: number;
     comment: string;
+    risk_Type: string;
 
     constructor(id: number, response: number, comment: 
         string) {

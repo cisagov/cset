@@ -82,19 +82,33 @@ export class AcetFilteringService {
      * for the specified IRP.
      */
     getStairstepRequired(irp: number): number[] {
-        switch (irp) {
-            case 0:
-                return [];
-            case 1:
-                return [1]; // Baseline
-            case 2:
-                return [1]; // Baseline
-            case 3:
-                return [1, 2]; // Baseline, Evolving
-            case 4:
-                return [1, 2, 3]; // Baseline, Evolving, Intermediate
-            case 5:
-                return [1, 2, 3, 4]; // Baseline, Evolving, Intermediate, Advanced
+        if (this.assessmentSvc.assessment.maturityModel.modelName === 'ISE') {
+            switch(irp) {
+                case 0:
+                    return [];
+                case 1:
+                    return [1]; // SCUEP
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    return [2]; // CORE
+            }
+        } else {
+            switch (irp) {
+                case 0:
+                    return [];
+                case 1:
+                    return [1]; // Baseline
+                case 2:
+                    return [1]; // Baseline
+                case 3:
+                    return [1, 2]; // Baseline, Evolving
+                case 4:
+                    return [1, 2, 3]; // Baseline, Evolving, Intermediate
+                case 5:
+                    return [1, 2, 3, 4]; // Baseline, Evolving, Intermediate, Advanced
+            }
         }
     }
 
@@ -103,19 +117,33 @@ export class AcetFilteringService {
      * RECOMMENDED for the specified IRP.
      */
     getStairstepRecommended(irp: number): number[] {
-        switch (irp) {
-            case 0:
-                return [];
-            case 1:
-                return [2]; // Evolving
-            case 2:
-                return [2, 3]; // Evolving, Intermediate
-            case 3:
-                return [3, 4]; // Intermediate, Advanced
-            case 4:
-                return [4, 5]; // Advanced, Innovative
-            case 5:
-                return [5]; // Innovative
+        if (this.assessmentSvc.assessment.maturityModel.modelName === 'ISE') {
+            switch(irp) {
+                case 0:
+                    return [];
+                case 1:
+                    return [1]; // SCUEP
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    return [2]; // CORE
+            }
+        } else {
+            switch (irp) {
+                case 0:
+                    return [];
+                case 1:
+                    return [2]; // Evolving
+                case 2:
+                    return [2, 3]; // Evolving, Intermediate
+                case 3:
+                    return [3, 4]; // Intermediate, Advanced
+                case 4:
+                    return [4, 5]; // Advanced, Innovative
+                case 5:
+                    return [5]; // Innovative
+            }
         }
     }
 

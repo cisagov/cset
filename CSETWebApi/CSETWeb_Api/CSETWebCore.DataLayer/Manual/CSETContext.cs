@@ -794,5 +794,41 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
+
+        public virtual IList<Get_Merge_ConflictsResult> Get_Merge_Conflicts(Nullable<int> assessmentId1, Nullable<int> assessmentId2,
+                                                                            int assessmentId3, int assessmentId4, int assessmentId5, int assessmentId6,
+                                                                            int assessmentId7, int assessmentId8, int assessmentId9, int assessmentId10)
+        {
+            if (!assessmentId1.HasValue || !assessmentId2.HasValue)
+                throw new ApplicationException("first two parameters may not be null");
+            IList<Get_Merge_ConflictsResult> myrval = null;
+            this.LoadStoredProc("Get_Merge_Conflicts")
+                     .WithSqlParam("@id1", assessmentId1)
+                     .WithSqlParam("@id2", assessmentId2)
+                     .WithSqlParam("@id3", assessmentId3)
+                     .WithSqlParam("@id4", assessmentId4)
+                     .WithSqlParam("@id5", assessmentId5)
+                     .WithSqlParam("@id6", assessmentId6)
+                     .WithSqlParam("@id7", assessmentId7)
+                     .WithSqlParam("@id8", assessmentId8)
+                     .WithSqlParam("@id9", assessmentId9)
+                     .WithSqlParam("@id10", assessmentId10)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<Get_Merge_ConflictsResult>();
+                     });
+            return myrval;
+        }
+
+        public virtual IList<Get_Assess_Detail_Filter_DataResult>Get_Assess_Detail_Filters(string model) {
+            IList<Get_Assess_Detail_Filter_DataResult> myrval = null;
+            this.LoadStoredProc("Get_Assess_Detail_Filter_Data")
+                .WithSqlParam("@model", model)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<Get_Assess_Detail_Filter_DataResult>();
+                });
+            return myrval;
+        }
     }
 }
