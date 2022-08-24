@@ -1,6 +1,12 @@
 <div class="container">
-  <div class="pb-3" style="padding-top: 60px">
 
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+    <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+      <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print Report</button>
+    </div>
+  </div>
+
+  <div class="pb-3" style="padding-top: 60px">
     <app-crr-side-toc></app-crr-side-toc>
 
     <div class="report-body-crr">

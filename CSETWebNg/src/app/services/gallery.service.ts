@@ -24,8 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { CrrPerformanceAppendixA } from '../models/crrperformanceappendixa.model';
-import { result } from 'lodash';
+import { SelectedTier } from '../models/frameworks.model';
 
 const headers = {
   headers: new HttpHeaders()
@@ -34,28 +33,29 @@ const headers = {
 };
 
 @Injectable()
-export class CrrService {
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GalleryService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
   /**
    * Retrieves the list of frameworks.
    */
-  getCrrHtml(view:string) {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrHtml?view='+view);
+  getGalleryItems(layout_name: string) {
+    return  this.http.get(this.configSvc.apiUrl + 'gallery/getboard',  {
+      params: {
+        Layout_Name: layout_name
+      }
+    });
   }
 
-  getCrrModel(){
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
-  }
-
-  getMil1FullAnswerDistribWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1FullAnswerDistrib',
-    { responseType: 'text' });
-  }
-
-  getMil1PerformanceSummaryLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
-    { responseType: 'text'});
+  /**
+   * Posts the current selected tier to the server.
+   */
+  postSelections(galleryItemId: number) {
+    return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemId, headers);
   }
 }

@@ -276,7 +276,7 @@ export class MaturityService {
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
       { responseType: 'text' }
     );
   }

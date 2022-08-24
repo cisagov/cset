@@ -8,7 +8,7 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-crr-deficiency',
   templateUrl: './crr-deficiency.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss']
+  styleUrls: ['./../crr-report/crr-report.component.scss']
 })
 export class CrrDeficiencyComponent implements OnInit {
 

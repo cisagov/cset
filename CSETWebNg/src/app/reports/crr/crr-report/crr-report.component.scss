@@ -6,6 +6,10 @@ a.navbar-brand {
 
 /* Reports styles
 -------------------------------------------------- */
+* {
+  scroll-margin-top: 60px;
+}
+
 .report-body-crr {
   font-family: Arial !important;
   font-size: 12pt !important;
@@ -42,17 +46,28 @@ p {
   clear: both;
 }
 
+.col-1 {
+  flex: 0 0 auto;
+  max-width: unset;
+}
+
 // Override max width of containers to match bootstrap v5
 @media (min-width: 1400px) {
   .container {
-      max-width: 1320px;
+    max-width: 1320px;
   }
 }
 
 @media only screen {
   .page-break {
-      margin: 40px 0;
-      border-top: 2px solid #769bb5;
+    margin: 40px 0;
+    border-top: 2px solid #769bb5;
+  }
+}
+
+@media print {
+  .container {
+    margin: 0;
   }
 }
 
