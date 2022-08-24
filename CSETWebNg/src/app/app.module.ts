@@ -358,7 +358,6 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -451,6 +450,8 @@ import { GuidanceBlockComponent } from './reports/module-content/guidance-block/
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { GalleryService } from './services/gallery.service';
+import { EllipsisModule } from 'ngx-ellipsis';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -565,6 +566,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         NgxChartsModule,
         TooltipModule,
         SwiperModule,
+        EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -785,7 +787,6 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
-        CrrExecutiveComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,
         RraLevelResultsComponent,
@@ -954,6 +955,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         RraFilteringService,
         CrrService,
         Utilities,
+        GalleryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

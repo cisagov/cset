@@ -136,7 +136,6 @@ import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import{TsaAnalyticsComponent} from './initial/tsa-analytics/tsa-analytics.component';
@@ -433,7 +432,6 @@ const appRoutes: Routes = [
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
       { path: 'crrreport', component: CrrReportComponent },
-      { path: 'crrExecutive', component: CrrExecutiveComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },

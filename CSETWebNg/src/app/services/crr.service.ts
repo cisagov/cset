@@ -58,15 +58,4 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
     { responseType: 'text'});
   }
-
-   /**
-     * Calls the api to get CrrPerformanceAppendixA Data
-     */
-    getCrrPerformanceAppendixA():CrrPerformanceAppendixA {
-      console.log("*******************************GetCrrPerformanceAppendixA*********************")
-      var result = this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA') as unknown as CrrPerformanceAppendixA;
-      console.log("***********"+result.TotalBarChart)
-      return result;
-    }
-
 }

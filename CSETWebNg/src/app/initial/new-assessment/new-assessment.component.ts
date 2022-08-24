@@ -9,6 +9,7 @@ import {
   BreakpointState
 } from '@angular/cdk/layout';
 import { SwiperComponent } from 'swiper/angular';
+import { GalleryService } from '../../services/gallery.service';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -21,31 +22,25 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('swiper', {static: false}) swiper?: SwiperComponent;
 
-  hoverIndex = -1;
-  tempArray=[,,,,,,,,,];
+  hoverIndex = -1;  
   config: SwiperOptions = {
     slidesPerView: 1,
     spaceBetween: 5,
     slidesPerGroup: 1, 
-    centeredSlides:true,
-    loop:true, 
+    //loop:true, 
     navigation:true,
     breakpoints: {
       200: {
         slidesPerView:1,
-        centeredSlides:true
       },
       620:{
         slidesPerView:2,
-        centeredSlides: true
       },
       800: {
         slidesPerView: 3, 
-        centeredSlides:true
       },
       1220:{
         slidesPerView:5,
-        centeredSlides: true
       }
     }, 
     on: {
@@ -54,11 +49,26 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       }
     }
   };
-  constructor(public dialog:MatDialog, public breakpointObserver: BreakpointObserver, private zone: NgZone) { 
+
+  galleryData: any;
+  rows: any;
+  testRow: any;
+  constructor(public dialog:MatDialog, 
+    public breakpointObserver: BreakpointObserver, 
+    public gallerySvc: GalleryService) { 
     
   }
 
   ngOnInit(): void {
+    this.gallerySvc.getGalleryItems("CSET").subscribe(
+      (resp: any) => {
+        this.galleryData = resp;
+        this.rows = this.galleryData.rows;
+        this.testRow = this.rows[1];
+        console.log(this.testRow);
+        console.log(this.rows);
+      }
+    );
     setTimeout(() => {
       this.checkNavigation();
     });
@@ -85,8 +95,8 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSwiper([swiper]){
-    console.log(this.swiper);
+   onSwiper([swiper]){
+      console.log(swiper);
   }
   onHover(i:number){
     this.hoverIndex = i;
