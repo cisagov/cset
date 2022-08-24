@@ -480,7 +480,14 @@ namespace CSETWebCore.Api.Controllers
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
                     d.Mat.Maturity_LevelNavigation = null;
-                    d.Mat.Parent_Question = null;
+                    d.Mat.InverseParent_Question = null;
+
+                    if (d.Mat.Parent_Question != null)
+                    {
+                        d.Mat.Parent_Question.Maturity_Model = null;
+                        d.Mat.Parent_Question.Maturity_LevelNavigation = null;
+                        d.Mat.Parent_Question.InverseParent_Question = null;
+                    }
                 });
 
 
