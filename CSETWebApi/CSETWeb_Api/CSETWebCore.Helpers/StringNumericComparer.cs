@@ -2,52 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace CSETWebCore.Helpers;
-
-public class StringNumericComparer: IComparer<string>
+namespace CSETWebCore.Helpers
 {
-    public static bool IsNumeric(string value)
+
+    public class StringNumericComparer : IComparer<string>
     {
-        return int.TryParse(value, out _);
-    }
-
-    public int Compare(string s1, string s2)
-    {
-        const int S1GreaterThanS2 = 1;
-        const int S2GreaterThanS1 = -1;
-
-        var IsNumeric1 = IsNumeric(s1);
-        var IsNumeric2 = IsNumeric(s2);
-
-        if (IsNumeric1 && IsNumeric2)
+        public static bool IsNumeric(string value)
         {
-            var i1 = Convert.ToInt32(s1);
-            var i2 = Convert.ToInt32(s2);
+            return int.TryParse(value, out _);
+        }
 
-            if (i1 > i2)
+        public int Compare(string s1, string s2)
+        {
+            const int S1GreaterThanS2 = 1;
+            const int S2GreaterThanS1 = -1;
+
+            var IsNumeric1 = IsNumeric(s1);
+            var IsNumeric2 = IsNumeric(s2);
+
+            if (IsNumeric1 && IsNumeric2)
             {
-                return S1GreaterThanS2;
+                var i1 = Convert.ToInt32(s1);
+                var i2 = Convert.ToInt32(s2);
+
+                if (i1 > i2)
+                {
+                    return S1GreaterThanS2;
+                }
+
+                if (i1 < i2)
+                {
+                    return S2GreaterThanS1;
+                }
+
+                return 0;
             }
 
-            if (i1 < i2)
+            if (IsNumeric1)
             {
                 return S2GreaterThanS1;
             }
 
-            return 0;
-        }
+            if (IsNumeric2)
+            {
+                return S1GreaterThanS2;
+            }
 
-        if (IsNumeric1)
-        {
-            return S2GreaterThanS1;
+            return string.Compare(s1, s2, true, CultureInfo.InvariantCulture);
         }
-
-        if (IsNumeric2)
-        {
-            return S1GreaterThanS2;
-        }
-
-        return string.Compare(s1, s2, true, CultureInfo.InvariantCulture);
     }
-
 }

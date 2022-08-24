@@ -345,7 +345,6 @@ export class AssessmentService {
         (response: any) => {
           // set the brand new flag
           this.isBrandNew = true;
-
           this.loadAssessment(response.id);
         },
         error =>
@@ -417,6 +416,16 @@ export class AssessmentService {
     }
   }
 
+  setNcuaDefaults() {
+    if (!!this.assessment) {
+      this.assessment.useMaturity = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      //this.assessment.isAcetOnly = true;
+
+      this.assessment.useStandard = false;
+      this.assessment.useDiagram = false;
+    }
+  }
 
   /**
    *
@@ -481,11 +490,11 @@ export class AssessmentService {
   }
 
   /**
-   * Sets the maturity model name on the assessment
+   * Sets the maturity model name on the local assessment model.
    * @param modelName
    */
   setModel(modelName: string) {
-    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == modelName);
+    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName.toUpperCase() == modelName.toUpperCase());
   }
 
   /**

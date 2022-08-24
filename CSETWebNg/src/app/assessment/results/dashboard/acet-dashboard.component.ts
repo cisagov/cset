@@ -60,6 +60,21 @@ export class AcetDashboardComponent implements OnInit {
         this.acetSvc.getAcetDashboard().subscribe(
             (data: AcetDashboard) => {
                 this.acetDashboard = data;
+
+                // Checks to remove any ISE irp data from the ACET results
+                let lastHeader = this.acetDashboard.irps.length - 1;
+                let iseRisk = this.acetDashboard.irps[lastHeader].riskCount;
+                let acetRisk = this.acetDashboard.sumRisk;
+                let result = acetRisk.map((item, index) => item - iseRisk[index]);
+                this.acetDashboard.sumRisk = result;
+                
+                let highest = Math.max(...this.acetDashboard.sumRisk);
+                let index = this.acetDashboard.sumRisk.indexOf(highest);
+                this.acetDashboard.sumRiskLevel = (index + 1);
+
+                // Remove the ISE irp from ACET IRP's results table.
+                this.acetDashboard.irps.pop();
+
                 // Domains do not currently come sorted from API, this will sort the domains into proper order.
                 this.sortDomainListKey.forEach(domain => {
                     data.domains.filter(item => {

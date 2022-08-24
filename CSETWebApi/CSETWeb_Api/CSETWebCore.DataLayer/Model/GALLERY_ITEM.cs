@@ -26,18 +26,17 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [Unicode(false)]
         public string Configuration_Setup { get; set; }
-        [Unicode(false)]
-        public string Configuration_Setup_Client { get; set; }
         [Required]
-        [StringLength(250)]
+        [StringLength(1000)]
         [Unicode(false)]
         public string Description { get; set; }
-
-        [InverseProperty("Gallery_Item")]
-        public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
-        
+        [Unicode(false)]
+        public string Configuration_Setup_Client { get; set; }
         [StringLength(200)]
         [Unicode(false)]
         public string Title { get; set; }
+
+        [InverseProperty("Gallery_Item")]
+        public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
     }
 }

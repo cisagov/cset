@@ -66,6 +66,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ASSESSMENT_DETAIL_FILTER_DATA]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ASSESSMENT_DIAGRAM_COMPONENTS]",
          "ObjectType": 0
       },
@@ -874,6 +878,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[analytics_selectedStandardList]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[analytics_setup_maturity_groupings]",
          "ObjectType": 1
       },
@@ -911,6 +919,10 @@
       },
       {
          "Name": "[dbo].[final_data_moves]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Get_Assess_Detail_Filter_Data]",
          "ObjectType": 1
       },
       {
@@ -1094,6 +1106,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_getGenericModelSummaryByGoal]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_getMedianOverall]",
          "ObjectType": 1
       },
@@ -1183,6 +1199,26 @@
       },
       {
          "Name": "[dbo].[usp_GetTop5Areas]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryByGoal]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryByGoalOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryOverall]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getVADRSummaryPage]",
          "ObjectType": 1
       },
       {

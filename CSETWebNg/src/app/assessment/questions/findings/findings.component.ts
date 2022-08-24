@@ -135,4 +135,13 @@ export class FindingsComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Determines if the assessment is ISE or not
+   */
+   isISE () {
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      return true;
+    }
+  }
 }

@@ -12,9 +12,9 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CsetwebContext
     {
-        private ICsetwebContextProcedures _procedures;
+        private CsetwebContextProcedures _procedures;
 
-        public virtual ICsetwebContextProcedures Procedures
+        public virtual CsetwebContextProcedures Procedures
         {
             get
             {
@@ -27,7 +27,7 @@ namespace CSETWebCore.DataLayer.Model
             }
         }
 
-        public ICsetwebContextProcedures GetProcedures()
+        public CsetwebContextProcedures GetProcedures()
         {
             return Procedures;
         }
@@ -39,10 +39,12 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<analytics_compute_single_averages_maturityResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_compute_single_averages_standardResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_Compute_standard_allResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_selectedStandardListResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<CheckHeadingResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<clean_out_requirements_modeResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<DeleteUserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<final_data_movesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Assess_Detail_Filter_DataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_Merge_ConflictsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
@@ -83,6 +85,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_getExplodedComponentResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFinancialQuestionsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFirstPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getGenericModelSummaryByGoalResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getMedianOverallResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getMinMaxAverageForSectorIndustryResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getOverallRankedCategoriesResult>().HasNoKey().ToView(null);
@@ -106,10 +109,114 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_GetStandardsSummaryPageResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getStandardSummaryOverallResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GetTop5AreasResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryPageResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_MaturityDetailsCalculationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_StatementsReviewedResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_StatementsReviewedTabTotalsResult>().HasNoKey().ToView(null);
         }
+    }
+
+    public interface ICsetwebContextProcedures
+    {
+        Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<analytics_Compute_MaturityAllResult>> analytics_Compute_MaturityAllAsync(int? maturity_model_id, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<analytics_compute_single_averages_maturityResult>> analytics_compute_single_averages_maturityAsync(int? assessment_id, int? maturity_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<analytics_compute_single_averages_standardResult>> analytics_compute_single_averages_standardAsync(int? assessment_id, string set_name, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<analytics_Compute_standard_allResult>> analytics_Compute_standard_allAsync(int? assessment_id, string set_name, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<analytics_selectedStandardListResult>> analytics_selectedStandardListAsync(int? standard_assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> analytics_setup_maturity_groupingsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> changeEmailAsync(string originalEmail, string newEmail, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<CheckHeadingResult>> CheckHeadingAsync(string Heading, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<clean_out_requirements_modeResult>> clean_out_requirements_modeAsync(string standard_name, string standard_name_with_mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> DeleteAssessmentAsync(int? assessmentid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<DeleteUserResult>> DeleteUserAsync(string userid, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> FillEmptyMaturityQuestionsForAnalysisAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> FillEmptyQuestionsForAnalysisAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> FillNetworkDiagramQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<final_data_movesResult>> final_data_movesAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Get_Merge_ConflictsResult>> Get_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Get_RecommendationsResult>> Get_RecommendationsAsync(int? value, int? industry, string organization, string assetvalue, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> GetApplicationModeDefaultAsync(int? Assessment_Id, OutputParameter<string> Application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetAreasDataResult>> GetAreasDataAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetAreasOverallResult>> GetAreasOverallAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonAreasFileResult>> GetComparisonAreasFileAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonBestToWorstResult>> GetComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonFileOverallsResult>> GetComparisonFileOverallsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonFilePercentageResult>> GetComparisonFilePercentageAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonFileSummaryResult>> GetComparisonFileSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetCompatibilityCountsResult>> GetCompatibilityCountsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetMaturityDetailsCalculationsResult>> GetMaturityDetailsCalculationsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetMaturityGroupingsResult>> GetMaturityGroupingsAsync(int? ModelID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetPercentageOverallResult>> GetPercentageOverallAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetRelevantAnswersResult>> GetRelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<InScopeQuestionsResult>> InScopeQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<InScopeRequirementsResult>> InScopeRequirementsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> Parse_XMLAsync(string XMLString, long? strtX, OutputParameter<long?> endX, OutputParameter<string> DataStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<RelevantAnswersResult>> RelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<requirement_final_movesResult>> requirement_final_movesAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<SearchAllTablesResult>> SearchAllTablesAsync(string SearchStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<SP_SearchTablesResult>> SP_SearchTablesAsync(string Tablenames, string SearchStr, bool? GenerateSQLOnly, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_AggregationCustomQuestionnaireLoadResult>> usp_AggregationCustomQuestionnaireLoadAsync(string AssessmentDBName, string entity_name, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_Answer_Components_DefaultResult>> usp_Answer_Components_DefaultAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_Assessments_Completion_For_UserResult>> usp_Assessments_Completion_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> usp_BuildCatNumbersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> usp_CopyIntoSet_DeleteAsync(string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GenerateSPRSScoreResult>> usp_GenerateSPRSScoreAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getAnswerComponentOverridesResult>> usp_getAnswerComponentOverridesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetAssessmentPieResult>> usp_GetAssessmentPieAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getComponentsRankedCategoriesResult>> usp_getComponentsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetComponentsRankedCategoriesPageResult>> usp_GetComponentsRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getComponentsResultsByCategoryResult>> usp_getComponentsResultsByCategoryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetComponentsResultsByCategoryPageResult>> usp_GetComponentsResultsByCategoryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getComponentsSummaryResult>> usp_getComponentsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetComponentsSummaryPageResult>> usp_GetComponentsSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getComponentTypesResult>> usp_getComponentTypesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetComponentTypesPageResult>> usp_GetComponentTypesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getFinancialQuestionsResult>> usp_getFinancialQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getFirstPageResult>> usp_getFirstPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getGenericModelSummaryByGoalResult>> usp_getGenericModelSummaryByGoalAsync(int? assessment_id, int? maturity_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getMedianOverallResult>> usp_getMedianOverallAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getMinMaxAverageForSectorIndustryResult>> usp_getMinMaxAverageForSectorIndustryAsync(int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getOverallRankedCategoriesResult>> usp_getOverallRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetOverallRankedCategoriesPageResult>> usp_GetOverallRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetQuestionsWithFeedBackResult>> usp_GetQuestionsWithFeedBackAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRankedCategoriesResult>> usp_getRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetRankedCategoriesPageResult>> usp_GetRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetRankedQuestionsResult>> usp_GetRankedQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRankedStandardCategoriesResult>> usp_getRankedStandardCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetRawCountsForEachAssessment_StandardsResult>> usp_GetRawCountsForEachAssessment_StandardsAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRRASummaryResult>> usp_getRRASummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRRASummaryByGoalResult>> usp_getRRASummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRRASummaryByGoalOverallResult>> usp_getRRASummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRRASummaryOverallResult>> usp_getRRASummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getRRASummaryPageResult>> usp_getRRASummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getStandardsRankedCategoriesResult>> usp_getStandardsRankedCategoriesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetStandardsRankedCategoriesPageResult>> usp_GetStandardsRankedCategoriesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getStandardsResultsByCategoryResult>> usp_getStandardsResultsByCategoryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetStandardsResultsByCategoryPageResult>> usp_GetStandardsResultsByCategoryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getStandardsSummaryResult>> usp_getStandardsSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetStandardsSummaryPageResult>> usp_GetStandardsSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getStandardSummaryOverallResult>> usp_getStandardSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? Aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getVADRSummaryResult>> usp_getVADRSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getVADRSummaryByGoalResult>> usp_getVADRSummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getVADRSummaryByGoalOverallResult>> usp_getVADRSummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getVADRSummaryOverallResult>> usp_getVADRSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getVADRSummaryPageResult>> usp_getVADRSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_MaturityDetailsCalculationsResult>> usp_MaturityDetailsCalculationsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> usp_setTrendOrderAsync(int? Aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_StatementsReviewedResult>> usp_StatementsReviewedAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_StatementsReviewedTabTotalsResult>> usp_StatementsReviewedTabTotalsAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
     }
 
     public partial class CsetwebContextProcedures : ICsetwebContextProcedures
@@ -295,6 +402,32 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<analytics_Compute_standard_allResult>("EXEC @returnValue = [dbo].[analytics_Compute_standard_all] @assessment_id, @set_name, @sector_id, @industry_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<analytics_selectedStandardListResult>> analytics_selectedStandardListAsync(int? standard_assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "standard_assessment_id",
+                    Value = standard_assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<analytics_selectedStandardListResult>("EXEC @returnValue = [dbo].[analytics_selectedStandardList] @standard_assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -561,6 +694,33 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<final_data_movesResult>("EXEC @returnValue = [dbo].[final_data_moves]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "model",
+                    Size = 100,
+                    Value = model ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Get_Assess_Detail_Filter_DataResult>("EXEC @returnValue = [dbo].[Get_Assess_Detail_Filter_Data] @model", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1901,6 +2061,38 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+        public virtual async Task<List<usp_getGenericModelSummaryByGoalResult>> usp_getGenericModelSummaryByGoalAsync(int? assessment_id, int? maturity_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "maturity_model_id",
+                    Value = maturity_model_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getGenericModelSummaryByGoalResult>("EXEC @returnValue = [dbo].[usp_getGenericModelSummaryByGoal] @assessment_id, @maturity_model_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<usp_getMedianOverallResult>> usp_getMedianOverallAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -2487,6 +2679,136 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_GetTop5AreasResult>("EXEC @returnValue = [dbo].[usp_GetTop5Areas] @Aggregation_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryResult>> usp_getVADRSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryResult>("EXEC @returnValue = [dbo].[usp_getVADRSummary] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryByGoalResult>> usp_getVADRSummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryByGoalResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryByGoal] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryByGoalOverallResult>> usp_getVADRSummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryByGoalOverallResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryByGoalOverall] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryOverallResult>> usp_getVADRSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryOverallResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryOverall] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryPageResult>> usp_getVADRSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryPageResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryPage] @assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
