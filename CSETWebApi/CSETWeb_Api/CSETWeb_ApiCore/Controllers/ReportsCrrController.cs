@@ -15,6 +15,8 @@ using CSETWebCore.Helpers.ReportWidgets;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Interfaces.AdminTab;
 using Newtonsoft.Json;
+using CSETWebCore.Model.Reports;
+using System.Xml.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -121,15 +123,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr/widget/mil1FullAnswerDistrib")]
 
         public IActionResult getMil1FullAnswerDistribHtml()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _crr.InstantiateScoringHelper(assessmentId);
-            var totalDistribution = _crr.MIL1FullAnswerDistrib();
-            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
-            totalBarChartInput.AnswerCounts = new List<int>
-                                        { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
-            ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
-            return Content(barChart.ToString(), "text/html");
+        {            
+            return Content(GetTotalBarChart(), "text/html");
         }
 
 
@@ -142,8 +137,15 @@ namespace CSETWebCore.Api.Controllers
 
         public IActionResult getMil1PerformanceSummaryLegend()
         {
-            var legend = new MIL1PerformanceSummaryLegend();
-            return Content(legend.ToString(), "text/html");
+           
+            return Content(GetMil1PerformanceSummaryLegendData(), "text/html");
+        }
+
+        [HttpGet]
+        [Route("api/reportscrr/widget/GetCrrPerformanceAppendixA")]
+        public IActionResult GetCrrPerformanceAppendixA()
+        {
+            return Ok(GetCrrPerformanceAppendixAData());
         }
 
         private CrrResultsModel GenerateCrrResults()
@@ -183,5 +185,96 @@ namespace CSETWebCore.Api.Controllers
             retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
             return retVal;
         }
+
+        private string GetTotalBarChart()
+        {
+            string totalBarChartString = string.Empty;
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var totalDistribution = _crr.MIL1FullAnswerDistrib();
+            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+            totalBarChartInput.AnswerCounts = new List<int>
+                                        { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+            ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
+            totalBarChartString = barChart.ToString();
+            return totalBarChartString;
+        }
+
+        private string GetMil1PerformanceSummaryLegendData()
+        {
+            var legend = new MIL1PerformanceSummaryLegend();
+            return legend.ToString();
+        }
+
+        private DomainSummary[] GetDomainSummaries()
+        {
+            DomainSummary[] domainSummaries = new DomainSummary[1];
+            var heatmapScale = 1.15;
+            var XDocument = _crr.XDoc;
+
+            DomainSummary domainSummary = null;
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _crr.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 45, Width = 75 };
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                var barChart = new ScoreBarChart(barChartInput);
+
+                XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                           el.Attribute("label").Value == "MIL-1");
+                var mil1Svg = new MilHeatMap(mil1, true, false, 8);
+                mil1Svg.Scale(heatmapScale);
+
+                XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                            el.Attribute("label").Value == "MIL-2");
+                var mil2Svg = new MilHeatMap(mil2, true, false, 8);
+                mil2Svg.Scale(heatmapScale);
+
+                XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                           el.Attribute("label").Value == "MIL-3");
+                var mil3Svg = new MilHeatMap(mil3, true, false, 8);
+                mil3Svg.Scale(heatmapScale);
+
+                XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                           el.Attribute("label").Value == "MIL-4");
+                var mil4Svg = new MilHeatMap(mil4, true, false, 8);
+                mil4Svg.Scale(heatmapScale);
+
+                XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                           el.Attribute("label").Value == "MIL-5");
+                var mil5Svg = new MilHeatMap(mil5, true, false, 8);
+                mil5Svg.Scale(heatmapScale);
+
+                domainSummary = new DomainSummary()
+                {
+                    DomainTitle = domain.Attribute("title").Value.Split('(')[0].Trim(),
+                    BarChart = barChart.ToString(),
+                    MilHeatMapSvg1 = mil1Svg.ToString(),
+                    MilHeatMapSvg2 = mil2Svg.ToString(),
+                    MilHeatMapSvg3 = mil3Svg.ToString(),
+                    MilHeatMapSvg4 = mil4Svg.ToString(),
+                    MilHeatMapSvg5 = mil5Svg.ToString()
+                };
+
+                
+            }
+            return domainSummaries;
+
+
+        }
+
+        private CrrPerformanceAppendixA GetCrrPerformanceAppendixAData()
+        {
+            CrrPerformanceAppendixA retVal = new CrrPerformanceAppendixA();
+            retVal.TotalBarChart = GetTotalBarChart();
+            retVal.CrrPerformanceLegend = GetMil1PerformanceSummaryLegendData();
+            retVal.DomainSummaryList = GetDomainSummaries();
+           
+
+            return retVal;
+
+        }
+
+        
     }
 }
