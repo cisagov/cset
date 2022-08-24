@@ -1,11 +1,8 @@
 import { CrrReportModel } from './../../../models/reports.model';
 import { CrrService } from './../../../services/crr.service';
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
-import { MaturityService } from '../../../services/maturity.service';
-import { ReportAnalysisService } from '../../../services/report-analysis.service';
-import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-crr-comments-marked',
@@ -17,26 +14,12 @@ export class CrrCommentsMarkedComponent implements OnInit {
   crrModel: CrrReportModel;
   loading: boolean = false;
   logoPath: string = '';
-
-  keyToCategory = {
-    AM: 'Asset Management',
-    CM: 'Controls Management',
-    CCM: 'Configuration and Change Management',
-    VM: 'Vulnerability Management',
-    IM: 'Incident Management',
-    SCM: 'Service Continuity Management',
-    RM: 'Risk Management',
-    EDM: 'External Dependencies Management',
-    TA: 'Training and Awareness',
-    SA: 'Situational Awareness'
-  };
+  keyToCategory: any;
 
   commentsList = [];
   markedForReviewList = [];
 
   constructor(
-  public analysisSvc: ReportAnalysisService,
-  public reportSvc: ReportService,
   public configSvc: ConfigService,
   private titleService: Title,
   private crrSvc: CrrService
@@ -45,6 +28,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.titleService.setTitle("Comments Report - CISA CRR");
+    this.keyToCategory = this.crrSvc.keyToCategory;
 
     let appCode = this.configSvc.installationMode;
     if (!appCode || appCode === 'CSET') {
@@ -57,7 +41,6 @@ export class CrrCommentsMarkedComponent implements OnInit {
     this.crrSvc.getCrrModel().subscribe(
       (r: CrrReportModel) => {
         this.crrModel = r;
-        console.log(this.crrModel);
 
         // Build up comments list
         this.crrModel.reportData.comments.forEach(matAns => {
@@ -74,10 +57,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
         // Sort the marked for review list
         this.commentsList.forEach(e => {
           e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.localeCompare(b.mat.question_Title);
-          })
-          e.matAnswers.sort((a, b) => {
-            return a.mat.question_Text.localeCompare(b.mat.question_Text);
+            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);
           })
         });
 
@@ -105,10 +85,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
         // Sort the marked for review list
         this.markedForReviewList.forEach(e => {
           e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.localeCompare(b.mat.question_Title);
-          })
-          e.matAnswers.sort((a, b) => {
-            return a.mat.question_Text.localeCompare(b.mat.question_Text);
+            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);
           })
         });
 
@@ -122,9 +99,10 @@ export class CrrCommentsMarkedComponent implements OnInit {
         });
 
         console.log(this.markedForReviewList);
+
         this.loading = false;
       },
-      error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
+      error => console.log('CRR Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
 

@@ -36,6 +36,19 @@ const headers = {
 @Injectable()
 export class CrrService {
 
+  keyToCategory = {
+    AM: 'Asset Management',
+    CM: 'Controls Management',
+    CCM: 'Configuration and Change Management',
+    VM: 'Vulnerability Management',
+    IM: 'Incident Management',
+    SCM: 'Service Continuity Management',
+    RM: 'Risk Management',
+    EDM: 'External Dependencies Management',
+    TA: 'Training and Awareness',
+    SA: 'Situational Awareness'
+  };
+
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
   /**

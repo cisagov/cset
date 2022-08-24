@@ -75,6 +75,7 @@ namespace CSETWebCore.Api.Controllers
             CrrVM viewModel = new CrrVM(detail, demographics.CriticalService, _crr, deficiencyData);
             viewModel.ReportData.Comments = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.Comments);
             viewModel.ReportData.MarkedForReviewList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.MarkedForReviewList);
+            viewModel.ReportData.DeficienciesList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.DeficienciesList);
             viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
