@@ -23,6 +23,7 @@
 <h4>Organization Details</h4>
 
 <form #f="ngForm">
+    <!-- Normal ACET Detail Boxes -->
     <ng-container *ngIf="this.assessment.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -41,8 +42,44 @@
                 <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
+        <div class="form-group" *ngIf="configSvc.installationMode !== 'ACET'">
+            <label class="mb-1" for="facility">Facility Name</label>
+            <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.facilityName"
+                (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
+            <label class="mb-1" for="creditUnion">Credit Union</label>
+            <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+                (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="citySite">City Or Site Name</label>
+                <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
+                    (change)="update($event)" tabindex="0">
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+                <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                    (change)="update($event)" tabindex="0">
+            </div>
+        </div>
+        <div class="form-row" [hidden]="configSvc.installationMode !== 'ACET'">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="charter">Charter</label>
+                <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
+                    (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="assets">Assets</label>
+                <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
+                    [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+            </div>
+            <div class="col-md-6"></div>
+        </div>
     </ng-container>
 
+    <!-- ISE Assessment Detail Boxes -->
     <ng-container *ngIf="this.assessment.maturityModel !== null && this.assessment.maturityModel.modelName === 'ISE'">
         <div class="form-row">
             <div class="form-group col-md-12">
@@ -66,54 +103,54 @@
                 <mat-datepicker #effectiveDatePicker></mat-datepicker>
             </div>
         </div>
-    </ng-container>
 
-    <div class="form-group">
-        <label class="mb-1" for="creditUnion">Credit Union Name</label>
-        <input type="text" maxlength="100" class="form-control" 
-               id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-               [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" (change)="update($event)" tabindex="0">
-        <cdk-virtual-scroll-viewport itemSize="20">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.name">
-                    {{ option.name }}
-                </mat-option>
-            </mat-autocomplete>
-        </cdk-virtual-scroll-viewport>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="citySite">City Or Site Name</label>
-            <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
-                (change)="update($event)" tabindex="0">
-        </div>
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
-            <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
-                (change)="update($event)" tabindex="0">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="charter">Charter</label>
-            <input type="text" [maxlength]="5" class="form-control" 
-                id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
-                [formControl]="assessmentCharterControl" [matAutocomplete]="autoCharter" 
-                (change)="update($event)" (blur)="update($event)" (input)="createAssessmentName()" tabindex="0">
+        <div class="form-group">
+            <label class="mb-1" for="creditUnion">Credit Union Name</label>
+            <input type="text" maxlength="100" class="form-control" 
+                id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
+                [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" (change)="update($event)" tabindex="0">
             <cdk-virtual-scroll-viewport itemSize="20">
-                <mat-autocomplete #autoCharter="matAutocomplete">
-                    <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.charter">
-                        {{ option.charter }}
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.name">
+                        {{ option.name }}
                     </mat-option>
                 </mat-autocomplete>
             </cdk-virtual-scroll-viewport>
         </div>
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="assets">Assets</label>
-            <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="citySite">City Or Site Name</label>
+                <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
+                    (change)="update($event)" tabindex="0">
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+                <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                    (change)="update($event)" tabindex="0">
+            </div>
         </div>
-        <div class="col-md-6"></div>
-    </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="charter">Charter</label>
+                <input type="text" [maxlength]="5" class="form-control" 
+                    id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
+                    [formControl]="assessmentCharterControl" [matAutocomplete]="autoCharter" 
+                    (change)="update($event)" (blur)="update($event)" (input)="createAssessmentName()" tabindex="0">
+                <cdk-virtual-scroll-viewport itemSize="20">
+                    <mat-autocomplete #autoCharter="matAutocomplete">
+                        <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.charter">
+                            {{ option.charter }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </cdk-virtual-scroll-viewport>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="assets">Assets</label>
+                <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
+                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </ng-container>
 </form>
