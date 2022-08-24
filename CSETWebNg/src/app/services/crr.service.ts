@@ -24,6 +24,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { CrrPerformanceAppendixA } from '../models/crrperformanceappendixa.model';
+import { result } from 'lodash';
 
 const headers = {
   headers: new HttpHeaders()
@@ -56,4 +58,15 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
     { responseType: 'text'});
   }
+
+   /**
+     * Calls the api to get CrrPerformanceAppendixA Data
+     */
+    getCrrPerformanceAppendixA():CrrPerformanceAppendixA {
+      console.log("*******************************GetCrrPerformanceAppendixA*********************")
+      var result = this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA') as unknown as CrrPerformanceAppendixA;
+      console.log("***********"+result.TotalBarChart)
+      return result;
+    }
+
 }
