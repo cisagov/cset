@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
-            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement, 
+            IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
@@ -296,23 +296,27 @@ namespace CSETWebCore.Api.Controllers
             var dict = mm.GetSourceFiles();
 
 
-            resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
+            resp.Groupings.ForEach(g =>
             {
-                string refText; 
-                if(!dict.TryGetValue(q.QuestionId, out refText))
+                g.SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
                 {
-                    refText = "None";
-                }
-                var newQ = new MaturityQuestion
-                {
-                    Question_Title = q.DisplayNumber,
-                    Question_Text = q.QuestionText,
-                    Answer = new ANSWER() { Answer_Text = q.Answer },
-                    ReferenceText = refText
-                };
+                    string refText;
+                    if (!dict.TryGetValue(q.QuestionId, out refText))
+                    {
+                        refText = "None";
+                    }
+                    var newQ = new MaturityQuestion
+                    {
+                        Question_Title = q.DisplayNumber,
+                        Question_Text = q.QuestionText,
+                        Answer = new ANSWER() { Answer_Text = q.Answer },
+                        ReferenceText = refText,
+                        Parent_Question_Id = q.ParentQuestionId
+                    };
 
-                questions.Add(newQ);
-            }));
+                    questions.Add(newQ);
+                }));
+            });
 
             return Ok(questions);
         }
