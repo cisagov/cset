@@ -236,7 +236,6 @@ let headers = {
   }
 
   refreshGroupList(level: number) {
-    console.log("refresh group list: " + level);
     this.acetFilteringSvc.resetDomainFilters(level);
   }
 

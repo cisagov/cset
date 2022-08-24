@@ -29,6 +29,7 @@
             *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Assessment Factor'">
             {{grouping.title}}
         </div>
+
         <div *ngFor="let sg of grouping.subGroupings">
             <app-grouping-block [grouping]="sg"></app-grouping-block>
         </div>

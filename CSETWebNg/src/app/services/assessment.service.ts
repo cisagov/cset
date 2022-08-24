@@ -31,7 +31,6 @@ import {
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
-import { NCUAService } from './ncua.service';
 import { Router } from '@angular/router';
 
 
@@ -346,7 +345,6 @@ export class AssessmentService {
         (response: any) => {
           // set the brand new flag
           this.isBrandNew = true;
-          
           this.loadAssessment(response.id);
         },
         error =>
