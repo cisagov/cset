@@ -617,7 +617,7 @@ export class QuestionExtrasComponent implements OnInit {
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
         || this.assessSvc.usesMaturityModel('CRR')
-        || this.isISE())) {
+        || this.assessSvc.isISE())) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -684,19 +684,10 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Determines if the assessment is ISE or not
-   */
-  isISE () {
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      return true;
-    }
-  }
-
-  /**
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
    observationOrIssue () {
-    if (this.isISE()) {
+    if (this.assessSvc.isISE()) {
       return 'Issue';
     }
     else {
