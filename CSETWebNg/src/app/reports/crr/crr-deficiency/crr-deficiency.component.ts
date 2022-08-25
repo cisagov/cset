@@ -40,17 +40,30 @@ export class CrrDeficiencyComponent implements OnInit {
     this.crrSvc.getCrrModel().subscribe(
       (r: CrrReportModel) => {
         this.crrModel = r;
-        console.log(this.crrModel);
+        let categories = [];
+
         // Build up deficiencies list
         this.crrModel.reportData.deficienciesList.forEach(matAns => {
           const domain = matAns.mat.question_Title.split(':')[0];
-          const dElement = this.deficienciesList.find(e => e.cat === this.keyToCategory[domain]);
+          const dElement = categories.find(e => e.cat === this.keyToCategory[domain]);
           if (!dElement) {
-            this.deficienciesList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
+            categories.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
           } else {
             dElement.matAnswers.push(matAns);
           }
         });
+
+        // We want the report to have the categories in a particular order, so manually add them in order
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['AM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['CM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['CCM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['VM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['IM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['SCM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['RM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['EDM']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['TA']));
+        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['SA']));
 
         // Sort the list
         this.deficienciesList.forEach(e => {
@@ -67,12 +80,24 @@ export class CrrDeficiencyComponent implements OnInit {
             }
           }
         });
+
+        this.loading = false;
       },
       error => console.log('CRR Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 
+  pushDeficiencyCategory(cat) {
+    if (cat) {
+      this.deficienciesList.push(cat);
+    }
+  }
+
   getFullAnswerText(abb: string) {
     return this.configSvc.config['answerLabel' + abb];
+  }
+
+  printReport() {
+    window.print();
   }
 }
