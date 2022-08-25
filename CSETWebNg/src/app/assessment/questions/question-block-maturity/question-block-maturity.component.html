@@ -181,7 +181,7 @@
 
 
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
-    <div *ngIf="this.assessSvc.assessment.maturityModel.modelName === 'ISE'" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
+    <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
         <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
         [class.display-none]="q.maturityLevelName === 'CORE+' && this.showCorePlus === false">
 
@@ -192,7 +192,7 @@
                     <div *ngIf="!q.isParentQuestion; else notNewMatLevel">
                         <div class="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-
+                        {{ q.displayNumber }}
                             <div>
                                 <span class="question-mat-level-name">
                                     {{ q.maturityLevelName }}
@@ -204,7 +204,6 @@
                         <div [class.display-hidden]="!!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                             {{ q.displayNumber }}
-
                         </div>
                     </ng-template>
                     <div style="width: 100%;">                        

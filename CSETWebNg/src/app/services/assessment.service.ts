@@ -516,4 +516,18 @@ export class AssessmentService {
     }
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
+
+   /**
+   * Determines if the assessment is ISE or not
+   */
+    isISE () {
+      if (this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
+        return false;
+      }
+      if (this.assessment.maturityModel.modelName === 'ISE') {
+        return true;
+      }
+  
+      return false;
+    }
 }

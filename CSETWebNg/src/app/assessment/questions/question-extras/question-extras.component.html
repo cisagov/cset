@@ -32,7 +32,7 @@
             </svg>
         </button>
 
-      <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component && !isISE()" class="extras-button cursor-pointer"
+      <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component && !this.assessSvc.isISE()" class="extras-button cursor-pointer"
           [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
           [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? 'Exam Step' : 'Details/Standard'"
           matTooltipPosition="above">
@@ -69,7 +69,7 @@
             </svg>
         </button>
 
-      <button *ngIf="!isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
+      <button *ngIf="!this.assessSvc.isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
           [matTooltip]="has('CMNT')==='inline' ? 'Comments with content':'Comment'" matTooltipPosition="above">
           <svg viewBox="0 0 32 32"
               style="height: 31px; width: 32px; margin: auto; margin-top: 5px; margin-left: -2px;">
@@ -332,7 +332,7 @@
         </div>
 
       <div *ngIf="extras !== null && mode === 'DISC'">
-            <div *ngIf="!isISE()">
+            <div *ngIf="!this.assessSvc.isISE()">
                 <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
                     <tr>
                         <th>Observation Title</th>
@@ -364,7 +364,7 @@
                 <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Observation</button>
             </div>
 
-            <div *ngIf="!!isISE()">
+            <div *ngIf="!!this.assessSvc.isISE()">
                 <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
                     <tr>
                         <th>Issue Title</th>
