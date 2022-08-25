@@ -8,6 +8,9 @@ CREATE PROCEDURE [dbo].[usp_GetTop5Areas]
 	@Aggregation_id int
 AS
 BEGIN
+
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
 /*
 set the sequence based on assessment date
 get the last two assessments.   Then compute
