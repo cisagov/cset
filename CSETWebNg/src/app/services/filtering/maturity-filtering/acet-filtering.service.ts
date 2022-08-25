@@ -82,7 +82,7 @@ export class AcetFilteringService {
      * for the specified IRP.
      */
     getStairstepRequired(irp: number): number[] {
-        if (this.assessmentSvc.assessment.maturityModel.modelName === 'ISE') {
+        if (this.assessmentSvc.isISE()) {
             switch(irp) {
                 case 0:
                     return [];

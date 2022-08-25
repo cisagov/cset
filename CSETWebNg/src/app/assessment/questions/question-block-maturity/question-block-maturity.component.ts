@@ -91,32 +91,35 @@ export class QuestionBlockMaturityComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+    if (this.assessSvc.assessment.maturityModel.modelName != null) {
+      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-      this.configSvc.buttonLabels['A'] = "Issue(N)";
-      this.configSvc.answerLabels['A'] = "No with Issue(s)";
-    } else {
-      this.configSvc.buttonLabels['A'] = "Yes(C)";
-      this.configSvc.answerLabels['A'] = "Yes Compensating Control"
-    }
-
-    this.refreshReviewIndicator();
-    this.refreshPercentAnswered();
-
-    // set sub questions' titles so that they align with their parent when hidden
-    this.myGrouping.questions.forEach(q => {
-      if (!!q.parentQuestionId) {
-        q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+      if (this.assessSvc.isISE()) {
+        this.configSvc.buttonLabels['A'] = "Issue(N)";
+        this.configSvc.answerLabels['A'] = "No with Issue(s)";
+      } else {
+        this.configSvc.buttonLabels['A'] = "Yes(C)";
+        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
       }
-    });
 
-    if (this.configSvc.installationMode === "ACET") {
-      if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
-        this.altTextPlaceholder = this.altTextPlaceholder_ISE;
-      }
-      else {
-        this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+      this.refreshReviewIndicator();
+      this.refreshPercentAnswered();
+
+      // set sub questions' titles so that they align with their parent when hidden
+      // commented out now to maintain unique numbers for child statements
+      // this.myGrouping.questions.forEach(q => {
+      //   if (!!q.parentQuestionId) {
+      //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+      //   }
+      // });
+
+      if (this.configSvc.installationMode === "ACET") {
+        if (this.assessSvc.isISE()) {
+          this.altTextPlaceholder = this.altTextPlaceholder_ISE;
+        }
+        else {
+          this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+        }
       }
     }
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
@@ -277,7 +280,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+    if (this.assessSvc.isISE()) {
       let bracketContact = '[' + this.contactInitials + ']';
 
       if (q.altAnswerText.indexOf(bracketContact) !== 0) {
