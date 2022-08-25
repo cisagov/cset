@@ -21,6 +21,13 @@
   SOFTWARE.
 -------------------------->
 <div class="container-fluid text-center max-w-75in" style="padding-top: 75px;">
+
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+    <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+      <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print Report</button>
+    </div>
+  </div>
+
     <div class="row">
       <div class="col">
         <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CYBER RESILIENCE REVIEW</h1>
@@ -71,8 +78,13 @@
           </div>
         </div>
 
-        <hr class="page-line m-0" />
-      <div *ngIf="!crrModel?.reportData.comments.length" class="row">
+      <hr class="page-line m-0" />
+
+      <div *ngIf="loading" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+
+      <div *ngIf="!crrModel?.reportData.comments.length && !loading" class="row">
         <div class="col text-left">
           There are no practices with comments
         </div>
@@ -139,7 +151,11 @@
 
       <hr class="page-line m-0" />
 
-      <div *ngIf="!crrModel?.reportData.markedForReviewList.length" class="row">
+      <div *ngIf="loading" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+
+      <div *ngIf="!crrModel?.reportData.markedForReviewList.length && !loading" class="row">
         <div class="col text-left">
           There are no practices marked for review
         </div>

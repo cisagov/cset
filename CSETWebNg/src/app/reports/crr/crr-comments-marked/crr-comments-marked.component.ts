@@ -41,19 +41,32 @@ export class CrrCommentsMarkedComponent implements OnInit {
     this.crrSvc.getCrrModel().subscribe(
       (r: CrrReportModel) => {
         this.crrModel = r;
+        let commentsCategories = [];
 
         // Build up comments list
         this.crrModel.reportData.comments.forEach(matAns => {
           const domain = matAns.mat.question_Title.split(':')[0];
-          const cElement = this.commentsList.find(e => e.cat === this.keyToCategory[domain]);
+          const cElement = commentsCategories.find(e => e.cat === this.keyToCategory[domain]);
 
           if (!cElement) {
-            this.commentsList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
+            commentsCategories.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
           } else {
             cElement.matAnswers.push(matAns);
           }
         });
 
+        // We want the report to have the categories in a particular order, so manually add them in order
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['AM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['CM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['CCM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['VM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['IM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['SCM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['RM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['EDM']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['TA']));
+        this.pushCommentsCategory(commentsCategories.find(e => e.cat === this.keyToCategory['SA']));
+
         // Sort the marked for review list
         this.commentsList.forEach(e => {
           e.matAnswers.sort((a, b) => {
@@ -70,18 +83,32 @@ export class CrrCommentsMarkedComponent implements OnInit {
           }
         });
 
+        let mfrCategories = [];
+
         // Build up marked for review list
         this.crrModel.reportData.markedForReviewList.forEach(matAns => {
           const domain = matAns.mat.question_Title.split(':')[0];
-          const mfrElement = this.markedForReviewList.find(e => e.cat === this.keyToCategory[domain]);
+          const mfrElement = mfrCategories.find(e => e.cat === this.keyToCategory[domain]);
 
           if (!mfrElement) {
-            this.markedForReviewList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
+            mfrCategories.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
           } else {
             mfrElement.matAnswers.push(matAns);
           }
         });
 
+        // We want the report to have the categories in a particular order, so manually add them in order
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['AM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['CM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['CCM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['VM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['IM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['SCM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['RM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['EDM']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['TA']));
+        this.pushMfrCategory(mfrCategories.find(e => e.cat === this.keyToCategory['SA']));
+
         // Sort the marked for review list
         this.markedForReviewList.forEach(e => {
           e.matAnswers.sort((a, b) => {
@@ -97,8 +124,6 @@ export class CrrCommentsMarkedComponent implements OnInit {
             }
           }
         });
-
-        console.log(this.markedForReviewList);
 
         this.loading = false;
       },
@@ -106,7 +131,23 @@ export class CrrCommentsMarkedComponent implements OnInit {
     );
   }
 
+  pushCommentsCategory(cat) {
+    if (cat) {
+      this.commentsList.push(cat);
+    }
+  }
+
+  pushMfrCategory(cat) {
+    if (cat) {
+      this.markedForReviewList.push(cat);
+    }
+  }
+
   getFullAnswerText(abb: string) {
     return this.configSvc.config['answerLabel' + abb];
+  }
+
+  printReport() {
+    window.print();
   }
 }
