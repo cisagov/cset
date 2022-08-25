@@ -69,12 +69,6 @@ p {
   }
 }
 
-@media print {
-  .container {
-    margin: 0;
-  }
-}
-
 /*
   Cover Sheet
 */
@@ -143,12 +137,6 @@ table {
 .domain-detail p {
   font-size: 12pt;
   font-family: Arial;
-}
-
-@media print {
-  .mat-section {
-      break-inside: avoid;
-  }
 }
 
 .report-notification {
@@ -633,6 +621,18 @@ div.widget {
 }
 
 @media print {
+
+  .page-margin-top {
+    border-top: none;
+  }
+
+  .container {
+    margin: 0;
+  }
+
+  .mat-section {
+    break-inside: avoid;
+  }
 
   .crrLastResultsTableRow {
       margin-left: 1px !important;
