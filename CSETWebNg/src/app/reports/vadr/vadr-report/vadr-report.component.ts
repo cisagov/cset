@@ -55,7 +55,7 @@ export class VadrReportComponent implements OnInit {
   //
   colorScheme1 = { domain: ['#007BFF'] };
   colorSchemeRed = { domain: ['#DC3545'] };
-  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c8c8c8'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#FFC107', '#c8c8c8'] };
 
   complianceGraph1 = [];
   answerDistribByGoal = [];
@@ -163,24 +163,14 @@ export class VadrReportComponent implements OnInit {
   createChart1(r: any) {
     let levelList = [];
 
+    const yesPercent = r.vadrSummaryOverall.find(x => x.answer_Text == 'Y').percent;
+    const altPercent = r.vadrSummaryOverall.find(x => x.answer_Text == 'A').percent;
+
     var overall = {
       name: 'Overall',
-      value: Math.round(r.vadrSummaryOverall.find(x => x.answer_Text == 'Y').percent)
+      value: Math.round(yesPercent + altPercent)
     };
     levelList.push(overall);
-
-
-    // r.vadrSummary.forEach(element => {
-    //   let level = levelList.find(x => x.name == element.level_Name);
-    //   if (!level) {
-    //     level = { name: element.level_Name, value: 0 };
-    //     levelList.push(level);
-    //   }
-
-    //   if (element.answer_Text == 'Y') {
-    //     level.value = level.value + Math.round(element.percent);
-    //   }
-    // });
 
     this.complianceGraph1 = levelList;
   }
@@ -191,6 +181,18 @@ export class VadrReportComponent implements OnInit {
    */
   createAnswerDistribByGoal(r: any) {
     let goalList = [];
+
+    // sort by title for readability
+    r.vadrSummaryByGoal.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    });
+    
     r.vadrSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
@@ -198,6 +200,7 @@ export class VadrReportComponent implements OnInit {
           name: element.title, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
+            { name: 'Alternate', value: 0},
             { name: 'Unanswered', value: 0 },
           ]
         };
@@ -220,8 +223,10 @@ export class VadrReportComponent implements OnInit {
     let goalList = [];
     this.answerDistribByGoal.forEach(element => {
       var yesPercent = element.series.find(x => x.name == 'Yes').value;
+      var altPercent = element.series.find(x => x.name == 'Alternate').value;
+
       var goal = {
-        name: element.name, value: (100 - Math.round(yesPercent))
+        name: element.name, value: (100 - Math.round(yesPercent + altPercent))
       };
       goalList.push(goal);
     });
