@@ -153,6 +153,22 @@ namespace CSETWebCore.Business.Reports
             {
                 AnalyzeCMMCData(cmmcModel);
             }
+            
+            MaturityModel crmpModel = this.MaturityModels
+                .Where(a => a.MaturityModelName == "CRMP")
+                .FirstOrDefault();
+            if (crmpModel != null)
+            {
+                AnalyzeCRMPData(crmpModel);
+            }
+            
+            MaturityModel vbosModel = this.MaturityModels
+                .Where(a => a.MaturityModelName == "VBOS")
+                .FirstOrDefault();
+            if (vbosModel != null)
+            {
+                AnalyzeVBOSData(vbosModel);
+            }
         }
 
 
@@ -256,6 +272,195 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        // CRMP
+        public void AnalyzeCRMPData(MaturityModel model)
+        {
+            // flesh out the questions with their capability and domain names
+            MATURITY_MODELS maturityModel;
+            var domains = new List<MATURITY_GROUPINGS>();
+            
+            maturityModel = _context.MATURITY_MODELS.Where(x => x.Model_Name == "CRMP").FirstOrDefault();
+
+            domains = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel.Maturity_Model_Id && x.Group_Level == 1)
+                .ToList();
+
+            var domainIds = domains.Select(d => d.Grouping_Id).ToList();
+
+            var capabilities = _context.MATURITY_GROUPINGS.Where(x => domainIds.Contains((int)x.Parent_Id)).ToList();
+
+            model.MaturityQuestions.ForEach(q =>
+            {
+                var myCapability = capabilities.Where(c => c.Grouping_Id == q.Grouping_Id).FirstOrDefault();
+                q.Capability = myCapability.Title;
+                q.Domain = domains.Where(d => d.Grouping_Id == myCapability.Parent_Id).FirstOrDefault().Title;
+            });
+            
+            model.StatsByLevel = new List<LevelStats>();
+            model.StatsByDomainAndLevel = new List<DomainStats>();
+            model.StatsByDomain = new List<DomainStats>();
+            model.StatsByDomainAtUnderTarget = new List<DomainStats>();
+            LevelStats aggregateLvlStats = new LevelStats();
+
+            //Get the aggregate level stats
+            aggregateLvlStats.ModelLevel = "Aggregate";
+            aggregateLvlStats.questionCount = model.MaturityQuestions.Count();
+            aggregateLvlStats.questionAnswered = model.MaturityQuestions.Where(qa => (qa.Answer.Answer_Text == "Y" || qa.Answer.Answer_Text == "A")).Count();
+            aggregateLvlStats.questionUnAnswered = model.MaturityQuestions.Where(qa => qa.Answer.Answer_Text != "Y" || qa.Answer.Answer_Text != "A").Count();
+            model.StatsByLevel.Add(aggregateLvlStats);
+
+
+
+            int questionCountAggregateForLevelAndBelow = 0;
+            
+            var maturity_levels = model.MaturityQuestions.
+                Select(mq => mq.Maturity_Level).
+                Distinct();
+
+            foreach (int level in maturity_levels)
+            {
+                //Get the stats for each level of question
+                var questions_at_level = model.MaturityQuestions
+                    .Where(mq => mq.Maturity_Level == level).ToList();
+                model.StatsByLevel.Add(ToLevelStats(questions_at_level, level.ToString(), questionCountAggregateForLevelAndBelow));
+                questionCountAggregateForLevelAndBelow += questions_at_level.Count();
+                if ((questions_at_level.Where(q => q.Answer.Answer_Text == "N" || q.Answer.Answer_Text == "U").Count() == 0))
+                {
+                    model.AcheivedLevel = level;
+                }
+
+                //Get the questions by domain for each level                
+                foreach (string domain in domains.Select(x => x.Title))
+                {
+                    var questions_of_domain_at_level = model.MaturityQuestions
+                        .Where(mq => mq.Maturity_Level == level && mq.Domain == domain)
+                        .ToList();
+                    model.StatsByDomainAndLevel.Add(ToDomainStats(questions_of_domain_at_level, level.ToString(), domain));
+                }
+            }
+
+            foreach (string domain in domains.Select(x => x.Title))
+            {
+                var questions_of_domain = model.MaturityQuestions
+                    .Where(mq => mq.Domain == domain && mq.Maturity_Level <= model.TargetLevel).ToList();
+                model.StatsByDomain.Add(ToDomainStats(questions_of_domain, domainName: domain));
+
+                //flatten stats by domain and level
+                DomainStats domainStats = new DomainStats();
+                var domainSpecificAtTargetLevel = model.StatsByDomainAndLevel
+                    .Where(sbdal => Int32.Parse(sbdal.ModelLevel) <= model.TargetLevel
+                    && sbdal.domainName == domain).ToList();
+
+                DomainStats consolidatedDomainStat = new DomainStats(domain);
+                foreach (var item in domainSpecificAtTargetLevel)
+                {
+                    consolidatedDomainStat.questionCount += item.questionCount;
+                    consolidatedDomainStat.questionAnswered += item.questionAnswered;
+                    consolidatedDomainStat.questionUnAnswered += item.questionUnAnswered;
+                }
+                model.StatsByDomainAtUnderTarget.Add(consolidatedDomainStat);
+
+            }
+            
+            model.TotalQuestions = model.MaturityQuestions.Count();
+        }
+        
+        // end CRMP
+        
+        // VBOS
+        
+        public void AnalyzeVBOSData(MaturityModel model)
+        {
+            // flesh out the questions with their capability and domain names
+            MATURITY_MODELS maturityModel;
+            var domains = new List<MATURITY_GROUPINGS>();
+            
+            maturityModel = _context.MATURITY_MODELS.Where(x => x.Model_Name == "VBOS").FirstOrDefault();
+
+            domains = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel.Maturity_Model_Id && x.Group_Level == 1)
+                .ToList();
+
+            var domainIds = domains.Select(d => d.Grouping_Id).ToList();
+
+            var capabilities = _context.MATURITY_GROUPINGS.Where(x => domainIds.Contains((int)x.Parent_Id)).ToList();
+
+            model.MaturityQuestions.ForEach(q =>
+            {
+                var myCapability = capabilities.Where(c => c.Grouping_Id == q.Grouping_Id).FirstOrDefault();
+                q.Capability = myCapability.Title;
+                q.Domain = domains.Where(d => d.Grouping_Id == myCapability.Parent_Id).FirstOrDefault().Title;
+            });
+            
+            model.StatsByLevel = new List<LevelStats>();
+            model.StatsByDomainAndLevel = new List<DomainStats>();
+            model.StatsByDomain = new List<DomainStats>();
+            model.StatsByDomainAtUnderTarget = new List<DomainStats>();
+            LevelStats aggregateLvlStats = new LevelStats();
+
+            //Get the aggregate level stats
+            aggregateLvlStats.ModelLevel = "Aggregate";
+            aggregateLvlStats.questionCount = model.MaturityQuestions.Count();
+            aggregateLvlStats.questionAnswered = model.MaturityQuestions.Where(qa => (qa.Answer.Answer_Text == "Y" || qa.Answer.Answer_Text == "A")).Count();
+            aggregateLvlStats.questionUnAnswered = model.MaturityQuestions.Where(qa => qa.Answer.Answer_Text != "Y" || qa.Answer.Answer_Text != "A").Count();
+            model.StatsByLevel.Add(aggregateLvlStats);
+
+
+
+            int questionCountAggregateForLevelAndBelow = 0;
+            
+            var maturity_levels = model.MaturityQuestions.
+                Select(mq => mq.Maturity_Level).
+                Distinct();
+
+            foreach (int level in maturity_levels)
+            {
+                //Get the stats for each level of question
+                var questions_at_level = model.MaturityQuestions
+                    .Where(mq => mq.Maturity_Level == level).ToList();
+                model.StatsByLevel.Add(ToLevelStats(questions_at_level, level.ToString(), questionCountAggregateForLevelAndBelow));
+                questionCountAggregateForLevelAndBelow += questions_at_level.Count();
+                if ((questions_at_level.Where(q => q.Answer.Answer_Text == "N" || q.Answer.Answer_Text == "U").Count() == 0))
+                {
+                    model.AcheivedLevel = level;
+                }
+
+                //Get the questions by domain for each level                
+                foreach (string domain in domains.Select(x => x.Title))
+                {
+                    var questions_of_domain_at_level = model.MaturityQuestions
+                        .Where(mq => mq.Maturity_Level == level && mq.Domain == domain)
+                        .ToList();
+                    model.StatsByDomainAndLevel.Add(ToDomainStats(questions_of_domain_at_level, level.ToString(), domain));
+                }
+            }
+
+            foreach (string domain in domains.Select(x => x.Title))
+            {
+                var questions_of_domain = model.MaturityQuestions
+                    .Where(mq => mq.Domain == domain && mq.Maturity_Level <= model.TargetLevel).ToList();
+                model.StatsByDomain.Add(ToDomainStats(questions_of_domain, domainName: domain));
+
+                //flatten stats by domain and level
+                DomainStats domainStats = new DomainStats();
+                var domainSpecificAtTargetLevel = model.StatsByDomainAndLevel
+                    .Where(sbdal => Int32.Parse(sbdal.ModelLevel) <= model.TargetLevel
+                    && sbdal.domainName == domain).ToList();
+
+                DomainStats consolidatedDomainStat = new DomainStats(domain);
+                foreach (var item in domainSpecificAtTargetLevel)
+                {
+                    consolidatedDomainStat.questionCount += item.questionCount;
+                    consolidatedDomainStat.questionAnswered += item.questionAnswered;
+                    consolidatedDomainStat.questionUnAnswered += item.questionUnAnswered;
+                }
+                model.StatsByDomainAtUnderTarget.Add(consolidatedDomainStat);
+
+            }
+            
+            model.TotalQuestions = model.MaturityQuestions.Count();
+        }
+        
+        // end VBOS
+        
         /// <summary>
         /// 
         /// </summary>

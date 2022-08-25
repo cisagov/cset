@@ -20,16 +20,110 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
-  <h3 class="wrap-text mb-3">Version Below Operating System (VBOS)</h3>
+  <h3 class="wrap-text mb-3">Vulnerabilities Below the OS (VBOS) Readiness Tutorial</h3>
+  <img src="assets/images/VBOS/VBOS_logo.png" alt="Ransomware Readiness logo" style="width: 13rem; float: right; margin: 0 0 .5rem .5rem;" />
   <div>
-      <h6>Purpose and Scope</h6>
-      <p>This evaluation provides an organization with a view of its cyber risk management program.
-           Specifically, it assesses structural, process, knowledge management, resource management, and cultural aspects of a risk management program at the organization or enterprise level (Level 1) described in U.S. National Institute of Standards and Technology Special Publication 800-39,
-            “Managing Information Security Risk: Organization, Mission, and Information System View”.</p>
+      <h4>Vulnerabilities Below the OS (VBOS) Readiness Assessment</h4>
+      <h6>This Tutorial is adapted from “Assessment of The Critical Supply Chains Supporting the U.S. Information and Communications Technology Industry,” Prepared by U.S. Department of Commerce and U.S. Department of Homeland Security, February 23, 2022. (https://www.dhs.gov/sites/default/files/2022-02/ICT%20Supply%20Chain%20Report_0.pdf)</h6>
+      <p>Cybersecurity tools have traditionally focused on securing the information technology stack, the operating system and the network. Today more and more, Operational Technology (“OT”) and Internet of Things (“IoT”) devices are being interconnected via internal networks and the internet. Firmware in these devices presents a large and ever-expanding attack surface. Securing the firmware layer is often overlooked, but it is a single point of failure in devices and is one of the stealthiest methods in which an attacker can compromise devices at scale. Compromised firmware in today’s devices, can result in catastrophic effects. Devices with unprotected firmware can lead to system-wide damage. Malicious code in the firmware of products such as the CPU, USB controllers and network interface cards, and management interfaces can not only give attackers control over the device itself but may allow attackers to bypass OS security measures to access high levels of privilege on a PC or an entire network. As the population of devices expands, issues in firmware security will be magnified exponentially. As attacks have increased, government and industry have begun to address firmware vulnerabilities to protect against and mitigate the impacts of future attacks.</p>
 
+      <h4>What is Firmware?</h4>
+      <p>Firmware (https://csrc.nist.gov/glossary/term/firmware) is a set of programs and data embedded into hardware, typically stored in non-volatile memory such as read-only memory (ROM), erasable programmable read-only memory (EPROM), or flash memory. Firmware is crucial to system operation, providing instructions and guidance for the device to communicate with other devices or perform a set of basic tasks and functions as the software intended. Firmware is tailor-made for each model or product and enables the operation of both simple and complex information and communications technology (ICT) devices and systems such as medical devices, manufacturing systems, data centers, power plants, mass transit systems, and telecommunications. To that end, because it connects hardware to software, firmware is necessary for a wide range of electronics such as traffic lights, digital watches, printers, remote controls, mobile phones, network routers and switches, and servers.
 
+      While firmware is effectively low-level software, or the command function level of software, it has very little to do with modern programming languages. At its core are instructions that define how a device operates and how it communicates with other hardware and peripherals. For IT devices firmware does not have previously designed code libraries or packages that software developers typically use. Instead, firmware development must be started from scratch and writing firmware requires deep hardware knowledge and masterful coding skills. On the other hand, for many IoT devices "firmware" is basically the entire Linux OS, which makes it easier to program and attack.
+      </p>
 
+      <h4>Attack Risks</h4>
+      <p>Due to firmware’s privileged position within the device, attacks conducted via firmware grant malicious actors unique advantages. Attackers can subvert OS and hypervisor visibility and bypass most security systems, hide, and persist in networks and devices for extended periods of time while conducting attack operations, and inflict irrevocable damage. Firmware can also be a lucrative target with a relatively low cost of attack. Despite its essential role in electronic devices, firmware security has not traditionally been a high priority for manufacturers or users and is not always well protected. Although this trend is changing in PCs as manufacturers and customers have realized the need for built-in protection, many devices still have firmware that is not well secured. Firmware on items such as network cards, Wi-Fi adapters, and USB hubs are often not properly signed with public or private keys. These devices have no way to verify that the operating firmware is authentic and can be trusted.</p>
 
-            <app-nav-back-next [page]="'tutorial-vbos'"></app-nav-back-next>
+      <h4>Supply Chain Risks</h4>
+      <p>Device manufacturers rely on a complex chain of component suppliers which may present organizational risks for firmware security. In PC production, for example, the OEMs are typically responsible for firmware and the rest of the PC platform elements. Many OEMs outsource firmware development to third-party suppliers where OEMs may not have visibility into their cybersecurity hygiene. Even if OEMs establish security standards, they may not be able to enforce supplier security protocols across a wide range of components and sub-suppliers. Individual OEM vendors may modify the firmware based on device needs once the firmware has been delivered to the OEM. This can lead to confusion about what party is ultimately responsible for firmware integrity and who is to supply customer updates. As devices and firmware change, OEMs often contract with different firmware developers, which can lead to delays or a lack of any update when older devices require updating and the original developer is not available. All of these factors can leave firmware open to malicious attacks.</p>
+
+      <h4>Updates Risks</h4>
+      <p>Update Risks: Pre-existing, unidentified, or inherent vulnerabilities are compounded by updating firmware, which varies widely across devices. A firmware’s update process and capability vary by device. Some devices receive regular firmware updates. Some may only receive one update over their lifetimes, while others may never receive an update. Device firmware may be updated wirelessly or require a physical connection to another device (e.g., USB, CD/DVD drive, etc.). Even for devices that are designed to update regularly, manufacturers do not always provide clear and readily available information on how to update the firmware. 
+
+      In addition, the process to update is not simple, and therefore not always done. For example, it may not be clear what the latest firmware update is for a particular device. As a result, users may not be able to quickly determine whether the device’s firmware is up to date. For devices with firmware that is not cryptographically signed and secure, devices may be updated with unsigned code, meaning firmware could be rewritten without needing any verification from the user. A once-trusted device may no longer be trusted as secure after an unencrypted update. 
+
+      Firmware updates present a major logistical challenge for many enterprises. In many instances, device firmware is never updated or may only be updated in an emergency. In addition, vendors may only supply firmware updates if driven by an incident or identified vulnerability. Because users cannot always identify the latest firmware or determine if a device is running the latest version, IT security professionals may not be able to independently verify critical security information and must rely on information provided by vendors. In addition, even if an organization wanted to upgrade security to a specific standard across devices, the age and variety of devices and their individual firmware make this extremely challenging. 
+      </p>
+
+      <h4>Methodology</h4>
+      <p>NIST states that organizations must exercise due diligence in managing information security and privacy risk. This is accomplished, in part, by establishing a comprehensive risk management program that uses the flexibility inherent in NIST publications to categorize systems, select and implement security and privacy controls that meet mission and business needs, assess the effectiveness of the controls, authorize the systems for operation, and continuously monitor the systems. This VBOS Readiness Assessment is designed to meet NIST SP 800-53 Rev 5 controls that include, either explicitly or by reference, firmware components within the subject of the control. The controls are aligned with the NIST Cybersecurity Framework 1.1. The controls are further mapped, where possible, to the following industry-specific frameworks and tailored versions of NIST SP 800-53:</p>
+
+      <ul>
+          <li>NIST SP 800-12</li>
+          <li>NIST SP 800-137</li>
+          <li>NEI 08.09 Rev6 Appendix A, D, E</li>
+          <li>NERC CIP October 2021</li>
+          <li>CIR Cyber Profile 1.1</li>
+          <li>ISO/IEC 27001:2017</li>
+          <li>CCIS Critical Security Controls Ver 7.1IS</li>
+          <li>NIST SP 800-171</li>
+          <li>CMMC 2.0</li>
+          <li>CMS ARS 3.1</li>
+          <li>CNSSI 1253</li>
+      </ul>
+
+      <h4>VBOS Readiness Assessment Composition: Practice Areas and Practice Questions</h4>
+      <p>This assessment represents one cybersecurity Domain that addresses VBOS. It is divided into ten Practice Areas, each with multiple Practice Questions that address the Practice Area. Wherever possible the Practice Questions are based on specific NIST SP 800-53 Rev 5 controls and enhancements relevant to VBOS. Certain Practice Questions are derived from subcategories of the NIST CSF. All have been tailored to focus each question on “physical and firmware components and configuration of IT, OT and IoT devices.” This means that the question must be answered specifically with respect to this concept. For example, if an organization has a centralized asset management tool but does not include “physical and firmware components and configuration of IT, OT and IoT devices” then it would have to answer NO to Practice Questions covering this topic.
+
+      The Practice Questions are tiered as Basic, Intermediate, and Advanced. Each question contains an identifier structured as follows:
+
+      Practice Area [PA] - Question Number [#.#] : Level [B,I,A]
+
+      An example of the above structure is “AM-1: B,” which represents Asset Management Question 1, Level “Basic.” Note that Practice Questions dealing with aspects of the same concept may have sub-questions of the same or higher level numbered with the same main Question Number followed by a “.#” such as “AM-1.1: I” representing Asset Management Question 1.1, Level “Intermediate.”
+
+      The blue oval beneath each identifier indicates the Basic, Intermediate, or Advanced tier for the question.
+      </p>
+
+      <p><img src="assets\images\VBOS\tierIndicator.png" alt="Tier Indicator"></p>
+
+      <p>The VBOS RA practices and tiers (Basic, Intermediate, and Advanced) are designed to assist an organization:</p>
+
+      <ul>
+          <li>to understand its current state of readiness to address the threat of vulnerabilities below the Operating System</li>
+          <li>with implementing a focused path for improvement.</li>
+      </ul>
+
+      <h4>Implementation Approach</h4>
+      <p>Organizations that are unfamiliar with VBOS and need to begin basic cyber hygiene safeguards against VBOS threats should focus on implementing the basic tier of practices.
+
+      After completing the basic tier of the improvement effort, organizations looking to further improve their risk posture against VBOS should implement the intermediate tier of practices.
+
+      Organizations that have already adopted basic and intermediate level VBOS RA practices and are looking to improve their response to VBOS threats should focus on adopting the practices in the Advanced Tier.
+
+      This suggested path to improvement can always be adapted by the organization to suit its own needs. However, with respect to the “Architecture and Development” and “Supply Chain Risk Management” Practice Areas, manufacturers of IT, OT and IoT devices are expected to adopt at least an Intermediate level of these practices and encouraged to adopt practices at the Advanced Level.  
+
+      Each practice question contains a yes/no response scale to evaluate whether the organization has implemented each practice:
+      </p>
+      <p><img src="assets\images\CRMP\yesNo.png" alt="Yes - No Selector"></p>
+      <p>Yes – the organization fully performs the activity specified in the question.</p>
+      <p>No – the organization does not fully perform the activity completely.</p>
+     
+      <p>Practice Questions are presented in the following format:</p>
+      <p><img src="assets\images\VBOS\questionFormat.png" alt="Question Format"></p>
+         
+     <p><img src="assets\images\CRMP\flagIcon.png" alt="flag Icon"><p></p> Mark for Review: To the right of the answer key is the flag icon which can be used to mark a practice for review. Marked questions are listed in the "VBOS RA Comments and Marked for Review" report. In this section of the CSET Report Page (left side navigation “Reports”), the user can recall any practice questions previously marked for review along with the specific comments. </p>
+     
+     <p><img src="assets\images\CRMP\guidanceIcon.png" alt="Guidance Icon"><p></p> Guidance: To aid the VBOS RA user, each question is supported by guidance.  The guidance should be referred to for background, possible examples, and for criteria that defines the requirements for a “Yes” response.  The guidance is engaged by selecting the Guidance Icon containing the letter “G” located below the question. </p>
+     
+     <p><img src="assets\images\CRMP\commentsIcon.png" alt="Comments Icon"><p></p> Comments: Selecting this icon will display a text box that may be used to make comments regarding each question. For example, the user of an assessment may make a note for future reference as to the reasoning behind an “NO” response. Note: these comments are not included in the official report and are meant to be private to the facilitator.
+      Practices with comments are listed in the “VBOS Readiness Assessment: Comments and Marked for Review” report. In this section of the CSET Report Page (left side navigation “Reports”), the user can recall any practice questions previously marked for review along with the specific comments. </p>
+     
+     <p><img src="assets\images\CRMP\documentsIcon.png" alt="Documents Icon"><p></p> Artifacts/Documents: Easily associate, track, and store evidence, artifacts, and other supporting documents throughout the assessment </p>
+
+     <p><img src="assets\images\CRMP\toolsIcon.png" alt="Tools Icon"></p>
+
+    <p>  These documents are stored with the assessment in the CSET Tools tab under Assessment Documents. </p>
+  
+    <p><img src="assets\images\CRMP\referencesIcon.png" alt="References Icon"><p><p> Selecting the References Icon will display the references. </p>
+
+    <p><img src="assets\images\CRMP\observationsIcon.png" alt="Observations Icon"><p><p> Observations: Selecting this icon will pop up an observation details dialog box used to capture information about an issue associated with the practice along with its importance, resolution date, etc. </p>
+
+    <p><img src="assets\images\CRMP\feedbackIcon.png" alt="Feedback Icon"><p><p> Feedback: Used to provide feedback regarding the question to CISA.  For example, a user may comment that the question language is too complex and suggest alternate wording. </p>
+   
+  </div>
+
+  <app-nav-back-next [page]="'tutorial-vbos'"></app-nav-back-next>
+</div>

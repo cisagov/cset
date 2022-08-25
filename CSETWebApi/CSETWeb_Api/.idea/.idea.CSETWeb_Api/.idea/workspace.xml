@@ -12,12 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="Db Setup - Added Questions to the table">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/model-select/model-select.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/model-select/model-select.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/services/navigation.service.ts" afterDir="false" />
-    </list>
+    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,9 +28,15 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2794e912b1427b202f6af830ba1ddd2a9a3c81c1bb10b6eac05a9eec34384e/FromQueryAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/575c31ecc35a636b6f962cb71d53992552941a18982aae1c8e6c16305cc3761b/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4cf0dfb15ffd4f75af1b3f4a52bc8483187fe0/4b/c7a6fae3/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="259w2smrOemX0rCcFtwQRoPJ7bJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -48,11 +49,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="XThreadsFramesViewSplitterKey" value="0.43283582" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\JetBrains Rider 2021.3.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -92,7 +95,17 @@
       <workItem from="1647287517309" duration="21432000" />
       <workItem from="1647889257190" duration="6634000" />
       <workItem from="1648735925095" duration="2292000" />
-      <workItem from="1649258042338" duration="1190000" />
+      <workItem from="1649258042338" duration="28255000" />
+      <workItem from="1650466942581" duration="8754000" />
+      <workItem from="1650555198841" duration="36431000" />
+      <workItem from="1652283098488" duration="3414000" />
+      <workItem from="1652368621639" duration="12715000" />
+      <workItem from="1652890130536" duration="28735000" />
+      <workItem from="1654272130860" duration="800000" />
+      <workItem from="1654637110008" duration="652000" />
+      <workItem from="1656686098000" duration="16641000" />
+      <workItem from="1658761580701" duration="13698000" />
+      <workItem from="1660229451109" duration="4928000" />
     </task>
     <task id="LOCAL-00001" summary="Db Setup - Added Our Maturity Levels/Models to table">
       <created>1647640063663</created>
@@ -115,7 +128,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647891117023</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added vbos questions to DB&#10;Added CRMP DB Relations">
+      <created>1649967963933</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1649967963933</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |">
+      <created>1658768752530</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1658768752530</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +177,71 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Db Setup - Added Our Maturity Levels/Models to table" />
     <MESSAGE value="Db Setup - Added Questions to the table" />
-    <option name="LAST_COMMIT_MESSAGE" value="Db Setup - Added Questions to the table" />
+    <MESSAGE value="Added vbos questions to DB&#10;Added CRMP DB Relations" />
+    <MESSAGE value="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Routing to crmp/vbos results | Added CRMP Stored Procedure |" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
+          <line>536</line>
+          <properties documentPath="C:\Users\NAIS-Dev\RiderProjects\cset\CSETWebApi\CSETWeb_Api\CSETWebCore.Business\Maturity\MaturityBusiness.cs" initialLine="536" containingFunctionPresentation="method 'GetMaturityQuestions'">
+            <startOffsets>
+              <option value="18875" />
+            </startOffsets>
+            <endOffsets>
+              <option value="18913" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Helpers/TokenManager.cs</url>
+          <line>396</line>
+          <properties documentPath="C:\Users\NAIS-Dev\RiderProjects\cset\CSETWebApi\CSETWeb_Api\CSETWebCore.Helpers\TokenManager.cs" initialLine="396" containingFunctionPresentation="method 'AssessmentForUser'">
+            <startOffsets>
+              <option value="13567" />
+            </startOffsets>
+            <endOffsets>
+              <option value="13630" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AnalysisController.cs</url>
+          <line>198</line>
+          <properties documentPath="C:\Users\NAIS-Dev\RiderProjects\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\Controllers\AnalysisController.cs" initialLine="198" containingFunctionPresentation="method 'GetDashboard'">
+            <startOffsets>
+              <option value="8055" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8327" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AnalysisController.cs</url>
+          <line>204</line>
+          <properties documentPath="C:\Users\NAIS-Dev\RiderProjects\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\Controllers\AnalysisController.cs" initialLine="204" containingFunctionPresentation="method 'GetDashboard'">
+            <startOffsets>
+              <option value="8340" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8626" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="LaunchSettings">
+        <watch expression="_context" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

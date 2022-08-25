@@ -322,6 +322,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
+//import { CrmpFilteringService } from './services/filtering/maturity-filtering/crmp-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
@@ -402,6 +403,10 @@ import { CyoteResultsComponent } from './assessment/results/analysis/cyote-resul
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { CyoteAnomalyComponent } from './assessment/questions/cyote-questions/cyote-anomaly/cyote-anomaly.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
+import { TutorialCrmpComponent } from './assessment/prepare/maturity/tutorial-crmp/tutorial-crmp.component';
+import { TutorialVbosComponent } from './assessment/prepare/maturity/tutorial-vbos/tutorial-vbos.component';
+import { CrmpSummaryComponent } from './assessment/results/crmp/crmp-summary.component';
+import { VbosSummaryComponent } from './assessment/results/vbos/vbos-summary.component';
 
 @NgModule({
     imports: [
@@ -670,6 +675,8 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
         TutorialEdmComponent,
         TutorialRraComponent,
         TutorialCrrComponent,
+        TutorialCrmpComponent,
+        TutorialVbosComponent,
         LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
@@ -758,6 +765,8 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
         TopMenusComponent,
         CyoteAnomalyComponent,
         LogoForReportsComponent,
+        CrmpSummaryComponent,
+        VbosSummaryComponent
     ],
     providers: [
         ConfigService,
@@ -814,6 +823,7 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
+       // CrmpFilteringService,
         CrrService,
         CyoteService
     ],

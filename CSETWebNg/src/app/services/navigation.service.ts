@@ -1100,6 +1100,41 @@ export class NavigationService {
       }
     },
 
+    // Results - CRMP
+    {
+      displayText: 'CRMP Results', pageId: 'app-crmp-summary', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('CRMP')
+      }
+    },
+    {
+      displayText: 'Goal Performance', pageId: 'crmp-summary', level: 2, path: 'assessment/{:id}/results/crmp-summary',
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+           && this.assessSvc.usesMaturityModel('CRMP')
+      }
+    },
+
+    // Results - VBOS
+    {
+      displayText: 'VBOS Results', pageId: 'app-vbos-summary', level: 1,
+      condition: () => {
+        return !!this.assessSvc.assessment
+          && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('VBOS')
+      }
+    },
+    {
+      displayText: 'Goal Performance', pageId: 'vbos-summary', level: 2, path: 'assessment/{:id}/results/vbos-summary',
+      condition: () => {
+        return !!this.assessSvc.assessment
+         && this.assessSvc.assessment?.useMaturity
+          && this.assessSvc.usesMaturityModel('VBOS')
+      }
+    },
 
 
     // Results - Standards
