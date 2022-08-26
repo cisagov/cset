@@ -23,8 +23,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Doc Num is used to
         /// </summary>
         [Key]
-        [StringLength(40)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Doc_Num { get; set; }
 
         [InverseProperty("Doc_NumNavigation")]

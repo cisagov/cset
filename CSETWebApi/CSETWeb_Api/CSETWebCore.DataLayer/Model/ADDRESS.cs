@@ -11,31 +11,23 @@ namespace CSETWebCore.DataLayer.Model
     public partial class ADDRESS
     {
         [StringLength(150)]
-        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string AddressType { get; set; }
         [Key]
         public Guid Id { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string City { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Country { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Line1 { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Line2 { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string State { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Zip { get; set; }
 
         [ForeignKey("Id")]

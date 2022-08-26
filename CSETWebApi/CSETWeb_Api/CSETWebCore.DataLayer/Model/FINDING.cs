@@ -18,15 +18,10 @@ namespace CSETWebCore.DataLayer.Model
         public int Answer_Id { get; set; }
         [Key]
         public int Finding_Id { get; set; }
-        [Unicode(false)]
         public string Summary { get; set; }
-        [Unicode(false)]
         public string Issue { get; set; }
-        [Unicode(false)]
         public string Impact { get; set; }
-        [Unicode(false)]
         public string Recommendations { get; set; }
-        [Unicode(false)]
         public string Vulnerabilities { get; set; }
         public DateTime? Resolution_Date { get; set; }
         public int? Importance_Id { get; set; }

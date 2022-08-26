@@ -15,7 +15,6 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(200)]
-        [Unicode(false)]
         public string GM_FingerType { get; set; }
         public int Id { get; set; }
     }

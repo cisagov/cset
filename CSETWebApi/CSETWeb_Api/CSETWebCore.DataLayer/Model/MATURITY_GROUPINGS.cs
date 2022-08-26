@@ -22,10 +22,8 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Grouping_Id { get; set; }
         [StringLength(500)]
-        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(2000)]
-        [Unicode(false)]
         public string Description { get; set; }
         public int Maturity_Model_Id { get; set; }
         public int Sequence { get; set; }
@@ -33,13 +31,10 @@ namespace CSETWebCore.DataLayer.Model
         public int? Group_Level { get; set; }
         public int Type_Id { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string Title_Id { get; set; }
         [StringLength(20)]
-        [Unicode(false)]
         public string Abbreviation { get; set; }
         [StringLength(20)]
-        [Unicode(false)]
         public string Title_Prefix { get; set; }
 
         [ForeignKey("Maturity_Model_Id")]

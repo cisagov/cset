@@ -8,12 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class ANSWER_ORDER
+    public partial class ASSESSMENT_ICONS
     {
         [Key]
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-        [Column("answer_order")]
-        public int answer_order1 { get; set; }
+        public int Icon_Id { get; set; }
+        [StringLength(100)]
+        public string Icon_Path { get; set; }
     }
 }

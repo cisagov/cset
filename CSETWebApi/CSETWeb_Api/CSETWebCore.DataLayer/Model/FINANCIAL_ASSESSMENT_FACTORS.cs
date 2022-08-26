@@ -26,7 +26,6 @@ namespace CSETWebCore.DataLayer.Model
         public string AssessmentFactor { get; set; }
         public int AssessmentFactorWeight { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Acronym { get; set; }
 
         [InverseProperty("AssessmentFactor")]

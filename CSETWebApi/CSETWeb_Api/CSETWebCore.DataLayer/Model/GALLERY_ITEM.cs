@@ -18,22 +18,16 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Gallery_Item_Id { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Icon_File_Name_Small { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Icon_File_Name_Large { get; set; }
         [Required]
-        [Unicode(false)]
         public string Configuration_Setup { get; set; }
         [Required]
         [StringLength(1000)]
-        [Unicode(false)]
         public string Description { get; set; }
-        [Unicode(false)]
         public string Configuration_Setup_Client { get; set; }
         [StringLength(200)]
-        [Unicode(false)]
         public string Title { get; set; }
 
         [InverseProperty("Gallery_Item")]

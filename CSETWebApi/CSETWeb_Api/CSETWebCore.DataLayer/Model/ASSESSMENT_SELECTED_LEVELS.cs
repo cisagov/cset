@@ -23,14 +23,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Level_Name { get; set; }
         /// <summary>
         /// The Standard Specific Sal Level is used to
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard_Specific_Sal_Level { get; set; }
 
         [ForeignKey("Assessment_Id")]

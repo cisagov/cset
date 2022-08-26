@@ -23,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         [Column(TypeName = "datetime")]
         public DateTime? Aggregation_Date { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Aggregation_Mode { get; set; }
         [Required]
         [StringLength(100)]
