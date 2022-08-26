@@ -7,6 +7,7 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class Get_Assess_Detail_Filter_DataResult
     {
+        public int Detail_Id { get; set; }
         public string Name { get; set; }
         public string CityOrSite { get; set; }
         public string State { get; set; }

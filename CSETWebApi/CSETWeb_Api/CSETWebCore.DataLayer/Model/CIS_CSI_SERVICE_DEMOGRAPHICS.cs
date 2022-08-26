@@ -13,35 +13,25 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Critical_Service_Name { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Critical_Service_Description { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string IT_ICS_Name { get; set; }
         public bool Multi_Site { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Multi_Site_Description { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Budget_Basis { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Authorized_Organizational_User_Count { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Authorized_Non_Organizational_User_Count { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Customers_Count { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string IT_ICS_Staff_Count { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
 
         [ForeignKey("Assessment_Id")]

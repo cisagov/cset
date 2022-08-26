@@ -19,7 +19,6 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Group_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Group_Title { get; set; }
 
         [InverseProperty("Group")]

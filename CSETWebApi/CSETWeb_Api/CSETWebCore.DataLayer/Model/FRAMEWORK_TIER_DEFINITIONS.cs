@@ -15,15 +15,11 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Tier { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string TierType { get; set; }
-        [Required]
         [StringLength(1024)]
-        [Unicode(false)]
         public string TierQuestion { get; set; }
 
         [ForeignKey("Tier")]

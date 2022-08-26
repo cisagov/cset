@@ -36,13 +36,11 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The Comment is used to
         /// </summary>
-        [Unicode(false)]
         public string Comment { get; set; }
         /// <summary>
         /// The Alternate Justification is used to
         /// </summary>
         [StringLength(2048)]
-        [Unicode(false)]
         public string Alternate_Justification { get; set; }
         /// <summary>
         /// The Question Number is used to
@@ -53,19 +51,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Answer_Text { get; set; }
         /// <summary>
         /// The Component Guid is used to
         /// </summary>
         public Guid Component_Guid { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Custom_Question_Guid { get; set; }
         public int? Old_Answer_Id { get; set; }
         public bool Reviewed { get; set; }
         [StringLength(2048)]
-        [Unicode(false)]
         public string FeedBack { get; set; }
         [Required]
         [StringLength(20)]
@@ -74,8 +69,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Is_Component { get; set; }
         public bool? Is_Framework { get; set; }
         public bool? Is_Maturity { get; set; }
-        [StringLength(4096)]
-        [Unicode(false)]
         public string Free_Response_Answer { get; set; }
         public int? Mat_Option_Id { get; set; }
 

@@ -18,12 +18,10 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Gen_File_Id { get; set; }
         [Key]
-        [StringLength(850)]
-        [Unicode(false)]
+        [StringLength(400)]
         public string Section_Ref { get; set; }
         public int? Page_Number { get; set; }
         [StringLength(2000)]
-        [Unicode(false)]
         public string Destination_String { get; set; }
 
         [ForeignKey("Gen_File_Id")]
