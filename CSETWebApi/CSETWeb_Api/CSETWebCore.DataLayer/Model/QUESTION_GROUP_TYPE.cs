@@ -23,28 +23,24 @@ namespace CSETWebCore.DataLayer.Model
         /// The Group Name is used to
         /// </summary>
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Group_Name { get; set; }
         /// <summary>
         /// The Scoring Group is used to
         /// </summary>
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Scoring_Group { get; set; }
         /// <summary>
         /// The Scoring Type is used to
         /// </summary>
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Scoring_Type { get; set; }
         /// <summary>
         /// The Group Header is used to
         /// </summary>
         [StringLength(2000)]
-        [Unicode(false)]
         public string Group_Header { get; set; }
     }
 }

@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Sal_Name { get; set; }
         public int Slider_Value { get; set; }
 

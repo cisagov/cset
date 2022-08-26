@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Component { get; set; }
         public int? DomainId { get; set; }
         public int? PresentationOrder { get; set; }

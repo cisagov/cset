@@ -35,7 +35,6 @@ namespace CSETWebCore.DataLayer.Model
         /// The Doc Short is used to
         /// </summary>
         [StringLength(50)]
-        [Unicode(false)]
         public string Doc_Short { get; set; }
         /// <summary>
         /// The Date Updated is used to

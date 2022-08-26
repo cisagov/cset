@@ -24,7 +24,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Question Id is used to

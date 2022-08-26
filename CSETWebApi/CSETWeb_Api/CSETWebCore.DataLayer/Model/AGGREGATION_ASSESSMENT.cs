@@ -15,8 +15,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Aggregation_Id { get; set; }
         public int? Sequence { get; set; }
-        [StringLength(15)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Alias { get; set; }
 
         [ForeignKey("Aggregation_Id")]

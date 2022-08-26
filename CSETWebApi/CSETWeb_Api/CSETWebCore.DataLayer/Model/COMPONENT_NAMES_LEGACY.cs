@@ -16,7 +16,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Component_Symbol_id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Old_Symbol_Name { get; set; }
 
         [ForeignKey("Component_Symbol_id")]

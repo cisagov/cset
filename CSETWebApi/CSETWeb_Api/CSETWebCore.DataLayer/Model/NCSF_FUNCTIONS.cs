@@ -19,11 +19,9 @@ namespace CSETWebCore.DataLayer.Model
         }
 
         [Key]
-        [StringLength(2)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string NCSF_Function_ID { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string NCSF_Function_Name { get; set; }
         public int? NCSF_Function_Order { get; set; }
         public int NCSF_ID { get; set; }

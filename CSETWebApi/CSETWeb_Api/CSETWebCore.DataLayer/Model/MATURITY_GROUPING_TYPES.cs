@@ -21,7 +21,6 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Type_Id { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Grouping_Type_Name { get; set; }
 
         [InverseProperty("Type")]

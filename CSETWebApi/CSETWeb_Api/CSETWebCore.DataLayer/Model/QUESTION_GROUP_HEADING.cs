@@ -31,9 +31,7 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The Std Ref is used to
         /// </summary>
-        [Required]
         [StringLength(10)]
-        [Unicode(false)]
         public string Std_Ref { get; set; }
         /// <summary>
         /// The Universal Weight is used to

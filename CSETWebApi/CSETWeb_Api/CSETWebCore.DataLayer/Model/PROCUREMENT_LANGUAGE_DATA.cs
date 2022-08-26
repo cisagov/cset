@@ -33,7 +33,6 @@ namespace CSETWebCore.DataLayer.Model
         /// The Section Number is used to
         /// </summary>
         [StringLength(50)]
-        [Unicode(false)]
         public string Section_Number { get; set; }
         /// <summary>
         /// The Topic Name is used to

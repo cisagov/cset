@@ -17,9 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Grouping_ID { get; set; }
         [Key]
         public int Assessment_Id { get; set; }
-        [Required]
         [StringLength(2048)]
-        [Unicode(false)]
         public string DomainRemarks { get; set; }
 
         [ForeignKey("Assessment_Id")]

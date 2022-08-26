@@ -20,13 +20,10 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(100)]
-        [Unicode(false)]
         public string Specific_Type { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Diagram_Type_XML { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Object_Type { get; set; }
 
         [ForeignKey("Object_Type")]

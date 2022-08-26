@@ -19,8 +19,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Universal Sal Level is used to
         /// </summary>
         [Key]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Universal_Sal_Level { get; set; }
         public int? IgnoreMe { get; set; }
 

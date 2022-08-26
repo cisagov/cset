@@ -15,11 +15,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(100)]
-        [Unicode(false)]
         public string Specific_Type { get; set; }
         [Key]
         [StringLength(200)]
-        [Unicode(false)]
         public string Stencil_Name { get; set; }
 
         [ForeignKey("Specific_Type")]

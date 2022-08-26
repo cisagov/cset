@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Sal_Determination_Type { get; set; }
 
         [InverseProperty("Last_Sal_Determination_TypeNavigation")]
