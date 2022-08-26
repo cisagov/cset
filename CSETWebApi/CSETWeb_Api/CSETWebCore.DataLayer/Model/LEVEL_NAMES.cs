@@ -23,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Level_Name { get; set; }
 
         [InverseProperty("Level_NameNavigation")]

@@ -8,22 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    [Keyless]
     public partial class ASSESSMENT_DETAIL_FILTER_DATA
     {
-        [Required]
-        [Unicode(false)]
+        [Key]
+        public int Detail_Id { get; set; }
         public string Name { get; set; }
-        [Unicode(false)]
         public string CityOrSite { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string State { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Charter { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string Model { get; set; }
     }
 }

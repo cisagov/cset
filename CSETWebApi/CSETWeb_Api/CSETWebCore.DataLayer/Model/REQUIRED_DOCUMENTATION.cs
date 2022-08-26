@@ -21,10 +21,8 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Documentation_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Number { get; set; }
         [StringLength(4000)]
-        [Unicode(false)]
         public string Document_Description { get; set; }
         public int RDH_Id { get; set; }
         public int? Document_Order { get; set; }

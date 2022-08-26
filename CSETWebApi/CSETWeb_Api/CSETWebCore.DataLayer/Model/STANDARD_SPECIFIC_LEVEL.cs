@@ -24,7 +24,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard_Level { get; set; }
         /// <summary>
         /// The Level Order is used to
@@ -35,18 +34,15 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Full_Name { get; set; }
         /// <summary>
         /// The Standard is used to
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Display_Name { get; set; }
         public int? Display_Order { get; set; }
         public bool Is_Default_Value { get; set; }

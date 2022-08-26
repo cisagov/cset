@@ -16,15 +16,12 @@ namespace CSETWebCore.DataLayer.Model
         public Guid Component_Guid { get; set; }
         public int Component_Symbol_Id { get; set; }
         [StringLength(200)]
-        [Unicode(false)]
         public string label { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string DrawIO_id { get; set; }
         public int? Zone_Id { get; set; }
         public int? Layer_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Parent_DrawIO_Id { get; set; }
 
         [ForeignKey("Assessment_Id")]

@@ -19,7 +19,6 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Profile_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string ProfileName { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Profile_Date { get; set; }

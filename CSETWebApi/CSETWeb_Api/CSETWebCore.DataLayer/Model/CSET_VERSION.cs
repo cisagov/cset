@@ -29,10 +29,8 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [Column("Cset_Version")]
         [StringLength(50)]
-        [Unicode(false)]
         public string Cset_Version1 { get; set; }
         [StringLength(500)]
-        [Unicode(false)]
         public string Build_Number { get; set; }
     }
 }

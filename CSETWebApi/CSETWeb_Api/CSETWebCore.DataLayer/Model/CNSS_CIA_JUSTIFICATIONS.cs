@@ -14,15 +14,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string CIA_Type { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string DropDownValueLevel { get; set; }
         [Required]
         [StringLength(1500)]
-        [Unicode(false)]
         public string Justification { get; set; }
 
         [ForeignKey("Assessment_Id")]

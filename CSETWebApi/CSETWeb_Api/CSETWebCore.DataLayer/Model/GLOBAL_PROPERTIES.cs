@@ -18,13 +18,10 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Property { get; set; }
         /// <summary>
         /// The Property Value is used to
         /// </summary>
-        [StringLength(7500)]
-        [Unicode(false)]
         public string Property_Value { get; set; }
     }
 }
