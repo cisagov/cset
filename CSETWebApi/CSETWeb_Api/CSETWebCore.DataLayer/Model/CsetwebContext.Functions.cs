@@ -25,7 +25,7 @@ namespace CSETWebCore.DataLayer.Model
         [DbFunction("Split", "dbo")]
         public IQueryable<SplitResult> Split(string @string)
         {
-            return FromExpression(() => Split(string));
+            return FromExpression(() => Split(@string));
         }
 
         protected void OnModelCreatingGeneratedFunctions(ModelBuilder modelBuilder)
