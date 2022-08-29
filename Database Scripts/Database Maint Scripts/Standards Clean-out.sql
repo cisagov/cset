@@ -15,6 +15,8 @@ delete NEW_REQUIREMENT where [Original_Set_Name] in (select [set_name] from #cus
 
 delete SETS where Is_Custom = 1
 
+delete NEW_QUESTION_LEVELS where New_Question_Set_Id not in (select new_question_set_id from NEW_QUESTION_SETS)
+
 
 -- Requirement IDs above 1 million are reserved for custom standards
 DBCC CHECKIDENT ('[NEW_REQUIREMENT]', RESEED, 1000000);
