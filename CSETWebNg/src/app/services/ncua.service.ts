@@ -83,7 +83,9 @@ let headers = {
   getSwitchStatus() {
     this.http.get(this.configSvc.apiUrl + 'isExaminersModule', headers).subscribe((
       response: boolean) => {
-        this.switchStatus = response;
+        if (this.configSvc.installationMode === 'ACET') {
+          this.switchStatus = response;
+        }
       }
     );
   }

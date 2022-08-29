@@ -84,7 +84,6 @@ export class IrpSummaryComponent implements OnInit {
                     let acetRisk = this.acetDashboard.sumRisk;
                     let result = acetRisk.map((item, index) => item - iseRisk[index]);
                     this.acetDashboard.sumRisk = result;
-                    console.log("sumRisk: " + this.acetDashboard.sumRisk);
 
                     let highest = Math.max(...this.acetDashboard.sumRisk);
                     let index = this.acetDashboard.sumRisk.indexOf(highest);
