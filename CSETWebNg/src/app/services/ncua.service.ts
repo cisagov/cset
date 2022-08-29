@@ -56,10 +56,13 @@ let headers = {
   hasShownCharterWarning: boolean = false;
 
   // Used to determine which kind of ISE exam is needed (SCUEP or CORE/CORE+)
-  iseAssetSize: string = "0";
-  iseIRP: string = "SCUEP";
-  usingIseOverride: boolean = false;
-  overrideIRP: string = "";
+  assetsAsString: string = "0";
+  assetsAsNumber: number = 0;
+  usingExamLevelOverride: boolean = false;
+  proposedExamLevel: string = "SCUEP";
+  chosenOverrideLevel: string = "No Override";
+
+  // CORE+ question trigger/state manager
   showCorePlus: boolean = false;
 
 
@@ -74,7 +77,6 @@ let headers = {
 
   async init() {
     this.getSwitchStatus();
-    this.getIRPfromAssets(true);
   }
 
   /*
@@ -184,7 +186,7 @@ let headers = {
   }
 
   /*
-  * Pull Credit Union filter data
+  * Pull Credit Union filter data to be used in ISE assessment detail filter search
   */
  getCreditUnionData() {
    headers.params = headers.params.set('model', 'ISE');
@@ -194,47 +196,42 @@ let headers = {
 
   /*
   * Manage the ISE maturity levels.
-  * SCUEP if assets is less than $50 Million. Core otherwise.
-  * Also allows for manual overriding.
   */
   updateAssetSize(amount: string) {
-    this.iseAssetSize = amount;
-    this.getIRPfromAssets(false);
+    this.assetsAsString = amount;
+    this.assetsAsNumber = parseInt(amount);
+    this.getExamLevelFromAssets();
   }
 
-  getIRPfromAssets(refresh: boolean) {
-    let level = "";
-    if (Number(this.iseAssetSize) > 50000000) {
-      level = 'CORE';
-      if (refresh) {
-        this.refreshGroupList(3);
-      }
-    } else {
-      level = 'SCUEP';
-      if (refresh) {
-        this.refreshGroupList(1);
-      }
+  checkExamLevel() {
+    if (this.usingExamLevelOverride === false) {
+      this.getExamLevelFromAssets();
+    } else if (this.usingExamLevelOverride === true) {
+      // TODO
     }
-
-    this.iseIRP = level;
-    return level;
   }
 
-  getIRPfromOverride() {
-    let level = "";
-    if (this.usingIseOverride === true) {
-      level = this.overrideIRP;
-
-      if (level === 'SCUEP') {
-        this.refreshGroupList(1);
-      } else if (level === 'CORE') {
-        this.refreshGroupList(3);
-      }
+  getExamLevelFromAssets() {
+    if (this.assetsAsNumber > 50000000) {
+      this.proposedExamLevel = 'CORE';
     } else {
-      level = this.getIRPfromAssets(true);
+      this.proposedExamLevel = 'SCUEP';
+    }
+  }
+
+  updateExamLevelOverride(level: number) {
+    if (level === 0) {
+      this.usingExamLevelOverride = false;
+      this.chosenOverrideLevel = "No Override";
+    } else if (level === 1) {
+      this.usingExamLevelOverride = true;
+      this.chosenOverrideLevel = "SCUEP";
+    } else if (level === 2) {
+      this.usingExamLevelOverride = true;
+      this.chosenOverrideLevel = "CORE";
     }
 
-    return level;
+    this.refreshGroupList(level);
   }
 
   refreshGroupList(level: number) {

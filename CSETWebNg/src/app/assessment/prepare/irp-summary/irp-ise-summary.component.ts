@@ -91,8 +91,7 @@ export class ExamProfileSummaryComponent implements OnInit {
                     this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
                 }
 
-                //this.assessSvc.assessment.assets.
-                this.overrideLabel = this.ncuaSvc.iseIRP;
+                this.overrideLabel = this.ncuaSvc.proposedExamLevel;
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
@@ -110,16 +109,16 @@ export class ExamProfileSummaryComponent implements OnInit {
      */
     changeInfo() {
         if (this.acetDashboard.override === 0) {
-            this.ncuaSvc.usingIseOverride = false;
+            this.ncuaSvc.usingExamLevelOverride = false;
             this.acetDashboard.overrideReason = '';
-            this.ncuaSvc.overrideIRP = "";
+            this.ncuaSvc.chosenOverrideLevel = "";
         } else if (this.acetDashboard.override === 1) {
-            this.ncuaSvc.usingIseOverride = true;
-            this.ncuaSvc.overrideIRP = 'SCUEP';
+            this.ncuaSvc.usingExamLevelOverride = true;
+            this.ncuaSvc.chosenOverrideLevel = 'SCUEP';
             this.ncuaSvc.refreshGroupList(1);
         } else if (this.acetDashboard.override === 2) {
-            this.ncuaSvc.usingIseOverride = true;
-            this.ncuaSvc.overrideIRP = 'CORE';
+            this.ncuaSvc.usingExamLevelOverride = true;
+            this.ncuaSvc.chosenOverrideLevel = 'CORE';
             this.ncuaSvc.refreshGroupList(3);
         }
 
@@ -133,10 +132,10 @@ export class ExamProfileSummaryComponent implements OnInit {
     }
 
     checkRiskLevel() {
-        if (this.ncuaSvc.usingIseOverride === false) {
-            this.ncuaSvc.getIRPfromAssets(true);
+        if (this.ncuaSvc.usingExamLevelOverride === false) {
+            //this.ncuaSvc.getIRPfromAssets(true);
         } else {
-            this.ncuaSvc.getIRPfromOverride();
+            //this.ncuaSvc.getIRPfromOverride();
         }
     }
 }
