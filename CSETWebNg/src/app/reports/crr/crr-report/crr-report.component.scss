@@ -644,21 +644,35 @@ div.widget {
   margin-left: 1px;
 }
 
+  /* Print styles */
+@page {
+  margin: 0;
+
+  @bottom-right {
+    content: counter(page);
+  }
+}
+
 @media print {
+
   .report-body-crr {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   .page-margin-top {
-    border-top: none;
+    border-top: none !important;
   }
 
   .container {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .mat-section {
-    break-inside: avoid;
+    break-inside: avoid !important;
+  }
+
+  .report-notification {
+    margin-top: 50mm;
   }
 }
