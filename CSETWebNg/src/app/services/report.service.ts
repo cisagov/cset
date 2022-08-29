@@ -35,7 +35,6 @@ export class ReportService {
 
     private initialized = false;
     private apiUrl: string;
-    private reportsUrl: string;
 
     /**
      *
@@ -46,7 +45,6 @@ export class ReportService {
     ) {
         if (!this.initialized) {
             this.apiUrl = this.configSvc.apiUrl;
-            this.reportsUrl = this.configSvc.reportsUrl;
             this.initialized = true;
         }
     }
@@ -72,7 +70,7 @@ export class ReportService {
     public getPdf(pdfString: string, security: string) {
         return this.http
             .get(
-                this.reportsUrl + 'getPdf?view=' + pdfString + '&security=' + security,
+                this.apiUrl + 'getPdf?view=' + pdfString + '&security=' + security,
                 { responseType: "blob", headers: headers.headers, params: headers.params }
             );
     }

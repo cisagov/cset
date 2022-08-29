@@ -36,6 +36,19 @@ const headers = {
 @Injectable()
 export class CrrService {
 
+  keyToCategory = {
+    AM: 'Asset Management',
+    CM: 'Controls Management',
+    CCM: 'Configuration and Change Management',
+    VM: 'Vulnerability Management',
+    IM: 'Incident Management',
+    SCM: 'Service Continuity Management',
+    RM: 'Risk Management',
+    EDM: 'External Dependencies Management',
+    TA: 'Training and Awareness',
+    SA: 'Situational Awareness'
+  };
+
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
   /**
@@ -58,8 +71,6 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
     { responseType: 'text'});
   }
-
-
 
   getMil1PerformanceSummaryBodyCharts() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
@@ -95,14 +106,11 @@ export class CrrService {
   /**
    * Calls the api to get CrrPerformanceAppendixA Data
    */
-   getCrrPerformanceAppendixA() {
+   getCrrPerformanceAppendixA():CrrPerformanceAppendixA {
     console.log("*******************************GetCrrPerformanceAppendixA*********************")
-    console.log("Here's the url:  "+this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA')
-
-
-
-    //return result;
+    var result = this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA') as unknown as CrrPerformanceAppendixA;
+    console.log("***********"+result.TotalBarChart)
+    return result;
   }
 
 }
