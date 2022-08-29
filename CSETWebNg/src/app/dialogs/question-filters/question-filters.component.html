@@ -40,10 +40,12 @@
       </div>
       <hr class="m-1" />
       <div *ngFor="let option of answerOptions">
-        <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
-        <label [for]="getId(option)" class="checkbox-custom-label d-block">
-          Show {{questions}} answered <em><strong>{{option.text}}</strong></em>
-        </label>
+        <div *ngIf="!(this.assessSvc.isISE()) || (this.assessSvc.isISE() && option.text !== 'N/A')">
+          <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
+          <label [for]="getId(option)" class="checkbox-custom-label d-block">
+            Show {{questions}} answered <em><strong>{{option.text}}</strong></em>
+          </label>
+        </div>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
