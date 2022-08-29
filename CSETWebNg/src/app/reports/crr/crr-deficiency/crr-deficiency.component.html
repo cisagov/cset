@@ -126,10 +126,10 @@
           </div>
         </div>
         <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
-            <div class="col-3 text-start">
+            <div class="col-3 text-left">
               <h4 class="small">Justification:</h4>
             </div>
-            <div class="col-9 text-start">
+            <div class="col-9 text-left">
               <p>{{ matAnswer.answer.alternate_Justification }}</p>
             </div>
         </div>
@@ -149,5 +149,9 @@
 <style>
 div {
   page-break-inside: avoid !important;
+}
+
+h3, h4 {
+  font-weight: 500;
 }
 </style>

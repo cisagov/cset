@@ -43,11 +43,11 @@ export class CmmcDeficiencyComponent implements OnInit {
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {
         this.model = r;
-        console.log(this.model);
 
         // Build up deficiencies list
         this.model.reportData.deficienciesList.forEach(matAns => {
           const domain = matAns.mat.question_Title.split('.')[0];
+          console.log(domain);
           const dElement = this.deficienciesList.find(e => e.cat === this.keyToCategory[domain]);
           if (!dElement) {
             this.deficienciesList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
@@ -74,7 +74,7 @@ export class CmmcDeficiencyComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CRR Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('CMMC Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 
