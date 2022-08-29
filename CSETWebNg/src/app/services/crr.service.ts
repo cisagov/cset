@@ -58,4 +58,51 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
     { responseType: 'text'});
   }
+
+
+
+  getMil1PerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
+  }
+
+  getCrrPerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
+  }
+
+  getCrrPerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
+    { responseType: 'text'});
+  }
+
+  getNistCsfSummaryChartWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
+    { responseType: 'text'});
+  }
+
+  getNistCsfSummaryReportBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfReportBodyData');
+  }
+
+  getMil1PerformanceLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
+    { responseType: 'text'});
+  }
+
+  getMil1PerformanceBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceBodyCharts');
+  }
+
+  /**
+   * Calls the api to get CrrPerformanceAppendixA Data
+   */
+   getCrrPerformanceAppendixA() {
+    console.log("*******************************GetCrrPerformanceAppendixA*********************")
+    console.log("Here's the url:  "+this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA')
+
+
+
+    //return result;
+  }
+
 }

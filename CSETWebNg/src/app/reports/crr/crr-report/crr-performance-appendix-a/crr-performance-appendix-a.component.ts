@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CrrPerformanceAppendixA } from '../../../../models/crrperformanceappendixa.model';
 import { CrrReportModel } from '../../../../models/reports.model';
 import { CrrService } from '../../../../services/crr.service';
+import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'app-crr-performance-appendix-a',
@@ -17,7 +19,12 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
   constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
-    this.modelData = this.crrSvc.getCrrPerformanceAppendixA();
+    this.crrSvc.getCrrPerformanceAppendixA().subscribe((resp: CrrPerformanceAppendixA) =>{
+      console.log("resp.CrrPerformanceLegend:  "+resp.crrPerformanceLegend);
+      this.modelData = resp;
+      console.log("this.modelData.CrrPerformanceLegend:  "+this.modelData.crrPerformanceLegend);
+    });
+
     }
 
 

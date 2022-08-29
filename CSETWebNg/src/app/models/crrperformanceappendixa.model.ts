@@ -1,16 +1,16 @@
 export interface CrrPerformanceAppendixA{
-  TotalBarChart: string;
-  CrrPerformanceLegend: string;
-  DomainSummaryList: DomainSummary[];
+  totalBarChart: string;
+  crrPerformanceLegend: string;
+  domainSummaryList: DomainSummary[];
 
 }
 
 export interface DomainSummary{
-  DomainTitle:string;
-  BarChart: string;
-  MilHeatMapSvg1: string;
-  MilHeatMapSvg2: string;
-  MilHeatMapSvg3: string;
-  MilHeatMapSvg4: string;
-  MilHeatMapSvg5: string;
+  domainTitle:string;
+  barChart: string;
+  milHeatMapSvg1: string;
+  milHeatMapSvg2: string;
+  milHeatMapSvg3: string;
+  milHeatMapSvg4: string;
+  milHeatMapSvg5: string;
 }
