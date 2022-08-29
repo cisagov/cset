@@ -518,10 +518,13 @@ export class AssessmentService {
   }
 
    /**
-   * Determines if the assessment is ISE or not
+   * A check for when we need custom ISE functionaltiy
+   * but prevents other assessments (like standards) from
+   * throwing an error when maturity model is undefined
    */
     isISE () {
-      if (this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
+      if (this.assessment === undefined || this.assessment === null ||
+        this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
         return false;
       }
       if (this.assessment.maturityModel.modelName === 'ISE') {
