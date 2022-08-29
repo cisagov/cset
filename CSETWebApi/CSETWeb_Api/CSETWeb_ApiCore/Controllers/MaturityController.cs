@@ -26,7 +26,6 @@ namespace CSETWebCore.Api.Controllers
 {
     public class MaturityController : ControllerBase
     {
-        private readonly IUserAuthentication _userAuthentication;
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -34,11 +33,9 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _reports;
         private readonly ICrrScoringHelper _crr;
 
-        public MaturityController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
-             ICrrScoringHelper crr)
+        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, 
+            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
         {
-            _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;

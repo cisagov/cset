@@ -360,7 +360,6 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -462,6 +461,27 @@ import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
 import { EllipsisModule } from 'ngx-ellipsis';
+import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
+import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
+import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
+import { CrrIntroAboutComponent } from './reports/crr/crr-report/crr-intro-about/crr-intro-about.component';
+import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr-mil1-performance-summary/crr-mil1-performance-summary.component';
+import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
+import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
+import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
+import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';
+import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
+import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
+import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
+import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-contact-information/crr-contact-information.component';
+import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
+import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
+import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
+import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
+import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
+import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 
 @NgModule({
     imports: [
@@ -783,7 +803,6 @@ import { EllipsisModule } from 'ngx-ellipsis';
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
-        CrrExecutiveComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,
         RraLevelResultsComponent,
@@ -878,7 +897,29 @@ import { EllipsisModule } from 'ngx-ellipsis';
         McOptionComponent,
         GuidanceBlockComponent,
         ReferencesBlockComponent,
-        NewAssessmentDialogComponent
+        CrrReportComponent,
+        CrrCoverSheetComponent,
+        CrrCoverSheet2Component,
+        CrrIntroAboutComponent,
+        CrrMil1PerformanceSummaryComponent,
+        CrrPerformanceSummaryComponent,
+        CrrNistCsfSummaryComponent,
+        CrrMil1PerformanceComponent,
+        CrrResultsSummaryComponent,
+        CrrPercentageOfPracticesComponent,
+        CrrDomainDetailComponent,
+        CrrResourcesComponent,
+        CrrContactInformationComponent,
+        CrrAppendixACoverComponent,
+        CrrPerformanceAppendixAComponent,
+        CrrNistCsfCatSummaryComponent,
+        CrrNistCsfCatPerformanceComponent,
+        CrrSideTocComponent,
+        ReferencesBlockComponent,
+        NewAssessmentDialogComponent,
+        CrrMainTocComponent,
+        Cmmc2CommentsMarkedComponent,
+        Cmmc2DeficiencyComponent
     ],
     providers: [
         ConfigService,

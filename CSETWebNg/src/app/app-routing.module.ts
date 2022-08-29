@@ -107,8 +107,6 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
-
-
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
 
 
@@ -138,7 +136,7 @@ import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-def
 import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
 import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
+import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import{TsaAnalyticsComponent} from './initial/tsa-analytics/tsa-analytics.component';
@@ -173,6 +171,8 @@ import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/ci
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 
@@ -435,6 +435,8 @@ const appRoutes: Routes = [
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
+      { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
+      { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
@@ -445,7 +447,7 @@ const appRoutes: Routes = [
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
-      { path: 'crrExecutive', component: CrrExecutiveComponent },
+      { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },
