@@ -30,7 +30,6 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class ConfigService {
 
-  reportsUrl: string;
   apiUrl: string;
   appUrl: string;
   docUrl: string;
@@ -59,7 +58,7 @@ export class ConfigService {
 
   /**
    * Specifies the mobile ecosystem that the app is running on.
-   * This is set by the build process when building CSET as 
+   * This is set by the build process when building CSET as
    * a mobile app.  If not being built for mobile, this property
    * will contain an empty string or "none".
    */
@@ -101,11 +100,6 @@ export class ConfigService {
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
           this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
-          if (localStorage.getItem("reportsApiUrl") != null) {
-            this.reportsUrl = localStorage.getItem("reportsApiUrl");
-          } else {
-            this.reportsUrl = data.reportsApi;
-          }
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;

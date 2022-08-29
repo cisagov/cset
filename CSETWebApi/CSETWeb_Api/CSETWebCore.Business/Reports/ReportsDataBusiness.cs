@@ -108,9 +108,11 @@ namespace CSETWebCore.Business.Reports
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
                 && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
+            NullOutNavigationPropeties(responseList);
+
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
             }
 
 
@@ -1366,6 +1368,31 @@ namespace CSETWebCore.Business.Reports
         public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
         {
             return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
+        }
+
+        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list) 
+        {
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            foreach (MatRelevantAnswers a in list)
+            {
+                a.ANSWER.Assessment = null;
+                a.Mat.Maturity_Model = null;
+                a.Mat.InverseParent_Question = null;
+                a.Mat.Parent_Question = null;
+
+                if (a.Mat.Grouping != null) 
+                { 
+                    a.Mat.Grouping.Maturity_Model = null;
+                    a.Mat.Grouping.MATURITY_QUESTIONS = null;
+                    a.Mat.Grouping.Type = null;
+                }
+
+                if (a.Mat.Maturity_LevelNavigation != null) 
+                { 
+                    a.Mat.Maturity_Level = a.Mat.Maturity_LevelNavigation.Level;
+                    a.Mat.Maturity_LevelNavigation = null;
+                }
+            }
         }
     }
 }

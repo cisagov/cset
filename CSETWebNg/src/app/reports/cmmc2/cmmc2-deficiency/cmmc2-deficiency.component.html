@@ -1,0 +1,157 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid text-center max-w-75in" style="padding-top: 75px;">
+
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+    <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+      <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print Report</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CMMC 2.0</h1>
+      <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">DEFICIENCY REPORT</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+          <img src="assets/images/ExecutiveFiles/image002.jpg" style="width: 500; height: 600;">
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col text-left">
+          <img [src]="logoPath" style="height: 7rem;">
+        </div>
+        <div class="col text-right" style="margin-left: 0">
+          <div>{{ model?.reportData.information.assessment_Name }}</div>
+          <div>{{ model?.reportData.information.assessment_Date | date:'dd-MMM-yyyy' }}</div>
+          <div>{{ model?.reportData.information.assessor_Name }}</div>
+        </div>
+      </div>
+
+      <div class="page-break"></div>
+
+      <div class="row justify-content-center">
+        <div class="col-10 border rounded-3 text-left" style="background-color: #f2f2f2;">
+          <div style="padding: 5rem 1rem">
+            <p>
+              This deficiency report lists the statements that are not currently compliant or "No" answers.
+            </p>
+            <p>
+              This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+              the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+              the gaps by implementing the controls necessary to come into compliance with the associated statement.
+            </p>
+            <p>
+              The percentage gap in each domain is also listed and will help to determine the priority. CMMC is a
+              cumulative maturity model meaning lower levels should be completed before moving to higher levels.
+              Ideally baseline should be completed before focusing efforts on controls in evolving and so forth
+              up the line of maturity levels.
+            </p>
+          </div>
+        </div>
+      </div>
+
+        <div class="page-break"></div>
+
+  <div class="row justify-content-center my-5">
+    <div class="col">
+
+      <div class="mx-3">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+          <h1 class="report-section-title">Deficiencies</h1>
+          <p style="color: #de761c; text-align: right;">
+            Marked for Review - <span><img src="assets/images/icons/MarkedFlag.png" class="marked-flag"></span>
+          </p>
+        </div>
+      </div>
+
+    <hr class="page-line m-0" />
+
+    <div *ngIf="loading" class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+
+    <div *ngIf="!model?.reportData.deficienciesList.length && !loading" class="row">
+      <div class="col text-left">
+        There are no deficiencies to display.
+      </div>
+    </div>
+
+    <ng-container *ngFor="let deficiency of deficienciesList">
+      <div class="report-domain-header">
+        {{ deficiency.cat }}
+      </div>
+      <div *ngFor="let matAnswer of deficiency.matAnswers" class="mat-section row"
+      style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+      <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
+        style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+        <div class="row mat-section m-0 p-0">
+          <div class="col-3 text-left">
+            <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline ">Practice {{ matAnswer.mat.question_Title }}</h3>
+          </div>
+          <div class="col-6 text-left">
+            <p>
+              {{ matAnswer.mat.question_Text }}
+            </p>
+          </div>
+          <div class="col-2 text-left">
+            <p *ngIf="!matAnswer.isParentWithChildren">
+              {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
+            </p>
+          </div>
+          <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+            <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
+          </div>
+        </div>
+        <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
+            <div class="col-3 text-left">
+              <h4 class="small">Justification:</h4>
+            </div>
+            <div class="col-9 text-left">
+              <p>{{ matAnswer.answer.alternate_Justification }}</p>
+            </div>
+        </div>
+        <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
+          <div class="col-3 text-left">
+            <h4 class="small">Comment:</h4>
+          </div>
+          <div class="col-9 text-left">
+            <p>{{ matAnswer.answer.comment }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<style>
+div {
+  page-break-inside: avoid !important;
+}
+
+h3, h4 {
+  font-weight: 500;
+}
+</style>
