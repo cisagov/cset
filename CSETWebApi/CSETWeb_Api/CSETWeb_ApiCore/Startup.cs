@@ -63,6 +63,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
+using System.Text.Json;
 
 namespace CSETWeb_ApiCore
 {
@@ -106,9 +107,14 @@ namespace CSETWeb_ApiCore
                 };
             });
             services.AddAuthorization();
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers().AddJsonOptions(opt =>
+            {
+                opt.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            })
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(

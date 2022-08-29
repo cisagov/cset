@@ -60,6 +60,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
         if (event instanceof HttpErrorResponse) {
           const e = <HttpErrorResponse>event;
+          console.log("*******STATUS****** :"+e?.status);
 
            // continue if this is a "business exception"
            if (e.status !== 500 && e.status !== 401) {

@@ -337,7 +337,7 @@ namespace CSETWebCore.Api.Controllers
         {
            
             return Content(GetMil1PerformanceSummaryLegendData(), "text/html");
-        }
+}
 
         /// <summary>
         /// 
