@@ -13,7 +13,7 @@
       </div>
       <div class="row" style="position: absolute; bottom: 0;">
           <div class="col" style="padding: 0;">
-              <div class="row" style="padding: 0;" [innerHtml]="modelData.TotalBarChart | safe">
+              <div class="row" style="padding: 0;" [innerHtml]="modelData.totalBarChart | safe">
                   <!-- @{
                       var totalDistribution = Model.CRRScores.FullAnswerDistrib();
                       var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
@@ -39,7 +39,7 @@
               <h3 class="depiction-title">CRR Performance</h3>
           </div>
 
-          <div style="padding: 0; width: 40%;" [innerHtml]="modelData.CrrPerformanceLegend | safe">
+          <div style="padding: 0; width: 40%;" [innerHtml]="modelData.crrPerformanceLegend | safe">
               <!-- @{
                   var legend = new MIL1PerformanceLegend();
               }
@@ -105,7 +105,7 @@
   </div>
 </div>
 
-<div class="row" style="border-top: 0.5px solid black;" *ngFor="let domain of modelData.DomainSummaryList">
+<div class="row" style="border-top: 0.5px solid black;" *ngFor="let domain of modelData.domainSummaryList">
   <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
       <div class="row">
           <div style="font-size: 0.7rem; font-weight: bold;">
@@ -113,12 +113,12 @@
               {{domain.DomainTitle}}
           </div>
       </div>
-      <div class="row" [innerHtml]="domain.BarChart | safe">
+      <div class="row" [innerHtml]="domain.barChart | safe">
           <!-- @Html.Raw(barChart.ToString()) -->
       </div>
   </div>
   <div class="col-10" style="display: flex; width: 85%; padding: 0;">
-      <div style="width: 60%; padding: 0.1rem;" [innerHtml]="domain.MilHeatMapSvg1 | safe">
+      <div style="width: 60%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg1 | safe">
           <!-- @{
               XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
               el.Attribute("label").Value == "MIL-1");
@@ -127,7 +127,7 @@
           }
           @Html.Raw(mil1Svg.ToString()) -->
       </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.MilHeatMapSvg2 | safe">
+      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg2 | safe">
           <!-- @{
               XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
               el.Attribute("label").Value == "MIL-2");
@@ -136,7 +136,7 @@
           }
           @Html.Raw(mil2Svg.ToString()) -->
       </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.MilHeatMapSvg3 | safe">
+      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg3 | safe">
           <!-- @{
               XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
               el.Attribute("label").Value == "MIL-3");
@@ -145,7 +145,7 @@
           }
           @Html.Raw(mil3Svg.ToString()) -->
       </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.MilHeatMapSvg4 | safe">
+      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg4 | safe">
           <!-- @{
               XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
               el.Attribute("label").Value == "MIL-4");
@@ -154,7 +154,7 @@
           }
           @Html.Raw(mil4Svg.ToString()) -->
       </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.MilHeatMapSvg5 | safe">
+      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg5 | safe">
           <!-- @{
               XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
               el.Attribute("label").Value == "MIL-5");
