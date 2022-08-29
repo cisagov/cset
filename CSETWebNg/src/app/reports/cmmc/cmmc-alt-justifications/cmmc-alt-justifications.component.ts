@@ -52,13 +52,6 @@ export class CmmcAltJustificationsComponent implements OnInit {
           }
         });
 
-        // Sort the list
-        this.altJustList.forEach(e => {
-          e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);;
-          });
-        });
-
         // mark questions followed by a child for border display
         this.altJustList.forEach(e => {
           for (let i = 0; i < e.matAnswers.length; i++) {

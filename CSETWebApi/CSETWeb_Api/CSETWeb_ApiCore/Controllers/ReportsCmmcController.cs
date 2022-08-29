@@ -36,7 +36,6 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
 
             var detail = _assessment.GetAssessmentDetail(assessmentId);
-            var demographics = _demographic.GetDemographics(assessmentId);
 
 
             var reportData = new MaturityBasicReportData()

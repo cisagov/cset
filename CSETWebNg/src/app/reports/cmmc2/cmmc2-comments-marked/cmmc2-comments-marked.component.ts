@@ -27,7 +27,7 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC Comments and Marked for Review - CSET");
+    this.titleService.setTitle("CMMC 2.0 Comments and Marked for Review - CSET");
     let appCode = this.configSvc.installationMode;
 
     if (!appCode || appCode === 'CSET') {
@@ -54,13 +54,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
           }
         });
 
-        // Sort the comments list
-        this.commentsList.forEach(e => {
-          e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);;
-          });
-        });
-
         // mark questions followed by a child for border display
         this.commentsList.forEach(e => {
           for (let i = 0; i < e.matAnswers.length; i++) {
@@ -82,13 +75,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
           }
         });
 
-        // Sort the marked for review list
-        this.markedForReviewList.forEach(e => {
-          e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);
-          })
-        });
-
         // mark questions followed by a child for border display
         this.markedForReviewList.forEach(e => {
           for (let i = 0; i < e.matAnswers.length; i++) {
@@ -100,7 +86,7 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CMMC Deficiency Report Error: ' + (<Error>error).message)
+      error => console.log('CMMC 2.0 Comments and Marked for Review Report Error: ' + (<Error>error).message)
     );
   }
 

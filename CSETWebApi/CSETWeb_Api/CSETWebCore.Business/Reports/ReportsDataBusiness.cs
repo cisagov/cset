@@ -108,12 +108,13 @@ namespace CSETWebCore.Business.Reports
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
                 && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
+            NullOutNavigationPropeties(responseList);
+
             if (selectedLevel != null && selectedLevel != 0)
             {
                 responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
             }
 
-            NullOutNavigationPropeties(responseList);
 
             return responseList;
         }
@@ -173,8 +174,6 @@ namespace CSETWebCore.Business.Reports
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
 
-            NullOutNavigationPropeties(responseList);
-
             return responseList;
         }
 
@@ -187,8 +186,6 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetCommentsList()
         {
             var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
-
-            NullOutNavigationPropeties(responseList);
 
             return responseList;
         }
@@ -203,7 +200,6 @@ namespace CSETWebCore.Business.Reports
         {
             var questionList = GetQuestionsList();
             var responseList = questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
-            NullOutNavigationPropeties(responseList);
             return responseList;
         }
 
@@ -215,7 +211,6 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> GetAlternatesList()
         {
             var responseList = GetQuestionsList().Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
-            NullOutNavigationPropeties(responseList);
             return responseList;
         }
 
@@ -1382,14 +1377,20 @@ namespace CSETWebCore.Business.Reports
             {
                 a.ANSWER.Assessment = null;
                 a.Mat.Maturity_Model = null;
-                a.Mat.Maturity_LevelNavigation = null;
                 a.Mat.InverseParent_Question = null;
                 a.Mat.Parent_Question = null;
+
                 if (a.Mat.Grouping != null) 
                 { 
                     a.Mat.Grouping.Maturity_Model = null;
                     a.Mat.Grouping.MATURITY_QUESTIONS = null;
                     a.Mat.Grouping.Type = null;
+                }
+
+                if (a.Mat.Maturity_LevelNavigation != null) 
+                { 
+                    a.Mat.Maturity_Level = a.Mat.Maturity_LevelNavigation.Level;
+                    a.Mat.Maturity_LevelNavigation = null;
                 }
             }
         }

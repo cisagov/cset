@@ -169,6 +169,8 @@ import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-defic
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -421,6 +423,8 @@ const appRoutes: Routes = [
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
+      { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
+      { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
