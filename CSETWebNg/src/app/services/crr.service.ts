@@ -106,11 +106,8 @@ export class CrrService {
   /**
    * Calls the api to get CrrPerformanceAppendixA Data
    */
-   getCrrPerformanceAppendixA():CrrPerformanceAppendixA {
-    console.log("*******************************GetCrrPerformanceAppendixA*********************")
-    var result = this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA') as unknown as CrrPerformanceAppendixA;
-    console.log("***********"+result.totalBarChart)
-    return result;
+   getCrrPerformanceAppendixA() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
   }
 
 }
