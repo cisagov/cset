@@ -188,35 +188,24 @@ function createWindow() {
       launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort);
       return assignedApiPort;
     }).then(assignedApiPort => {
-
-      // Port checking for reports api...
-      let reportsApiPort = parseInt(angularConfig.reportsApi.substr(angularConfig.reportsApi.length - 6, 5));
-      assignPort(reportsApiPort, assignedApiPort, apiUrl).then(assignedReportsApiPort => {
-        log.info('Reports API launching on port', assignedReportsApiPort);
-        launchAPI(rootDir + '/Website', 'CSETWebCore.Reports.exe', assignedReportsApiPort);
-        return {apiPort: assignedApiPort, reportsApiPort: assignedReportsApiPort};
-      }).then(ports => {
-
-        // Keep attempting to connect to API, every 2 seconds, then load application
-        retryApiConnection(120, 2000, ports.apiPort, error => {
-          if (error) {
-            log.error(error);
-            app.quit();
-          } else {
-             // Load the index.html of the app
-             mainWindow.loadURL(
-              url.format({
-                pathname: path.join(__dirname, 'dist/index.html'),
-                protocol: 'file:',
-                query: {
-                  apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + ports.apiPort,
-                  reportsApiUrl: angularConfig.reportsApi.substr(0, 17) + ports.reportsApiPort + '/'
-                },
-                slashes: true
-              })
-            );
-          }
-        });
+      // Keep attempting to connect to API, every 2 seconds, then load application
+      retryApiConnection(120, 2000, assignedApiPort, error => {
+        if (error) {
+          log.error(error);
+          app.quit();
+        } else {
+           // Load the index.html of the app
+           mainWindow.loadURL(
+            url.format({
+              pathname: path.join(__dirname, 'dist/index.html'),
+              protocol: 'file:',
+              query: {
+                apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + assignedApiPort,
+              },
+              slashes: true
+            })
+          );
+        }
       });
     });
   } else {
@@ -225,8 +214,7 @@ function createWindow() {
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
-          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port,
-          reportsApiUrl: angularConfig.reportsApi
+          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port
         },
         slashes: true
       })

@@ -1244,18 +1244,6 @@
       {
          "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
          "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[convert_sal_short]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[convert_sal]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[Split]",
-         "ObjectType": 2
       }
    ],
    "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",

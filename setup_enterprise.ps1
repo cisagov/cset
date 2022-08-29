@@ -36,13 +36,11 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
 $password = Read-Host -AsSecureString "Enter a password for CSET service user account"
 New-LocalUser -Name "CSETUser" -Description "CSET Service User" -Password $password -PasswordNeverExpires -UserMayNotChangePassword
 
-# Create directories to place CSETAPI, CSETReportAPI, and CSETUI
+# Create directories to place CSETAPI and CSETUI
 New-Item -ItemType directory -Path C:\inetpub\wwwroot\CSETAPI -Force
-New-Item -ItemType directory -Path C:\inetpub\wwwroot\CSETReportAPI -Force
 New-Item -ItemType directory -Path C:\inetpub\wwwroot\CSETUI -Force
 
 Copy-Item -Path CSETWebApi\* -Destination C:\inetpub\wwwroot\CSETAPI -Recurse -Force
-Copy-Item -Path CSETWebApiReports\* -Destination C:\inetpub\wwwroot\CSETReportAPI -Recurse -Force
 Copy-Item -Path CSETUI\* -Destination C:\inetpub\wwwroot\CSETUI -Recurse -Force
 
 # Copy database files to user directory
@@ -54,15 +52,11 @@ $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
 # Add CSET app pools (leaving managedRuntimeVersion blank results in "No Managed Code")
 & ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETReportAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
 & ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETUI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
 
-# Create CSETAPI, CSETReportAPI, and CSETUI sites and add them to CSET app pool
+# Create CSETAPI and CSETUI sites and add them to CSET app pool
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETAPI" /physicalPath:"C:\inetpub\wwwroot\CSETAPI" /bindings:"http/*:5001:"
 & ${Env:windir}\system32\inetsrv\appcmd set site "CSETAPI" /applicationDefaults.applicationPool:"CSETAPI"
-
-& ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETReportAPI" /physicalPath:"C:\inetpub\wwwroot\CSETReportAPI" /bindings:"http/*:5002:"
-& ${Env:windir}\system32\inetsrv\appcmd set site "CSETReportAPI" /applicationDefaults.applicationPool:"CSETReportAPI"
 
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETUI" /physicalPath:"C:\inetpub\wwwroot\CSETUI" /bindings:"http/*:80:"
 & ${Env:windir}\system32\inetsrv\appcmd set site "CSETUI" /applicationDefaults.applicationPool:"CSETUI"
@@ -82,9 +76,7 @@ $serverescaped = $server.replace("\", "\\")
 
 # Making sure connection string and ports are correct in config files
 (Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\MSSQLLocalDb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
-(Get-Content C:\inetpub\wwwroot\CSETReportAPI\appsettings.json -Raw).replace("(localdb)\\MSSQLLocalDb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETReportAPI\appsettings.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
-(Get-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -Raw).replace('"reportsApi":"http://localhost:44363/"', '"reportsApi":"http://localhost:5002/"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
@@ -93,16 +85,13 @@ sqlcmd -E -S $server -d "CSETWeb" -Q "GRANT EXECUTE ON SCHEMA :: [dbo] to [${env
 
 # Restarting websites
 & ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETAPI"
-& ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETReportAPI"
 & ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETUI"
 
 & ${Env:windir}\system32\inetsrv\appcmd stop site "CSETAPI"
-& ${Env:windir}\system32\inetsrv\appcmd stop site "CSETReportAPI"
 & ${Env:windir}\system32\inetsrv\appcmd stop site "CSETUI"
 & ${Env:windir}\system32\inetsrv\appcmd stop site "Default Web Site"
 
 & ${Env:windir}\system32\inetsrv\appcmd start site "CSETAPI"
-& ${Env:windir}\system32\inetsrv\appcmd start site "CSETReportAPI"
 & ${Env:windir}\system32\inetsrv\appcmd start site "CSETUI"
 
 Write-Host "CSET enterprise setup complete. Open IIS Manager to check the status of the application or make further changes."
