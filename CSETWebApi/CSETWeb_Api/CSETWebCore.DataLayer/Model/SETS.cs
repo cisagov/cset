@@ -76,7 +76,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsEncryptedModule { get; set; }
         [Required]
         public bool? IsEncryptedModuleOpen { get; set; }
-        public int? Icon_Id { get; set; }
 
         [ForeignKey("Set_Category_Id")]
         [InverseProperty("SETS")]
