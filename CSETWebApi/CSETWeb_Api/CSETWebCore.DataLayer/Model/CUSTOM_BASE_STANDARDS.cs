@@ -12,11 +12,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Custom_Questionaire_Name { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Base_Standard { get; set; }
 
         [ForeignKey("Custom_Questionaire_Name")]

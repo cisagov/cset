@@ -26,6 +26,8 @@ import { QuestionsService } from '../../../services/questions.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { AssessmentService } from '../../../services/assessment.service';
 
 
 /**
@@ -52,10 +54,15 @@ export class DomainMaturityFilterComponent implements OnInit {
   // the domain that we are filtering
   domainName: string;
 
+  // ISE shouldn't show "traditional" IRP buttons
+  iseIRPSetting: string = "";
+
   constructor(
     public questionsSvc: QuestionsService,
     public maturityFilteringSvc: MaturityFilteringService,
     public acetFilteringSvc: AcetFilteringService,
+    public assessSvc: AssessmentService,
+    public ncuaSvc: NCUAService
   ) { }
 
   /**
@@ -63,6 +70,10 @@ export class DomainMaturityFilterComponent implements OnInit {
    */
   ngOnInit() {
     this.domainName = this.domain.title;
+
+    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+      this.determineIseFilter();
+    }
   }
 
 
@@ -94,5 +105,16 @@ export class DomainMaturityFilterComponent implements OnInit {
     }
     return filterForDomain.settings.find(s => s.level == level.level).value;
   }
+
+  determineIseFilter() {
+    this.iseIRPSetting = this.ncuaSvc.getIRPfromOverride();
+    
+    if (this.iseIRPSetting === 'SCUEP') {
+      this.maturityLevels = [{"level": "1", "label": "SCUEP", "applicable": true}];
+      } else {
+        this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
+      }
+  }
+
 
 }

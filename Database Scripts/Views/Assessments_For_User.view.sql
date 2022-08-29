@@ -2,6 +2,7 @@
 
 
 
+
 CREATE VIEW [dbo].[Assessments_For_User]
 AS
 select 	
@@ -10,7 +11,7 @@ select
 	AssessmentDate = Assessment_Date,
 	AssessmentCreatedDate,
 	CreatorName = u.FirstName + ' ' + u.LastName,
-	LastModifiedDate = LastAccessedDate,
+	LastModifiedDate = LastModifiedDate,
 	MarkedForReview = isnull(mark_for_review,0),
 	c.UserId
 	from ASSESSMENTS a 

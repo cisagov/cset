@@ -14,43 +14,32 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         public bool Motivation_CRR { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_CRR_Description { get; set; }
         public bool Motivation_RRAP { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_RRAP_Description { get; set; }
         public bool Motivation_Organization_Request { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_Organization_Request_Description { get; set; }
         public bool Motivation_Law_Enforcement_Request { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_Law_Enforcement_Description { get; set; }
         public bool Motivation_Direct_Threats { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_Direct_Threats_Description { get; set; }
         public bool Motivation_Special_Event { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_Special_Event_Description { get; set; }
         public bool Motivation_Other { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Motivation_Other_Description { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Parent_Organization { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Organization_Name { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Site_Name { get; set; }
         [StringLength(75)]
-        [Unicode(false)]
         public string Street_Address { get; set; }
         [Column(TypeName = "date")]
         public DateTime? Visit_Date { get; set; }
@@ -58,16 +47,12 @@ namespace CSETWebCore.DataLayer.Model
         public bool Completed_For_Federal { get; set; }
         public bool Completed_For_National_Special_Event { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string CIKR_Sector { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Sub_Sector { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string IT_ICS_Staff_Count { get; set; }
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
 
         [ForeignKey("Assessment_Id")]

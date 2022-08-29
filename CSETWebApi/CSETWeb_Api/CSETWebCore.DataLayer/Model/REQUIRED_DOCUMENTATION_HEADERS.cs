@@ -23,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         public int RDH_Id { get; set; }
         [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Requirement_Documentation_Header { get; set; }
         public int? Header_Order { get; set; }
 

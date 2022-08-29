@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(250)]
-        [Unicode(false)]
         public string AttributeName { get; set; }
 
         [InverseProperty("AttributeNameNavigation")]

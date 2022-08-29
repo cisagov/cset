@@ -63,6 +63,12 @@
                             <span class="cset-icons-export-excel fs-base mr-2"></span>
                             <label for="importFile" class="m-0">Export All to Excel</label>
                         </label>
+
+                        <label *ngIf="this.ncuaSvc.switchStatus" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                            matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
+                            <span class="fs-base mr-2"></span>
+                            <label for="mergeExamination" class="m-0">Merge Examinations</label>
+                        </label>
                     </div>
                 </div>
                 <div *ngIf="unsupportedImportFile"
@@ -145,6 +151,7 @@
     </div>
 
     <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
+        <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
 
         <!-- table for larger layouts -->
         <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
@@ -239,5 +246,61 @@
                 </td>
             </tr>
         </table>
-    </div>
+        </ng-container>
+
+        <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
+        class="assessment-summary" style="overflow-x:auto">
+        <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
+        <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
+        <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
+        <th aria-label="assessor" mat-sort-header="assessor" style="width:15%;">Primary Assessor</th>
+        <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
+        <th aria-label="merge assessment" style="width:5%;"></th>
+        <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
+            <td>
+                <button tabindex="0"
+                    class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                    (click)="this.assessSvc.loadAssessment(assessment.assessmentId)">
+                    {{assessment.assessmentName}}
+                </button>
+            </td>
+            <td>{{assessment.type}}</td>
+            <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
+            <td>{{assessment.creatorName}}</td>
+            <td>
+              <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
+                <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                  {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Question(s) Completed
+                </span>
+                <ng-template #blankAssessment>
+                  Blank Assessment
+                </ng-template>
+                <br>
+              </div>
+              <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                    matTooltip="This assessment contains answers that require further review.">Needs
+                    Review
+              </span>
+            </td>
+            <td>
+                <div *ngIf="assessment.type === 'ISE'">
+                    <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}" class="checkbox-custom mt-1"
+                        (change)="this.ncuaSvc.modifyMergeList(assessment, $event)" [checked]="">
+                    <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
+                        Merge
+                    </label>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button *ngIf="this.ncuaSvc.prepForMerge"
+        (click)="this.proceedToMerge()"
+        [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10" 
+        class="btn btn-primary"
+        matTooltip="Merge checked examinations"
+        style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">Start Merge</button>
+
+    <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
+        <p>There are no assessments available.</p>
+    </div> -->
 </div>

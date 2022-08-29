@@ -25,7 +25,6 @@ namespace CSETWebCore.DataLayer.Model
         public int IndustryId { get; set; }
         [Required]
         [StringLength(150)]
-        [Unicode(false)]
         public string IndustryName { get; set; }
 
         [ForeignKey("SectorId")]

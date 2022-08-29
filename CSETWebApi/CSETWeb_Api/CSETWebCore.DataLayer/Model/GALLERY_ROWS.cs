@@ -12,7 +12,6 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Layout_Name { get; set; }
         [Key]
         public int Row_Index { get; set; }

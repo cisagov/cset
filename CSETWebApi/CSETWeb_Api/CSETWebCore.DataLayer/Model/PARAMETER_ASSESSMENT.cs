@@ -14,9 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Parameter_ID { get; set; }
         [Key]
         public int Assessment_ID { get; set; }
-        [Required]
         [StringLength(2000)]
-        [Unicode(false)]
         public string Parameter_Value_Assessment { get; set; }
 
         [ForeignKey("Assessment_ID")]

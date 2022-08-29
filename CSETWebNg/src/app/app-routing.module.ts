@@ -101,6 +101,7 @@ import { ModelSelectComponent } from './assessment/prepare/maturity/model-select
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
+import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
@@ -168,9 +169,12 @@ import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/con
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
+import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
+import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
+import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -282,7 +286,12 @@ const appRoutes: Routes = [
         path:'tsa-analytics',
         component:TsaAnalyticsComponent
       },
-      { path: 'resource-library', component: ResourceLibraryComponent },
+      { path: 'resource-library', 
+        component: ResourceLibraryComponent },
+      {
+        path: 'examination-merge',
+        component: MergeExaminationsComponent 
+      },
 
       {
         path: 'assessment/:id',
@@ -316,6 +325,8 @@ const appRoutes: Routes = [
               { path: 'required', component: RequiredDocsComponent },
               { path: 'irp', component: IRPComponent },
               { path: 'irp-summary', component: IrpSummaryComponent },
+              { path: 'exam-profile', component: ExamProfileComponent },
+              { path: 'exam-profile-summary', component: ExamProfileSummaryComponent },
               {
                 path: 'diagram',
                 component: DiagramComponent,
@@ -337,6 +348,7 @@ const appRoutes: Routes = [
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
+          { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 

@@ -32,6 +32,7 @@
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
+    "buttonLabelA_ISE": "Notes(C)",
     "buttonLabelI": "Inc",
 
     "answerLabelY": "Yes",
@@ -39,6 +40,7 @@
     "answerLabelNA": "N/A",
     "answerLabelA": "Alternate",
     "answerLabelA_ACET": "Yes Compensating Control",
+    "answerLabelA_ISE": "Notes or Issues",
     "answerLabelU": "Unanswered",
     "answerLabelI": "Incomplete"
 }

@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
         public int requirement_id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard_Level { get; set; }
     }
 }

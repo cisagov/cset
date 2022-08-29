@@ -19,15 +19,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Industry_Id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Organization_Size { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Asset_Value { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
 
         [ForeignKey("Sector_Id")]

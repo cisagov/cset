@@ -30,8 +30,6 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The Question Text is used to
         /// </summary>
-        [StringLength(7000)]
-        [Unicode(false)]
         public string Question_Text { get; set; }
 
         [InverseProperty("Question")]

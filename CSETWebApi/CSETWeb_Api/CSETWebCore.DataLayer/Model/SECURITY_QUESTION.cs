@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
         public int SecurityQuestionId { get; set; }
         [Required]
         [StringLength(500)]
-        [Unicode(false)]
         public string SecurityQuestion { get; set; }
         [Required]
         public bool? IsCustomQuestion { get; set; }

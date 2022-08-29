@@ -16,16 +16,12 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int UserId { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string SecurityQuestion1 { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string SecurityAnswer1 { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string SecurityQuestion2 { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string SecurityAnswer2 { get; set; }
 
         [ForeignKey("UserId")]

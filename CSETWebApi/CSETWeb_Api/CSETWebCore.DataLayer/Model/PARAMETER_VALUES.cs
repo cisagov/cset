@@ -14,9 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public int Answer_Id { get; set; }
         [Key]
         public int Parameter_Id { get; set; }
-        [Required]
         [StringLength(2000)]
-        [Unicode(false)]
         public string Parameter_Value { get; set; }
         public bool Parameter_Is_Default { get; set; }
 

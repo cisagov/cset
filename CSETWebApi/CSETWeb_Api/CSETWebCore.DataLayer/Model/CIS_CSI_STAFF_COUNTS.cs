@@ -19,8 +19,7 @@ namespace CSETWebCore.DataLayer.Model
         }
 
         [Key]
-        [StringLength(25)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Staff_Count { get; set; }
         public int Sequence { get; set; }
 

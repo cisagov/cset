@@ -11,8 +11,6 @@ namespace CSETWebCore.DataLayer.Model
     public partial class NAVIGATION_STATE
     {
         [Key]
-        [StringLength(500)]
-        [Unicode(false)]
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public bool IsError { get; set; }

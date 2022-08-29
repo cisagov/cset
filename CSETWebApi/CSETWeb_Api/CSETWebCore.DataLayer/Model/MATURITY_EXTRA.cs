@@ -15,7 +15,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string NIST171_Title { get; set; }
         [StringLength(500)]
-        [Unicode(false)]
         public string Question_text { get; set; }
         public int? SPRSValue { get; set; }
         [Column("Comment for Guidance Field")]
@@ -24,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string CMMC1_Title { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string CMMC2_Title { get; set; }
     }
 }

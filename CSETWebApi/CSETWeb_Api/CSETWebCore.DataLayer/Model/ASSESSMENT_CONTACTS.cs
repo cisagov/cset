@@ -22,13 +22,10 @@ namespace CSETWebCore.DataLayer.Model
 
         public int Assessment_Id { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string FirstName { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string LastName { get; set; }
         public bool Invited { get; set; }
         public int AssessmentRoleId { get; set; }
@@ -36,26 +33,19 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Contact_Id { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Title { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Phone { get; set; }
         public bool Is_Primary_POC { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Site_Name { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Organization_Name { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Cell_Phone { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Reports_To { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Emergency_Communications_Protocol { get; set; }
         public bool Is_Site_Participant { get; set; }
 

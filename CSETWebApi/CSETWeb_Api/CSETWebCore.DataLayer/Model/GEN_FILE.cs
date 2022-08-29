@@ -37,22 +37,17 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The File Name is used to
         /// </summary>
-        [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string File_Name { get; set; }
         /// <summary>
         /// The Title is used to
         /// </summary>
-        [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Title { get; set; }
         /// <summary>
         /// The Name is used to
         /// </summary>
         [StringLength(250)]
-        [Unicode(false)]
         public string Name { get; set; }
         /// <summary>
         /// The File Size is used to
@@ -62,27 +57,23 @@ namespace CSETWebCore.DataLayer.Model
         /// The Doc Num is used to
         /// </summary>
         [Required]
-        [StringLength(40)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Doc_Num { get; set; }
         /// <summary>
         /// The Comments is used to
         /// </summary>
         [StringLength(500)]
-        [Unicode(false)]
         public string Comments { get; set; }
         /// <summary>
         /// The Description is used to
         /// </summary>
         [StringLength(250)]
-        [Unicode(false)]
         public string Description { get; set; }
         /// <summary>
         /// The Short Name is used to
         /// </summary>
         [Required]
         [StringLength(60)]
-        [Unicode(false)]
         public string Short_Name { get; set; }
         /// <summary>
         /// The Publish Date is used to
@@ -92,20 +83,17 @@ namespace CSETWebCore.DataLayer.Model
         /// <summary>
         /// The Doc Version is used to
         /// </summary>
-        [StringLength(20)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Doc_Version { get; set; }
         /// <summary>
         /// The Summary is used to
         /// </summary>
         [StringLength(2000)]
-        [Unicode(false)]
         public string Summary { get; set; }
         /// <summary>
         /// The Source Type is used to
         /// </summary>
         [StringLength(50)]
-        [Unicode(false)]
         public string Source_Type { get; set; }
         public byte[] Data { get; set; }
         [Required]
