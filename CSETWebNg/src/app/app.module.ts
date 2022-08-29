@@ -470,6 +470,7 @@ import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-p
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
+import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 
 @NgModule({
     imports: [
@@ -896,7 +897,8 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
         ReferencesBlockComponent,
-        NewAssessmentDialogComponent
+        NewAssessmentDialogComponent,
+        CrrMainTocComponent
     ],
     providers: [
         ConfigService,

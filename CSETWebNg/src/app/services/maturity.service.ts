@@ -43,6 +43,25 @@ export class MaturityService {
 
   domains: any[];
 
+  keyToCategory = {
+    AC: 'Access Control',
+    AM: 'Asset Management',
+    AU: 'Audit and Accountability',
+    AT: 'Awareness and Training',
+    CM: 'Configuration Management',
+    IA: 'Identification And Authentication',
+    IR: 'Incident Response',
+    MA: 'Maintenance',
+    MP: 'Media Protection',
+    PS: 'Personnel Security',
+    PE: 'Physical Protection',
+    RM: 'Risk Management',
+    CA: 'Security Assessment',
+    SA: 'Situational Awareness',
+    SC: 'System and Communications Protection',
+    SI: 'System And Information Integrity'
+  }
+
   // Array of Options for Consideration
   ofc: any[];
 
@@ -140,6 +159,10 @@ export class MaturityService {
       this.cmmcData = this.http.get(this.configSvc.apiUrl + 'reports/' + reportId);
     }
     return this.cmmcData;
+  }
+
+  public getCmmcReportData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscmmc/maturitymodel')
   }
 
   /**
