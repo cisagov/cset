@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Inject, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 
@@ -45,6 +46,7 @@ export class QuestionFiltersComponent implements OnInit {
   constructor(
     public filterSvc: QuestionFilterService,
     private dialog: MatDialogRef<QuestionFiltersComponent>,
+    private assessSvc: AssessmentService,
     private configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {

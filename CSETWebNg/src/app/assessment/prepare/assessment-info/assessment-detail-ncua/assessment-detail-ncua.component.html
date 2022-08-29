@@ -150,7 +150,25 @@
                 <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
                 [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
-            <div class="col-md-6"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="mb-1" for="examLevel">Proposed Exam Level</label>
+                <input type="text" class="form-control" id="examLevel" name="examLevel" [disabled]="true" [ngModel]="this.ncuaSvc.proposedExamLevel">
+            </div>
+            <div class="col-md-6">
+                <label class="mb-1" for="examOverride">Exam Level Override</label>
+                <select class="form-control" name="examOverride" [(ngModel)]="examOverride" 
+                  (change)="updateOverride($event.target.value)" [disabled]="this.acetDashboard === undefined || this.ncuaSvc.proposedExamLevel == 'CORE'">
+                    <option>No Override</option>
+                    <option>SCUEP</option>
+                    <option>CORE</option>
+                </select>
+
+                <div class="invalid-feedback d-block text-muted ml-1" *ngIf="this.ncuaSvc.proposedExamLevel === 'CORE'">
+                    A CORE exam level cannot be changed
+                </div>
+            </div>
         </div>
     </ng-container>
 </form>
