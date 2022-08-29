@@ -1,0 +1,81 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<style>
+  .toc li {
+      margin-bottom: 5px;
+      overflow: hidden;
+      color: black;
+      font-weight: bold;
+  }
+
+  .toc li a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      background-color: white;
+  }
+
+  .toc li span {
+      float: right;
+      position: relative;
+      padding-right: 10px;
+  }
+
+  .toc li span:before {
+      content: "";
+      width: 999px;
+      height: 100%;
+      position: absolute;
+      top: -5px;
+      right: 100%;
+      z-index: 0;
+      border-bottom: 2.5px dotted black;
+  }
+</style>
+
+<h4>
+  Table of Contents
+</h4>
+<div class="toc">
+  <ol style="width: auto; padding-left: 0; margin-top: 40px;">
+      <li><a>Introduction</a><span>{{ model?.pageNumbers["_CrrIntroAbout"] ?? 0 }}</span></li>
+      <li><a>About This Report</a><span>6</span></li>
+      <li><a>Cyber Resilience Review Results</a><span>7</span></li>
+      <li><a>Summary of Results</a><span>{{ model?.pageNumbers["_CrrMil1PerformanceSummary"] ?? 0 }}</span></li>
+      <li><a>1 &emsp; Asset Management</a><span>{{ model?.pageNumbers["_CrrDD1_AM"] ?? 0 }}</span></li>
+      <li><a>2 &emsp; Controls Management</a><span>{{ model?.pageNumbers["_CrrDD2_CM"] ?? 0 }}</span></li>
+      <li><a>3 &emsp; Configuration and Change Management</a><span>{{ model?.pageNumbers["_CrrDD3_CCM"] ?? 0 }}</span></li>
+      <li><a>4 &emsp; Vulnerability Management</a><span>{{ model?.pageNumbers["_CrrDD4_VM"] ?? 0 }}</span></li>
+      <li><a>5 &emsp; Incident Management</a><span>{{ model?.pageNumbers["_CrrDD5_IM"] ?? 0 }}</span></li>
+      <li><a>6 &emsp; Service Continuity Management</a><span>{{ model?.pageNumbers["_CrrDD6_SCM"] ?? 0 }}</span></li>
+      <li><a>7 &emsp; Risk Management</a><span>{{ model?.pageNumbers["_CrrDD7_RM"] ?? 0 }}</span></li>
+      <li><a>8 &emsp; External Dependency Management</a><span>{{ model?.pageNumbers["_CrrDD8_EDM"] ?? 0 }}</span></li>
+      <li><a>9 &emsp; Training and Awareness</a><span>{{ model?.pageNumbers["_CrrDD9_TA"] ?? 0 }}</span></li>
+      <li><a>10&emsp;Situational Awareness</a><span>{{ model?.pageNumbers["_CrrDD10_SA"] ?? 0 }}</span></li>
+      <li><a>List of Resources Referenced in this Report</a><span>{{ model?.pageNumbers["_CrrResources"] ?? 0 }}</span></li>
+      <li><a>Appendix A</a><span>{{ model?.pageNumbers["_CrrAppendixACover"] ?? 0 }}</span></li>
+  </ol>
+</div>

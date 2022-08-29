@@ -1,0 +1,106 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container">
+
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+    <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+      <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print Report</button>
+    </div>
+  </div>
+
+  <div class="pb-3" style="padding-top: 60px">
+    <app-crr-side-toc></app-crr-side-toc>
+
+    <div class="report-body-crr">
+
+      <div id="toc-top">
+        <app-crr-cover-sheet [model]="crrModel"></app-crr-cover-sheet>
+      </div>
+
+      <div class="page-margin-top">
+        <app-crr-cover-sheet2 [model]="crrModel"></app-crr-cover-sheet2>
+      </div>
+
+      <div class="page-margin-top">
+        <app-crr-main-toc [model]="crrModel"></app-crr-main-toc>
+      </div>
+
+      <div id="toc-intro" class="page-margin-top">
+        <app-crr-intro-about [model]="crrModel"></app-crr-intro-about>
+      </div>
+
+      <div id="toc-mil1-ps" class="page-margin-top">
+        <app-crr-mil1-performance-summary [model]="crrModel"></app-crr-mil1-performance-summary>
+      </div>
+
+      <div id="toc-crr-ps" class="page-margin-top">
+        <app-crr-performance-summary [model]="crrModel"></app-crr-performance-summary>
+      </div>
+
+      <div id="toc-nist-csf" class="page-margin-top">
+        <app-crr-nist-csf-summary [model]="crrModel"></app-crr-nist-csf-summary>
+      </div>
+
+      <div id="toc-mil1-performance" class="page-margin-top">
+        <app-crr-mil1-performance [model]="crrModel"></app-crr-mil1-performance>
+      </div>
+
+      <div id="toc-summary-results" class="page-margin-top" style="padding-bottom: 60px">
+        <app-crr-results-summary [model]="crrModel"></app-crr-results-summary>
+      </div>
+
+      <div id="toc-percentage-practices" class="page-margin-top">
+        <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+      </div>
+
+      <div id="toc-domain-detail" class="page-margin-top">
+        <app-crr-domain-detail [model]="crrModel"></app-crr-domain-detail>
+      </div>
+
+      <div id="toc-resources-referenced" class="page-margin-top">
+        <app-crr-resources [model]="crrModel"></app-crr-resources>
+      </div>
+
+      <div id="toc-contact-information" class="page-margin-top">
+        <app-crr-contact-information [model]="crrModel"></app-crr-contact-information>
+      </div>
+
+      <div id="toc-additional-views" class="page-margin-top">
+        <app-crr-appendix-a-cover [model]="crrModel"></app-crr-appendix-a-cover>
+      </div>
+
+      <div id="toc-crr-performance-app-a" class="page-margin-top">
+        <!-- <app-crr-performance-appendix-a [model]="crrModel"></app-crr-performance-appendix-a> -->
+      </div>
+
+      <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
+        <app-crr-nist-csf-cat-summary [model]="crrModel"></app-crr-nist-csf-cat-summary>
+      </div>
+
+      <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
+        <app-crr-nist-csf-cat-performance [model]="crrModel"></app-crr-nist-csf-cat-performance>
+      </div>
+
+    </div>
+  </div>
+</div>

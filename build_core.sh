@@ -46,24 +46,6 @@ build_api() {
     echo 'PLEASE WAIT'
 }
 
-build_reports_api() {
-    cd CSETWebApi/csetweb_api/CSETWebCore.Reports
-
-    echo 'Cleaning Project...'
-  
-	dotnet clean 
-
-    echo 'Publishing project...'
-	outputDirReportsApi="/c/temp/reports-api-publish_${1}"
-	dotnet publish --configuration Release -o $outputDirReportsApi -v q
-	
-	mkdir -p ../../../dist/CSETWebApiReports && cp -r "${outputDirReportsApi}/." ../../../dist/CSETWebApiReports
-
-    echo 'Reports API project published.'
-    
-    echo 'PLEASE WAIT'
-}
-
 build_electron() {
 	cd CSETWebNg
 	
@@ -102,11 +84,6 @@ build_ng $ts | sed "s/^/NG BUILD: /" &
 build_api $ts | sed "s/^/API BUILD: /" &
 
 echo 'Processes started.'
-
-wait
-
-# Cannot build reports api ansynchrnously due to shared dependency file access errors with main api
-build_reports_api $ts | sed "s/^/REPORTS API BUILD: /"
 
 wait
 
