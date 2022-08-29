@@ -5,6 +5,7 @@ using CSETWebCore.Model.Crr;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Reports.Models;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace CSETWebCore.Api.Models
 {
@@ -28,6 +29,8 @@ namespace CSETWebCore.Api.Models
         public List<EdmScoreParent> ParentScores { get; set; }
 
         public ICrrScoringHelper CRRScores { get; set; }
+
+        public object Structure { get; set; }
 
         public CrrReportChart ReportChart { get; set; }
 

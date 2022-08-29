@@ -91,7 +91,7 @@
                       <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                           src="assets/images/icons/MarkedFlag.png"></td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="s.answer.comment">
                       <td></td>
                       <td colspan="4">
                           <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
