@@ -20,7 +20,6 @@ export class CrrNistCsfSummaryComponent implements OnInit {
 
     this.crrSvc.getNistCsfSummaryReportBodyData().subscribe((resp: any[]) => {
       this.bodyData = resp;
-      console.log(this.bodyData)
     })
 
     this.crrSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {
