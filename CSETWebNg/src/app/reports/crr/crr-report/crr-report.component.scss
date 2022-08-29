@@ -645,6 +645,10 @@ div.widget {
 }
 
 @media print {
+  .report-body-crr {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
   .page-margin-top {
     border-top: none;
@@ -656,23 +660,5 @@ div.widget {
 
   .mat-section {
     break-inside: avoid;
-  }
-
-  .crrLastResultsTableRow {
-      margin-left: 1px !important;
-  }
-
-  .mil-upper-grid {
-      padding-right: 0 !important;
-      display: inline-block;
-      height: var(--table-row-height);
-      width: calc(var(--mil-upper-width) / 4);
-  }
-
-  .mil-upper-grid {
-      padding-right: 0 !important;
-      display: inline-block;
-      height: var(--table-row-height);
-      width: calc(var(--mil-upper-width) / 4);
   }
 }
