@@ -66,12 +66,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.ncuaSvc.getCreditUnionData().subscribe(
-      (response: any) => {
-        this.creditUnionOptions = response;
-        console.log("this.creditUnionOptions: " + JSON.stringify(this.creditUnionOptions, null, 4));
-      });
+    if (this.configSvc.installationMode === 'ACET') {
+      this.ncuaSvc.getCreditUnionData().subscribe(
+        (response: any) => {
+          this.creditUnionOptions = response;
+        });
+    }
 
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
