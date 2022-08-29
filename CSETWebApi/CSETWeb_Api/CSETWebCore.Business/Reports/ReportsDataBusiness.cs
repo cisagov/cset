@@ -110,7 +110,7 @@ namespace CSETWebCore.Business.Reports
 
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
             }
 
             NullOutNavigationPropeties(responseList);
