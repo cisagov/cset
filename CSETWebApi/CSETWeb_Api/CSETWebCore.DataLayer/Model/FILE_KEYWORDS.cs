@@ -23,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(60)]
-        [Unicode(false)]
         public string Keyword { get; set; }
 
         [ForeignKey("Gen_File_Id")]

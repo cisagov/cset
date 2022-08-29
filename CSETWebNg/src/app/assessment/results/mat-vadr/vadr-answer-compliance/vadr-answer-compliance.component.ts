@@ -27,6 +27,7 @@ export class VadrAnswerComplianceComponent implements OnInit {
 
   createAnswerDistribByLevel(r: any) {
     let levelList = [];
+    
     r.vadrSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
       if (!level) {
@@ -34,6 +35,7 @@ export class VadrAnswerComplianceComponent implements OnInit {
           name: element.level_Name, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
+            { name: 'Alternate', value: 0 },
             { name: 'Unanswered', value: 0 },
           ]
         };
@@ -56,6 +58,7 @@ export class VadrAnswerComplianceComponent implements OnInit {
           name: element.title, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
+            { name: 'Alternate', value: 0 },
             { name: 'Unanswered', value: 0 },
           ]
         };
@@ -71,10 +74,21 @@ export class VadrAnswerComplianceComponent implements OnInit {
 
   createComplianceByGoal(r: any) {
     let goalList = [];
+    this.answerDistribByGoal.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+
     this.answerDistribByGoal.forEach(element => {
       var yesPercent = element.series.find(x => x.name == 'Yes').value;
+      var altPercent = element.series.find(x => x.name == 'Alternate').value;
 
-      var goal = { name: element.name, value: Math.round(yesPercent) };
+      var goal = { name: element.name, value: Math.round(yesPercent + altPercent) };
       goalList.push(goal);
     });
 

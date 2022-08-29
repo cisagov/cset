@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Budget_Basis { get; set; }
 
         [InverseProperty("Budget_BasisNavigation")]

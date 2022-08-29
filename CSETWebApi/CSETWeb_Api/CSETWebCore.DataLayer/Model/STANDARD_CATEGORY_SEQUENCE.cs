@@ -15,11 +15,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(250)]
-        [Unicode(false)]
         public string Standard_Category { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
         [Column("Standard_Category_Sequence")]
         public int Standard_Category_Sequence1 { get; set; }

@@ -24,26 +24,21 @@ namespace CSETWebCore.DataLayer.Model
         public int Container_Id { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string ContainerType { get; set; }
         [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Name { get; set; }
         [Required]
         public bool? Visible { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string DrawIO_id { get; set; }
         public int Assessment_Id { get; set; }
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Universal_Sal_Level { get; set; }
         public int Parent_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Parent_Draw_IO_Id { get; set; }
 
         [ForeignKey("ContainerType")]

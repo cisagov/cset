@@ -17,9 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public int? Requirement_Id { get; set; }
         [Key]
         public int Compliance_Risk_Rank { get; set; }
-        [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Violation_Risk_Factor { get; set; }
 
         [ForeignKey("Question_id")]

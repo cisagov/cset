@@ -20,21 +20,16 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Sal_Name { get; set; }
-        [Required]
         [StringLength(1024)]
-        [Unicode(false)]
         public string Sal_Description { get; set; }
         public int Sal_Order { get; set; }
         public int? min { get; set; }
         public int? max { get; set; }
         public int? step { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string prefix { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string postfix { get; set; }
 
         [InverseProperty("Sal_NameNavigation")]

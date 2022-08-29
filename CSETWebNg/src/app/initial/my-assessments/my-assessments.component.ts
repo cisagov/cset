@@ -41,6 +41,7 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
+import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { LayoutService } from "../../services/layout.service";
@@ -87,6 +88,8 @@ export class MyAssessmentsComponent implements OnInit {
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
+  prepForMerge: boolean = false;
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -101,6 +104,7 @@ export class MyAssessmentsComponent implements OnInit {
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
     private tsaanalyticSvc :TsaAnalyticsService,
+    private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService
   ) { }
 
@@ -136,6 +140,8 @@ export class MyAssessmentsComponent implements OnInit {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
     this.checkPasswordReset();
+
+    this.ncuaSvc.assessmentsToMerge = [];
   }
 
   /**
@@ -347,6 +353,11 @@ export class MyAssessmentsComponent implements OnInit {
   continueStandAlone() {
     this.router.navigate(['/home']);
   }
+
+  proceedToMerge() {
+    this.router.navigate(['/examination-merge']);
+  }
+    
 }
 
 

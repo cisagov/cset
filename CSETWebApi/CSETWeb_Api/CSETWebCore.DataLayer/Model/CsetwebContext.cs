@@ -33,7 +33,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+        public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+        public virtual DbSet<ASSESSMENT_ICONS> ASSESSMENT_ICONS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
@@ -52,6 +54,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
         public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
+        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CIS_CSI_BUDGET_BASES> CIS_CSI_BUDGET_BASES { get; set; }
@@ -656,6 +659,11 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Answer_Standards_InScope>(entity =>
             {
                 entity.ToView("Answer_Standards_InScope");
+            });
+
+            modelBuilder.Entity<Assessments_For_User>(entity =>
+            {
+                entity.ToView("Assessments_For_User");
             });
 
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
@@ -3190,6 +3198,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
             OnModelCreatingGeneratedProcedures(modelBuilder);
+            OnModelCreatingGeneratedFunctions(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

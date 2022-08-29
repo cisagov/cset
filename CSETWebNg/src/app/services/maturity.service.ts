@@ -237,6 +237,19 @@ export class MaturityService {
   }
 
   /**
+   * Indicates whether to show the scoring bar chart
+   * on MaturityQuestionsNested.  
+   * Someday this could be set in the MATURITY_MODELS table as a profile item
+   * for each model that uses the nested questions structure.
+   */
+   showChartOnNestedQPage(): boolean {
+    if (this.assessSvc.assessment.maturityModel.modelName == "CIS") {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    *
    * @param maturityModel
    */

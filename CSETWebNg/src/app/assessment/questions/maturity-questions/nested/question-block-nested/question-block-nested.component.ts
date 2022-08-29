@@ -43,6 +43,13 @@ export class QuestionBlockNestedComponent implements OnInit {
 
   questionList: Question[];
 
+  /** 
+   * Some models should show the maturity level.
+   * This should probably be a property of the 
+   * maturity model and eventually defined in the database.
+   */
+  showQuestionLevel = false;
+
   // temporary debug aid
   showIdTag = false;
 
@@ -65,6 +72,11 @@ export class QuestionBlockNestedComponent implements OnInit {
 
     if (!!this.questions) {
       this.questionList = this.questions;
+    }
+
+    // MVRA should show the maturity level.  CIS does not.
+    if (this.assessSvc.assessment.maturityModel.modelId == 9) {
+      this.showQuestionLevel = true;
     }
 
     this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
