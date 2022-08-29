@@ -33,6 +33,8 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
+import { ACETService } from '../../../../services/acet.service';
+import { AcetDashboard } from '../../../../models/acet-dashboard.model';
 
 
 @Component({
@@ -53,6 +55,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentCharterControl = new FormControl('');
   creditUnionOptions: CreditUnionDetails[] = [];
   filteredOptions: Observable<CreditUnionDetails[]>;
+  
+  acetDashboard: AcetDashboard;
+  examOverride: string = "";
 
   /**
    * 
@@ -62,42 +67,30 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
+    public acetSvc: ACETService,
     public datePipe: DatePipe
   ) { }
 
   ngOnInit() {
-    if (this.configSvc.installationMode === 'ACET') {
-      this.ncuaSvc.getCreditUnionData().subscribe(
-        (response: any) => {
-          this.creditUnionOptions = response;
-        });
-    }
-
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
 
-    this.filteredOptions = this.assessmentControl.valueChanges.pipe(
-      startWith(''), map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.creditUnionOptions.slice();
-      }),
-    );
-  }
+    if (this.configSvc.installationMode === 'ACET') {
+      this.ncuaSvc.getCreditUnionData().subscribe(
+        (response: any) => {
+          this.creditUnionOptions = response;
+        }
+      );
 
-  displayOptions(creditUnion: CreditUnionDetails): string {
-    return creditUnion.name && creditUnion.name ? creditUnion.name : '';
-  }
-
-  private _filter(name: string): CreditUnionDetails[] {
-    const filterValue = name.toLowerCase();
-    return this.creditUnionOptions.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-    
-  isAnExamination() {
-    if (this.assessment.maturityModel?.modelName === 'ISE') {
-      return true;
+      this.filteredOptions = this.assessmentControl.valueChanges.pipe(
+        startWith(''), map(value => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this.filter(name as string) : this.creditUnionOptions.slice();
+        }),
+      );
     }
+
   }
 
   /**
@@ -105,6 +98,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
+
+    // Load dashboard to keep track of irp overriding
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+        this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
+        this.examOverride = this.ncuaSvc.chosenOverrideLevel;
+    });
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
@@ -129,7 +130,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     this.setCharterPad();
-    
+    this.ncuaSvc.updateAssetSize(this.assessment.assets);
 
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -142,16 +143,25 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
     if (this.assessment.assessmentName === "New Assessment")
       this.createAssessmentName();
+
     
-    // ISE's determine IRP based on asset size
-    this.ncuaSvc.iseAssetSize = this.assessment.assets;
+    
   }
 
+
+  displayOptions (creditUnion: CreditUnionDetails): string {
+    return creditUnion.name && creditUnion.name ? creditUnion.name : '';
+  }
+
+  filter (name: string): CreditUnionDetails[] {
+    const filterValue = name.toLowerCase();
+    return this.creditUnionOptions.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
 
   /**
    * 
    */
-  update(e) {
+  update(e: any) {
     // default Assessment Name if it is left empty
     if (!!this.assessment) {
       if (this.assessment.assessmentName.trim().length === 0) {
@@ -159,24 +169,43 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
+    this.createAssessmentName();
+
+
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
-      if (e.target.value === this.creditUnionOptions[i].name) {
-        this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
-        this.assessment.stateProvRegion = this.creditUnionOptions[i].stateProvinceRegion;
-        this.assessment.charter = this.creditUnionOptions[i].charter;
-      } else if (e.target.value === this.creditUnionOptions[i].charter.toString()) {
-        this.assessment.creditUnion = this.creditUnionOptions[i].name;
-        this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
-        this.assessment.stateProvRegion = this.creditUnionOptions[i].stateProvinceRegion;
+      if (e.target !== undefined) {
+        if (e.target.value === this.creditUnionOptions[i].name) {
+          this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
+          this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
+          this.assessment.charter = this.creditUnionOptions[i].charter;
+        } else if (e.target.value === this.creditUnionOptions[i].charter.toString()) {
+          this.assessment.creditUnion = this.creditUnionOptions[i].name;
+          this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
+          this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
+        }
       }
     }
 
-    this.createAssessmentName();
-
     this.setCharterPad();
 
+    
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
     this.assessSvc.updateAssessmentDetails(this.assessment);
+  }
+
+  updateOverride(e: any) {
+    if (e === "No Override") {
+      this.acetDashboard.override = 0;
+    } else if (e === 'SCUEP') {
+      this.acetDashboard.override = 1;
+    } else if (e === 'CORE') {
+      this.acetDashboard.override = 2;
+    }
+
+    this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
+      this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
+    });
+
   }
 
   /**
@@ -196,6 +225,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   padLeft(text: string, padChar: string, size: number): string {
     return (String(padChar).repeat(size) + text).substr((size * -1), size);
+  }
+
+  isAnExamination() {
+    if (this.assessment.maturityModel?.modelName === 'ISE') {
+      return true;
+    }
   }
 
   /**

@@ -24,7 +24,7 @@
 export class CreditUnionDetails {
     name: string;    
     cityOrSite: string;
-    stateProvinceRegion: string;
+    state: string;
     charter: string;
     model: string
 }

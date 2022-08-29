@@ -116,17 +116,17 @@ export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
   addNcuaOptions() {
     // Add "ACET" and "ISE" assessment options in the order the client wants
     this.features.unshift({
-      code: 'ise',
-      label: 'ISE',
-      description: 'ISE functionality',
-      expanded: false
-    })
-    this.features.unshift({
       code: 'acet',
-      label: 'ACET',
+      label: 'Automated Cybersecurity Evaluation Toolbox (ACET)',
       description: 'ACET functionality',
       expanded: false
     });
+    this.features.unshift({
+      code: 'ise',
+      label: 'Infrastructure Security Examination (ISE)',
+      description: 'ISE functionality',
+      expanded: false
+    })
 
     // Removes network diagram from the list of options when the NCUA switch is on.
     // this.features.pop();
