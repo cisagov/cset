@@ -141,12 +141,24 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
       }
     );
 
-    if (this.ncuaSvc.usingIseOverride === false) {
-      this.ncuaSvc.getIRPfromAssets(true);
-      this.statementLevel = "Statements - " + this.ncuaSvc.iseIRP;
+    if (this.ncuaSvc.usingExamLevelOverride === false) {
+      this.statementLevel = "Statements - " + this.ncuaSvc.proposedExamLevel;
     } else {
-      this.ncuaSvc.getIRPfromOverride();
-      this.statementLevel = "Statements - " + this.ncuaSvc.overrideIRP;
+      this.statementLevel = "Statements - " + this.ncuaSvc.chosenOverrideLevel;
+    }
+
+    if (this.ncuaSvc.usingExamLevelOverride === false) {
+      if (this.ncuaSvc.proposedExamLevel === 'SCUEP') {
+        this.ncuaSvc.refreshGroupList(1);
+      } else if (this.ncuaSvc.proposedExamLevel === 'CORE') {
+        this.ncuaSvc.refreshGroupList(2);
+      }
+    } else {
+      if (this.ncuaSvc.chosenOverrideLevel === 'SCUEP') {
+        this.ncuaSvc.refreshGroupList(1);
+      } else if (this.ncuaSvc.chosenOverrideLevel === 'CORE') {
+        this.ncuaSvc.refreshGroupList(2);
+      }
     }
   }
   
