@@ -36,8 +36,7 @@ a.navbar-brand {
 .report-body-crr {
   font-family: Arial !important;
   font-size: 12pt !important;
-  margin: auto;
-  margin-left: 20vw;
+  margin-left: 15vw !important;
 }
 
 h1 {
@@ -55,13 +54,13 @@ h3 {
 }
 
 h4 {
-  font-size: 14pt;
+  font-size: 16pt;
   color: #005288;
 }
 
 p {
   font-family: Arial;
-  font-size: 12pt;
+  font-size: 14pt;
 }
 
 .small {
@@ -646,6 +645,7 @@ div.widget {
 
   /* Print styles */
 @page {
+  size: A4;
   margin: 0;
 
   @bottom-right {
@@ -655,13 +655,41 @@ div.widget {
 
 @media print {
 
+  html, body {
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
   .report-body-crr {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    margin-left: 1.5cm !important;
+    margin-right: 1.5cm !important;
+  }
+
+  #coversheet1 {
+    margin-left: -2cm;
+    margin-right: -2cm;
+  }
+
+  .container-fluid, .report-body-crr {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .page-margin-top {
     border-top: none !important;
+  }
+
+  #notification-page-break {
+    padding-top: 1.5cm !important;
+  }
+
+  #mil4-page-break {
+    padding-top: 1.5cm !important;
+    page-break-after: always;
+  }
+
+  .page-break {
+    padding-top: 1.5cm !important;
   }
 
   .container {
@@ -670,9 +698,5 @@ div.widget {
 
   .mat-section {
     break-inside: avoid !important;
-  }
-
-  .report-notification {
-    margin-top: 50mm;
   }
 }
