@@ -54,9 +54,6 @@ export class DomainMaturityFilterComponent implements OnInit {
   // the domain that we are filtering
   domainName: string;
 
-  // ISE shouldn't show "traditional" IRP buttons
-  iseIRPSetting: string = "";
-
   constructor(
     public questionsSvc: QuestionsService,
     public maturityFilteringSvc: MaturityFilteringService,
@@ -107,10 +104,10 @@ export class DomainMaturityFilterComponent implements OnInit {
   }
 
   determineIseFilter() {
-    this.iseIRPSetting = this.ncuaSvc.getIRPfromOverride();
-    
-    if (this.iseIRPSetting === 'SCUEP') {
-      this.maturityLevels = [{"level": "1", "label": "SCUEP", "applicable": true}];
+    if (this.ncuaSvc.proposedExamLevel === 'SCUEP' || 
+      this.ncuaSvc.chosenOverrideLevel === "No Override" ||
+      this.ncuaSvc.chosenOverrideLevel === 'SCUEP') {
+        this.maturityLevels = [{"level": "1", "label": "SCUEP", "applicable": true}];
       } else {
         this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
       }
