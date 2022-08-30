@@ -643,13 +643,17 @@ div.widget {
   margin-left: 1px;
 }
 
-  /* Print styles */
+
+/* Print styles */
 @page {
   size: A4;
   margin: 0;
+}
 
-  @bottom-right {
-    content: counter(page);
+@media screen {
+  table.page-layout {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -680,11 +684,10 @@ div.widget {
   }
 
   #notification-page-break {
-    padding-top: 1.5cm !important;
+    margin-top: 1.5cm !important;
   }
 
   #mil4-page-break {
-    padding-top: 1.5cm !important;
     page-break-after: always;
   }
 
@@ -698,5 +701,22 @@ div.widget {
 
   .mat-section {
     break-inside: avoid !important;
+  }
+
+  .print-footer-right, .header-space,
+  .print-footer-left, .footer-space {
+    height: 2cm;
+  }
+
+  .print-footer-right {
+    position: fixed;
+    bottom: 3cm;
+    right: 3cm;
+  }
+
+  .print-footer-left {
+    position: fixed;
+    bottom: 3cm;
+    left: 1.5cm;
   }
 }
