@@ -1,2 +1,19 @@
+.card-image-parent{
+  position: absolute;
+  clip-path: inset(0);
+  right: 0px;
+  top:0;
+  width: 200px;
+  height: 200px;
+  z-index: 0;
+}
 
+.card-image-child {
+  height: 190px !important;
+  right: -20px;
+  top: -28px;
+  clip-path: inset(0);
+  position: absolute;
+  opacity: 20%;
+}
 
