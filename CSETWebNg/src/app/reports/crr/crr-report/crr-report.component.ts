@@ -34,10 +34,18 @@ import { Title } from '@angular/platform-browser';
 export class CrrReportComponent implements OnInit {
 
   crrModel: CrrReportModel;
+  securityLevel: string = '';
 
   constructor(private crrSvc: CrrService, private titleSvc: Title) { }
 
   ngOnInit(): void {
+
+    const securityLevel = localStorage.getItem('crrReportConfidentiality');
+    if (securityLevel) {
+      securityLevel !== 'None' ? this.securityLevel = securityLevel : this.securityLevel = '';
+      localStorage.removeItem('crrReportConfidentiality');
+    }
+
     this.titleSvc.setTitle('CRR Report - CSET');
     this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
 
