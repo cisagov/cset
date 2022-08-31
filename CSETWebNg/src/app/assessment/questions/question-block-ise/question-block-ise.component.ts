@@ -39,11 +39,11 @@ import { LayoutService } from '../../../services/layout.service';
  * of the question block can eventually replace the original.
  */
 @Component({
-  selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html',
-  styleUrls: ['./question-block-maturity.component.scss']
+  selector: 'app-question-block-ise',
+  templateUrl: './question-block-ise.component.html',
+  styleUrls: ['./question-block-ise.component.scss']
 })
-export class QuestionBlockMaturityComponent implements OnInit {
+export class QuestionBlockIseComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
 
@@ -56,8 +56,18 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
+  textForSummary = "Insert comments relating to this statement / category";
+
+  contactInitials = "";
+  altAnswerSegment = "";
+  convoBuffer = '\n- - End of Issue - -\n';
+  // altAnswerConversation = [];
 
   showQuestionIds = false;
+
+  showCorePlus: boolean = false;
+  coreChecked: boolean = false;
 
 
   /**
@@ -82,6 +92,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
+      if (this.assessSvc.isISE()) {
+        this.configSvc.buttonLabels['A'] = "Issue(N)";
+        this.configSvc.answerLabels['A'] = "No with Issue(s)";
+      } else {
         this.configSvc.buttonLabels['A'] = "Yes(C)";
         this.configSvc.answerLabels['A'] = "Yes Compensating Control"
       }
@@ -98,15 +112,26 @@ export class QuestionBlockMaturityComponent implements OnInit {
       // });
 
       if (this.configSvc.installationMode === "ACET") {
-          this.altTextPlaceholder = this.altTextPlaceholder_ACET;      
+        if (this.assessSvc.isISE()) {
+          this.altTextPlaceholder = this.altTextPlaceholder_ISE;
+        }
+        else {
+          this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+        }
       }
-
+    }
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+      this.contactInitials = firstInitial + lastInitial;
+    });
   }
 
   /**
@@ -253,6 +278,60 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
+        if (!!q.altAnswerText) {
+          if (q.altAnswerText.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
+            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
+          }
+
+          else {
+            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
+                let newComment = q.altAnswerText.substring(oldComments.length);
+
+                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              // }
+            }
+          }
+        }
+      }
+    }
+    // Matt's work in progress for adding contact initials to comments
+    // else{
+
+    // }
+
+
+
+    // if (q.altAnswerText.charAt(0) !== "[") {
+    //   this.altAnswerSegment = '[' + this.contactInitials + '] ' + q.altAnswerText + this.convoBuffer;
+    //   this.altAnswerConversation.push(this.altAnswerSegment);
+    // }
+
+    // else {
+    //   let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+    //   let newTextStart = q.altAnswerText.lastIndexOf(this.convoBuffer);
+
+    //   this.altAnswerSegment = q.altAnswerText.substring(newTextStart);
+
+    //   if (previousContactInitials !== this.contactInitials) {
+    //     this.altAnswerSegment = '[' + this.contactInitials + '] ' + this.altAnswerSegment + this.convoBuffer;
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+    //   }
+    //   else {
+    //     this.altAnswerConversation.pop();
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+
+    //   }
+    // }
+
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -280,4 +359,94 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   }
 
+  /**
+   * Very similar to 'storeAltText' above. Text box is at the end of each question set, and
+   * attaches to the parent statement.
+   * @param q
+
+  */
+  storeSummaryComment(q: Question, e: any) {
+    q.comment = e.target.value;
+ 
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.parentQuestionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: e.target.value,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+  
+    this.refreshReviewIndicator();
+  
+    this.questionsSvc.storeAnswer(answer)
+      .subscribe();
+    }, 500);
+
+  }
+
+  getSummaryComment(q) {
+    let parentId = q.parentQuestionId;
+    let comment = "";
+
+    for (const question of this.myGrouping.questions) {
+      if (question.questionId === parentId) {
+        comment = question.comment;
+        break;
+      }
+    }
+
+    return comment;
+  }
+
+
+  showSummaryCommentBox(id: number) {
+    switch(id) {
+      // Final question under each SCUEP parent
+      case (7196): case(7201): case(7206): case(7214):
+      case (7217): case(7220): case(7225):
+      // Final question under each CORE parent (before CORE+)
+      case (7233): case (7238): case (7244): case (7249): 
+      case (7256): case (7259): case (7265): case (7273): 
+      case (7276): case (7281): case (7285): case (7289): 
+      case (7293): case (7296): case (7301): case (7304):
+      // Final question under each CORE+ parent
+      case (7421): case (7429): case (7444): case (7450):
+      case (7458): case (7465):
+        return true;
+    }
+  }
+
+  showCorePlusButton(id: number) {
+    switch(id) {
+      // Final question under each CORE parent
+      case (7233): case (7238): case (7244): case (7249): 
+      case (7256): case (7265): case (7273): case (7276): 
+      case (7281): case (7285): case (7289): case (7293): 
+      case (7296): case (7301): case (7304):
+        return true;
+    }
+  }
+
+  updateCorePlusStatus(q: Question) {
+    this.showCorePlus = !this.showCorePlus
+
+    if (this.showCorePlus) {
+      this.ncuaSvc.showCorePlus = true;
+    } else if (!this.showCorePlus) {
+      this.ncuaSvc.showCorePlus = false;
+    }
+  }
+
+  
 }
