@@ -116,6 +116,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
+        if (reportType === 'crrreport') {
+          localStorage.setItem('crrReportConfidentiality', this.securitySelected);
+        }
+
         window.open(url, "_blank");
     }
 

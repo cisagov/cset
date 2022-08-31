@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { CrrReportModel } from '../../../../models/reports.model';
+import { CrrService } from '../../../../services/crr.service';
 
 @Component({
   selector: 'app-crr-nist-csf-cat-performance',
@@ -33,9 +34,15 @@ export class CrrNistCsfCatPerformanceComponent implements OnInit {
 
   @Input() model: CrrReportModel;
 
-  constructor() { }
+  bodyData: any[] = [];
+
+  constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
+    this.crrSvc.getNistCsfCatPerformanceBodyData().subscribe((resp: any[]) => {
+      this.bodyData = resp;
+      console.log(this.bodyData);
+    })
   }
 
 }

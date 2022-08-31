@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,8 +41,8 @@ let headers = {
  @Injectable({
     providedIn: 'root'
   })
-  
- export class NCUAService {
+
+ export class NCUAService implements OnInit {
 
   // used to determine whether this is an NCUA installation or not
   apiUrl: string;
@@ -71,7 +71,9 @@ let headers = {
     private configSvc: ConfigService,
     public dialog: MatDialog,
     public acetFilteringSvc: AcetFilteringService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.init();
   }
 
@@ -124,12 +126,12 @@ let headers = {
 
       if (this.mainAssessCharter === "") {
         this.mainAssessCharter = tempCharter;
-      } 
-      
+      }
+
       if (this.mainAssessCharter !== tempCharter && this.hasShownCharterWarning === false) {
         this.openCharterWarning();
       }
-      
+
       this.assessmentsToMerge.push(assessment.assessmentId);
     } else {
       const index = this.assessmentsToMerge.indexOf(assessment.assessmentId);
@@ -177,7 +179,7 @@ let headers = {
     let id8 = (this.assessmentsToMerge[7] !== undefined ? this.assessmentsToMerge[7] : 0);
     let id9 = (this.assessmentsToMerge[8] !== undefined ? this.assessmentsToMerge[8] : 0);
     let id10 = (this.assessmentsToMerge[9] !== undefined ? this.assessmentsToMerge[9] : 0);
-   
+
 
     headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
     .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
