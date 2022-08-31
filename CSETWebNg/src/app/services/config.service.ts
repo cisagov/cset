@@ -132,6 +132,7 @@ export class ConfigService {
     if (this.installationMode === 'ACET') {
       this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
     }
+    this.buttonLabels['Iss'] = this.config.buttonLabelIss;
     this.buttonLabels['I'] = this.config.buttonLabelI;
 
     this.answerLabels['Y'] = this.config.answerLabelY;
@@ -141,6 +142,7 @@ export class ConfigService {
     if (this.installationMode === 'ACET') {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
+    this.answerLabels['Iss'] = this.config.answerLabelIss;
     this.answerLabels['U'] = this.config.answerLabelU;
     this.answerLabels[''] = this.config.answerLabelU;
     this.answerLabels['I'] = this.config.answerLabelI;
@@ -160,6 +162,7 @@ export class ConfigService {
     this.buttonClasses['N'] = 'btn-no';
     this.buttonClasses['NA'] = 'btn-na';
     this.buttonClasses['A'] = 'btn-alt';
+    this.buttonClasses['Iss'] = 'btn-iss';
     this.buttonClasses['I'] = 'btn-inc';
   }
 
