@@ -12,7 +12,6 @@
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
-    "reportsApi":"http://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
@@ -27,6 +26,7 @@
 
     "showQuestionAndRequirementIDs": false,
     "showBuildTime": false,
+    "mobileEnvironment": "",
 
     "installationMode": "",
 

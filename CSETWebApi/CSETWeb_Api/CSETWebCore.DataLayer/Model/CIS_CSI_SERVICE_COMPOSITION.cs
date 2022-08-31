@@ -18,22 +18,16 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Assessment_Id { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Networks_Description { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Services_Description { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Applications_Description { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Connections_Description { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Personnel_Description { get; set; }
         [StringLength(400)]
-        [Unicode(false)]
         public string Other_Defining_System_Description { get; set; }
         public int? Primary_Defining_System { get; set; }
 

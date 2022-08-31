@@ -25,7 +25,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(255)]
         public string FinComponent { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Acronym { get; set; }
         public int? Number { get; set; }
 

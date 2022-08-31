@@ -37,7 +37,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         public bool? Is_Visible { get; set; }
-        [Unicode(false)]
         public string Diagram_Markup { get; set; }
         public string Image_Source { get; set; }
     }

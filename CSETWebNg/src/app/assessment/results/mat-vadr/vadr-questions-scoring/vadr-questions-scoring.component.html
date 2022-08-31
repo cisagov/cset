@@ -1,23 +1,24 @@
-
 <table class="cset-table" class="table table-striped">
   <thead>
-  <tr>
-      <th></th>
-      <th class="text-right">Yes</th>
-      <th class="text-right">No</th>
-      <th class="text-right">Unanswered</th>
-      <th class="text-right">Total Practices</th>
-      <th class="text-right">Percent Complete</th>
-  </tr>
-</thead>
-<tbody>
-  <tr *ngFor="let g of goalTable">
+    <tr>
+      <th>Goal</th>
+      <th class="text-right" style="width: 7%">Yes</th>
+      <th class="text-right" style="width: 7%">No</th>
+      <th class="text-right" style="width: 7%">Alt</th>
+      <th class="text-right" style="width: 7%">Unanswered</th>
+      <th class="text-right" style="width: 7%">Total Practices</th>
+      <th class="text-right" style="width: 7%">Percent Complete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let g of goalTable">
       <td>{{g.name}}</td>
       <td class="text-right">{{g.yes}}</td>
       <td class="text-right">{{g.no}}</td>
+      <td class="text-right">{{g.alt}}</td>
       <td class="text-right">{{g.unanswered}}</td>
       <td class="text-right">{{g.total}}</td>
       <td class="text-right">{{g.percent}}%</td>
-  </tr>
-</tbody>
+    </tr>
+  </tbody>
 </table>

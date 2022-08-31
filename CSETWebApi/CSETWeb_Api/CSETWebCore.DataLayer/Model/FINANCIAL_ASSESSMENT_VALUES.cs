@@ -17,10 +17,8 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Key]
         [StringLength(250)]
-        [Unicode(false)]
         public string AttributeName { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string AttributeValue { get; set; }
 
         [ForeignKey("Assessment_Id")]

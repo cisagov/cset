@@ -156,7 +156,9 @@ export class TopMenusComponent implements OnInit {
     }));
     // Keyboard Shortcuts
     this._hotkeysService.add(new Hotkey('?', (event: KeyboardEvent): boolean => {
-      this.showKeyboardShortcuts();
+      if (!this.configSvc.isMobile()) {
+        this.showKeyboardShortcuts();
+      }
       return false; // Prevent bubbling
     }));
 
@@ -197,6 +199,26 @@ export class TopMenusComponent implements OnInit {
     return this.router.url !== '/resource-library';
   }
 
+  /**
+   * Hides user guide menu items that are not relevant to the current assessment.
+   */
+  isVisible(module: string) {
+    // we hide these on the phone
+    if (this.configSvc.isMobile()) {
+      return false;
+    }
+
+    if (this.assessSvc.assessment?.maturityModel?.modelName == module) {
+      return true;
+    }
+
+    if (module == 'TSA') {
+      return this.assessSvc.assessment?.workflow == 'TSA';
+    }
+
+    return false;
+  }
+
   showMenuStrip() {
     return this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
@@ -204,7 +226,8 @@ export class TopMenusComponent implements OnInit {
   }
 
   showResourceLibraryLink() {
-    return this.router.url !== '/resource-library'
+    return !this.configSvc.isMobile()
+      && this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
       && !this.isModuleBuilder(this.router.url);
   }

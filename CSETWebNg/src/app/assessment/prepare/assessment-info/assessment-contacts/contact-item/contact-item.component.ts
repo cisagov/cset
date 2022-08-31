@@ -269,4 +269,3 @@ export class ContactItemComponent implements OnInit {
     this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
   }
 }
-

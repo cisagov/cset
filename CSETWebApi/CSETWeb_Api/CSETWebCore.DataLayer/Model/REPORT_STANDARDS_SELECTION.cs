@@ -14,7 +14,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Assesment_Id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Report_Set_Entity_Name { get; set; }
         public int Report_Section_Order { get; set; }
         public bool Is_Selected { get; set; }

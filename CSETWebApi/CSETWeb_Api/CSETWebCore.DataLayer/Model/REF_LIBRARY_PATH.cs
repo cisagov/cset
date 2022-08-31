@@ -34,7 +34,6 @@ namespace CSETWebCore.DataLayer.Model
         /// The Path Name is used to
         /// </summary>
         [StringLength(60)]
-        [Unicode(false)]
         public string Path_Name { get; set; }
 
         [ForeignKey("Parent_Path_Id")]

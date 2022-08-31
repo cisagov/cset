@@ -30,7 +30,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Heading_Pair_Id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
 
         public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
