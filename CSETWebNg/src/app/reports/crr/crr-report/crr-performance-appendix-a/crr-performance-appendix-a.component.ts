@@ -43,9 +43,8 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
 
   ngOnInit(): void {
     this.crrSvc.getCrrPerformanceAppendixA().subscribe((resp: CrrPerformanceAppendixA) =>{
-      console.log("resp.CrrPerformanceLegend:  "+resp.crrPerformanceLegend);
       this.modelData = resp;
-      console.log("this.modelData.CrrPerformanceLegend:  "+this.modelData.crrPerformanceLegend);
+      console.log(this.modelData);
     });
 
     }
