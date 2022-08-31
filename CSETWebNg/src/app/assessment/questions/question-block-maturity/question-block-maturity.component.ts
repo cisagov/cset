@@ -57,7 +57,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
-  textForSummary = "Question Comments";
+  textForSummary = "Insert comments relating to this statement / category";
 
   contactInitials = "";
   altAnswerSegment = "";
