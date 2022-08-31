@@ -309,6 +309,7 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
@@ -761,6 +762,7 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         AcetOriginComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
+        QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
