@@ -2,6 +2,8 @@
 
 
 
+
+
 /**
 The default consists of one one question 
 joined on the types in the diagram
@@ -13,7 +15,7 @@ AS
 
 SELECT                   
 	-- This guarantees a unique column to key on in the model
-	CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
+	CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
 	a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text, 
 	CONVERT(nvarchar(1000), a.Comment) AS Comment, CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification, 
 	a.Question_Number, q.Simple_Question AS QuestionText, 		
