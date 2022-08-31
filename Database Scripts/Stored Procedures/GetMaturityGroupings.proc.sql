@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [dbo].[GetMaturityGroupings]
+CREATE PROCEDURE GetMaturityGroupings
 	@ModelID int
 AS
 BEGIN
