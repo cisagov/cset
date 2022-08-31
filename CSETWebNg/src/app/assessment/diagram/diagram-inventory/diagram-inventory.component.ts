@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { saveAs } from "file-saver";
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -32,11 +31,28 @@ import { Router } from '@angular/router';
 })
 export class DiagramInventoryComponent implements OnInit {
 
-  constructor(public diagramSvc: DiagramService, public router: Router) { }
+  componentsExist: boolean = true;
 
-  ngOnInit() {
+  /**
+   * 
+   */
+  constructor(public diagramSvc: DiagramService) { }
+
+  /**
+   * 
+   */
+  ngOnInit() { }
+
+  /**
+   * 
+   */
+  onChange(list: any) {
+    this.componentsExist = list.length > 0;
   }
 
+  /**
+   * 
+   */
   getExport() {
     this.diagramSvc.getExport().subscribe(data => {
       saveAs(data, 'diagram-inventory-export.xlsx');
@@ -44,9 +60,5 @@ export class DiagramInventoryComponent implements OnInit {
       error => {
         console.log('Error downloading file');
       });
-  }
-
-  navToDiagram() {
-    this.router.navigateByUrl("/assessment/" + localStorage.getItem('assessmentId') + "/prepare/diagram/info");
   }
 }
