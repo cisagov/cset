@@ -45,10 +45,11 @@
                         <td [attr.rowspan]="e.subCatsCount" style="height: 100%; padding: 0; border: none;"
                         [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
                             <div class="function">
-                                <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }}) </div>
+                                <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }})</div>
                             </div>
                         </td>
-                        <td style="padding: 0 1rem; border: none;" [innerHtml]="'\<b\>' + e.function.Function.name.toUpperCase() + ' Summary\</b\>\<br /\>' + e.chart | safe">
+                        <td style="padding: 0 1rem; border: none;"
+                        [innerHtml]="'\<b\>' + e.function.Function.name.toUpperCase() + ' Summary\</b\>\<br /\>' + e.chart | safe">
                         </td>
                         <td colspan="2" style="font-size: 12px; border: none;">
                             <b>
@@ -58,16 +59,20 @@
                     </tr>
                     <tr *ngFor="let cat of e.cats" class="bb-2" style="border: none;">
                         <td class="category" style="padding: 0 1rem; border: none;">
-                            <div style="font-size: 10px; margin-bottom: 1rem;">
+                            <div style="width: 70%; font-size: 10px; margin-bottom: 1rem;">
                                 <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
                             </div>
-                            <ng-container *ngIf="cat.heatMaps.length">CRR Practices<br/>
-                                <div *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe"></div>
+                            <ng-container *ngIf="cat.heatMaps.length">
+                                CRR Practices<br/>
+                                <div class="d-flex justify-content-start align-items-center flex-wrap" style="column-gap: 15px; width: 70%">
+                                    <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe"></div>
+                                </div>
                             </ng-container>
                         </td>
                         <td colspan="2" style="padding: 3px 0 0 0; border: none;">
                             <table style="margin: 0; border: none;">
-                                <tr *ngFor="let subCat of cat.subCats; let i = index" [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''" style="padding: 1rem; border: none;">
+                                <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
+                                [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
                                     <td style="width: 210px; padding: 0.25rem; border: none; font-size: 10px;">
                                         <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                     </td>
