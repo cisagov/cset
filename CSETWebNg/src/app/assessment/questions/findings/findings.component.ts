@@ -49,7 +49,7 @@ export class FindingsComponent implements OnInit {
     private dialog: MatDialogRef<FindingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
-    private assessSvc: AssessmentService
+    public assessSvc: AssessmentService
   ) {
     this.finding = data;
     this.answerID = data.answer_Id;
@@ -135,4 +135,5 @@ export class FindingsComponent implements OnInit {
       }
     });
   }
+
 }

@@ -1,24 +1,19 @@
 
 <div class="assess-component d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <h3>Summary Results</h3>
-        <link rel="stylesheet" type="text/css" [href]="stylesheetUrl">
-
         <div class="my-5">
           <div *ngIf="!summaryResultLoaded" class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
-          <div *ngIf="summaryResultLoaded" [innerHtml]="summaryResult | safe"></div>
+            <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
         </div>
 
         <div class="my-5">
-            <h3>Percentage of Practices Completed by Domain</h3>
-            <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
-              <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-            <canvas id="percentagePractices">{{chart}}</canvas>
+          <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+          <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
         </div>
-
 
         <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
     </div>

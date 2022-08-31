@@ -32,14 +32,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(100)]
-        [Unicode(false)]
         public string File_Name { get; set; }
         /// <summary>
         /// The Component Family Name is used to
         /// </summary>
         [Required]
         [StringLength(150)]
-        [Unicode(false)]
         public string Component_Family_Name { get; set; }
         /// <summary>
         /// The Symbol Group Id is used to
@@ -49,18 +47,15 @@ namespace CSETWebCore.DataLayer.Model
         /// The Abbreviation is used to
         /// </summary>
         [Required]
-        [StringLength(5)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Abbreviation { get; set; }
         public bool IsService { get; set; }
         [Required]
         [StringLength(100)]
-        [Unicode(false)]
         public string Symbol_Name { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string Search_Tags { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }

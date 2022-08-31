@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Mat_Question_Type { get; set; }
 
         [InverseProperty("Mat_Question_TypeNavigation")]

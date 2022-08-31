@@ -30,16 +30,13 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reportscmmc/maturitymodel")]
-        public IActionResult GetMaturityModel(string token)
+        public IActionResult GetMaturityModel()
         {
-            _token.Init(token);
-            int assessmentId = _token.AssessmentForUser(token);
-            HttpContext.Session.Set("token", Encoding.ASCII.GetBytes(token));
-
-            var detail = _assessment.GetAssessmentDetail(assessmentId, token);
-            var demographics = _demographic.GetDemographics(assessmentId);
-
+            int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
+
+            var detail = _assessment.GetAssessmentDetail(assessmentId);
+
 
             var reportData = new MaturityBasicReportData()
             {
@@ -50,6 +47,11 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _report.GetMarkedForReviewList(),
                 AlternateList = _report.GetAlternatesList()
             };
+
+            reportData.DeficienciesList = reportData.AddMissingParentsTo(reportData.DeficienciesList);
+            reportData.Comments = reportData.AddMissingParentsTo(reportData.Comments);
+            reportData.MarkedForReviewList = reportData.AddMissingParentsTo(reportData.MarkedForReviewList);
+            reportData.AlternateList = reportData.AddMissingParentsTo(reportData.AlternateList);
 
             var viewModel = new ReportVM(detail, reportData);
             

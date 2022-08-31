@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
         public int IRP_HEADER_ID { get; set; }
         public int? RISK_LEVEL { get; set; }
         [StringLength(500)]
-        [Unicode(false)]
         public string COMMENT { get; set; }
 
         [ForeignKey("ASSESSMENT_ID")]

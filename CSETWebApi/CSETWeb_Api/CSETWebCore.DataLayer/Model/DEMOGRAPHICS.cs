@@ -23,26 +23,21 @@ namespace CSETWebCore.DataLayer.Model
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Size { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string AssetValue { get; set; }
         public bool NeedsPrivacy { get; set; }
         public bool NeedsSupplyChain { get; set; }
         public bool NeedsICS { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string OrganizationName { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? Facilitator { get; set; }
         public int? PointOfContact { get; set; }
         public bool? IsScoped { get; set; }
         [StringLength(100)]
-        [Unicode(false)]
         public string CriticalService { get; set; }
 
         [ForeignKey("Assessment_Id")]

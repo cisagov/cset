@@ -30,20 +30,16 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Application_Mode { get; set; }
         /// <summary>
         /// The Selected Sal Level is used to
         /// </summary>
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Selected_Sal_Level { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Last_Sal_Determination_Type { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Sort_Set_Name { get; set; }
         public bool Is_Advanced { get; set; }
 

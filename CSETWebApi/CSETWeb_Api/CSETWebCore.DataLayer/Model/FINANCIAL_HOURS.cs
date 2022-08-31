@@ -17,16 +17,13 @@ namespace CSETWebCore.DataLayer.Model
         public int Assessment_Id { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Component { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string ReviewType { get; set; }
         [Column(TypeName = "decimal(9, 2)")]
         public decimal Hours { get; set; }
         [StringLength(512)]
-        [Unicode(false)]
         public string OtherSpecifyValue { get; set; }
 
         [ForeignKey("Assessment_Id")]

@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         public int Level { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Level_Name { get; set; }
         [Key]
         public int Maturity_Level_Id { get; set; }

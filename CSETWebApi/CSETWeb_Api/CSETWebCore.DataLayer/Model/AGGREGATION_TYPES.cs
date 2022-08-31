@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Aggregation_Mode { get; set; }
 
         [InverseProperty("Aggregation_ModeNavigation")]

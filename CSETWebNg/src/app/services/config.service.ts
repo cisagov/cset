@@ -30,7 +30,6 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class ConfigService {
 
-  reportsUrl: string;
   apiUrl: string;
   appUrl: string;
   docUrl: string;
@@ -56,6 +55,15 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   installationMode = '';
+
+  /**
+   * Specifies the mobile ecosystem that the app is running on.
+   * This is set by the build process when building CSET as
+   * a mobile app.  If not being built for mobile, this property
+   * will contain an empty string or "none".
+   */
+  mobileEnvironment = '';
+
 
   canDeleteCustomModules = false;
 
@@ -92,16 +100,14 @@ export class ConfigService {
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
           this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
-          if (localStorage.getItem("reportsApiUrl") != null) {
-            this.reportsUrl = localStorage.getItem("reportsApiUrl");
-          } else {
-            this.reportsUrl = data.reportsApi;
-          }
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
+
+
+          this.mobileEnvironment = (this.config.mobileEnvironment);
 
           this.canDeleteCustomModules = (this.config.canDeleteCustomModules ?? false);
 
@@ -155,6 +161,18 @@ export class ConfigService {
     this.buttonClasses['NA'] = 'btn-na';
     this.buttonClasses['A'] = 'btn-alt';
     this.buttonClasses['I'] = 'btn-inc';
+  }
+
+  /**
+   * A convenience method so that consumers can quickly know whether
+   * CSET is currently running as a mobile app or not.
+   */
+  isMobile(): boolean {
+    if (this.mobileEnvironment.toUpperCase() == 'NONE'
+      || this.mobileEnvironment == '') {
+      return false;
+    }
+    return true;
   }
 
   /**

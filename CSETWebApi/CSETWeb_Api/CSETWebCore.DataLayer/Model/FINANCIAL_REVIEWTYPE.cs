@@ -20,7 +20,6 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string ReviewType { get; set; }
 
         [InverseProperty("ReviewTypeNavigation")]

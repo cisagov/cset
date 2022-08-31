@@ -17,15 +17,13 @@ namespace CSETWebCore.DataLayer.Model
         /// The Universal Sal Level is used to
         /// </summary>
         [Key]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Universal_Sal_Level { get; set; }
         /// <summary>
         /// The Standard Level is used to
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard_Level { get; set; }
 
         [ForeignKey("Standard_Level")]

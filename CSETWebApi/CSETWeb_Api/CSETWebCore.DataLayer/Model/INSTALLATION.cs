@@ -13,15 +13,12 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public partial class INSTALLATION
     {
-        [Required]
         [StringLength(200)]
-        [Unicode(false)]
         public string JWT_Secret { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime Generated_UTC { get; set; }
         [Key]
         [StringLength(200)]
-        [Unicode(false)]
         public string Installation_ID { get; set; }
     }
 }

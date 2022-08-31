@@ -27,8 +27,7 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [Column("Universal_Sal_Level")]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Universal_Sal_Level1 { get; set; }
         /// <summary>
         /// The Sal Level Order is used to
@@ -38,8 +37,7 @@ namespace CSETWebCore.DataLayer.Model
         /// The Full Name Sal is used to
         /// </summary>
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Full_Name_Sal { get; set; }
 
         [InverseProperty("Universal_Sal_LevelNavigation")]

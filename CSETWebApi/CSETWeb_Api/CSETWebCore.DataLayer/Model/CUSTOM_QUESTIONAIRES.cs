@@ -18,14 +18,11 @@ namespace CSETWebCore.DataLayer.Model
 
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Custom_Questionaire_Name { get; set; }
         [StringLength(800)]
-        [Unicode(false)]
         public string Description { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
 
         [InverseProperty("Custom_Questionaire_NameNavigation")]

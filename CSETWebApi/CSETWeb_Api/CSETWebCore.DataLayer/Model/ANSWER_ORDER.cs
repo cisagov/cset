@@ -12,7 +12,6 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Answer_Text { get; set; }
         [Column("answer_order")]
         public int answer_order1 { get; set; }

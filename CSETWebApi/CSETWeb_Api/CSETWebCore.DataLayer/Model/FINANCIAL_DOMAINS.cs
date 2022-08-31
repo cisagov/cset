@@ -27,7 +27,6 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int DomainId { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Acronym { get; set; }
 
         [InverseProperty("Domain")]

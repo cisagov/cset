@@ -39,10 +39,12 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<analytics_compute_single_averages_maturityResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_compute_single_averages_standardResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_Compute_standard_allResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_selectedStandardListResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<CheckHeadingResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<clean_out_requirements_modeResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<DeleteUserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<final_data_movesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Assess_Detail_Filter_DataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_Merge_ConflictsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
@@ -83,6 +85,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_getExplodedComponentResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFinancialQuestionsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFirstPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getGenericModelSummaryByGoalResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getMedianOverallResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getMinMaxAverageForSectorIndustryResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getOverallRankedCategoriesResult>().HasNoKey().ToView(null);
@@ -106,6 +109,11 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_GetStandardsSummaryPageResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getStandardSummaryOverallResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GetTop5AreasResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryPageResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_MaturityDetailsCalculationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_StatementsReviewedResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_StatementsReviewedTabTotalsResult>().HasNoKey().ToView(null);
@@ -295,6 +303,32 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<analytics_Compute_standard_allResult>("EXEC @returnValue = [dbo].[analytics_Compute_standard_all] @assessment_id, @set_name, @sector_id, @industry_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<analytics_selectedStandardListResult>> analytics_selectedStandardListAsync(int? standard_assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "standard_assessment_id",
+                    Value = standard_assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<analytics_selectedStandardListResult>("EXEC @returnValue = [dbo].[analytics_selectedStandardList] @standard_assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -561,6 +595,33 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<final_data_movesResult>("EXEC @returnValue = [dbo].[final_data_moves]", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "model",
+                    Size = 100,
+                    Value = model ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Get_Assess_Detail_Filter_DataResult>("EXEC @returnValue = [dbo].[Get_Assess_Detail_Filter_Data] @model", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1901,6 +1962,38 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+        public virtual async Task<List<usp_getGenericModelSummaryByGoalResult>> usp_getGenericModelSummaryByGoalAsync(int? assessment_id, int? maturity_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "maturity_model_id",
+                    Value = maturity_model_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getGenericModelSummaryByGoalResult>("EXEC @returnValue = [dbo].[usp_getGenericModelSummaryByGoal] @assessment_id, @maturity_model_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<usp_getMedianOverallResult>> usp_getMedianOverallAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -2487,6 +2580,136 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_GetTop5AreasResult>("EXEC @returnValue = [dbo].[usp_GetTop5Areas] @Aggregation_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryResult>> usp_getVADRSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryResult>("EXEC @returnValue = [dbo].[usp_getVADRSummary] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryByGoalResult>> usp_getVADRSummaryByGoalAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryByGoalResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryByGoal] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryByGoalOverallResult>> usp_getVADRSummaryByGoalOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryByGoalOverallResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryByGoalOverall] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryOverallResult>> usp_getVADRSummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryOverallResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryOverall] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getVADRSummaryPageResult>> usp_getVADRSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getVADRSummaryPageResult>("EXEC @returnValue = [dbo].[usp_getVADRSummaryPage] @assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

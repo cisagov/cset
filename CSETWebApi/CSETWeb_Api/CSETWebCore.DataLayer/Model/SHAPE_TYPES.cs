@@ -15,19 +15,13 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Diagram_Type_XML { get; set; }
-        [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Telerik_Shape_Type { get; set; }
-        [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Visio_Shape_Type { get; set; }
         public bool IsDefault { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string DisplayName { get; set; }
     }
 }

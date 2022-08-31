@@ -16,7 +16,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Maturity_Question_Id { get; set; }
         [Key]
         [StringLength(200)]
-        [Unicode(false)]
         public string Question_Group { get; set; }
 
         [ForeignKey("Maturity_Model_Id")]

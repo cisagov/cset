@@ -18,14 +18,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Doc Num is used to
         /// </summary>
         [Key]
-        [StringLength(40)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Doc_Num { get; set; }
 
         [ForeignKey("Doc_Num")]

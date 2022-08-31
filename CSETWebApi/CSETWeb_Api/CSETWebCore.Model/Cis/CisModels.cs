@@ -56,6 +56,8 @@ namespace CSETWebCore.Model.Cis
         public int QuestionId { get; set; }
         public string QuestionType { get; set; }
         public int Sequence { get; set; }
+        public int MaturityLevel { get; set; }  
+        public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
 

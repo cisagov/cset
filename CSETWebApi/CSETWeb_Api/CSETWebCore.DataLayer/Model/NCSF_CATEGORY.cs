@@ -20,20 +20,16 @@ namespace CSETWebCore.DataLayer.Model
         }
 
         [Required]
-        [StringLength(2)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string NCSF_Function_Id { get; set; }
         [Required]
-        [StringLength(20)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string NCSF_Category_Id { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string NCSF_Category_Name { get; set; }
         [Required]
         [StringLength(500)]
-        [Unicode(false)]
         public string NCSF_Category_Description { get; set; }
         [Key]
         public int NCSF_Cat_Id { get; set; }

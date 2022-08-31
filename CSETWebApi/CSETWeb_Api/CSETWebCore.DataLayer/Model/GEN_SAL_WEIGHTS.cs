@@ -23,7 +23,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Sal_Name { get; set; }
         /// <summary>
         /// The Slider Value is used to
@@ -40,7 +39,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Display { get; set; }
 
         [ForeignKey("Sal_Name")]

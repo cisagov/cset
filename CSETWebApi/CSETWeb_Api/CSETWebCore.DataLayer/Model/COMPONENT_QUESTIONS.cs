@@ -32,7 +32,6 @@ namespace CSETWebCore.DataLayer.Model
         /// The Seq is used to
         /// </summary>
         [StringLength(50)]
-        [Unicode(false)]
         public string Seq { get; set; }
 
         [ForeignKey("Component_Symbol_Id")]

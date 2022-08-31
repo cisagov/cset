@@ -19,36 +19,24 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public Guid Id { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string CellPhone { get; set; }
-        [Required]
         [StringLength(150)]
-        [Unicode(false)]
         public string FirstName { get; set; }
-        [Required]
         [StringLength(150)]
-        [Unicode(false)]
         public string LastName { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string HomePhone { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string OfficePhone { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string ImagePath { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string JobTitle { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string Organization { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string SecondaryEmail { get; set; }
 
         [InverseProperty("IdNavigation")]
