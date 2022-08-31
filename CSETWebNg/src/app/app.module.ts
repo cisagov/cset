@@ -226,7 +226,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
-import { ComponentsComponent } from './assessment/diagram/diagram-inventory/components/components.component';
+import { DiagramComponentsComponent } from './assessment/diagram/diagram-inventory/components/diagram-components.component';
 import { LinksComponent } from './assessment/diagram/diagram-inventory/links/links.component';
 import { NetworkWarningsComponent } from './assessment/diagram/diagram-inventory/network-warnings/network-warnings.component';
 import { ShapesComponent } from './assessment/diagram/diagram-inventory/shapes/shapes.component';
@@ -309,6 +309,7 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
@@ -679,7 +680,7 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         ExamProfileSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
-        ComponentsComponent,
+        DiagramComponentsComponent,
         LinksComponent,
         NetworkWarningsComponent,
         ShapesComponent,
@@ -761,6 +762,7 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         AcetOriginComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
+        QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,

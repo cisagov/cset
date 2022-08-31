@@ -32,7 +32,7 @@
     <th mat-sort-header="descriptions">Description</th>
     <th mat-sort-header="hostName">Host Name</th>
     <th mat-sort-header="visibleC">Visible</th>
-    <tr *ngFor="let component of components; let i = index">
+    <tr *ngFor="let component of diagramComponentList; let i = index">
         <td>{{component.label}}</td>
         <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestions" [disabled]="true"
           [checked]="component.hasUniqueQuestions" > </td>
