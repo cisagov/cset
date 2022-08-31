@@ -226,7 +226,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
-import { ComponentsComponent } from './assessment/diagram/diagram-inventory/components/components.component';
+import { DiagramComponentsComponent } from './assessment/diagram/diagram-inventory/components/diagram-components.component';
 import { LinksComponent } from './assessment/diagram/diagram-inventory/links/links.component';
 import { NetworkWarningsComponent } from './assessment/diagram/diagram-inventory/network-warnings/network-warnings.component';
 import { ShapesComponent } from './assessment/diagram/diagram-inventory/shapes/shapes.component';
@@ -680,7 +680,7 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         ExamProfileSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
-        ComponentsComponent,
+        DiagramComponentsComponent,
         LinksComponent,
         NetworkWarningsComponent,
         ShapesComponent,
