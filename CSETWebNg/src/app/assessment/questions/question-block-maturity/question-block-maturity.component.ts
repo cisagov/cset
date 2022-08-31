@@ -57,6 +57,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
+  textForSummary = "Insert comments relating to this statement / category";
 
   contactInitials = "";
   altAnswerSegment = "";
@@ -66,9 +67,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
   showQuestionIds = false;
 
   showCorePlus: boolean = false;
-  endOfCore: number[] = [7235, 7240, 7248, 7253, 7260, 7267, 
-                         7270, 7273, 7279, 7285, 7289, 7293, 
-                         7296, 7299, 7304, 7311];
   coreChecked: boolean = false;
 
 
@@ -361,8 +359,77 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   }
 
+  /**
+   * Very similar to 'storeAltText' above. Text box is at the end of each question set, and
+   * attaches to the parent statement.
+   * @param q
+
+  */
+  storeSummaryComment(q: Question, e: any) {
+    q.comment = e.target.value;
+ 
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.parentQuestionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: e.target.value,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+  
+    this.refreshReviewIndicator();
+  
+    this.questionsSvc.storeAnswer(answer)
+      .subscribe();
+    }, 500);
+
+  }
+
+  getSummaryComment(q) {
+    let parentId = q.parentQuestionId;
+    let comment = "";
+
+    for (const question of this.myGrouping.questions) {
+      if (question.questionId === parentId) {
+        comment = question.comment;
+        break;
+      }
+    }
+
+    return comment;
+  }
+
+
+  showSummaryCommentBox(id: number) {
+    switch(id) {
+      // Final question under each SCUEP parent
+      case (7196): case(7201): case(7206): case(7214):
+      case (7217): case(7220): case(7225):
+      // Final question under each CORE parent (before CORE+)
+      case (7233): case (7238): case (7244): case (7249): 
+      case (7256): case (7259): case (7265): case (7273): 
+      case (7276): case (7281): case (7285): case (7289): 
+      case (7293): case (7296): case (7301): case (7304):
+      // Final question under each CORE+ parent
+      case (7421): case (7429): case (7444): case (7450):
+      case (7458): case (7465):
+        return true;
+    }
+  }
+
   showCorePlusButton(id: number) {
     switch(id) {
+      // Final question under each CORE parent
       case (7233): case (7238): case (7244): case (7249): 
       case (7256): case (7265): case (7273): case (7276): 
       case (7281): case (7285): case (7289): case (7293): 
