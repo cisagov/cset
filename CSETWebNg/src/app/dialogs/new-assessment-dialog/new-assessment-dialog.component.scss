@@ -1,3 +1,32 @@
 :host {
     width:100%;
 }
+
+.icon-container{
+    margin: 0 auto;
+    opacity: 35%;
+}
+
+.icon-container-child{
+    height:180px;
+}
+
+.card-image-parent{
+    top: 0;
+    width: 100%;
+    height: 310px;
+    z-index: 0;
+    margin: 0 auto;
+    position: absolute;
+    text-align: right;
+  }
+  
+  .card-image-child {
+    height: 300px !important;
+    position: relative;
+    opacity: 20%;
+    margin: 0 auto;
+    text-align: center;
+    top: -45px;
+    right: -30px;
+  }
