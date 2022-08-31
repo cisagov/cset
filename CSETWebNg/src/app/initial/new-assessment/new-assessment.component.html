@@ -9,13 +9,16 @@
     >
         <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
             <div class="card" (mouseover)="onHover(c.gallery_Item_Id)" (mouseleave)="onHover(-1)">
-                <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px;">
+                <div class="card-image-parent">
+                    <img class="card-image-child" [src]="getImageSrc(c.icon_File_Name_Small)">
+                </div>
+                <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px; z-index:1">
                     <h6 class="card-title" ellipsis [ellipsis-content]="c.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                     <p class="card-text" ellipsis [ellipsis-content]="c.description" style="max-height:80px; min-height:80px;"></p>
                 </div>
                 <div class="card-body gallery-card-body-buttons" style="text-align:right;" [@enterAnimation]="c.gallery_Item_Id==hoverIndex">
-                    <button  class="btn btn-outline-primary" (click)="openDialog(c)" style="margin-right:5px;"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-                    <button  class="btn btn-primary" ><i class="fa-solid fa-play" style="font-size: 18px;"></i></button>
+                    <button  class="btn btn-outline-primary" (click)="openDialog(c)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
+                    <button  class="btn btn-primary" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
                 </div>
             </div>
         </ng-template>

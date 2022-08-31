@@ -120,7 +120,17 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   onSlideChange(){}
 
+  getImageSrc(src: string){
+    let path="assets/images/cards/";
+    if(src){
+      console.log(src);
+      return path+src;
+    }
+    return path+'default.png';
+  }
+
   openDialog(data: any ){
+    data.path = this.getImageSrc(data.icon_File_Name_Small);
     this.dialog.open(NewAssessmentDialogComponent, {
       panelClass: 'new-assessment-dialog-responsive',
       data:data
