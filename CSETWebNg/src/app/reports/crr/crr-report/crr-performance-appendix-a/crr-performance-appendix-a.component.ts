@@ -37,7 +37,8 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
 
   @Input() model: CrrReportModel;
 
-  modelData : CrrPerformanceAppendixA;
+  modelData: CrrPerformanceAppendixA;
+  legend: string = '';
 
   constructor(private crrSvc: CrrService) { }
 
@@ -47,7 +48,11 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
       console.log(this.modelData);
     });
 
-    }
+    this.crrSvc.getMil1PerformanceLegendWidget().subscribe((resp: string) => {
+      this.legend = resp;
+    });
+
+  }
 
 
   }

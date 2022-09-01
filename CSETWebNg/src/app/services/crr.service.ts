@@ -107,7 +107,7 @@ export class CrrService {
    * Calls the api to get CrrPerformanceAppendixA Data
    */
    getCrrPerformanceAppendixA() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixA');
   }
 
   getNistCsfCatSummaryBodyData() {
