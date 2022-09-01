@@ -42,7 +42,6 @@ export class CrrNistCsfCatSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.crrSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
       this.bodyData = resp;
-      console.log(this.bodyData);
     })
 
     this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
