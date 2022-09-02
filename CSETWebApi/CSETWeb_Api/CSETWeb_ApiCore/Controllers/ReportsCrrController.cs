@@ -358,7 +358,7 @@ namespace CSETWebCore.Api.Controllers
             _crr.InstantiateScoringHelper(assessmentId);
             var XDocument = _crr.XDoc;
 
-            List<object> domainData = new List<object>();
+            List<object> bodyData = new List<object>();
             double heatmapScale = 1.15;
 
             foreach (XElement domain in XDocument.Root.Elements())
@@ -380,10 +380,10 @@ namespace CSETWebCore.Api.Controllers
                     heatMaps.Add(milSvg.ToString());
                 }
 
-                domainData.Add(new { ScoreBarChart = barChart, HeatMaps = heatMaps });
+                bodyData.Add(new { ScoreBarChart = barChart, HeatMaps = heatMaps });
             }
 
-            return Ok(domainData);
+            return Ok(bodyData);
         }
 
         [HttpGet]
