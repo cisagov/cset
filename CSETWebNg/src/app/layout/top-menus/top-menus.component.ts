@@ -199,6 +199,26 @@ export class TopMenusComponent implements OnInit {
     return this.router.url !== '/resource-library';
   }
 
+  /**
+   * Hides user guide menu items that are not relevant to the current assessment.
+   */
+  isVisible(module: string) {
+    // we hide these on the phone
+    if (this.configSvc.isMobile()) {
+      return false;
+    }
+
+    if (this.assessSvc.assessment?.maturityModel?.modelName == module) {
+      return true;
+    }
+
+    if (module == 'TSA') {
+      return this.assessSvc.assessment?.workflow == 'TSA';
+    }
+
+    return false;
+  }
+
   showMenuStrip() {
     return this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'

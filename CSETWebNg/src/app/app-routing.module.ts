@@ -334,7 +334,6 @@ const appRoutes: Routes = [
                 canActivateChild: [AssessGuard],
                 children: [
                   { path: 'info', component: DiagramInfoComponent },
-                  { path: 'inventory', component: DiagramInventoryComponent },
                   { path: '', redirectTo: 'info', pathMatch: 'full' },
                   { path: '**', redirectTo: 'info' }
                 ]

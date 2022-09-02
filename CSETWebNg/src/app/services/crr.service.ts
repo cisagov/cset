@@ -110,4 +110,13 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
   }
 
+  getNistCsfCatSummaryBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatSummaryBodyData');
+  }
+
+  getNistCsfCatPerformanceBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatPerformanceBodyData');
+  }
+
+
 }
