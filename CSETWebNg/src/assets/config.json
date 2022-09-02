@@ -1,14 +1,14 @@
 {
     "appCode": "CSET",
-    "app":{
+    "app": {
         "protocol": "http",
         "url": "localhost",
-        "port":"4200"
+        "port": "4200"
     },
-    "api":{
-        "protocol":"http",
+    "api": {
+        "protocol": "http",
         "url": "localhost",
-        "port":"5000",
+        "port": "5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
@@ -22,21 +22,20 @@
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
 
-    "canDeleteCustomModules": true,
-
-    "showQuestionAndRequirementIDs": false,
-    "showBuildTime": false,
-    "mobileEnvironment": "",
-
+    "debug": {
+        "showBuildTime": false,
+        "showQuestionAndRequirementIDs": false,
+        "canDeleteCustomModules": true
+    },
+    
     "installationMode": "",
-
+    "mobileEnvironment": "",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
     "buttonLabelI": "Inc",
-
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
