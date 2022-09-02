@@ -123,7 +123,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   getImageSrc(src: string){
     let path="assets/images/cards/";
     if(src){
-      console.log(src);
+      //console.log(src);
       return path+src;
     }
     return path+'default.png';
