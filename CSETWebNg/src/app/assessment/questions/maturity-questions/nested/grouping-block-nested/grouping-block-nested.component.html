@@ -1,5 +1,7 @@
-<h4 class="mb-4">{{title}}</h4>
-<div class="alert alert-light" role="alert" *ngIf="grouping.description?.length > 0">{{grouping.description}}</div>
+<div class="sticky-sal pt-3 pb-2" style="top: -1px">
+  <h4 class="mb-3">{{title}}</h4>
+  <div class="alert alert-dark" role="alert" *ngIf="grouping.description?.length > 0" [innerHTML]="grouping.description"></div>
+</div>
 
 <div *ngFor="let g of grouping.groupings" class="ml-3 mb-4">
     <app-grouping-block-nested [grouping]="g"></app-grouping-block-nested>

@@ -68,6 +68,9 @@ export class MaturityService {
 
   cmmcData = null;
 
+  mvraGroupings = [];
+  cisGroupings = [];
+
   /**
    *
    * @param http
@@ -79,6 +82,15 @@ export class MaturityService {
     private assessSvc: AssessmentService
   ) {
 
+    // get MVRA grouping titles
+    this.getGroupingTitles(9).subscribe((l: any[]) => {
+      this.mvraGroupings = l;
+    });
+
+    // get CIS grouping titles
+    this.getGroupingTitles(8).subscribe((l: any[]) => {
+      this.cisGroupings = l;
+    });
   }
 
 
@@ -317,4 +329,10 @@ export class MaturityService {
     );
   }
 
+  /**
+   * 
+   */
+  getGroupingTitles(modelId: number) {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
+  }
 }
