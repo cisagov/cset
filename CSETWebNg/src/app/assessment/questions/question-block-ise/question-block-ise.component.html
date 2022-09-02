@@ -187,11 +187,11 @@
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
                    <!--<div [class.display-hidden]="!!q.parentQuestionId">-->
-                    
-                    <div *ngIf="!q.isParentQuestion; else notNewMatLevel">
+                     
+                    <div *ngIf="!q.isParentQuestion; else parentQuestion">
                         <div class="!!q.parentQuestionId"
-                        style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                        {{ q.displayNumber }}
+                            style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
+                            {{ q.displayNumber }}
                             <div>
                                 <span class="question-mat-level-name">
                                     {{ q.maturityLevelName }}
@@ -199,9 +199,9 @@
                             </div>
                         </div>
                     </div>
-                    <ng-template #notNewMatLevel>
+                    <ng-template #parentQuestion>
                         <div [class.display-hidden]="!!q.parentQuestionId"
-                        style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
+                        style="font-size: 1.25rem; font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                             {{ q.displayNumber }}
                         </div>
                     </ng-template>
@@ -210,7 +210,12 @@
                             {{ q.shortName }}
                         </div>
 
+                        <div *ngIf="!!q.isParentQuestion; else childQuestion" style="font-size: 1.25rem;">
                             <app-question-text [questionText]="q.questionText"></app-question-text>
+                        </div>
+                        <ng-template #childQuestion>
+                            <app-question-text [questionText]="q.questionText"></app-question-text>
+                        </ng-template>
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                     </div>
