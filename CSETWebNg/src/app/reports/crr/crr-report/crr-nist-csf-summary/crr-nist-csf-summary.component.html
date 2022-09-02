@@ -47,61 +47,63 @@
     }
 </style>
 
-<div class="row">
+<div class="container-fluid">
+  <div class="row">
     <div class="col-3" style="padding-left: 2rem;">
       <div [innerHtml]="chartAll | safe"></div>
       <h5 class="appendix-label">NIST CSF Summary</h5>
     </div>
     <div class="col-9" style="padding: 0; position: relative;">
-        <div class="row" style="position: absolute; bottom: 0;">
-            <div class="col-6">
-                <h3 class="depiction-title">
-                    NIST Cybersecurity Framework Summary
-                </h3>
-            </div>
-            <div class="col-6 tinytext" [innerHtml]="legend | safe">
-            </div>
+      <div class="row" style="position: absolute; bottom: 0;">
+        <div class="col-6">
+          <h3 class="depiction-title">
+            NIST Cybersecurity Framework Summary
+          </h3>
         </div>
+        <div class="col-6 tinytext" [innerHtml]="legend | safe">
+        </div>
+      </div>
     </div>
-</div>
-<div class="row" style="border-top: 1px solid black;">
+  </div>
+  <div class="row" style="border-top: 1px solid black;">
     <div class="col-3" style="font-size: 10px; padding-left: 2rem;">
-        FUNCTION
+      FUNCTION
     </div>
     <div class="col-9" style="font-size: 10px; padding: 0;">
-        CATEGORY
+      CATEGORY
     </div>
-</div>
+  </div>
 
-<div *ngFor="let e of bodyData" class="row" style="border-top: 1px solid black;">
+  <div *ngFor="let e of bodyData" class="row" style="border-top: 1px solid black;">
     <div class="col-3">
-        <div class="row" style="height: 95%;">
-            <div style="height: 100%; margin: 0.25rem 0.75rem 0.25rem 0; width: 10%"
-            [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
-                <div style="height: 145px;"></div>
-            </div>
-            <div class="col-10">
-                <div class="row">
+      <div class="row" style="height: 95%;">
+        <div style="height: 100%; margin: 0.25rem 0.75rem 0.25rem 0; width: 10%"
+        [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
+        <div style="height: 145px;"></div>
+      </div>
+      <div class="col-10">
+                  <div class="row">
                     <p style="font-size: 0.75rem; font-weight: bold;">
-                        {{ e.function.Function.name }} ({{ e.function.Function.code }})
-                    </p>
-                </div>
-                <div class="row" style="vertical-align: middle;" [innerHtml]="e.chart | safe">
-                </div>
-            </div>
+                          {{ e.function.Function.name }} ({{ e.function.Function.code }})
+                        </p>
+                      </div>
+                      <div class="row" style="vertical-align: middle;" [innerHtml]="e.chart | safe">
+                      </div>
+                    </div>
+          </div>
         </div>
-    </div>
-    <div class="col-9">
-        <div *ngFor="let cat of e.cats; let i = index" class="row"
-        [style.border-bottom]="i != (e.cats.length - 1) ? 'solid 0.5px black' : 'none'">
-            <div class="col-4" style="font-size: 8px; padding: .25rem 0">
-                <div style="font-weight: bold;">
-                    {{ cat.parentCode }}.{{ cat.code }}
-                </div>
-                {{ cat.name }}
+        <div class="col-9">
+          <div *ngFor="let cat of e.cats; let i = index" class="row"
+          [style.border-bottom]="i != (e.cats.length - 1) ? 'solid 0.5px black' : 'none'">
+          <div class="col-4" style="font-size: 8px; padding: .25rem 0">
+            <div style="font-weight: bold;">
+              {{ cat.parentCode }}.{{ cat.code }}
             </div>
-            <div class="col-8" style="align-items: center; padding: 0.25rem;" [innerHtml]="cat.catChart | safe">
-            </div>
+            {{ cat.name }}
+          </div>
+          <div class="col-8" style="align-items: center; padding: 0.25rem;" [innerHtml]="cat.catChart | safe">
+          </div>
         </div>
-    </div>
+      </div>
+  </div>
 </div>
