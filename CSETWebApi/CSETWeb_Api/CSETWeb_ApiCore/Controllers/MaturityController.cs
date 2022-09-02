@@ -218,6 +218,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/maturity/groupingtitles")]
+        public IActionResult GetGroupingTitles([FromQuery] int modelId)
+        {
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetGroupingTitles(modelId);
+            return Ok(x);
+        }
+
+
         /// <summary>
         /// Returns the questions in a CIS section.
         /// </summary>
