@@ -41,7 +41,6 @@ export class CrrNistCsfCatPerformanceComponent implements OnInit {
   ngOnInit(): void {
     this.crrSvc.getNistCsfCatPerformanceBodyData().subscribe((resp: any[]) => {
       this.bodyData = resp;
-      console.log(this.bodyData);
     })
   }
 

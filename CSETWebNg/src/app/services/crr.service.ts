@@ -24,8 +24,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { CrrPerformanceAppendixA } from '../models/crrperformanceappendixa.model';
-import { result } from 'lodash';
 
 const headers = {
   headers: new HttpHeaders()
@@ -50,13 +48,6 @@ export class CrrService {
   };
 
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
-
-  /**
-   * Retrieves the list of frameworks.
-   */
-  getCrrHtml(view:string) {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrHtml?view='+view);
-  }
 
   getCrrModel(){
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
@@ -103,11 +94,8 @@ export class CrrService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceBodyCharts');
   }
 
-  /**
-   * Calls the api to get CrrPerformanceAppendixA Data
-   */
-   getCrrPerformanceAppendixA() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/GetCrrPerformanceAppendixA');
+  getCrrPerformanceAppendixABodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixABodyData');
   }
 
   getNistCsfCatSummaryBodyData() {
@@ -117,6 +105,4 @@ export class CrrService {
   getNistCsfCatPerformanceBodyData() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatPerformanceBodyData');
   }
-
-
 }

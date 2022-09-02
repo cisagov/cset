@@ -351,10 +351,39 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/reportscrr/widget/GetCrrPerformanceAppendixA")]
-        public IActionResult GetCrrPerformanceAppendixA()
+        [Route("api/reportscrr/getCrrPerformanceAppendixABodyData")]
+        public IActionResult GetCrrPerformanceAppendixABodyData()
         {
-            return Ok(GetCrrPerformanceAppendixAData());
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var XDocument = _crr.XDoc;
+
+            List<object> bodyData = new List<object>();
+            double heatmapScale = 1.15;
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _crr.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 45, Width = 75 };
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                string barChart = new ScoreBarChart(barChartInput).ToString();
+
+                List<string> heatMaps = new List<string>();
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                    el.Attribute("label").Value == "MIL-" + i);
+
+                    var milSvg = new MilHeatMap(mil, true, false, 8);
+                    milSvg.Scale(heatmapScale);
+                    heatMaps.Add(milSvg.ToString());
+                }
+
+                bodyData.Add(new { ScoreBarChart = barChart, HeatMaps = heatMaps });
+            }
+
+            return Ok(bodyData);
         }
 
         [HttpGet]
@@ -540,44 +569,6 @@ namespace CSETWebCore.Api.Controllers
             return d;
         }
 
-        private CrrResultsModel GenerateCrrResults()
-        {
-            MaturityReportData maturityData = new MaturityReportData(_context);
-
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
-            maturityData.AnalyzeMaturityData();
-
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            maturityData.MaturityModels.ForEach(d =>
-            {
-                d.MaturityQuestions.ForEach(q =>
-                {
-                    q.Answer.Assessment = null;
-                });
-            });
-
-            CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = maturityData.MaturityModels.FirstOrDefault(d => d.MaturityModelName == "CRR")?.StatsByDomainAndLevel;
-            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
-            retVal.TrimToNElements(10);
-            retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
-            return retVal;
-        }
-
-        private CrrResultsModel GenerateCrrResults(MaturityReportData data)
-        {
-            //For Testing
-
-            CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CRR").First().StatsByDomainAndLevel;
-            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
-            retVal.TrimToNElements(10);
-            retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
-            return retVal;
-        }
-
         private string GetTotalBarChart()
         {
             string totalBarChartString = string.Empty;
@@ -596,77 +587,6 @@ namespace CSETWebCore.Api.Controllers
         {
             var legend = new MIL1PerformanceSummaryLegend();
             return legend.ToString();
-        }
-
-        private DomainSummary[] GetDomainSummaries()
-        {
-            DomainSummary[] domainSummaries = new DomainSummary[1];
-            var heatmapScale = 1.15;
-            var XDocument = _crr.XDoc;
-
-            DomainSummary domainSummary = null;
-            foreach (XElement domain in XDocument.Root.Elements())
-            {
-                var domainScores = _crr.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                var barChartInput = new BarChartInput() { Height = 45, Width = 75 };
-                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
-                var barChart = new ScoreBarChart(barChartInput);
-
-                XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-1");
-                var mil1Svg = new MilHeatMap(mil1, true, false, 8);
-                mil1Svg.Scale(heatmapScale);
-
-                XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                            el.Attribute("label").Value == "MIL-2");
-                var mil2Svg = new MilHeatMap(mil2, true, false, 8);
-                mil2Svg.Scale(heatmapScale);
-
-                XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-3");
-                var mil3Svg = new MilHeatMap(mil3, true, false, 8);
-                mil3Svg.Scale(heatmapScale);
-
-                XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-4");
-                var mil4Svg = new MilHeatMap(mil4, true, false, 8);
-                mil4Svg.Scale(heatmapScale);
-
-                XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-5");
-                var mil5Svg = new MilHeatMap(mil5, true, false, 8);
-                mil5Svg.Scale(heatmapScale);
-
-                domainSummary = new DomainSummary()
-                {
-                    DomainTitle = domain.Attribute("title").Value.Split('(')[0].Trim(),
-                    BarChart = barChart.ToString(),
-                    MilHeatMapSvg1 = mil1Svg.ToString(),
-                    MilHeatMapSvg2 = mil2Svg.ToString(),
-                    MilHeatMapSvg3 = mil3Svg.ToString(),
-                    MilHeatMapSvg4 = mil4Svg.ToString(),
-                    MilHeatMapSvg5 = mil5Svg.ToString()
-                };
-
-                
-            }
-            return domainSummaries;
-
-
-        }
-
-        private CrrPerformanceAppendixA GetCrrPerformanceAppendixAData()
-        {
-            CrrPerformanceAppendixA retVal = new CrrPerformanceAppendixA();
-            retVal.TotalBarChart = GetTotalBarChart();
-            retVal.CrrPerformanceLegend = GetMil1PerformanceSummaryLegendData();
-            retVal.DomainSummaryList = GetDomainSummaries();
-           
-
-            return retVal;
-
-        }
-
-        
+        } 
     }
 }
