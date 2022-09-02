@@ -1,3 +1,110 @@
+<style>
+    /* derived from a ww2schools example */
+    /* Make sure that padding behaves as expected */
+    * {box-sizing:border-box}
+    
+    /* Container is for skill bars */
+    .container {
+      width: 100%; /* full width */
+      background-color: #ddd; /* grey background */
+    }
+    
+    .skillstypebar {
+      text-align: right; /* text to the right within the bar */
+      padding-top: 10px; /* */
+      padding-bottom: 10px; /* */
+      color: white; /* visible text foreground*/
+    }
+    
+    /* width replaced with data call to maturity level or min[scores by domain] */
+    /* width = mat score * 20 then to % */
+    .assetmanagement {width: 80%; background-color: #04AA6D;} /* green */
+    .configurationmanagement {width: 40%; background-color: #2196F3;} /* blue */
+    .accesscontrol {width: 20%; background-color: #f44336;} /* red */
+    .flawremediation {width: 60%; background-color: #808080;} /* dark grey */
+    .maliciouscodedetection {width: 60%; background-color: #808080;} /* dark grey */
+    .systemintegrity {width: 60%; background-color: #808080;} /* dark grey */
+    .continuousmonitoring {width: 60%; background-color: #808080;} /* dark grey */
+    .incidentresponseandrecoveryplanning {width: 60%; background-color: #808080;} /* dark grey */
+    .architectureanddevelopment {width: 60%; background-color: #808080;} /* dark grey */
+    .supplychainriskmanagement {width: 60%; background-color: #808080;} /* dark grey */
+</style>
+    
+
+<div style="text-align: center;">
+    <h2>VBOS Results</h2>
+</div>
+
+<div class="card" style="width: 27%;">
+    <h3>Achieved Level </h3>
+        <div class="card-body">
+        
+            <p> Achieved Level = 3</p>
+            {{achievedLevelList}}
+            <!-- {{achievedLevel()}}  -->
+        </div>
+</div>
+
+<!-- Need container for whole chart  -->
+
+    <p>Asset Management</p>
+      <div class="container">
+        <div class="skillstypebar assetmanagement">#</div>
+      </div>
+
+    <p>Configuration Management</p>
+      <div class="container">
+        <div class="skillstypebar configurationmanagement">#</div>
+      </div>
+
+    <p>Access Control</p>
+      <div class="container">
+        <div class="skillstypebar accesscontrol">#</div>
+      </div>
+
+    <p>Flaw Remediation</p>
+      <div class="container">
+        <div class="skillstypebar flawremediation">#</div>
+      </div>
+
+    <p>Malicious Code Detection</p>
+      <div class="container">
+        <div class="skillstypebar maliciouscodedetection">#</div>
+      </div>
+
+    <p>System Integrity</p>
+      <div class="container">
+        <div class="skillstypebar systemintegrity">#</div>
+      </div>
+
+    <p>Continuous Monitoring</p>
+      <div class="container">
+        <div class="skillstypebar continuousmonitoring">#</div>
+      </div>
+
+    <p>Incident Response and Recovery Planning</p>
+      <div class="container">
+        <div class="skillstypebar incidentresponseandrecoveryplanning">#</div>
+      </div>
+
+    <p>Architecture and Development</p>
+      <div class="container">
+        <div class="skillstypebar architectureanddevelopment">#</div>
+      </div>
+
+    <p>Supply Chain Risk Management</p>
+      <div class="container">
+        <div class="skillstypebar supplychainriskmanagement">#</div>
+      </div>
+
+
+
+
+
+
+
+
+
 <h3>#1</h3>
 
 	<div>
@@ -8,9 +115,9 @@
 		<canvas id="bar-chart-horizontal" chart-labels="labels" width="800" height="500"></canvas>
 	</div>
 
-	<h3>Failed Load Spinner</h3>
+	<!-- <h3>Failed Load Spinner</h3>
 
-    <!-- <div *ngIf="!initialized">
+    <div *ngIf="!initialized">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
         	<div style="max-width: ?px; max-height: ?px;"></div>
         </div>
@@ -25,13 +132,16 @@
 	</div>
 
 	<div class="card" style="width: 27%;">
-		<h3>Achieved Level </h3>
-	   		<p> Achieved Level = 3</p>
-			{{achievedLevelList}}
-	    	<!-- {{achievedLevel()}}  -->
+        <div class="card-body">
+            <h3>Achieved Level </h3>
+                <p> Achieved Level = 3</p>
+                {{achievedLevelList}}
+                <!-- {{achievedLevel()}}  -->
+        </div>
 	</div>
 
 	<hr>
+
     <h3>#2</h3>
 
     <div class="horizontalBarchart">
@@ -48,22 +158,19 @@
         <div clas="container">
             <div class="row mb-5">
                 <div class="col-12">
-                    <h3></h3>
-
+                    <h3>
                     horizontalBarchart here
+                    </h3>
                     <div>
                         <canvas id="bar-chart-horizontal" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="false"></canvas>
                         </div>
                         <div>
                         <canvas id="bar-chart-horizontal" chart-labels="labels" width="800" height="500"></canvas>
                         </div>
-
-                    <!-- <app-vbos_results></app-vbos_results> -->
                 </div>
             </div>     
         </div>
     </div>
-        
         
 	<hr>   
 
@@ -89,8 +196,9 @@
         </div>
     </div>
 
-    <hr>
-      <h3>#4</h3>
+    <!--
+        <h3>#4</h3>
+    -->
 
     <!-- <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
         <div clas="container">
@@ -108,8 +216,10 @@
         </div>
     </div> -->
 
+    <!--
 	<hr>
 	<h3>#5</h3>
+    -->
 
     <!-- <div>
         <ngx-charts-bar-horizontal [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
@@ -122,25 +232,12 @@
 	        </ng-template>
     	</ngx-charts-bar-horizontal>
     </div>  -->
-    
-    <app-nav-back-next [page]="'vbos-summary'"></app-nav-back-next> 
-
-
-	<hr>
-	<h3>OLD HTML</h3>
 
     <!--OLD HTML-->
+    <!--
     <div>
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <h3>Achieved Level</h3>
-
-            <!--
-            <div *ngIf="!initialized">
-                <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-                    <div style="max-width:100%; max-height: 20rem;"></div>
-                </div>
-            </div>
-        --> 
 
             <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
                 <div clas="container">
@@ -153,12 +250,12 @@
 			</div>
 		</div>
 	</div>
-
+    -->
 
 <app-nav-back-next [page]="'vbos-summary'"></app-nav-back-next>
 
 <script type="text/javascript">
-
+// transfer to .ts file
 	var chartItems =
 {
 	"labels": [
@@ -190,81 +287,13 @@
 var categories = ["Asset Management", "Configuration Management", "Access Control", "Flaw Remediation", "Malicious Code Detection", "System Integrity",
 "Continuous Monitoring", "Incident Response and Recovery Planning", "Architecture and Development", "Supply Chain Risk Management"]
 
+// reduntant
+//horizBarChartLabels = {
+//	1: "1",
+//	2: "2"
+//}
 
-horizBarChartLabels = {
-	1: "1",
-	2: "2"
-}
-
-var categories = ["Risk Framing", "Risk Assessment", "Risk Response", "Risk Monitoring"]
+// CRMP
+// var categories = ["Risk Framing", "Risk Assessment", "Risk Response", "Risk Monitoring"]
 
 </script>
-        
-
-<!-- <div class="white-panel d-flex flex-column flex-11a">
-    <h3 class="d-flex flex-column flex-00a">{{title}}</h3>
-    <p>
-        These charts represent the answer distribution overall and across all tiers.
-    </p>
-    </div> -->
-    <!-- <div class="container">
-        <div class="row">
-             <div class="col-6"><app-vbos-summary [title]="'Overall'"></app-vbos-summary></div> 
-             <div class="col-6"><app-vbos-summary [title]="'Basic'" ></app-vbos-summary></div> 
-        </div>
-        <div class="row" style="margin-top:45px;">
-            <div class="col-6"><app-vbos-summary [title]="'Intermediate'"></app-vbos-summary></div>
-            <div class="col-6"><app-vbos-summary [title]="'Advanced'"></app-vbos-summary></div>
-        </div>
-    </div> -->
-
-     <!-- <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-        <div clas="container">
-            <div class="row mb-5">
-                <div class="col-12">
-                    <h5>VBOS Performance by Goal</h5>
-                    <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
-                        <ngx-charts-bar-horizontal-stacked [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
-                            [trimYAxisTicks]="'false'" [maxYAxisTickLength]="maxLevel" [xAxisTicks]="sAxisTicks" [legend]="'true'"
-                            [legendPosition]="'below'" [scheme]="answerDistribColorScheme" [showDataLabel]="'true'" >
-                        </ngx-charts-bar-horizontal-stacked>
-                    </div>            
-                    </div>
-
-     <div>
-        <ngx-charts-bar-horizontal [results]="answerCountsByLevel" [yAxis]="'true'" [xAxis]="'true'"
-        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
-        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
-        <ng-template #tooltipTemplate let-model="model">
-            <div class="p-1">
-                {{model.value}}
-            </div>
-        </ng-template>
-    </ngx-charts-bar-horizontal>
-    </div> 
-    
-    <app-nav-back-next *ngIf="showNav" [page]="'vbos-summary'"></app-nav-back-next> -->
-
-    <!--            OLD HTML
-    <div>
-        <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-            <h3>Achieved Level</h3>
-            <div *ngIf="!initialized">
-                <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-                    <div style="max-width:100%; max-height: 20rem;"></div>
-                </div>
-            </div>
-            <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-                <div clas="container">
-                    <div class="row mb-5">
-                        <div class="col-12">
-                            <h5>VBOS Performance by Goal</h5>
-                        </div>
-                    </div>
-                </div>
-                <app-nav-back-next *mgIf="showNav" [page]="'vbos-summary'"></app-nav-back-next>
-</div>
--->
-
- <!--[filter]="'Intermediate'"
- [filter]="'Advanced'"-->
