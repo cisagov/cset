@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,7 +42,7 @@ let headers = {
     providedIn: 'root'
   })
 
- export class NCUAService implements OnInit {
+ export class NCUAService {
 
   // used to determine whether this is an NCUA installation or not
   apiUrl: string;
@@ -71,9 +71,7 @@ let headers = {
     private configSvc: ConfigService,
     public dialog: MatDialog,
     public acetFilteringSvc: AcetFilteringService
-  ) { }
-
-  ngOnInit(): void {
+  ) { 
     this.init();
   }
 
