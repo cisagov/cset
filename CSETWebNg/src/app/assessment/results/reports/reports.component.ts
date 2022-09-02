@@ -49,6 +49,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * used when the ACET model is in use and this is an ACET installation.
      */
     disableAcetReportLinks: boolean = true;
+    disableIseReportLinks: boolean = true;
     securityIdentifier: any = [];
     securitySelected: string = "None";
 
@@ -135,6 +136,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             return;
         }
 
+        this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
+            if (percentAnswered == 100) {
+                this.disableAcetReportLinks = false;
+            }
+        });
+    }
+
+    checkIseDisabledStatus() {
+        this.disableIseReportLinks = true;
+        if (!this.assessSvc.isISE()) {
+            return;
+        }
+        // the below code needs converted to ISE stuff
         this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
             if (percentAnswered == 100) {
                 this.disableAcetReportLinks = false;
