@@ -130,12 +130,28 @@ export class NavigationService {
       let d = new DOMParser();
       this.workflow = d.parseFromString(xml, 'text/xml');
 
+
+      // populate displaytext for CIS and MVRA using API-sourced grouping titles
+      this.maturitySvc.mvraGroupings.forEach(t => {
+        const e = this.workflow.getElementById('maturity-questions-nested-' + t.id);
+        if (!!e) {
+          e.setAttribute('displaytext', t.title);
+        }
+      });
+
+      this.maturitySvc.cisGroupings.forEach(t => {
+        const e = this.workflow.getElementById('maturity-questions-nested-' + t.id);
+        if (!!e) {
+          e.setAttribute('displaytext', t.title);
+        }
+      });
+
+
       // build the sidenav tree
       localStorage.removeItem('tree');
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
     },
       (err: HttpErrorResponse) => {
-        debugger;
         console.log(err);
       });
   }

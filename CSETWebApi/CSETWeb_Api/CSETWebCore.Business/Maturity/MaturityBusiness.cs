@@ -1547,5 +1547,28 @@ namespace CSETWebCore.Business.Maturity
             var msfm = new MaturityStructureForModel(modelId, _context);
             return msfm;
         }
+
+
+        /// <summary>
+        /// Returns an unordered list of MATURITY_GROUPINGS titles and IDs for a model.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public List<GroupingTitle> GetGroupingTitles(int modelId)
+        {
+            var dbList = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).ToList();
+
+            var response = new List<GroupingTitle>();
+            dbList.ForEach(x => 
+            {
+                response.Add(new GroupingTitle() 
+                { 
+                    Id = x.Grouping_Id,
+                    Title = x.Title
+                });
+            });
+
+            return response;
+        }
     }
 }
