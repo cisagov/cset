@@ -20,8 +20,10 @@ BEGIN
 			FROM Answer_Maturity a 
 			join (
 				select q.Mat_Question_Id, g.* 
-				from MATURITY_QUESTIONS q join MATURITY_GROUPINGS g on q.Grouping_Id=g.Grouping_Id and q.Maturity_Model_Id=g.Maturity_Model_Id
-				where g.Maturity_Model_Id=7 and Group_Level = 2
+				from MATURITY_QUESTIONS q 
+				join MATURITY_GROUPINGS g on q.Grouping_Id=g.Grouping_Id and q.Maturity_Model_Id=g.Maturity_Model_Id
+				where q.Parent_Question_Id is null -- don't count child freeform text questions; they aren't answered y,n, etc.
+					and g.Maturity_Model_Id=7 and Group_Level = 2
 			) g on a.Question_Or_Requirement_Id=g.Mat_Question_Id
 			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
 			group by a.Assessment_Id, g.Title)

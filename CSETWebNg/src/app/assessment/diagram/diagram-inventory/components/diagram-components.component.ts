@@ -21,40 +21,48 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
-  selector: 'components',
-  templateUrl: './components.component.html',
-  styleUrls: ['./components.component.scss']
+  selector: 'app-diagram-components',
+  templateUrl: './diagram-components.component.html',
+  styleUrls: ['./diagram-components.component.scss']
 })
-export class ComponentsComponent implements OnInit {
-  components: any;
+export class DiagramComponentsComponent implements OnInit {
+
+  diagramComponentList: any;
+  
+  @Output()
+  change = new EventEmitter<any>();
+
   displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
-  constructor(public diagramSvc: DiagramService) {
 
-   }
+  /**
+   * 
+   */
+  constructor(public diagramSvc: DiagramService) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
-    // Summary Percent Compliance
-    this.diagramSvc.getAllSymbols().subscribe((x:any) => {
+    this.diagramSvc.getAllSymbols().subscribe((x: any) => {
       this.assetTypes = x;
     });
     this.getComponents();
   }
 
-  getComponents(){
-    this.diagramSvc.getDiagramComponents().subscribe((x:any) =>{
-      this.components = x;
+  /**
+   * 
+   */
+  getComponents() {
+    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
+      this.diagramComponentList = x;
+      this.change.emit(this.diagramComponentList);
     });
   }
-
-  
-
-
-
 }

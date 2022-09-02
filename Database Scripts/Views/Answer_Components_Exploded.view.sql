@@ -1,9 +1,12 @@
 
 
+
+
+
 CREATE VIEW [dbo].[Answer_Components_Exploded]
 AS
 
-SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) as UniqueKey,
+SELECT CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) as UniqueKey,
 	a.Assessment_Id, b.Answer_Id, a.Question_Id, isnull(b.Answer_Text, c.Answer_Text) as Answer_Text, 
 	CONVERT(nvarchar(1000), b.Comment) AS Comment, CONVERT(nvarchar(1000), b.Alternate_Justification) AS Alternate_Justification, 
 	b.FeedBack,
@@ -17,7 +20,7 @@ SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY a.Question_id)) as Uniq
 	b.Mark_For_Review, Is_Requirement=cast(0 as bit), Is_Framework=cast(0 as bit),
 	b.Reviewed, a.Simple_Question, a.Sub_Heading_Question_Description, a.heading_pair_id, a.label, a.Component_Symbol_Id
 from (
-SELECT CONVERT(varchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
+SELECT CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
 	adc.Assessment_Id, q.Question_Id, q.Simple_Question,
 	adc.label, adc.Component_Symbol_Id, 
 	h.Question_Group_Heading, usch.Question_Group_Heading_Id as GroupHeadingId, 
