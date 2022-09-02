@@ -23,15 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.CryptoBuffer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.ExportCSV", "CSETWebCore.ExportCSV\CSETWebCore.ExportCSV.csproj", "{7D67B073-4E40-4079-BD75-BDC097E8DB39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.Reports", "CSETWebCore.Reports\CSETWebCore.Reports.csproj", "{023FE90A-B9B1-4902-BE78-4FEE51BDD184}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.DatabaseManager", "CSETWebCore.DatabaseManager\CSETWebCore.DatabaseManager.csproj", "{00FA2FD6-6603-4575-9CC7-DF13884A71A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.HelpersTests", "CSETWebCore.HelpersTests\CSETWebCore.HelpersTests.csproj", "{3B2CE4B5-2618-42A6-A275-D4704161D8DF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.UpgradeLibrary", "CSETWebCore.UpgradeLibrary\CSETWebCore.UpgradeLibrary.csproj", "{CA7543E7-5573-41D6-9E37-3F9FEE43F8E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.BusinessTests", "CSETWebCore.BusinessTests\CSETWebCore.BusinessTests.csproj", "{85A5D909-3D41-4DDA-8321-D6B7D1605605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.BusinessTests", "CSETWebCore.BusinessTests\CSETWebCore.BusinessTests.csproj", "{85A5D909-3D41-4DDA-8321-D6B7D1605605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,16 +140,6 @@ Global
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.NCUA|Any CPU.Build.0 = Release|Any CPU
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D67B073-4E40-4079-BD75-BDC097E8DB39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localdb|Any CPU.Build.0 = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.localhost|Any CPU.Build.0 = Debug|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.NCUA|Any CPU.ActiveCfg = Release|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.NCUA|Any CPU.Build.0 = Release|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{023FE90A-B9B1-4902-BE78-4FEE51BDD184}.Release|Any CPU.Build.0 = Release|Any CPU
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FA2FD6-6603-4575-9CC7-DF13884A71A2}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
