@@ -1,3 +1,4 @@
+
 <!----------------------
 
    Copyright 2022 Battelle Energy Alliance, LLC
@@ -21,167 +22,135 @@
   SOFTWARE.
 -------------------------->
 <div class="container-fluid">
-
-  <div class="row crr-performance">
-    <div class="col-1" style="width: 15%;">
-      <div class="row" style="padding: 0; height: auto; min-width: 130px;">
-        <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px;">
-          Total number of practices performed
-        </div>
-        <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
-          Total number of practices incompletely performed
-        </div>
-        <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
-          Total number of practices not performed
-        </div>
-      </div>
-      <div class="row" style="height: 50px;">
-        <div class="col-1" style="position: relative; padding: 0;">
-          <div style="position: absolute; padding: 0; width: 110px;" [innerHtml]="modelData?.totalBarChart | safe">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col" style="padding: 0;">
-          <h5 class="appendix-label">CRR Summary</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-1" style="width: 85%; padding: 0; position: relative;">
-            <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
-                <h3 class="depiction-title" style="padding-bottom: 1rem;">CRR Performance</h3>
-              </div>
-            <div class="col-6" style="padding: 0; position: absolute; bottom: 0; left: 47%;" [innerHtml]="legend | safe">
+    <div class="row">
+        <div class="col-1" style="width: 15%;">
+            <div class="row" style="padding: 0; height: auto; min-width: 130px;">
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px;">
+                    Total number of practices performed
+                </div>
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
+                    Total number of practices incompletely performed
+                </div>
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
+                    Total number of practices not performed
+                </div>
             </div>
-          </div>
+            <div class="row" style="position: absolute; bottom: 0;">
+                <div class="col" style="padding: 0;">
+                    <div class="row" style="padding: 0 0 0 1rem;" [innerHtml]="mil1FullAnswerDistribChart | safe">
+                    </div>
+                    <div class="col" style="padding: 0;">
+                        <h5 class="appendix-label">CRR Summary</h5>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row" style="border-top: solid 1.5px black;">
-          <div style="width: 15%; padding: 0; font-size: 10px;">
-            DOMAIN SUMMARY
-          </div>
-          <div style="width: 85%; padding: 0; font-size: 10px;">
-            MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
-          </div>
+        <div class="col-1" style="width: 85%;">
+            <div class="row">
+                <div style="padding: 0; width: 60%;">
+                    <h3 class="depiction-title">CRR Performance</h3>
+                </div>
+                <div style="padding: 0; width: 40%;" [innerHtml]="legend | safe">
+                </div>
+            </div>
+            <div class="row header" style="border-top: 1px solid black; padding: 0;">
+                <div style="width: 60%;">
+                        <b>MIL-1 Performed</b>
+                        <br />
+                        Domain practices are being performed.
+                </div>
+                <div style="width: 9%; padding-right: 1rem;">
+                        <b>MIL-2 Planned</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        planning, policy,
+                        stakeholders, and
+                        standards.
+                </div>
+                <div style="width: 10%; padding-right: 1rem;">
+                        <b>MIL-3 Managed</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        governance and
+                        adequate
+                        resources.
+                </div>
+                <div style="width: 10%; padding-right: 1rem;">
+                        <b>MIL-4 Measured</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        measurement,
+                        monitoring, and
+                        executive
+                        oversight.
+                </div>
+                <div style="width: 10%;">
+                        <b>MIL-5 Defined</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        enterprise
+                        standardization
+                        and analysis of.
+                        lessons learned.
+                </div>
+            </div>
         </div>
-        <div class="row header" style="border-top: 1px solid black; padding: 0;">
-          <div style="width: 60%;">
-            <b>MIL-1 Performed</b>
-            <br />
-            Domain practices are being performed.
-          </div>
-          <div style="width: 10%;">
-            <b>MIL-2 Planned</b>
-            <br />
-            Domain practices
-            are supported by
-            planning, policy,
-            stakeholders, and
-            standards.
-          </div>
-          <div style="width: 10%;">
-            <b>MIL-3 Managed</b>
-            <br />
-            Domain practices
-            are supported by
-            governance and
-            adequate
-            resources.
-          </div>
-          <div style="width: 10%;">
-            <b>MIL-4 Measured</b>
-            <br />
-            Domain practices
-            are supported by
-            measurement,
-            monitoring, and
-            executive
-            oversight.
-          </div>
-          <div style="width: 10%;">
-            <b>MIL-5 Defined</b>
-            <br />
-            Domain practices
-            are supported by
-            enterprise
-            standardization
-            and analysis of.
-            lessons learned.
-          </div>
-        </div>
-      </div>
-
-    <div class="row" style="border-top: solid 1.5px black;">
-      <div style="width: 15%; padding: 0; font-size: 10px;">
-        DOMAIN SUMMARY
-      </div>
-      <div style="width: 85%; padding: 0; font-size: 10px;">
-        MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
-      </div>
     </div>
-
-    <div class="row" style="border-top: 0.5px solid black;" *ngFor="let domain of modelData?.domainSummaryList">
-      <div class="col-1" style="width: 15%; padding: 0 0.25rem 0 0;">
-        <div class="row">
-          <div style="font-size: 0.7rem; font-weight: bold;">
-            <!-- @domain.Attribute("title").Value.Split('(')[0].Trim() -->
-            {{domain.DomainTitle}}
-          </div>
+    <div class="row" style="border-top: solid 1.5px black;">
+        <div style="width: 15%; padding: 0; font-size: 10px;">
+            DOMAIN SUMMARY
         </div>
-        <div class="row" [innerHtml]="domain.barChart | safe">
-          <!-- @Html.Raw(barChart.ToString()) -->
+        <div style="width: 85%; padding: 0; font-size: 10px;">
+            MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
         </div>
-      </div>
-  <div class="col-10" style="display: flex; width: 85%; padding: 0;">
-    <div style="width: 60%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg1 | safe">
-      <!-- @{
-        XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-        el.Attribute("label").Value == "MIL-1");
-              var mil1Svg = new MilHeatMap(mil1, true, false, 8);
-              mil1Svg.Scale(heatmapScale);
-            }
-            @Html.Raw(mil1Svg.ToString()) -->
-          </div>
-          <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg2 | safe">
-            <!-- @{
-              XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-              el.Attribute("label").Value == "MIL-2");
-              var mil2Svg = new MilHeatMap(mil2, true, false, 8);
-              mil2Svg.Scale(heatmapScale);
-            }
-            @Html.Raw(mil2Svg.ToString()) -->
-          </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg3 | safe">
-        <!-- @{
-          XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-          el.Attribute("label").Value == "MIL-3");
-          var mil3Svg = new MilHeatMap(mil3, true, false, 8);
-          mil3Svg.Scale(heatmapScale);
-        }
-        @Html.Raw(mil3Svg.ToString()) -->
-      </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg4 | safe">
-        <!-- @{
-          XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-          el.Attribute("label").Value == "MIL-4");
-          var mil4Svg = new MilHeatMap(mil4, true, false, 8);
-          mil4Svg.Scale(heatmapScale);
-        }
-        @Html.Raw(mil4Svg.ToString()) -->
-      </div>
-      <div style="width: 10%; padding: 0.1rem;" [innerHtml]="domain.milHeatMapSvg5 | safe">
-        <!-- @{
-          XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-          el.Attribute("label").Value == "MIL-5");
-          var mil5Svg = new MilHeatMap(mil5, true, false, 8);
-          mil5Svg.Scale(heatmapScale);
-        }
-        @Html.Raw(mil5Svg.ToString()) -->
-      </div>
+    </div>
+    <div  *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row" style="border-top: 0.5px solid black;">
+        <div class="col-1" style="width: 15%; padding: 0 2rem 0 1rem;">
+            <div class="row">
+                <div style="font-size: 0.7rem; font-weight: bold;">
+                    <!-- @domain.Attribute("title").Value.Split('(')[0].Trim() -->
+                    {{ domain.title.split('(')[0].trim() }}
+                </div>
+            </div>
+            <div class="row" [innerHtml]="bodyData[i].scoreBarChart | safe">
+                <!-- @Html.Raw(barChart.ToString()) -->
+            </div>
+        </div>
+        <div class="col-10" style="display: flex; width: 85%; padding: 0;">
+            <div *ngFor="let heatMap of bodyData[i].heatMaps; let j = index" style="padding: 0.1rem;" [innerHtml]="heatMap | safe"
+            [style.width]="j === 0 ? '62%' : '10%'">
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
-  .tinytext {
-    font-size: 8px;
-  }
+    .depiction-title {
+        font-family: Arial;
+        font-size: 18pt;
+        line-height: 90%;
+        margin: 0;
+    }
+
+    .crr-logo {
+        height: 75px;
+        width: auto;
+        max-width: 250px;
+    }
+
+    .header div {
+        padding: 0;
+        font-size: 7.5px;
+        padding: 0.1rem;
+    }
+
+    .appendix-label {
+        font-size: 0.7rem;
+        font-weight: bold;
+        margin: 0;
+    }
 </style>
