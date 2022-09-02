@@ -109,7 +109,7 @@ export class ConfigService {
 
           this.mobileEnvironment = (this.config.mobileEnvironment);
 
-          this.canDeleteCustomModules = (this.config.canDeleteCustomModules ?? false);
+          this.canDeleteCustomModules = (this.config.debug.canDeleteCustomModules ?? false);
 
           this.populateLabelValues();
 
@@ -180,7 +180,7 @@ export class ConfigService {
    * question and requirement IDs for debugging purposes.
    */
   showQuestionAndRequirementIDs() {
-    return this.config.showQuestionAndRequirementIDs || false;
+    return this.config.debug.showQuestionAndRequirementIDs || false;
   }
 
   /**
@@ -189,7 +189,7 @@ export class ConfigService {
    * @returns
    */
   showBuildTime() {
-    return this.config.showBuildTime || false;
+    return this.config.debug.showBuildTime || false;
   }
 }
 
