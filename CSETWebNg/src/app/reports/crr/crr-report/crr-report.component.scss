@@ -646,7 +646,7 @@ div.widget {
 
 /* Print styles */
 @page {
-  size: A4;
+  size: letter;
   margin: 0;
 }
 
@@ -683,7 +683,7 @@ div.widget {
   }
 
   .report-notification {
-    margin-top: 8cm;
+    margin-top: 8cm !important;
   }
 
   #mil4-page-break {
