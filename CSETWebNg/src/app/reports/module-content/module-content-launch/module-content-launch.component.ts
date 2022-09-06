@@ -40,7 +40,7 @@ export class ModuleContentLaunchComponent implements OnInit {
    * 
    */
   selectType(event: any) {
-    this.whichType = event.srcElement.id;
+    this.whichType = event.target.id;
   }
 
   /**

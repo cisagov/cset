@@ -63,7 +63,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {
         this.model = r;
-        console.log(r)
 
         // Build up comments list
         this.model.reportData.comments.forEach(matAns => {

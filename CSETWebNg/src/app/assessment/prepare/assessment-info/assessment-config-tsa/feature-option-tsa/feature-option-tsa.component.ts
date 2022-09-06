@@ -86,7 +86,7 @@ export class FeatureOptionTsaComponent implements OnInit {
   * Sets the selection of a feature and posts the assesment detail to the server.
   */
   submittsa(feature, event: any) {
-    const value = event.srcElement.checked;
+    const value = event.target.checked;
 
    const model=this.assessSvc.assessment;
 

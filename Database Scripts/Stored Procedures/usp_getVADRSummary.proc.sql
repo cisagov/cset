@@ -24,8 +24,10 @@ BEGIN
 		(
 				SELECT l.Level_Name, a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Question_Or_Requirement_Id)) OVER(PARTITION BY Level_Name) AS Total
 				FROM Answer_Maturity a 
+				join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
 				join MATURITY_LEVELS l on a.Maturity_Level = l.Maturity_Level_Id
-				where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
+				where q.Parent_Question_Id is null -- don't count child freeform text questions; they aren't answered y,n, etc.
+					and a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
 				group by a.Assessment_Id, l.Maturity_Level_Id, l.Level_Name, a.Answer_Text
 		)m on a.Level_Name=m.Level_Name and a.Answer_Text=m.Answer_Text		
 	JOIN ANSWER_ORDER o on a.Answer_Text=o.answer_text

@@ -36,8 +36,7 @@ a.navbar-brand {
 .report-body-crr {
   font-family: Arial !important;
   font-size: 12pt !important;
-  margin: auto;
-  margin-left: 20vw;
+  margin-left: 15vw !important;
 }
 
 h1 {
@@ -55,13 +54,13 @@ h3 {
 }
 
 h4 {
-  font-size: 14pt;
+  font-size: 16pt;
   color: #005288;
 }
 
 p {
   font-family: Arial;
-  font-size: 12pt;
+  font-size: 14pt;
 }
 
 .small {
@@ -644,35 +643,80 @@ div.widget {
   margin-left: 1px;
 }
 
+
+/* Print styles */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media screen {
+  table.page-layout {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 @media print {
 
+  html, body {
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  .report-body-crr {
+    margin-left: 1.5cm !important;
+    margin-right: 1.5cm !important;
+  }
+
+  #coversheet1 {
+    margin-left: -2cm;
+    margin-right: -2cm;
+  }
+
+  .container-fluid, .report-body-crr {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   .page-margin-top {
-    border-top: none;
+    border-top: none !important;
+  }
+
+  #notification-page-break {
+    margin-top: 1.5cm !important;
+  }
+
+  #mil4-page-break {
+    page-break-after: always;
+  }
+
+  .page-break {
+    padding-top: 1.5cm !important;
   }
 
   .container {
-    margin: 0;
+    margin: 0 !important;
   }
 
   .mat-section {
-    break-inside: avoid;
+    break-inside: avoid !important;
   }
 
-  .crrLastResultsTableRow {
-      margin-left: 1px !important;
+  .print-footer-right, .header-space,
+  .print-footer-left, .footer-space {
+    height: 2cm;
   }
 
-  .mil-upper-grid {
-      padding-right: 0 !important;
-      display: inline-block;
-      height: var(--table-row-height);
-      width: calc(var(--mil-upper-width) / 4);
+  .print-footer-right {
+    position: fixed;
+    bottom: 3cm;
+    right: 3cm;
   }
 
-  .mil-upper-grid {
-      padding-right: 0 !important;
-      display: inline-block;
-      height: var(--table-row-height);
-      width: calc(var(--mil-upper-width) / 4);
+  .print-footer-left {
+    position: fixed;
+    bottom: 3cm;
+    left: 1.5cm;
   }
 }

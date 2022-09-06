@@ -74,7 +74,7 @@ export class FeatureOptionComponent implements OnInit {
   */
   submitlegacy(feature, event: any) {
 
-    const value = event.srcElement.checked;
+    const value = event.target.checked;
 
     if (!this.isNotLegacy) {
       this.selectFeature(feature, value);
