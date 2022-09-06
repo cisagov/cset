@@ -77,7 +77,7 @@ export class FeatureOptionNcuaComponent implements OnInit {
   * Sets the selection of a feature and posts the assesment detail to the server.
   */
   submit(feature, event: any) {
-    const optionChecked = event.srcElement.checked;
+    const optionChecked = event.target.checked;
     switch (feature.code) {
       case 'maturity':
       case 'acet':

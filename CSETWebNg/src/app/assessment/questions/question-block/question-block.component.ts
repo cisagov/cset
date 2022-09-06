@@ -148,7 +148,7 @@ export class QuestionBlockComponent implements OnInit {
    * Spawns a dialog to capture the new substitution text.
    */
   questionTextClicked(q: Question, e: Event) {
-    const target: Element = (e.target || e.srcElement || e.currentTarget) as Element;
+    const target: Element = (e.target || e.target || e.currentTarget) as Element;
     const parameterId = this.getParameterId(target);
 
     // If they did not click on a parameter, do nothing
@@ -160,7 +160,7 @@ export class QuestionBlockComponent implements OnInit {
       {
         data: {
           question: q,
-          clickedToken: e.srcElement,
+          clickedToken: e.target,
           parameterId: parameterId
         },
         disableClose: false
