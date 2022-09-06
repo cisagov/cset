@@ -57,9 +57,9 @@
                 </tr>
                 <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
                     <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text1 !== 'U' ? this.mergeConflicts[i].answer_Text1 : " " }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text2 !== 'U' ? this.mergeConflicts[i].answer_Text2 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3">{{ this.mergeConflicts[i].answer_Text3 !== 'U' ? this.mergeConflicts[i].answer_Text3 : " " }}</td>
+                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text1))">{{ getDisplayText(this.mergeConflicts[i].answer_Text1) }}</td>
+                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text2))">{{ getDisplayText(this.mergeConflicts[i].answer_Text2) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text3))">{{ getDisplayText(this.mergeConflicts[i].answer_Text3) }}</td>
                     <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4">{{ this.mergeConflicts[i].answer_Text4 !== 'U' ? this.mergeConflicts[i].answer_Text4 : " " }}</td>
                     <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5">{{ this.mergeConflicts[i].answer_Text5 !== 'U' ? this.mergeConflicts[i].answer_Text5 : " " }}</td>
                     <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6">{{ this.mergeConflicts[i].answer_Text6 !== 'U' ? this.mergeConflicts[i].answer_Text6 : " " }}</td>
