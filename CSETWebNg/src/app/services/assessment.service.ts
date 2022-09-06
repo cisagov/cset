@@ -127,6 +127,11 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
   }
 
+  createNewAssessmentGallery(workflow:string, assessType:number){
+    let nAssessment = {workflow: workflow, assessType: assessType}
+    return this.http.post(this.apiUrl + 'createassessment?', nAssessment, headers)
+  }
+
   /**
    *
    */
@@ -353,6 +358,34 @@ export class AssessmentService {
           )
       );
   }
+
+  newAssessmentGallery(assessType:number) {
+    let workflow: string;
+    switch (this.configSvc.installationMode || '') {
+      case 'ACET':
+        workflow = 'ACET';
+        break;
+      case 'TSA':
+        workflow = 'TSA';
+        break;
+      default:
+        workflow = 'BASE';
+    }
+    this.createAssessment(workflow)
+      .toPromise()
+      .then(
+        (response: any) => {
+          // set the brand new flag
+          this.isBrandNew = true;
+          this.loadAssessment(response.id);
+        },
+        error =>
+          console.log(
+            'Unable to create new assessment: ' + (<Error>error).message
+          )
+      );
+  }
+
 
   /**
    *
