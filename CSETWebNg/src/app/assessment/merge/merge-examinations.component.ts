@@ -116,7 +116,6 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
         this.mergeConflicts = response;
-        console.log("this.mergeConflicts: " + JSON.stringify(this.mergeConflicts, null, 4));
         this.getAssessmentNames();
       }
     );
@@ -149,6 +148,35 @@ export class MergeExaminationsComponent implements OnInit {
       )
     }
   }
+
+  getDisplayText(answerText: String) {
+    if (answerText === 'U') {
+      return '';
+    } else if (answerText === 'A') {
+      return 'N-I';
+    } else {
+      return answerText;
+    }
+  }
+
+  getAltText(altText: any) {
+    let commentString = "";
+
+    if (altText === null || altText === "") {
+      return "";
+    } else {
+      let tempArray = altText.split("- - End of Issue - -");
+      for (let i = 0; i < tempArray.length; i++) {
+        if (!tempArray[i].includes("- - End of Issue - -")) {
+          commentString += tempArray[i];
+        }
+      }
+
+      return commentString;
+    }
+    
+  }
+
 
   navToHome() {
     this.router.navigate(['/landing-page']);
