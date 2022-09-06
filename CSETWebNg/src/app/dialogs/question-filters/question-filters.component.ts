@@ -99,7 +99,7 @@ export class QuestionFiltersComponent implements OnInit {
       this.close();
     }
 
-    const s = (<HTMLInputElement>e.srcElement).value.trim();
+    const s = (<HTMLInputElement>e.target).value.trim();
     this.filterSvc.filterSearchString = s;
 
     this.filterChanged.emit(true);
@@ -111,7 +111,7 @@ export class QuestionFiltersComponent implements OnInit {
    * @param ans 
    */
   updateFilters(e: Event, ans: string) {
-    this.filterSvc.setFilter(ans, (<HTMLInputElement>e.srcElement).checked);
+    this.filterSvc.setFilter(ans, (<HTMLInputElement>e.target).checked);
 
     this.filterChanged.emit(true);
   }

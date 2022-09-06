@@ -55,10 +55,10 @@ export class ModuleContentComponent implements OnInit {
   }
 
   toggleShowGuidance(evt: any) {
-    this.reportSvc.showGuidance = evt.srcElement.checked;
+    this.reportSvc.showGuidance = evt.target.checked;
   }
 
   toggleShowReferences(evt: any) {
-    this.reportSvc.showReferences = evt.srcElement.checked;
+    this.reportSvc.showReferences = evt.target.checked;
   }
 }

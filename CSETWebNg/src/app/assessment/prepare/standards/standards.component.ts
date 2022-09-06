@@ -182,7 +182,7 @@ export class StandardsComponent implements OnInit {
    * Builds a list of selected standards and post it to the server.
    */
   submit(standard, event: Event) {
-    standard.selected = (event.srcElement as HTMLInputElement).checked;
+    standard.selected = (event.target as HTMLInputElement).checked;
     const selectedStandards: string[] = [];
     if (!this.showLegalese(standard)) {
       return;
