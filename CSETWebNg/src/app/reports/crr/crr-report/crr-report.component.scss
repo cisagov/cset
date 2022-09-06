@@ -167,6 +167,7 @@ table {
   border: solid 2px black;
   width: 70%;
   margin: 10% auto;
+  break-inside: avoid-page;
 }
 
 .report-notification h1 {
@@ -680,6 +681,7 @@ div.widget {
 
   .page-margin-top {
     border-top: none !important;
+    padding-top: 1.5cm !important;
   }
 
   .report-notification {
