@@ -22,10 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrPerformanceAppendixA } from '../../../../models/crrperformanceappendixa.model';
 import { CrrReportModel } from '../../../../models/reports.model';
 import { CrrService } from '../../../../services/crr.service';
-import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -37,20 +35,26 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
 
   @Input() model: CrrReportModel;
 
-  modelData : CrrPerformanceAppendixA;
+  bodyData: any[];
+  legend: string = '';
+  mil1FullAnswerDistribChart = '';
 
   constructor(private crrSvc: CrrService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getCrrPerformanceAppendixA().subscribe((resp: CrrPerformanceAppendixA) =>{
-      console.log("resp.CrrPerformanceLegend:  "+resp.crrPerformanceLegend);
-      this.modelData = resp;
-      console.log("this.modelData.CrrPerformanceLegend:  "+this.modelData.crrPerformanceLegend);
+    this.crrSvc.getCrrPerformanceAppendixABodyData().subscribe((resp: any) =>{
+      this.bodyData = resp;
     });
 
-    }
+    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
+      this.mil1FullAnswerDistribChart = resp;
+    })
 
+    this.crrSvc.getMil1PerformanceLegendWidget().subscribe((resp: string) => {
+      this.legend = resp;
+    });
 
   }
+}
 
 

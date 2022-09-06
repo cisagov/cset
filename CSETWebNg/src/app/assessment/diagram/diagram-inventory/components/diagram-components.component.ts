@@ -21,31 +21,48 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from './../../../../services/crr.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DiagramService } from '../../../../services/diagram.service';
 
 @Component({
-  selector: 'app-crr-nist-csf-cat-summary',
-  templateUrl: './crr-nist-csf-cat-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+  selector: 'app-diagram-components',
+  templateUrl: './diagram-components.component.html',
+  styleUrls: ['./diagram-components.component.scss']
 })
-export class CrrNistCsfCatSummaryComponent implements OnInit {
+export class DiagramComponentsComponent implements OnInit {
 
-  @Input() model: CrrReportModel;
+  diagramComponentList: any;
+  
+  @Output()
+  change = new EventEmitter<any>();
 
-  bodyData: any[] = [];
-  legend: string = '';
+  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
+  assetTypes: any;
+  sal: any;
+  criticality: any;
 
-  constructor(private crrSvc: CrrService) { }
+  /**
+   * 
+   */
+  constructor(public diagramSvc: DiagramService) { }
 
-  ngOnInit(): void {
-    this.crrSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
-      this.bodyData = resp;
-    })
+  /**
+   * 
+   */
+  ngOnInit() {
+    this.diagramSvc.getAllSymbols().subscribe((x: any) => {
+      this.assetTypes = x;
+    });
+    this.getComponents();
+  }
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
-      this.legend = resp;
-    })
+  /**
+   * 
+   */
+  getComponents() {
+    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
+      this.diagramComponentList = x;
+      this.change.emit(this.diagramComponentList);
+    });
   }
 }

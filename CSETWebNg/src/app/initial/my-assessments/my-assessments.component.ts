@@ -320,16 +320,16 @@ export class MyAssessmentsComponent implements OnInit {
   importAssessmentFile(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
-    if (event.srcElement.files[0].name.endsWith(".csetw")
-      || event.srcElement.files[0].name.endsWith(".acet")) {
+    if (event.target.files[0].name.endsWith(".csetw")
+      || event.target.files[0].name.endsWith(".acet")) {
       // Call Standard import service
       dialogRef = this.dialog.open(UploadExportComponent, {
-        data: { files: event.srcElement.files, IsNormalLoad: true }
+        data: { files: event.target.files, IsNormalLoad: true }
       });
     } else {
       if (this.authSvc.isLocal) {
         dialogRef = this.dialog.open(UploadExportComponent, {
-          data: { files: event.srcElement.files, IsNormalLoad: false }
+          data: { files: event.target.files, IsNormalLoad: false }
         });
       } else {
         this.unsupportedImportFile = true;

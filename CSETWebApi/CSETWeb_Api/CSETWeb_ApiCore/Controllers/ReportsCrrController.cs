@@ -351,48 +351,222 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/reportscrr/widget/GetCrrPerformanceAppendixA")]
-        public IActionResult GetCrrPerformanceAppendixA()
+        [Route("api/reportscrr/getCrrPerformanceAppendixABodyData")]
+        public IActionResult GetCrrPerformanceAppendixABodyData()
         {
-            return Ok(GetCrrPerformanceAppendixAData());
-        }
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+            var XDocument = _crr.XDoc;
 
-        private CrrResultsModel GenerateCrrResults()
-        {
-            MaturityReportData maturityData = new MaturityReportData(_context);
+            List<object> bodyData = new List<object>();
+            double heatmapScale = 1.15;
 
-            maturityData.MaturityModels = _report.GetMaturityModelData();
-            maturityData.information = _report.GetInformation();
-            maturityData.AnalyzeMaturityData();
-
-
-            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
-            maturityData.MaturityModels.ForEach(d =>
+            foreach (XElement domain in XDocument.Root.Elements())
             {
-                d.MaturityQuestions.ForEach(q =>
-                {
-                    q.Answer.Assessment = null;
-                });
-            });
+                var domainScores = _crr.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 45, Width = 75 };
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                string barChart = new ScoreBarChart(barChartInput).ToString();
 
-            CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = maturityData.MaturityModels.FirstOrDefault(d => d.MaturityModelName == "CRR")?.StatsByDomainAndLevel;
-            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
-            retVal.TrimToNElements(10);
-            retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
-            return retVal;
+                List<string> heatMaps = new List<string>();
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                    el.Attribute("label").Value == "MIL-" + i);
+
+                    var milSvg = new MilHeatMap(mil, true, false, 8);
+                    milSvg.Scale(heatmapScale);
+                    heatMaps.Add(milSvg.ToString());
+                }
+
+                bodyData.Add(new { ScoreBarChart = barChart, HeatMaps = heatMaps });
+            }
+
+            return Ok(bodyData);
         }
 
-        private CrrResultsModel GenerateCrrResults(MaturityReportData data)
+        [HttpGet]
+        [Route("api/reportscrr/getNistCsfCatSummaryBodyData")]
+        public IActionResult GetNistCsfCatSummaryBodyData()
         {
-            //For Testing
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
 
-            CrrResultsModel retVal = new CrrResultsModel();
-            List<DomainStats> cmmcDataDomainLevelStats = data.MaturityModels.Where(d => d.MaturityModelName == "CRR").First().StatsByDomainAndLevel;
-            retVal.EvaluateDataList(cmmcDataDomainLevelStats);
-            retVal.TrimToNElements(10);
-            retVal.GenerateWidthValues(); //If generating wrong values, check inner method values match the ones set in the css
-            return retVal;
+            XDocument xDoc = _crr.XCsf;
+            var functions = xDoc.Descendants("Function");
+
+            List<object> funcs = new List<object>();
+            foreach (var func in functions)
+            {
+                var distFunc = GetDeepAnswerDistrib(func);
+
+                distFunc.Height = 65;
+                distFunc.Width = 150;
+                distFunc.IncludePercentFirstBar = true;
+                var barChart = new ScoreBarChart(distFunc);
+
+                List<object> cats = new List<object>();
+                foreach (var cat in func.Elements("Category"))
+                {
+                    string catChart = "";
+
+                    if (cat.Element("References") != null)
+                    {
+                        var distCategory = GetAnswerDistrib(cat.Element("References"));
+                        distCategory.Height = 20;
+                        distCategory.Width = 150;
+                        catChart = new ScoreStackedBarChart(distCategory).ToString();
+                    }
+
+                    List<object> subCats = new List<object>();
+
+                    foreach (var subcat in cat.Elements("Subcategory"))
+                    {
+                        var distSubcategory = GetAnswerDistrib(subcat.Element("References"));
+                        distSubcategory.Height = 20;
+                        distSubcategory.Width = 230;
+                        var chartSubcat = new ScoreStackedBarChart(distSubcategory);
+                        subCats.Add(new { ChartSubCat = chartSubcat.ToString(), SubCat = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(subcat)) });
+                    }
+
+                    cats.Add(new
+                    {
+                        Name = cat.Attribute("name").Value,
+                        ParentCode = cat.Parent.Attribute("code").Value,
+                        Code = cat.Attribute("code").Value,
+                        Desc = cat.Attribute("desc").Value,
+                        CatChart = catChart,
+                        SubCats = subCats
+                    });
+                }
+
+                funcs.Add(new
+                {
+                    Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)),
+                    SubCatsCount = func.Descendants("Subcategory").Count(),
+                    Chart = barChart.ToString(),
+                    Cats = cats
+                });
+            }
+
+            return Ok(funcs);
+        }
+
+        [HttpGet]
+        [Route("api/reportscrr/getNistCsfCatPerformanceBodyData")]
+        public IActionResult GetNistCsfCatPerformanceBodyData()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _crr.InstantiateScoringHelper(assessmentId);
+
+            XDocument xDoc = _crr.XCsf;
+            var functions = xDoc.Descendants("Function");
+
+            List<object> funcs = new List<object>();
+            foreach (var func in functions)
+            {
+                var distFunc = GetDeepAnswerDistrib(func);
+
+                distFunc.Height = 65;
+                distFunc.Width = 150;
+                distFunc.IncludePercentFirstBar = true;
+                var barChart = new ScoreBarChart(distFunc);
+
+                List<object> cats = new List<object>();
+                foreach (var cat in func.Elements("Category"))
+                {
+                    List<string> heatMaps = new List<string>();
+
+                    if (cat.Element("References") != null)
+                    {
+                        var mappedQs = cat.Element("References").Elements().ToList(); ;
+
+                        var block = new NistDomainBlock(mappedQs);
+                        foreach (string heatmap in block.HeatmapList)
+                        {
+                            heatMaps.Add(heatmap);
+                        }
+                    }
+
+                    List<object> subCats = new List<object>();
+
+                    foreach (var subcat in cat.Elements("Subcategory")) 
+                    {
+                        var mappedQs = subcat.Element("References").Elements().ToList();
+                        var block = new NistDomainBlock(mappedQs);
+                        List<string> subCatHeatMaps = new List<string>();
+                        foreach (string heatmap in block.HeatmapList)
+                        {
+                            subCatHeatMaps.Add(heatmap);
+                        }
+                        subCats.Add(new { HeatMaps = subCatHeatMaps, SubCat = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(subcat)) });
+                    }
+
+                    cats.Add(new
+                    {
+                        Name = cat.Attribute("name").Value,
+                        ParentCode = cat.Parent.Attribute("code").Value,
+                        Code = cat.Attribute("code").Value,
+                        Desc = cat.Attribute("desc").Value,
+                        HeatMaps = heatMaps,
+                        SubCats = subCats
+                    });
+                }
+
+                funcs.Add(new
+                {
+                    Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)),
+                    SubCatsCount = func.Descendants("Subcategory").Count(),
+                    Chart = barChart.ToString(),
+                    Cats = cats
+                });
+            }
+
+            return Ok(funcs);
+        }
+
+        private BarChartInput GetDeepAnswerDistrib(XElement element) 
+        {
+            var answeredNo = new List<string>() { "N", "U" };
+
+            var myQs = element.Descendants("CrrReference");
+
+            var distrib = new List<int>();
+            distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
+            distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
+            distrib.Add(myQs.Count(x => answeredNo.Contains(x.Attribute("answer")?.Value)));
+
+            var d = new BarChartInput()
+            {
+                AnswerCounts = distrib
+            };
+
+            return d;
+        }
+
+        BarChartInput GetAnswerDistrib(XElement element)
+        {
+            var answeredNo = new List<string>() { "N", "U" };
+
+            if (element == null)
+            {
+                return new BarChartInput();
+            }
+
+            var myQs = element.Elements("CrrReference");
+
+            var distrib = new List<int>();
+            distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "Y"));
+            distrib.Add(myQs.Count(x => x.Attribute("answer")?.Value == "I"));
+            distrib.Add(myQs.Count(x => answeredNo.Contains(x.Attribute("answer")?.Value)));
+
+            var d = new BarChartInput()
+            {
+                AnswerCounts = distrib
+            };
+
+            return d;
         }
 
         private string GetTotalBarChart()
@@ -413,77 +587,6 @@ namespace CSETWebCore.Api.Controllers
         {
             var legend = new MIL1PerformanceSummaryLegend();
             return legend.ToString();
-        }
-
-        private DomainSummary[] GetDomainSummaries()
-        {
-            DomainSummary[] domainSummaries = new DomainSummary[1];
-            var heatmapScale = 1.15;
-            var XDocument = _crr.XDoc;
-
-            DomainSummary domainSummary = null;
-            foreach (XElement domain in XDocument.Root.Elements())
-            {
-                var domainScores = _crr.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                var barChartInput = new BarChartInput() { Height = 45, Width = 75 };
-                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
-                var barChart = new ScoreBarChart(barChartInput);
-
-                XElement mil1 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-1");
-                var mil1Svg = new MilHeatMap(mil1, true, false, 8);
-                mil1Svg.Scale(heatmapScale);
-
-                XElement mil2 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                            el.Attribute("label").Value == "MIL-2");
-                var mil2Svg = new MilHeatMap(mil2, true, false, 8);
-                mil2Svg.Scale(heatmapScale);
-
-                XElement mil3 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-3");
-                var mil3Svg = new MilHeatMap(mil3, true, false, 8);
-                mil3Svg.Scale(heatmapScale);
-
-                XElement mil4 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-4");
-                var mil4Svg = new MilHeatMap(mil4, true, false, 8);
-                mil4Svg.Scale(heatmapScale);
-
-                XElement mil5 = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                           el.Attribute("label").Value == "MIL-5");
-                var mil5Svg = new MilHeatMap(mil5, true, false, 8);
-                mil5Svg.Scale(heatmapScale);
-
-                domainSummary = new DomainSummary()
-                {
-                    DomainTitle = domain.Attribute("title").Value.Split('(')[0].Trim(),
-                    BarChart = barChart.ToString(),
-                    MilHeatMapSvg1 = mil1Svg.ToString(),
-                    MilHeatMapSvg2 = mil2Svg.ToString(),
-                    MilHeatMapSvg3 = mil3Svg.ToString(),
-                    MilHeatMapSvg4 = mil4Svg.ToString(),
-                    MilHeatMapSvg5 = mil5Svg.ToString()
-                };
-
-                
-            }
-            return domainSummaries;
-
-
-        }
-
-        private CrrPerformanceAppendixA GetCrrPerformanceAppendixAData()
-        {
-            CrrPerformanceAppendixA retVal = new CrrPerformanceAppendixA();
-            retVal.TotalBarChart = GetTotalBarChart();
-            retVal.CrrPerformanceLegend = GetMil1PerformanceSummaryLegendData();
-            retVal.DomainSummaryList = GetDomainSummaries();
-           
-
-            return retVal;
-
-        }
-
-        
+        } 
     }
 }

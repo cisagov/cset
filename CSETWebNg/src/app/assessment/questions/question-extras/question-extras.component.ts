@@ -187,7 +187,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    this.answer.comment = e.srcElement.value;
+    this.answer.comment = e.target.value;
     this.saveAnswer();
   }
 
@@ -211,7 +211,7 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    this.answer.feedback = e.srcElement.value;
+    this.answer.feedback = e.target.value;
     this.saveAnswer();
   }
 
