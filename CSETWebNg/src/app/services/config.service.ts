@@ -160,6 +160,7 @@ export class ConfigService {
     this.buttonClasses['N'] = 'btn-no';
     this.buttonClasses['NA'] = 'btn-na';
     this.buttonClasses['A'] = 'btn-alt';
+    this.buttonClasses['Iss'] = 'btn-iss';
     this.buttonClasses['I'] = 'btn-inc';
   }
 

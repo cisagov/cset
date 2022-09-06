@@ -3,6 +3,7 @@ import { AfterViewInit, Component, NgZone, OnInit, ViewChild, ViewEncapsulation 
 import SwiperCore, { SwiperOptions, Navigation, Pagination, Virtual } from 'swiper';
 import { MatDialog} from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { AssessmentService } from '../../services/assessment.service';
 import {
   BreakpointObserver,
   Breakpoints,
@@ -69,7 +70,8 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog:MatDialog, 
     public breakpointObserver: BreakpointObserver, 
-    public gallerySvc: GalleryService) { 
+    public gallerySvc: GalleryService, 
+    public assessSvc: AssessmentService) { 
   }
 
   ngOnInit(): void {
@@ -123,7 +125,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   getImageSrc(src: string){
     let path="assets/images/cards/";
     if(src){
-      //console.log(src);
       return path+src;
     }
     return path+'default.png';

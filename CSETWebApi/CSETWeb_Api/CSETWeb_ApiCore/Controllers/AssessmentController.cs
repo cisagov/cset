@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Assessment;
@@ -6,6 +7,13 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Standards;
+using CSETWebCore.Business.Maturity;
+using CSETWebCore.Interfaces.AdminTab;
+using System.Collections.Generic;
+using J2N.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NodaTime;
 
 namespace CSETWebCore.Api.Controllers
@@ -17,15 +25,23 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
+        private readonly IStandardsBusiness _standards;
         private readonly CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         
         public AssessmentController(IAssessmentBusiness assessmentBusiness, 
-            ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context)
+            ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context, 
+            IStandardsBusiness standards,IAssessmentUtil assessmentUtil, 
+            IAdminTabBusiness adminTabBusiness )
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
             _context = context;
+            _standards = standards;
+            _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
         }
 
         /// <summary>
@@ -39,6 +55,46 @@ namespace CSETWebCore.Api.Controllers
         {
             int currentuserId = _tokenManager.GetUserId();
             return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, workflow));
+        }
+        
+        [HttpPost]
+        [Route("api/createassessment")]
+        public IActionResult CreateAssessment([FromBody] StartAssessment sAssessment)
+        {
+            int currentuserId = _tokenManager.GetUserId();
+            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == sAssessment.GalleryId);
+            List<string> assessType = new List<string>();
+            if (galleryItem != null)
+            {
+                var galleryConfig = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
+                
+                assessType = galleryConfig?.Sets != null ? galleryConfig.Sets : null;
+            }
+
+            if (assessType != null)
+            {
+                //create new assessment
+                var nAssessment = _assessmentBusiness.CreateNewAssessment(currentuserId, sAssessment.Workflow);
+                //determine if set or model
+                var isSet = _context.SETS.Any(x => x.Set_Name == assessType.First());
+                if (isSet)
+                {
+                    //set for assessment
+                    var newStandard = _standards.PersistSelectedStandards(nAssessment.Id, assessType);
+                    nAssessment.QuestionRequirementCounts = newStandard;
+                }
+                else
+                {
+                    //model for assessment
+                    new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(nAssessment.Id, assessType.First());
+                    var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(nAssessment.Id);
+                    nAssessment.MaturityModel = newModel;
+                }
+
+                return Ok(nAssessment);
+            }
+
+            return BadRequest("Assessment was not created");
         }
 
         /// <summary>
