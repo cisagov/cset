@@ -112,7 +112,7 @@ let headers = {
   // Adds or removes selected ISE examinations to the list to merge
   modifyMergeList(assessment: any, event: any) {
     let tempCharter = "";
-    const optionChecked = event.srcElement.checked;
+    const optionChecked = event.target.checked;
 
     if (optionChecked) {
       tempCharter = this.pullAssessmentCharter(assessment);
