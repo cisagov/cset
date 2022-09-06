@@ -20,11 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="page-margin-top" *ngFor="let domain of model?.structure.Model.Domain; let i = index">
+<div *ngFor="let domain of model?.structure.Model.Domain; let i = index">
   <h3 class="depiction-title">{{ (i + 1 + ' ') + domain.title }}</h3>
   <div class="widget text-nowrap">
     <app-crr-heatmap [domainAbbrev]="domain.abbreviation"></app-crr-heatmap>
   </div>
   <app-crr-results-detail [domain]="domain"></app-crr-results-detail>
+  <div class="page-break"></div>
 </div>
 
