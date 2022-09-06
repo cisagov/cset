@@ -894,6 +894,42 @@ table.td-align-top td {
   margin-right: 1rem;
 }
 
+.btn-circle.btn-sm {
+  width: 35px;
+  height: 35px;
+  padding: 6px 8px;
+  border-radius: 20px;
+  font-size: 8px !important;
+  text-align: center;
+}
+.btn-circle.btn-md {
+  width: 50px;
+  height: 50px;
+  padding: 7px 10px;
+  border-radius: 25px;
+  font-size: 10px;
+  text-align: center;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn-circle{
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+
 /* round the inside corners of the 'inside' buttons of the group */
 .answer-group.btn-group>.btn {
   border-radius: 4px !important;
@@ -3535,7 +3571,7 @@ h6.dropdown-header {
 .swiper-button-prev, .swiper-button-next {
   z-index: 100 !important;
   height: 65px !important;
-  top: 69px !important;
+  top: 94px !important;
   background-color: rgba(0, 0, 0,0.3) !important;
   padding: 0px 20px !important;  
   margin: 0 5px;
@@ -3553,7 +3589,7 @@ h6.dropdown-header {
   font-size: 22px !important;
 }
 .swiper-wrapper {
-  padding: 20px 0 10px 0; 
+  padding: 35px 0 20px 0; 
 }
 
 .gallery-card-body{
@@ -3580,11 +3616,16 @@ h6.dropdown-header {
 .swiper-slide {
   transition: 300ms all;
   min-width:230px;
-
+  max-width:300px;
+  border-radius:10px;
+  background-color: white;
+  
   &:hover {
-      z-index: 100;
-      box-shadow: 0 0px 6px 0 rgb(0 0 0 / 15%);
+      z-index: 1000;
+      box-shadow: 0 0px 6px 0 rgb(0 0 0 / 20%);
       margin-top: -15px;
+      transform: scale(1.1);
+      max-width:350px;
       
   }
 
@@ -3593,11 +3634,46 @@ h6.dropdown-header {
   }
 
   &:first-child:hover{
-   
+   margin-left:20px;
   }
 
   &:last-child:hover{
-   
+   margin-right:20px;
   }
+
+  &:hover .gallery-card-body {
+   
+    transform: scale(.93);
+  }
+  &:hover .gallery-card-footer .btn {
+   
+    transform: scale(.93);
+  }
+}
+
+.gallery-card{
+  border-radius:10px !important;
+  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 60%, rgba(238,238,238,1) 100%);
+  
+  border: 1px solid rgba(54,113,144,.30);;
+}
+
+.gallery-card:hover{
+  border:1px solid rgba(54,113,144,.40);
+  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(183,204,215,.30) 60%, rgba(54,113,144,.30) 100%) !important;
+  
+}
+
+.gallery-card-footer{
+  background-color: $secondary-color;
+  padding:8px 10px !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+.gallery-btn-play {
+  color:$secondary-color !important;
+}
+.gallery-btn-info:hover{
+  color:$secondary-color !important;
 }
 
