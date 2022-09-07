@@ -79,23 +79,16 @@ export class MergeExaminationsComponent implements OnInit {
   aggregateExistingAnswers(response) {
     this.count++
 
-    let var1 = response.groupings[0].subGroupings.length
-
-    console.log("response.groupings[0].subGroupings.length: " + var1);
-    
-    // subGroupings
-    // subGroupings[i].subGroupings
-    // subGroupings[i].subGroupings[j].questions
-
-    // This checks through every SCUEP question.
+    /** A 3 tiered loop to check under ever grouping level.
+    /* TODO: Currently breaks if SCUEP statements 1 - 7 are answered and 
+    /* CORE statements 1 - 7 are also answered.
+    **/
     for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
       for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
         for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
-          console.log("response.groupings[0].subGroupings[i].subGroupings[j].questions[k]: " + JSON.stringify(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].displayNumber));
         if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === false && 
             (this.mergingAssessmentAnswers[k] === undefined || this.mergingAssessmentAnswers[k].answerText === 'U')) 
           {
-            console.log("Passed the IF statement: " + JSON.stringify(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].displayNumber));
             this.mergingAssessmentAnswers[k] = {
               answerId: null,
               questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
