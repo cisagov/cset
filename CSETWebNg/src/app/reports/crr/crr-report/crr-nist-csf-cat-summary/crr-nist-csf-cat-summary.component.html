@@ -39,7 +39,7 @@
                   <th class="subcategory">Subcategory</th>
                   <th class="references">CRR References</th>
               </tr>
-              <tr class="bb-2" style="border: none;">
+              <tr class="bb-2" style="border: none; page-break-inside: auto;">
                   <td [attr.rowspan]="e.subCatsCount" style="height: 100%; padding: 0; border: none;">
                       <div class="function" [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
                           <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }})</div>
@@ -79,9 +79,9 @@
                       </table>
                   </td>
               </tr>
+              <div *ngIf="e.function.Function.code != 'RC'" class="break"></div>
           </tbody>
       </table>
-      <div *ngIf="e.function.Function.code != 'RC'" class="break"></div>
   </div>
 </div>
 
@@ -134,7 +134,7 @@
   tr, td {
       padding: 0.5rem 0;
       text-align: left;
-      page-break-inside: avoid !important;
+      page-break-inside: auto !important;
   }
 
 
