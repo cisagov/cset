@@ -3612,7 +3612,7 @@ h6.dropdown-header {
   transition: 300ms all;
   min-width:230px;
   max-width:300px;
-  border-radius:10px;
+  border-radius:5px;
   background-color: white;
   
   &:hover {
@@ -3621,7 +3621,6 @@ h6.dropdown-header {
       margin-top: -15px;
       transform: scale(1.1);
       max-width:350px;
-      
   }
 
   &:only-child{
@@ -3647,22 +3646,20 @@ h6.dropdown-header {
 }
 
 .gallery-card{
-  border-radius:10px !important;
-  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(238,238,238,1) 60%, rgba(238,238,238,1) 100%);
-  
+  border-radius:5px !important;
+  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(230,230,230,1) 70%, rgba(230,230,230,1) 100%);
   border: 1px solid rgba(54,113,144,.30);;
 }
 
 .gallery-card:hover{
   border:1px solid rgba(54,113,144,.40);
-  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(183,204,215,.30) 60%, rgba(54,113,144,.30) 100%) !important;
-  
+  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(183,204,215,.30) 60%, rgba(54,113,144,.30) 100%) !important; 
 }
 
 .gallery-card-footer{
   background-color: $secondary-color;
   padding:8px 10px !important;
-  border-radius: 0 0 10px 10px !important;
+  border-radius: 0 0 5px 5px !important;
 }
 
 .gallery-btn-play {
