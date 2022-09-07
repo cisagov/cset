@@ -79,14 +79,22 @@ export class MergeExaminationsComponent implements OnInit {
   aggregateExistingAnswers(response) {
     this.count++;
 
-    for (let j = 0; j < response.groupings[0].questions.length; j++) {
-      if (response.groupings[0].questions[j].isParentQuestion === false && (this.mergingAssessmentAnswers[j] === undefined || this.mergingAssessmentAnswers[j].answerText === 'U')) {
-            this.mergingAssessmentAnswers[j] = {
+    /** A 3 tiered loop to check under ever grouping level.
+    /* TODO: Currently breaks if SCUEP statements 1 - 7 are answered and 
+    /* CORE statements 1 - 7 are also answered.
+    **/
+    for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+      for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
+        for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+        if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === false && 
+            (this.mergingAssessmentAnswers[k] === undefined || this.mergingAssessmentAnswers[k].answerText === 'U')) 
+          {
+            this.mergingAssessmentAnswers[k] = {
               answerId: null,
-              questionId: response.groupings[0].questions[j].questionId,
+              questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
               questionType: null,
               questionNumber: '0',
-              answerText: response.groupings[0].questions[j].answer,
+              answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
               altAnswerText: null,
               freeResponseAnswer: null,
               comment: null,
@@ -98,6 +106,8 @@ export class MergeExaminationsComponent implements OnInit {
               is_Maturity: true,
               componentGuid: '00000000-0000-0000-0000-000000000000'
             }
+          }
+        }
       }
     }
 
@@ -116,7 +126,6 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
         this.mergeConflicts = response;
-        console.log("this.mergeConflicts: " + JSON.stringify(this.mergeConflicts, null, 4));
         this.getAssessmentNames();
       }
     );
@@ -149,6 +158,35 @@ export class MergeExaminationsComponent implements OnInit {
       )
     }
   }
+
+  getDisplayText(answerText: String) {
+    if (answerText === 'U') {
+      return '';
+    } else if (answerText === 'A') {
+      return 'Comment';
+    } else {
+      return answerText;
+    }
+  }
+
+  getAltText(altText: any) {
+    let commentString = "";
+
+    if (altText === null || altText === "") {
+      return "";
+    } else {
+      let tempArray = altText.split("- - End of Issue - -");
+      for (let i = 0; i < tempArray.length; i++) {
+        if (!tempArray[i].includes("- - End of Issue - -")) {
+          commentString += tempArray[i];
+        }
+      }
+
+      return commentString;
+    }
+    
+  }
+
 
   navToHome() {
     this.router.navigate(['/landing-page']);

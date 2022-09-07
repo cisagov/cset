@@ -14,9 +14,9 @@
   <component name="ChangeListManager">
     <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AssessmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AssessmentController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +28,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9dde5a1c17304cc381f2398d38f0ea6d1749f0/34/2c203d9a/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/134622bcf8ad016d3faf7776eb0457b76a5798c537458aa82651ab2cee6e1/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
@@ -111,7 +114,7 @@
       <workItem from="1660929249398" duration="1973000" />
       <workItem from="1660931417454" duration="95000" />
       <workItem from="1660932087138" duration="3273000" />
-      <workItem from="1661449037828" duration="1860000" />
+      <workItem from="1661449037828" duration="17280000" />
     </task>
     <servers />
   </component>
@@ -162,19 +165,6 @@
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs</url>
-          <line>345</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" initialLine="345" containingFunctionPresentation="method 'GetAllModels'">
-            <startOffsets>
-              <option value="11992" />
-            </startOffsets>
-            <endOffsets>
-              <option value="12085" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
           <line>360</line>
           <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="360" containingFunctionPresentation="method 'GetAllModels'">
@@ -199,6 +189,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs</url>
+          <line>35</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs" initialLine="35" containingFunctionPresentation="method 'Login'">
+            <startOffsets>
+              <option value="1330" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1391" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
