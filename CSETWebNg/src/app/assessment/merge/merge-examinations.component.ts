@@ -77,7 +77,7 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   aggregateExistingAnswers(response) {
-    this.count++
+    this.count++;
 
     /** A 3 tiered loop to check under ever grouping level.
     /* TODO: Currently breaks if SCUEP statements 1 - 7 are answered and 
