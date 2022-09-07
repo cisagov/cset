@@ -262,14 +262,15 @@
             </div>
             <hr>
 
+            <button *ngIf="showCorePlusButton(q.questionId)"
+                class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
+            </button>
+
             <div *ngIf="showSummaryCommentBox(q.questionId)">
                 <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"
                     (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea>
             </div>
-
-            <button *ngIf="showCorePlusButton(q.questionId)"
-                class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}</button>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
