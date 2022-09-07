@@ -233,12 +233,12 @@
                                     (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                 {{configSvc.buttonLabels[option]}}
                             </label>
-                            <label *ngIf="option === 'A'" class="btn form-check-label"
-                                [class]="configSvc.buttonClasses['Iss']" [class.answer-selected]="q.answer === option"
+                            <label *ngIf="option === 'A'" class="btn btn-iss form-check-label"
+                                [class.answer-selected]="q.answer === option"
                                 [matTooltip]="configSvc.answerLabels[option]">
                                 <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
                                     (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                {{configSvc.buttonLabels[option]}}
+                                <span class="cset-icons-comment fs-base"></span>
                             </label>
                         </label>
 
