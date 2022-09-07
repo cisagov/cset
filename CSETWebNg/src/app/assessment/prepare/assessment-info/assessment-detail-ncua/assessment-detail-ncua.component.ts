@@ -80,6 +80,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.ncuaSvc.getCreditUnionData().subscribe(
         (response: any) => {
           this.creditUnionOptions = response;
+          for (let i = 0; i < this.creditUnionOptions.length; i++) {
+            this.creditUnionOptions[i].charter = this.padLeft(this.creditUnionOptions[i].charter, '0', 5);
+          }
         }
       );
 
@@ -106,28 +109,27 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
         this.examOverride = this.ncuaSvc.chosenOverrideLevel;
     });
-
-    this.assessSvc.getAssessmentContacts().then((response: any) => {
-      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-      this.contactInitials = firstInitial + lastInitial;
-    });
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       this.assessSvc.setNcuaDefaults();
 
+      this.assessSvc.getAssessmentContacts().then((response: any) => {
+        let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
+        let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
+        this.contactInitials = firstInitial + lastInitial;
+      });
+
       this.assessSvc.updateAssessmentDetails(this.assessment);
+    } else {
+      // This will keep the contact initials the same, even when importing an assessment changes the assessment owner
+      if (this.assessment.assessmentName !== "New Assessment" && !(this.assessment.assessmentName.includes("merged"))) {
+        let splitNameArray = this.assessment.assessmentName.split("_");
+        this.contactInitials = splitNameArray[1];
+      }
     }
     
     this.assessSvc.isBrandNew = false;
-
-    // This will keep the contact initials the same, even when importing an assessment changes the assessment owner
-    if (this.assessment.assessmentName !== "New Assessment" && !(this.assessment.assessmentName.includes("merged"))) {
-      let splitNameArray = this.assessment.assessmentName.split("_");
-      
-      this.contactInitials = splitNameArray[1];
-    }
 
     this.setCharterPad();
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
@@ -144,8 +146,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessment.assessmentName === "New Assessment")
       this.createAssessmentName();
 
-    
-    
   }
 
 
@@ -171,14 +171,13 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
     this.createAssessmentName();
 
-
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
       if (e.target !== undefined) {
         if (e.target.value === this.creditUnionOptions[i].name) {
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
-        } else if (e.target.value === this.creditUnionOptions[i].charter.toString()) {
+        } else if (e.target.value === (this.creditUnionOptions[i].charter.toString())) {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;

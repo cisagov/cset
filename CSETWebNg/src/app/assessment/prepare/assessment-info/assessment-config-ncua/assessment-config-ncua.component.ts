@@ -117,13 +117,13 @@ export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
     // Add "ACET" and "ISE" assessment options in the order the client wants
     this.features.unshift({
       code: 'acet',
-      label: 'Automated Cybersecurity Evaluation Toolbox (ACET)',
+      label: 'ACET - Maturity Assessment',
       description: 'ACET functionality',
       expanded: false
     });
     this.features.unshift({
       code: 'ise',
-      label: 'Infrastructure Security Examination (ISE)',
+      label: 'ISE - Information Security Examination',
       description: 'ISE functionality',
       expanded: false
     })
