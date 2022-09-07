@@ -57,7 +57,10 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
+
   textForSummary = "Insert comments relating to this statement / category";
+  summaryCommentCopy = "";
+  summaryEditedCheck = false;
 
   contactInitials = "";
   altAnswerSegment = "";
@@ -367,6 +370,8 @@ export class QuestionBlockIseComponent implements OnInit {
   */
   storeSummaryComment(q: Question, e: any) {
     q.comment = e.target.value;
+    this.summaryCommentCopy = q.comment;
+    this.summaryEditedCheck = true;
  
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
@@ -377,7 +382,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: e.target.value,
+        comment: q.comment,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -395,12 +400,21 @@ export class QuestionBlockIseComponent implements OnInit {
 
   }
 
-  getSummaryComment(q) {
+  getSummaryComment(q: Question) {
     let parentId = q.parentQuestionId;
     let comment = "";
 
     for (const question of this.myGrouping.questions) {
       if (question.questionId === parentId) {
+        // uses a local copy of the comment to avoid using API call
+        if (this.summaryCommentCopy !== "") {
+          comment = this.summaryCommentCopy;
+          return comment;
+        }
+        if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true){
+          comment = this.summaryCommentCopy;
+          return comment;
+        }
         comment = question.comment;
         break;
       }
@@ -409,25 +423,27 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
+  showCorePlusButton(id: number) {
+    if (this.isLastCoreQuestion(id) && !this.showCorePlus) {
+      return true;
+    }
+    if (this.isLastCorePlusQuestion(id) && this.showCorePlus) {
+      return true;
+    }
+    return false;
+  }
 
-  showSummaryCommentBox(id: number) {
+  isLastScuepQuestion(id: number) {
     switch(id) {
       // Final question under each SCUEP parent
       case (7196): case(7201): case(7206): case(7214):
       case (7217): case(7220): case(7225):
-      // Final question under each CORE parent (before CORE+)
-      case (7233): case (7238): case (7244): case (7249): 
-      case (7256): case (7259): case (7265): case (7273): 
-      case (7276): case (7281): case (7285): case (7289): 
-      case (7293): case (7296): case (7301): case (7304):
-      // Final question under each CORE+ parent
-      case (7421): case (7429): case (7444): case (7450):
-      case (7458): case (7465):
         return true;
     }
+    return false;
   }
 
-  showCorePlusButton(id: number) {
+  isLastCoreQuestion(id: number) {
     switch(id) {
       // Final question under each CORE parent
       case (7233): case (7238): case (7244): case (7249): 
@@ -436,6 +452,42 @@ export class QuestionBlockIseComponent implements OnInit {
       case (7296): case (7301): case (7304):
         return true;
     }
+    return false;
+  }
+
+  isLastCorePlusQuestion(id: number) {
+    switch(id) {
+      // Final question under each CORE+ non-parent
+      case (7312): case (7316): case (7322): case (7332): 
+      case (7338): case (7344): case (7351): case (7359): 
+      case (7366): case (7373): case (7381): case (7390): 
+      case (7395): case (7400): case (7408):
+        return true;
+    }
+    return false;
+  }
+
+  isLastCorePlusOnlyQuestion(id: number) {
+    switch(id) {
+      // Final question under each CORE+ parent
+      case (7421): case (7429): case (7444): case (7450):
+      case (7458): case (7465):
+        return true;
+    }
+    return false;
+  }
+
+  showSummaryCommentBox(id: number) {
+    if (this.isLastScuepQuestion(id)) {
+      return true;
+    } 
+    if (this.isLastCoreQuestion(id) && !this.showCorePlus) {
+      return true;
+    }
+    if ((this.isLastCorePlusQuestion(id) || this.isLastCorePlusOnlyQuestion(id)) && this.showCorePlus) {
+      return true;
+    }
+    return false;
   }
 
   updateCorePlusStatus(q: Question) {
