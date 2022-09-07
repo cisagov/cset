@@ -77,16 +77,31 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   aggregateExistingAnswers(response) {
-    this.count++;
+    this.count++
 
-    for (let j = 0; j < response.groupings[0].questions.length; j++) {
-      if (response.groupings[0].questions[j].isParentQuestion === false && (this.mergingAssessmentAnswers[j] === undefined || this.mergingAssessmentAnswers[j].answerText === 'U')) {
-            this.mergingAssessmentAnswers[j] = {
+    let var1 = response.groupings[0].subGroupings.length
+
+    console.log("response.groupings[0].subGroupings.length: " + var1);
+    
+    // subGroupings
+    // subGroupings[i].subGroupings
+    // subGroupings[i].subGroupings[j].questions
+
+    // This checks through every SCUEP question.
+    for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+      for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
+        for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+          console.log("response.groupings[0].subGroupings[i].subGroupings[j].questions[k]: " + JSON.stringify(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].displayNumber));
+        if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === false && 
+            (this.mergingAssessmentAnswers[k] === undefined || this.mergingAssessmentAnswers[k].answerText === 'U')) 
+          {
+            console.log("Passed the IF statement: " + JSON.stringify(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].displayNumber));
+            this.mergingAssessmentAnswers[k] = {
               answerId: null,
-              questionId: response.groupings[0].questions[j].questionId,
+              questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
               questionType: null,
               questionNumber: '0',
-              answerText: response.groupings[0].questions[j].answer,
+              answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
               altAnswerText: null,
               freeResponseAnswer: null,
               comment: null,
@@ -98,6 +113,8 @@ export class MergeExaminationsComponent implements OnInit {
               is_Maturity: true,
               componentGuid: '00000000-0000-0000-0000-000000000000'
             }
+          }
+        }
       }
     }
 
@@ -153,7 +170,7 @@ export class MergeExaminationsComponent implements OnInit {
     if (answerText === 'U') {
       return '';
     } else if (answerText === 'A') {
-      return 'N-I';
+      return 'Comment';
     } else {
       return answerText;
     }
