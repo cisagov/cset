@@ -58,7 +58,7 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
 
-  textForSummary = "Insert comments relating to this statement / category";
+  textForSummary = "Work Summary - insert comments";
   summaryCommentCopy = "";
   summaryEditedCheck = false;
 

@@ -57,16 +57,16 @@
                 </tr>
                 <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
                     <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text1 !== 'U' ? this.mergeConflicts[i].answer_Text1 : " " }}</td>
-                    <td>{{ this.mergeConflicts[i].answer_Text2 !== 'U' ? this.mergeConflicts[i].answer_Text2 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3">{{ this.mergeConflicts[i].answer_Text3 !== 'U' ? this.mergeConflicts[i].answer_Text3 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4">{{ this.mergeConflicts[i].answer_Text4 !== 'U' ? this.mergeConflicts[i].answer_Text4 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5">{{ this.mergeConflicts[i].answer_Text5 !== 'U' ? this.mergeConflicts[i].answer_Text5 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6">{{ this.mergeConflicts[i].answer_Text6 !== 'U' ? this.mergeConflicts[i].answer_Text6 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7">{{ this.mergeConflicts[i].answer_Text7 !== 'U' ? this.mergeConflicts[i].answer_Text7 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8">{{ this.mergeConflicts[i].answer_Text8 !== 'U' ? this.mergeConflicts[i].answer_Text8 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9">{{ this.mergeConflicts[i].answer_Text9 !== 'U' ? this.mergeConflicts[i].answer_Text9 : " " }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length == 10">{{ this.mergeConflicts[i].answer_Text10 !== 'U' ? this.mergeConflicts[i].answer_Text10 : " " }}</td>
+                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text1))">{{ getDisplayText(this.mergeConflicts[i].answer_Text1) }}</td>
+                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text2))">{{ getDisplayText(this.mergeConflicts[i].answer_Text2) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text3))">{{ getDisplayText(this.mergeConflicts[i].answer_Text3) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text4))">{{ getDisplayText(this.mergeConflicts[i].answer_Text4) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text5))">{{ getDisplayText(this.mergeConflicts[i].answer_Text5) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text6))">{{ getDisplayText(this.mergeConflicts[i].answer_Text6) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text7))">{{ getDisplayText(this.mergeConflicts[i].answer_Text7) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text8))">{{ getDisplayText(this.mergeConflicts[i].answer_Text8) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text9))">{{ getDisplayText(this.mergeConflicts[i].answer_Text9) }}</td>
+                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 10" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text10))">{{ getDisplayText(this.mergeConflicts[i].answer_Text10) }}</td>
                     <td>
                         <input type="radio" id="yes" name="option{{i}}" value="yes"
                         (change)="updateAnswers(i, $event.target.value)">

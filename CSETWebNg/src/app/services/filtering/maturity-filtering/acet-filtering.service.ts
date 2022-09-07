@@ -117,7 +117,7 @@ export class AcetFilteringService {
      * RECOMMENDED for the specified IRP.
      */
     getStairstepRecommended(irp: number): number[] {
-        if (this.assessmentSvc.assessment.maturityModel.modelName === 'ISE') {
+        if (this.assessmentSvc.isISE()) {
             switch(irp) {
                 case 0:
                     return [];
