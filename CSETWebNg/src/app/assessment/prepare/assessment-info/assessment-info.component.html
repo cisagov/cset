@@ -28,8 +28,8 @@
   <app-assessment-detail *ngIf="!this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
   <app-assessment-detail-ncua *ngIf="this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>
 
-  <app-assessment-config *ngIf="this.configSvc.installationMode !== 'RRA' && this.configSvc.installationMode !== 'ACET'" class="mb-5"></app-assessment-config>
-  <app-assessment-config-ncua *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-5"></app-assessment-config-ncua>
+  <app-assessment-config *ngIf="false && this.configSvc.installationMode !== 'RRA' && this.configSvc.installationMode !== 'ACET'" class="mb-5"></app-assessment-config>
+  <app-assessment-config-ncua *ngIf="false && this.configSvc.installationMode === 'ACET'" class="mb-5"></app-assessment-config-ncua>
 
   <app-nav-back-next [page]="'info1'" [hide]="'back'"></app-nav-back-next>
 
