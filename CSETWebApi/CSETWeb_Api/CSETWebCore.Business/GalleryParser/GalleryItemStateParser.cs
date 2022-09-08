@@ -38,32 +38,35 @@ namespace CSETWebCore.Business.GalleryParser
         /// <param name="gallery_item_id"></param>
         public void ProcessParserState(int assessment_id, int gallery_item_id)
         {
-            /**Get the state from the database for the given item
+            /** Get the state from the database for the given item
              * once we have that state parse it and call the appropriate methods            
-              GalleryConfig:{
-	            MatModel:{ModelName:"CRR", Level:1},
-	              Sets:["800-53",
-		            "TSAPipeline"]
-	               ,SALLevel:"Low"
-                   ,QuestionMode:"Requirements",
-	                  SAL_Detail:{
-		                "selected_Sal_Level": null,
-		                "last_Sal_Determination_Type": null,
-		                "sort_Set_Name": null,
-		                "cLevel": null,
-		                "iLevel": null,
-		                "aLevel": null,
-		                "selectedSALOverride": false
-	                  }	
-                  }
-              }
+            {
+                Model: {
+                    ModelName: "CRR",
+                    Level: 1
+                },
+                Sets: ["800-53", "TSAPipeline"],
+                SALLevel: "Low",
+                QuestionMode: "Requirements",
+                SAL_Detail: {
+                    "selected_Sal_Level": null,
+                    "last_Sal_Determination_Type": null,
+                    "sort_Set_Name": null,
+                    "cLevel": null,
+                    "iLevel": null,
+                    "aLevel": null,
+                    "selectedSALOverride": false
+                }
+            }
+              
             */
 
             var item = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == gallery_item_id).FirstOrDefault();
-            parseAndProcess(assessment_id, item.Configuration_Setup);
+            ParseAndProcess(assessment_id, item.Configuration_Setup);
         }
 
-        public void parseAndProcess(int assessment_id,string config)
+
+        public void ParseAndProcess(int assessment_id,string config)
         {
             GalleryConfig gallery = (GalleryConfig) JsonSerializer.Deserialize<GalleryConfig>(config);
             //process the matModels
@@ -111,7 +114,8 @@ namespace CSETWebCore.Business.GalleryParser
             GalleryGroup galleryGroup = null;
             foreach(var item in data)
             {
-                if (row != item.r.Row_Index) {
+                if (row != item.r.Row_Index) 
+                {
                     rvalue.Layout_Name = item.r.Layout_Name;
                     galleryGroup = new GalleryGroup();
                     galleryGroup.Group_Title = item.g.Group_Title;
@@ -119,16 +123,15 @@ namespace CSETWebCore.Business.GalleryParser
                     rvalue.Rows.Add(galleryGroup);
                     row = item.r.Row_Index;
                 }
-                else
-                {
-                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
-                }
-            }
 
+                galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+            }
 
             return rvalue;
         }
     }
+
+
     public class GalleryConfig
     {
         [JsonPropertyName("MatModel")]

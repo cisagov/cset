@@ -23,8 +23,7 @@ namespace CSETWebCore.Api.Controllers
            )
         {
             _tokenManager = tokenManager;
-            _stateManager = parser;
-          
+            _stateManager = parser;          
         }
 
         [HttpGet]
