@@ -96,10 +96,10 @@ export class AssessmentService {
           AssessmentService.allMaturityModels = data;
         });
 
-        //this.http.get(this.apiUrl + "assessmenticons")
-        //.subscribe((data: AssessmentIcon[]) => {
-        //  AssessmentService.assessmentIcons = data;
-        //});
+      //this.http.get(this.apiUrl + "assessmenticons")
+      //.subscribe((data: AssessmentIcon[]) => {
+      //  AssessmentService.assessmentIcons = data;
+      //});
 
       this.initialized = true;
     }
@@ -127,9 +127,14 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
   }
 
-  createNewAssessmentGallery(workflow:string, assessType:number){
-    let nAssessment = {workflow: workflow, assessType: assessType}
-    return this.http.post(this.apiUrl + 'createassessment?', nAssessment, headers)
+  /**
+   * 
+   * @param workflow 
+   * @param galleryId 
+   * @returns 
+   */
+  createNewAssessmentGallery(workflow: string, galleryId: number) {
+    return this.http.get(this.apiUrl + 'createassessment/gallery?workflow=' + workflow + '&galleryId=' + galleryId, headers)
   }
 
   /**
@@ -359,8 +364,8 @@ export class AssessmentService {
       );
   }
 
-  newAssessmentGallery(assessType:number) {
-    let workflow: string;
+  newAssessmentGallery(assessType: number) {
+    let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
         workflow = 'ACET';
@@ -371,7 +376,8 @@ export class AssessmentService {
       default:
         workflow = 'BASE';
     }
-    this.createAssessment(workflow)
+
+    this.createNewAssessmentGallery(workflow, assessType)
       .toPromise()
       .then(
         (response: any) => {
@@ -395,7 +401,7 @@ export class AssessmentService {
 
       this.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-        if(this.assessment.baselineAssessmentId){
+        if (this.assessment.baselineAssessmentId) {
           localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
         } else {
           localStorage.setItem("baseline", "0");
@@ -550,20 +556,20 @@ export class AssessmentService {
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 
-   /**
-   * A check for when we need custom ISE functionaltiy
-   * but prevents other assessments (like standards) from
-   * throwing an error when maturity model is undefined
-   */
-    isISE () {
-      if (this.assessment === undefined || this.assessment === null ||
-        this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
-        return false;
-      }
-      if (this.assessment.maturityModel.modelName === 'ISE') {
-        return true;
-      }
-  
+  /**
+  * A check for when we need custom ISE functionaltiy
+  * but prevents other assessments (like standards) from
+  * throwing an error when maturity model is undefined
+  */
+  isISE() {
+    if (this.assessment === undefined || this.assessment === null ||
+      this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
       return false;
     }
+    if (this.assessment.maturityModel.modelName === 'ISE') {
+      return true;
+    }
+
+    return false;
+  }
 }
