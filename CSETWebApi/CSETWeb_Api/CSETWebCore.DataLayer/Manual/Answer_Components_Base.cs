@@ -40,11 +40,11 @@ namespace CSETWebCore.DataLayer.Model
         public bool? Mark_For_Review { get; set; }
         public bool Is_Requirement { get; set; }
         public bool Is_Framework { get; set; }
-        public int heading_pair_id { get; set; }
+        public int Heading_Pair_Id { get; set; }
         public string Sub_Heading_Question_Description { get; set; }
         public string Simple_Question { get; set; }
         public bool? Reviewed { get; set; }
-        public string label { get; set; }
+        public string Label { get; set; }
         public string ComponentName { get; set; }
         public string Symbol_Name { get; set; }
         public int Component_Symbol_Id { get; set; }
