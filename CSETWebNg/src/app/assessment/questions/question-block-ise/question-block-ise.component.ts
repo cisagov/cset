@@ -56,7 +56,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  altTextPlaceholder_ISE = "Description, explanation and/or justification for issue";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
 
   textForSummary = "Work Summary - insert comments";
   summaryCommentCopy = "";
@@ -64,7 +64,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   contactInitials = "";
   altAnswerSegment = "";
-  convoBuffer = '\n- - End of Issue - -\n';
+  convoBuffer = '\n- - End of Comment - -\n';
   // altAnswerConversation = [];
 
   showQuestionIds = false;
