@@ -68,7 +68,7 @@ export class DomainMaturityFilterComponent implements OnInit {
   ngOnInit() {
     this.domainName = this.domain.title;
 
-    if (this.assessSvc.assessment.maturityModel.modelName === 'ISE') {
+    if (this.assessSvc.isISE()) {
       this.determineIseFilter();
     }
   }
