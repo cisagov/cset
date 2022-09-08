@@ -74,7 +74,6 @@ namespace CSETWebCore.Api.Controllers
 
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
-
             var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == galleryId);
             if (galleryItem != null)
             {
@@ -82,7 +81,7 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                return BadRequest("Assessment was not created");
+                return BadRequest("Assessment cannot be created without options");
             }
 
 
@@ -101,21 +100,15 @@ namespace CSETWebCore.Api.Controllers
             var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
 
             // Application Mode
-            if (config.QuestionMode != null)
+            if (config.QuestionMode != null && ss != null)
             {
-                if (ss != null)
-                {
-                    ss.Application_Mode = $"{config.QuestionMode.Trim()} Based";
-                }
+                ss.Application_Mode = $"{config.QuestionMode.Trim()} Based";
             }
 
             // SAL 
-            if (config.SALLevel != null)
+            if (config.SALLevel != null && ss != null)
             {
-                if (ss != null)
-                {
-                    ss.Selected_Sal_Level = config.SALLevel;
-                }
+                ss.Selected_Sal_Level = config.SALLevel;
             }
 
             _context.SaveChanges();
