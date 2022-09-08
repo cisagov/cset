@@ -386,7 +386,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.Heading_Pair_Id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -455,7 +455,7 @@ namespace CSETWebCore.Business.Question
                 }
 
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                if (dbQ.heading_pair_id != curHeadingPairId)
+                if (dbQ.Heading_Pair_Id != curHeadingPairId)
                 {
                     sc = new QuestionSubCategory()
                     {
@@ -463,12 +463,12 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers.Where(x => x.HeadingId == dbQ.Heading_Pair_Id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
 
-                    curHeadingPairId = dbQ.heading_pair_id;
+                    curHeadingPairId = dbQ.Heading_Pair_Id;
                 }
 
                 qa = new QuestionAnswer()

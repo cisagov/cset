@@ -57,11 +57,17 @@ namespace CSETWebCore.Business.Question
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
 
-            var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
+            var list1 = _context.usp_Answer_Components_Default(assessmentId).ToList();
+            var list2 = new List<Answer_Components_Base>();
+            foreach (var component1 in list1)
+            {
+                TinyMapper.Bind<Answer_Components_Default, Answer_Components_Base>();
+                var component2 = TinyMapper.Map<Answer_Components_Default, Answer_Components_Base>(component1);
+                list2.Add(component2);
+            }
 
-            AddResponse(resp, list, "Component Defaults");
+            AddResponse(resp, list2, "Component Defaults");
             BuildOverridesOnly(resp);
-
 
             return resp;
         }
@@ -149,7 +155,7 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description,
-                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.Heading_Pair_Id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
@@ -223,7 +229,7 @@ namespace CSETWebCore.Business.Question
                 }
 
                 // new subcategory -- break on pairing ID to separate 'base' and 'custom' pairings
-                if (dbQ.heading_pair_id != curHeadingPairId)
+                if (dbQ.Heading_Pair_Id != curHeadingPairId)
                 {
                     sc = new QuestionSubCategory()
                     {
@@ -231,12 +237,12 @@ namespace CSETWebCore.Business.Question
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
                         HeaderQuestionText = dbQ.Sub_Heading_Question_Description??string.Empty,
-                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
+                        SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.Heading_Pair_Id).FirstOrDefault()?.AnswerText
                     };
 
                     qg.SubCategories.Add(sc);
 
-                    curHeadingPairId = dbQ.heading_pair_id;
+                    curHeadingPairId = dbQ.Heading_Pair_Id;
                 }
 
                 qa = new QuestionAnswer()
