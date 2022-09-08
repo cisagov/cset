@@ -121,6 +121,8 @@ import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
+import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
+import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
@@ -446,6 +448,11 @@ const appRoutes: Routes = [
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
+      // { path: 'iseexecutive', component: AcetExecutiveComponent },
+      // { path: 'isegaps', component: AcetDeficencyComponent },
+      // { path: 'isecommentsmarked', component: AcetCommentsmarkedComponent },
+      { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
+      { path: 'iseissues', component: IseIssuesComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

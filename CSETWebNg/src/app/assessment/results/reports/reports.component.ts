@@ -156,7 +156,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         // the below code needs converted to ISE stuff
         this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
             if (percentAnswered == 100) {
-                this.disableAcetReportLinks = false;
+                this.disableIseReportLinks = false;
             }
         });
     }
