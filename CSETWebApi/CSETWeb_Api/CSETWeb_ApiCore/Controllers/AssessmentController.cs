@@ -29,11 +29,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
-        
-        public AssessmentController(IAssessmentBusiness assessmentBusiness, 
-            ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context, 
-            IStandardsBusiness standards,IAssessmentUtil assessmentUtil, 
-            IAdminTabBusiness adminTabBusiness )
+
+        public AssessmentController(IAssessmentBusiness assessmentBusiness,
+            ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
+            IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
+            IAdminTabBusiness adminTabBusiness)
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
@@ -51,51 +51,98 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment")]
-        public IActionResult CreateAssessment(string workflow)
+        public IActionResult CreateAssessment([FromQuery] string workflow)
         {
             int currentuserId = _tokenManager.GetUserId();
             return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, workflow));
         }
-        
-        [HttpPost]
-        [Route("api/createassessment")]
-        public IActionResult CreateAssessment([FromBody] StartAssessment sAssessment)
+
+
+        /// <summary>
+        /// Creates a new Assessment and populates it with the options defined
+        /// for the specified gallery ID.
+        /// </summary>
+        /// <param name="workflow"></param>
+        /// <param name="galleryId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/createassessment/gallery")]
+        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId)
         {
-            int currentuserId = _tokenManager.GetUserId();
-            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == sAssessment.GalleryId);
-            List<string> assessType = new List<string>();
+            int currentUserId = _tokenManager.GetUserId();
+
+
+            // read the 'recipe' for the assessment
+            GalleryConfig config = null;
+
+            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == galleryId);
             if (galleryItem != null)
             {
-                var galleryConfig = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
-                
-                assessType = galleryConfig?.Sets != null ? galleryConfig.Sets : null;
+                config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
             }
-
-            if (assessType != null)
+            else
             {
-                //create new assessment
-                var nAssessment = _assessmentBusiness.CreateNewAssessment(currentuserId, sAssessment.Workflow);
-                //determine if set or model
-                var isSet = _context.SETS.Any(x => x.Set_Name == assessType.First());
-                if (isSet)
-                {
-                    //set for assessment
-                    var newStandard = _standards.PersistSelectedStandards(nAssessment.Id, assessType);
-                    nAssessment.QuestionRequirementCounts = newStandard;
-                }
-                else
-                {
-                    //model for assessment
-                    new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(nAssessment.Id, assessType.First());
-                    var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(nAssessment.Id);
-                    nAssessment.MaturityModel = newModel;
-                }
-
-                return Ok(nAssessment);
+                return BadRequest("Assessment was not created");
             }
 
-            return BadRequest("Assessment was not created");
+
+            // create new empty assessment
+            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
+
+
+            // now add the options
+            if (config.Sets != null)
+            {
+                var counts = _standards.PersistSelectedStandards(assessment.Id, config.Sets);
+                assessment.QuestionRequirementCounts = counts;                
+                assessment.UseStandard = true;                
+            }
+
+            var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
+
+            // Application Mode
+            if (config.QuestionMode != null)
+            {
+                if (ss != null)
+                {
+                    ss.Application_Mode = $"{config.QuestionMode.Trim()} Based";
+                }
+            }
+
+            // SAL 
+            if (config.SALLevel != null)
+            {
+                if (ss != null)
+                {
+                    ss.Selected_Sal_Level = config.SALLevel;
+                }
+            }
+
+            _context.SaveChanges();
+
+
+            // Model
+            if (config.Model != null)
+            {
+                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessment.Id, config.Model);
+                var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessment.Id);
+                assessment.MaturityModel = newModel;
+                assessment.UseMaturity = true;
+            }
+
+
+            // Diagram
+            if (config.Diagram)
+            {
+                assessment.UseDiagram = true;
+            }
+           
+
+            _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+
+            return Ok(assessment);
         }
+
 
         /// <summary>
         /// Returns an array of Assessments connected to the current user.
@@ -174,7 +221,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             _documentBusiness.SetUserAssessmentId(assessmentId);
-            
+
             return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
         }
 
