@@ -220,7 +220,7 @@
   <div *ngIf="assessSvc.isISE()"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>ISE Reports</h4>
-    <div *ngIf="disableAcetReportLinks" class="
+    <div *ngIf="disableIseReportLinks" class="
         alert-warning
         mt-2
         mb-2
@@ -236,24 +236,24 @@
         Some reports are disabled until all statements have been answered.
       </span>
     </div>
-    <p *ngIf="disableAcetReportLinks"></p>
-    <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableAcetReportLinks">
+    <p *ngIf="disableIseReportLinks"></p>
+    <button (click)="clickReportLink('iseexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Executive Summary
     </button>
-    <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableAcetReportLinks">
+    <button (click)="clickReportLink('isegaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Gap Report
     </button>
-    <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableAcetReportLinks">
+    <button (click)="clickReportLink('isecommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Comments and Marked for Review
     </button>
-    <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+    <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       ISE Answered Statements
     </button>
-    <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableAcetReportLinks">
+    <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Issues
     </button>
   </div>
