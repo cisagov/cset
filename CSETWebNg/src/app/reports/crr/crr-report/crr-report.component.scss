@@ -314,6 +314,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  counter-reset: page;
 }
 
 .footer {
@@ -644,13 +645,6 @@ div.widget {
   margin-left: 1px;
 }
 
-
-/* Print styles */
-@page {
-  size: letter;
-  margin: 0;
-}
-
 @media screen {
   table.page-layout {
     margin-left: auto;
@@ -658,6 +652,16 @@ div.widget {
   }
 }
 
+/* Print styles */
+@page {
+  size: letter;
+  margin: 0;
+}
+
+.print-footer-right::before {
+  counter-increment: page 1;
+  content: counter(page);;
+}
 @media print {
 
   html, body {
@@ -718,6 +722,7 @@ div.widget {
     bottom: 0;
     right: 2cm;
   }
+
 
   .print-footer-left {
     position: fixed;
