@@ -11,10 +11,10 @@
         <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM)" />
 
         <!-- model select (this will be going away when the Gallery Interface is ready, but will still be needed for other skins?) -->
-        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" condition="OPTION:MATURITY MATURITY-NOT:ISE SOURCE-NOT:TSA" />
+        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" condition="HIDE" />
 
         <!-- Standards selection screen -->
-        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="OPTION:STANDARD" />
+        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="HIDE" />
 
         <!-- ACET-specific screens -->
         <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:ACET" />
