@@ -11,23 +11,25 @@
     
     .skillstypebar {
       text-align: right; /* text to the right within the bar */
-      padding-top: 10px; /* */
-      padding-bottom: 10px; /* */
+      padding-top: 20px; /* */
+      padding-bottom: 20px; /* */
       color: white; /* visible text foreground*/
     }
     
-    /* width replaced with data call to maturity level or min[scores by domain] */
-    /* width = mat score * 20 then to % */
-    .assetmanagement {width: 80%; background-color: #04AA6D;} /* green */
-    .configurationmanagement {width: 40%; background-color: #2196F3;} /* blue */
-    .accesscontrol {width: 20%; background-color: #f44336;} /* red */
-    .flawremediation {width: 60%; background-color: #808080;} /* dark grey */
-    .maliciouscodedetection {width: 60%; background-color: #808080;} /* dark grey */
-    .systemintegrity {width: 60%; background-color: #808080;} /* dark grey */
-    .continuousmonitoring {width: 60%; background-color: #808080;} /* dark grey */
-    .incidentresponseandrecoveryplanning {width: 60%; background-color: #808080;} /* dark grey */
-    .architectureanddevelopment {width: 60%; background-color: #808080;} /* dark grey */
-    .supplychainriskmanagement {width: 60%; background-color: #808080;} /* dark grey */
+    /* width of achieved level bar*/
+    .achievedwidth {width: 60%;}
+    /* width replaced with data call to maturity level or min[scores by domain/level] */
+    /* width = mat score with text label x out of 5 above, right side */
+    .assetmanagement {width: 80%; background-color: #2196F3;} 
+    .configurationmanagement {width: 40%; background-color: #2196F3;} 
+    .accesscontrol {width: 20%; background-color: #2196F3;} 
+    .flawremediation {width: 60%; background-color: #2196F3;} 
+    .maliciouscodedetection {width: 60%; background-color: #2196F3;} 
+    .systemintegrity {width: 60%; background-color: #2196F3;} 
+    .continuousmonitoring {width: 60%; background-color: #2196F3;} 
+    .incidentresponseandrecoveryplanning {width: 60%; background-color: #2196F3;} 
+    .architectureanddevelopment {width: 60%; background-color: #2196F3;} 
+    .supplychainriskmanagement {width: 60%; background-color: #2196F3;} 
 </style>
     
 
@@ -42,87 +44,82 @@
             <p> Achieved Level = 3</p>
             {{achievedLevelList}}
             <!-- {{achievedLevel()}}  -->
+            <div class="container">
+              <div class="skillstypebar achievedwidth"></div>
+            </div>
         </div>
 </div>
 
-<!-- Need container for whole chart  -->
+<div>
 
-    <p>Asset Management</p>
+    <p>Asset Management <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar assetmanagement">#</div>
+        <div class="skillstypebar assetmanagement"></div>
       </div>
 
-    <p>Configuration Management</p>
+    <p>Configuration Management <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar configurationmanagement">#</div>
+        <div class="skillstypebar configurationmanagement"></div>
       </div>
 
-    <p>Access Control</p>
+    <p>Access Control <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar accesscontrol">#</div>
+        <div class="skillstypebar accesscontrol"></div>
       </div>
 
-    <p>Flaw Remediation</p>
+    <p>Flaw Remediation <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar flawremediation">#</div>
+        <div class="skillstypebar flawremediation"></div>
       </div>
 
-    <p>Malicious Code Detection</p>
+    <p>Malicious Code Detection <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar maliciouscodedetection">#</div>
+        <div class="skillstypebar maliciouscodedetection"></div>
       </div>
 
-    <p>System Integrity</p>
+    <p>System Integrity <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar systemintegrity">#</div>
+        <div class="skillstypebar systemintegrity"></div>
       </div>
 
-    <p>Continuous Monitoring</p>
+    <p>Continuous Monitoring <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar continuousmonitoring">#</div>
+        <div class="skillstypebar continuousmonitoring"></div>
       </div>
 
-    <p>Incident Response and Recovery Planning</p>
+    <p>Incident Response and Recovery Planning <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar incidentresponseandrecoveryplanning">#</div>
+        <div class="skillstypebar incidentresponseandrecoveryplanning"></div>
       </div>
 
-    <p>Architecture and Development</p>
+    <p>Architecture and Development <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar architectureanddevelopment">#</div>
+        <div class="skillstypebar architectureanddevelopment"></div>
       </div>
 
-    <p>Supply Chain Risk Management</p>
+    <p>Supply Chain Risk Management <span style="text-align: right">Level 4 of 5</span></p>
       <div class="container">
-        <div class="skillstypebar supplychainriskmanagement">#</div>
+        <div class="skillstypebar supplychainriskmanagement"></div>
       </div>
 
+</div>
 
 
 
 
 
 
-
-
-<h3>#1</h3>
+<!--
+<h3>Examples</h3>
 
 	<div>
 		<canvas id="bar-chart-horizontal" class="chart-base" chart-type="type" chart-data="data" chart-labels="labels" chart-legend="false"></canvas>
 	</div>
 
+
 	<div>
 		<canvas id="bar-chart-horizontal" chart-labels="labels" width="800" height="500"></canvas>
 	</div>
-
-	<!-- <h3>Failed Load Spinner</h3>
-
-    <div *ngIf="!initialized">
-        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        	<div style="max-width: ?px; max-height: ?px;"></div>
-        </div>
-    </div> -->
-
 
     <hr>
     <h3>#1</h3>
@@ -136,18 +133,15 @@
             <h3>Achieved Level </h3>
                 <p> Achieved Level = 3</p>
                 {{achievedLevelList}}
-                <!-- {{achievedLevel()}}  -->
         </div>
 	</div>
-
-	<hr>
-
+-->
+<!--
     <h3>#2</h3>
 
     <div class="horizontalBarchart">
     	<div class="chartHeader"></div>
     	<div class="leftLabels">
-    		<!-- {{categoriesList}} -->
     	</div>
     	<div class="chartBody">
     		{{statsByCategoryList}}
@@ -178,7 +172,6 @@
 		
 	<div class="white-panel d-flex flex-column flex-11a">
     	<h3 class="d-flex flex-column flex-00a">
-    	<!--{{title}}-->
     		Title
     	</h3>
 	    	<p>
@@ -195,7 +188,7 @@
             <div class="col-6"><app-vbos-summary [title]="'Advanced'"></app-vbos-summary></div>
         </div>
     </div>
-
+-->  
     <!--
         <h3>#4</h3>
     -->
@@ -286,14 +279,5 @@
 
 var categories = ["Asset Management", "Configuration Management", "Access Control", "Flaw Remediation", "Malicious Code Detection", "System Integrity",
 "Continuous Monitoring", "Incident Response and Recovery Planning", "Architecture and Development", "Supply Chain Risk Management"]
-
-// reduntant
-//horizBarChartLabels = {
-//	1: "1",
-//	2: "2"
-//}
-
-// CRMP
-// var categories = ["Risk Framing", "Risk Assessment", "Risk Response", "Risk Monitoring"]
 
 </script>
