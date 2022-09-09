@@ -113,229 +113,48 @@
         <!-- MVRA questions displayed in tree structure -->
         <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
             <node id="maturity-questions-nested-2338" displaytext="Anticipate">
-                <node id="maturity-questions-nested-2343" displaytext="Adaptive Response">
-                    <node id="maturity-questions-nested-2388" displaytext="Dynamic Reconfiguration" path="assessment/{:id}/maturity-questions-nested/2388"/>
-                    <node id="maturity-questions-nested-2389" displaytext="Dynamic Resource Allocation" path="assessment/{:id}/maturity-questions-nested/2389"/>
-                    <node id="maturity-questions-nested-2390" displaytext="Adaptive Management" path="assessment/{:id}/maturity-questions-nested/2390"/>
-                </node>
-                <node id="maturity-questions-nested-2344" displaytext="Business Environment">
-                    <node id="maturity-questions-nested-2427" displaytext="The organization's role in the supply chain is identified and communicated" path="assessment/{:id}/maturity-questions-nested/2427"/>
-                    <node id="maturity-questions-nested-2428" displaytext="The organization's place in critical infrastructure and its industry sector is identified and communicated" path="assessment/{:id}/maturity-questions-nested/2428"/>
-                    <node id="maturity-questions-nested-2429" displaytext="Priorities for organizational mission, objectives, and activities are established and communicated" path="assessment/{:id}/maturity-questions-nested/2429"/>
-                    <node id="maturity-questions-nested-2430" displaytext="Dependencies and critical functions for delivery of critical services are established" path="assessment/{:id}/maturity-questions-nested/2430"/>
-                    <node id="maturity-questions-nested-2431" displaytext="Resilience requirements to support delivery of critical services are established for all operating states (e.g. under duress/attack, during recovery, normal operations)" path="assessment/{:id}/maturity-questions-nested/2431"/>
-                </node>
-                <node id="maturity-questions-nested-2345" displaytext="Contextual Awareness">
-                    <node id="maturity-questions-nested-2391" displaytext="Dynamic Resource Awareness" path="assessment/{:id}/maturity-questions-nested/2391"/>
-                    <node id="maturity-questions-nested-2392" displaytext="Dynamic Threat Awareness" path="assessment/{:id}/maturity-questions-nested/2392"/>
-                </node>
-                <node id="maturity-questions-nested-2346" displaytext="Coordinated Protection">
-                    <node id="maturity-questions-nested-2393" displaytext="Calibrated Defense-in-Depth" path="assessment/{:id}/maturity-questions-nested/2393"/>
-                    <node id="maturity-questions-nested-2394" displaytext="Consistency Analysis" path="assessment/{:id}/maturity-questions-nested/2394"/>
-                    <node id="maturity-questions-nested-2395" displaytext="Orchestration" path="assessment/{:id}/maturity-questions-nested/2395"/>
-                    <node id="maturity-questions-nested-2396" displaytext="Self-Challenge" path="assessment/{:id}/maturity-questions-nested/2396"/>
-                </node>
-                <node id="maturity-questions-nested-2347" displaytext="Diversity">
-                    <node id="maturity-questions-nested-2397" displaytext="Design and Architectural Diversity" path="assessment/{:id}/maturity-questions-nested/2397"/>
-                    <node id="maturity-questions-nested-2398" displaytext="Architectural Diversity" path="assessment/{:id}/maturity-questions-nested/2398"/>
-                    <node id="maturity-questions-nested-2399" displaytext="Information Diversity" path="assessment/{:id}/maturity-questions-nested/2399"/>
-                    <node id="maturity-questions-nested-2400" displaytext="Synthetic Diversity" path="assessment/{:id}/maturity-questions-nested/2400"/>
-                    <node id="maturity-questions-nested-2401" displaytext="Design Diversity" path="assessment/{:id}/maturity-questions-nested/2401"/>
-                    <node id="maturity-questions-nested-2402" displaytext="Path Diversity" path="assessment/{:id}/maturity-questions-nested/2402"/>
-                    <node id="maturity-questions-nested-2403" displaytext="Supply Chain Diversity" path="assessment/{:id}/maturity-questions-nested/2403"/>
-                </node>
-                <node id="maturity-questions-nested-2348" displaytext="Dynamic Positioning">
-                    <node id="maturity-questions-nested-2404" displaytext="Functional Relocation of Sensors" path="assessment/{:id}/maturity-questions-nested/2404"/>
-                    <node id="maturity-questions-nested-2405" displaytext="Functional Relocation of Cyber Resources" path="assessment/{:id}/maturity-questions-nested/2405"/>
-                    <node id="maturity-questions-nested-2406" displaytext="Asset Mobility" path="assessment/{:id}/maturity-questions-nested/2406"/>
-                    <node id="maturity-questions-nested-2407" displaytext="Fragmentation" path="assessment/{:id}/maturity-questions-nested/2407"/>
-                    <node id="maturity-questions-nested-2408" displaytext="Distributed Functionality" path="assessment/{:id}/maturity-questions-nested/2408"/>
-                </node>
-                <node id="maturity-questions-nested-2349" displaytext="Governance">
-                    <node id="maturity-questions-nested-2409" displaytext="Organizational cybersecurity policy is established and communicated" path="assessment/{:id}/maturity-questions-nested/2409"/>
-                    <node id="maturity-questions-nested-2410" displaytext="Cybersecurity roles and responsibilities are coordinated and aligned with internal roles and external partners" path="assessment/{:id}/maturity-questions-nested/2410"/>
-                    <node id="maturity-questions-nested-2411" displaytext="Legal and regulatory requirements regarding cybersecurity, including privacy and civil liberties obligations, are understood and managed" path="assessment/{:id}/maturity-questions-nested/2411"/>
-                    <node id="maturity-questions-nested-2412" displaytext="Governance and risk management processes address cybersecurity risks" path="assessment/{:id}/maturity-questions-nested/2412"/>
-                </node>
-                <node id="maturity-questions-nested-2350" displaytext="Risk Assessment">
-                    <node id="maturity-questions-nested-2413" displaytext="Cyber threat intelligence is received from information sharing forums and sources." path="assessment/{:id}/maturity-questions-nested/2413"/>
-                    <node id="maturity-questions-nested-2414" displaytext="Threats, both internal and external, are identified and documented." path="assessment/{:id}/maturity-questions-nested/2414"/>
-                    <node id="maturity-questions-nested-2415" displaytext="Potential business impacts and likelihoods are identified." path="assessment/{:id}/maturity-questions-nested/2415"/>
-                    <node id="maturity-questions-nested-2416" displaytext="Threats, vulnerabilities, likelihoods, and impacts are used to determine risk." path="assessment/{:id}/maturity-questions-nested/2416"/>
-                    <node id="maturity-questions-nested-2417" displaytext="Risk responses are identified and prioritized" path="assessment/{:id}/maturity-questions-nested/2417"/>
-                </node>
-                <node id="maturity-questions-nested-2353" displaytext="Risk Management Strategy">
-                    <node id="maturity-questions-nested-2418" displaytext="Risk management processes are established, managed, and agreed to by organizational stakeholders" path="assessment/{:id}/maturity-questions-nested/2418"/>
-                    <node id="maturity-questions-nested-2420" displaytext="The organization's determination of risk tolerance is informed by its role in critical infrastructure and sector specific risk analysis" path="assessment/{:id}/maturity-questions-nested/2420"/>
-                </node>
-                <node id="maturity-questions-nested-2354" displaytext="Supply Chain Risk Management">
-                    <node id="maturity-questions-nested-2422" displaytext="Cyber supply chain risk management processes are identified, established, assessed, managed, and agreed to by organizational stakeholders" path="assessment/{:id}/maturity-questions-nested/2422"/>
-                    <node id="maturity-questions-nested-2423" displaytext="Contracts with suppliers and third-party partners are used to implement appropriate measures designed to meet the objectives of an organization's cybersecurity program and Cyber Supply Chain Risk Management Plan." path="assessment/{:id}/maturity-questions-nested/2423"/>
-                    <node id="maturity-questions-nested-2424" displaytext="Suppliers and third party partners of information systems, components, and services are identified, prioritized, and assessed using a cyber supply chain risk assessment process" path="assessment/{:id}/maturity-questions-nested/2424"/>
-                    <node id="maturity-questions-nested-2425" displaytext="Suppliers and third-party partners are routinely assessed using audits, test results, or other forms of evaluations to confirm they are meeting their contractual obligations." path="assessment/{:id}/maturity-questions-nested/2425"/>
-                    <node id="maturity-questions-nested-2426" displaytext="Response and recovery planning and testing are conducted with suppliers and third-party providers" path="assessment/{:id}/maturity-questions-nested/2426"/>
-                </node>
+                <node id="maturity-questions-nested-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions-nested/2343" />
+                <node id="maturity-questions-nested-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions-nested/2344" />                
+                <node id="maturity-questions-nested-2345" displaytext="Contextual Awareness" path="assessment/{:id}/maturity-questions-nested/2345"/>
+                <node id="maturity-questions-nested-2346" displaytext="Coordinated Protection" path="assessment/{:id}/maturity-questions-nested/2346"/>
+                <node id="maturity-questions-nested-2347" displaytext="Diversity" path="assessment/{:id}/maturity-questions-nested/2347" />
+                <node id="maturity-questions-nested-2348" displaytext="Dynamic Positioning" path="assessment/{:id}/maturity-questions-nested/2348" />
+                <node id="maturity-questions-nested-2349" displaytext="Governance" path="assessment/{:id}/maturity-questions-nested/2349" />
+                <node id="maturity-questions-nested-2350" displaytext="Risk Assessment" path="assessment/{:id}/maturity-questions-nested/2350" />
+                <node id="maturity-questions-nested-2353" displaytext="Risk Management Strategy" path="assessment/{:id}/maturity-questions-nested/2353" />
+                <node id="maturity-questions-nested-2354" displaytext="Supply Chain Risk Management" path="assessment/{:id}/maturity-questions-nested/2354" />
             </node>
             <node id="maturity-questions-nested-2339" displaytext="Withstand">
-                <node id="maturity-questions-nested-2355" displaytext="Anomalies and Events">
-                    <node id="maturity-questions-nested-2465" displaytext="A baseline of network operations and expected data flows for users and systems is established and managed" path="assessment/{:id}/maturity-questions-nested/2465"/>
-                    <node id="maturity-questions-nested-2466" displaytext="Detected events (incidents) are analyzed to understand attack targets and methods" path="assessment/{:id}/maturity-questions-nested/2466"/>
-                    <node id="maturity-questions-nested-2467" displaytext="Event data are collected and correlated from multiple sources and sensors" path="assessment/{:id}/maturity-questions-nested/2467"/>
-                    <node id="maturity-questions-nested-2468" displaytext="Impact of events is determined" path="assessment/{:id}/maturity-questions-nested/2468"/>
-                    <node id="maturity-questions-nested-2469" displaytext="Incident alert thresholds are established" path="assessment/{:id}/maturity-questions-nested/2469"/>
-                </node>
-                <node id="maturity-questions-nested-2356" displaytext="Asset Management">
-                    <node id="maturity-questions-nested-2470" displaytext="Physical devices and systems within the organization are inventoried" path="assessment/{:id}/maturity-questions-nested/2470"/>
-                    <node id="maturity-questions-nested-2471" displaytext="Organizational communication and data flows are mapped" path="assessment/{:id}/maturity-questions-nested/2471"/>
-                    <node id="maturity-questions-nested-2472" displaytext="External information systems are catalogued" path="assessment/{:id}/maturity-questions-nested/2472"/>
-                    <node id="maturity-questions-nested-2473" displaytext="Resources (e.g., hardware, devices, data, time, personnel, and software) are prioritized based on their classification, criticality, and business value" path="assessment/{:id}/maturity-questions-nested/2473"/>
-                    <node id="maturity-questions-nested-2474" displaytext="Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders (e.g., suppliers, customers, partners) are established" path="assessment/{:id}/maturity-questions-nested/2474"/>
-                </node>
-                <node id="maturity-questions-nested-2357" displaytext="Awareness and Training">
-                    <node id="maturity-questions-nested-2475" displaytext="All users are informed and trained" path="assessment/{:id}/maturity-questions-nested/2475"/>
-                    <node id="maturity-questions-nested-2476" displaytext="Privileged users understand their roles and responsibilities" path="assessment/{:id}/maturity-questions-nested/2476"/>
-                    <node id="maturity-questions-nested-2477" displaytext="Physical and cybersecurity personnel understand their roles and responsibilities" path="assessment/{:id}/maturity-questions-nested/2477"/>
-                </node>
-                <node id="maturity-questions-nested-2358" displaytext="Data Security">
-                    <node id="maturity-questions-nested-2478" displaytext="Data-at-rest is protected" path="assessment/{:id}/maturity-questions-nested/2478"/>
-                    <node id="maturity-questions-nested-2479" displaytext="Data-in-transit is protected" path="assessment/{:id}/maturity-questions-nested/2479"/>
-                    <node id="maturity-questions-nested-2480" displaytext="Assets are formally managed throughout removal, transfers, and disposition" path="assessment/{:id}/maturity-questions-nested/2480"/>
-                    <node id="maturity-questions-nested-2481" displaytext="Adequate capacity to ensure availability is maintained" path="assessment/{:id}/maturity-questions-nested/2481"/>
-                    <node id="maturity-questions-nested-2482" displaytext="Protections against data leaks are implemented" path="assessment/{:id}/maturity-questions-nested/2482"/>
-                    <node id="maturity-questions-nested-2483" displaytext="Integrity checking mechanisms are used to verify software, firmware, and information integrity" path="assessment/{:id}/maturity-questions-nested/2483"/>
-                    <node id="maturity-questions-nested-2484" displaytext="The development and testing environment(s) are separate from the production environment" path="assessment/{:id}/maturity-questions-nested/2484"/>
-                    <node id="maturity-questions-nested-2485" displaytext="Integrity checking mechanisms are used to verify hardware integrity" path="assessment/{:id}/maturity-questions-nested/2485"/>
-                </node>
-                <node id="maturity-questions-nested-2359" displaytext="Deception">
-                    <node id="maturity-questions-nested-2486" displaytext="Obfuscation" path="assessment/{:id}/maturity-questions-nested/2486"/>
-                    <node id="maturity-questions-nested-2487" displaytext="Misdirection" path="assessment/{:id}/maturity-questions-nested/2487"/>
-                    <node id="maturity-questions-nested-2488" displaytext="Tainting" path="assessment/{:id}/maturity-questions-nested/2488"/>
-                </node>
-                <node id="maturity-questions-nested-2360" displaytext="Detection Processes">
-                    <node id="maturity-questions-nested-2489" displaytext="Roles and responsibilities for detection are well defined to ensure accountability" path="assessment/{:id}/maturity-questions-nested/2489"/>
-                    <node id="maturity-questions-nested-2490" displaytext="Detection activities comply with all applicable requirements" path="assessment/{:id}/maturity-questions-nested/2490"/>
-                    <node id="maturity-questions-nested-2491" displaytext="Event detection information is communicated" path="assessment/{:id}/maturity-questions-nested/2491"/>
-                    <node id="maturity-questions-nested-2492" displaytext="Detection processes are tested" path="assessment/{:id}/maturity-questions-nested/2492"/>
-                    <node id="maturity-questions-nested-2493" displaytext="Detection processes are continuously improved" path="assessment/{:id}/maturity-questions-nested/2493"/>
-                </node>
-                <node id="maturity-questions-nested-2361" displaytext="Identity and Access Control">
-                    <node id="maturity-questions-nested-2494" displaytext="Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users and processes" path="assessment/{:id}/maturity-questions-nested/2494"/>
-                    <node id="maturity-questions-nested-2495" displaytext="Access permissions and authorizations are managed, incorporating the principles of least privilege and separation of duties" path="assessment/{:id}/maturity-questions-nested/2495"/>
-                    <node id="maturity-questions-nested-2496" displaytext="Identities are proofed and bound to credentials and asserted in interactions" path="assessment/{:id}/maturity-questions-nested/2496"/>
-                    <node id="maturity-questions-nested-2497" displaytext="Users, devices, and other assets are authenticated (e.g., single-factor, multi-factor) commensurate with the risk of the transaction (e.g., individuals’ security and privacy risks and other organizational risks)" path="assessment/{:id}/maturity-questions-nested/2497"/>
-                </node>
-                <node id="maturity-questions-nested-2362" displaytext="Information Protection">
-                    <node id="maturity-questions-nested-2498" displaytext="A baseline configuration of information technology/industrial control systems is created and maintained incorporating security principles (e.g. concept of least functionality)" path="assessment/{:id}/maturity-questions-nested/2498"/>
-                    <node id="maturity-questions-nested-2499" displaytext="A System Development Life Cycle to manage systems is implemented" path="assessment/{:id}/maturity-questions-nested/2499"/>
-                    <node id="maturity-questions-nested-2500" displaytext="Configuration change control processes are in place" path="assessment/{:id}/maturity-questions-nested/2500"/>
-                    <node id="maturity-questions-nested-2501" displaytext="Backups of information are conducted, maintained, and tested" path="assessment/{:id}/maturity-questions-nested/2501"/>
-                    <node id="maturity-questions-nested-2502" displaytext="Policy and regulations regarding the physical operating environment for organizational assets are met" path="assessment/{:id}/maturity-questions-nested/2502"/>
-                    <node id="maturity-questions-nested-2504" displaytext="Protection processes are improved" path="assessment/{:id}/maturity-questions-nested/2504"/>
-                    <node id="maturity-questions-nested-2503" displaytext="Data is destroyed according to policy" path="assessment/{:id}/maturity-questions-nested/2503"/>
-                    <node id="maturity-questions-nested-2505" displaytext="Effectiveness of protection technologies is shared" path="assessment/{:id}/maturity-questions-nested/2505"/>
-                    <node id="maturity-questions-nested-2506" displaytext="Response plans (Incident Response and Business Continuity) and recovery plans (Incident Recovery and Disaster Recovery) are in place and managed" path="assessment/{:id}/maturity-questions-nested/2506"/>
-                    <node id="maturity-questions-nested-2507" displaytext="Response and recovery plans are tested" path="assessment/{:id}/maturity-questions-nested/2507"/>
-                    <node id="maturity-questions-nested-2508" displaytext="Cybersecurity is included in human resources practices (e.g., deprovisioning, personnel screening)" path="assessment/{:id}/maturity-questions-nested/2508"/>
-                    <node id="maturity-questions-nested-2509" displaytext="A vulnerability management plan is developed and implemented" path="assessment/{:id}/maturity-questions-nested/2509"/>
-                </node>
-                <node id="maturity-questions-nested-2363" displaytext="Maintenance">
-                    <node id="maturity-questions-nested-2510" displaytext="Maintenance and repair of organizational assets are performed and logged, with approved and controlled tools" path="assessment/{:id}/maturity-questions-nested/2510"/>
-                    <node id="maturity-questions-nested-2511" displaytext="Remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access" path="assessment/{:id}/maturity-questions-nested/2511"/>
-                </node>
-                <node id="maturity-questions-nested-2371" displaytext="Non-Persistence">
-                    <node id="maturity-questions-nested-2512" displaytext="Non-Persistent Information" path="assessment/{:id}/maturity-questions-nested/2512"/>
-                    <node id="maturity-questions-nested-2513" displaytext="Non-Persistent Services" path="assessment/{:id}/maturity-questions-nested/2513"/>
-                    <node id="maturity-questions-nested-2514" displaytext="Non-Persistent Connectivity" path="assessment/{:id}/maturity-questions-nested/2514"/>
-                </node>
-                <node id="maturity-questions-nested-2372" displaytext="Privilege Restriction">
-                    <node id="maturity-questions-nested-2515" displaytext="Trust-Based Privilege Management" path="assessment/{:id}/maturity-questions-nested/2515"/>
-                    <node id="maturity-questions-nested-2516" displaytext="Attribute-Based Usage Restriction" path="assessment/{:id}/maturity-questions-nested/2516"/>
-                    <node id="maturity-questions-nested-2517" displaytext="Dynamic Privileges" path="assessment/{:id}/maturity-questions-nested/2517"/>
-                </node>
-                <node id="maturity-questions-nested-2373" displaytext="Protective Technology">
-                    <node id="maturity-questions-nested-2518" displaytext="Audit/log records are determined, documented, implemented, and reviewed in accordance with policy" path="assessment/{:id}/maturity-questions-nested/2518"/>
-                    <node id="maturity-questions-nested-2520" displaytext="Removable media is protected and its use restricted according to policy" path="assessment/{:id}/maturity-questions-nested/2520"/>
-                    <node id="maturity-questions-nested-2521" displaytext="The principle of least functionality is incorporated by configuring systems to provide only essential capabilities" path="assessment/{:id}/maturity-questions-nested/2521"/>
-                    <node id="maturity-questions-nested-2522" displaytext="Communications and control networks are protected" path="assessment/{:id}/maturity-questions-nested/2522"/>
-                    <node id="maturity-questions-nested-2523" displaytext="Mechanisms (e.g., failsafe, load balancing, hot swap) are implemented to achieve resilience requirements in normal and adverse situations" path="assessment/{:id}/maturity-questions-nested/2523"/>
-                </node>
-                <node id="maturity-questions-nested-2374" displaytext="Security Continuous Monitoring">
-                    <node id="maturity-questions-nested-2524" displaytext="The network is monitored to detect potential cybersecurity events" path="assessment/{:id}/maturity-questions-nested/2524"/>
-                    <node id="maturity-questions-nested-2525" displaytext="The physical environment is monitored to detect potential cybersecurity events" path="assessment/{:id}/maturity-questions-nested/2525"/>
-                    <node id="maturity-questions-nested-2526" displaytext="Personnel activity is monitored to detect potential cybersecurity events" path="assessment/{:id}/maturity-questions-nested/2526"/>
-                    <node id="maturity-questions-nested-2527" displaytext="Malicious code is detected" path="assessment/{:id}/maturity-questions-nested/2527"/>
-                    <node id="maturity-questions-nested-2528" displaytext="Unauthorized mobile code is detected" path="assessment/{:id}/maturity-questions-nested/2528"/>
-                    <node id="maturity-questions-nested-2529" displaytext="External service provider activity is monitored to detect potential cybersecurity events" path="assessment/{:id}/maturity-questions-nested/2529"/>
-                    <node id="maturity-questions-nested-2530" displaytext="Monitoring for unauthorized personnel, connections, devices, and software is performed" path="assessment/{:id}/maturity-questions-nested/2530"/>
-                    <node id="maturity-questions-nested-2531" displaytext="Vulnerability scans are performed" path="assessment/{:id}/maturity-questions-nested/2531"/>
-                </node>
-                <node id="maturity-questions-nested-2375" displaytext="Segmentation">
-                    <node id="maturity-questions-nested-2532" displaytext="Predefined Segmentation" path="assessment/{:id}/maturity-questions-nested/2532"/>
-                    <node id="maturity-questions-nested-2533" displaytext="Dynamic Segmentation and Isolation" path="assessment/{:id}/maturity-questions-nested/2533"/>
-                </node>
-                <node id="maturity-questions-nested-2376" displaytext="Sustained Integrity">
-                    <node id="maturity-questions-nested-2534" displaytext="Integrity Checks" path="assessment/{:id}/maturity-questions-nested/2534"/>
-                    <node id="maturity-questions-nested-2535" displaytext="Provenance Tracking" path="assessment/{:id}/maturity-questions-nested/2535"/>
-                    <node id="maturity-questions-nested-2536" displaytext="Behavior Validation" path="assessment/{:id}/maturity-questions-nested/2536"/>
-                </node>
-                <node id="maturity-questions-nested-2377" displaytext="Unpredictability">
-                    <node id="maturity-questions-nested-2537" displaytext="Temporal Unpredictability" path="assessment/{:id}/maturity-questions-nested/2537"/>
-                    <node id="maturity-questions-nested-2538" displaytext="Contextual Unpredictability" path="assessment/{:id}/maturity-questions-nested/2538"/>
-                </node>
+                <node id="maturity-questions-nested-2355" displaytext="Anomalies and Events" path="assessment/{:id}/maturity-questions-nested/2355" />
+                <node id="maturity-questions-nested-2356" displaytext="Asset Management" path="assessment/{:id}/maturity-questions-nested/2356" />
+                <node id="maturity-questions-nested-2357" displaytext="Awareness and Training" path="assessment/{:id}/maturity-questions-nested/2357" />
+                <node id="maturity-questions-nested-2358" displaytext="Data Security" path="assessment/{:id}/maturity-questions-nested/2358" />
+                <node id="maturity-questions-nested-2359" displaytext="Deception" path="assessment/{:id}/maturity-questions-nested/2359" />
+                <node id="maturity-questions-nested-2360" displaytext="Detection Processes" path="assessment/{:id}/maturity-questions-nested/2360" />
+                <node id="maturity-questions-nested-2361" displaytext="Identity and Access Control" path="assessment/{:id}/maturity-questions-nested/2361" />
+                <node id="maturity-questions-nested-2362" displaytext="Information Protection" path="assessment/{:id}/maturity-questions-nested/2362" />
+                <node id="maturity-questions-nested-2363" displaytext="Maintenance" path="assessment/{:id}/maturity-questions-nested/2363" />
+                <node id="maturity-questions-nested-2371" displaytext="Non-Persistence" path="assessment/{:id}/maturity-questions-nested/2371" />
+                <node id="maturity-questions-nested-2372" displaytext="Privilege Restriction" path="assessment/{:id}/maturity-questions-nested/2372" />
+                <node id="maturity-questions-nested-2373" displaytext="Protective Technology" path="assessment/{:id}/maturity-questions-nested/2373" />
+                <node id="maturity-questions-nested-2374" displaytext="Security Continuous Monitoring" path="assessment/{:id}/maturity-questions-nested/2374" />
+                <node id="maturity-questions-nested-2375" displaytext="Segmentation" path="assessment/{:id}/maturity-questions-nested/2375" />
+                <node id="maturity-questions-nested-2376" displaytext="Sustained Integrity" path="assessment/{:id}/maturity-questions-nested/2376" />
+                <node id="maturity-questions-nested-2377" displaytext="Unpredictability" path="assessment/{:id}/maturity-questions-nested/2377" />
             </node>
             <node id="maturity-questions-nested-2340" displaytext="Recover">
-                <node id="maturity-questions-nested-2378" displaytext="Analysis">
-                    <node id="maturity-questions-nested-2443" displaytext="Notifications from detection systems are investigated" path="assessment/{:id}/maturity-questions-nested/2443"/>
-                    <node id="maturity-questions-nested-2444" displaytext="The impact of the incident is understood" path="assessment/{:id}/maturity-questions-nested/2444"/>
-                    <node id="maturity-questions-nested-2445" displaytext="Forensics are performed" path="assessment/{:id}/maturity-questions-nested/2445"/>
-                    <node id="maturity-questions-nested-2446" displaytext="Incidents are categorized consistent with response plans" path="assessment/{:id}/maturity-questions-nested/2446"/>
-                    <node id="maturity-questions-nested-2464" displaytext="Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources (e.g. internal testing, security bulletins, or security researchers)" path="assessment/{:id}/maturity-questions-nested/2464"/>
-                </node>
-                <node id="maturity-questions-nested-2379" displaytext="Analytic Monitoring">
-                    <node id="maturity-questions-nested-2448" displaytext="Monitoring and Damage Assessment" path="assessment/{:id}/maturity-questions-nested/2448"/>
-                    <node id="maturity-questions-nested-2449" displaytext="Sensor Fusion and Analysis" path="assessment/{:id}/maturity-questions-nested/2449"/>
-                    <node id="maturity-questions-nested-2450" displaytext="Forensic and Behavioral Analysis" path="assessment/{:id}/maturity-questions-nested/2450"/>
-                </node>
-                <node id="maturity-questions-nested-2380" displaytext="Communications">
-                    <node id="maturity-questions-nested-2451" displaytext="Personnel know their roles and order of operations when a response is needed" path="assessment/{:id}/maturity-questions-nested/2451"/>
-                    <node id="maturity-questions-nested-2452" displaytext="Incidents are reported consistent with established criteria" path="assessment/{:id}/maturity-questions-nested/2452"/>
-                    <node id="maturity-questions-nested-2453" displaytext="Information is shared consistent with response plans" path="assessment/{:id}/maturity-questions-nested/2453"/>
-                    <node id="maturity-questions-nested-2454" displaytext="Coordination with stakeholders occurs consistent with response plans" path="assessment/{:id}/maturity-questions-nested/2454"/>
-                    <node id="maturity-questions-nested-2455" displaytext="Voluntary information sharing occurs with external stakeholders to achieve broader cybersecurity situational awareness" path="assessment/{:id}/maturity-questions-nested/2455"/>
-                </node>
-                <node id="maturity-questions-nested-2381" displaytext="Improvements">
-                    <node id="maturity-questions-nested-2456" displaytext="Response plans incorporate lessons learned" path="assessment/{:id}/maturity-questions-nested/2456"/>
-                    <node id="maturity-questions-nested-2457" displaytext="Response strategies are updated" path="assessment/{:id}/maturity-questions-nested/2457"/>
-                </node>
-                <node id="maturity-questions-nested-2382" displaytext="Mitigation">
-                    <node id="maturity-questions-nested-2458" displaytext="Incidents are contained" path="assessment/{:id}/maturity-questions-nested/2458"/>
-                    <node id="maturity-questions-nested-2459" displaytext="Incidents are mitigated" path="assessment/{:id}/maturity-questions-nested/2459"/>
-                    <node id="maturity-questions-nested-2460" displaytext="Newly identified vulnerabilities are mitigated or documented as accepted risks" path="assessment/{:id}/maturity-questions-nested/2460"/>
-                </node>
-                <node id="maturity-questions-nested-2383" displaytext="Redundancy">
-                    <node id="maturity-questions-nested-2461" displaytext="Protected Backup and Restore" path="assessment/{:id}/maturity-questions-nested/2461"/>
-                    <node id="maturity-questions-nested-2462" displaytext="Surplus Capacity" path="assessment/{:id}/maturity-questions-nested/2462"/>
-                    <node id="maturity-questions-nested-2463" displaytext="Replication" path="assessment/{:id}/maturity-questions-nested/2463"/>
-                </node>
+                <node id="maturity-questions-nested-2378" displaytext="Analysis" path="assessment/{:id}/maturity-questions-nested/2378" />
+                <node id="maturity-questions-nested-2379" displaytext="Analytic Monitoring" path="assessment/{:id}/maturity-questions-nested/2379" />
+                <node id="maturity-questions-nested-2380" displaytext="Communications" path="assessment/{:id}/maturity-questions-nested/2380" />
+                <node id="maturity-questions-nested-2381" displaytext="Improvements" path="assessment/{:id}/maturity-questions-nested/2381" />
+                <node id="maturity-questions-nested-2382" displaytext="Mitigation" path="assessment/{:id}/maturity-questions-nested/2382" />
+                <node id="maturity-questions-nested-2383" displaytext="Redundancy" path="assessment/{:id}/maturity-questions-nested/2383" />
             </node>
             <node id="maturity-questions-nested-2342" displaytext="Adapt">
-                <node id="maturity-questions-nested-2384" displaytext="Recovery Planning">
-                    <node id="maturity-questions-nested-2433" displaytext="Recovery plan is executed during or after a cybersecurity incident" path="assessment/{:id}/maturity-questions-nested/2433"/>
-                </node>
-                <node id="maturity-questions-nested-2385" displaytext="Improvements">
-                    <node id="maturity-questions-nested-2434" displaytext="Recovery plans incorporate lessons learned" path="assessment/{:id}/maturity-questions-nested/2434"/>
-                </node>
-                <node id="maturity-questions-nested-2386" displaytext="Communications">
-                    <node id="maturity-questions-nested-2436" displaytext="Public relations are managed" path="assessment/{:id}/maturity-questions-nested/2436"/>
-                    <node id="maturity-questions-nested-2437" displaytext="Reputation is repaired after an incident" path="assessment/{:id}/maturity-questions-nested/2437"/>
-                    <node id="maturity-questions-nested-2438" displaytext="Recovery activities are communicated to internal and external stakeholders as well as executive management teams" path="assessment/{:id}/maturity-questions-nested/2438"/>
-                </node>
-                <node id="maturity-questions-nested-2387" displaytext="Realignment 800-160">
-                    <node id="maturity-questions-nested-2439" displaytext="Purposing" path="assessment/{:id}/maturity-questions-nested/2439"/>
-                    <node id="maturity-questions-nested-2440" displaytext="Offloading" path="assessment/{:id}/maturity-questions-nested/2440"/>
-                    <node id="maturity-questions-nested-2441" displaytext="Replacement" path="assessment/{:id}/maturity-questions-nested/2441"/>
-                    <node id="maturity-questions-nested-2442" displaytext="Evolvability" path="assessment/{:id}/maturity-questions-nested/2442"/>
-                </node>
+                <node id="maturity-questions-nested-2384" displaytext="Recovery Planning" path="assessment/{:id}/maturity-questions-nested/2384" />
+                <node id="maturity-questions-nested-2385" displaytext="Improvements" path="assessment/{:id}/maturity-questions-nested/2385" />
+                <node id="maturity-questions-nested-2386" displaytext="Communications" path="assessment/{:id}/maturity-questions-nested/2386" />
+                <node id="maturity-questions-nested-2387" displaytext="Realignment 800-160" path="assessment/{:id}/maturity-questions-nested/2387" />
             </node>
         </node>
 
