@@ -71,5 +71,4 @@ export class CrrReportComponent implements OnInit {
   printReport() {
     window.print();
   }
-
 }
