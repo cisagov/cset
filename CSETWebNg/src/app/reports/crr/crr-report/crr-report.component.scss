@@ -659,11 +659,6 @@ div.widget {
 @page {
   size: letter;
   margin: 0;
-  counter-increment: page;
-  counter-reset: page 1;
-  @top-right {
-      content: "Page " counter(page) " of " counter(pages);
-  }
 }
 
 @media print {
