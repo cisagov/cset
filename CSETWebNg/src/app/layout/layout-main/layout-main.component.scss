@@ -3613,10 +3613,44 @@ h6.dropdown-header {
   font-size: 14px !important;
 }
 
+@media screen and (max-width:500px){
+
+  .swiper-slide {
+    transition: 300ms all;
+    min-width:230px;
+  
+    order-radius:5px;
+    background-color: white;
+    &:hover {
+        z-index: 1000;
+        box-shadow: 0 0px 6px 0 rgb(0 0 0 / 20%);
+        margin-top: -15px;
+        transform: none;
+    }
+
+    &:first-child:hover{
+      
+    }
+
+    &:last-child:hover{
+      
+    }
+
+    &:hover .gallery-card-body {
+    
+      transform:none;
+    }
+    &:hover .gallery-card-footer .btn {
+    
+      transform: none;
+    }
+  }
+}
+@media screen and (min-width:500px){
 .swiper-slide {
   transition: 300ms all;
   min-width:230px;
-  max-width:300px;
+  
   border-radius:5px;
   background-color: white;
   
@@ -3625,7 +3659,6 @@ h6.dropdown-header {
       box-shadow: 0 0px 6px 0 rgb(0 0 0 / 20%);
       margin-top: -15px;
       transform: scale(1.1);
-      max-width:350px;
   }
 
   &:only-child{
@@ -3633,11 +3666,11 @@ h6.dropdown-header {
   }
 
   &:first-child:hover{
-   margin-left:20px;
+    left: 20px;
   }
 
   &:last-child:hover{
-   margin-right:20px;
+   right:20px !important;
   }
 
   &:hover .gallery-card-body {
@@ -3649,7 +3682,7 @@ h6.dropdown-header {
     transform: scale(.93);
   }
 }
-
+}
 .gallery-card{
   border-radius:5px !important;
   background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(230,230,230,1) 70%, rgba(230,230,230,1) 100%);
