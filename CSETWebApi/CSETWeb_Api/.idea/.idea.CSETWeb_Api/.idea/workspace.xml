@@ -14,10 +14,7 @@
   <component name="ChangeListManager">
     <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Model/Assessment/AssessmentDetail.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AssessmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AssessmentController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/new-assessment/new-assessment.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +111,7 @@
       <workItem from="1660929249398" duration="1973000" />
       <workItem from="1660931417454" duration="95000" />
       <workItem from="1660932087138" duration="3273000" />
-      <workItem from="1661449037828" duration="17280000" />
+      <workItem from="1661449037828" duration="19032000" />
     </task>
     <servers />
   </component>
