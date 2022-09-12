@@ -8,7 +8,7 @@
         #swiper
     >
         <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
-            <div class="card gallery-card" (mouseover)="onHover(c.gallery_Item_Id)" (mouseleave)="onHover(-1)">
+            <div [attr.id]="'c'+c.gallery_Item_Id" class="card gallery-card" (mouseover)="onHover(c.gallery_Item_Id)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Id)">
                 <div class="card-image-parent">
                     <img class="card-image-child" [src]="getImageSrc(c.icon_File_Name_Small)">
                 </div>
