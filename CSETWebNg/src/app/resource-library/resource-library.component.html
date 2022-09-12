@@ -72,8 +72,8 @@
           </div>
         </div>
   ​
-        <mat-tree #tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a example-tree" style="margin-bottom:1rem;" [dataSource]="navSvc?.dataSource" [treeControl]="navSvc?.treeControl">
-          <mat-tree-node  *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild" [style.display]="(node.visible == null ? true : node.visible) ? 'flex' : 'none!important'"  class="d-flex flex-column justify-content-start align-items-start flex-11a matbtn">
+        <mat-tree #tree class="ml-4 pr-2 oy-auto bgc-trans h-0 d-flex flex-column flex-11a example-tree" style="margin-bottom:1rem;" [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl">
+          <mat-tree-node *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild" [style.display]="(node.visible == null ? true : node.visible) ? 'flex' : 'none!important'"  class="d-flex flex-column justify-content-start align-items-start flex-11a matbtn">
             <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value" class="mt-2 d-flex justify-content-start flex-00a ml-3 mb-2 p-0 d-flex justify-content-start flex-00a">
               <h4><span class="btn-link docTitle">
                 {{node?.label}}

@@ -22,16 +22,13 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ConfigService } from '../services/config.service';
 import { NavTreeNode } from '../services/navigation/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation/navigation.service';
-import { MatTreeNestedDataSource } from "@angular/material/tree";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { SelectionModel } from "@angular/cdk/collections";
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -88,7 +85,6 @@ export class ResourceLibraryComponent implements OnInit {
     this.isexpanded=true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
-    const magic = this.navSvc.getMagic();
 ​
     // Debounce filter changes so the first few letters typed
     // don't have a long noticeable delay as each letter refilters the
@@ -103,7 +99,8 @@ export class ResourceLibraryComponent implements OnInit {
     const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
-        this.navTreeSvc.setTree(response, magic, true);
+        console.log(response);
+        this.navTreeSvc.setTree(response, this.navSvc.getMagic(), true);
         this.isLoading = false;
         clearTimeout(timeout);
       }
