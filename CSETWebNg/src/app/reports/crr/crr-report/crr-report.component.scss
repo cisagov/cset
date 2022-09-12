@@ -314,7 +314,6 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  counter-reset: page;
 }
 
 .footer {
@@ -656,16 +655,17 @@ div.widget {
   }
 }
 
-/* Print styles */
+/**************** Print styles ****************/
 @page {
   size: letter;
   margin: 0;
+  counter-increment: page;
+  counter-reset: page 1;
+  @top-right {
+      content: "Page " counter(page) " of " counter(pages);
+  }
 }
 
-.print-footer-right::before {
-  counter-increment: page 1;
-  content: counter(page);;
-}
 @media print {
 
   html, body {
