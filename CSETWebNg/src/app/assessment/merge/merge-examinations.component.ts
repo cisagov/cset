@@ -26,7 +26,7 @@ export class MergeExaminationsComponent implements OnInit {
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
   contactsInitials: any[] = [];
-  initialsAsString: string = "";
+  mergedContactInitials: string = "";
 
   // Answers pulled from the assessments being merged (that aren't in conflict)
   mergingAssessmentAnswers: Answer[] = [];
@@ -67,7 +67,6 @@ export class MergeExaminationsComponent implements OnInit {
   getMergingAssessmentAnswers() {
     for(let i = 0; i < this.ncuaSvc.assessmentsToMerge.length; i++) {
       this.assessSvc.getAssessmentToken(this.ncuaSvc.assessmentsToMerge[i]).then(() => {
-        this.getAssessmentContactInitials();
         this.maturitySvc.getQuestionsList("ACET", false).subscribe(
           (response: any) => {
             this.aggregateExistingAnswers(response);
@@ -95,9 +94,9 @@ export class MergeExaminationsComponent implements OnInit {
               questionType: null,
               questionNumber: '0',
               answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
-              altAnswerText: null,
+              altAnswerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].altAnswerText,
               freeResponseAnswer: null,
-              comment: null,
+              comment: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment,
               feedback: null,
               markForReview: false,
               reviewed: false,
@@ -143,20 +142,19 @@ export class MergeExaminationsComponent implements OnInit {
       this.assessmentNames[7] = this.mergeConflicts[0].assessment_Name8;
       this.assessmentNames[8] = this.mergeConflicts[0].assessment_Name9;
       this.assessmentNames[9] = this.mergeConflicts[0].assessment_Name10;
+
+      this.assessmentNames.forEach(name => {
+        if (name !== null) {
+          this.getAssessmentContactInitials(name);
+        }
+      });
     }
   }
 
-  getAssessmentContactInitials() {
-    if (this.assessSvc.id()) {
-      this.assessSvc.getAssessmentContacts().then((data: AssessmentContactsResponse) => {
-        let firstInitial = data.contactList[0].firstName[0];
-        let lastInitial = data.contactList[0].lastName[0];
-        let contactInitials = firstInitial + lastInitial;
-        this.contactsInitials.push(contactInitials);
-        this.initialsAsString = this.contactsInitials.join("_");
-        }
-      )
-    }
+  getAssessmentContactInitials(assessmentName: string) {
+    let splitArray = assessmentName.split("_");
+    let initials = splitArray[1];
+    this.mergedContactInitials += ("_" + initials);
   }
 
   getDisplayText(answerText: String) {
@@ -172,7 +170,7 @@ export class MergeExaminationsComponent implements OnInit {
   getAltText(altText: any) {
     let commentString = "";
 
-    if (altText === null || altText === "") {
+    if (altText === null || altText === undefined || altText === "") {
       return "";
     } else {
       let tempArray = altText.split("- - End of Issue - -");
@@ -205,15 +203,18 @@ export class MergeExaminationsComponent implements OnInit {
   // convert "Y" or "N" or "NA" into an ANSWER Object
   convertToAnswerType(length: number, answers: string[]) {
     for (let i = 0; i < length; i++) {
+      let comments = this.combineComments(i);
+      let altText = this.combineAltText(i);
+
       this.mergeAnswers[i] = {
         answerId: null,
         questionId: this.mergeConflicts[i].question_Or_Requirement_Id1,
         questionType: null,
         questionNumber: '0',
         answerText: answers[i],
-        altAnswerText: null,
+        altAnswerText: altText,
         freeResponseAnswer: null,
-        comment: null,
+        comment: comments,
         feedback: null,
         markForReview: false,
         reviewed: false,
@@ -224,6 +225,81 @@ export class MergeExaminationsComponent implements OnInit {
       }
     }
   }
+
+  combineComments(length: number) {
+    let myString = "";
+    /*
+    for (let i = 0; i < length; i++) {
+      if (this.mergeConflicts[i].comment1 !== null) {
+        myString += this.mergeConflicts[i].comment1 + "\n";
+      }
+      if (this.mergeConflicts[i].comment2 !== null) {
+        myString += this.mergeConflicts[i].comment2 + "\n";
+      }
+      if (this.mergeConflicts[i].comment3 !== null) {
+        myString += this.mergeConflicts[i].comment3 + "\n";
+      }
+      if (this.mergeConflicts[i].comment4 !== null) {
+        myString += this.mergeConflicts[i].comment1 + "\n";
+      }
+      if (this.mergeConflicts[i].comment5 !== null) {
+        myString += this.mergeConflicts[i].comment2 + "\n";
+      }
+      if (this.mergeConflicts[i].comment6 !== null) {
+        myString += this.mergeConflicts[i].comment3 + "\n";
+      }
+      if (this.mergeConflicts[i].comment7 !== null) {
+        myString += this.mergeConflicts[i].comment1 + "\n";
+      }
+      if (this.mergeConflicts[i].comment8 !== null) {
+        myString += this.mergeConflicts[i].comment2 + "\n";
+      }
+      if (this.mergeConflicts[i].comment9 !== null) {
+        myString += this.mergeConflicts[i].comment3 + "\n";
+      }
+      if (this.mergeConflicts[i].comment10 !== null) {
+        myString += this.mergeConflicts[i].comment4 + "\n";
+      }
+    }
+    */
+    return myString;
+  }
+
+  combineAltText(i: number) {
+    let myString = "";
+    if (this.mergeConflicts[i].alt_Text1 !== null) {
+      myString += this.mergeConflicts[i].alt_Text1 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text2 !== null) {
+      myString += this.mergeConflicts[i].alt_Text2 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text3 !== null) {
+      myString += this.mergeConflicts[i].alt_Text3 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text4 !== null) {
+      myString += this.mergeConflicts[i].alt_Text4 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text5 !== null) {
+      myString += this.mergeConflicts[i].alt_Text5 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text6 !== null) {
+      myString += this.mergeConflicts[i].alt_Text6 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text7 !== null) {
+      myString += this.mergeConflicts[i].alt_Text7 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text8 !== null) {
+      myString += this.mergeConflicts[i].alt_Text8 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text9 !== null) {
+      myString += this.mergeConflicts[i].alt_Text9 + "\n";
+    }
+    if (this.mergeConflicts[i].alt_Text10 !== null) {
+      myString += this.mergeConflicts[i].alt_Text10 + "\n";
+    }
+  return myString;
+  }
+
 
   createMergedAssessment() {
     // null out the button to prevent multiple clicks
@@ -245,7 +321,7 @@ export class MergeExaminationsComponent implements OnInit {
 
             // Update the assessment with the merge data and send it back
             details.assessmentName = "Merged ISE " + this.mergeConflicts[0].charter_Number + " " + 
-                                      this.datePipe.transform(details.assessmentDate, 'MMddyy') + "_" + this.initialsAsString;
+                                      this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
             details.charter = this.mergeConflicts[0].charter_Number;
             details.assets = this.mergeConflicts[0].asset_Amount;
             details.isAcetOnly = false;
@@ -257,6 +333,8 @@ export class MergeExaminationsComponent implements OnInit {
               for (let j = 0; j < this.mergingAssessmentAnswers.length; j++) {
                 if (this.mergeAnswers[i].questionId === this.mergingAssessmentAnswers[j].questionId) {
                   this.mergingAssessmentAnswers[j].answerText = this.mergeAnswers[i].answerText;
+                  this.mergingAssessmentAnswers[j].comment = this.mergeAnswers[i].comment;
+                  this.mergingAssessmentAnswers[j].altAnswerText = this.mergeAnswers[i].altAnswerText;
                 }
               }
             }
