@@ -160,7 +160,6 @@ export class NavTreeService {
    */
   clearTree(magic: string) {
     if (this.magic === magic) {
-      console.log('cleared tree!')
       this.isNavLoading = true;
       this.dataSource.data = null;
       this.tocControl.dataNodes = this.dataSource.data;
