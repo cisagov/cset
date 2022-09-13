@@ -70,11 +70,6 @@ export interface MaturityModel {
     iconId: number;
 }
 
-export interface AssessmentIcon {
-  icon_Id: number;
-  icon_Path: string;
-}
-
 /**
  * Defines a single maturity level.
  */
