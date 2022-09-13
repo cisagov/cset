@@ -1,9 +1,32 @@
+////////////////////////////////
+//
+//   Copyright 2022 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
 
 /**
- * Analyzes assessment 
+ * Analyzes assessment
  */
 @Injectable({
   providedIn: 'root'
@@ -44,9 +67,9 @@ export class PageVisibilityService {
       return true;
     }
 
-    
+
     // Conditions are separated by spaces and a condition cannot contain
-    // any internal spaces.  For the page to show, all conditions must be true.  
+    // any internal spaces.  For the page to show, all conditions must be true.
     // Start with true and if any fail, result is false.
     let show = true;
     let conditions = conditionAttrib.toUpperCase().split(' ');
@@ -74,7 +97,7 @@ export class PageVisibilityService {
         show = show && this.skinAny(c);
       }
 
-      if (c.startsWith('INSTALL-MODE-NOT:') || c.startsWith('INSTALL-MODE-NONE(')) {        
+      if (c.startsWith('INSTALL-MODE-NOT:') || c.startsWith('INSTALL-MODE-NONE(')) {
         show = show && !this.skinAny(c);
       }
 
@@ -117,7 +140,7 @@ export class PageVisibilityService {
 
 
   /**
-   * Returns true if any of the specified installation modes 
+   * Returns true if any of the specified installation modes
    * matches the currently-running installation mode (skin).
    */
   skinAny(rule: string): boolean {
@@ -138,8 +161,8 @@ export class PageVisibilityService {
 
   /**
    * "Source" is a synomym for the original skin that the assessment
-   * was created under.  It is stored in the "Workflow" column of the 
-   * INFORMATION database table. 
+   * was created under.  It is stored in the "Workflow" column of the
+   * INFORMATION database table.
    */
   sourceAny(rule: string): boolean {
     let targets = this.getTargets(rule);
@@ -174,9 +197,9 @@ export class PageVisibilityService {
   }
 
   /**
-   * 
-   * @param rule 
-   * @returns 
+   *
+   * @param rule
+   * @returns
    */
   maturityAny(rule: string): boolean {
     let targets = this.getTargets(rule);
@@ -191,7 +214,7 @@ export class PageVisibilityService {
   /**
    * Parses the value(s) following the first colon or open paren
    * and returns a list of them.
-   * @param c 
+   * @param c
    */
   getTargets(c: string): string[] {
     let pC = c.indexOf(':');
