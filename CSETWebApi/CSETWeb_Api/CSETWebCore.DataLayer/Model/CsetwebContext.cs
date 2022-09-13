@@ -35,12 +35,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        public virtual DbSet<ASSESSMENT_ICONS> ASSESSMENT_ICONS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
         public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
         public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-        public virtual DbSet<ASSESSMENT_SEQUENCES> ASSESSMENT_SEQUENCES { get; set; }
         public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
         public virtual DbSet<Analytics_Answers> Analytics_Answers { get; set; }
@@ -546,19 +544,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.ASSESSMENT_SELECTED_LEVELS)
                     .HasForeignKey(d => d.Level_Name)
                     .HasConstraintName("FK_ASSESSMENT_SELECTED_LEVELS_LEVEL_NAMES");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_SEQUENCES>(entity =>
-            {
-                entity.HasOne(d => d.Maturity_Model)
-                    .WithMany(p => p.ASSESSMENT_SEQUENCES)
-                    .HasForeignKey(d => d.Maturity_Model_Id)
-                    .HasConstraintName("FK_ASSESSMENT_SEQUENCES_MATURITY_MODELS");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.ASSESSMENT_SEQUENCES)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_ASSESSMENT_SEQUENCES_SETS");
             });
 
             modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
@@ -1526,6 +1511,8 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
             {
+                entity.HasKey(e => new { e.Group_Id, e.Column_Index });
+
                 entity.HasOne(d => d.Gallery_Item)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Id)
@@ -2091,7 +2078,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
 
-                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
+                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([varchar](50),[Std_Ref_Number],(0)) end)", false);
 
                 entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
 
