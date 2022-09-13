@@ -529,9 +529,8 @@ namespace CSETWebCore.Api.Controllers
             var isCis = _context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId && x.model_id == 8);
             if (isCis)
             {
-                // TODO:  Why does uncommenting the next lines cause the endpoint to not respond/return?
-                //var qt = new QuestionTreeXml(assessmentId, _context);
-                //oos = qt.OutOfScopeQuestionIds();
+                var qt = new QuestionTreeXml(assessmentId, _context);
+                oos = qt.OutOfScopeQuestionIds();
             }
 
             MaturityBasicReportData data = new MaturityBasicReportData
