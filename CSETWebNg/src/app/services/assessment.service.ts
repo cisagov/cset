@@ -26,7 +26,6 @@ import { Injectable } from '@angular/core';
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
-  AssessmentIcon,
   MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
@@ -68,8 +67,6 @@ export class AssessmentService {
 
   static allMaturityModels: MaturityModel[];
 
-  static assessmentIcons: AssessmentIcon[];
-
   /**
    * Indicates if a brand-new assessment is being created.
    * This will allow the assessment-detail page to do certain
@@ -95,11 +92,6 @@ export class AssessmentService {
         .subscribe((data: MaturityModel[]) => {
           AssessmentService.allMaturityModels = data;
         });
-
-      //this.http.get(this.apiUrl + "assessmenticons")
-      //.subscribe((data: AssessmentIcon[]) => {
-      //  AssessmentService.assessmentIcons = data;
-      //});
 
       this.initialized = true;
     }
@@ -128,10 +120,10 @@ export class AssessmentService {
   }
 
   /**
-   * 
-   * @param workflow 
-   * @param galleryId 
-   * @returns 
+   *
+   * @param workflow
+   * @param galleryId
+   * @returns
    */
   createNewAssessmentGallery(workflow: string, galleryId: number) {
     return this.http.get(this.apiUrl + 'createassessment/gallery?workflow=' + workflow + '&galleryId=' + galleryId, headers)
