@@ -26,6 +26,12 @@ namespace CSETWebCore.Api.Controllers
             _stateManager = parser;          
         }
 
+
+        /// <summary>
+        /// Returns the gallery card structure
+        /// </summary>
+        /// <param name="Layout_Name"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/getboard")]
         public IActionResult GetBoard(string Layout_Name)
@@ -33,26 +39,6 @@ namespace CSETWebCore.Api.Controllers
             try
             {   
                 return Ok(_stateManager.GetGalleryBoard(Layout_Name));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Persists the current Standards selection in the database.
-        /// </summary>
-        [HttpPost]
-        [Route("api/gallery/setstate")]
-        public IActionResult PersistSelectedStandards([FromBody] int GalleryItemId)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            try
-            {
-                _stateManager.ProcessParserState(assessmentId, GalleryItemId);
-                return Ok();
             }
             catch (Exception e)
             {
