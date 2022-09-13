@@ -99,7 +99,6 @@ export class ResourceLibraryComponent implements OnInit {
     const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
-        console.log(response);
         this.navTreeSvc.setTree(response, this.navSvc.getMagic(), true);
         this.isLoading = false;
         clearTimeout(timeout);
