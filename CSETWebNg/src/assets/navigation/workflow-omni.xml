@@ -233,8 +233,7 @@
 
 
         <!-- Results - Diagram -->
-        <node displaytext="Diagram Results" condition="OPTION:DIAGRAM">
-            <node displaytext="Components Results" id="components-results-node"/>
+        <node displaytext="Components Results" condition="OPTION:DIAGRAM">
             <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" />
             <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" />
             <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" />
