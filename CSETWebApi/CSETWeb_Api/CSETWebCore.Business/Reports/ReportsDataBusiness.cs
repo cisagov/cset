@@ -38,6 +38,8 @@ namespace CSETWebCore.Business.Reports
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
 
+        public List<int> OutOfScopeQuestions = new List<int>();
+
 
         /// <summary>
         /// Constructor.
@@ -85,6 +87,7 @@ namespace CSETWebCore.Business.Reports
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
                             && a.Question_Type == "Maturity"
+                            && !this.OutOfScopeQuestions.Contains(m.Mat_Question_Id)
                         orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
                         select new MatRelevantAnswers()
                         {
