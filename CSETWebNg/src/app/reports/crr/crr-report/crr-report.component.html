@@ -47,7 +47,7 @@
             <app-crr-cover-sheet2 [model]="crrModel"></app-crr-cover-sheet2>
           </div>
 
-          <div class="page-margin-top">
+          <div id="main-toc" class="page-margin-top">
             <app-crr-main-toc [model]="crrModel"></app-crr-main-toc>
           </div>
 
@@ -116,5 +116,7 @@
   </td></tr></tfoot>
 </table>
 
+<div class="print-header-left"></div>
+<div class="print-header-right"></div>
 <div class="print-footer-right">CRR Self-Assessment</div>
 <div class="print-footer-left">{{ securityLevel }}</div>

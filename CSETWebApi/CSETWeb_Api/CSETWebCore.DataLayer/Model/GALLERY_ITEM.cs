@@ -23,10 +23,10 @@ namespace CSETWebCore.DataLayer.Model
         public string Icon_File_Name_Large { get; set; }
         [Required]
         public string Configuration_Setup { get; set; }
+        public string Configuration_Setup_Client { get; set; }
         [Required]
         [StringLength(1000)]
         public string Description { get; set; }
-        public string Configuration_Setup_Client { get; set; }
         [StringLength(200)]
         public string Title { get; set; }
 

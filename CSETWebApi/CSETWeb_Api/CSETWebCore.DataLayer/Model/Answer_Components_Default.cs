@@ -11,7 +11,6 @@ namespace CSETWebCore.DataLayer.Model
     [Keyless]
     public partial class Answer_Components_Default
     {
-        //[StringLength(100)]
         public int UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
@@ -35,21 +34,24 @@ namespace CSETWebCore.DataLayer.Model
         public int SubCategoryId { get; set; }
         [StringLength(2048)]
         public string FeedBack { get; set; }
-        public bool Is_Component { get; set; }
-        public Guid? Component_Guid { get; set; }
+        public bool? Is_Component { get; set; }
+        public Guid Component_Guid { get; set; }
         [StringLength(10)]
         public string SAL { get; set; }
         public bool? Mark_For_Review { get; set; }
-        public bool Is_Requirement { get; set; }
-        public bool Is_Framework { get; set; }
-        public int Heading_Pair_Id { get; set; }
+        public bool? Is_Requirement { get; set; }
+        public bool? Is_Framework { get; set; }
+        public int heading_pair_id { get; set; }
         [StringLength(1000)]
         public string Sub_Heading_Question_Description { get; set; }
         public string Simple_Question { get; set; }
-        public bool? Reviewed { get; set; }
-        public string Label { get; set; }
+        public bool Reviewed { get; set; }
+        [StringLength(30)]
+        public string label { get; set; }
+        [StringLength(30)]
         public string ComponentName { get; set; }
+        [StringLength(30)]
         public string Symbol_Name { get; set; }
-        public int Component_Symbol_Id { get; set; }
+        public int Component_Symbol_id { get; set; }
     }
 }
