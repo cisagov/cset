@@ -644,18 +644,21 @@ div.widget {
   margin-left: 1px;
 }
 
-
-/* Print styles */
-@page {
-  size: letter;
-  margin: 0;
-}
-
 @media screen {
   table.page-layout {
     margin-left: auto;
     margin-right: auto;
   }
+
+  #main-toc {
+    display: none;
+  }
+}
+
+/**************** Print styles ****************/
+@page {
+  size: letter;
+  margin: 0;
 }
 
 @media print {
@@ -708,9 +711,13 @@ div.widget {
     page-break-inside: auto;
   }
 
-  .print-footer-right, .header-space,
-  .print-footer-left, .footer-space {
+  .print-footer-right, .print-header-left, .print-header-right,
+  .print-footer-left, .footer-space, .header-space {
     height: 2cm;
+    width: 5cm;
+    background-color: white;
+    z-index: 10;
+    padding: 1rem;
   }
 
   .print-footer-right {
@@ -722,6 +729,18 @@ div.widget {
   .print-footer-left {
     position: fixed;
     bottom: 0;
+    left: 2cm;
+  }
+
+  .print-header-right {
+    position: fixed;
+    top: 0;
+    right: 2cm;
+  }
+
+  .print-header-left {
+    position: fixed;
+    top: 0;
     left: 2cm;
   }
 }

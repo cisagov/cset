@@ -8,14 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
+    [Index("Group_Id", "Column_Index", Name = "IX_GALLERY_GROUP_DETAILS", IsUnique = true)]
     public partial class GALLERY_GROUP_DETAILS
     {
-        [Key]
         public int Group_Id { get; set; }
-        [Key]
         public int Column_Index { get; set; }
         public int? Gallery_Item_Id { get; set; }
         public int Click_Count { get; set; }
+        [Key]
+        public int Group_Detail_Id { get; set; }
 
         [ForeignKey("Gallery_Item_Id")]
         [InverseProperty("GALLERY_GROUP_DETAILS")]
