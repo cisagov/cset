@@ -10,8 +10,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class ASSESSMENT_DETAIL_FILTER_DATA
     {
-        [Key]
-        public int Detail_Id { get; set; }
         public string Name { get; set; }
         public string CityOrSite { get; set; }
         [StringLength(100)]
@@ -20,5 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Charter { get; set; }
         [StringLength(100)]
         public string Model { get; set; }
+        [Key]
+        public int Detail_Id { get; set; }
     }
 }

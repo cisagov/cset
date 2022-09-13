@@ -366,7 +366,6 @@ export class QuestionBlockIseComponent implements OnInit {
    * Very similar to 'storeAltText' above. Text box is at the end of each question set, and
    * attaches to the parent statement.
    * @param q
-
   */
   storeSummaryComment(q: Question, e: any) {
     q.comment = e.target.value;
@@ -423,71 +422,59 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
+  isFinalQuestion(id: number) {
+    // If SCUEP examination
+    if (this.ncuaSvc.proposedExamLevel === "SCUEP" || this.ncuaSvc.chosenOverrideLevel === "SCUEP") {
+      switch (id) {
+        case (7196): case(7201): case(7206): case(7214):
+        case (7217): case(7220): case(7225):
+          return true;
+      }
+      return false;
+    } else { // If CORE examination
+      if (!this.showCorePlus) {
+        switch (id) {
+          case (7233): case (7238): case (7244): case (7249): 
+          case (7256): case (7265): case (7273): case (7276): 
+          case (7281): case (7285): case (7289): case (7293): 
+          case (7296): case (7301): case (7304):
+            return true;
+        }
+        return false;
+      } else if (this.showCorePlus) {
+        switch (id) {
+          // Final question under each CORE+ non-parent
+          case (7312): case (7316): case (7322): case (7332): 
+          case (7338): case (7344): case (7351): case (7359): 
+          case (7366): case (7373): case (7381): case (7390): 
+          case (7395): case (7400): case (7408): 
+          
+          // ID's of CORE+ only questions
+          case (7421): case (7429): case (7444): case (7450): 
+          case (7458): case (7465):
+            return true;
+        }
+        return false;
+      }
+    }
+  }
+
   showCorePlusButton(id: number) {
-    if (this.isLastCoreQuestion(id) && !this.showCorePlus) {
+    if (this.isFinalQuestion(id)) {
       return true;
     }
-    if (this.isLastCorePlusQuestion(id) && this.showCorePlus) {
-      return true;
-    }
-    return false;
-  }
-
-  isLastScuepQuestion(id: number) {
-    switch(id) {
-      // Final question under each SCUEP parent
-      case (7196): case(7201): case(7206): case(7214):
-      case (7217): case(7220): case(7225):
-        return true;
-    }
-    return false;
-  }
-
-  isLastCoreQuestion(id: number) {
-    switch(id) {
-      // Final question under each CORE parent
-      case (7233): case (7238): case (7244): case (7249): 
-      case (7256): case (7265): case (7273): case (7276): 
-      case (7281): case (7285): case (7289): case (7293): 
-      case (7296): case (7301): case (7304):
-        return true;
-    }
-    return false;
-  }
-
-  isLastCorePlusQuestion(id: number) {
-    switch(id) {
-      // Final question under each CORE+ non-parent
-      case (7312): case (7316): case (7322): case (7332): 
-      case (7338): case (7344): case (7351): case (7359): 
-      case (7366): case (7373): case (7381): case (7390): 
-      case (7395): case (7400): case (7408):
-        return true;
-    }
-    return false;
-  }
-
-  isLastCorePlusOnlyQuestion(id: number) {
-    switch(id) {
-      // Final question under each CORE+ parent
-      case (7421): case (7429): case (7444): case (7450):
-      case (7458): case (7465):
-        return true;
-    }
-    return false;
   }
 
   showSummaryCommentBox(id: number) {
-    if (this.isLastScuepQuestion(id)) {
-      return true;
-    } 
-    if (this.isLastCoreQuestion(id) && !this.showCorePlus) {
+    if (this.isFinalQuestion(id)) {
       return true;
     }
-    if ((this.isLastCorePlusQuestion(id) || this.isLastCorePlusOnlyQuestion(id)) && this.showCorePlus) {
+  }
+
+  showAddIssueButton(id: number) {
+    if (this.isFinalQuestion(id)) {
       return true;
     }
-    return false;
   }
 
   updateCorePlusStatus(q: Question) {
