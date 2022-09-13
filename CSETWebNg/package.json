@@ -50,6 +50,7 @@
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "ajv-keywords": "^5.1.0",
     "angular2-hotkeys": "^2.2.0",
+    "ansi-styles": "^6.1.1",
     "array.prototype.fill": "^1.0.2",
     "bootstrap": "^4.6.0",
     "chart.js": "^3.7.1",

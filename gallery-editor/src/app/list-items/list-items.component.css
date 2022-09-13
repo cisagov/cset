@@ -1,0 +1,7 @@
+.item {
+    padding-left: 15px;
+}
+
+.handle {
+    cursor: grab;
+}

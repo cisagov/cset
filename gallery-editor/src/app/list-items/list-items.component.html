@@ -1,0 +1,12 @@
+<div [class.item]="!isRoot" id="g{{listTest.group_Id}}">
+	<div *ngIf="isRoot">Type Enter to Update a value</div>
+	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
+            <fa-icon [icon]="faArrows" class="handle"></fa-icon>
+            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 
+        </div>
+	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
+		<div *ngFor="let listChild of listTest.children">            
+			<app-list-items [listTest]="listChild"></app-list-items>
+		</div>
+	</div>
+</div>
