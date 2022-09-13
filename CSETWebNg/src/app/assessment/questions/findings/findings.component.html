@@ -85,10 +85,10 @@
       </div>
      
       <div class="pl-3">
-        <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible form-check">
-          <input class="form-check-input" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
+        <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible">
+          <input class="checkbox-custom" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
             [(ngModel)]="contact.selected">
-          <label for="{{contact.assessment_Contact_Id}}">{{ contact.name }}</label>
+          <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
       </div>
       <br/><br/>
