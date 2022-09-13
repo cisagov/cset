@@ -251,9 +251,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "set_name",
-                    Size = 20,
+                    Size = 40,
                     Value = set_name ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -284,9 +284,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "set_name",
-                    Size = 20,
+                    Size = 40,
                     Value = set_name ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
@@ -369,16 +369,16 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "originalEmail",
-                    Size = 200,
+                    Size = 400,
                     Value = originalEmail ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "newEmail",
-                    Size = 200,
+                    Size = 400,
                     Value = newEmail ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -403,9 +403,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Heading",
-                    Size = 250,
+                    Size = 500,
                     Value = Heading ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -430,16 +430,16 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "standard_name",
-                    Size = 50,
+                    Size = 100,
                     Value = standard_name ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "standard_name_with_mode",
-                    Size = 50,
+                    Size = 100,
                     Value = standard_name_with_mode ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -490,9 +490,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "userid",
-                    Size = 10,
+                    Size = 20,
                     Value = userid ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -615,9 +615,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "model",
-                    Size = 100,
+                    Size = 200,
                     Value = model ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -734,16 +734,16 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "organization",
-                    Size = 50,
+                    Size = 100,
                     Value = organization ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "assetvalue",
-                    Size = 50,
+                    Size = 100,
                     Value = assetvalue ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -759,10 +759,10 @@ namespace CSETWebCore.DataLayer.Model
             var parameterApplication_Mode = new SqlParameter
             {
                 ParameterName = "Application_Mode",
-                Size = 100,
+                Size = 200,
                 Direction = System.Data.ParameterDirection.InputOutput,
                 Value = Application_Mode?._value ?? Convert.DBNull,
-                SqlDbType = System.Data.SqlDbType.VarChar,
+                SqlDbType = System.Data.SqlDbType.NVarChar,
             };
             var parameterreturnValue = new SqlParameter
             {
@@ -810,9 +810,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "applicationMode",
-                    Size = 100,
+                    Size = 200,
                     Value = applicationMode ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -843,9 +843,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "applicationMode",
-                    Size = 100,
+                    Size = 200,
                     Value = applicationMode ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -902,9 +902,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "applicationMode",
-                    Size = 100,
+                    Size = 200,
                     Value = applicationMode ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -935,9 +935,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "applicationMode",
-                    Size = 100,
+                    Size = 200,
                     Value = applicationMode ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -1223,7 +1223,7 @@ namespace CSETWebCore.DataLayer.Model
                 Size = -1,
                 Direction = System.Data.ParameterDirection.InputOutput,
                 Value = DataStr?._value ?? Convert.DBNull,
-                SqlDbType = System.Data.SqlDbType.VarChar,
+                SqlDbType = System.Data.SqlDbType.NVarChar,
             };
             var parameterreturnValue = new SqlParameter
             {
@@ -1239,7 +1239,7 @@ namespace CSETWebCore.DataLayer.Model
                     ParameterName = "XMLString",
                     Size = -1,
                     Value = XMLString ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
@@ -1347,9 +1347,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Tablenames",
-                    Size = 500,
+                    Size = 1000,
                     Value = Tablenames ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
@@ -1387,16 +1387,16 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "AssessmentDBName",
-                    Size = 5000,
+                    Size = 8000,
                     Value = AssessmentDBName ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "entity_name",
-                    Size = 50,
+                    Size = 100,
                     Value = entity_name ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -1525,16 +1525,16 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "SourceSetName",
-                    Size = 50,
+                    Size = 100,
                     Value = SourceSetName ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "DestinationSetName",
-                    Size = 50,
+                    Size = 100,
                     Value = DestinationSetName ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
@@ -1559,9 +1559,9 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "DestinationSetName",
-                    Size = 50,
+                    Size = 100,
                     Value = DestinationSetName ?? Convert.DBNull,
-                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
             };
