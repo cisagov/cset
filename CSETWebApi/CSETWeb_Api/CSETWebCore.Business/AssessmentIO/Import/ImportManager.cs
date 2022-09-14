@@ -149,8 +149,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                     throw;
                                 }
 
-                                //Set the GUID at time of export so we are sure it's right!!!
-                                model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(setResult.Result.NEW_REQUIREMENT, s => s.Custom_Question_Guid, req => new Guid(new MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(originalSetName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString(), (erea, s) =>
+                                //Set the GUID at time of export so we are sure it's right!!!                                
+                                model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(setResult.Result.NEW_REQUIREMENT, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(originalSetName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString(), (erea, s) =>
                                 {
                                     var req = s.FirstOrDefault();
                                     if (req != null)
@@ -158,7 +158,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                         erea.Question_Or_Requirement_Id = req.Requirement_Id;
                                     }
                                     return erea;
-                                }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(setResult.Result.NEW_QUESTION, s => s.Custom_Question_Guid, req => new Guid(new MD5CryptoServiceProvider().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString(), (erer, s) =>
+                                }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(setResult.Result.NEW_QUESTION, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString(), (erer, s) =>
                                 {
                                     var req = s.FirstOrDefault();
                                     if (req != null)
