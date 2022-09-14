@@ -117,7 +117,7 @@
     "rxjs-tslint": "^0.1.6",
     "ts-node": "^9.1.1",
     "tslint": "~6.1.0",
-    "webpack": "^5.63.0"
+    "webpack": "^5.74.0"
   },
   "resolutions": {
     "minimist": "1.2.6"
