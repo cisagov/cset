@@ -43,7 +43,6 @@ import { concatMap, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
-import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { LayoutService } from "../../services/layout.service";
 
 
@@ -357,7 +356,11 @@ export class MyAssessmentsComponent implements OnInit {
   proceedToMerge() {
     this.router.navigate(['/examination-merge']);
   }
-    
+
+  clickNewAssessmentButton() {
+    this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })
+  }
+
 }
 
 
