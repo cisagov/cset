@@ -64,7 +64,7 @@ export class LoginCsetComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true' ? true : false;
+    this.isRunningInElectron = this.configSvc.isRunningInElectron;
     if (this.authenticationService.isLocal) {
       this.mode = 'LOCAL';
       this.continueStandAlone();
