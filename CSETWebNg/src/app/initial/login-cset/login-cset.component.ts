@@ -76,7 +76,7 @@ export class LoginCsetComponent implements OnInit {
       this.checkForEjection(this.route.snapshot.queryParams['token']);
       // Clear token query param to make the url look nicer.
       if (this.route.snapshot.queryParams['token']) {
-        this.router.navigate(['.'], { relativeTo: this.route, queryParams: { token: null } });
+        this.router.navigate([], { queryParams: {} });
       }
     }
     if (this.route.snapshot.params['id']) {
