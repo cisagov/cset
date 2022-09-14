@@ -230,7 +230,6 @@ export class CmmcStyleService {
     for (let i = 0; i < sortedData.length; i++) {
       let dataEle = [];
       if (i == 0) {
-        // dataEle.push(data[i])
       } else {
         outputData[i - 1].forEach(outputEle => {
           dataEle.push(outputEle);
@@ -292,7 +291,7 @@ export class CmmcStyleService {
    * @returns 
    */
   getStackedChartSectionStyle(data) {
-    let retVal = [];
+    let retVal = {};
 
     switch (data.modelLevel) {
       case "1":
@@ -327,20 +326,19 @@ export class CmmcStyleService {
       retVal["background-color"] = this.lightenDarkenColor(retVal["background-color"], -30);
     }
 
-
     //Determine if section should be displayed and size if so
     if (data.modelLevel <= this.cmmcModel.targetLevel) {
       let levelToTotalRatio = data.totalForLevel / data.totalQuestions;
       let sectionToLevelRatio = (data.count / data.totalForLevel);
       let sectionPercent = (levelToTotalRatio * sectionToLevelRatio) * 100;
-      retVal["flex-basis"] = `calc(${sectionPercent}%`;
+      retVal["flex-basis"] = `calc(${sectionPercent}%)`;
     } else {
       if (data.type == "No") {
         retVal["display"] = "none";
       } else {
         let levelToTotalRatio = data.totalForLevel / data.totalQuestions;
         let sectionPercent = levelToTotalRatio * 100;
-        retVal["flex-basis"] = `calc(${sectionPercent}%`;
+        retVal["flex-basis"] = `calc(${sectionPercent}%)`;
       }
     }
 
