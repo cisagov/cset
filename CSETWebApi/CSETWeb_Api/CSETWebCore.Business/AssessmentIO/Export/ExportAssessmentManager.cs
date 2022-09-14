@@ -342,7 +342,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         if (req != null)
                         {
                             var buffer = Encoding.Default.GetBytes($"{extStandard.shortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
-                            t.Custom_Question_Guid = new Guid(new MD5CryptoServiceProvider().ComputeHash(buffer)).ToString();
+                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
                         }
                         return t;
                     }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(questions, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
@@ -351,7 +351,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         if (req != null)
                         {
                             var buffer = Encoding.Default.GetBytes(req.Simple_Question);
-                            t.Custom_Question_Guid = new Guid(new MD5CryptoServiceProvider().ComputeHash(buffer)).ToString();
+                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
                         }
                         return t;
                     })).ToList();
