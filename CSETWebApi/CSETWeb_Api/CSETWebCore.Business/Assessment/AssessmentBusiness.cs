@@ -282,6 +282,31 @@ namespace CSETWebCore.Business.Assessment
                     DetermineFeaturesFromData(ref assessment);
                 }
 
+                // older assessments won't have TypeTitle or TypeDescription,
+                // and I am assuming that its possible have multiple types on a single assessment
+                if (string.IsNullOrWhiteSpace(assessment.TypeTitle)) 
+                {
+                    if (assessment.UseMaturity) 
+                    {
+                        assessment.TypeTitle += ", " + assessment.MaturityModel.ModelName;
+                    }
+
+                    if (assessment.UseStandard) 
+                    {
+                        GetStandardsShortNamesFromSetNames(assessment.Standards).ForEach(standard => assessment.TypeTitle += ", " + standard);
+                    }
+
+                    if (assessment.UseDiagram) 
+                    {
+                        assessment.TypeTitle += ", Network Diagram";
+                    }
+
+                    if (assessment.TypeTitle.IndexOf(",") == 0) 
+                    {
+                        assessment.TypeTitle = assessment.TypeTitle.Substring(2);
+                    }
+                }
+
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
@@ -637,6 +662,17 @@ namespace CSETWebCore.Business.Assessment
         //{
         //    throw new NotImplementedException();
         //}
+
+        public List<string> GetStandardsShortNamesFromSetNames(List<string> setNames) 
+        {
+            var allSets = _context.SETS.ToList();
+            List<string> standardsShortNames = new List<string>();
+            foreach (string setName in setNames) 
+            {
+                standardsShortNames.Add(allSets.Find(set => set.Set_Name == setName).Short_Name);
+            }
+            return standardsShortNames;
+        }
 
     }
 }
