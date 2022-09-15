@@ -453,6 +453,9 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
 
+            dbAssessment.TypeTitle = assessment.Title;
+            dbAssessment.TypeDescription = assessment.Description;
+
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
             dbAssessment.Assets = assessment.Assets != null ? assessment.Assets.ToString() : null;

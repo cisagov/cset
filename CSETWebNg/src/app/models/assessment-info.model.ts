@@ -51,8 +51,9 @@ export interface AssessmentDetail {
 
     // A list of selected standards
     standards?: string[];
-    title?: string;
-    description?: string;
+
+    typeTitle?: string;
+    typeDescription?: string;
 }
 
 export interface MaturityModel {
