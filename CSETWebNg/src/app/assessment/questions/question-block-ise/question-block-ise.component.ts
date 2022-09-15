@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -30,6 +31,11 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
+import { FindingsComponent } from './../findings/findings.component';
+import { Finding } from './../findings/findings.model';
+import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
+import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
+import { FindingsService } from '../../../services/findings.service';
 
 
 /**
@@ -51,6 +57,8 @@ export class QuestionBlockIseComponent implements OnInit {
 
   private _timeoutId: NodeJS.Timeout;
 
+  extras: QuestionDetailsContentViewModel;
+
   percentAnswered = 0;
   answerOptions = [];
 
@@ -70,6 +78,7 @@ export class QuestionBlockIseComponent implements OnInit {
   showQuestionIds = false;
 
   showCorePlus: boolean = false;
+  showIssues: boolean = false;
   coreChecked: boolean = false;
 
 
@@ -83,7 +92,9 @@ export class QuestionBlockIseComponent implements OnInit {
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public dialog: MatDialog,
+    private findSvc: FindingsService
   ) { 
     
   }
@@ -93,6 +104,14 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
+
+      this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
+        (details) => {
+          this.extras = details;
+          this.extras.questionId = this.myGrouping.questions[0].questionId;
+        });
+
+          
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
       if (this.assessSvc.isISE()) {
@@ -486,6 +505,106 @@ export class QuestionBlockIseComponent implements OnInit {
       this.ncuaSvc.showCorePlus = false;
     }
   }
+
+  updateShowIssues() {
+    if (this.showIssues === false) {
+      this.showIssues = true;
+    } else if (this.showIssues === true) {
+      this.showIssues = false;
+    }
+  }
+
+  getIssuesButtonText() {
+    if (this.showIssues === false) {
+      if (this.extras?.findings.length > 0) {
+        return ('Show ' + this.extras.findings.length + ' Issues');
+      } else {
+        return ('Show Issues');
+      }
+    } else if (this.showIssues === true) {
+      return ('Hide Issues');
+    }
+  }
+
+    /**
+   *
+   * @param findid
+   */
+     addEditDiscovery(findid) {
+      //this.saveAnswer();
+  
+      // TODO Always send an empty one for now.
+      // At some juncture we need to change this to
+      // either send the finding to be edited or
+      // send an empty one.
+      const find: Finding = {
+        question_Id: this.myGrouping.questions[0].questionId,
+        answer_Id: this.myGrouping.questions[0].answer_Id,
+        finding_Id: findid,
+        summary: '',
+        finding_Contacts: null,
+        impact: '',
+        importance: null,
+        importance_Id: 1,
+        issue: '',
+        recommendations: '',
+        resolution_Date: null,
+        vulnerabilities: ''
+      };
+  
+      this.dialog.open(FindingsComponent, { 
+          data: find, 
+          disableClose: true,
+          width: this.layoutSvc.hp ? '90%' : '600px',
+          maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+        })
+        .afterClosed().subscribe(result => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+    }
+  
+    /**
+     * Deletes a discovery.
+     * @param findingToDelete
+     */
+    deleteDiscovery(findingToDelete) {
+  
+      // Build a message whether the observation has a title or not
+      let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
+  
+      if (findingToDelete.summary === null) {
+        msg = "Are you sure you want to delete this issue?";
+      }
+  
+  
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage = msg;
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+          let deleteIndex = null;
+  
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+              deleteIndex = i;
+            }
+          }
+          this.extras.findings.splice(deleteIndex, 1);
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+  
+        }
+      });
+    }
+
 
   
 }
