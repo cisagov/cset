@@ -244,6 +244,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
+                assessment.TypeTitle = result.aa.TypeTitle;
+                assessment.TypeDescription = result.aa.TypeDescription;
 
                 assessment.UseStandard = result.aa.UseStandard;
                 if (assessment.UseStandard)
@@ -453,8 +455,8 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
 
-            dbAssessment.TypeTitle = assessment.Title;
-            dbAssessment.TypeDescription = assessment.Description;
+            dbAssessment.TypeTitle = assessment.TypeTitle;
+            dbAssessment.TypeDescription = assessment.TypeDescription;
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
