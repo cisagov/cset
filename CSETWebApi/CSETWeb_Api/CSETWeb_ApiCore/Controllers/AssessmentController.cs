@@ -87,7 +87,8 @@ namespace CSETWebCore.Api.Controllers
 
             // create new empty assessment
             var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
-
+            assessment.Title = galleryItem.Title;
+            assessment.Description = galleryItem.Description;
 
             // now add the options
             if (config.Sets != null)
@@ -137,7 +138,6 @@ namespace CSETWebCore.Api.Controllers
             {
                 assessment.UseDiagram = true;
             }
-           
 
             _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
 

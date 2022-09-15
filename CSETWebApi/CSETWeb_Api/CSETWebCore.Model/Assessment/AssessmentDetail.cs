@@ -50,5 +50,7 @@ namespace CSETWebCore.Model.Assessment
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }
         public string ExecutiveSummary { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
