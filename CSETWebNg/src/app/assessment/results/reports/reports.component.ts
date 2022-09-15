@@ -52,6 +52,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     disableIseReportLinks: boolean = true;
     securityIdentifier: any = [];
     securitySelected: string = "None";
+    isMobile = false;
 
     lastModifiedTimestamp = '';
 
@@ -75,6 +76,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 (data: any) => {
                     this.assessSvc.assessment = data;
                 });
+        }
+        if(this.configSvc.mobileEnvironment){
+            this.isMobile = true;
+        } else {
+            this.isMobile = false;
         }
     }
 
