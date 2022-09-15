@@ -41,7 +41,6 @@ namespace CSETWebCore.DataLayer.Model
         public string Model_Description { get; set; }
         [StringLength(200)]
         public string Model_Title { get; set; }
-        public int? Icon_Id { get; set; }
 
         [InverseProperty("Maturity_Model")]
         public virtual ICollection<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
