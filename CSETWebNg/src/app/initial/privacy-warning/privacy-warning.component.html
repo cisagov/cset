@@ -1,0 +1,60 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<app-logo-cset [logoHeight]="layoutSvc.hp ? 50 : 100" style="opacity: .2; margin: 3rem 0 2rem 3rem"></app-logo-cset>
+<div class="w-100">
+    <div style="margin: 0 auto" [ngStyle]="{ 'width': layoutSvc.hp ? '90vw' : '70vw'}">
+        <div style="margin: 2rem 0; padding: 2rem; border-top: 1px solid #aaa; border-bottom: 1px solid #aaa;"
+            [class.p-3]="layoutSvc.hp" [class.fs-smaller]="layoutSvc.hp">
+            <p class="text-center font-weight-bold">
+                <span *ngIf="!layoutSvc.hp">
+                    **WARNING**WARNING**WARNING**WARNING**WARNING**
+                </span>
+                <span *ngIf="layoutSvc.hp">
+                    **WARNING**WARNING**WARNING**
+                </span>
+            </p>
+            <p class="text-justify">
+                This is a Department of Energy (DOE) computer system. DOE computer systems are provided for the
+                processing of official U.S. Government information only.
+                All data contained within DOE computer systems is owned by DOE and may be audited, intercepted,
+                recorded, read, copied, or captured in any manner and disclosed in any manner by authorized personnel.
+                THERE IS NO RIGHT OF PRIVACY IN THIS SYSTEM. System personnel may disclose any potential evidence of
+                crime found on DOE computer systems to appropriate authorities.
+                USE OF THIS SYSTEM BY ANY USER, AUTHORIZED OR UNAUTHORIZED, CONSTITUTES CONSENT TO THIS AUDITING,
+                INTERCEPTION, RECORDING, READING, COPYING, CAPTURING, and DISCLOSURE OF COMPUTER ACTIVITY.
+            </p>
+            <p class="text-center font-weight-bold">
+                <span *ngIf="!layoutSvc.hp">
+                    **WARNING**WARNING**WARNING**WARNING**WARNING**
+                </span>
+                <span *ngIf="layoutSvc.hp">
+                    **WARNING**WARNING**WARNING**
+                </span>
+            </p>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <button class="btn btn-primary mb-3" style="min-width: 20vw" (click)="accept()">Accept</button>
+            <button class="btn btn-secondary" style="min-width: 20vw" (click)="decline()">Decline</button>
+        </div>
+    </div>
+</div>
