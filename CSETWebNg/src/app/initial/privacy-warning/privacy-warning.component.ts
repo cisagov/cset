@@ -21,48 +21,45 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { JwtParser } from '../helpers/jwt-parser';
-import { AuthenticationService } from '../services/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LayoutService } from '../../services/layout.service';
 
-@Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
-  private parser = new JwtParser();
-  private holdItForAMoment = localStorage.getItem('isAPI_together_With_Web');
+@Component({
+  selector: 'app-privacy-warning',
+  templateUrl: './privacy-warning.component.html',
+  // tslint:disable-next-line:use-host-property-decorator
+  host: { class: 'd-flex flex-column flex-11a' }
+})
+export class PrivacyWarningComponent implements OnInit {
 
   /**
    * 
    */
   constructor(
     private router: Router,
-    private authSvc: AuthenticationService
+    public layoutSvc: LayoutService
   ) { }
 
   /**
    * 
    */
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-    return this.canActivate(childRoute, state);
+  ngOnInit(): void {
   }
 
   /**
    * 
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log('canActivate');
-    if (!this.authSvc.hasUserAgreedToPrivacyWarning()) {
-      this.router.navigate(['/home/privacy-warning'], { queryParamsHandling: "preserve" });
-      return false;
-    }
-
-    if (this.authSvc.userToken()
-      && this.parser.decodeToken(this.authSvc.userToken()).userid) {
-      return true;
-    }
-
+  accept() {
+    sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'true');
     this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
-    return false;
   }
+
+  /**
+   * 
+   */
+  decline() {
+    this.router.navigate(['/home/privacy-warning-reject']);
+  }
+
 }

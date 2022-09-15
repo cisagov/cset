@@ -41,6 +41,8 @@ export class ConfigService {
   analyticsUrl: string;
   config: any;
 
+  isCsetOnline = false;
+
   // button labels
   buttonLabels = {};
 
@@ -103,6 +105,8 @@ export class ConfigService {
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
+
+          this.isCsetOnline = this.config.isCsetOnline ?? false;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
 
