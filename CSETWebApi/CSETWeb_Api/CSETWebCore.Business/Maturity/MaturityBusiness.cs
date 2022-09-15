@@ -368,8 +368,7 @@ namespace CSETWebCore.Business.Maturity
                              ModelName = a.Model_Name,
                              QuestionsAlias = a.Questions_Alias,
                              ModelDescription = a.Model_Description,
-                             ModelTitle = a.Model_Title,
-                             IconId = a.Icon_Id
+                             ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())
             {
