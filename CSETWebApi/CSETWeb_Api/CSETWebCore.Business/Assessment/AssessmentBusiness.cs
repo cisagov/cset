@@ -280,6 +280,8 @@ namespace CSETWebCore.Business.Assessment
                     DetermineFeaturesFromData(ref assessment);
                 }
 
+                SetAssessmentTypeInfo(assessment);
+
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
@@ -632,6 +634,73 @@ namespace CSETWebCore.Business.Assessment
         //{
         //    throw new NotImplementedException();
         //}
+
+        /// <summary>
+        /// Sets the assessment type title and description.
+        /// </summary>
+        /// <param name="assessment"></param>
+        public void SetAssessmentTypeInfo(AssessmentDetail assessment) 
+        {
+            // Check for old assessment with multiple assessment types.
+            bool multipleTypes = (assessment.UseStandard && assessment.Standards.Count > 1) 
+                                || (assessment.UseDiagram && assessment.UseMaturity) 
+                                || (assessment.UseDiagram && assessment.UseStandard) 
+                                || (assessment.UseMaturity && assessment.UseStandard);
+
+            if (assessment.UseMaturity)
+            {
+                // Use shorter names on assessments with multiple types.
+                assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
+                assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
+            }
+
+            if (assessment.UseStandard)
+            {
+                GatherSetsInfo(assessment.Standards).ForEach(standard =>
+                {
+                    // Use shorter names on assessments with multiple types.
+                    assessment.TypeTitle += ", " + (multipleTypes ? standard.ShortName : standard.FullName);
+                    assessment.TypeDescription = standard.Description;
+                });
+            }
+
+            if (assessment.UseDiagram)
+            {
+                assessment.TypeTitle += ", Network Diagram";
+                assessment.TypeDescription = "A Network Architecture and Diagram Based assessment. This assessment requires that you build" +
+                    "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
+            }
+
+            if (assessment.TypeTitle.IndexOf(",") == 0)
+            {
+                assessment.TypeTitle = assessment.TypeTitle.Substring(2);
+            }
+
+            // Remove description for assessments with multiple types.
+            if (multipleTypes)
+            {
+                assessment.TypeDescription = null;
+            }
+        }
+
+        public List<SetInfo> GatherSetsInfo(List<string> setNames) 
+        {
+            var allSets = _context.SETS.ToList();
+            List<SetInfo> processedSets = new List<SetInfo>();
+            foreach (string setName in setNames) 
+            {
+                var set = allSets.Find(set => set.Set_Name == setName);
+                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name, Description = set.Standard_ToolTip });
+            }
+            return processedSets;
+        }
+
+        public class SetInfo 
+        { 
+            public string FullName { get; set; }
+            public string ShortName { get; set; }
+            public string Description { get; set; }
+        }
 
     }
 }
