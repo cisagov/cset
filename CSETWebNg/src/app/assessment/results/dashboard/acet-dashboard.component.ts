@@ -80,6 +80,10 @@ export class ACETDashboardComponent implements OnInit {
 
                 this.overrideLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.sumRiskLevel);
                 this.overriddenLabel = this.acetSvc.interpretRiskLevel(this.acetDashboard.override);
+
+                if (this.overriddenLabel == "0 - Incomplete") {
+                    this.overriddenLabel = "No Override";
+                }
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
