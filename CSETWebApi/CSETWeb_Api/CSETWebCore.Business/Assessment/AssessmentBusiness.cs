@@ -244,8 +244,6 @@ namespace CSETWebCore.Business.Assessment
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
-                assessment.TypeTitle = result.aa.TypeTitle;
-                assessment.TypeDescription = result.aa.TypeDescription;
 
                 assessment.UseStandard = result.aa.UseStandard;
                 if (assessment.UseStandard)
@@ -282,30 +280,7 @@ namespace CSETWebCore.Business.Assessment
                     DetermineFeaturesFromData(ref assessment);
                 }
 
-                // older assessments won't have TypeTitle or TypeDescription,
-                // and I am assuming that its possible have multiple types on a single assessment
-                if (string.IsNullOrWhiteSpace(assessment.TypeTitle)) 
-                {
-                    if (assessment.UseMaturity) 
-                    {
-                        assessment.TypeTitle += ", " + assessment.MaturityModel.ModelName;
-                    }
-
-                    if (assessment.UseStandard) 
-                    {
-                        GetStandardsShortNamesFromSetNames(assessment.Standards).ForEach(standard => assessment.TypeTitle += ", " + standard);
-                    }
-
-                    if (assessment.UseDiagram) 
-                    {
-                        assessment.TypeTitle += ", Network Diagram";
-                    }
-
-                    if (assessment.TypeTitle.IndexOf(",") == 0) 
-                    {
-                        assessment.TypeTitle = assessment.TypeTitle.Substring(2);
-                    }
-                }
+                SetAssessmentTypeInfo(assessment);
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
@@ -479,9 +454,6 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseDiagram = assessment.UseDiagram;
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
-
-            dbAssessment.TypeTitle = assessment.TypeTitle;
-            dbAssessment.TypeDescription = assessment.TypeDescription;
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
@@ -663,15 +635,64 @@ namespace CSETWebCore.Business.Assessment
         //    throw new NotImplementedException();
         //}
 
-        public List<string> GetStandardsShortNamesFromSetNames(List<string> setNames) 
+        /// <summary>
+        /// Sets the assessment type title and description.
+        /// </summary>
+        /// <param name="assessment"></param>
+        public void SetAssessmentTypeInfo(AssessmentDetail assessment) 
+        {
+            if (assessment.UseMaturity)
+            {
+                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
+                assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
+            }
+
+            if (assessment.UseStandard)
+            {
+                ProcessSetTypes(assessment.Standards).ForEach(standard =>
+                {
+                    assessment.TypeTitle += ", " + standard.FullName;
+                    assessment.TypeDescription = standard.Description;
+                });
+            }
+
+            if (assessment.UseDiagram)
+            {
+                assessment.TypeTitle += ", Network Diagram";
+                assessment.TypeDescription = "A Network Architecture and Diagram Based assessment. This assessment requires that you build" +
+                    "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
+            }
+
+            if (assessment.TypeTitle.IndexOf(",") == 0)
+            {
+                assessment.TypeTitle = assessment.TypeTitle.Substring(2);
+            }
+
+            // Check for old assessment with multiple assessment types.
+            // Just remove description if that's the case.
+            if ((assessment.UseDiagram && assessment.UseMaturity) || (assessment.UseDiagram && assessment.UseStandard) ||
+                (assessment.UseMaturity && assessment.UseStandard))
+            {
+                assessment.TypeDescription = null;
+            }
+        }
+
+        public List<SetInfo> ProcessSetTypes(List<string> setNames) 
         {
             var allSets = _context.SETS.ToList();
-            List<string> standardsShortNames = new List<string>();
+            List<SetInfo> processedSets = new List<SetInfo>();
             foreach (string setName in setNames) 
             {
-                standardsShortNames.Add(allSets.Find(set => set.Set_Name == setName).Short_Name);
+                var mySet = allSets.Find(set => set.Set_Name == setName);
+                processedSets.Add(new SetInfo { FullName = mySet.Full_Name, Description = mySet.Standard_ToolTip });
             }
-            return standardsShortNames;
+            return processedSets;
+        }
+
+        public class SetInfo 
+        { 
+            public string FullName { get; set; }
+            public string Description { get; set; }
         }
 
     }

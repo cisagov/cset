@@ -87,8 +87,6 @@ namespace CSETWebCore.Api.Controllers
 
             // create new empty assessment
             var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
-            assessment.TypeTitle = galleryItem.Title;
-            assessment.TypeDescription = galleryItem.Description;
 
             // now add the options
             if (config.Sets != null)
