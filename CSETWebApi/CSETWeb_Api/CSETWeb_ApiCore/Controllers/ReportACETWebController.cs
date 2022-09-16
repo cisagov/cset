@@ -55,5 +55,17 @@ namespace CSETWebCore.Api.Controllers
             data.Information = _report.GetInformation();
             return Ok(data);
         }
+
+        [HttpGet]
+        [Route("api/reports/acet/getIseAnsweredQuestions")]
+        public IActionResult GetIseAnsweredQuestions()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.MatAnsweredQuestions = _report.GetIseAnsweredQuestionList();
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
     }
 }

@@ -483,6 +483,10 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
+import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
+import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
+import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 
 @NgModule({
     imports: [
@@ -750,6 +754,10 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         AcetCommentsmarkedComponent,
         AcetAnsweredQuestionsComponent,
         AcetCompensatingcontrolsComponent,
+        IseAnsweredQuestionsComponent,
+        IseIssuesComponent,
+        IseExecutiveComponent,
+        IseDonutChartComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,

@@ -407,6 +407,10 @@ namespace CSETWebCore.Constants
         public const string AdvancedMaturity = "Advanced";
         public const string InnovativeMaturity = "Innovative";
 
+        public const string ScuepMaturity = "SCUEP";
+        public const string CoreMaturity = "CORE";
+        public const string CorePlusMaturity = "CORE+";
+
         //IRP Levels
         public const string LeastIrp = "Least";
         public const string MinimalIrp = "Minimal";
