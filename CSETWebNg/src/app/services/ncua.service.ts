@@ -197,8 +197,8 @@ let headers = {
   /*
   * Pull Credit Union filter data to be used in ISE assessment detail filter search
   */
- getAnsweredQuestions() {
-  return this.http.get(this.apiUrl + 'reports/ise/getAnsweredQuestions', headers);
+ getIseAnsweredQuestions() {
+  return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
 }
 
   /*

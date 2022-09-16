@@ -36,8 +36,11 @@ namespace CSETWebCore.Interfaces.Maturity
             int assessmentId);
 
         List<string> GetMaturityRange(int assessmentId);
+        List<string> GetIseMaturityRange(int assessmentId);
         List<int> GetMaturityRangeIds(int assessmentId);
+        List<int> GetIseMaturityRangeIds(int assessmentId);
         List<string> IrpSwitch(int irpRating);
+        List<string> IrpSwitchIse(int irpRating);
         Dictionary<int, MaturityMap> GetRequirementMaturityLevels();
         object GetEdmScores(int assessmentId, string section);
         object GetReferenceText(string modelName);

@@ -89,8 +89,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
         // call the API for a ruling on whether all questions have been answered
         this.disableAcetReportLinks = false;
+        this.disableIseReportLinks = false;
         if (this.configSvc.installationMode === 'ACET') {
-            this.checkAcetDisabledStatus();
+            if(this.assessSvc.isISE()) {
+                this.checkIseDisabledStatus();
+            }
+            else {
+                this.checkAcetDisabledStatus();
+            }
         }
 
         this.reportSvc.getSecurityIdentifiers().subscribe(data => {
@@ -154,7 +160,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             return;
         }
         // the below code needs converted to ISE stuff
-        this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
+        this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
             if (percentAnswered == 100) {
                 this.disableIseReportLinks = false;
             }

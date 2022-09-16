@@ -177,6 +177,8 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
+import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
+import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -448,10 +450,11 @@ const appRoutes: Routes = [
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
-      // { path: 'iseexecutive', component: AcetExecutiveComponent },
+      { path: 'iseexecutive', component: IseExecutiveComponent },
       // { path: 'isegaps', component: AcetDeficencyComponent },
       // { path: 'isecommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
+      { path: 'isedonutchart', component: IseDonutChartComponent },
       { path: 'iseissues', component: IseIssuesComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
