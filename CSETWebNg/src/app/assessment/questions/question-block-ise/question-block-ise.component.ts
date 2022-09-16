@@ -555,8 +555,8 @@ export class QuestionBlockIseComponent implements OnInit {
       this.dialog.open(FindingsComponent, { 
           data: find, 
           disableClose: true,
-          width: this.layoutSvc.hp ? '90%' : '600px',
-          maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+          width: this.layoutSvc.hp ? '90%' : '1200px',
+          maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
         })
         .afterClosed().subscribe(result => {
           const answerID = find.answer_Id;
