@@ -516,7 +516,9 @@ export class QuestionBlockIseComponent implements OnInit {
 
   getIssuesButtonText() {
     if (this.showIssues === false) {
-      if (this.extras?.findings.length > 0) {
+      if (this.extras?.findings.length === 1) {
+        return ('Show 1 Issue');
+      } else if (this.extras?.findings.length > 1) {
         return ('Show ' + this.extras.findings.length + ' Issues');
       } else {
         return ('Show Issues');
