@@ -649,6 +649,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (assessment.UseMaturity)
             {
+                // Use shorter names on assessments with multiple types.
                 assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
                 assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
             }
@@ -657,6 +658,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 GatherSetsInfo(assessment.Standards).ForEach(standard =>
                 {
+                    // Use shorter names on assessments with multiple types.
                     assessment.TypeTitle += ", " + (multipleTypes ? standard.ShortName : standard.FullName);
                     assessment.TypeDescription = standard.Description;
                 });
