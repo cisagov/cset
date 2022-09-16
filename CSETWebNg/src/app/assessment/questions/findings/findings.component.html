@@ -20,19 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<!-- Normal Findings -->
+<ng-container *ngIf="!this.assessSvc.isISE()">
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
-    <span *ngIf="!this.assessSvc.isISE()">Observation Details</span>
-    <span *ngIf="this.assessSvc.isISE()">Issue Details</span>
+    <span>Observation Details</span>
   </div>
 
   <mat-dialog-content class="py-3">
     <div class="item bigitem">
-      <p *ngIf="!this.assessSvc.isISE()">The question observation section is for advanced users that want to collect extra information about specific
-        questions in the assessment.</p>
-      
-      <p *ngIf="this.assessSvc.isISE()">The question issue section is for advanced users that want to collect extra information about specific
+      <p>The question observation section is for advanced users that want to collect extra information about specific
         questions in the assessment.</p>
 
       <div class="form-group">
@@ -100,3 +98,111 @@
     <button class="btn btn-primary" (click)="update()">Close</button>
   </mat-dialog-actions>
 </div>
+</ng-container>
+
+
+<!-- ISE Findings (Issues) -->
+<ng-container *ngIf="this.assessSvc.isISE()">
+  <div class="d-flex flex-column justify-content-center flex-11a">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+      <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+      <span>Issue Details</span>
+    </div>
+  
+    <mat-dialog-content class="py-3">
+      <div class="item bigitem">
+        <p *ngIf="this.assessSvc.isISE()">The question issue section is for advanced users that want to collect extra information about specific
+          questions in the examination.</p>
+  
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-md-6">
+              <label for="title" class="form-label">Title</label>
+              <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.summary">
+            </div>
+            <div class="col-md-6">
+              <label for="issueType" class="form-label">Issue Type:</label><br>
+              <mat-button-toggle-group id="issueType" class="mr-1">
+                <mat-button-toggle value="examinerFinding">Examiner Finding</mat-button-toggle>
+                <mat-button-toggle value="resolutionDocument">Document of Resolution</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <label for="importance" class="form-label">Importance</label>
+            <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.importance_Id"
+              (change)="updateImportance($event.target.value)">
+              <option *ngFor="let import of importances" [value]="import?.importance_Id">{{import?.value}}</option>
+            </select>
+              
+            <div class="mt-5">
+              <label for="date" class="form-label">Resolution Date</label>
+              <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+                [(ngModel)]="finding.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
+                (change)="update()">
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="description" class="form-label">Description</label>
+              <p>The information security program policies and procedures are not commensurate to its size, complexity, and risk. Each credit union
+                must identify and evaluate risks to its information, develop a plan to mitigate the risks, implement the plan, test the plan, and monitor
+                the need to update the plan.
+              </p>
+              <p>As information security program is the written plan created and implemented by a credit union to identify and control risks to
+                information and information systems and to properly dispose of information. The plan inclues policies and procedures regarding the 
+                institution's risk assement, controls, testomg. service-provider onversight, periodic review and updating, and reporting to its board of directors.
+              </p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="issue" class="form-label">Issue</label>
+          <textarea id="issue" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.issue"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="impact" class="form-label">Impacts</label>
+          <textarea id="impact" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.impact"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="recommendations" class="form-label">Recommendations</label>
+          <textarea id="recommendations" autocomplete="off" class="form-control" type="text"
+            [(ngModel)]="finding.recommendations"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="vulnerabilities" class="form-label">Vulnerabilities</label>
+          <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text"
+            [(ngModel)]="finding.vulnerabilities"></textarea>
+        </div>
+      </div>
+  
+  
+      <!-- interested parties -->
+      <div class="form-group">
+        <div class="d-flex justify-content-between align-items-center flex-11a">
+          <label for="contacts" class="form-label">Individuals Responsible</label>
+          <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
+        </div>
+       
+        <div class="pl-3">
+          <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible form-check">
+            <input class="form-check-input" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
+              [(ngModel)]="contact.selected">
+            <label for="{{contact.assessment_Contact_Id}}">{{ contact.name }}</label>
+          </div>
+        </div>
+        <br/><br/>
+        <app-assessment-contacts (triggerChange)="refreshContacts()" class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+      </div>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="update()">Close</button>
+    </mat-dialog-actions>
+  </div>
+  </ng-container>
