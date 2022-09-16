@@ -237,10 +237,6 @@
       </span>
     </div>
     <p *ngIf="disableIseReportLinks"></p>
-    <button (click)="clickReportLink('iseexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableIseReportLinks">
-      ISE Executive Summary
-    </button>
     <button (click)="clickReportLink('isegaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableIseReportLinks">
       ISE Gap Report
@@ -254,7 +250,11 @@
     </button>
     <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableIseReportLinks">
-      ISE Issues
+      ISE Scope Report
+    </button>
+    <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
+      ISE Examination Report
     </button>
   </div>
 
