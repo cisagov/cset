@@ -641,17 +641,23 @@ namespace CSETWebCore.Business.Assessment
         /// <param name="assessment"></param>
         public void SetAssessmentTypeInfo(AssessmentDetail assessment) 
         {
+            // Check for old assessment with multiple assessment types.
+            bool multipleTypes = (assessment.UseStandard && assessment.Standards.Count > 1) 
+                                || (assessment.UseDiagram && assessment.UseMaturity) 
+                                || (assessment.UseDiagram && assessment.UseStandard) 
+                                || (assessment.UseMaturity && assessment.UseStandard);
+
             if (assessment.UseMaturity)
             {
-                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
+                assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
                 assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
             }
 
             if (assessment.UseStandard)
             {
-                ProcessSetTypes(assessment.Standards).ForEach(standard =>
+                GatherSetsInfo(assessment.Standards).ForEach(standard =>
                 {
-                    assessment.TypeTitle += ", " + standard.FullName;
+                    assessment.TypeTitle += ", " + (multipleTypes ? standard.ShortName : standard.FullName);
                     assessment.TypeDescription = standard.Description;
                 });
             }
@@ -668,23 +674,21 @@ namespace CSETWebCore.Business.Assessment
                 assessment.TypeTitle = assessment.TypeTitle.Substring(2);
             }
 
-            // Check for old assessment with multiple assessment types.
-            // Just remove description if that's the case.
-            if ((assessment.UseDiagram && assessment.UseMaturity) || (assessment.UseDiagram && assessment.UseStandard) ||
-                (assessment.UseMaturity && assessment.UseStandard))
+            // Remove description for assessments with multiple types.
+            if (multipleTypes)
             {
                 assessment.TypeDescription = null;
             }
         }
 
-        public List<SetInfo> ProcessSetTypes(List<string> setNames) 
+        public List<SetInfo> GatherSetsInfo(List<string> setNames) 
         {
             var allSets = _context.SETS.ToList();
             List<SetInfo> processedSets = new List<SetInfo>();
             foreach (string setName in setNames) 
             {
-                var mySet = allSets.Find(set => set.Set_Name == setName);
-                processedSets.Add(new SetInfo { FullName = mySet.Full_Name, Description = mySet.Standard_ToolTip });
+                var set = allSets.Find(set => set.Set_Name == setName);
+                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name, Description = set.Standard_ToolTip });
             }
             return processedSets;
         }
@@ -692,6 +696,7 @@ namespace CSETWebCore.Business.Assessment
         public class SetInfo 
         { 
             public string FullName { get; set; }
+            public string ShortName { get; set; }
             public string Description { get; set; }
         }
 
