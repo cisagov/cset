@@ -16,11 +16,12 @@ using CSETWebCore.Model.Maturity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -276,7 +277,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
         /// Get deficiency chart data for comparative between current assessment and baseline
         /// </summary>
@@ -315,7 +316,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             // TODO: verify that the user has permission to both assessments
-            
+
 
 
 
@@ -549,18 +550,35 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             _reports.SetReportsAssessmentId(assessmentId);
 
+
+
+            // if this is a CIS assessment, don't include questions that
+            // are "out of scope" (a descendant of a deselected Option)
+            List<int> oos = new();
+            var isCis = _context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId && x.model_id == 8);
+            if (isCis)
+            {
+                var qt = new QuestionTreeXml(assessmentId, _context);
+                oos = qt.OutOfScopeQuestionIds();
+            }
+
             MaturityBasicReportData data = new MaturityBasicReportData
             {
                 Comments = _reports.GetCommentsList(),
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
+            
+
+           data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+           data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             data.Comments.ForEach(d =>
             {
                 d.ANSWER.Assessment = null;
+                d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;
@@ -570,6 +588,7 @@ namespace CSETWebCore.Api.Controllers
             data.MarkedForReviewList.ForEach(d =>
             {
                 d.ANSWER.Assessment = null;
+                d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;

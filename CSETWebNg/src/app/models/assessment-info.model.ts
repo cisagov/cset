@@ -51,6 +51,9 @@ export interface AssessmentDetail {
 
     // A list of selected standards
     standards?: string[];
+
+    typeTitle?: string;
+    typeDescription?: string;
 }
 
 export interface MaturityModel {
@@ -68,11 +71,6 @@ export interface MaturityModel {
     modelTitle: string;
     modelDescription: string;
     iconId: number;
-}
-
-export interface AssessmentIcon {
-  icon_Id: number;
-  icon_Path: string;
 }
 
 /**

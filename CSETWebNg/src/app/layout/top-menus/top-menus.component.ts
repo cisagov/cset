@@ -390,6 +390,6 @@ export class TopMenusComponent implements OnInit {
 
   goHome() {
     this.assessSvc.dropAssessment();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home'], { queryParams: { tab: 'myAssessments' } });
   }
 }

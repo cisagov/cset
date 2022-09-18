@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-landing-page-tabs',
@@ -7,12 +9,19 @@ import { Component, OnInit } from '@angular/core';
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class LandingPageTabsComponent implements OnInit {
-  
-  currentTab:string;
-  constructor() { }
+
+  currentTab: string;
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.currentTab="newAssessment";
+    this.setTab('newAssessment');
+
+    // setting the tab when we get a query parameter.
+    this.route.queryParamMap.pipe(filter(params => params.has('tab'))).subscribe(params => {
+      this.setTab(params.get('tab'));
+      // clear the query parameters from the url.
+      this.router.navigate([], { queryParams: {} });
+    });
   }
 
   setTab(tab) {

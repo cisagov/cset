@@ -64,7 +64,7 @@ export class LoginCsetComponent implements OnInit {
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true' ? true : false;
+    this.isRunningInElectron = this.configSvc.isRunningInElectron;
     if (this.authenticationService.isLocal) {
       this.mode = 'LOCAL';
       this.continueStandAlone();
@@ -76,7 +76,7 @@ export class LoginCsetComponent implements OnInit {
       this.checkForEjection(this.route.snapshot.queryParams['token']);
       // Clear token query param to make the url look nicer.
       if (this.route.snapshot.queryParams['token']) {
-        this.router.navigate(['.'], { relativeTo: this.route, queryParams: { token: null } });
+        this.router.navigate([], { queryParams: {} });
       }
     }
     if (this.route.snapshot.params['id']) {

@@ -1,4 +1,5 @@
 {
+    "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
         "protocol": "http",
@@ -29,7 +30,7 @@
     },
     
     "installationMode": "",
-    "mobileEnvironment": "",
+    "mobileEnvironment": "iOS",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",

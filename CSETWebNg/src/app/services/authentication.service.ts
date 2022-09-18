@@ -61,14 +61,35 @@ export class AuthenticationService {
     private initialized = false;
     private parser = new JwtParser();
 
-    constructor(private http: HttpClient, private router: Router, private configSvc: ConfigService, public dialog: MatDialog) {
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private configSvc: ConfigService,
+        public dialog: MatDialog
+    ) {
         if (!this.initialized) {
             this.initialized = true;
-
         }
     }
 
+    /**
+     * Indicates if the user has agreed to the privacy warning.
+     * Returns true if not running as "CSET Online".
+     * 
+     * Only CSET Online requires the user agreement.  
+     * If not currently running as CSET Online, always returns true.
+     */
+    hasUserAgreedToPrivacyWarning() {        
+        if (!this.configSvc.isCsetOnline) {
+            return true;
+        }
 
+        return (sessionStorage.getItem('hasUserAgreedToPrivacyWarning') == 'true');
+    }
+
+    /**
+     * 
+     */
     checkLocal() {
         return this.http.post(this.configSvc.apiUrl + 'auth/login/standalone',
             JSON.stringify(
@@ -193,6 +214,7 @@ export class AuthenticationService {
     logout() {
         // remove user from session storage to log user out
         localStorage.clear();
+
         this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
     }
 

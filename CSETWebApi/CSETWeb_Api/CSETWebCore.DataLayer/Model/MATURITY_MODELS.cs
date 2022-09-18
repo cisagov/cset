@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
         public MATURITY_MODELS()
         {
             ANALYTICS_MATURITY_GROUPINGS = new HashSet<ANALYTICS_MATURITY_GROUPINGS>();
-            ASSESSMENT_SEQUENCES = new HashSet<ASSESSMENT_SEQUENCES>();
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             MATURITY_GROUPINGS = new HashSet<MATURITY_GROUPINGS>();
             MATURITY_LEVELS = new HashSet<MATURITY_LEVELS>();
@@ -31,9 +30,9 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Maturity_Model_Id { get; set; }
         [StringLength(50)]
-        public string Answer_Options { get; set; }
-        [StringLength(50)]
         public string Questions_Alias { get; set; }
+        [StringLength(50)]
+        public string Answer_Options { get; set; }
         /// <summary>
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>
@@ -42,12 +41,9 @@ namespace CSETWebCore.DataLayer.Model
         public string Model_Description { get; set; }
         [StringLength(200)]
         public string Model_Title { get; set; }
-        public int? Icon_Id { get; set; }
 
         [InverseProperty("Maturity_Model")]
         public virtual ICollection<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
-        [InverseProperty("Maturity_Model")]
-        public virtual ICollection<ASSESSMENT_SEQUENCES> ASSESSMENT_SEQUENCES { get; set; }
         [InverseProperty("model")]
         public virtual ICollection<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
         [InverseProperty("Maturity_Model")]

@@ -28,7 +28,11 @@
     prior to that update may not reflect the current state of the assessment.
   </p>
 
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div class="alert alert-warning" *ngIf="isMobile">
+    For optimal viewing experience access your reports from a desktop browser
+  </div>
+
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
@@ -36,7 +40,7 @@
 
   <div *ngIf="
       !!assessSvc.assessment &&
-      (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram)
+      (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile
     " class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Standards and Diagram</h4>
     <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
@@ -56,7 +60,7 @@
     </button>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
 
@@ -81,7 +85,7 @@
     </button>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
@@ -100,7 +104,7 @@
   </div>
 
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>External Dependencies Management</h4>
     <div>
@@ -123,7 +127,7 @@
     </button>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Resilience Review</h4>
 
@@ -153,7 +157,7 @@
     </button>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Ransomware Readiness Assessment</h4>
     <div>
@@ -176,7 +180,7 @@
 
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>ACET Reports</h4>
     <div *ngIf="disableAcetReportLinks" class="
@@ -217,7 +221,7 @@
     </button>
   </div>
 
-  <div *ngIf="assessSvc.isISE()"
+  <div *ngIf="assessSvc.isISE() && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>ISE Reports</h4>
     <div *ngIf="disableIseReportLinks" class="
@@ -259,7 +263,7 @@
   </div>
 
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Cyber Infrastructure Survey (CIS)</h4>
 
@@ -285,7 +289,7 @@
     </div>
   </div>
 
-  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('VADR')"
+  <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('VADR') && !isMobile"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
     <h4>Validated Architecture Design Review (VADR)</h4>
     <div>

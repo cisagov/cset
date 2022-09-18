@@ -11,8 +11,7 @@ namespace CSETWebCore.DataLayer.Model
     [Keyless]
     public partial class Answer_Components_Default
     {
-        [StringLength(100)]
-        public string UniqueKey { get; set; }
+        public int UniqueKey { get; set; }
         public int Assessment_Id { get; set; }
         public int Answer_Id { get; set; }
         public int Question_Id { get; set; }
@@ -47,9 +46,12 @@ namespace CSETWebCore.DataLayer.Model
         public string Sub_Heading_Question_Description { get; set; }
         public string Simple_Question { get; set; }
         public bool Reviewed { get; set; }
-        public int? label { get; set; }
-        public int? ComponentName { get; set; }
-        public int? Symbol_Name { get; set; }
+        [StringLength(30)]
+        public string label { get; set; }
+        [StringLength(30)]
+        public string ComponentName { get; set; }
+        [StringLength(30)]
+        public string Symbol_Name { get; set; }
         public int Component_Symbol_id { get; set; }
     }
 }
