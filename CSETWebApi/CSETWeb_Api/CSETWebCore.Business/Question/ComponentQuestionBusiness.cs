@@ -57,11 +57,17 @@ namespace CSETWebCore.Business.Question
             // Is there a quick way to tell if all the diagram answers have already been filled?
             _context.FillNetworkDiagramQuestions(assessmentId);
 
-            var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
+            var list1 = _context.usp_Answer_Components_Default(assessmentId).ToList();
+            var list2 = new List<Answer_Components_Base>();
+            foreach (var component1 in list1)
+            {
+                TinyMapper.Bind<Answer_Components_Default, Answer_Components_Base>();
+                var component2 = TinyMapper.Map<Answer_Components_Default, Answer_Components_Base>(component1);
+                list2.Add(component2);
+            }
 
-            AddResponse(resp, list, "Component Defaults");
+            AddResponse(resp, list2, "Component Defaults");
             BuildOverridesOnly(resp);
-
 
             return resp;
         }

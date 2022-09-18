@@ -487,6 +487,8 @@ import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/i
 import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
 import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
+import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
+import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 
 @NgModule({
     imports: [
@@ -929,7 +931,9 @@ import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-char
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
         Cmmc2CommentsMarkedComponent,
-        Cmmc2DeficiencyComponent
+        Cmmc2DeficiencyComponent,
+        PrivacyWarningComponent,
+        PrivacyWarningRejectComponent
     ],
     providers: [
         ConfigService,

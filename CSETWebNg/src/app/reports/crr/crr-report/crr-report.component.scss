@@ -166,15 +166,16 @@ table {
   padding: 1rem;
   border: solid 2px black;
   width: 70%;
-  margin: 5% auto;
+  margin: 10% auto;
+  break-inside: avoid-page;
 }
 
-  .report-notification h1 {
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-  }
+.report-notification h1 {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
 
 .col-mod {
   padding-left: 2px;
@@ -643,30 +644,32 @@ div.widget {
   margin-left: 1px;
 }
 
-
-/* Print styles */
-@page {
-  size: A4;
-  margin: 0;
-}
-
 @media screen {
   table.page-layout {
     margin-left: auto;
     margin-right: auto;
   }
+
+  #main-toc {
+    display: none;
+  }
+}
+
+/**************** Print styles ****************/
+@page {
+  size: letter;
+  margin: 0;
 }
 
 @media print {
 
   html, body {
     margin: 0 !important;
-    overflow: visible !important;
   }
 
   .report-body-crr {
     margin-left: 1.5cm !important;
-    margin-right: 1.5cm !important;
+    margin-right: -2cm !important;
   }
 
   #coversheet1 {
@@ -681,10 +684,11 @@ div.widget {
 
   .page-margin-top {
     border-top: none !important;
+    padding-top: 1.5cm !important;
   }
 
-  #notification-page-break {
-    margin-top: 1.5cm !important;
+  .report-notification {
+    margin-top: 8cm !important;
   }
 
   #mil4-page-break {
@@ -703,20 +707,40 @@ div.widget {
     break-inside: avoid !important;
   }
 
-  .print-footer-right, .header-space,
-  .print-footer-left, .footer-space {
+  table.page-layout {
+    page-break-inside: auto;
+  }
+
+  .print-footer-right, .print-header-left, .print-header-right,
+  .print-footer-left, .footer-space, .header-space {
     height: 2cm;
+    width: 5cm;
+    background-color: white;
+    z-index: 10;
+    padding: 1rem;
   }
 
   .print-footer-right {
     position: fixed;
-    bottom: 3cm;
-    right: 3cm;
+    bottom: 0;
+    right: 2cm;
   }
 
   .print-footer-left {
     position: fixed;
-    bottom: 3cm;
-    left: 1.5cm;
+    bottom: 0;
+    left: 2cm;
+  }
+
+  .print-header-right {
+    position: fixed;
+    top: 0;
+    right: 2cm;
+  }
+
+  .print-header-left {
+    position: fixed;
+    top: 0;
+    left: 2cm;
   }
 }

@@ -88,6 +88,7 @@ import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.compone
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
+import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -158,7 +159,6 @@ import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sp
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
-import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
@@ -179,6 +179,8 @@ import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
+import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
+import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -215,6 +217,8 @@ const appRoutes: Routes = [
     path: 'home',
     component: homeComponentForCurrentInstallationMode,
     children: [
+      { path: 'privacy-warning', component: PrivacyWarningComponent },
+      { path: 'privacy-warning-reject', component: PrivacyWarningRejectComponent },
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
       { path: 'login', component: LoginComponent },
