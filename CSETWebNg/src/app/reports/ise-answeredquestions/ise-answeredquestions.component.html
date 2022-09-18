@@ -82,7 +82,6 @@
                     <td></td>
                     <td></td>
                     <td>Answer</td>
-                    <td>Comment</td>
                     <td>Exam Level</td>
                 </tr>
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
@@ -103,9 +102,7 @@
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                     <td class="pr-3" [innerHTML]="q.questionText"></td>
                                     <td *ngIf="!parentQuestion(q)" class="pr-3">{{ answerText(q) }}</td>
-                                    <td *ngIf="parentQuestion(q)" class="pr-3">( N/A )</td>
-                                    <td *ngIf="parentQuestion(q)">{{q.comments}}</td>
-                                    <td *ngIf="!parentQuestion(q)">{{isAltAnswer(q)}}</td>
+                                    <td *ngIf="parentQuestion(q)" class="pr-3"> </td>
                                     <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                 </tr>
                             </ng-container>
