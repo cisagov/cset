@@ -77,4 +77,4 @@
 </form>
 <h4>Assessment Type</h4>
 <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
-<p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription">{{ assessment.typeDescription }}</p>
+<p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>

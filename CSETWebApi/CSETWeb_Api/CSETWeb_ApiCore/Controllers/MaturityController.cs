@@ -370,6 +370,20 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityAnswerIseCompletionRate")]
+        public IActionResult GetIseAnswerCompletionRate()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
+        }
+
+
+        /// <summary>
         /// Get all EDM glossary entries in alphabetical order.
         /// </summary>
         /// <returns></returns>
@@ -401,6 +415,21 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var maturity = manager.GetMaturityAnswers(assessmentId);
+
+            return Ok(maturity);
+        }
+
+        /// <summary>
+        /// Get maturity calculations
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getIseMaturityResults")]
+        public IActionResult GetIseMaturityResults()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var maturity = manager.GetIseMaturityAnswers(assessmentId);
 
             return Ok(maturity);
         }

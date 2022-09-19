@@ -195,6 +195,13 @@ let headers = {
  }
 
   /*
+  * Pull Credit Union filter data to be used in ISE assessment detail filter search
+  */
+ getIseAnsweredQuestions() {
+  return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
+}
+
+  /*
   * Manage the ISE maturity levels.
   */
   updateAssetSize(amount: string) {
