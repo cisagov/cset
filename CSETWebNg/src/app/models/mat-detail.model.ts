@@ -62,4 +62,7 @@ export class MaturityComponent {
     intermediate: number;
     advanced: number;
     innovative: number;
+    scuep: number;
+    core: number;
+    corePlus: number;
 }

@@ -72,7 +72,6 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlus: boolean = false;
   coreChecked: boolean = false;
 
-
   /**
    * Constructor.
    * @param configSvc
@@ -94,14 +93,6 @@ export class QuestionBlockIseComponent implements OnInit {
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
-
-      if (this.assessSvc.isISE()) {
-        this.configSvc.buttonLabels['A'] = "Comment";
-        this.configSvc.answerLabels['A'] = "Comment";
-      } else {
-        this.configSvc.buttonLabels['A'] = "Yes(C)";
-        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
-      }
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -276,30 +267,28 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   * Pushes the answer to the API, specifically containing the alt text
    * @param q
-   * @param altText
    */
-  storeAltText(q: Question) {
+   storeComment(q: Question) {
     if (this.assessSvc.isISE()) {
       let bracketContact = '[' + this.contactInitials + ']';
 
-      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
-        if (!!q.altAnswerText) {
-          if (q.altAnswerText.indexOf('[') !== 0) {
-            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
-            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
+      if (q.comment.indexOf(bracketContact) !== 0) {
+        if (q.comment !== '') {
+          if (q.comment.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.comment;
+            q.comment = this.altAnswerSegment + this.convoBuffer;
           }
 
           else {
-            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            let previousContactInitials = q.comment.substring(q.comment.lastIndexOf('[') + 1, q.comment.lastIndexOf(']'));
+            let endOfLastBuffer = q.comment.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
             if (previousContactInitials !== this.contactInitials) {
               // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
-                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
-                let newComment = q.altAnswerText.substring(oldComments.length);
+                let oldComments = q.comment.substring(0, endOfLastBuffer);
+                let newComment = q.comment.substring(oldComments.length);
 
-                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+                q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
               // }
             }
           }
@@ -359,6 +348,88 @@ export class QuestionBlockIseComponent implements OnInit {
       this.questionsSvc.storeAnswer(answer)
         .subscribe();
     }, 500);
+  }
+
+  /**
+   * Shows/hides the "expand" section.
+   * @param q
+   * @param feature
+   */
+  toggleComment(q: Question) {
+    if (q.extrasExpanded) {
+      // hide if already open
+      q.extrasExpanded = false;
+      return;
+    }
+    q.extrasExpanded = true;
+  }
+
+  /**
+   * @param q
+   */
+  hasComment(q: Question) {
+    if(q.comment === null || q.comment === '') {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Pushes the answer to the API, specifically containing the alt text
+   * @param q
+   * @param altText
+   */
+  storeAltText(q: Question) {
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
+        if (!!q.altAnswerText) {
+          if (q.altAnswerText.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
+            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
+          }
+
+          else {
+            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
+                let newComment = q.altAnswerText.substring(oldComments.length);
+
+                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              // }
+            }
+          }
+        }
+      }
+    }
+
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
 
   }
 
@@ -368,8 +439,9 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
   */
   storeSummaryComment(q: Question, e: any) {
-    q.comment = e.target.value;
-    this.summaryCommentCopy = q.comment;
+    // q.comment = e.target.value;
+    // this.summaryCommentCopy = q.comment;
+    this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;
  
     clearTimeout(this._timeoutId);
@@ -381,7 +453,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: q.comment,
+        comment: e.target.value,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -424,7 +496,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   isFinalQuestion(id: number) {
     // If SCUEP examination
-    if (this.ncuaSvc.proposedExamLevel === "SCUEP" || this.ncuaSvc.chosenOverrideLevel === "SCUEP") {
+    if (this.isScuep()) {
       switch (id) {
         case (7196): case(7201): case(7206): case(7214):
         case (7217): case(7220): case(7225):
@@ -460,31 +532,41 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id)) {
+    if (this.isFinalQuestion(id) && !this.isScuep()) {
       return true;
     }
+    return false;
   }
 
   showSummaryCommentBox(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   showAddIssueButton(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   updateCorePlusStatus(q: Question) {
-    this.showCorePlus = !this.showCorePlus
+    this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {
       this.ncuaSvc.showCorePlus = true;
     } else if (!this.showCorePlus) {
       this.ncuaSvc.showCorePlus = false;
     }
+  }
+
+  isScuep() {
+    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
+      return false;
+    }
+    return true;
   }
 
   

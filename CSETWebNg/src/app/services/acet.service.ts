@@ -79,6 +79,10 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'MaturityAnswerCompletionRate');
     }
 
+    getIseAnswerCompletionRate() {
+        return this.http.get(this.apiUrl + 'MaturityAnswerIseCompletionRate');
+    }
+
     ////////////////// Maturity Detail functions ///////////////////////////
 
     /**
@@ -86,6 +90,14 @@ export class ACETService {
     */
     getMatDetailList() {
         return this.http.get(this.apiUrl + 'getMaturityResults');
+        // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
+    }
+
+    /**
+    * Returns the maturity details.
+    */
+     getIseMatDetailList() {
+        return this.http.get(this.apiUrl + 'getIseMaturityResults');
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 
@@ -101,6 +113,13 @@ export class ACETService {
     */
     getMatRange() {
         return this.http.get(this.apiUrl + 'getMaturityRange');
+    }
+
+    /*
+    * Returns matury range based on current IRP rating
+    */
+    getIseMatRange() {
+        return this.http.get(this.apiUrl + 'getIseMaturityRange');
     }
 
     /*
@@ -123,6 +142,10 @@ export class ACETService {
 
     getAnsweredQuestions() {
         return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
+    }
+
+    getIseAnsweredQuestions() {
+        return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
     }
 
     /*

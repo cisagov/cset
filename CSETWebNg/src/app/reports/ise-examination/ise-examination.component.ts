@@ -21,31 +21,40 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { AssessmentService } from '../../services/assessment.service';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ReportService } from '../../services/report.service';
+import { ACETService } from '../../services/acet.service';
+import { ConfigService } from '../../services/config.service';
+import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-inherent-risk-profile',
-  templateUrl: './inherent-risk-profile.component.html',
-  styleUrls: ['../../reports/reports.scss']
+  selector: 'app-ise-examination',
+  templateUrl: './ise-examination.component.html',
+  styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
-export class InherentRiskProfileComponent implements OnInit {
-
-  @Input() 
-  acetDashboard: any;
-
-  title: string = "";
+export class IseExaminationComponent implements OnInit {
+  response: any = {};
 
   constructor(
-    private assessmentSvc: AssessmentService
+    public reportSvc: ReportService,
+    private titleService: Title,
+    public acetSvc: ACETService,
+    public configSvc: ConfigService,
+    public ncuaSvc: NCUAService
   ) { }
 
   ngOnInit(): void {
-    if (this.assessmentSvc.isISE()) {
-      this.title = "Exam Profile"
-    } else {
-      this.title = "Inherent Risk"
-    }
+    this.titleService.setTitle("Examination Report - ISE");
+
+    this.acetSvc.getAnsweredQuestions().subscribe(
+      (r: any) => {
+        this.response = r;
+        console.log(this.response);
+      },
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+    );
   }
 
+  
 }
