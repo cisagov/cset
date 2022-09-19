@@ -650,7 +650,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REFS') {
         return false;
       }
+    }
 
+    // ISE
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
+      if (mode == 'DISC') {
+        return false;
+      }
     }
 
     return true;

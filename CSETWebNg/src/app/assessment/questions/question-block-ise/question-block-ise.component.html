@@ -281,10 +281,47 @@
                 (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
             </button>
 
+            <!-- Currently models ACET findings, will need to be tailored to ISE -->
             <button *ngIf="isFinalQuestion(q.questionId)"
                 class="btn btn-na mt-2 mb-4" style="width: 20%"
-                (click)="addIssue()">Add Issue
+                (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
             </button>
+
+            <div *ngIf="showIssues === true && isFinalQuestion(q.questionId)" style="margin: 0.75em">
+                <table class="table" *ngIf="extras?.findings.length > 0">
+                    <tr>
+                        <th>Issue</th>
+                        <th>Title</th>
+                        <th>Importance</th>
+                        <th style="width:5%;"></th>
+                        <th style="width:5%;"></th>
+                    </tr>
+                    <tr *ngFor="let find of extras?.findings; let i = index" style="box-sizing: content-box;height:20px;">
+                        <td>
+                            <div>Issue {{ i+1 }}</div>
+                        </td>
+                        <td style="height:20px">
+                            <div>{{find.summary}}</div>
+                        </td>
+                        <td>
+                            <div>{{find.importance?.value}}</div>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                                (click)="addEditDiscovery(find.finding_Id)">
+                                <span class="mr-1 cset-icons-pencil"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                (click)="deleteDiscovery(find)">
+                                <span class="mr-1 cset-icons-trash-can"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary add mt-2 mb-4" (click)="addEditDiscovery(0)">Add an Issue</button>
+            </div>
 
             <div *ngIf="isFinalQuestion(q.questionId)">
                 <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"

@@ -3,7 +3,7 @@
     <!-- Prepare Phase -->
     <node displaytext="Prepare" id="phase-prepare">
         <node displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" condition="SOURCE-NOT:TSA" />
-        <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" condition="SOURCE-NOT:TSA" />
+        <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" condition="SOURCE-NOT:TSA MATURITY-NOT:ISE" />
 
         <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="SOURCE:TSA" />
         <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="SOURCE:TSA" />
