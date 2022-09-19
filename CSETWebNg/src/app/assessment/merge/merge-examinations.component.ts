@@ -267,43 +267,33 @@ export class MergeExaminationsComponent implements OnInit {
     let myString = "";
     if (this.mergeConflicts[i].alt_Text1 !== null && this.mergeConflicts[i].alt_Text1 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text1 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text1: " + this.mergeConflicts[i].alt_Text1);
     }
     if (this.mergeConflicts[i].alt_Text2 !== null && this.mergeConflicts[i].alt_Text2 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text2 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text2: " + this.mergeConflicts[i].alt_Text2);
     }
     if (this.mergeConflicts[i].alt_Text3 !== null && this.mergeConflicts[i].alt_Text3 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text3 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text3: " + this.mergeConflicts[i].alt_Text3);
     }
     if (this.mergeConflicts[i].alt_Text4 !== null && this.mergeConflicts[i].alt_Text4 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text4 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text4: " + this.mergeConflicts[i].alt_Text4);
     }
     if (this.mergeConflicts[i].alt_Text5 !== null && this.mergeConflicts[i].alt_Text5 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text5 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text5: " + this.mergeConflicts[i].alt_Text5);
     }
     if (this.mergeConflicts[i].alt_Text6 !== null && this.mergeConflicts[i].alt_Text6 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text6 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text6: " + this.mergeConflicts[i].alt_Text6);
     }
     if (this.mergeConflicts[i].alt_Text7 !== null && this.mergeConflicts[i].alt_Text7 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text7 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text7: " + this.mergeConflicts[i].alt_Text7);
     }
     if (this.mergeConflicts[i].alt_Text8 !== null && this.mergeConflicts[i].alt_Text8 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text8 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text8: " + this.mergeConflicts[i].alt_Text8);
     }
     if (this.mergeConflicts[i].alt_Text9 !== null && this.mergeConflicts[i].alt_Text9 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text9 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text9: " + this.mergeConflicts[i].alt_Text9);   
     }
     if (this.mergeConflicts[i].alt_Text10 !== null && this.mergeConflicts[i].alt_Text10 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text10 + "\n";
-      console.log("this.mergeConflicts[" + i + "].alt_Text10: " + this.mergeConflicts[i].alt_Text10);
     }
   return myString;
   }
@@ -343,8 +333,6 @@ export class MergeExaminationsComponent implements OnInit {
                   this.mergingAssessmentAnswers[j].answerText = this.mergeAnswers[i].answerText;
                   this.mergingAssessmentAnswers[j].comment = this.mergeAnswers[i].comment;
                   this.mergingAssessmentAnswers[j].altAnswerText = this.mergeAnswers[i].altAnswerText;
-                  console.log("mergeAnswers[i].altAnswerText" + this.mergeAnswers[i].altAnswerText);
-                  console.log("mergingAssessmentAnswers[j].Alt Text: " + this.mergingAssessmentAnswers[j].altAnswerText);
                 }
               }
             }
