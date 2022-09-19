@@ -281,6 +281,7 @@
                 (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
             </button>
 
+            <!-- Currently models ACET findings, will need to be tailored to ISE -->
             <button *ngIf="isFinalQuestion(q.questionId)"
                 class="btn btn-na mt-2 mb-4" style="width: 20%"
                 (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
@@ -324,7 +325,7 @@
 
             <div *ngIf="isFinalQuestion(q.questionId)">
                 <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"
-                    (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea> 
+                    (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea>
             </div>
 
             <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
