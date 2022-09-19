@@ -1511,8 +1511,6 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
             {
-                entity.HasKey(e => new { e.Group_Id, e.Column_Index });
-
                 entity.HasOne(d => d.Gallery_Item)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Id)
@@ -1523,6 +1521,11 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Group_Id)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
+            });
+
+            modelBuilder.Entity<GALLERY_ITEM>(entity =>
+            {
+                entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<GALLERY_ROWS>(entity =>
@@ -2078,7 +2081,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
 
-                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([varchar](50),[Std_Ref_Number],(0)) end)", false);
+                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
 
                 entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
 
