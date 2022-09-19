@@ -10,7 +10,7 @@ import { ACETService } from '../../services/acet.service';
   templateUrl: './ise-issues.component.html',
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
-export class ISEIssuesComponent implements OnInit {
+export class IseIssuesComponent implements OnInit {
   response: any = null; 
 
   constructor(

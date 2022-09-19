@@ -81,7 +81,6 @@ export class QuestionBlockIseComponent implements OnInit {
   showIssues: boolean = false;
   coreChecked: boolean = false;
 
-
   /**
    * Constructor.
    * @param configSvc
@@ -113,14 +112,6 @@ export class QuestionBlockIseComponent implements OnInit {
 
           
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
-
-      if (this.assessSvc.isISE()) {
-        this.configSvc.buttonLabels['A'] = "Comment";
-        this.configSvc.answerLabels['A'] = "Comment";
-      } else {
-        this.configSvc.buttonLabels['A'] = "Yes(C)";
-        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
-      }
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -295,6 +286,84 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
+   * @param q
+   */
+  storeComment(q: Question) {
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (q.comment.indexOf(bracketContact) !== 0) {
+        if (q.comment !== '') {
+          if (q.comment.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.comment;
+            q.comment = this.altAnswerSegment + this.convoBuffer;
+          }
+
+          else {
+            let previousContactInitials = q.comment.substring(q.comment.lastIndexOf('[') + 1, q.comment.lastIndexOf(']'));
+            let endOfLastBuffer = q.comment.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+                let oldComments = q.comment.substring(0, endOfLastBuffer);
+                let newComment = q.comment.substring(oldComments.length);
+
+                q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+            }
+          }
+        }
+      }
+    }
+
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+  }
+
+  /**
+   * Shows/hides the "expand" section.
+   * @param q
+   * @param feature
+   */
+  toggleComment(q: Question) {
+    if (q.extrasExpanded) {
+      // hide if already open
+      q.extrasExpanded = false;
+      return;
+    }
+    q.extrasExpanded = true;
+  }
+
+  /**
+   * @param q
+   */
+  hasComment(q: Question) {
+    if(q.comment === null || q.comment === '') {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Pushes the answer to the API, specifically containing the alt text
    * @param q
    * @param altText
@@ -325,34 +394,6 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
-    // Matt's work in progress for adding contact initials to comments
-    // else{
-
-    // }
-
-
-
-    // if (q.altAnswerText.charAt(0) !== "[") {
-    //   this.altAnswerSegment = '[' + this.contactInitials + '] ' + q.altAnswerText + this.convoBuffer;
-    //   this.altAnswerConversation.push(this.altAnswerSegment);
-    // }
-
-    // else {
-    //   let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-    //   let newTextStart = q.altAnswerText.lastIndexOf(this.convoBuffer);
-
-    //   this.altAnswerSegment = q.altAnswerText.substring(newTextStart);
-
-    //   if (previousContactInitials !== this.contactInitials) {
-    //     this.altAnswerSegment = '[' + this.contactInitials + '] ' + this.altAnswerSegment + this.convoBuffer;
-    //     this.altAnswerConversation.push(this.altAnswerSegment);
-    //   }
-    //   else {
-    //     this.altAnswerConversation.pop();
-    //     this.altAnswerConversation.push(this.altAnswerSegment);
-
-    //   }
-    // }
 
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
@@ -387,8 +428,9 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
   */
   storeSummaryComment(q: Question, e: any) {
-    q.comment = e.target.value;
-    this.summaryCommentCopy = q.comment;
+    // q.comment = e.target.value;
+    // this.summaryCommentCopy = q.comment;
+    this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;
  
     clearTimeout(this._timeoutId);
@@ -400,7 +442,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: q.comment,
+        comment: e.target.value,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -443,7 +485,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   isFinalQuestion(id: number) {
     // If SCUEP examination
-    if (this.ncuaSvc.proposedExamLevel === "SCUEP" || this.ncuaSvc.chosenOverrideLevel === "SCUEP") {
+    if (this.isScuep()) {
       switch (id) {
         case (7196): case(7201): case(7206): case(7214):
         case (7217): case(7220): case(7225):
@@ -479,25 +521,28 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id)) {
+    if (this.isFinalQuestion(id) && !this.isScuep()) {
       return true;
     }
+    return false;
   }
 
   showSummaryCommentBox(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   showAddIssueButton(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   updateCorePlusStatus(q: Question) {
-    this.showCorePlus = !this.showCorePlus
+    this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {
       this.ncuaSvc.showCorePlus = true;
@@ -532,81 +577,83 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-     addEditDiscovery(findid) {
-      //this.saveAnswer();
+  addEditDiscovery(findid) {
+    //this.saveAnswer();
   
-      // TODO Always send an empty one for now.
-      // At some juncture we need to change this to
-      // either send the finding to be edited or
-      // send an empty one.
-      const find: Finding = {
-        question_Id: this.myGrouping.questions[0].questionId,
-        answer_Id: this.myGrouping.questions[0].answer_Id,
-        finding_Id: findid,
-        summary: '',
-        finding_Contacts: null,
-        impact: '',
-        importance: null,
-        importance_Id: 1,
-        issue: '',
-        recommendations: '',
-        resolution_Date: null,
-        vulnerabilities: ''
-      };
+    // TODO Always send an empty one for now.
+    // At some juncture we need to change this to
+    // either send the finding to be edited or
+    // send an empty one.
+    const find: Finding = {
+      question_Id: this.myGrouping.questions[0].questionId,
+      answer_Id: this.myGrouping.questions[0].answer_Id,
+      finding_Id: findid,
+      summary: '',
+      finding_Contacts: null,
+      impact: '',
+      importance: null,
+      importance_Id: 1,
+      issue: '',
+      recommendations: '',
+      resolution_Date: null,
+      vulnerabilities: ''
+    };
   
-      this.dialog.open(FindingsComponent, { 
-          data: find, 
-          disableClose: true,
-          width: this.layoutSvc.hp ? '90%' : '1200px',
-          maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
-        })
-        .afterClosed().subscribe(result => {
-          const answerID = find.answer_Id;
-          this.findSvc.getAllDiscoveries(answerID).subscribe(
-            (response: Finding[]) => {
-              this.extras.findings = response;
-              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-              this.myGrouping.questions[0].answer_Id = find.answer_Id;
-            },
-            error => console.log('Error updating findings | ' + (<Error>error).message)
-          );
-        });
-    }
-  
-    /**
-     * Deletes a discovery.
-     * @param findingToDelete
-     */
-    deleteDiscovery(findingToDelete) {
-  
-      // Build a message whether the observation has a title or not
-      let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
-  
-      if (findingToDelete.summary === null) {
-        msg = "Are you sure you want to delete this issue?";
-      }
-  
-  
-      const dialogRef = this.dialog.open(ConfirmComponent);
-      dialogRef.componentInstance.confirmMessage = msg;
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
-          let deleteIndex = null;
-  
-          for (let i = 0; i < this.extras.findings.length; i++) {
-            if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
-              deleteIndex = i;
-            }
-          }
-          this.extras.findings.splice(deleteIndex, 1);
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-  
-        }
+    this.dialog.open(FindingsComponent, { 
+      data: find, 
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '1200px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
+    }).afterClosed().subscribe(result => {
+        const answerID = find.answer_Id;
+        this.findSvc.getAllDiscoveries(answerID).subscribe(
+          (response: Finding[]) => {
+            this.extras.findings = response;
+            this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+            this.myGrouping.questions[0].answer_Id = find.answer_Id;
+          },
+          error => console.log('Error updating findings | ' + (<Error>error).message)
+        );
       });
+  }
+  
+  /**
+  * Deletes a discovery.
+  * @param findingToDelete
+  */
+  deleteDiscovery(findingToDelete) {
+    // Build a message whether the observation has a title or not
+    let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
+  
+    if (findingToDelete.summary === null) {
+      msg = "Are you sure you want to delete this issue?";
     }
 
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage = msg;
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+        let deleteIndex = null;
+  
+        for (let i = 0; i < this.extras.findings.length; i++) {
+          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+            deleteIndex = i;
+          }
+        }
+        this.extras.findings.splice(deleteIndex, 1);
+        this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+  
+      }
+    });
+  }
 
+  isScuep() {
+    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
+      return false;
+    }
+    return true;
+  }
   
 }

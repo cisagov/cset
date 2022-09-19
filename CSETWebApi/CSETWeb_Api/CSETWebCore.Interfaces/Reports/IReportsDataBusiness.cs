@@ -16,6 +16,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatRelevantAnswers> GetAlternatesList();
         List<MatRelevantAnswers> GetQuestionsList();
         List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
+        List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList();
         List<string> GetDomains();
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
