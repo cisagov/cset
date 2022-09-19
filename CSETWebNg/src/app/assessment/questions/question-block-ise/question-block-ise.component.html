@@ -233,13 +233,21 @@
                                     (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                 {{configSvc.buttonLabels[option]}}
                             </label>
-                            <label *ngIf="option === 'A'" class="btn btn-iss form-check-label"
+                            <!-- <label *ngIf="option === 'A'" class="btn btn-iss form-check-label"
                                 [class.answer-selected]="q.answer === option"
                                 [matTooltip]="configSvc.answerLabels[option]">
                                 <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
                                     (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                 <span class="cset-icons-comment fs-base"></span>
-                            </label>
+                            </label> -->
+                        </label>
+
+                        <!-- Comment bubble button -->
+                        <label class="btn form-check-label btn-iss"
+                            [matTooltip]="hasComment(q) ? 'Comments with content':'Comment'" matTooltipPosition="below"
+                            [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
+                            <input name="q_{{q.questionId}}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
+                            <span class="cset-icons-comment fs-base"></span>
                         </label>
 
                         <!-- Mark For Review Flag  -->
@@ -253,13 +261,19 @@
                     </div>
                 </div>
             </div>
-            
-            <div *ngIf="q.answer === 'A'">
+        
+            <div *ngIf="q.extrasExpanded">
+                <div class="form-group">
+                    <textarea autosize [(ngModel)]="q.comment" (change)="storeComment(q)" 
+                        style="min-height: 120px; width: 100%" class="form-control" [placeholder]="altTextPlaceholder"></textarea>
+                </div>
+            </div>
+            <!-- <div *ngIf="q.answer === 'A'">
                 <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
                     style="width: 100%; min-height: 120px;" [placeholder]="altTextPlaceholder"
                     [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
                 <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
-            </div>
+            </div> -->
             <hr>
 
             <button *ngIf="isFinalQuestion(q.questionId)"
