@@ -60,17 +60,44 @@
         </div>
     </div>
     <div class="page-break">
-        <h1 class="page-title">Answered Statements</h1>
-        <hr class="page-line">
-        <div class="paragraph">
-            <p><br>
-                This report includes all the statements within your maturity level, your answers, and whether there is a
-                comment
-                attached to the statement.
-                <br><br>
-                The statement set is determined by your maturity level.<br>
-            </p>
+        <div class="ml-3 mr-3 form">
+            <h1 class="page-header">
+                Demographics
+            </h1>
+            <hr class="page-line">
+            
+            <table class="table-site-info">
+                <tr>
+                    <td>Assessment Name:</td>
+                    <td>{{response?.information?.assessment_Name}}</td>
+                </tr>
+                <tr>
+                    <td>Assessment Date:</td>
+                    <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td>Credit Union:</td>
+                    <td>{{response?.information?.credit_Union_Name}}</td>
+                </tr>
+                <tr>
+                    <td>City or Site Name:</td>
+                    <td>{{response?.information?.city_Or_Site_Name}}</td>
+                </tr>
+                <tr>
+                    <td>State, Province or Region:</td>
+                    <td>{{response?.information?.state_Province_Or_Region}}</td>
+                </tr>
+                <tr>
+                    <td>Charter:</td>
+                    <td>{{response?.information?.charter}}</td>
+                </tr>
+                <tr>
+                    <td>Assets:</td>
+                    <td>{{response?.information?.assets | currency}}</td>
+                </tr>
+            </table>
         </div>
+        <div class="page-break"></div>
         <div class="page-break pb-5">
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div>
