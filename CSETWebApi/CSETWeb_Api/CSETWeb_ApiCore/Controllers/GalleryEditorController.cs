@@ -99,9 +99,10 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("api/galleryEdit/updateItem")]
-        public IActionResult updateItem([FromBody]UpdateItem item)
+        public IActionResult updateItem([FromBody] UpdateItem item)
         {
             try
             {
@@ -116,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
                 else
                 {
                     var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item.Group_Id).FirstOrDefault();
-                    if(galleryItem == null) return BadRequest();
+                    if (galleryItem == null) return BadRequest();
 
                     galleryItem.Title = item.Value;
                     _context.SaveChanges();
@@ -129,6 +130,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
     }
 
     public class MoveItem

@@ -45,5 +45,18 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("api/gallery/getLayouts")]
+        public IActionResult getLayouts()
+        {
+            try { 
+                return Ok(_stateManager.GetLayout());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

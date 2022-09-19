@@ -1,8 +1,8 @@
 <div [class.item]="!isRoot" id="g{{listTest.group_Id}}">
-	<div *ngIf="isRoot">Type Enter to Update a value</div>
+	<div *ngIf="isRoot">Type Enter to Update a value <span>Layout <Select><option>CSET</option></Select> </span> </div>
 	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
             <fa-icon [icon]="faArrows" class="handle"></fa-icon>
-            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 
+            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> <button>Delete</button>
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
 		<div *ngFor="let listChild of listTest.children">            
