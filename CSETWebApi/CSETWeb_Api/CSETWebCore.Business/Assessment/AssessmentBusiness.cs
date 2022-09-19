@@ -667,7 +667,7 @@ namespace CSETWebCore.Business.Assessment
             if (assessment.UseDiagram)
             {
                 assessment.TypeTitle += ", Network Diagram";
-                assessment.TypeDescription = "A Network Architecture and Diagram Based assessment. This assessment requires that you build" +
+                assessment.TypeDescription = "A Network Architecture and Diagram Based assessment. This assessment requires that you build " +
                     "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
             }
 
