@@ -47,7 +47,9 @@ namespace CSETWebCore.Business.Maturity
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
-                        QuestionsAlias = mm.Questions_Alias
+                        ModelTitle = mm.Model_Title,
+                        QuestionsAlias = mm.Questions_Alias,
+                        ModelDescription = mm.Model_Description
                     };
             var myModel = q.FirstOrDefault();
 
@@ -368,8 +370,7 @@ namespace CSETWebCore.Business.Maturity
                              ModelName = a.Model_Name,
                              QuestionsAlias = a.Questions_Alias,
                              ModelDescription = a.Model_Description,
-                             ModelTitle = a.Model_Title,
-                             IconId = a.Icon_Id
+                             ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())
             {

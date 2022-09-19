@@ -483,6 +483,8 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
+import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 
 @NgModule({
     imports: [
@@ -921,7 +923,9 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
         Cmmc2CommentsMarkedComponent,
-        Cmmc2DeficiencyComponent
+        Cmmc2DeficiencyComponent,
+        PrivacyWarningComponent,
+        PrivacyWarningRejectComponent
     ],
     providers: [
         ConfigService,
