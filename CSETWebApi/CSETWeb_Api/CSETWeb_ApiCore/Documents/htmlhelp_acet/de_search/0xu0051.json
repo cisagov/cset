@@ -1,13 +1,13 @@
 [
 	{ "s": "QUALIFICATIONS", "p": [4] },
-	{ "s": "QUALITY", "p": [55] },
-	{ "s": "QUERY", "p": [25] },
-	{ "s": "QUESTION", "p": [25, 52, 24, 51, 48, 11, 71, 70, 54, 37, 28, 22, 21, 16] },
-	{ "s": "QUESTION(S", "p": [25] },
-	{ "s": "QUESTION-BASED", "p": [25] },
-	{ "s": "QUESTION/REQUIREMENT", "p": [71, 51] },
-	{ "s": "QUESTIONS", "p": [25, 52, 24, 23, 22, 20, 70, 51, 48, 44, 37, 67, 57, 55, 54, 49, 45, 21, 18, 16, 11, 4] },
-	{ "s": "QUESTIONS/REQUIREMENTS", "p": [24] },
-	{ "s": "QUICK", "p": [52, 42, 41, 40] },
-	{ "s": "QUICKLY", "p": [65, 44] }
+	{ "s": "QUALITY", "p": [53] },
+	{ "s": "QUERY", "p": [23] },
+	{ "s": "QUESTION", "p": [23, 50, 22, 49, 46, 9, 69, 68, 52, 35, 26, 20, 19, 14] },
+	{ "s": "QUESTION(S", "p": [23] },
+	{ "s": "QUESTION-BASED", "p": [23] },
+	{ "s": "QUESTION/REQUIREMENT", "p": [69, 49] },
+	{ "s": "QUESTIONS", "p": [23, 50, 22, 21, 20, 18, 68, 49, 46, 42, 35, 65, 55, 53, 52, 47, 43, 19, 16, 14, 9, 4] },
+	{ "s": "QUESTIONS/REQUIREMENTS", "p": [22] },
+	{ "s": "QUICK", "p": [50, 40, 39, 38] },
+	{ "s": "QUICKLY", "p": [63, 42] }
 ]
