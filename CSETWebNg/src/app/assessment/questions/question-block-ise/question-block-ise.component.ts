@@ -72,7 +72,6 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlus: boolean = false;
   coreChecked: boolean = false;
 
-
   /**
    * Constructor.
    * @param configSvc
@@ -94,14 +93,6 @@ export class QuestionBlockIseComponent implements OnInit {
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
-
-      if (this.assessSvc.isISE()) {
-        this.configSvc.buttonLabels['A'] = "Comment";
-        this.configSvc.answerLabels['A'] = "Comment";
-      } else {
-        this.configSvc.buttonLabels['A'] = "Yes(C)";
-        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
-      }
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -273,6 +264,114 @@ export class QuestionBlockIseComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  /**
+   * @param q
+   */
+   storeComment(q: Question) {
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (q.comment.indexOf(bracketContact) !== 0) {
+        if (q.comment !== '') {
+          if (q.comment.indexOf('[') !== 0) {
+            this.altAnswerSegment = bracketContact + ' ' + q.comment;
+            q.comment = this.altAnswerSegment + this.convoBuffer;
+          }
+
+          else {
+            let previousContactInitials = q.comment.substring(q.comment.lastIndexOf('[') + 1, q.comment.lastIndexOf(']'));
+            let endOfLastBuffer = q.comment.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+                let oldComments = q.comment.substring(0, endOfLastBuffer);
+                let newComment = q.comment.substring(oldComments.length);
+
+                q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              // }
+            }
+          }
+        }
+      }
+    }
+    // Matt's work in progress for adding contact initials to comments
+    // else{
+
+    // }
+
+
+
+    // if (q.altAnswerText.charAt(0) !== "[") {
+    //   this.altAnswerSegment = '[' + this.contactInitials + '] ' + q.altAnswerText + this.convoBuffer;
+    //   this.altAnswerConversation.push(this.altAnswerSegment);
+    // }
+
+    // else {
+    //   let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
+    //   let newTextStart = q.altAnswerText.lastIndexOf(this.convoBuffer);
+
+    //   this.altAnswerSegment = q.altAnswerText.substring(newTextStart);
+
+    //   if (previousContactInitials !== this.contactInitials) {
+    //     this.altAnswerSegment = '[' + this.contactInitials + '] ' + this.altAnswerSegment + this.convoBuffer;
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+    //   }
+    //   else {
+    //     this.altAnswerConversation.pop();
+    //     this.altAnswerConversation.push(this.altAnswerSegment);
+
+    //   }
+    // }
+
+    clearTimeout(this._timeoutId);
+    this._timeoutId = setTimeout(() => {
+      const answer: Answer = {
+        answerId: q.answer_Id,
+        questionId: q.questionId,
+        questionType: q.questionType,
+        questionNumber: q.displayNumber,
+        answerText: q.answer,
+        altAnswerText: q.altAnswerText,
+        comment: q.comment,
+        feedback: q.feedback,
+        markForReview: q.markForReview,
+        reviewed: q.reviewed,
+        is_Component: q.is_Component,
+        is_Requirement: q.is_Requirement,
+        is_Maturity: q.is_Maturity,
+        componentGuid: q.componentGuid
+      };
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
+    }, 500);
+  }
+
+  /**
+   * Shows/hides the "expand" section.
+   * @param q
+   * @param feature
+   */
+  toggleComment(q: Question) {
+    if (q.extrasExpanded) {
+      // hide if already open
+      q.extrasExpanded = false;
+      return;
+    }
+    q.extrasExpanded = true;
+  }
+
+  /**
+   * @param q
+   */
+  hasComment(q: Question) {
+    if(q.comment === null || q.comment === '') {
+      return false;
+    }
+    return true;
   }
 
   /**
