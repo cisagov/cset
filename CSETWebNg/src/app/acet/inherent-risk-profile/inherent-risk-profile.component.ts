@@ -41,7 +41,7 @@ export class InherentRiskProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.assessmentSvc.assessment.maturityModel.modelName === 'ISE') {
+    if (this.assessmentSvc.isISE()) {
       this.title = "Exam Profile"
     } else {
       this.title = "Inherent Risk"
