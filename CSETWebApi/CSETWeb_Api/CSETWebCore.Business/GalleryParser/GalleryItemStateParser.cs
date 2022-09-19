@@ -67,5 +67,10 @@ namespace CSETWebCore.Business.GalleryParser
 
             return rvalue;
         }
+
+        public List<string> GetLayout()
+        {
+            return _context.GALLERY_LAYOUT.Select(x=> x.Layout_Name).ToList();
+        }
     }
 }
