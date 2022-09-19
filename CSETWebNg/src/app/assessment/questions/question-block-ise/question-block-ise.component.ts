@@ -405,34 +405,6 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
-    // Matt's work in progress for adding contact initials to comments
-    // else{
-
-    // }
-
-
-
-    // if (q.altAnswerText.charAt(0) !== "[") {
-    //   this.altAnswerSegment = '[' + this.contactInitials + '] ' + q.altAnswerText + this.convoBuffer;
-    //   this.altAnswerConversation.push(this.altAnswerSegment);
-    // }
-
-    // else {
-    //   let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-    //   let newTextStart = q.altAnswerText.lastIndexOf(this.convoBuffer);
-
-    //   this.altAnswerSegment = q.altAnswerText.substring(newTextStart);
-
-    //   if (previousContactInitials !== this.contactInitials) {
-    //     this.altAnswerSegment = '[' + this.contactInitials + '] ' + this.altAnswerSegment + this.convoBuffer;
-    //     this.altAnswerConversation.push(this.altAnswerSegment);
-    //   }
-    //   else {
-    //     this.altAnswerConversation.pop();
-    //     this.altAnswerConversation.push(this.altAnswerSegment);
-
-    //   }
-    // }
 
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
@@ -467,8 +439,9 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
   */
   storeSummaryComment(q: Question, e: any) {
-    q.comment = e.target.value;
-    this.summaryCommentCopy = q.comment;
+    // q.comment = e.target.value;
+    // this.summaryCommentCopy = q.comment;
+    this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;
  
     clearTimeout(this._timeoutId);
@@ -480,7 +453,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: q.comment,
+        comment: e.target.value,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -523,7 +496,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   isFinalQuestion(id: number) {
     // If SCUEP examination
-    if (this.ncuaSvc.proposedExamLevel === "SCUEP" || this.ncuaSvc.chosenOverrideLevel === "SCUEP") {
+    if (this.isScuep()) {
       switch (id) {
         case (7196): case(7201): case(7206): case(7214):
         case (7217): case(7220): case(7225):
@@ -559,31 +532,41 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id)) {
+    if (this.isFinalQuestion(id) && !this.isScuep()) {
       return true;
     }
+    return false;
   }
 
   showSummaryCommentBox(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   showAddIssueButton(id: number) {
     if (this.isFinalQuestion(id)) {
       return true;
     }
+    return false;
   }
 
   updateCorePlusStatus(q: Question) {
-    this.showCorePlus = !this.showCorePlus
+    this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {
       this.ncuaSvc.showCorePlus = true;
     } else if (!this.showCorePlus) {
       this.ncuaSvc.showCorePlus = false;
     }
+  }
+
+  isScuep() {
+    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
+      return false;
+    }
+    return true;
   }
 
   
