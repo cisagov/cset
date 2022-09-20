@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Model.Assessment
 {
@@ -38,6 +39,8 @@ namespace CSETWebCore.Model.Assessment
 
         public List<string> Standards { get; set; }
 
+        public QuestionRequirementCounts QuestionRequirementCounts { get; set; }
+
 
         /// <summary>
         /// The last time the Assessment was altered.
@@ -47,5 +50,7 @@ namespace CSETWebCore.Model.Assessment
         public string AdditionalNotesAndComments { get; set; }
         public string AssessmentDescription { get; set; }
         public string ExecutiveSummary { get; set; }
+        public string TypeTitle { get; set; }
+        public string TypeDescription { get; set; }
     }
 }

@@ -43,16 +43,38 @@ export class MaturityService {
 
   domains: any[];
 
+  keyToCategory = {
+    AC: 'Access Control',
+    AM: 'Asset Management',
+    AU: 'Audit and Accountability',
+    AT: 'Awareness and Training',
+    CM: 'Configuration Management',
+    IA: 'Identification And Authentication',
+    IR: 'Incident Response',
+    MA: 'Maintenance',
+    MP: 'Media Protection',
+    PS: 'Personnel Security',
+    PE: 'Physical Protection',
+    RM: 'Risk Management',
+    CA: 'Security Assessment',
+    SA: 'Situational Awareness',
+    SC: 'System and Communications Protection',
+    SI: 'System And Information Integrity'
+  }
+
   // Array of Options for Consideration
   ofc: any[];
 
 
   cmmcData = null;
 
+  mvraGroupings = [];
+  cisGroupings = [];
+
   /**
-   * 
-   * @param http 
-   * @param configSvc 
+   *
+   * @param http
+   * @param configSvc
    */
   constructor(
     private http: HttpClient,
@@ -60,6 +82,15 @@ export class MaturityService {
     private assessSvc: AssessmentService
   ) {
 
+    // get MVRA grouping titles
+    this.getGroupingTitles(9).subscribe((l: any[]) => {
+      this.mvraGroupings = l;
+    });
+
+    // get CIS grouping titles
+    this.getGroupingTitles(8).subscribe((l: any[]) => {
+      this.cisGroupings = l;
+    });
   }
 
 
@@ -132,8 +163,8 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param reportId 
+   *
+   * @param reportId
    */
   public getResultsData(reportId: string) {
     if (!this.cmmcData) {
@@ -142,29 +173,33 @@ export class MaturityService {
     return this.cmmcData;
   }
 
+  public getCmmcReportData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscmmc/maturitymodel')
+  }
+
   /**
-   * 
+   *
    */
   public getTargetLevel() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/targetlevel');
   }
   /**
-   * 
+   *
    */
   public getComplianceByLevel() {
     return this.http.get(this.configSvc.apiUrl + 'results/compliancebylevel');
   }
 
   /**
-   * 
+   *
    */
   public getComplianceByDomain() {
     return this.http.get(this.configSvc.apiUrl + 'results/compliancebydomain');
   }
 
   /**
-   * Posts the selected maturity level to the API. 
-   * @param level 
+   * Posts the selected maturity level to the API.
+   * @param level
    */
   saveLevel(level: number) {
     if (this.assessSvc.assessment) {
@@ -179,7 +214,7 @@ export class MaturityService {
 
 
   /**
-   * 
+   *
    */
   getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
@@ -193,7 +228,7 @@ export class MaturityService {
    * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
    * the response to a specific domain.
    */
-  getStructure(domainAbbrev: string) {
+  getStructure(domainAbbrev: string = '') {
     var url = this.configSvc.apiUrl + 'MaturityStructure'
     if (domainAbbrev != '') {
       url = url + '?domainAbbrev=' + domainAbbrev;
@@ -203,8 +238,8 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param modelName 
+   *
+   * @param modelName
    */
   getModel(modelName: string): MaturityModel {
     for (let m of AssessmentService.allMaturityModels) {
@@ -214,23 +249,38 @@ export class MaturityService {
   }
 
   /**
-   * 
-   * @param maturityModel 
+   * Indicates whether to show the scoring bar chart
+   * on MaturityQuestionsNested.  
+   * Someday this could be set in the MATURITY_MODELS table as a profile item
+   * for each model that uses the nested questions structure.
+   */
+   showChartOnNestedQPage(): boolean {
+    if (this.assessSvc.assessment.maturityModel.modelName == "CIS") {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   *
+   * @param maturityModel
    */
   getMaturityDeficiency(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
-
+  getMaturityOpenEndedQuestions(maturityModel){
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityOpenEndedQList?maturity=' + maturityModel);
+  }
   /**
-   * 
-   * @param maturity 
+   *
+   * @param maturity
    */
   getCommentsMarked() {
     return this.http.get(this.configSvc.apiUrl + 'getCommentsMarked', headers);
   }
 
   /**
-   * 
+   *
    * @param section
    */
   getEdmScores(section) {
@@ -238,7 +288,7 @@ export class MaturityService {
   }
 
   /**
-   * 
+   *
    */
   getMatDetailEDMAppendixList() {
     return this.http.get(this.configSvc.apiUrl + 'getEdmNistCsfResults');
@@ -252,15 +302,15 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
   }
   /**
-   * 
-   * @param modelName 
+   *
+   * @param modelName
    */
   getReferenceText(modelName) {
     return this.http.get(this.configSvc.apiUrl + 'referencetext?model=' + modelName, headers);
   }
 
   /**
-   * @param maturityModel 
+   * @param maturityModel
    */
   getGlossary(maturityModel: string) {
     return this.http.get(this.configSvc.apiUrl + 'getGlossary?model=' + maturityModel);
@@ -268,15 +318,21 @@ export class MaturityService {
 
 
   /**
-   * Returns SVG markup for the the specified 
+   * Returns SVG markup for the the specified
    *    domain abbreviation (AM, SCM, etc)
    *    and MIL (MIL-1, MIL-2) etc.
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.7',
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
       { responseType: 'text' }
     );
   }
 
+  /**
+   * 
+   */
+  getGroupingTitles(modelId: number) {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
+  }
 }

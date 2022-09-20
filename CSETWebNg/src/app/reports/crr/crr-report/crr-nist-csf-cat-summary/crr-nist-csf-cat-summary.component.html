@@ -1,0 +1,156 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-6">
+          <h3 class="depiction-title">NIST Cybersecurity Framework<br />Category Summary</h3>
+      </div>
+      <div class="col-6 tinytext" [innerHtml]="legend | safe">
+      </div>
+  </div>
+  <div *ngFor="let e of bodyData">
+      <table class="domain-function" style="height: 90%; border: none">
+          <tbody>
+              <tr style="width: 100%; border: none;">
+                  <th style="width: 75px;">
+                      <div style="text-align: center;">Function</div>
+                  </th>
+                  <th class="category">Category</th>
+                  <th class="subcategory">Subcategory</th>
+                  <th class="references">CRR References</th>
+              </tr>
+              <tr class="bb-2" style="border: none; page-break-inside: auto;">
+                  <td [attr.rowspan]="e.subCatsCount" style="height: 100%; padding: 0; border: none;">
+                      <div class="function" [style.background-color]="model?.crrScores.csfFunctionColors[e.function.Function.code]">
+                          <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }})</div>
+                      </div>
+                  </td>
+                  <td style="padding: 0 1rem; border: none;"
+                  [innerHtml]="'\<b\>' + e.function.Function.name.toUpperCase() + ' Summary\</b\>\<br /\>' + e.chart | safe">
+                  </td>
+                  <td colspan="2" style="font-size: 12px; padding: 0.25rem; border: none;">
+                      <b>
+                          {{ e.function.Function.desc }}
+                      </b>
+                  </td>
+              </tr>
+              <tr *ngFor="let cat of e.cats" class="bb-2" style="border: none;">
+                  <td class="category" style="padding: 0 1rem 1rem 1rem; border: none;">
+                      <div style="font-size: 10px; margin-bottom: 1rem; width: 70%;">
+                          <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
+                      </div>
+                      <ng-container *ngIf="cat.catChart">
+                        <b>{{ e.function.Function.code }}.{{ cat.code }}:</b>
+                        <div [innerHtml]="cat.catChart | safe"></div>
+                      </ng-container>
+                      <br />
+                  </td>
+                  <td colspan="2" style="padding: 0; border: none;">
+                      <table style="margin: 0; border: none;">
+                          <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
+                          [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
+                              <td style="width: 210px; padding: 0.25rem; border: none; font-size: 10px; ">
+                                  <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
+                              </td>
+                              <td style="width: 280px; border: none;">
+                                  <div [innerHtml]="subCat.chartSubCat | safe" class="ml-1"></div>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+              <div *ngIf="e.function.Function.code != 'RC'" class="break"></div>
+          </tbody>
+      </table>
+  </div>
+</div>
+
+<style>
+
+  .function {
+      font-weight: bolder;
+      height: 100%;
+      width: 75px;
+      display: block;
+      position: relative;
+  }
+
+  .vertical-text {
+      color: #fff;
+      transform: rotate(-90deg);
+      padding: 50px 10px;
+      line-height: 24px;
+  }
+
+  .tinytext {
+        font-size: 8px;
+  }
+
+  th .category, .category {
+      width: 300px;
+  }
+
+  th .subcategory, .subcategory {
+      width: 210px;
+  }
+
+  th .references, .references {
+      width: 280px;
+  }
+
+  table {
+      page-break-inside: auto;
+  }
+
+  th {
+      background-color: black;
+      color: #fff;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: left;
+      height: 20px;
+  }
+
+  tr, td {
+      padding: 0.5rem 0;
+      text-align: left;
+      page-break-inside: avoid !important;
+  }
+
+
+  .bb-1 {
+      border-bottom: solid 1px black !important;
+  }
+
+  .bb-2 {
+      border-bottom: solid 2px black !important;
+  }
+
+  .bb-3 {
+      border-bottom: solid 3px black;
+  }
+
+  .break {
+      page-break-before: always;
+  }
+</style>

@@ -17,7 +17,6 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(20)]
         public string Question_Type { get; set; }
         [StringLength(1)]
-        [Unicode(false)]
         public string Answer_Text { get; set; }
     }
 }

@@ -32,7 +32,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(200)]
-        [Unicode(false)]
         public string Heading_Name { get; set; }
 
         [InverseProperty("Parent_Heading")]

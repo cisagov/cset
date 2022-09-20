@@ -37,18 +37,14 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Set_Name { get; set; }
         /// <summary>
         /// The Full Name is used to
         /// </summary>
-        [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Full_Name { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Short_Name { get; set; }
         [Required]
         public bool? Is_Displayed { get; set; }
@@ -60,7 +56,6 @@ namespace CSETWebCore.DataLayer.Model
         /// The Old Std Name is used to
         /// </summary>
         [StringLength(50)]
-        [Unicode(false)]
         public string Old_Std_Name { get; set; }
         public int? Set_Category_Id { get; set; }
         public int? Order_In_Category { get; set; }
@@ -70,11 +65,9 @@ namespace CSETWebCore.DataLayer.Model
         public bool Is_Requirement { get; set; }
         public int Order_Framework_Standards { get; set; }
         [StringLength(800)]
-        [Unicode(false)]
         public string Standard_ToolTip { get; set; }
         public bool Is_Deprecated { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Upgrade_Set_Name { get; set; }
         public bool Is_Custom { get; set; }
         [Column(TypeName = "datetime")]
@@ -82,7 +75,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool IsEncryptedModule { get; set; }
         [Required]
         public bool? IsEncryptedModuleOpen { get; set; }
-        public bool IsACET { get; set; }
 
         [ForeignKey("Set_Category_Id")]
         [InverseProperty("SETS")]

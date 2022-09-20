@@ -27,6 +27,7 @@ namespace CSETWebCore.Helpers
 
         private IHttpContextAccessor _httpContext;
         private readonly IConfiguration _configuration;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
 
         private CSETContext _context;
         private static string _secret = null;
@@ -37,10 +38,12 @@ namespace CSETWebCore.Helpers
         /// Creates an instance of TokenManager and populates it with 
         /// the Authorization token in the current HTTP request.
         /// </summary>
-        public TokenManager(IHttpContextAccessor httpContext, IConfiguration configuration, CSETContext context)
+        public TokenManager(IHttpContextAccessor httpContext, IConfiguration configuration,
+            ILocalInstallationHelper localInstallationHelper, CSETContext context)
         {
             _httpContext = httpContext;
             _configuration = configuration;
+            _localInstallationHelper = localInstallationHelper;
             _context = context;
 
             /* Get the token string from the Authorization header and
@@ -249,8 +252,8 @@ namespace CSETWebCore.Helpers
             }
 
 
-            // see if the token has expired
-            if (token.ValidTo < DateTime.UtcNow)
+            // see if the token has expired (we aren't really concerned with expiration on local installations)
+            if (token.ValidTo < DateTime.UtcNow && !_localInstallationHelper.IsLocalInstallation())
             {
                 log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
 
@@ -533,7 +536,8 @@ namespace CSETWebCore.Helpers
                 Content = new StringContent("User not authorized for assessment"),
                 ReasonPhrase = "The current user is not authorized to access the target assessment"                
             };
-            throw new Exception(resp.Content.ToString());        }
+            throw new Exception(resp.Content.ReadAsStringAsync().Result);        
+        }
 
 
         /// <summary>

@@ -26,7 +26,8 @@ import { Router } from '@angular/router';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
   selector: 'app-assessment-info',
@@ -38,17 +39,26 @@ export class AssessmentInfoComponent implements OnInit {
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    public navSvc: NavigationService
+    public navSvc: NavigationService,
+    public ncuaSvc: NCUAService
 
     ) { }
 
 
   ngOnInit() {
-    this.navSvc.setWorkflow("BASE");
 
-    if (this.configSvc.installationMode === 'RRA') {
-      this.navSvc.setWorkflow('RRA');
-    }
+    // this simple assignment is temporary.  I think we are going to 
+    // need an "omni workflow" that supports everything, in case there
+    // is a mixture of features/options.
+    // The omni workflow will still work in a single-option assessment.
+    // const assessment = this.assessSvc.assessment;
+    // if (assessment.useStandard) {
+    //   this.navSvc.setWorkflow('classic');
+    // } 
+    // if (assessment.useMaturity) {
+    //   this.navSvc.setWorkflow('maturity');
+    // }
+
+    this.navSvc.setWorkflow('omni');
   }
-
 }

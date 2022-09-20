@@ -33,6 +33,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
         public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
         public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+        public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
         public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
         public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
         public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
@@ -51,6 +52,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
         public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
         public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
+        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
         public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
         public virtual DbSet<CIS_CSI_BUDGET_BASES> CIS_CSI_BUDGET_BASES { get; set; }
@@ -115,6 +117,11 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<FRAMEWORK_TIER_TYPE> FRAMEWORK_TIER_TYPE { get; set; }
         public virtual DbSet<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         public virtual DbSet<FiltersNormalized> FiltersNormalized { get; set; }
+        public virtual DbSet<GALLERY_GROUP> GALLERY_GROUP { get; set; }
+        public virtual DbSet<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
+        public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
+        public virtual DbSet<GALLERY_LAYOUT> GALLERY_LAYOUT { get; set; }
+        public virtual DbSet<GALLERY_ROWS> GALLERY_ROWS { get; set; }
         public virtual DbSet<GENERAL_SAL> GENERAL_SAL { get; set; }
         public virtual DbSet<GENERAL_SAL_DESCRIPTIONS> GENERAL_SAL_DESCRIPTIONS { get; set; }
         public virtual DbSet<GEN_FILE> GEN_FILE { get; set; }
@@ -133,6 +140,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
         public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
         public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
+        public virtual DbSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK { get; set; }
         public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
@@ -638,6 +646,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.ToView("Answer_Standards_InScope");
             });
 
+            modelBuilder.Entity<Assessments_For_User>(entity =>
+            {
+                entity.ToView("Assessments_For_User");
+            });
+
             modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
             {
                 entity.HasKey(e => e.Data_Id)
@@ -961,6 +974,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Custom_Questionaire_Name)
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
             });
+
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
             {
                 entity.HasComment("A collection of DEMOGRAPHICS records");
@@ -1489,6 +1503,46 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of FiltersNormalized records");
             });
 
+            modelBuilder.Entity<GALLERY_GROUP>(entity =>
+            {
+                entity.HasKey(e => e.Group_Id)
+                    .HasName("PK_GALLERY_GROUP_1");
+            });
+
+            modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
+            {
+                entity.HasOne(d => d.Gallery_Item)
+                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
+                    .HasForeignKey(d => d.Gallery_Item_Id)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
+            });
+
+            modelBuilder.Entity<GALLERY_ITEM>(entity =>
+            {
+                entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
+            });
+
+            modelBuilder.Entity<GALLERY_ROWS>(entity =>
+            {
+                entity.HasKey(e => new { e.Layout_Name, e.Row_Index });
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.GALLERY_ROWS)
+                    .HasForeignKey(d => d.Group_Id)
+                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_GROUP");
+
+                entity.HasOne(d => d.Layout_NameNavigation)
+                    .WithMany(p => p.GALLERY_ROWS)
+                    .HasForeignKey(d => d.Layout_Name)
+                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_LAYOUT");
+            });
+
             modelBuilder.Entity<GENERAL_SAL>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Sal_Name })
@@ -1762,6 +1816,24 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1");
             });
 
+            modelBuilder.Entity<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Option_Id_1, e.Mat_Option_Id_2 })
+                    .HasName("PK_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+                entity.HasOne(d => d.Mat_Option_Id_1Navigation)
+                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation)
+                    .HasForeignKey(d => d.Mat_Option_Id_1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+                entity.HasOne(d => d.Mat_Option_Id_2Navigation)
+                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation)
+                    .HasForeignKey(d => d.Mat_Option_Id_2)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS2");
+            });
+
             modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
             {
                 entity.HasKey(e => new { e.Grouping_ID, e.Assessment_Id });
@@ -2009,7 +2081,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
 
-                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([varchar](50),[Std_Ref_Number],(0)) end)", false);
+                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
 
                 entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
 

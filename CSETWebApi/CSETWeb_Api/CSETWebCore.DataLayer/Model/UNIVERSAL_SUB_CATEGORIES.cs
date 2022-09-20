@@ -24,7 +24,6 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(100)]
-        [Unicode(false)]
         public string Universal_Sub_Category { get; set; }
         /// <summary>
         /// The Universal Sub Category Id is used to

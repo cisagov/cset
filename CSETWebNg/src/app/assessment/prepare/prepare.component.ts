@@ -25,7 +25,8 @@ import { StandardService } from "./../../services/standard.service";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AssessmentService } from "../../services/assessment.service";
-import { NavigationService } from "../../services/navigation.service";
+import { NavigationService } from "../../services/navigation/navigation.service";
+import { NavTreeService } from "../../services/navigation/nav-tree.service";
 
 @Component({
   selector: "app-prepare",
@@ -41,6 +42,7 @@ export class PrepareComponent implements OnInit {
     private assessSvc: AssessmentService,
 
     private navSvc: NavigationService,
+    public navTreeSvc: NavTreeService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -56,12 +58,12 @@ export class PrepareComponent implements OnInit {
    * If the nav tree is not yet populated, build it.
    */
   ngOnInit() {
-    if (this.navSvc.treeControl.dataNodes == null) {
+    this.assessSvc.currentTab = 'prepare';
+    if (this.navTreeSvc.tocControl.dataNodes == null) {
       setTimeout(() => {
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
       }, 1000);
     }
-    this.assessSvc.currentTab = 'prepare';
   }
 
    /**

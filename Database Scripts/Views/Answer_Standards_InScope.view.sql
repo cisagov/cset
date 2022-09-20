@@ -1,7 +1,9 @@
 
+
+
 CREATE VIEW [dbo].[Answer_Standards_InScope]
 AS
-		select distinct mode='Q', a.assessment_id, a.answer_id, is_requirement=0, a.question_or_requirement_id, a.mark_for_review, 
+		select distinct mode=N'Q', a.assessment_id, a.answer_id, is_requirement=0, a.question_or_requirement_id, a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid,a.is_framework,a.old_answer_id, a.reviewed, a.FeedBack
 			,c.Simple_Question as Question_Text
@@ -19,7 +21,7 @@ AS
 					)
 			)	s on c.Question_Id = s.Question_Id and s.std_assessment_id = a.Assessment_Id			
 		union	
-		select distinct mode='R', a.assessment_id, a.answer_id, is_requirement=1, a.question_or_requirement_id,a.mark_for_review, 
+		select distinct mode=N'R', a.assessment_id, a.answer_id, is_requirement=1, a.question_or_requirement_id,a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed, a.FeedBack
 			,req.Requirement_Text as Question_Text

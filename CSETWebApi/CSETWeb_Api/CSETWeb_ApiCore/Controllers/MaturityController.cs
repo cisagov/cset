@@ -16,17 +16,17 @@ using CSETWebCore.Model.Maturity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
     public class MaturityController : ControllerBase
     {
-        private readonly IUserAuthentication _userAuthentication;
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -34,11 +34,9 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _reports;
         private readonly ICrrScoringHelper _crr;
 
-        public MaturityController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
-             ICrrScoringHelper crr)
+        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, 
+            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
         {
-            _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -221,6 +219,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/maturity/groupingtitles")]
+        public IActionResult GetGroupingTitles([FromQuery] int modelId)
+        {
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetGroupingTitles(modelId);
+            return Ok(x);
+        }
+
+
         /// <summary>
         /// Returns the questions in a CIS section.
         /// </summary>
@@ -234,21 +242,6 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CisStructure(assessmentId, sectionId, _context);
             return Ok(biz.MyModel);
-        }
-
-
-        /// <summary>
-        /// Returns the CIS subnode list.  This is used to 
-        /// render the sidenav tree in the UI.
-        /// </summary>
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/maturity/cis/navstruct")]
-        public IActionResult GetCisNavStructure()
-        {
-            var nav = new CisNavStructure(_context);
-            var s = nav.GetNavStructure();
-            return Ok(s);
         }
 
 
@@ -284,7 +277,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
         /// Get deficiency chart data for comparative between current assessment and baseline
         /// </summary>
@@ -323,13 +316,29 @@ namespace CSETWebCore.Api.Controllers
 
 
             // TODO: verify that the user has permission to both assessments
-            
+
 
 
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.ImportCisAnswers(request.Dest, request.Source);
             return Ok();
+        }
+
+
+        /// <summary>
+        /// Get all of the possible cis options that can fail the integrity check.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cis/integritycheck")]
+        public IActionResult GetIntegrityCheckOptions() 
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+
+            var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
+            return Ok(integrityCheckOptions);
         }
 
 
@@ -357,6 +366,20 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/MaturityAnswerIseCompletionRate")]
+        public IActionResult GetIseAnswerCompletionRate()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
         }
 
 
@@ -392,6 +415,21 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var maturity = manager.GetMaturityAnswers(assessmentId);
+
+            return Ok(maturity);
+        }
+
+        /// <summary>
+        /// Get maturity calculations
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getIseMaturityResults")]
+        public IActionResult GetIseMaturityResults()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var maturity = manager.GetIseMaturityAnswers(assessmentId);
 
             return Ok(maturity);
         }
@@ -479,6 +517,14 @@ namespace CSETWebCore.Api.Controllers
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
                     d.Mat.Maturity_LevelNavigation = null;
+                    d.Mat.InverseParent_Question = null;
+
+                    if (d.Mat.Parent_Question != null)
+                    {
+                        d.Mat.Parent_Question.Maturity_Model = null;
+                        d.Mat.Parent_Question.Maturity_LevelNavigation = null;
+                        d.Mat.Parent_Question.InverseParent_Question = null;
+                    }
                 });
 
 
@@ -491,8 +537,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
-
-
+        
         /// <summary>
         /// get all comments and marked for review
         /// </summary>
@@ -505,29 +550,49 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             _reports.SetReportsAssessmentId(assessmentId);
 
+
+
+            // if this is a CIS assessment, don't include questions that
+            // are "out of scope" (a descendant of a deselected Option)
+            List<int> oos = new();
+            var isCis = _context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId && x.model_id == 8);
+            if (isCis)
+            {
+                var qt = new QuestionTreeXml(assessmentId, _context);
+                oos = qt.OutOfScopeQuestionIds();
+            }
+
             MaturityBasicReportData data = new MaturityBasicReportData
             {
                 Comments = _reports.GetCommentsList(),
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
+            
+
+           data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+           data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             data.Comments.ForEach(d =>
             {
                 d.ANSWER.Assessment = null;
+                d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
             });
 
             data.MarkedForReviewList.ForEach(d =>
             {
                 d.ANSWER.Assessment = null;
+                d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
                 d.Mat.Maturity_LevelNavigation = null;
                 d.Mat.InverseParent_Question = null;
+                d.Mat.Parent_Question = null;
             });
 
             return Ok(data);

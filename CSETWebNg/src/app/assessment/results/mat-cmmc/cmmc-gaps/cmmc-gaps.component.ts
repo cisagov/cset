@@ -22,11 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
 import * as $ from 'jquery';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-cmmc-gaps',
@@ -59,7 +60,8 @@ export class CmmcGapsComponent implements OnInit {
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
-    public assessmentSvc: AssessmentService
+    public assessmentSvc: AssessmentService,
+    public layoutSvc: LayoutService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }

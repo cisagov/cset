@@ -24,7 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService } from '../../services/navigation.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 import { ConfigService } from '../../services/config.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
@@ -64,7 +64,7 @@ export class DiagramComponent implements OnInit {
                     this.assessSvc.currentTab = 'prepare';
                     this.navSvc.setCurrentPage('diagram');
                     localStorage.removeItem('tree');
-                    this.navSvc.buildTree(this.navSvc.getMagic());
+                    this.navSvc.buildTree();
                 });
         }
     }

@@ -22,33 +22,23 @@ namespace CSETWebCore.DataLayer.Model
         public int IRP_ID { get; set; }
         public int? Item_Number { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Risk_1_Description { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Risk_2_Description { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Risk_3_Description { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Risk_4_Description { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Risk_5_Description { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Validation_Approach { get; set; }
         public int Header_Id { get; set; }
         [StringLength(1000)]
-        [Unicode(false)]
         public string Description { get; set; }
         [StringLength(1300)]
-        [Unicode(false)]
         public string DescriptionComment { get; set; }
-        [Required]
         [StringLength(10)]
-        [Unicode(false)]
         public string Risk_Type { get; set; }
 
         [ForeignKey("Header_Id")]

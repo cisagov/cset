@@ -31,7 +31,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-findings',
-  templateUrl: './findings.component.html'
+  templateUrl: './findings.component.html',
+  host: {
+    'style': 'max-width: 100%'
+  }
 })
 export class FindingsComponent implements OnInit {
 
@@ -46,7 +49,7 @@ export class FindingsComponent implements OnInit {
     private dialog: MatDialogRef<FindingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
-    private assessSvc: AssessmentService
+    public assessSvc: AssessmentService
   ) {
     this.finding = data;
     this.answerID = data.answer_Id;
@@ -132,4 +135,12 @@ export class FindingsComponent implements OnInit {
       }
     });
   }
+
+  observationOrIssue () {
+    if (this.assessSvc.isISE()) {
+      return 'Observation';
+    }
+    return 'Issue';
+  }
+
 }

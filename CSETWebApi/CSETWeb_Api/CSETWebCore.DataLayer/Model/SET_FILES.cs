@@ -15,12 +15,10 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string SetName { get; set; }
         [Key]
         public int Gen_File_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Comment { get; set; }
 
         [ForeignKey("Gen_File_Id")]

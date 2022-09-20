@@ -30,8 +30,9 @@ import { AssessmentService } from "../../../services/assessment.service";
 import { StandardService } from "../../../services/standard.service";
 import { CyberStandard } from "./../../../models/standards.model";
 import { AwwaStandardComponent } from "./awwa-standard/awwa-standard.component";
-import { NavigationService } from "../../../services/navigation.service";
+import { NavigationService } from "../../../services/navigation/navigation.service";
 import { EnableFeatureService } from "../../../services/enable-feature.service";
+import { LayoutService } from "../../../services/layout.service";
 
 @Component({
   selector: "app-standards",
@@ -45,12 +46,14 @@ export class StandardsComponent implements OnInit {
   dialogRef: MatDialogRef<OkayComponent>;
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
 
+
   constructor(
     private router: Router,
     private assessSvc: AssessmentService,
     private standardSvc: StandardService,
     public navSvc: NavigationService,
     private enableFeatureSvc: EnableFeatureService,
+    public layoutSvc: LayoutService,
     public dialog: MatDialog
   ) { }
 
@@ -179,7 +182,7 @@ export class StandardsComponent implements OnInit {
    * Builds a list of selected standards and post it to the server.
    */
   submit(standard, event: Event) {
-    standard.selected = (event.srcElement as HTMLInputElement).checked;
+    standard.selected = (event.target as HTMLInputElement).checked;
     const selectedStandards: string[] = [];
     if (!this.showLegalese(standard)) {
       return;
@@ -207,7 +210,7 @@ export class StandardsComponent implements OnInit {
 
     // refresh sidenav
     localStorage.removeItem('tree');
-    this.navSvc.buildTree(this.navSvc.getMagic());
+    this.navSvc.buildTree();
 
     this.standardSvc
       .postSelections(selectedStandards)

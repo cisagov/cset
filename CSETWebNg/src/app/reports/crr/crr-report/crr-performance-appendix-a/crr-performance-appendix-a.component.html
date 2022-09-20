@@ -1,0 +1,156 @@
+
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1" style="width: 15%;">
+            <div class="row" style="padding: 0; height: auto; min-width: 130px;">
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px;">
+                    Total number of practices performed
+                </div>
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
+                    Total number of practices incompletely performed
+                </div>
+                <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px; ">
+                    Total number of practices not performed
+                </div>
+            </div>
+            <div class="row" style="position: absolute; bottom: 0;">
+                <div class="col" style="padding: 0;">
+                    <div class="row" style="padding: 0 0 0 1rem;" [innerHtml]="mil1FullAnswerDistribChart | safe">
+                    </div>
+                    <div class="col" style="padding: 0;">
+                        <h5 class="appendix-label">CRR Summary</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-1" style="width: 85%;">
+            <div class="row">
+                <div style="padding: 0; width: 60%;">
+                    <h3 class="depiction-title">CRR Performance</h3>
+                </div>
+                <div style="padding: 0; width: 40%;" [innerHtml]="legend | safe">
+                </div>
+            </div>
+            <div class="row header" style="border-top: 1px solid black; padding: 0;">
+                <div style="width: 60%;">
+                        <b>MIL-1 Performed</b>
+                        <br />
+                        Domain practices are being performed.
+                </div>
+                <div style="width: 9%; padding-right: 1rem;">
+                        <b>MIL-2 Planned</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        planning, policy,
+                        stakeholders, and
+                        standards.
+                </div>
+                <div style="width: 10%; padding-right: 1rem;">
+                        <b>MIL-3 Managed</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        governance and
+                        adequate
+                        resources.
+                </div>
+                <div style="width: 10%; padding-right: 1rem;">
+                        <b>MIL-4 Measured</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        measurement,
+                        monitoring, and
+                        executive
+                        oversight.
+                </div>
+                <div style="width: 10%;">
+                        <b>MIL-5 Defined</b>
+                        <br />
+                        Domain practices
+                        are supported by
+                        enterprise
+                        standardization
+                        and analysis of.
+                        lessons learned.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="border-top: solid 1.5px black;">
+        <div style="width: 15%; padding: 0; font-size: 10px;">
+            DOMAIN SUMMARY
+        </div>
+        <div style="width: 85%; padding: 0; font-size: 10px;">
+            MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
+        </div>
+    </div>
+    <div  *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row" style="border-top: 0.5px solid black;">
+        <div class="col-1" style="width: 15%; padding: 0 2rem 0 1rem;">
+            <div class="row">
+                <div style="font-size: 0.7rem; font-weight: bold;">
+                    <!-- @domain.Attribute("title").Value.Split('(')[0].Trim() -->
+                    {{ domain.title.split('(')[0].trim() }}
+                </div>
+            </div>
+            <div class="row" [innerHtml]="bodyData[i].scoreBarChart | safe">
+                <!-- @Html.Raw(barChart.ToString()) -->
+            </div>
+        </div>
+        <div class="col-10" style="display: flex; width: 85%; padding: 0;">
+            <div *ngFor="let heatMap of bodyData[i].heatMaps; let j = index" style="padding: 0.1rem;" [innerHtml]="heatMap | safe"
+            [style.width]="j === 0 ? '62%' : '10%'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .depiction-title {
+        font-family: Arial;
+        font-size: 18pt;
+        line-height: 90%;
+        margin: 0;
+    }
+
+    .crr-logo {
+        height: 75px;
+        width: auto;
+        max-width: 250px;
+    }
+
+    .header div {
+        padding: 0;
+        font-size: 7.5px;
+        padding: 0.1rem;
+    }
+
+    .appendix-label {
+        font-size: 0.7rem;
+        font-weight: bold;
+        margin: 0;
+    }
+</style>

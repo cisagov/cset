@@ -67,7 +67,6 @@ export class AssessmentService {
 
   static allMaturityModels: MaturityModel[];
 
-
   /**
    * Indicates if a brand-new assessment is being created.
    * This will allow the assessment-detail page to do certain
@@ -118,6 +117,16 @@ export class AssessmentService {
 
   createAssessment(workflow: string) {
     return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
+  }
+
+  /**
+   *
+   * @param workflow
+   * @param galleryId
+   * @returns
+   */
+  createNewAssessmentGallery(workflow: string, galleryId: number) {
+    return this.http.get(this.apiUrl + 'createassessment/gallery?workflow=' + workflow + '&galleryId=' + galleryId, headers)
   }
 
   /**
@@ -338,7 +347,6 @@ export class AssessmentService {
         (response: any) => {
           // set the brand new flag
           this.isBrandNew = true;
-
           this.loadAssessment(response.id);
         },
         error =>
@@ -348,6 +356,35 @@ export class AssessmentService {
       );
   }
 
+  newAssessmentGallery(assessType: number) {
+    let workflow = 'BASE';
+    switch (this.configSvc.installationMode || '') {
+      case 'ACET':
+        workflow = 'ACET';
+        break;
+      case 'TSA':
+        workflow = 'TSA';
+        break;
+      default:
+        workflow = 'BASE';
+    }
+
+    this.createNewAssessmentGallery(workflow, assessType)
+      .toPromise()
+      .then(
+        (response: any) => {
+          // set the brand new flag
+          this.isBrandNew = true;
+          this.loadAssessment(response.id);
+        },
+        error =>
+          console.log(
+            'Unable to create new assessment: ' + (<Error>error).message
+          )
+      );
+  }
+
+
   /**
    *
    */
@@ -356,7 +393,7 @@ export class AssessmentService {
 
       this.getAssessmentDetail().subscribe(data => {
         this.assessment = data;
-        if(this.assessment.baselineAssessmentId){
+        if (this.assessment.baselineAssessmentId) {
           localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
         } else {
           localStorage.setItem("baseline", "0");
@@ -398,7 +435,7 @@ export class AssessmentService {
 
 
   /**
-   * 
+   *
    */
   setRraDefaults() {
     if (!!this.assessment) {
@@ -410,6 +447,16 @@ export class AssessmentService {
     }
   }
 
+  setNcuaDefaults() {
+    if (!!this.assessment) {
+      this.assessment.useMaturity = true;
+      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
+      //this.assessment.isAcetOnly = true;
+
+      this.assessment.useStandard = false;
+      this.assessment.useDiagram = false;
+    }
+  }
 
   /**
    *
@@ -474,11 +521,11 @@ export class AssessmentService {
   }
 
   /**
-   * Sets the maturity model name on the assessment
+   * Sets the maturity model name on the local assessment model.
    * @param modelName
    */
   setModel(modelName: string) {
-    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == modelName);
+    this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName.toUpperCase() == modelName.toUpperCase());
   }
 
   /**
@@ -499,5 +546,22 @@ export class AssessmentService {
       return '';
     }
     return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  }
+
+  /**
+  * A check for when we need custom ISE functionaltiy
+  * but prevents other assessments (like standards) from
+  * throwing an error when maturity model is undefined
+  */
+  isISE() {
+    if (this.assessment === undefined || this.assessment === null ||
+      this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
+      return false;
+    }
+    if (this.assessment.maturityModel.modelName === 'ISE') {
+      return true;
+    }
+
+    return false;
   }
 }

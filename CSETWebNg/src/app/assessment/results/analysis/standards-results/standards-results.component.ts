@@ -22,12 +22,13 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { StandardService } from '../../../../services/standard.service';
-import { NavigationService } from '../../../../services/navigation.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-standards-results',
@@ -36,16 +37,20 @@ import { NavigationService } from '../../../../services/navigation.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsResultsComponent implements OnInit {
+  
   chart: Chart;
   dataRows: { title: string; failed: number; total: number; percent: number; }[];
   dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
+  
   initialized = false;
+
   constructor(
     private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
     private stdSvc: StandardService,
-    private router: Router) { }
+    private router: Router,
+    public layoutSvc: LayoutService) { }
 
   ngOnInit() {
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => this.setupChart(x));
@@ -58,7 +63,7 @@ export class StandardsResultsComponent implements OnInit {
     this.dataSets = x.dataSets;
 
     let tempChart = Chart.getChart('canvasStandardResult');
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     this.chart = new Chart('canvasStandardResult', {
@@ -72,15 +77,15 @@ export class StandardsResultsComponent implements OnInit {
         plugins: {
           tooltip: {
             callbacks: {
-              label: function(context) {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+              label: function (context) {
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               }
             }
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Results by Category'
           },
           legend: {

@@ -24,11 +24,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation.service';
-import { NavTreeNode } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
+import { NavTreeNode } from '../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../services/config.service';
 import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
 
 @Component({
     selector: 'app-info',
@@ -38,12 +39,10 @@ export class DiagramInfoComponent implements OnInit {
 
     msgDiagramExists = 'Edit the Network Diagram';
     msgNoDiagramExists = 'Create a Network Diagram';
-    buttonDiagramInventory = 'Diagram Inventory';
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
 
     constructor(private router: Router,
-
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
@@ -52,7 +51,7 @@ export class DiagramInfoComponent implements OnInit {
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
-        this.populateTree();
+        //this.populateTree();
         this.checkForDiagram();
 
         // When returning from Diagram, we get a brand new authSvc.
@@ -65,10 +64,9 @@ export class DiagramInfoComponent implements OnInit {
         this.delayCheckForDiagram(1000)
     }
 
-
     populateTree() {
         localStorage.removeItem('tree');
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
     }
 
     private checkForDiagram(){
@@ -77,14 +75,15 @@ export class DiagramInfoComponent implements OnInit {
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
     }
+
     private async delayCheckForDiagram(ms){
         await this.delay(ms)
         this.checkForDiagram();
     }
+
     private delay(ms: number){
         return new Promise(resolve => setTimeout(resolve,ms));
     }
-
 
     navToDiagram() {
         const jwt = localStorage.getItem('userToken');
@@ -107,12 +106,5 @@ export class DiagramInfoComponent implements OnInit {
             '&c=' + client +
             '&l=' + this.authSvc.isLocal +
             '&a=' + localStorage.getItem('assessmentId');
-    }
-
-    /**
-     * Navigate to diagram inventory screen.
-     */
-    navToInventory() {
-        this.router.navigateByUrl('/assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/inventory');
     }
 }

@@ -14,8 +14,7 @@ namespace CSETWebCore.DataLayer.Model
     public partial class SP80053_FAMILY_ABBREVIATIONS
     {
         [Key]
-        [StringLength(2)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string ID { get; set; }
         [Required]
         [StringLength(250)]

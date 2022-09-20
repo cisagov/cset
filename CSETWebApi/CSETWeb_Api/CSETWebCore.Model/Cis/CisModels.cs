@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Model.Cis
 {
@@ -11,6 +12,7 @@ namespace CSETWebCore.Model.Cis
     public class ModelStructure
     {
         public string ModelName { get; set; }
+        public string ModelTitle { get; set; }
         public int ModelId { get; set; }
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
     }
@@ -54,12 +56,17 @@ namespace CSETWebCore.Model.Cis
         public int QuestionId { get; set; }
         public string QuestionType { get; set; }
         public int Sequence { get; set; }
+        public int MaturityLevel { get; set; }  
+        public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
         public string ReferenceText { get; set; }
+
+        public List<CustomDocument> SourceDocuments { get; set; }
+        public List<CustomDocument> AdditionalDocuments { get; set; }
 
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }
@@ -84,7 +91,13 @@ namespace CSETWebCore.Model.Cis
 
         public decimal? Weight { get; set; }
 
-        public bool Selected { get; set; }  
+        /// <summary>
+        /// Identifies an option that should not be selected
+        /// if any of its peers is selected, e.g., "none of the above"
+        /// </summary>
+        public bool IsNone { get; set; }
+
+        public bool Selected { get; set; }
 
         public int? AnswerId { get; set; }
 
@@ -112,6 +125,21 @@ namespace CSETWebCore.Model.Cis
 
 
         public List<Question> Followups { get; set; } = new List<Question>();
+    }
+
+
+    public class IntegrityCheckOption 
+    {
+        public int OptionId { get; set; }
+        public bool Selected { get; set; }
+        public List<InconsistentOption> InconsistentOptions { get; set; } = new List<InconsistentOption>();
+    }
+
+
+    public class InconsistentOption
+    {
+        public int OptionId { get; set; }
+        public string ParentQuestionText { get; set; }
     }
 
 

@@ -38,6 +38,8 @@ import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { MaturityService } from '../../../services/maturity.service';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
   selector: 'app-question-extras',
@@ -80,7 +82,9 @@ export class QuestionExtrasComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
-    private maturitySvc: MaturityService) {
+    private maturitySvc: MaturityService,
+    public layoutSvc: LayoutService
+    ) {
   }
 
 
@@ -101,7 +105,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: '600px',
+      width: this.layoutSvc.hp ? '90%' : '600px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
       height: '800px',
       data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
@@ -182,7 +187,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    this.answer.comment = e.srcElement.value;
+    this.answer.comment = e.target.value;
     this.saveAnswer();
   }
 
@@ -206,7 +211,7 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    this.answer.feedback = e.srcElement.value;
+    this.answer.feedback = e.target.value;
     this.saveAnswer();
   }
 
@@ -335,15 +340,19 @@ export class QuestionExtrasComponent implements OnInit {
       vulnerabilities: ''
     };
 
-    this.dialog
-      .open(FindingsComponent, { data: find, disableClose: true })
+    this.dialog.open(FindingsComponent, { 
+        data: find, 
+        disableClose: true,
+        width: this.layoutSvc.hp ? '90%' : '600px',
+        maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+      })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
             this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
-            this.myQuestion.answer_Id = find.answer_Id
+            this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
@@ -357,12 +366,16 @@ export class QuestionExtrasComponent implements OnInit {
   deleteDiscovery(findingToDelete) {
 
     // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete observation '"
+    let msg = "Are you sure you want to delete "
+      + this.observationOrIssue().toLowerCase()
+      + " '"
       + findingToDelete.summary
       + "?'";
 
     if (findingToDelete.summary === null) {
-      msg = "Are you sure you want to delete this observation?";
+      msg = "Are you sure you want to delete this "
+      + this.observationOrIssue().toLowerCase()
+      + "?";
     }
 
 
@@ -404,7 +417,7 @@ export class QuestionExtrasComponent implements OnInit {
     const options = {};
     options['questionId'] = this.myQuestion.questionId;
     options['answerId'] = this.myQuestion.answer_Id;
-    options['maturity'] = this.myQuestion.is_Maturity;
+    options['questionType'] = this.myQuestion.questionType;
 
     this.fileSvc.fileUpload(e.target.files[0], options)
       .subscribe(resp => {
@@ -603,7 +616,8 @@ export class QuestionExtrasComponent implements OnInit {
     // EDM
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
-        || this.assessSvc.usesMaturityModel('CRR'))) {
+        || this.assessSvc.usesMaturityModel('CRR')
+        || this.assessSvc.isISE())) {
       if (mode == 'DETAIL') {
         return false;
       }
@@ -636,7 +650,13 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'REFS') {
         return false;
       }
+    }
 
+    // ISE
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
+      if (mode == 'DISC') {
+        return false;
+      }
     }
 
     return true;
@@ -661,6 +681,24 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     return "I";
+  }
+
+  areNoReferenceDocumentsAvailable() {
+    return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
+      && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
+      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+  }
+
+  /**
+   * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
+   */
+   observationOrIssue () {
+    if (this.assessSvc.isISE()) {
+      return 'Issue';
+    }
+    else {
+      return 'Observation';
+    }
   }
 
 

@@ -1,0 +1,746 @@
+/*
+
+  Copyright 2022 Battelle Energy Alliance, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Reports styles
+-------------------------------------------------- */
+* {
+  scroll-margin-top: 60px;
+}
+
+.report-body-crr {
+  font-family: Arial !important;
+  font-size: 12pt !important;
+  margin-left: 15vw !important;
+}
+
+h1 {
+  font-size: 48pt;
+  color: #005288;
+}
+
+h2 {
+  font-size: 34pt;
+  color: #005288;
+}
+
+h3 {
+  font-size: 24pt;
+}
+
+h4 {
+  font-size: 16pt;
+  color: #005288;
+}
+
+p {
+  font-family: Arial;
+  font-size: 14pt;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.page-break {
+  page-break-before: always;
+  clear: both;
+}
+
+.col-1 {
+  flex: 0 0 auto;
+  max-width: unset;
+}
+
+// Override max width of containers to match bootstrap v5
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+@media only screen {
+  .page-break {
+    margin: 40px 0;
+    border-top: 2px solid #769bb5;
+  }
+}
+
+/*
+  Cover Sheet
+*/
+.coversheet-text * {
+  padding: 0 5rem;
+  font-family: 'Franklin Gothic', Arial;
+  font-weight: bolder;
+}
+
+/*
+  CISA Self Assessment Page
+*/
+.cisa * {
+  color: black;
+  justify-content: center;
+  text-align: center;
+}
+
+/*
+  CRR About/Intro
+*/
+.about-intro p {
+  margin-bottom: 16px;
+  font-size: 12pt;
+  font-family: Arial;
+}
+
+.about-intro li {
+  font-size: 12pt;
+  font-family: Arial;
+}
+
+/*
+  Depictions
+*/
+.depiction-title {
+  font-family: Arial;
+  font-weight: bold;
+  font-size: 18pt;
+  margin: 0;
+}
+
+/*
+  Miscellaneous
+*/
+.crr-logo {
+  width: 20%;
+  height: auto;
+}
+
+
+/* Legends */
+.legend-svg text {
+  font-size: .5rem;
+}
+
+
+/*
+  Domain Detail
+*/
+table {
+  margin: 0;
+  padding: 0;
+}
+
+.domain-detail p {
+  font-size: 12pt;
+  font-family: Arial;
+}
+
+.report-notification {
+  background-color: #D3D3D3;
+  padding: 1rem;
+  border: solid 2px black;
+  width: 70%;
+  margin: 10% auto;
+  break-inside: avoid-page;
+}
+
+.report-notification h1 {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.col-mod {
+  padding-left: 2px;
+  padding-right: 0;
+  font-size: small;
+  text-align: center;
+}
+
+.col-mod-group {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.col-mod-header {
+  margin-bottom: 3px;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
+
+.col-mod-score {
+  padding: 4px 4px !important;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.red-score {
+  background-color: #DC3545;
+  border: 1px solid #DC3545;
+  color: #fff;
+}
+
+.yellow-score {
+  background-color: #FFC107;
+  border: 1px solid #FFC107;
+  color: #000;
+}
+
+.green-score {
+  background-color: #28A745;
+  border: 1px solid #28A745;
+  color: #fff;
+}
+
+.light-gray-score {
+  background-color: #d3d3d3;
+  border: 1px solid #d3d3d3;
+  color: #000;
+}
+
+.default-score {
+  background-color: #6C757D;
+  border: 1px solid #6C757D;
+  color: #fff;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.report-section-title {
+  color: #1274d2;
+  font-size: 22px;
+}
+
+.marked-flag {
+  width: 15px;
+  height: auto;
+}
+
+.page-line {
+  width: 100%;
+  background-color: #000;
+}
+
+.report-domain-header {
+  color: #1274d2;
+  font-size: 18px;
+  text-align: left;
+  margin-left: 1rem;
+}
+
+.max-w-75in {
+  max-width: 7.5in;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+      font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+  /* Vertically center the text there */
+}
+
+/* --- spinner styles -- */
+.spinner-container {
+  padding: 8px;
+}
+
+.spinner-container>.spinner,
+.spinner-container>div {
+  border: 4px solid #f2f2f2;
+  border-radius: 50%;
+  border-top: 4px solid #052637;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin-wait 1.3s linear infinite;
+  /* Safari */
+  animation: spin-wait 1.3s linear infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.spinner-container.toc>.spinner,
+.spinner-container.toc>div {
+  border-top: 4px solid #6390a9;
+}
+
+div.spinner-size-50 {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+/* Safari */
+@-webkit-keyframes spin-wait {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-wait {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* spinner fade animation */
+.spinner-fade-in {
+  opacity: 0 !important;
+  transition: 0.2s ease-in-out all;
+}
+
+.spinner-show {
+  opacity: 1 !important;
+}
+
+.spinner-hide {
+  display: none;
+}
+
+
+/* ---- Table styles ---- */
+
+table.cset-table, table.cset-table-4 {
+  width: calc(100% - 2em);
+  margin: 0 auto 2em auto;
+  border-collapse: collapse;
+}
+
+  table.cset-table th, table.cset-table-4 th {
+      background-color: #336699;
+      color: #fff;
+      font-weight: bold;
+      break-inside: avoid;
+  }
+
+  table.cset-table th, table.cset-table td, table.cset-table-4 th, table.cset-table-4 td {
+      padding: 10px;
+      border: 1px solid #999;
+      vertical-align: top;
+      break-inside: avoid;
+  }
+
+table.cset-table-2 {
+  width: calc(100% - 2em);
+  margin: 0 auto 2em auto;
+  border-collapse: collapse;
+}
+
+  table.cset-table-2 th, table.cset-table-2 td {
+      border: 1px solid #000;
+      border: 1px solid #999;
+      padding: 5px;
+      break-inside: avoid;
+  }
+
+  table.cset-table-2 tr.pale-green {
+      background-color: #EAF1DD;
+      background-color: #ecf6f9;
+  }
+
+table.cset-table-3 {
+  width: calc(100% - 2em);
+  margin: 0 auto 1em auto;
+  border-collapse: collapse;
+}
+
+  table.cset-table-3 th, table.cset-table-3 td {
+      border: 1px solid #999;
+      padding: 5px;
+      break-inside: avoid;
+  }
+
+  table.cset-table-3 th {
+      text-align: left;
+      font-weight: normal;
+      background-color: #d9e6ed;
+  }
+
+table.cset-table.alt-shade tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+table.cset-table.alt-shade tr:nth-child(odd) {
+  background: #fafafa;
+}
+
+table.no-borders tr, table.no-borders td {
+  border: none;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+div.widget {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+  div.widget svg {
+      vertical-align: top !important;
+  }
+
+/*# sourceMappingURL=bootstrap-grid.css.map */
+
+.page-margin-top {
+  page-break-before: always;
+  min-width: 860px;
+  margin-top: 40px;
+  border-top: 2px solid #769bb5;
+  padding-top: 40px;
+}
+
+/* VARIABLES  */
+:host {
+  --page-width: 792px;
+  --table-margin: 0px;
+  --table-width: calc(var(--page-width) - calc(var(--table-margin)*2));
+  --table-name-width: 160px;
+  --table-row-height: 50px;
+  --axis-label-row-height: 80px;
+  --mil-1-ratio: .5;
+  --mil-1-width: calc( calc( var(--table-width) - var(--table-name-width) ) * var(--mil-1-ratio) );
+  --mil-upper-width: calc( calc( var(--table-width) - var(--table-name-width) ) * calc(1 - var(--mil-1-ratio)) );
+  --mil-upper-width-individual: calc(var(--mil-upper-width) / 4);
+  --bar-height: 16px;
+}
+/* END VARIABLES */
+
+
+
+.crrResultsTable {
+  width: var(--table-width);
+
+  font-size: 0;
+}
+.parent {
+  width: var(--page-width);
+}
+
+.parent * {
+  font-family: Arial;
+}
+
+.crrResultsTableRow {
+  width: calc(var(--table-width));
+  height: var(--table-row-height);
+  box-sizing: border-box;
+  border-top: solid 1px black;
+  border-right: solid 1px black;
+  font-size: 0; /*Done to prevent funky margins*/
+}
+
+.crrResultsDomainCell {
+  height: var(--table-row-height);
+  font-size: 12px;
+  vertical-align: top;
+  font-weight: 600;
+  border-right: solid 1px black;
+  display: inline-block;
+}
+
+.crrResultsTableDomainName {
+  width: var(--table-name-width);
+}
+
+.crrResultsProgressBar {
+  height: var(--bar-height);
+  background: rgb(199,121,44);
+  display: inline-block;
+  position: relative;
+  margin-left: var(--table-name-width);
+  top: calc( -1 * calc( calc( var(--table-row-height) /2 ) + calc(var(--bar-height) / 2) ) );
+  box-sizing: border-box;
+  border-left: solid 1px black;
+}
+
+
+.mil-1-grid {
+  padding-right: 2px;
+  display: inline-block;
+  height: var(--table-row-height);
+  width: calc(var(--mil-1-width) / 4);
+  box-sizing: border-box;
+}
+.mil-1-override {
+  box-sizing: border-box;
+  border-right: solid 1px gray !important;
+}
+
+.mil-upper-grid {
+  display: inline-block;
+  height: var(--table-row-height);
+  width: calc(var(--mil-upper-width) / 4);
+  box-sizing: border-box;
+}
+
+.rb-l {
+  box-sizing: border-box;
+  border-right: solid 1px lightgray;
+}
+
+.rb-d {
+  box-sizing: border-box;
+  border-right: solid 1px gray;
+}
+
+.mil-number-labels {
+  font-size: 12px;
+  padding-right: 5px;
+}
+
+/* CAN THE CLASS NAMES GET ANY LONGER?!?! */
+.crrResultsTableAxisLabelRow {
+  height: var(--axis-label-row-height);
+  font-size: 14px;
+  vertical-align: top;
+  font-weight: 600;
+  box-sizing: border-box;
+  border-right: solid 1px black;
+  display: inline-block;
+}
+
+.crrResultsTableLabelRow {
+  width: calc(var(--table-width));
+  height: 80px;
+  box-sizing: border-box;
+  border-top: white solid 0px;
+  border-right: solid 1px black;
+}
+
+.crrResultsLabelCell {
+  width: var(--table-name-width);
+  height: var(--table-row-height);
+  font-size: 14px;
+  vertical-align: top;
+  font-weight: 200;
+  box-sizing: border-box;
+  border-right: solid 1px black;
+  display: inline-block;
+  text-align: right;
+}
+
+.crrTableLabel {
+  text-align: right;
+  vertical-align: top;
+}
+
+.upper-mil-label-desc, .upper-mil-label-bold {
+  font-size: 8px;
+  text-align: right;
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.upper-mil-label-bold {
+  font-size: 8px;
+  font-weight: 800;
+  white-space: nowrap;
+  padding-left: 5px;
+}
+
+.ccrLastLabel {
+  width: var(--mil-upper-width-individual);
+  margin-left: -9px;
+  font-size: 18px;
+  /* Minus 9, one for each of the borders included in the row*/
+}
+
+.crrLastResultsTableRow {
+  margin-left: 1px;
+}
+
+@media screen {
+  table.page-layout {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #main-toc {
+    display: none;
+  }
+}
+
+/**************** Print styles ****************/
+@page {
+  size: letter;
+  margin: 0;
+}
+
+@media print {
+
+  html, body {
+    margin: 0 !important;
+  }
+
+  .report-body-crr {
+    margin-left: 1.5cm !important;
+    margin-right: -2cm !important;
+  }
+
+  #coversheet1 {
+    margin-left: -2cm;
+    margin-right: -2cm;
+  }
+
+  .container-fluid, .report-body-crr {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page-margin-top {
+    border-top: none !important;
+    padding-top: 1.5cm !important;
+  }
+
+  .report-notification {
+    margin-top: 8cm !important;
+  }
+
+  #mil4-page-break {
+    page-break-after: always;
+  }
+
+  .page-break {
+    padding-top: 1.5cm !important;
+  }
+
+  .container {
+    margin: 0 !important;
+  }
+
+  .mat-section {
+    break-inside: avoid !important;
+  }
+
+  table.page-layout {
+    page-break-inside: auto;
+  }
+
+  .print-footer-right, .print-header-left, .print-header-right,
+  .print-footer-left, .footer-space, .header-space {
+    height: 2cm;
+    width: 5cm;
+    background-color: white;
+    z-index: 10;
+    padding: 1rem;
+  }
+
+  .print-footer-right {
+    position: fixed;
+    bottom: 0;
+    right: 2cm;
+  }
+
+  .print-footer-left {
+    position: fixed;
+    bottom: 0;
+    left: 2cm;
+  }
+
+  .print-header-right {
+    position: fixed;
+    top: 0;
+    right: 2cm;
+  }
+
+  .print-header-left {
+    position: fixed;
+    top: 0;
+    left: 2cm;
+  }
+}

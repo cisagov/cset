@@ -16,7 +16,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Question_Id { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Question_Answer { get; set; }
 
         [ForeignKey("Assessment_Id")]

@@ -285,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/UpdateUser")]
-        public void PostUpdateUser([FromBody] CreateUser userBeingUpdated)
+        public IActionResult PostUpdateUser([FromBody] CreateUser userBeingUpdated)
         {
             int userid = 0;
             if (_token.IsAuthenticated())
@@ -325,14 +325,24 @@ namespace CSETWebCore.Api.Controllers
                     // Updating a Contact in the context of the current Assessment.  
                     (_token).AuthorizeAdminRole();
 
-                    _contact.UpdateContact(new ContactDetail
+                    int newUserId = userBeingUpdated.UserId;
+
+                    // If there is already a user with the same email as the newly updated email, use that existing user's id to connect them
+                    // to the assessment after editing a contact
+                    var existingUser = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail).FirstOrDefault();
+                    if (existingUser != null) 
+                    {
+                        newUserId = existingUser.UserId;
+                    }
+
+                    ContactDetail updatedContact = new ContactDetail
                     {
                         AssessmentId = assessmentId,
                         AssessmentRoleId = userBeingUpdated.AssessmentRoleId,
                         FirstName = userBeingUpdated.FirstName,
                         LastName = userBeingUpdated.LastName,
                         PrimaryEmail = userBeingUpdated.PrimaryEmail,
-                        UserId = userBeingUpdated.UserId,
+                        UserId = newUserId,
                         Title = userBeingUpdated.Title,
                         Phone = userBeingUpdated.Phone,
                         CellPhone = userBeingUpdated.CellPhone,
@@ -342,9 +352,15 @@ namespace CSETWebCore.Api.Controllers
                         IsPrimaryPoc = userBeingUpdated.IsPrimaryPoc,
                         IsSiteParticipant = userBeingUpdated.IsSiteParticipant,
                         EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
-                    });
+                    };
+
+                    _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
                     _assessmentUtil.TouchAssessment(assessmentId);
+
+                    return Ok(updatedContact);
                 }
+
+                return Unauthorized();
             }
             else
             {
@@ -423,6 +439,7 @@ namespace CSETWebCore.Api.Controllers
                     log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 }
 
+                return Ok();
             }
         }
 

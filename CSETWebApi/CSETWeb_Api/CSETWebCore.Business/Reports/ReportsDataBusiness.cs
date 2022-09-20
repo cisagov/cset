@@ -38,6 +38,8 @@ namespace CSETWebCore.Business.Reports
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly ITokenManager _tokenManager;
 
+        public List<int> OutOfScopeQuestions = new List<int>();
+
 
         /// <summary>
         /// Constructor.
@@ -85,6 +87,7 @@ namespace CSETWebCore.Business.Reports
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
                             && a.Question_Type == "Maturity"
+                            && !this.OutOfScopeQuestions.Contains(m.Mat_Question_Id)
                         orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
                         select new MatRelevantAnswers()
                         {
@@ -108,9 +111,11 @@ namespace CSETWebCore.Business.Reports
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
                 && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
+            NullOutNavigationPropeties(responseList);
+
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
             }
 
 
@@ -343,6 +348,128 @@ namespace CSETWebCore.Business.Reports
         private string GetLevelLabel(int maturityLevel, List<MATURITY_LEVELS> levels)
         {
             return levels.FirstOrDefault(x => x.Maturity_Level_Id == maturityLevel)?.Level_Name ?? "";
+        }
+
+
+        /// <summary>
+        /// Returns a list of answered maturity questions.  This was built for ACET ISE
+        /// but could be used by other maturity models with some work.
+        /// </summary>
+        /// <returns></returns>
+        public List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+
+
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+
+            var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+            // get the target maturity level IDs
+            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
+
+            var questions = _context.MATURITY_QUESTIONS.Where(q =>
+                myModel.model_id == q.Maturity_Model_Id
+                && targetRange.Contains(q.Maturity_Level)).ToList();
+
+
+            // Get all MATURITY answers for the assessment
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b };
+
+
+            // Get all subgroupings for this maturity model
+            var allGroupings = _context.MATURITY_GROUPINGS
+                .Include(x => x.Type)
+                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+
+            // Recursively build the grouping/question hierarchy
+            var questionGrouping = new MaturityGrouping();
+            BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
+
+            var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+            // ToDo: Refactor the following stucture of loops
+            foreach (var domain in questionGrouping.SubGroupings)
+            {
+                var newDomain = new MatAnsweredQuestionDomain()
+                {
+                    Title = domain.Title,
+                    IsDeficient = false,
+                    AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
+                };
+                foreach (var assesmentFactor in domain.SubGroupings)
+                {
+                    var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
+                    {
+                        Title = assesmentFactor.Title,
+                        IsDeficient = false,
+                        Components = new List<MaturityAnsweredQuestionsComponent>()
+                    };
+
+                    foreach (var componenet in assesmentFactor.SubGroupings)
+                    {
+                        var newComponent = new MaturityAnsweredQuestionsComponent()
+                        {
+                            Title = componenet.Title,
+                            IsDeficient = false,
+                            Questions = new List<MaturityAnsweredQuestions>()
+                        };
+
+                        foreach (var question in componenet.Questions)
+                        {
+                            if (question.Answer != null)
+                            {
+                                var newQuestion = new MaturityAnsweredQuestions()
+                                {
+                                    Title = question.DisplayNumber,
+                                    QuestionText = question.QuestionText,
+                                    MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
+                                    AnswerText = question.Answer,
+                                    Comment = question.Comment,
+                                    MarkForReview = question.MarkForReview
+                                };
+
+                                if (question.Answer == "N")
+                                {
+                                    newDomain.IsDeficient = true;
+                                    newAssesmentFactor.IsDeficient = true;
+                                    newComponent.IsDeficient = true;
+                                }
+
+                                if (question.Comment != null)
+                                {
+                                    newQuestion.Comments = "Yes";
+                                }
+                                else
+                                {
+                                    newQuestion.Comments = "No";
+                                }
+
+                                newComponent.Questions.Add(newQuestion);
+                            }
+                        }
+                        if (newComponent.Questions.Count > 0)
+                        {
+                            newAssesmentFactor.Components.Add(newComponent);
+                        }
+                    }
+                    if (newAssesmentFactor.Components.Count > 0)
+                    {
+                        newDomain.AssessmentFactors.Add(newAssesmentFactor);
+                    }
+                }
+                if (newDomain.AssessmentFactors.Count > 0)
+                {
+                    maturityDomains.Add(newDomain);
+                }
+            }
+
+            return maturityDomains;
         }
 
 
@@ -1366,6 +1493,31 @@ namespace CSETWebCore.Business.Reports
         public IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes()
         {
             return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
+        }
+
+        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list) 
+        {
+            // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
+            foreach (MatRelevantAnswers a in list)
+            {
+                a.ANSWER.Assessment = null;
+                a.Mat.Maturity_Model = null;
+                a.Mat.InverseParent_Question = null;
+                a.Mat.Parent_Question = null;
+
+                if (a.Mat.Grouping != null) 
+                { 
+                    a.Mat.Grouping.Maturity_Model = null;
+                    a.Mat.Grouping.MATURITY_QUESTIONS = null;
+                    a.Mat.Grouping.Type = null;
+                }
+
+                if (a.Mat.Maturity_LevelNavigation != null) 
+                { 
+                    a.Mat.Maturity_Level = a.Mat.Maturity_LevelNavigation.Level;
+                    a.Mat.Maturity_LevelNavigation = null;
+                }
+            }
         }
     }
 }

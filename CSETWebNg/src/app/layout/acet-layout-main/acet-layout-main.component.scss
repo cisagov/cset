@@ -741,6 +741,22 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-iss {
+  background-color: $white;
+  border-color: $black;
+  color: $black;
+}
+
+.btn-iss.answer-selected:hover {
+  background-color: $black;
+}
+
+.btn-iss.answer-selected,
+.btn-iss:hover {
+  background-color: $black;
+  color: $active-text-color;
+}
+
 .btn-inc {
   background-color: $white;
   border-color: $alt-color;
@@ -1317,6 +1333,7 @@ ul.nav-tabs li.active button .tab-icon {
   margin-bottom: 0;
   border-radius: 0;
   min-height: auto;
+  padding:.7rem 1rem !important;
 }
 
 .navbar-toggler-icon {

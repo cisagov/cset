@@ -28,6 +28,8 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { LayoutService } from '../../../services/layout.service';
 
 
 /**
@@ -57,6 +59,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+
   /**
    * Constructor.
    * @param configSvc
@@ -65,31 +68,39 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService
-  ) {
-
-
+    public acetFilteringSvc: AcetFilteringService,
+    public layoutSvc: LayoutService,
+    public ncuaSvc: NCUAService
+  ) { 
+    
   }
 
   /**
    *
    */
   ngOnInit(): void {
-    this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+    if (this.assessSvc.assessment.maturityModel.modelName != null) {
+      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
-    this.refreshReviewIndicator();
-    this.refreshPercentAnswered();
-
-    // set sub questions' titles so that they align with their parent when hidden
-    this.myGrouping.questions.forEach(q => {
-      if (!!q.parentQuestionId) {
-        q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+        this.configSvc.buttonLabels['A'] = "Yes(C)";
+        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
       }
-    });
 
-    if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-    }
+      this.refreshReviewIndicator();
+      this.refreshPercentAnswered();
+
+      // set sub questions' titles so that they align with their parent when hidden
+      // commented out now to maintain unique numbers for child statements
+      // this.myGrouping.questions.forEach(q => {
+      //   if (!!q.parentQuestionId) {
+      //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+      //   }
+      // });
+
+      if (this.configSvc.installationMode === "ACET") {
+          this.altTextPlaceholder = this.altTextPlaceholder_ACET;      
+      }
+
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -166,9 +177,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
-      });
+      .subscribe();
   }
 
   /**
@@ -244,7 +253,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * @param altText
    */
   storeAltText(q: Question) {
-
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -267,10 +275,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
-        });
+        .subscribe();
     }, 500);
 
   }
+
 }

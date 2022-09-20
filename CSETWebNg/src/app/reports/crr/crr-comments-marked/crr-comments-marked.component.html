@@ -20,150 +20,201 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="container-fluid text-center max-w-75in" style="padding-top: 75px;">
 
-    <div class="flex-container">
-        <div class="column">
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                COMMENTS REVIEW REPORT CISA CRR
-            </p>
+  <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+    <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+      <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print Report</button>
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="col">
+        <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">CYBER RESILIENCE REVIEW</h1>
+        <h1 class="text-capitalize" style="font-family: Verdana; font-size: 30px; letter-spacing: 5px; Color: #0f3c7a; margin: 0;">COMMENTS AND MARKED FOR REVIEW</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+            <img src="assets/images/ExecutiveFiles/image002.jpg" style="width: 500; height: 600;">
+          </div>
         </div>
-        <div class="column">
-            <p style="text-align: center">
-                <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
-            </p>
+        <div class="row justify-content-between">
+          <div class="col text-left">
+            <img [src]="logoPath" style="height: 7rem;">
+          </div>
+          <div class="col text-right" style="margin-left: 0">
+            <div>{{ crrModel?.reportData.information.assessment_Name }}</div>
+            <div>{{ crrModel?.reportData.information.assessment_Date | date:'dd-MMM-yyyy' }}</div>
+            <div>{{ crrModel?.reportData.information.assessor_Name }}</div>
+          </div>
         </div>
 
-        <div class="cover-page-bottom">
-          <app-logo-for-reports></app-logo-for-reports>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.Assessment_Name}}</div>
-                <div>
-                    {{response?.information.Assessment_Date | date:'dd-MMM-yyyy'}}
-                </div>
-                <div>
-                    {{response?.information.Assessor_Name}}
-                </div>
+        <div class="page-break"></div>
+
+        <div class="row justify-content-center">
+          <div class="col-10 border rounded-3 text-left" style="background-color: #f2f2f2;">
+            <div style="padding: 5rem 1rem">
+              <p>
+                This report contains two lists of questions.  The first list
+                indicates questions that have been commented on.
+                The second list indicates questions that have been marked for review.
+              </p>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="page-break"></div>
 
-    <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
+          <div class="page-break"></div>
 
-    <ng-template #mainContent>
-      <div class="ml-3 mr-3 form">
-        <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">Practices Marked for Review</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+    <div class="row justify-content-center my-5">
+      <div class="col">
+
+        <div class="mx-3">
+          <div class="d-flex flex-row justify-content-between align-items-end">
+            <h1 class="report-section-title">Practice Comments</h1>
+            <p style="color: #de761c; text-align: right;">
+              Marked for Review - <span><img src="assets/images/icons/MarkedFlag.png" class="marked-flag"></span>
+            </p>
+          </div>
         </div>
-        <hr class="page-line m-0">
-        <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.MarkedForReviewList">
-                <tr>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
-                    <td class="deficiencies-list-comment"
-                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                        <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                        </div>
-                    </td>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                        src="assets/images/icons/MarkedFlag.png">
-                </td>
-                </tr>
-                <div *ngIf="s.ANSWER.Comment;then c_comments_given"></div>
-                <ng-template #c_comments_given>
-                    <tr>
-                        <td></td>
-                        <td colspan="4">
-                            <div class="alert alert-secondary" style="background-color:#d6d8db">
-                                <table>
-                                    <tr>
-                                        <td
-                                            style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                            <b>Comment:</b>
-                                        </td>
-                                        <td
-                                            style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.Comment}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-template>
-                <tr>
-                    <td colspan="4">
-                        <hr class="my-2">
-                    </td>
-                </tr>
-            </ng-template>
-        </table>
 
-        <div *ngIf="!response?.MarkedForReviewList || response?.MarkedForReviewList.length == 0" class="mt-3">
-            There are no practices marked for review
+      <hr class="page-line m-0" />
+
+      <div *ngIf="loading" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+
+      <div *ngIf="!crrModel?.reportData.comments.length && !loading" class="row">
+        <div class="col text-left">
+          There are no practices with comments
         </div>
       </div>
 
-      <div class="ml-3 mr-3 form">
-        <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">Practice Comments</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+      <ng-container *ngFor="let comment of commentsList">
+        <div class="report-domain-header">
+          {{ comment.cat }}
         </div>
-        <hr class="page-line m-0">
-        <table role="presentation">
-            <ng-template ngFor let-s [ngForOf]="response?.Comments">
-                <tr>
-                    <td class="deficiencies-list-item"><b>Practice {{s.Mat.Question_Title}}</b></td>
-                    <td class="deficiencies-list-comment"
-                        [innerHTML]="reportSvc.scrubGlossaryMarkup(s.Mat.Question_Text)"></td>
-                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                        <div style="width: 7rem">
-                            {{configSvc.answerLabels[s.ANSWER.Answer_Text]}}
-                        </div>
-                    </td>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.ANSWER.Mark_For_Review"
-                        src="assets/images/icons/MarkedFlag.png"></td>
-                </tr>
-                <div *ngIf="s.ANSWER.Comment;then sc_comments_given"></div>
-                <ng-template #sc_comments_given>
-                    <tr>
-                        <td></td>
-                        <td colspan="4">
-                            <div class="alert alert-secondary" style="background-color:#d6d8db">
-                                <table>
-                                    <tr>
-                                        <td
-                                            style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                            <b>Comment:</b>
-                                        </td>
-                                        <td
-                                            style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                            {{s.ANSWER.Comment}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-template>
-                <tr>
-                    <td colspan="4">
-                        <hr class="my-2">
-                    </td>
-                </tr>
-            </ng-template>
-        </table>
-
-        <div *ngIf="!response?.Comments || response?.Comments.length == 0" class="mt-3">
-            There are no practices with comments
+        <div *ngFor="let matAnswer of comment.matAnswers" class="mat-section row"
+        style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+        <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
+          style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+          <div class="row mat-section m-0 p-0">
+            <div class="col-3 text-left">
+              <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{ matAnswer.mat.question_Title }}</h3>
+            </div>
+            <div class="col-6 text-left">
+              <p>
+                {{ matAnswer.mat.question_Text }}
+              </p>
+            </div>
+            <div class="col-2 text-left">
+              <p *ngIf="!matAnswer.isParentWithChildren">
+                {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
+              </p>
+            </div>
+            <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+              <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
+            </div>
+          </div>
+          <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
+              <div class="col-3 text-start">
+                <h4 class="small">Justification:</h4>
+              </div>
+              <div class="col-9 text-start">
+                <p>{{ matAnswer.answer.alternate_Justification }}</p>
+              </div>
+          </div>
+          <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
+            <div class="col-3 text-left">
+              <h4 class="small">Comment:</h4>
+            </div>
+            <div class="col-9 text-left">
+              <p>{{ matAnswer.answer.comment }}</p>
+            </div>
+          </div>
         </div>
       </div>
-    </ng-template>
+    </ng-container>
+
+
+      <div class="page-break"></div>
+
+
+      <div class="mx-3">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+          <h1 class="report-section-title">Practices Marked for Review</h1>
+          <p style="color: #de761c; text-align: right;">
+            Marked for Review - <span><img src="assets/images/icons/MarkedFlag.png" class="marked-flag"></span>
+          </p>
+        </div>
+      </div>
+
+      <hr class="page-line m-0" />
+
+      <div *ngIf="loading" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+
+      <div *ngIf="!crrModel?.reportData.markedForReviewList.length && !loading" class="row">
+        <div class="col text-left">
+          There are no practices marked for review
+        </div>
+      </div>
+
+      <ng-container *ngFor="let mfr of markedForReviewList">
+        <div class="report-domain-header">
+          {{ mfr.cat }}
+        </div>
+        <div *ngFor="let matAnswer of mfr.matAnswers" class="mat-section row"
+        style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+        <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
+          style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+          <div class="row mat-section m-0 p-0">
+            <div class="col-3 text-left">
+              <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{ matAnswer.mat.question_Title }}</h3>
+            </div>
+            <div class="col-6 text-left">
+              <p>
+                {{ matAnswer.mat.question_Text }}
+              </p>
+            </div>
+            <div class="col-2 text-left">
+              <p *ngIf="!matAnswer.isParentWithChildren">
+                {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
+              </p>
+            </div>
+            <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+              <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
+            </div>
+          </div>
+          <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
+              <div class="col-3 text-left">
+                <h4 class="small">Justification:</h4>
+              </div>
+              <div class="col-9 text-left">
+                <p>{{ matAnswer.answer.alternate_Justification }}</p>
+              </div>
+          </div>
+          <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
+            <div class="col-3 text-left">
+              <h4 class="small">Comment:</h4>
+            </div>
+            <div class="col-9 text-left">
+              <p>{{ matAnswer.answer.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </div>
+
+<style>
+  div {
+    page-break-inside: avoid !important;
+  }
+
+  h3, h4 {
+    font-weight: 500;
+  }
+</style>

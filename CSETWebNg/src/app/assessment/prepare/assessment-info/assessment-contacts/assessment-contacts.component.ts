@@ -34,6 +34,8 @@ import { ConfigService } from "../../../../services/config.service";
 import { EmailService } from "../../../../services/email.service";
 import { EditableUser } from "../../../../models/editable-user.model";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { LayoutService } from "../../../../services/layout.service";
 
 @Component({
   selector: "app-assessment-contacts",
@@ -50,6 +52,7 @@ export class AssessmentContactsComponent implements OnInit {
   userEmail: string;
   adding: boolean = false;
 
+
   // all child contact item components
   @ViewChildren(ContactItemComponent) contactItems: ContactItemComponent[];
 
@@ -59,7 +62,8 @@ export class AssessmentContactsComponent implements OnInit {
     private assessSvc: AssessmentService,
     private emailSvc: EmailService,
     private auth: AuthenticationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public layoutSvc: LayoutService
   ) { }
 
   ngOnInit() {
@@ -209,7 +213,11 @@ export class AssessmentContactsComponent implements OnInit {
    * Fires when a contact's edit is complete.
    */
   editContact(contact: User) {
-    this.assessSvc.updateContact(contact).subscribe(() => {
+    this.assessSvc.updateContact(contact).subscribe(data => {
+      if (data && data.userId != contact.userId) {
+        // Update the userId in case changing email linked to new user in backend
+        this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
+      }
       this.contactItems.forEach(x => x.enableMyControls = true);
       this.changeOccurred();
     });
@@ -258,6 +266,8 @@ export class AssessmentContactsComponent implements OnInit {
     }
 
     this.emailDialog = this.dialog.open(EmailComponent, {
+      width: this.layoutSvc.hp ? '90%' : '',
+      maxWidth: this.layoutSvc.hp ? '90%' : '',
       data: {
         showContacts: true,
         contacts: invitees,

@@ -22,26 +22,19 @@ namespace CSETWebCore.DataLayer.Model
 
         [Required]
         [StringLength(150)]
-        [Unicode(false)]
         public string PrimaryEmail { get; set; }
         [Key]
         public int UserId { get; set; }
-        [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Password { get; set; }
-        [Required]
         [StringLength(250)]
-        [Unicode(false)]
         public string Salt { get; set; }
         public bool IsSuperUser { get; set; }
         [Required]
         public bool? PasswordResetRequired { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string FirstName { get; set; }
         [StringLength(150)]
-        [Unicode(false)]
         public string LastName { get; set; }
         public Guid? Id { get; set; }
 

@@ -26,7 +26,7 @@ import { Category, Domain } from '../../../models/questions.model';
 import { QuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
@@ -64,8 +64,8 @@ export class DiagramQuestionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadQuestions();
     this.assessSvc.currentTab = 'questions';
+    this.loadQuestions();
   }
 
   /**

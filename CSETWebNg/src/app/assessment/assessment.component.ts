@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+
 import {
   Component,
   EventEmitter,
@@ -36,15 +37,18 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
-import { NavigationService } from '../services/navigation.service';
+import { LayoutService } from '../services/layout.service';
+import { NavTreeService } from '../services/navigation/nav-tree.service';
+import { NavigationService } from '../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment',
+  styleUrls: ['./assessment.component.scss'],
   templateUrl: './assessment.component.html',
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AssessmentComponent implements AfterContentChecked {
+export class AssessmentComponent implements OnInit, AfterContentChecked {
   innerWidth: number;
   innerHeight: number;
 
@@ -52,7 +56,7 @@ export class AssessmentComponent implements AfterContentChecked {
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
    */
-  expandNav = true;
+  expandNav = false;
 
   /**
    * Indicates whether the nav stays visible (true)
@@ -60,25 +64,18 @@ export class AssessmentComponent implements AfterContentChecked {
    */
   lockNav = true;
 
-  minWidth = 960;
+  widthBreakpoint = 960;
   scrollTop = 0;
 
+
   @Output() navSelected = new EventEmitter<string>();
+
   @ViewChild('sNav')
   sideNav: MatSidenav;
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.innerHeight = window.innerHeight;
-
-    // show/hide lock/unlock the nav drawer based on available width
-    if (this.innerWidth < this.minWidth) {
-      this.expandNav = false;
-      this.lockNav = false;
-    } else {
-      this.expandNav = true;
-      this.lockNav = true;
-    }
+    this.evaluateWindowSize();
   }
 
   constructor(
@@ -86,15 +83,21 @@ export class AssessmentComponent implements AfterContentChecked {
     private route: ActivatedRoute,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    private cd: ChangeDetectorRef
+    public navTreeSvc: NavTreeService,
+    private cd: ChangeDetectorRef,
+    public layoutSvc: LayoutService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.assessSvc.currentTab = 'prepare';
     this.navSvc.activeResultsView = null;
     if (localStorage.getItem('tree')) {
-      this.navSvc.buildTree(this.navSvc.getMagic());
+      this.navSvc.buildTree();
     }
+  }
+
+  ngOnInit(): void {
+    this.evaluateWindowSize();
   }
 
   ngAfterContentChecked() {
@@ -109,6 +112,39 @@ export class AssessmentComponent implements AfterContentChecked {
     return this.assessSvc.currentTab === tab;
   }
 
+  /**
+   * Determines how to display the sidenav.
+   */
+  sidenavMode() {
+    if (this.layoutSvc.hp) {
+      this.lockNav = false;
+      return 'over';
+    }
+
+    return this.innerWidth < this.widthBreakpoint ? 'over' : 'side';
+  }
+
+  /**
+   * Evaluates sidenav drawer behavior based on window size
+   */
+  evaluateWindowSize() {
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.innerHeight;
+
+    // show/hide lock/unlock the nav drawer based on available width
+    if (this.innerWidth < this.widthBreakpoint) {
+      this.expandNav = false;
+      this.lockNav = false;
+    } else {
+      this.expandNav = true;
+      this.lockNav = true;
+    }
+  }
+
+  /**
+   * Called when the user clicks an item
+   * in the nav.  
+   */
   selectNavItem(target: string) {
     if (!this.lockNav) {
       this.expandNav = false;

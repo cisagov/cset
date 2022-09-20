@@ -45,6 +45,7 @@ using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Business.GalleryParser;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,6 +63,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
+using System.Text.Json;
 
 namespace CSETWeb_ApiCore
 {
@@ -105,9 +107,11 @@ namespace CSETWeb_ApiCore
                 };
             });
             services.AddAuthorization();
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
@@ -138,6 +142,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
@@ -151,7 +156,9 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
+            services.AddTransient<IGalleryState, GalleryState>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
+
 
             services.AddSwaggerGen(c =>
             {
