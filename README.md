@@ -1,11 +1,9 @@
-# Please note we do not use java and are not vulnerable to the log4j vulnerability.
-After review we do use log4net but are not using log4j
-
+To Download the Latest CSET Release click here https://cset-download.inl.gov/
 
 # CSET 11.x.x
  
 Download CSET For Windows:
-[CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
+[CSET 11.X.X Standalone Installer](https://cset-download.inl.gov/)
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -13,8 +11,13 @@ What is CSET?
 How Do I Use CSET?
 [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU)
 
+Older Versions of CSET For Windows:
+[CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
 
-						
+
+# Please note we do not use java and are not vulnerable to the log4j vulnerability.
+After review we do use log4net but are not using log4j
+
 -------------------------------------------------------------------------
 
 File Checksum Integrity Verifier version 2.05.
