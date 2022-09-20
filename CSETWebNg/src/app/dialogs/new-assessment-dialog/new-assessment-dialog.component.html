@@ -13,8 +13,8 @@
         </div>
       </div>
     </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0" align="end">
-      <button class="btn btn-danger" (click)="close()" style="margin-right:5px;"><i class="fa-solid fa-xmark"></i></button>
-      <button class="btn btn-primary" (click)="launchAssessment()"><i class="fa-solid fa-play"></i></button>
+    <mat-dialog-actions class="pb-3 pt-0 mb-0" style="padding-right: 4rem" align="end">
+      <button matTooltip="Close" class="btn btn-secondary" (click)="close()" style="margin-right:5px;"><i class="fa-solid fa-xmark"></i></button>
+      <button matTooltip="Create Assessment" class="btn btn-primary" (click)="launchAssessment()"><i class="fa-solid fa-play"></i></button>
     </mat-dialog-actions>
   </div>
