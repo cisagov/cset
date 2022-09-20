@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Diagram\" />
     <Folder Include="Documents\cdDocs_CRR\" />
-    <Folder Include="WebApp\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +55,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Diagram\src\main\webapp\package.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="WebApp\placeholder.txt" />
+    <Content Include="WebApp\placeholder.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
