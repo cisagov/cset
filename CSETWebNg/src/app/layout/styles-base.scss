@@ -158,6 +158,8 @@ $na-color: #367190;
 $na-hover-color: #0a4b6e;
 $alt-color: #b17300;
 $alt-hover-color: #805300;
+$iss-color: #242424;
+$iss-hover-color: #000000;
 
 $spacer: 18px;
 
@@ -425,7 +427,7 @@ label[required]::after {
 
 .quick-info-container {
   border-radius: 4px;
-  background-color: $secondary-color;
+  background-color: $primary-800;
   color: $gray-100;
   //min-width: 130px;
 }
@@ -744,6 +746,22 @@ table.td-align-top td {
 .btn-alt.answer-selected,
 .btn-alt:hover {
   background-color: $alt-color;
+  color: $active-text-color;
+}
+
+.btn-iss {
+  background-color: $white;
+  border-color: $iss-color;
+  color: $iss-color;
+}
+
+.btn-iss.answer-selected:hover {
+  background-color: $iss-hover-color;
+}
+
+.btn-iss.answer-selected,
+.btn-iss:hover {
+  background-color: $iss-color;
   color: $active-text-color;
 }
 

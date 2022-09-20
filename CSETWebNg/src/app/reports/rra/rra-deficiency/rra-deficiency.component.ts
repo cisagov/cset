@@ -15,6 +15,8 @@ export class RraDeficiencyComponent implements OnInit {
 
   response: any;
 
+  loading: boolean = false;
+
   colorSchemeRed = { domain: ['#DC3545'] };
   xAxisTicks = [0, 25, 50, 75, 100];
 
@@ -31,6 +33,7 @@ export class RraDeficiencyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.titleService.setTitle("Deficiency Report - RRA");
 
     this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
@@ -58,6 +61,7 @@ export class RraDeficiencyComponent implements OnInit {
         });
 
         this.response.deficienciesList = basicList.concat(intermediateList).concat(advancedList);
+        this.loading = false;
       },
       error => console.log('Deficiency Report Error: ' + (<Error>error).message)
     );
@@ -84,9 +88,9 @@ export class RraDeficiencyComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param levelNumber 
-   * @returns 
+   *
+   * @param levelNumber
+   * @returns
    */
   getStringLevel(levelNumber: number) {
     //this should come from db eventually.
@@ -126,7 +130,7 @@ export class RraDeficiencyComponent implements OnInit {
   /**
    * Build a chart sorting the least-compliant goals to the top.
    * Must build answerDistribByGoal before calling this function.
-   * @param r 
+   * @param r
    */
    createTopRankedGoals(r: any) {
     let goalList = [];
@@ -144,9 +148,9 @@ export class RraDeficiencyComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param x 
-   * @returns 
+   *
+   * @param x
+   * @returns
    */
   formatPercent(x: any) {
     return x + '%';

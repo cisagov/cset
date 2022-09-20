@@ -115,11 +115,11 @@
       </div>
       <table class="builder-requirement-docs">
         <tr>
-          <th class="pr-2">Source Documents</th>
+          <th class="pr-4">Source Documents</th>
           <th>Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.sourceDocs">
-          <td class="pr-2">
+          <td class="pr-4">
             {{ref.title}}
           </td>
           <td>
@@ -135,7 +135,7 @@
         </tr>
         <tr>
           <td class="pr-2">
-            <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocID">
+            <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
@@ -146,18 +146,18 @@
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.requirementID, newSourceDocID, true, newSourceSectionRef, true)"
+              (click)="addDeleteReference(r.requirementID, newSourceDocId, true, newSourceSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>
           </td>
         </tr>
         <tr>
-          <th class="pt-2">Help Documents</th>
+          <th class="pt-2 pr-4">Additional Documents</th>
           <th class="pt-2">Bookmark</th>
         </tr>
-        <tr *ngFor="let ref of r.resourceDocs">
-          <td>
+        <tr *ngFor="let ref of r.additionalDocs">
+          <td class="pr-4">
             {{ref.title}}
           </td>
           <td>
@@ -173,19 +173,19 @@
         </tr>
         <tr>
           <td class="pr-2">
-            <select id="newResourceDoc" name="newResourceDoc" class="form-control" [(ngModel)]="newResourceDocID">
+            <select id="newAdditionalDoc" name="newAdditionalDoc" class="form-control" [(ngModel)]="newAdditionalDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
-            <div class="alert alert-danger" *ngIf="resourceDocMissing">A document is required.</div>
+            <div class="alert alert-danger" *ngIf="additionalDocMissing">A document is required.</div>
           </td>
           <td>
             <input type="text" maxlength="2000" id="newBookmark" class="form-control"
-              [(ngModel)]="newResourceSectionRef">
+              [(ngModel)]="newAdditionalSectionRef">
           </td>
           <td>
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-              (click)="addDeleteReference(r.requirementID, newResourceDocID, false, newResourceSectionRef, true)"
+              (click)="addDeleteReference(r.requirementID, newAdditionalDocId, false, newAdditionalSectionRef, true)"
               matTooltip="Add reference">
               <span class="cset-icons-plus fs-base-2 mr-2"></span>
             </button>

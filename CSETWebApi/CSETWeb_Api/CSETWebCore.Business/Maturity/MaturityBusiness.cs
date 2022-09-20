@@ -47,7 +47,9 @@ namespace CSETWebCore.Business.Maturity
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
-                        QuestionsAlias = mm.Questions_Alias
+                        ModelTitle = mm.Model_Title,
+                        QuestionsAlias = mm.Questions_Alias,
+                        ModelDescription = mm.Model_Description
                     };
             var myModel = q.FirstOrDefault();
 
@@ -216,7 +218,10 @@ namespace CSETWebCore.Business.Maturity
                             break;
                         case "N":
                         case "U":
-                            q.Score = (int)mx?.SPRSValue;
+                            if (mx != null)
+                            {
+                                q.Score = (int)mx.SPRSValue;
+                            }
                             break;
                     }
 
@@ -322,7 +327,7 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public Dictionary<int,string> getSourceFiles()
+        public Dictionary<int,string> GetSourceFiles()
         {
             List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
@@ -846,6 +851,36 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// Returns the percentage of maturity questions that have been answered for the 
+        /// current maturity level (IRP).
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public double GetIseAnswerCompletionRate(int assessmentId)
+        {
+            var irp = GetOverallIrpNumber(assessmentId);
+
+            // get the highest maturity level for the risk level (use the stairstep model)
+            var topMatLevel = GetIseTopMatLevelForRisk(irp);
+
+            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+
+            var answeredCount = 0;
+            var totalCount = 0;
+            foreach (var d in answerDistribution)
+            {
+                if (d.Answer_Text != "U")
+                {
+                    answeredCount += d.Count;
+                }
+                totalCount += d.Count;
+            }
+
+            return ((double)answeredCount / (double)totalCount) * 100d;
+        }
+
+
+        /// <summary>
         /// Using the 'stairstep' model, determines the highest maturity level
         /// that corresponds to the specified IRP/risk.  
         /// 
@@ -873,6 +908,31 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
+        /// <summary>
+        /// Using the 'stairstep' model, determines the highest maturity level
+        /// that corresponds to the specified IRP/risk.  
+        /// 
+        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
+        /// though this method only returns the top level.
+        /// </summary>
+        /// <param name="irp"></param>
+        /// <returns></returns>
+        private int GetIseTopMatLevelForRisk(int irp)
+        {
+            switch (irp)
+            {
+                case 1:
+                    return 1; // SCUEP
+                case 2:
+                    return 2; // CORE
+                case 3:
+                    return 3; // CORE+
+            }
+
+            return 0;
+        }
+
+
 
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
@@ -882,6 +942,12 @@ namespace CSETWebCore.Business.Maturity
 
 
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
+        {
+            var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
+            return CalculateComponentValues(data, assessmentId);
+        }
+
+        public List<MaturityDomain> GetIseMaturityAnswers(int assessmentId)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
             return CalculateComponentValues(data, assessmentId);
@@ -1126,6 +1192,184 @@ namespace CSETWebCore.Business.Maturity
             return maturityDomains;
         }
 
+        /// <summary>
+        /// Calculate maturity levels of components
+        /// </summary>
+        /// <param name="maturity"></param>
+        /// <returns></returns>
+        public List<MaturityDomain> CalculateIseComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
+        {
+
+            var maturityDomains = new List<MaturityDomain>();
+            var domains = _context.MATURITY_GROUPINGS.Where(row => row.Maturity_Model_Id == 10 && row.Group_Level == 2).ToList();
+            var sub_categories = from m in maturity
+                                 group new { m.Domain, m.AssessmentFactor, m.FinComponent }
+                                  by new { m.Domain, m.AssessmentFactor, m.FinComponent } into mk
+                                 select new
+                                 {
+                                     mk.Key.Domain,
+                                     mk.Key.AssessmentFactor,
+                                     mk.Key.FinComponent
+                                 };
+
+            //var maturityRange = GetMaturityRange(assessmentId);
+
+            if (maturity.Count > 0)
+            {
+                foreach (var d in domains)
+                {
+                    var tGroupOrder = maturity.FirstOrDefault(x => x.Domain == d.Title);
+                    var maturityDomain = new MaturityDomain
+                    {
+                        DomainName = d.Title,
+                        Assessments = new List<MaturityAssessment>(),
+                        Sequence = Int32.Parse(d.Title_Id),
+                        TargetPercentageAchieved = 0,
+                        PercentAnswered = 0
+                    };
+
+                    var DomainQT = 0;
+                    var DomainAT = 0;
+
+                    var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Title).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
+                    foreach (var s in partial_sub_categoy)
+                    {
+
+                        int AssQT = 0;
+                        int AssAT = 0;
+
+                        var maturityAssessment = new MaturityAssessment
+                        {
+                            AssessmentFactor = s,
+                            Components = new List<MaturityComponent>(),
+                            Sequence = (int)maturity.FirstOrDefault(x => x.AssessmentFactor == s).grouporder
+
+                        };
+                        var assessmentCategories = sub_categories.Where(x => x.AssessmentFactor == s);
+                        foreach (var c in assessmentCategories)
+                        {
+                            int CompQT = 0;
+                            int CompAT = 0;
+                            int CompQuestions = 0;
+                            int totalAnswered = 0;
+                            double AnsweredPer = 0;
+
+                            var component = new MaturityComponent
+                            {
+                                ComponentName = c.FinComponent,
+                                Sequence = (int)maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).grouporder
+
+                            };
+                            var scuep = new SalAnswers
+                            {
+                                UnAnswered = !maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).Complete,
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()).AnswerPercent * 100) : 0
+                            };
+
+                            // Calc total questons and anserwed
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.ScuepMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                            totalAnswered = 0;
+
+                            if (AnsweredPer > 0)
+                            {
+                                totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                            }
+                            CompQT += CompQuestions;
+                            CompAT += totalAnswered;
+
+                            var core = new SalAnswers
+                            {
+
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()).AnswerPercent * 100) : 0
+
+
+                            };
+
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CoreMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                            totalAnswered = 0;
+
+                            if (AnsweredPer > 0)
+                            {
+                                totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                            }
+                            CompQT += CompQuestions;
+                            CompAT += totalAnswered;
+
+
+                            var corePlus = new SalAnswers
+                            {
+
+                                Answered = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()).AnswerPercent * 100) : 0
+
+                            };
+
+                            CompQuestions = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()).Total) : 0;
+                            AnsweredPer = maturity.Any(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()) ? Convert.ToInt32(maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent && x.MaturityLevel == Constants.Constants.CorePlusMaturity.ToUpper()).AnswerPercent * 100) : 0;
+
+                            totalAnswered = 0;
+
+                            if (AnsweredPer > 0)
+                            {
+                                totalAnswered = Convert.ToInt32((AnsweredPer / 100) * CompQuestions);
+                            }
+
+                            CompQT += CompQuestions;
+                            CompAT += totalAnswered;
+
+                            component.Scuep = scuep.Answered;
+                            component.Core = core.Answered;
+                            component.CorePlus = corePlus.Answered;
+                            component.AssessedMaturityLevel = scuep.UnAnswered ? Constants.Constants.IncompleteMaturity :
+                                                                scuep.Answered < 100 ? Constants.Constants.SubBaselineMaturity :
+                                                                    core.Answered < 100 ? Constants.Constants.ScuepMaturity :
+                                                                        corePlus.Answered < 100 ? Constants.Constants.CoreMaturity :
+                                                                            "CORE+";
+
+                            maturityAssessment.Components.Add(component);
+
+                            AssQT += CompQT;
+                            AssAT += CompAT;
+                        }
+
+                        maturityAssessment.AssessmentFactorMaturity = maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.IncompleteMaturity) ? Constants.Constants.IncompleteMaturity :
+                                                                        maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.SubBaselineMaturity) ? Constants.Constants.SubBaselineMaturity :
+                                                                            maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.ScuepMaturity) ? Constants.Constants.ScuepMaturity :
+                                                                                maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CoreMaturity) ? Constants.Constants.CoreMaturity :
+                                                                                    maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CorePlusMaturity) ? Constants.Constants.CorePlusMaturity :
+                                                                                        Constants.Constants.IncompleteMaturity;
+                        
+                        maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
+                        maturityDomain.Assessments.Add(maturityAssessment);
+
+                        DomainQT += AssQT;
+                        DomainAT += AssAT;
+
+                    }
+
+                    maturityDomain.DomainMaturity = maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.IncompleteMaturity) ? Constants.Constants.IncompleteMaturity :
+                                                                        maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.SubBaselineMaturity) ? Constants.Constants.SubBaselineMaturity :
+                                                                           maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.ScuepMaturity) ? Constants.Constants.ScuepMaturity :
+                                                                               maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.CoreMaturity) ? Constants.Constants.CoreMaturity :
+                                                                                   maturityDomain.Assessments.Any(x => x.AssessmentFactorMaturity == Constants.Constants.CorePlusMaturity) ? Constants.Constants.CorePlusMaturity :
+                                                                                        Constants.Constants.IncompleteMaturity;
+
+                    maturityDomain.Assessments = maturityDomain.Assessments.OrderBy(x => x.Sequence).ToList();
+
+                    double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
+                    maturityDomain.TargetPercentageAchieved = AchPerTol;
+
+                    maturityDomains.Add(maturityDomain);
+                }
+            }
+
+            maturityDomains = maturityDomains.OrderBy(x => x.Sequence).ToList();
+            return maturityDomains;
+        }
+
 
         /// <summary>
         /// Get matrix for maturity determination based on total irp rating
@@ -1144,6 +1388,23 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// Get matrix for maturity determination based on total irp rating
+        /// </summary>
+        /// <param name="irpRating"></param>
+        /// <returns></returns>
+        public List<string> GetIseMaturityRange(int assessmentId)
+        {
+            Model.Acet.ACETDashboard irpCalculation = GetIseIrpCalculation(assessmentId);
+            int assetLevel = Int32.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
+            bool targetBandOnly = GetTargetBandOnly(assessmentId);
+            int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : assetLevel;
+            if (!targetBandOnly)
+                irpRating = 3; //Do the default configuration
+            return IrpSwitchIse(irpRating);
+        }
+
+
+        /// <summary>
         /// Returns the active maturity level list, but the IDs for the levels.
         /// </summary>
         /// <param name="assessmentId"></param>
@@ -1155,6 +1416,27 @@ namespace CSETWebCore.Business.Maturity
             var result = GetMaturityRange(assessmentId);
 
             var levels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 1).ToList();
+            foreach (string r in result)
+            {
+                output.Add(levels.Where(x => x.Level_Name.ToLower() == r.ToLower()).First().Maturity_Level_Id);
+            }
+
+            return output;
+        }
+
+
+        /// <summary>
+        /// Returns the active maturity level list, but the IDs for the levels.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public List<int> GetIseMaturityRangeIds(int assessmentId)
+        {
+            var output = new List<int>();
+
+            var result = GetIseMaturityRange(assessmentId);
+
+            var levels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == 10).ToList();
             foreach (string r in result)
             {
                 output.Add(levels.Where(x => x.Level_Name.ToLower() == r.ToLower()).First().Maturity_Level_Id);
@@ -1191,6 +1473,29 @@ namespace CSETWebCore.Business.Maturity
                     {
                         Constants.Constants.BaselineMaturity, Constants.Constants.EvolvingMaturity, Constants.Constants.IntermediateMaturity,
                         Constants.Constants.AdvancedMaturity, Constants.Constants.InnovativeMaturity
+                    };
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="irpRating"></param>
+        /// <returns></returns>
+        public List<string> IrpSwitchIse(int irpRating)
+        {
+            switch (irpRating)
+            {
+                case 1:
+                    return new List<string> { Constants.Constants.ScuepMaturity };
+                case 2:
+                    return new List<string>
+                        { Constants.Constants.CoreMaturity, Constants.Constants.CorePlusMaturity };
+                default:
+                    return new List<string>
+                    {
+                        Constants.Constants.ScuepMaturity, Constants.Constants.CoreMaturity, Constants.Constants.CorePlusMaturity
                     };
             }
         }
@@ -1458,6 +1763,91 @@ namespace CSETWebCore.Business.Maturity
             return result;
         }
 
+        /// <summary>
+        /// Get all IRP calculations for display
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public Model.Acet.ACETDashboard GetIseIrpCalculation(int assessmentId)
+        {
+            Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
+
+
+            // now just properties on an Assessment
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            if (assessment == null) { return null; }
+            result.CreditUnionName = assessment.CreditUnionName;
+            result.Charter = assessment.Charter;
+            result.Assets = assessment.Assets;
+
+            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
+            
+            //IRP Section
+            result.Override = assessment.IRPTotalOverride ?? 0;
+            result.OverrideReason = assessment.IRPTotalOverrideReason;
+            foreach (IRP_HEADER header in _context.IRP_HEADER)
+            {
+                IRPSummary summary = new IRPSummary();
+                summary.HeaderText = header.Header;
+
+                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
+                if (headerInfo != null)
+                {
+                    summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
+                    summary.RiskLevel = headerInfo.RISK_LEVEL.Value;
+                    summary.Comment = headerInfo.COMMENT;
+                }
+
+                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
+                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
+                foreach (DataLayer.Model.IRP irp in irps)
+                {
+                    ASSESSMENT_IRP answer = null;
+                    dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
+                    //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
+                    if (answer != null && answer.Response != 0)
+                    {
+                        summary.RiskCount[answer.Response.Value - 1]++;
+                        summary.RiskSum++;
+                        result.SumRisk[answer.Response.Value - 1]++;
+                        result.SumRiskTotal++;
+                    }
+                }
+
+                result.Irps.Add(summary);
+            }
+
+            //go back through the IRPs and calculate the Risk Level for each section
+            foreach (IRPSummary irp in result.Irps)
+            {
+                int MaxRisk = 0;
+                irp.RiskLevel = 0;
+                for (int i = 0; i < irp.RiskCount.Length; i++)
+                {
+                    if (irp.RiskCount[i] >= MaxRisk && irp.RiskCount[i] > 0)
+                    {
+                        MaxRisk = irp.RiskCount[i];
+                        irp.RiskLevel = i + 1;
+                    }
+                }
+            }
+
+            _context.SaveChanges();
+
+            result.SumRiskLevel = 1;
+            int maxRisk = 0;
+            for (int i = 0; i < result.SumRisk.Length; i++)
+            {
+                if (result.SumRisk[i] >= maxRisk && result.SumRisk[i] > 0)
+                {
+                    result.SumRiskLevel = i + 1;
+                    maxRisk = result.SumRisk[i];
+                }
+            }
+
+            return result;
+        }
+
         public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
         {
             if (assessmentId == 0 || summary == null) { return; }
@@ -1542,6 +1932,29 @@ namespace CSETWebCore.Business.Maturity
         {
             var msfm = new MaturityStructureForModel(modelId, _context);
             return msfm;
+        }
+
+
+        /// <summary>
+        /// Returns an unordered list of MATURITY_GROUPINGS titles and IDs for a model.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public List<GroupingTitle> GetGroupingTitles(int modelId)
+        {
+            var dbList = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).ToList();
+
+            var response = new List<GroupingTitle>();
+            dbList.ForEach(x => 
+            {
+                response.Add(new GroupingTitle() 
+                { 
+                    Id = x.Grouping_Id,
+                    Title = x.Title
+                });
+            });
+
+            return response;
         }
     }
 }

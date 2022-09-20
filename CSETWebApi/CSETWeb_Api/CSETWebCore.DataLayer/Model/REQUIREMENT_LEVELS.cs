@@ -23,14 +23,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string Standard_Level { get; set; }
         /// <summary>
         /// The Level Type is used to
         /// </summary>
         [Key]
-        [StringLength(5)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Level_Type { get; set; }
         /// <summary>
         /// The Id is used to

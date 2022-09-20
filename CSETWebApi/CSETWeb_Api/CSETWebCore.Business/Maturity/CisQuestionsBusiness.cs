@@ -344,5 +344,73 @@ namespace CSETWebCore.Business.Maturity
 
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Get all of the integrity check options.
+        /// </summary>
+        /// <returns>The list of all options applicable to an integrity check</returns>
+        public List<IntegrityCheckOption> GetIntegrityCheckOptions() 
+        {
+            List<IntegrityCheckOption> integrityCheckOptions = new List<IntegrityCheckOption>();
+
+            var integrityCheckDbPairs = _context.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK.ToList();
+            var myAnswers = _context.ANSWER.Where(a => a.Assessment_Id == _assessmentId).ToList();
+            var cisQuestions = _context.MATURITY_QUESTIONS.Where(q => q.Maturity_Model_Id == _cisModelId).ToList();
+
+            foreach (var pair in integrityCheckDbPairs) 
+            {
+                // Add the first integrity check option of the pair.
+                ProcessIntegrityCheckOption(pair.Mat_Option_Id_1, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
+
+                // Now add the second option of the pair if not already added.
+                ProcessIntegrityCheckOption(pair.Mat_Option_Id_2, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
+            }
+
+            return integrityCheckOptions;
+        }
+
+        private void ProcessIntegrityCheckOption(int pairOptionId, List<IntegrityCheckOption> integrityCheckOptions, 
+            List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> integrityCheckDbPairs, List<ANSWER> myAnswers, List<MATURITY_QUESTIONS> cisQuestions) 
+        {
+
+            var query = from mq in _context.MATURITY_QUESTIONS
+                        join ma in _context.MATURITY_ANSWER_OPTIONS on mq.Mat_Question_Id equals ma.Mat_Question_Id
+                        select new { mq, ma };
+
+            if (!integrityCheckOptions.Exists(opt => opt.OptionId == pairOptionId))
+            {
+                IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pairOptionId};
+                newOption.Selected = myAnswers.Find(a => a.Mat_Option_Id == newOption.OptionId)?.Answer_Text == "S";
+
+                foreach (var p in integrityCheckDbPairs)
+                {
+                    int? optionId = null;
+
+                    if (p.Mat_Option_Id_2 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_1))
+                    {
+                        optionId = p.Mat_Option_Id_1;
+                    }
+                    else if (p.Mat_Option_Id_1 == newOption.OptionId && !newOption.InconsistentOptions.Exists(o => o.OptionId == p.Mat_Option_Id_2))
+                    {
+                        optionId = p.Mat_Option_Id_2;
+                    }
+
+                    if (optionId != null)
+                    {
+                        var matQuestion = query.Where(x => x.ma.Mat_Option_Id == optionId).FirstOrDefault().mq;
+                        // Try to get the next level up parent question, if available, to make integrity check warnings more clear.
+                        string parentQuestionText = cisQuestions.Where(q => q.Mat_Question_Id == matQuestion.Parent_Question_Id).FirstOrDefault()?.Question_Text ?? matQuestion.Question_Text;
+                        newOption.InconsistentOptions.Add(
+                            new InconsistentOption()
+                            {
+                                OptionId = (int)optionId,
+                                ParentQuestionText = parentQuestionText
+                            });
+                    }
+
+                }
+                integrityCheckOptions.Add(newOption);
+            }
+        }
     }
 }

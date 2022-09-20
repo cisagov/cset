@@ -42,11 +42,9 @@
         <table>
           <tr *ngFor="let a of assessments">
             <td>
-              <input type="checkbox" [id]="'assess-' + a.assessmentId" class="mr-2"
+              <input type="checkbox" [id]="'assess-' + a.assessmentId" class="checkbox-custom mr-2"
                 (change)="toggleSelection($event, a)" [checked]="a.selected">
-            </td>
-            <td>
-              <label [for]="'assess-' + a.assessmentId" class="mb-0 pr-5">{{ a.assessmentName }}</label>
+                <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pr-5">{{ a.assessmentName }}</label>
             </td>
             <td>
               {{ a.assessmentDate | date:'dd-MMM-yyyy' }}

@@ -25,18 +25,13 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Mat_Question_Id { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string Question_Title { get; set; }
         [Required]
-        [Unicode(false)]
         public string Question_Text { get; set; }
-        [Unicode(false)]
         public string Supplemental_Info { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string Category { get; set; }
         [StringLength(250)]
-        [Unicode(false)]
         public string Sub_Category { get; set; }
         public int Maturity_Level { get; set; }
         public int Sequence { get; set; }
@@ -46,13 +41,10 @@ namespace CSETWebCore.DataLayer.Model
         public int? Parent_Question_Id { get; set; }
         public int? Ranking { get; set; }
         public int? Grouping_Id { get; set; }
-        [Unicode(false)]
         public string Examination_Approach { get; set; }
         [StringLength(80)]
-        [Unicode(false)]
         public string Short_Name { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Mat_Question_Type { get; set; }
         public int? Parent_Option_Id { get; set; }
 

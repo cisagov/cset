@@ -23,7 +23,7 @@ export class VadrSummaryComponent implements OnInit {
   arcWidth = .5;
   legend: string[] = [];
   colorScheme = {
-    domain: ['#28A745', '#DC3545', '#c3c3c3']
+    domain: ['#28A745', '#DC3545', '#FFC107', '#c3c3c3']
   };
 
   legendColors: ColorHelper;
@@ -48,6 +48,7 @@ export class VadrSummaryComponent implements OnInit {
           'name': element.level_Name, series: [
             { 'name': 'Yes', value: '' },
             { 'name': 'No', value: '' },
+            { 'name': 'Alternate', value: '' },
             { 'name': 'Unanswered', value: '' },
           ]
         };

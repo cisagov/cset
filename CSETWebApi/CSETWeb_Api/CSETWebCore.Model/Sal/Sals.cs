@@ -8,7 +8,6 @@
         public string CLevel { get; set; }
         public string ILevel { get; set; }
         public string ALevel { get; set; }
-        public bool SelectedSALOverride { get; set; }
-        public string AssessmentName { get; internal set; }
+        public bool SelectedSALOverride { get; set; }       
     }
 }

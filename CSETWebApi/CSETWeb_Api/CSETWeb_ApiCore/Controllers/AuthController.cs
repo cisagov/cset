@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Business.Authorization;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Model.Authentication;
@@ -11,13 +12,15 @@ namespace CSETWebCore.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserAuthentication _userAuthentication;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _tokenManager;
         private static readonly object _locker = new object();
         static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(AuthController));
 
-        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager)
+        public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager, ILocalInstallationHelper localInstallationHelper)
         {
             _userAuthentication = userAuthentication;
+            _localInstallationHelper = localInstallationHelper;
             _tokenManager = tokenManager;
         }
 
@@ -82,8 +85,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/islocal")]
         public IActionResult IsLocalInstallation()
         {
-            string scope = _tokenManager.Payload(Constants.Constants.Token_Scope);
-            return Ok(_userAuthentication.IsLocalInstallation(scope));
+            return Ok(_localInstallationHelper.IsLocalInstallation());
         }
 
         /// <summary>

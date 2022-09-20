@@ -5,6 +5,6 @@ namespace CSETWebCore.Model.Set
     public class ReferenceDocLists
     {
         public List<ReferenceDoc> SourceDocs;
-        public List<ReferenceDoc> ResourceDocs;
+        public List<ReferenceDoc> AdditionalDocs;
     }
 }

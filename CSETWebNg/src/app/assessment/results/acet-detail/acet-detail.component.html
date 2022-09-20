@@ -1,0 +1,189 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <div class="container">
+        <div class="row" style="padding-bottom:5px;">
+            <div class="col-8" style="padding-left:0;">
+                <h3>ACET Maturity Results</h3>
+            </div>
+            <div class="col-4"><button class="btn btn-primary float-right" (click)="checkExpand()">{{expand}}</button>
+            </div>
+        </div>
+        <div *ngIf="false">
+            <input type="checkbox" [(ngModel)]="targetBandOnly" name="targetBandOnlyCheckbox"
+                (change)="setTargetBand()">
+            <label for="targetBandOnlyCheckbox">&nbsp;Show Target Band Only</label>
+
+        </div>
+
+        <div class="d-table mb-4" style="min-width: 50%;">
+            <div class="d-table-row">
+                <div class="d-table-cell pr-3 label-cell">IRP:</div>
+                <div class="d-table-cell">{{overallIrp}}</div>
+            </div>
+            <div class="d-table-row">
+                <div class="d-table-cell pr-3 label-cell">Target Maturity Range:</div>
+                <div class="d-table-cell">{{matRangeString}}</div>
+            </div>
+        </div>
+
+        <div class="row" *ngFor="let domain of domainDataList">
+            <div class="col-lg" style="padding-bottom:20px;">
+                <div class="row">
+                    <h5>Domain</h5>
+                </div>
+                <div class="row" *ngIf="!layoutSvc.hp">
+                    <div class="col-8 my-auto">
+                        <h6>{{domain.domainName}}</h6>
+                    </div>
+                    <div class="col-4 float-right my-auto">
+                        <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)"
+                            style="float:right; width:300px;">
+
+                            <div class="row">
+                                <div class="col-8">
+                                    Actual Level:
+                                </div>
+                                <div class="col-4" [ngClass]="checkMaturity(domain.domainMaturity)">
+                                    {{ domain.levelDisplay }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="layoutSvc.hp">
+                    <h6>{{domain.domainName}}</h6>
+                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain)" style="float:right; width:300px;">
+                        <div class="row">
+                            <div class="col-8">
+                                Actual Level:
+                            </div>
+                            <div class="col-4" [ngClass]="checkMaturity(domain.domainMaturity)">
+                                {{ domain.levelDisplay }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngFor="let factor of domain.graphdata" class="mt-4">
+                    <div class="row">
+                        <h5 class="mb-3">Assessment Factor</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg">
+
+                            <mat-accordion multi="true">
+
+                                <mat-expansion-panel [expanded]="expanded">
+                                    <mat-expansion-panel-header *ngIf="!layoutSvc.hp">
+                                        <mat-panel-title>
+                                            <h6>{{factor.assessmentFactor}}</h6>
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            <div class="alert"
+                                                [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
+                                                style="width:125px;height:41px; margin-top:15px; padding:.5rem .25rem">
+                                                {{
+                                                acetSvc.translateMaturity(factor.domainMaturity) }}</div>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+
+                                    <mat-expansion-panel-header *ngIf="layoutSvc.hp">
+                                        <div class="flex-column">
+                                            <h6 class="text-center mt-2">{{factor.assessmentFactor}}</h6>
+                                            <div class="alert"
+                                                [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
+                                                style="width:125px;height:41px; margin-top:15px; padding:.5rem .25rem">
+                                                {{ acetSvc.translateMaturity(factor.domainMaturity) }}</div>
+                                        </div>
+
+                                    </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <h5>Components</h5>
+                                    </div>
+                                    <div class="row clearfix" *ngFor="let comp of factor.sections; last as isLast">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="mt-3 mb-3 item-table">
+
+                                                    <div *ngIf="!layoutSvc.hp" class="row">
+                                                        <div class="col-8 my-auto">
+                                                            <h1 class="item-title m-0">{{comp.name}}</h1>
+                                                        </div>
+                                                        <div class="col-4 my-auto">
+                                                            <div class="alert"
+                                                                [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
+                                                                style="width:125px; height:41px; padding:.5rem .25rem; margin-right:23px; float:right;margin-top: 1rem">
+                                                                {{
+                                                                acetSvc.translateMaturity(comp.assessedMaturityLevel) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="layoutSvc.hp" class="d-flex flex-column align-items-center">
+                                                        <div class="pt-2">
+                                                            <h1 class="item-title" style="text-indent: 0">{{comp.name}}
+                                                            </h1>
+                                                        </div>
+                                                        <div>
+                                                            <div class="alert py-2 px-1"
+                                                                [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
+                                                                style="width:125px; height:41px;">{{
+                                                                acetSvc.translateMaturity(comp.assessedMaturityLevel) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-3 mr-3 form">
+                                                        <table class="label-value mx-auto">
+                                                            <tbody>
+                                                                <tr class="item-row">
+                                                                    <td>
+                                                                        <app-acet-donut-chart [donutData]="comp.data"
+                                                                            [range]="matRange"></app-acet-donut-chart>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <hr [hidden]="isLast">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-nav-back-next [page]="'acet-detail'"></app-nav-back-next>
+
+</div>

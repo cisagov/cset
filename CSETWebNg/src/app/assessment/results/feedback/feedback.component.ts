@@ -27,7 +27,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalysisService } from '../../../services/analysis.service';
 import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AnalyticsService } from '../../../services/analytics.service';

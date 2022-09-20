@@ -1,0 +1,257 @@
+<nav>
+
+    <!-- Prepare Phase -->
+    <node displaytext="Prepare" id="phase-prepare">
+        <node displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" condition="SOURCE-NOT:TSA" />
+        <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" condition="SOURCE-NOT:TSA MATURITY-NOT:ISE" />
+
+        <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="SOURCE:TSA" />
+        <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="SOURCE:TSA" />
+
+        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM)" />
+
+        <!-- model select (this will be going away when the Gallery Interface is ready, but will still be needed for other skins?) -->
+        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" condition="HIDE" />
+
+        <!-- Standards selection screen -->
+        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="HIDE" />
+
+        <!-- ACET-specific screens -->
+        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:ACET" />
+        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:ACET" />
+
+        <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:ISE" />
+
+        <!-- Diagram -->
+        <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" condition="OPTION:DIAGRAM" />
+
+        <!-- maturity model tutorials -->
+        <node displaytext="CMMC Tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" condition="MATURITY:CMMC" />
+        <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" condition="MATURITY-ANY(CMMC,CMMC2)" />
+
+        <node displaytext="CMMC Tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" condition="MATURITY:CMMC2" />
+
+        <node displaytext="EDM Tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" condition="MATURITY:EDM" />
+
+        <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:CRR" />
+
+        <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA" />
+
+        <node displaytext="CIS Tutorial" id="tutorial-cis" path="assessment/{:id}/prepare/tutorial-cis" condition="MATURITY:CIS" />
+        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
+        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="MATURITY:CIS" />
+
+    </node>
+
+
+
+    <!-- Assessment Phase -->
+    <node displaytext="Assessment" id="phase-assessment">
+        <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
+
+
+        <!-- The scenario that will normally show -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA)" />
+
+        <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
+
+        <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
+        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
+        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
+
+        <!-- CIS questions displayed in tree structure -->
+        <node displaytext="CIS Questions" condition="MATURITY:CIS">
+            <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management">
+                <node id="maturity-questions-nested-2306" path="assessment/{:id}/maturity-questions-nested/2306" displaytext="1. Cybersecurity Leadership" />
+                <node id="maturity-questions-nested-2307" displaytext="Cybersecurity Architecture">
+                    <node id="maturity-questions-nested-2328" path="assessment/{:id}/maturity-questions-nested/2328" displaytext="2. Inventory" />
+                    <node id="maturity-questions-nested-2329" path="assessment/{:id}/maturity-questions-nested/2329" displaytext="3. System Architecture" />
+                    <node id="maturity-questions-nested-2330" path="assessment/{:id}/maturity-questions-nested/2330" displaytext="4. Security Architecture" />
+                </node>
+                <node id="maturity-questions-nested-2308" path="assessment/{:id}/maturity-questions-nested/2308" displaytext="5. Change Management" />
+                <node id="maturity-questions-nested-2309" path="assessment/{:id}/maturity-questions-nested/2309" displaytext="6. Lifecycle Tracking" />
+                <node id="maturity-questions-nested-2310" path="assessment/{:id}/maturity-questions-nested/2310" displaytext="7. Assessment and Evaluations" />
+                <node id="maturity-questions-nested-2311" path="assessment/{:id}/maturity-questions-nested/2311" displaytext="8. Cybersecurity Plan" />
+                <node id="maturity-questions-nested-2312" path="assessment/{:id}/maturity-questions-nested/2312" displaytext="9. Cybersecurity Exercises" />
+                <node id="maturity-questions-nested-2313" displaytext="Information Sharing">
+                    <node id="maturity-questions-nested-2331" path="assessment/{:id}/maturity-questions-nested/2331" displaytext="10. External Information Sharing" />
+                    <node id="maturity-questions-nested-2332" path="assessment/{:id}/maturity-questions-nested/2332" displaytext="11. Internal Information Sharing" />
+                </node>
+            </node>
+            <node id="maturity-questions-nested-2302" displaytext="Cybersecurity Forces">
+                <node id="maturity-questions-nested-2314" path="assessment/{:id}/maturity-questions-nested/2314" displaytext="12. Personnel" />
+                <node id="maturity-questions-nested-2315" path="assessment/{:id}/maturity-questions-nested/2315" displaytext="13. Cybersecurity Training" />
+            </node>
+            <node id="maturity-questions-nested-2303" displaytext="Cybersecurity Controls">
+                <node id="maturity-questions-nested-2316" path="assessment/{:id}/maturity-questions-nested/2316" displaytext="14. Authentication and Authorization Controls" />
+                <node id="maturity-questions-nested-2317" displaytext="Access Controls">
+                    <node id="maturity-questions-nested-2333" path="assessment/{:id}/maturity-questions-nested/2333" displaytext="15. Access Paths" />
+                    <node id="maturity-questions-nested-2334" path="assessment/{:id}/maturity-questions-nested/2334" displaytext="16. Remote Access Controls" />
+                </node>
+                <node id="maturity-questions-nested-2318" displaytext="Cybersecurity Measures">
+                    <node id="maturity-questions-nested-2335" path="assessment/{:id}/maturity-questions-nested/2335" displaytext="17. Malicious Code Controls" />
+                    <node id="maturity-questions-nested-2336" path="assessment/{:id}/maturity-questions-nested/2336" displaytext="18. Monitoring and Scanning" />
+                    <node id="maturity-questions-nested-2337" path="assessment/{:id}/maturity-questions-nested/2337" displaytext="19. Security and Event Log" />
+                </node>
+                <node id="maturity-questions-nested-2319" path="assessment/{:id}/maturity-questions-nested/2319" displaytext="20. Information Protection" />
+                <node id="maturity-questions-nested-2320" path="assessment/{:id}/maturity-questions-nested/2320" displaytext="21. User Training" />
+                <node id="maturity-questions-nested-2321" path="assessment/{:id}/maturity-questions-nested/2321" displaytext="22. Defense Sophistication and Compensating Controls" />
+            </node>
+            <node id="maturity-questions-nested-2304" displaytext="Incident Response">
+                <node id="maturity-questions-nested-2322" path="assessment/{:id}/maturity-questions-nested/2322" displaytext="23. Incident Response Measures" />
+                <node id="maturity-questions-nested-2323" path="assessment/{:id}/maturity-questions-nested/2323" displaytext="24. Alternate Site and Disaster Recovery" />
+            </node>
+            <node id="maturity-questions-nested-2305" displaytext="Dependencies">
+                <node id="maturity-questions-nested-2324" path="assessment/{:id}/maturity-questions-nested/2324" displaytext="25. Dependencies - Data at Rest" />
+                <node id="maturity-questions-nested-2325" path="assessment/{:id}/maturity-questions-nested/2325" displaytext="26. Dependencies - Data in Motion" />
+                <node id="maturity-questions-nested-2326" path="assessment/{:id}/maturity-questions-nested/2326" displaytext="27. Dependencies - Data in Process" />
+                <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" />
+            </node>
+        </node>
+
+        <!-- MVRA questions displayed in tree structure -->
+        <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
+            <node id="maturity-questions-nested-2338" displaytext="Anticipate">
+                <node id="maturity-questions-nested-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions-nested/2343" />
+                <node id="maturity-questions-nested-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions-nested/2344" />                
+                <node id="maturity-questions-nested-2345" displaytext="Contextual Awareness" path="assessment/{:id}/maturity-questions-nested/2345"/>
+                <node id="maturity-questions-nested-2346" displaytext="Coordinated Protection" path="assessment/{:id}/maturity-questions-nested/2346"/>
+                <node id="maturity-questions-nested-2347" displaytext="Diversity" path="assessment/{:id}/maturity-questions-nested/2347" />
+                <node id="maturity-questions-nested-2348" displaytext="Dynamic Positioning" path="assessment/{:id}/maturity-questions-nested/2348" />
+                <node id="maturity-questions-nested-2349" displaytext="Governance" path="assessment/{:id}/maturity-questions-nested/2349" />
+                <node id="maturity-questions-nested-2350" displaytext="Risk Assessment" path="assessment/{:id}/maturity-questions-nested/2350" />
+                <node id="maturity-questions-nested-2353" displaytext="Risk Management Strategy" path="assessment/{:id}/maturity-questions-nested/2353" />
+                <node id="maturity-questions-nested-2354" displaytext="Supply Chain Risk Management" path="assessment/{:id}/maturity-questions-nested/2354" />
+            </node>
+            <node id="maturity-questions-nested-2339" displaytext="Withstand">
+                <node id="maturity-questions-nested-2355" displaytext="Anomalies and Events" path="assessment/{:id}/maturity-questions-nested/2355" />
+                <node id="maturity-questions-nested-2356" displaytext="Asset Management" path="assessment/{:id}/maturity-questions-nested/2356" />
+                <node id="maturity-questions-nested-2357" displaytext="Awareness and Training" path="assessment/{:id}/maturity-questions-nested/2357" />
+                <node id="maturity-questions-nested-2358" displaytext="Data Security" path="assessment/{:id}/maturity-questions-nested/2358" />
+                <node id="maturity-questions-nested-2359" displaytext="Deception" path="assessment/{:id}/maturity-questions-nested/2359" />
+                <node id="maturity-questions-nested-2360" displaytext="Detection Processes" path="assessment/{:id}/maturity-questions-nested/2360" />
+                <node id="maturity-questions-nested-2361" displaytext="Identity and Access Control" path="assessment/{:id}/maturity-questions-nested/2361" />
+                <node id="maturity-questions-nested-2362" displaytext="Information Protection" path="assessment/{:id}/maturity-questions-nested/2362" />
+                <node id="maturity-questions-nested-2363" displaytext="Maintenance" path="assessment/{:id}/maturity-questions-nested/2363" />
+                <node id="maturity-questions-nested-2371" displaytext="Non-Persistence" path="assessment/{:id}/maturity-questions-nested/2371" />
+                <node id="maturity-questions-nested-2372" displaytext="Privilege Restriction" path="assessment/{:id}/maturity-questions-nested/2372" />
+                <node id="maturity-questions-nested-2373" displaytext="Protective Technology" path="assessment/{:id}/maturity-questions-nested/2373" />
+                <node id="maturity-questions-nested-2374" displaytext="Security Continuous Monitoring" path="assessment/{:id}/maturity-questions-nested/2374" />
+                <node id="maturity-questions-nested-2375" displaytext="Segmentation" path="assessment/{:id}/maturity-questions-nested/2375" />
+                <node id="maturity-questions-nested-2376" displaytext="Sustained Integrity" path="assessment/{:id}/maturity-questions-nested/2376" />
+                <node id="maturity-questions-nested-2377" displaytext="Unpredictability" path="assessment/{:id}/maturity-questions-nested/2377" />
+            </node>
+            <node id="maturity-questions-nested-2340" displaytext="Recover">
+                <node id="maturity-questions-nested-2378" displaytext="Analysis" path="assessment/{:id}/maturity-questions-nested/2378" />
+                <node id="maturity-questions-nested-2379" displaytext="Analytic Monitoring" path="assessment/{:id}/maturity-questions-nested/2379" />
+                <node id="maturity-questions-nested-2380" displaytext="Communications" path="assessment/{:id}/maturity-questions-nested/2380" />
+                <node id="maturity-questions-nested-2381" displaytext="Improvements" path="assessment/{:id}/maturity-questions-nested/2381" />
+                <node id="maturity-questions-nested-2382" displaytext="Mitigation" path="assessment/{:id}/maturity-questions-nested/2382" />
+                <node id="maturity-questions-nested-2383" displaytext="Redundancy" path="assessment/{:id}/maturity-questions-nested/2383" />
+            </node>
+            <node id="maturity-questions-nested-2342" displaytext="Adapt">
+                <node id="maturity-questions-nested-2384" displaytext="Recovery Planning" path="assessment/{:id}/maturity-questions-nested/2384" />
+                <node id="maturity-questions-nested-2385" displaytext="Improvements" path="assessment/{:id}/maturity-questions-nested/2385" />
+                <node id="maturity-questions-nested-2386" displaytext="Communications" path="assessment/{:id}/maturity-questions-nested/2386" />
+                <node id="maturity-questions-nested-2387" displaytext="Realignment 800-160" path="assessment/{:id}/maturity-questions-nested/2387" />
+            </node>
+        </node>
+
+
+        <!-- Diagram questions -->
+        <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
+    </node>
+
+
+    <!-- Results Phase -->
+    <node displaytext="Results" id="phase-results">
+        <!-- Results - Standards -->
+        <node displaytext="Standard Results" condition="OPTION:STANDARD">
+            <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
+            <node displaytext="Control Priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" />
+            <node displaytext="Standards Summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" />
+            <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/{:id}/results/standards-ranked" />
+            <node displaytext="Results By Category" id="standards-results" path="assessment/{:id}/results/standards-results" />
+        </node>
+
+
+        <!-- Results - CMMC -->
+        <node displaytext="Target and Achieved Levels" id="cmmc-level-results" path="assessment/{:id}/results/cmmc-level-results" condition="MATURITY:CMMC" />
+        <node displaytext="Level Drill Down" id="cmmc-level-drilldown" path="assessment/{:id}/results/cmmc-level-drilldown" condition="MATURITY:CMMC" />
+        <node displaytext="Compliance Score" id="cmmc-compliance" path="assessment/{:id}/results/cmmc-compliance" condition="MATURITY:CMMC" />
+        <node displaytext="Detailed Gaps List" id="cmmc-gaps" path="assessment/{:id}/results/cmmc-gaps" condition="MATURITY:CMMC" />
+
+
+        <!-- Results - CMMC2 -->
+        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" condition="MATURITY:CMMC2" />
+        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" condition="MATURITY:CMMC2" />
+        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" condition="MATURITY:CMMC2 TARGET-LEVEL-GT:1" />
+
+
+
+        <!-- Results - EDM -->
+        <node displaytext="Summary Results" id="summary-results" path="assessment/{:id}/results/summary-results" condition="MATURITY:EDM" />
+        <node displaytext="Relationship Formation" id="relationship-formation" path="assessment/{:id}/results/relationship-formation" condition="MATURITY:EDM" />
+        <node displaytext="Relationship Management and Governance" id="relationship-management" path="assessment/{:id}/results/relationship-management" condition="MATURITY:EDM" />
+        <node displaytext="Service Protection and Sustainment" id="service-protection" path="assessment/{:id}/results/service-protection" condition="MATURITY:EDM" />
+        <node displaytext="Maturity Indicator Levels" id="maturity-indicator-levels" path="assessment/{:id}/results/maturity-indicator-levels" condition="MATURITY:EDM" />
+
+
+
+        <!-- Results - CRR -->
+        <node displaytext="Summary Results" id="crr-summary-results" path="assessment/{:id}/results/crr-summary-results" condition="MATURITY:CRR" />
+        <node displaytext="Asset Management" id="crr-domain-am" path="assessment/{:id}/results/crr-domain-am" condition="MATURITY:CRR" />
+        <node displaytext="Controls Management" id="crr-domain-cm" path="assessment/{:id}/results/crr-domain-cm" condition="MATURITY:CRR" />
+        <node displaytext="Configuration and Change Management" id="crr-domain-ccm" path="assessment/{:id}/results/crr-domain-ccm" condition="MATURITY:CRR" />
+        <node displaytext="Vulnerability Management" id="crr-domain-vm" path="assessment/{:id}/results/crr-domain-vm" condition="MATURITY:CRR" />
+        <node displaytext="Incident Management" id="crr-domain-im" path="assessment/{:id}/results/crr-domain-im" condition="MATURITY:CRR" />
+        <node displaytext="Service Continuity Management" id="crr-domain-scm" path="assessment/{:id}/results/crr-domain-scm" condition="MATURITY:CRR" />
+        <node displaytext="Risk Management" id="crr-domain-rm" path="assessment/{:id}/results/crr-domain-rm" condition="MATURITY:CRR" />
+        <node displaytext="External Dependencies Management" id="crr-domain-edm" path="assessment/{:id}/results/crr-domain-edm" condition="MATURITY:CRR" />
+        <node displaytext="Training and Awareness" id="crr-domain-ta" path="assessment/{:id}/results/crr-domain-ta" condition="MATURITY:CRR" />
+        <node displaytext="Situational Awareness" id="crr-domain-sa" path="assessment/{:id}/results/crr-domain-sa" condition="MATURITY:CRR" />
+
+
+
+        <!-- Results - RRA -->
+        <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" condition="MATURITY:RRA" />
+        <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" condition="MATURITY:RRA" />
+        <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" condition="MATURITY:RRA" />
+
+
+
+        <!-- Results - ACET -->
+        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:ACET" />
+        <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:ACET" />
+
+
+
+        <!-- Results - CIS -->
+        <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:CIS" />
+        <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
+
+
+        <!-- Results - Diagram -->
+        <node displaytext="Components Results" condition="OPTION:DIAGRAM">
+            <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" />
+            <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" />
+            <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" />
+            <node displaytext="Answers By Component Type" id="components-types" path="assessment/{:id}/results/components-types" />
+            <node displaytext="Network Warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" />
+        </node>
+
+
+        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
+
+        <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
+
+        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:CSET" />
+
+        <node displaytext="Share Assessment With CISA" id="analytics" path="assessment/{:id}/results/analytics" condition="HIDE" />
+
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
+
+    </node>
+
+</nav>

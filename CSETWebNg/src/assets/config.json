@@ -1,18 +1,18 @@
 {
+    "isCsetOnline": false,
     "appCode": "CSET",
-    "app":{
+    "app": {
         "protocol": "http",
         "url": "localhost",
-        "port":"4200"
+        "port": "4200"
     },
-    "api":{
-        "protocol":"http",
+    "api": {
+        "protocol": "http",
         "url": "localhost",
-        "port":"5000",
+        "port": "5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
-    "reportsApi":"http://localhost:44363/",
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
@@ -23,23 +23,27 @@
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
 
-    "showQuestionAndRequirementIDs": false,
-    "showBuildTime": false,
-
+    "debug": {
+        "showBuildTime": false,
+        "showQuestionAndRequirementIDs": false,
+        "canDeleteCustomModules": true
+    },
+    
     "installationMode": "",
-
+    "mobileEnvironment": "iOS",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
     "buttonLabelA": "Alt",
     "buttonLabelA_ACET": "Yes(C)",
+    "buttonLabelIss": "Issue(N)",
     "buttonLabelI": "Inc",
-
     "answerLabelY": "Yes",
     "answerLabelN": "No",
     "answerLabelNA": "N/A",
     "answerLabelA": "Alternate",
     "answerLabelA_ACET": "Yes Compensating Control",
+    "answerLabelIss": "No with Issue(s)",
     "answerLabelU": "Unanswered",
     "answerLabelI": "Incomplete"
 }

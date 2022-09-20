@@ -192,6 +192,8 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -249,6 +251,8 @@ namespace CSETWebCore.Business.Maturity
                     QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                     ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                     Sequence = myQ.Sequence,
+                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -306,7 +310,8 @@ namespace CSETWebCore.Business.Maturity
                     OptionType = o.Mat_Option_Type,
                     Sequence = o.Answer_Sequence,
                     HasAnswerText = o.Has_Answer_Text,
-                    Weight = o.Weight
+                    Weight = o.Weight,
+                    IsNone = o.Is_None
                 };
 
                 var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id
@@ -342,6 +347,8 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,

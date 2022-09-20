@@ -19,31 +19,35 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <h3 class="wrap-text">Cybersecurity Standards Selection</h3>
 
-  <div class="d-flex flex-wrap align-items-start flex-00a">
-    <div class="mr-2 d-flex justify-content-start flex-column flex-1150">
-      <p class="m-0">
+  <div class="d-flex flex-row align-items-start flex-00a">
+    <div class="mr-2 d-flex flex-column">
+      <p class="m-0 mb-3">
         Select a standard from the list below to define the questions you will answer during the assessment. Standards
         in bold text are recommended based on your demographic information.
       </p>
-      <div class="d-flex flex-wrap justify-content-start align-items-start flex-00a">
-        <button class="btn btn-link p-0 mr-1" tabindex="0" (click)="doBasicAssessment()" matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment instead</button>
+      <div>
+        <button class="btn btn-link p-0 m-0 text-left" tabindex="0" (click)="doBasicAssessment()"
+          matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment
+          instead</button>
       </div>
     </div>
 
-    <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
-      <div style="white-space: nowrap">Requirements</div>
-      <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
-        standards?.requirementCount }}</div>
-    </div>
+    <div class="d-flex" [ngClass]="{'flex-row': !layoutSvc.hp, 'flex-column': layoutSvc.hp }">
+      <div class="quick-info-container p-2" [class.mr-2]="!layoutSvc.hp" [class.mb-2]="layoutSvc.hp">
+        <div class="text-nowrap text-center">Requirements</div>
+        <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
+          standards?.requirementCount }}</div>
+      </div>
 
-    <div class="bgc-secondary c-gray-50 p-2 mt-2 mt-md-0" style="border-radius: 4px; margin: 0 4px;">
-      <div style="white-space: nowrap">Questions</div>
-      <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
-        standards?.questionCount }}</div>
+      <div class="quick-info-container p-2">
+        <div class="text-nowrap text-center">Questions</div>
+        <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
+          standards?.questionCount }}</div>
+      </div>
     </div>
   </div>
 
@@ -55,7 +59,7 @@
         <div class="standard-item d-flex justify-content-between flex-11a">
           <div>
             <input type="checkbox" id="{{s.code}}" tabindex="0" name="{{s.code}}" class="checkbox-custom mt-1"
-                (change)="submit(s, $event)" [checked]="s.selected">
+              (change)="submit(s, $event)" [checked]="s.selected">
             <label for="{{s.code}}" [class.recommended-standard]="s.recommended" class="checkbox-custom-label">
               {{s.fullName}}
               <ng-template [ngIf]="s.recommended">
@@ -63,9 +67,11 @@
               </ng-template>
             </label>
           </div>
-          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.code]" (click)="toggleExpansion(s.code)"></i>
+          <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc[s.code]"
+            (click)="toggleExpansion(s.code)"></i>
         </div>
-        <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.code]" [class.closed-desc]="!expandedDesc[s.code]">
+        <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc[s.code]"
+          [class.closed-desc]="!expandedDesc[s.code]">
           {{s.description}}
         </div>
 

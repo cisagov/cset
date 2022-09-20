@@ -51,13 +51,23 @@ namespace CSETWebCore.Business.Question
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var resp = new QuestionResponse();            
+            var resp = new QuestionResponse();
 
-            var list = _context.usp_Answer_Components_Default(assessmentId).Cast<Answer_Components_Base>().ToList();
+            // Ideally, we would not call this proc each time we fetch the questions.
+            // Is there a quick way to tell if all the diagram answers have already been filled?
+            _context.FillNetworkDiagramQuestions(assessmentId);
 
-            AddResponse(resp, list, "Component Defaults");
+            var list1 = _context.usp_Answer_Components_Default(assessmentId).ToList();
+            var list2 = new List<Answer_Components_Base>();
+            foreach (var component1 in list1)
+            {
+                TinyMapper.Bind<Answer_Components_Default, Answer_Components_Base>();
+                var component2 = TinyMapper.Map<Answer_Components_Default, Answer_Components_Base>(component1);
+                list2.Add(component2);
+            }
+
+            AddResponse(resp, list2, "Component Defaults");
             BuildOverridesOnly(resp);
-
 
             return resp;
         }

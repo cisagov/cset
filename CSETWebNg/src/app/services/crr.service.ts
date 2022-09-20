@@ -34,16 +34,75 @@ const headers = {
 @Injectable()
 export class CrrService {
 
+  keyToCategory = {
+    AM: 'Asset Management',
+    CM: 'Controls Management',
+    CCM: 'Configuration and Change Management',
+    VM: 'Vulnerability Management',
+    IM: 'Incident Management',
+    SCM: 'Service Continuity Management',
+    RM: 'Risk Management',
+    EDM: 'External Dependencies Management',
+    TA: 'Training and Awareness',
+    SA: 'Situational Awareness'
+  };
+
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
-  /**
-   * Retrieves the list of frameworks.
-   */
-  getCrrHtml(view:string) {
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrHtml?view='+view);
+  getCrrModel(){
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 
-  getCrrModel(){
-    return this.http.get(this.configSvc.reportsUrl + 'api/report/getCrrModel');
+  getMil1FullAnswerDistribWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1FullAnswerDistrib',
+    { responseType: 'text' });
+  }
+
+  getMil1PerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
+    { responseType: 'text'});
+  }
+
+  getMil1PerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
+  }
+
+  getCrrPerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
+  }
+
+  getCrrPerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
+    { responseType: 'text'});
+  }
+
+  getNistCsfSummaryChartWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
+    { responseType: 'text'});
+  }
+
+  getNistCsfSummaryReportBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfReportBodyData');
+  }
+
+  getMil1PerformanceLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
+    { responseType: 'text'});
+  }
+
+  getMil1PerformanceBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceBodyCharts');
+  }
+
+  getCrrPerformanceAppendixABodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixABodyData');
+  }
+
+  getNistCsfCatSummaryBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatSummaryBodyData');
+  }
+
+  getNistCsfCatPerformanceBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatPerformanceBodyData');
   }
 }

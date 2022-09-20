@@ -29,29 +29,23 @@ namespace CSETWebCore.DataLayer.Model
         public int Question_Id { get; set; }
         [Required]
         [StringLength(55)]
-        [Unicode(false)]
         public string Std_Ref { get; set; }
         public int Std_Ref_Number { get; set; }
-        [StringLength(7338)]
-        [Unicode(false)]
         public string Simple_Question { get; set; }
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Universal_Sal_Level { get; set; }
         public int? Weight { get; set; }
         public int? Question_Group_Id { get; set; }
         public int? Question_Group_Number { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Original_Set_Name { get; set; }
         [MaxLength(32)]
         public byte[] Question_Hash { get; set; }
         public int? Ranking { get; set; }
         public int Heading_Pair_Id { get; set; }
         [StringLength(106)]
-        [Unicode(false)]
         public string Std_Ref_Id { get; set; }
 
         public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }

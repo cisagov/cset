@@ -29,7 +29,7 @@ export interface AssessmentDetail {
     createdDate?: string;
     creatorId?: number;
     assessmentDate?: string;
-    baselineAssessmentId?: number; 
+    baselineAssessmentId?: number;
     facilityName?: string;
     cityOrSiteName?: string;
     stateProvRegion?: string;
@@ -51,6 +51,9 @@ export interface AssessmentDetail {
 
     // A list of selected standards
     standards?: string[];
+
+    typeTitle?: string;
+    typeDescription?: string;
 }
 
 export interface MaturityModel {
@@ -67,6 +70,7 @@ export interface MaturityModel {
     answerOptions: string[];
     modelTitle: string;
     modelDescription: string;
+    iconId: number;
 }
 
 /**

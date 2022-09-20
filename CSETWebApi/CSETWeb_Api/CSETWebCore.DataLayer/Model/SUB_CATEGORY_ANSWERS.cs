@@ -25,14 +25,12 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string Answer_Text { get; set; }
         /// <summary>
         /// The Component Id is used to
         /// </summary>
         [Key]
-        [StringLength(36)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string Component_Guid { get; set; }
 
         [ForeignKey("Answer_Text")]

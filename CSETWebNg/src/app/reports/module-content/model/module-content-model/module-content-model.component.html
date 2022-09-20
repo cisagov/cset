@@ -1,0 +1,7 @@
+<h3><em>{{model?.modelTitle}}</em></h3>
+
+<div class="ml-4">
+    <div *ngFor="let g of model.groupings">
+        <app-mc-grouping [g]="g"></app-mc-grouping>
+    </div>  
+</div>

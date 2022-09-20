@@ -100,7 +100,7 @@ namespace CSETWebCore.Business.Reports
                         var sourceLinks = gggg.Where(x => x.rsf.Requirement_Id == req.RequirementID).ToList();
                         foreach (var link in sourceLinks)
                         {
-                            req.ResourceDocs.Add(new ReferenceDoc
+                            req.AdditionalDocs.Add(new ReferenceDoc
                             {
                                 SectionRef = link.rsf.Section_Ref,
                                 ID = link.gf.Gen_File_Id,

@@ -7,6 +7,8 @@ CREATE PROCEDURE [dbo].[usp_getStandardSummaryOverall]
 	@assessment_id int
 AS
 BEGIN
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;

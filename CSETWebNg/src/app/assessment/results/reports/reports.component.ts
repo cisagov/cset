@@ -29,10 +29,12 @@ import { ACETService } from '../../../services/acet.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
 import { data } from 'jquery';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
 
 @Component({
     selector: 'app-reports',
@@ -47,13 +49,16 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * used when the ACET model is in use and this is an ACET installation.
      */
     disableAcetReportLinks: boolean = true;
+    disableIseReportLinks: boolean = true;
     securityIdentifier: any = [];
     securitySelected: string = "None";
+    isMobile = false;
 
     lastModifiedTimestamp = '';
 
+    dialogRef: MatDialogRef<any>;
     /**
-     * 
+     *
      */
     constructor(
         public assessSvc: AssessmentService,
@@ -63,7 +68,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private route: ActivatedRoute,
         public configSvc: ConfigService,
         private cdr: ChangeDetectorRef,
-        private reportSvc: ReportService
+        private reportSvc: ReportService,
+        public dialog: MatDialog
     ) {
         if (this.assessSvc.assessment == null) {
             this.assessSvc.getAssessmentDetail().subscribe(
@@ -71,10 +77,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                     this.assessSvc.assessment = data;
                 });
         }
+        if(this.configSvc.mobileEnvironment){
+            this.isMobile = true;
+        } else {
+            this.isMobile = false;
+        }
     }
 
     /**
-     * 
+     *
      */
     ngOnInit() {
         this.assessSvc.currentTab = 'results';
@@ -84,8 +95,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
         // call the API for a ruling on whether all questions have been answered
         this.disableAcetReportLinks = false;
+        this.disableIseReportLinks = false;
         if (this.configSvc.installationMode === 'ACET') {
-            this.checkAcetDisabledStatus();
+            if(this.assessSvc.isISE()) {
+                this.checkIseDisabledStatus();
+            }
+            else {
+                this.checkAcetDisabledStatus();
+            }
         }
 
         this.reportSvc.getSecurityIdentifiers().subscribe(data => {
@@ -98,35 +115,26 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     ngAfterViewInit() {
         this.cdr.detectChanges();
     }
 
     /**
-     * 
-     * @param reportType 
+     *
+     * @param reportType
      */
     clickReportLink(reportType: string, print: boolean = false) {
 
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-        window.open(url, "_blank");
-    }
 
-    /**
-     * The new way to launch reports that are generated in the API.
-     * @param reportUrl 
-     * @returns 
-     */
-    clickReportLink2(reportUrl: string) {
-        let url = this.configSvc.reportsUrl + 'reports/' + reportUrl + '?token=' + localStorage.getItem('userToken');
-        if (this.assessSvc.usesMaturityModel('CRR')) {
-            url += "&security=" + this.securitySelected
+        if (reportType === 'crrreport') {
+          localStorage.setItem('crrReportConfidentiality', this.securitySelected);
         }
+
         window.open(url, "_blank");
-        return;
     }
 
     clickReportService(report: string) {
@@ -137,7 +145,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     /**
      * If all ACET statements are not answered, set the 'disable' flag
-     * to true.  
+     * to true.
      */
     checkAcetDisabledStatus() {
         this.disableAcetReportLinks = true;
@@ -152,7 +160,38 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    checkIseDisabledStatus() {
+        this.disableIseReportLinks = true;
+        if (!this.assessSvc.isISE()) {
+            return;
+        }
+        // the below code needs converted to ISE stuff
+        this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
+            if (percentAnswered == 100) {
+                this.disableIseReportLinks = false;
+            }
+        });
+    }
+
     onSelectSecurity(val) {
         this.securitySelected = val;
     }
+
+    showExcelExportDialog() {
+      const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+      const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+      if (this.dialog.openDialogs[0] || doNotShow) {
+        this.exportToExcel();
+        return;
+      }
+      this.dialogRef = this.dialog.open(ExcelExportComponent);
+      this.dialogRef
+        .afterClosed()
+        .subscribe();
+    }
+
+    exportToExcel() {
+      window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    }
+
 }

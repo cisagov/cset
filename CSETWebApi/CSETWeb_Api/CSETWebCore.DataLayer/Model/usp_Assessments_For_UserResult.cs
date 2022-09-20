@@ -10,7 +10,7 @@ namespace CSETWebCore.DataLayer.Model
         public int AssessmentId { get; set; }
         public string AssessmentName { get; set; }
         public DateTime AssessmentDate { get; set; }
-        public DateTime AssessmentCreatedDate { get; set; }        
+        public DateTime AssessmentCreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public bool MarkedForReview { get; set; }
         public bool UseDiagram { get; set; }

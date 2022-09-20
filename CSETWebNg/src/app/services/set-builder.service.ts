@@ -89,6 +89,14 @@ export class SetBuilderService {
 
 
     /**
+     * Returns a collection of all standards that are currently being used in an assessment.
+     */
+    getSetsInUseList() {
+      return this.http.get(this.apiUrl + 'builder/getSetsInUse');
+    }
+
+
+    /**
      *
      */
     newCustomSet() {

@@ -1,4 +1,6 @@
+
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
   selector: 'app-tutorial-rra',
@@ -13,9 +15,13 @@ export class TutorialRraComponent implements OnInit {
   @Input()
   showNav: boolean = true;
 
-  constructor() { }
+
+  constructor(
+    public layoutSvc: LayoutService
+  ) { }
 
   ngOnInit(): void {
+
   }
 
 }

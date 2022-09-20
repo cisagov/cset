@@ -26,10 +26,12 @@
 
     <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
       <div class="d-flex align-items-start flex-11a">
-        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)">Collapse
-          All</button>
-        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)">Expand All</button>
-        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
+        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
+          matTooltip="Collapse All" aria-label="Collapse All">
+          <i class="fas fa-compress-alt"></i></button>
+        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
+          aria-label="Expand All"><i class="fas fa-expand-alt"></i></button>
+        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()" matTooltip="Filter">
           <i class="cset-icons-filter" aria-label="Filter"></i>
         </button>
       </div>
@@ -37,26 +39,27 @@
 
     <div class="d-block mb-2">
       <h2 *ngIf="groupings?.length != 1">{{ pageTitle }}</h2>
-      
+
       <div class="mb-2" *ngIf="showTargetLevel">
-        The target maturity level for this assessment is set to 
+        The target maturity level for this assessment is set to
         <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
       </div>
     </div>
 
     <div *ngIf="!!groupings && !areGroupingsVisible()"
-    class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-      There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's 
-      target maturity level.
-    </span>
-  </div>
+      class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's
+        target maturity level.
+      </span>
+    </div>
 
     <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
-    <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions Above Target Level</div>
-    
+    <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
+      Above Target Level</div>
+
     <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
@@ -65,9 +68,11 @@
 
 
     <!-- top level -->
-    <div *ngFor="let g of groupings" class="w-100">
-      <app-grouping-block [grouping]="g"></app-grouping-block>
-    </div>
+    <ng-template [ngIf]="!!groupings">
+      <div *ngFor="let g of groupings" class="w-100">
+        <app-grouping-block [grouping]="g"></app-grouping-block>
+      </div>
+    </ng-template>
 
   </div>
 

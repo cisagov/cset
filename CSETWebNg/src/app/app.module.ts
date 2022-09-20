@@ -118,6 +118,7 @@ import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { IRPComponent } from './assessment/prepare/irp/irp.component';
+import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.component';
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
@@ -178,7 +179,7 @@ import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
-import { LandingPageComponent } from './initial/landing-page/landing-page.component';
+import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { LoginComponent } from './initial/login/login.component';
 import { RegisterComponent } from './initial/register/register.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
@@ -193,7 +194,7 @@ import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
 import { FindingsService } from './services/findings.service';
 import { FrameworkService } from './services/framework.service';
-import { NavigationService } from './services/navigation.service';
+import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
@@ -214,8 +215,8 @@ import { StandardDocumentsComponent } from './builder/standard-documents/standar
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { RequiredDocumentService } from './services/required-document.service';
 import { IRPService } from './services/irp.service';
-import { MatDetailComponent } from './assessment/results/mat-detail/mat-detail.component';
-import { ACETDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
+import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
+import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
@@ -225,7 +226,7 @@ import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summar
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
-import { ComponentsComponent } from './assessment/diagram/diagram-inventory/components/components.component';
+import { DiagramComponentsComponent } from './assessment/diagram/diagram-inventory/components/diagram-components.component';
 import { LinksComponent } from './assessment/diagram/diagram-inventory/links/links.component';
 import { NetworkWarningsComponent } from './assessment/diagram/diagram-inventory/network-warnings/network-warnings.component';
 import { ShapesComponent } from './assessment/diagram/diagram-inventory/shapes/shapes.component';
@@ -292,7 +293,7 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
-import { ChartsDonutComponent } from './reports/charts-donut/charts-donut.component';
+import { AcetDonutChartComponent } from './reports/acet-donut-chart/acet-donut-chart.component';
 import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
 import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
 import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
@@ -308,12 +309,14 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
+import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
+import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
@@ -358,7 +361,6 @@ import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justific
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-import { CrrExecutiveComponent } from './reports/crr/crr-executive/crr-executive.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -382,6 +384,7 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
 import { Utilities } from './services/utilities.service';
+import { NCUAService } from './services/ncua.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -414,6 +417,7 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
+import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-info/assessment-detail-ncua/assessment-detail-ncua.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 import { VadrAnswerComplianceComponent } from './assessment/results/mat-vadr/vadr-answer-compliance/vadr-answer-compliance.component';
@@ -425,10 +429,13 @@ import { VadrLevelsComponent } from './assessment/results/mat-vadr/vadr-levels/v
 import { VadrQuestionsScoringComponent } from './assessment/results/mat-vadr/vadr-questions-scoring/vadr-questions-scoring.component';
 import { VadrSummaryComponent } from './assessment/results/mat-vadr/vadr-summary/vadr-summary.component';
 import { VadrSummaryAllComponent } from './assessment/results/mat-vadr/vadr-summary-all/vadr-summary-all.component';
+import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions/open-ended-questions.component';
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
 import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
 import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
+import { AssessmentConfigNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/assessment-config-ncua.component';
+import { FeatureOptionNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/feature-option-ncua/feature-option-ncua.component';
 import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
@@ -438,8 +445,50 @@ import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-defic
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
-
-
+import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
+import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
+import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
+import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
+import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
+import { ModuleContentStandardComponent } from './reports/module-content/module-content-standard/module-content-standard.component';
+import { ModuleContentModelComponent } from './reports/module-content/model/module-content-model/module-content-model.component';
+import { McGroupingComponent } from './reports/module-content/model/mc-grouping/mc-grouping.component';
+import { McQuestionComponent } from './reports/module-content/model/mc-question/mc-question.component';
+import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
+import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
+import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
+import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
+import { SwiperModule } from 'swiper/angular';
+import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
+import { GalleryService } from './services/gallery.service';
+import { EllipsisModule } from 'ngx-ellipsis';
+import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
+import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
+import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
+import { CrrIntroAboutComponent } from './reports/crr/crr-report/crr-intro-about/crr-intro-about.component';
+import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr-mil1-performance-summary/crr-mil1-performance-summary.component';
+import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
+import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
+import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
+import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';
+import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
+import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
+import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
+import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-contact-information/crr-contact-information.component';
+import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
+import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
+import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
+import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
+import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
+import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
+import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
+import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
+import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
+import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
+import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 
 @NgModule({
     imports: [
@@ -535,6 +584,8 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         NgbModule,
         NgxChartsModule,
         TooltipModule,
+        SwiperModule,
+        EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -545,14 +596,15 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         AppComponent,
         InitialComponent,
         LoginComponent,
-        LandingPageComponent,
+        MyAssessmentsComponent,
         AssessmentComponent,
+        ContactItemComponent,
         PrepareComponent,
         AssessmentInfoComponent,
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
-        ContactItemComponent,
+        AssessmentDetailNcuaComponent,
         ResultsComponent,
         SalSimpleComponent,
         StandardsComponent,
@@ -576,8 +628,9 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         FrameworkComponent,
         RequiredDocsComponent,
         IRPComponent,
+        ExamProfileComponent,
         DiagramComponent,
-        MatDetailComponent,
+        AcetDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -616,7 +669,7 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         UploadExportComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        ACETDashboardComponent,
+        AcetDashboardComponent,
         AdminComponent,
         SetListComponent,
         CustomSetComponent,
@@ -630,9 +683,10 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         RefDocumentComponent,
         DomainMaturityFilterComponent,
         IrpSummaryComponent,
+        ExamProfileSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
-        ComponentsComponent,
+        DiagramComponentsComponent,
         LinksComponent,
         NetworkWarningsComponent,
         ShapesComponent,
@@ -686,6 +740,7 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         AskQuestionsComponent,
         MaturityQuestionsComponent,
         MaturityQuestionsAcetComponent,
+        MaturityQuestionsIseComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
@@ -695,12 +750,16 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         CsetOriginComponent,
         InherentRiskProfileComponent,
         IrpSectionComponent,
-        ChartsDonutComponent,
+        AcetDonutChartComponent,
         AcetExecutiveComponent,
         AcetDeficencyComponent,
         AcetCommentsmarkedComponent,
         AcetAnsweredQuestionsComponent,
         AcetCompensatingcontrolsComponent,
+        IseAnsweredQuestionsComponent,
+        IseIssuesComponent,
+        IseExecutiveComponent,
+        IseDonutChartComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,
@@ -713,6 +772,7 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         AcetOriginComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
+        QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
         EdmCommentsmarkedComponent,
@@ -755,7 +815,6 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         CmmcCommentsMarkedComponent,
         CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
-        CrrExecutiveComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,
         RraLevelResultsComponent,
@@ -821,10 +880,13 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        OpenEndedQuestionsComponent,
         CisSurveyComponent,
         GroupingBlockNestedReportComponent,
         QuestionBlockNestedReportComponent,
         OptionBlockNestedReportComponent,
+        AssessmentConfigNcuaComponent,
+        FeatureOptionNcuaComponent,
         CoverSheetAComponent,
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
@@ -835,6 +897,43 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         CisSectionScoringComponent,
         CisScoringChartComponent,
         SectionScoringComponent,
+        MergeExaminationsComponent,
+        CharterMismatchComponent,
+        DigitsOnlyNotZeroDirective,
+        LandingPageTabsComponent,
+        NewAssessmentComponent,
+        ModuleContentStandardComponent,
+        ModuleContentModelComponent,
+        McGroupingComponent,
+        McQuestionComponent,
+        McOptionComponent,
+        GuidanceBlockComponent,
+        ReferencesBlockComponent,
+        CrrReportComponent,
+        CrrCoverSheetComponent,
+        CrrCoverSheet2Component,
+        CrrIntroAboutComponent,
+        CrrMil1PerformanceSummaryComponent,
+        CrrPerformanceSummaryComponent,
+        CrrNistCsfSummaryComponent,
+        CrrMil1PerformanceComponent,
+        CrrResultsSummaryComponent,
+        CrrPercentageOfPracticesComponent,
+        CrrDomainDetailComponent,
+        CrrResourcesComponent,
+        CrrContactInformationComponent,
+        CrrAppendixACoverComponent,
+        CrrPerformanceAppendixAComponent,
+        CrrNistCsfCatSummaryComponent,
+        CrrNistCsfCatPerformanceComponent,
+        CrrSideTocComponent,
+        ReferencesBlockComponent,
+        NewAssessmentDialogComponent,
+        CrrMainTocComponent,
+        Cmmc2CommentsMarkedComponent,
+        Cmmc2DeficiencyComponent,
+        PrivacyWarningComponent,
+        PrivacyWarningRejectComponent
     ],
     providers: [
         ConfigService,
@@ -893,6 +992,8 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
         RraFilteringService,
         CrrService,
         Utilities,
+        NCUAService,
+        GalleryService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

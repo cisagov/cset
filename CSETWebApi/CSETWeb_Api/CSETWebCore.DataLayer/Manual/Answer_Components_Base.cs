@@ -44,7 +44,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Sub_Heading_Question_Description { get; set; }
         public string Simple_Question { get; set; }
         public bool? Reviewed { get; set; }
-        public string label { get; set; }
+        public string Label { get; set; }
         public string ComponentName { get; set; }
         public string Symbol_Name { get; set; }
         public int Component_Symbol_Id { get; set; }

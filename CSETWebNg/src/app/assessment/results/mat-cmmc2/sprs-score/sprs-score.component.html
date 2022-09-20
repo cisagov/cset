@@ -33,7 +33,7 @@
 
     <div *ngIf="!loading && !dataError">
 
-      <div class="mt-3 text-center" [innerHTML]="sprsGauge | safe"></div>
+      <div class="mt-3 text-center" style="max-width: 500px; margin-left: auto; margin-right: auto" [innerHTML]="sprsGauge | safe"></div>
       <div class="mb-5 text-center">Your SPRS Score is <strong>{{response.sprsScore}}</strong></div>
 
       <h4>Scorecard</h4>
@@ -42,15 +42,15 @@
         For more information on SPRS scoring methodology and preliminary requirements for its use, please refer to the tutorial.
       </p>
 
-      <table class="cset-table">
+      <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">
         <tr>
           <th>Practice</th>
           <th></th>
           <th>
-            Response
+            {{ layoutSvc.hp ? 'Resp' : 'Response' }}
           </th>
           <th>
-            Value
+            {{ layoutSvc.hp ? 'Val' : 'Value' }}
           </th>
         </tr>
 

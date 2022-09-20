@@ -21,7 +21,6 @@ namespace CSETWebCore.DataLayer.Model
         public int Defining_System_Id { get; set; }
         [Required]
         [StringLength(400)]
-        [Unicode(false)]
         public string Defining_System { get; set; }
 
         [InverseProperty("Primary_Defining_SystemNavigation")]

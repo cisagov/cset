@@ -19,33 +19,43 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-12" style="padding-bottom:15px;">
-                <h4>Diagram Inventory</h4>
-            </div>
+-------------------------->
+<div class="container">
+    <h5>Component Inventory</h5>
+
+    <div *ngIf="componentsExist">
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary" (click)="getExport()">
+                <i class="cset-icons-export-excel mr-2"></i>
+                Export to Excel</button>
         </div>
-        <div class="row" style="padding-bottom:10px;">
-            <div class="col-6"><button class="btn btn-primary" (click)="getExport()">Export to Excel</button></div>
-            <div class="col-6 pull-right"><button class="btn btn-primary pull-right" (click)="navToDiagram()" ><i class="fas fa-project-diagram"></i>&nbsp;&nbsp;Return to Diagram</button></div>
-            
-        </div>
-        <div class="row" style="padding-bottom:5px;">
+        <div class="row mb-3">
             <div class="col-12">
                 <mat-tab-group style="overflow: auto">
-                    <mat-tab label="Components"><components></components></mat-tab>
-                    <mat-tab label="Zones"><zones></zones></mat-tab>
-                    <mat-tab label="Shapes"><shapes></shapes></mat-tab>
+                    <mat-tab label="Components">
+                        <app-diagram-components (change)="onChange($event)"></app-diagram-components>
+                    </mat-tab>
+                    <mat-tab label="Zones">
+                        <zones></zones>
+                    </mat-tab>
+                    <mat-tab label="Shapes">
+                        <shapes></shapes>
+                    </mat-tab>
                     <mat-tab label="Text"><text></text></mat-tab>
-                    <mat-tab label="Links"><links></links></mat-tab>
-                    <mat-tab label="Network Warnings"><networkwarnings></networkwarnings></mat-tab>
+                    <mat-tab label="Links">
+                        <links></links>
+                    </mat-tab>
+                    <mat-tab label="Network Warnings">
+                        <networkwarnings></networkwarnings>
+                    </mat-tab>
                 </mat-tab-group>
             </div>
         </div>
     </div>
+
+    <div *ngIf="!componentsExist" class="pt-3">
+        <div class="alert alert-warning">
+            There are no network components defined
+        </div>
+    </div>
 </div>
-
-

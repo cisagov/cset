@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
-import { Answer } from '../models/questions.model';
+import { Answer, IntegrityCheckOption } from '../models/questions.model';
 import { of as observableOf, BehaviorSubject, Observable, of } from "rxjs";
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -42,6 +42,11 @@ export class CisService {
   public baselineAssessmentId?: number;
 
   /**
+   * This list holds the optionIds for all of the possible inconsistent CIS options.
+   */
+  public integrityCheckOptions: IntegrityCheckOption[] = [];
+
+  /**
    *
    */
   constructor(
@@ -50,46 +55,15 @@ export class CisService {
     public assessSvc: AssessmentService
   ) { }
 
-
-  /**
-   * Builds and returns the list of CIS subnodes for navigation
-   */
-  cisSubnodeList$ = new Observable((observer) => {
-    var list = [];
-    this.getCisSubnodes().subscribe((data: any) => {
-      data.forEach(n => {
-        let ccc = {
-          displayText: n.title,
-          pageId: 'maturity-questions-nested-' + n.id,
-          level: n.level,
-          path: 'assessment/{:id}/maturity-questions-nested/' + n.id,
-          condition: 'MATURITY-CIS'
-        }
-
-        // remove the path of 'parent' nodes to prevent direct navigation to them
-        if (n.hasChildren) {
-          Reflect.deleteProperty(ccc, 'path');
-        }
-
-        list.push(ccc);
-      });
-
-      observer.next(list);
-    });
-  })
-
-  /**
-   * Gets the CIS structure from the API.
-   */
-  getCisSubnodes() {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/navstruct');
-  }
-
   /**
    *
    */
   getCisSection(sectionId: Number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
+  }
+
+  getIntegrityCheckOptions() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/integritycheck');
   }
 
   /**

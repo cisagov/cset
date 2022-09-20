@@ -3,7 +3,7 @@ import { AssessmentDetail, MaturityModel } from '../../../../../models/assessmen
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
-import { NavigationService } from '../../../../../services/navigation.service';
+import { NavigationService } from '../../../../../services/navigation/navigation.service';
 import { TsaService } from '../../../../../services/tsa.service';
 import { QuestionRequirementCounts, StandardsBlock } from "../../../../../models/standards.model";
 import { StandardService } from '../../../../../services/standard.service';
@@ -86,7 +86,7 @@ export class FeatureOptionTsaComponent implements OnInit {
   * Sets the selection of a feature and posts the assesment detail to the server.
   */
   submittsa(feature, event: any) {
-    const value = event.srcElement.checked;
+    const value = event.target.checked;
 
    const model=this.assessSvc.assessment;
 
@@ -116,7 +116,7 @@ export class FeatureOptionTsaComponent implements OnInit {
           this.assessSvc.assessment.maturityModel = response;
           // tell the nav service to refresh the nav tree
           localStorage.removeItem('tree');
-          this.navSvc.buildTree(this.navSvc.getMagic());
+          this.navSvc.buildTree();
         });
 
         break;
@@ -132,7 +132,7 @@ export class FeatureOptionTsaComponent implements OnInit {
             this.assessSvc.assessment.maturityModel = response;
             // tell the nav service to refresh the nav tree
             localStorage.removeItem('tree');
-            this.navSvc.buildTree(this.navSvc.getMagic());
+            this.navSvc.buildTree();
           })
         break;
         }
@@ -146,7 +146,7 @@ export class FeatureOptionTsaComponent implements OnInit {
             this.assessSvc.assessment.maturityModel = response;
             // tell the nav service to refresh the nav tree
             localStorage.removeItem('tree');
-            this.navSvc.buildTree(this.navSvc.getMagic());
+            this.navSvc.buildTree();
           })
         break;
         }
@@ -163,7 +163,7 @@ export class FeatureOptionTsaComponent implements OnInit {
     if(selectedStandards.length>0){
     // tell the nav service to refresh the nav tree
       localStorage.removeItem('tree');
-      this.navSvc.buildTree(this.navSvc.getMagic());
+      this.navSvc.buildTree();
     }
 
         break;
@@ -180,7 +180,7 @@ export class FeatureOptionTsaComponent implements OnInit {
     if(selectedStandards.length>0){
       // tell the nav service to refresh the nav tree
         localStorage.removeItem('tree');
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
       }
       break;
   }
@@ -196,7 +196,7 @@ export class FeatureOptionTsaComponent implements OnInit {
     if(selectedStandards.length>0){
       // tell the nav service to refresh the nav tree
         localStorage.removeItem('tree');
-        this.navSvc.buildTree(this.navSvc.getMagic());
+        this.navSvc.buildTree();
       }
     break;
 }
@@ -204,7 +204,7 @@ export class FeatureOptionTsaComponent implements OnInit {
    }
     // // tell the nav service to refresh the nav tree
     localStorage.removeItem('tree');
-    this.navSvc.buildTree(this.navSvc.getMagic());
+    this.navSvc.buildTree();
   }
   loadStandards(){
     this.standardSvc.getStandardsList().subscribe(

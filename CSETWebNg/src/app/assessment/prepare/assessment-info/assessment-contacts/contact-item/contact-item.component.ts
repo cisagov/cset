@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { AlertComponent } from "../../../../../dialogs/alert/alert.component";
@@ -31,6 +32,7 @@ import { AssessmentService, Role } from "../../../../../services/assessment.serv
 import { AuthenticationService } from "../../../../../services/authentication.service";
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
+import { LayoutService } from "../../../../../services/layout.service";
 
 @Component({
   selector: "app-contact-item",
@@ -65,12 +67,14 @@ export class ContactItemComponent implements OnInit {
   roles: Role[];
   editMode: boolean;
 
+
   constructor(
     private configSvc: ConfigService,
     private emailSvc: EmailService,
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public layoutSvc: LayoutService
   ) {
     this.editMode = true;
   }
@@ -104,6 +108,8 @@ export class ContactItemComponent implements OnInit {
     const body = this.configSvc.config.defaultInviteTemplate;
 
     this.emailDialog = this.dialog.open(EmailComponent, {
+      width: this.layoutSvc.hp ? '90%' : '',
+      maxWidth: this.layoutSvc.hp ? '90%' : '',
       data: {
         showContacts: false,
         contacts: [this.contact],
@@ -260,7 +266,6 @@ export class ContactItemComponent implements OnInit {
    * Scrolls to the top of this contact item
    */
   scrollToTop() {
-    this.topScroll?.nativeElement.scrollIntoView({behavior: 'smooth', alignToTop: true});
+    this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
   }
 }
-

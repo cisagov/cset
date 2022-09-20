@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Authorization;
+﻿using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Enum;
-using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
-using CSETWebCore.Model.User;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Model.Assessment;
 

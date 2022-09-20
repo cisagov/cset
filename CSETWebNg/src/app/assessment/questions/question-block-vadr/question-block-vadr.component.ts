@@ -29,6 +29,8 @@ import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { groupBy } from 'rxjs/operators';
+import { LayoutService } from '../../../services/layout.service';
+
 
 @Component({
   selector: 'app-question-block-vadr',
@@ -58,10 +60,9 @@ export class QuestionBlockVadrComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService
+    public acetFilteringSvc: AcetFilteringService,
+    public layoutSvc: LayoutService
   ) {
-
-
   }
 
   /**

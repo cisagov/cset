@@ -21,7 +21,6 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Importance_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
         public string Value { get; set; }
 
         [InverseProperty("Importance")]

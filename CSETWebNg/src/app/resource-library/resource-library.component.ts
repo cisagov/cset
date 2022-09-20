@@ -22,16 +22,14 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ConfigService } from '../services/config.service';
-import { NavTreeNode } from '../services/navigation.service';
+import { NavTreeNode } from '../services/navigation/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { NavigationService } from '../services/navigation.service';
-import { MatTreeNestedDataSource } from "@angular/material/tree";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { SelectionModel } from "@angular/cdk/collections";
+import { NavigationService } from '../services/navigation/navigation.service';
+import { NavTreeService } from '../services/navigation/nav-tree.service';
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
@@ -78,6 +76,7 @@ export class ResourceLibraryComponent implements OnInit {
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
+    public navTreeSvc: NavTreeService,
     public dialog: MatDialog) {
 ​
   }
@@ -86,7 +85,6 @@ export class ResourceLibraryComponent implements OnInit {
     this.isexpanded=true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
-    const magic = this.navSvc.getMagic();
 ​
     // Debounce filter changes so the first few letters typed
     // don't have a long noticeable delay as each letter refilters the
@@ -101,7 +99,7 @@ export class ResourceLibraryComponent implements OnInit {
     const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
-        this.navSvc.setTree(response, magic, true);
+        this.navTreeSvc.setTree(response, this.navSvc.getMagic(), true);
         this.isLoading = false;
         clearTimeout(timeout);
       }
@@ -111,7 +109,7 @@ export class ResourceLibraryComponent implements OnInit {
 ​
   setFilter(filter: string) {
     this.filter = filter ?? '';
-    let nodes = this.navSvc?.dataSource.data;
+    let nodes = this.navTreeSvc?.dataSource.data;
     // Convert to lowercase & trim the filter string
     // and pass the value to sub-functions instead of
     // doing the same conversion again in-place many more
@@ -122,7 +120,7 @@ export class ResourceLibraryComponent implements OnInit {
       this.filterDepthMatch(node, filterLowerCaseTrimmed);
     });
 ​
-    this.navSvc.dataChange.next(nodes);
+    this.navTreeSvc.dataChange.next(nodes);
   }
 ​
   filterDepthMatch(node: any, filterLowerCaseTrimmed: string)  {

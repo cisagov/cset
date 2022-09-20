@@ -1,0 +1,25 @@
+.subcat-header {
+  padding: 0.7em;
+  border-radius: 5px;
+  background-color: #E9E9EA;
+  border-bottom: 1px solid #cccccc;
+}
+.btn-button{
+width: 220px !important;
+}
+@media print{
+  .noprint{
+    visibility: hidden;
+  }
+}
+.exportBtb{
+  background-color: #d9d9d9;
+  color:black;
+}
+
+.exportBtb:hover {
+  background-color: #17395C;
+  border-color: #17395C;
+  color: #ffffff;
+  fill: #ffffff;
+}

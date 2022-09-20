@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Model.Cis;
-
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Helpers
 {
@@ -21,11 +21,12 @@ namespace CSETWebCore.Helpers
 
         public ModelStructure Model;
 
+        private List<MATURITY_GROUPINGS> allGroupings;
+
         private List<MATURITY_QUESTIONS> allQuestions;
 
         private List<ANSWER> allAnswers;
 
-        private List<MATURITY_GROUPINGS> allGroupings;
 
 
         /// <summary>
@@ -66,8 +67,9 @@ namespace CSETWebCore.Helpers
                 return;
             }
 
-            Model.ModelName = mm.Model_Name;
             Model.ModelId = _modelId;
+            Model.ModelName = mm.Model_Name;
+            Model.ModelTitle = mm.Model_Title;
 
 
             // Get all maturity questions for the model regardless of level.
@@ -82,6 +84,7 @@ namespace CSETWebCore.Helpers
             allAnswers = _context.ANSWER
                 .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == 3026)
                 .ToList();
+
 
 
             // Get all subgroupings for this maturity model
@@ -151,6 +154,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -162,6 +167,10 @@ namespace CSETWebCore.Helpers
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
+
+                        GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
+                        question.SourceDocuments = s;
+                        question.AdditionalDocuments = r;
                     }
 
                     grouping.Questions.Add(question);
@@ -198,6 +207,8 @@ namespace CSETWebCore.Helpers
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
+                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -209,6 +220,10 @@ namespace CSETWebCore.Helpers
                 {
                     question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
                     question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
+
+                    GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
+                    question.SourceDocuments = s;
+                    question.AdditionalDocuments = r;
                 }
 
                 qList.Add(question);
@@ -252,6 +267,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
+                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
@@ -263,6 +280,10 @@ namespace CSETWebCore.Helpers
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
+
+                        GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
+                        question.SourceDocuments = s;
+                        question.AdditionalDocuments = r;
                     }
 
                     option.Followups.Add(question);
@@ -272,6 +293,18 @@ namespace CSETWebCore.Helpers
             }
 
             return list;
+        }
+
+            
+        private void GetReferences(int questionId, out List<CustomDocument> sourceDocs,
+                out List<CustomDocument> additionalDocs)
+        {
+            var refBuilder = new Helpers.ReferencesBuilder(_context);
+            refBuilder.BuildDocumentsForMaturityQuestion(questionId, out List<CustomDocument> s,
+                out List<CustomDocument> r);
+
+            sourceDocs = s;
+            additionalDocs = r;
         }
 
 

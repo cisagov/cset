@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-inherent-risk-profile',
@@ -33,9 +34,18 @@ export class InherentRiskProfileComponent implements OnInit {
   @Input() 
   acetDashboard: any;
 
-  constructor() { }
+  title: string = "";
+
+  constructor(
+    private assessmentSvc: AssessmentService
+  ) { }
 
   ngOnInit(): void {
+    if (this.assessmentSvc.isISE()) {
+      this.title = "Exam Profile"
+    } else {
+      this.title = "Inherent Risk"
+    }
   }
 
 }

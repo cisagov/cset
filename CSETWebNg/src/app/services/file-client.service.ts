@@ -39,7 +39,6 @@ import { Observable } from 'rxjs';
 export class FileUploadClientService {
 
   downloadUrl: String;
-  reportsUrl: String;
   token: String;
   exportUrl: string;
 
@@ -47,12 +46,11 @@ export class FileUploadClientService {
     private authSvc: AuthenticationService) {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
-    this.reportsUrl = this.configSvc.reportsUrl;
     this.token = this.authSvc.userToken();
   }
 
   /**
-   * 
+   *
    */
   downloadFile(id: number) {
     const headers = {
@@ -64,19 +62,19 @@ export class FileUploadClientService {
   }
 
   /**
-   * 
+   *
    */
   download(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }
 
   /**
-   * 
+   *
    */
   getText(url: string): Observable<string> {
     return this.http.get(url, { responseType: 'text' });
   }
-  
+
   /**
    *
    * @param fileItem
@@ -194,7 +192,7 @@ export class FileUploadClientService {
   }
 
   /**
-   * 
+   *
    */
   uploadAwwaSpreadsheet(fileItem: File, options?: object): any {
     const apiEndpoint = this.configSvc.apiUrl + 'import/AWWA';

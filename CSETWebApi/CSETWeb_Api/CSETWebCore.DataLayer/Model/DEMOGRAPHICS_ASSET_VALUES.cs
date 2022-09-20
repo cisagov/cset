@@ -21,12 +21,10 @@ namespace CSETWebCore.DataLayer.Model
         public int DemographicsAssetId { get; set; }
         [Key]
         [StringLength(50)]
-        [Unicode(false)]
         public string AssetValue { get; set; }
         public int? ValueOrder { get; set; }
         [Required]
-        [StringLength(10)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string AppCode { get; set; }
 
         [ForeignKey("AppCode")]

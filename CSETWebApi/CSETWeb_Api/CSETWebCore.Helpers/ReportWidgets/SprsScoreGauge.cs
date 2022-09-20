@@ -31,9 +31,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
-            _xSvg.SetAttributeValue("width", $"{width + 50}");
-            _xSvg.SetAttributeValue("height", $"{height}");
-
+            _xSvg.SetAttributeValue("viewBox", $"0 0 {width + 50} {height}");
 
             // style tag
             var xStyle = new XElement("style");

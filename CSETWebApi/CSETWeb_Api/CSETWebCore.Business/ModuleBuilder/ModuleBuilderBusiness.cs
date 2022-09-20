@@ -62,6 +62,17 @@ namespace CSETWebCore.Business.ModuleBuilder
 
 
         /// <summary>
+        /// Gets the full list of sets that are being used in an assessment.
+        /// </summary>
+        public List<SetDetail> GetSetsInUseList() 
+        {
+            List<AVAILABLE_STANDARDS> selectedStandards = _context.AVAILABLE_STANDARDS.Where(x => x.Selected).ToList();
+
+            return GetCustomSetList(true).FindAll(x => selectedStandards.Exists(y => y.Set_Name == x.SetName));
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         public void SetBaseSets(String setName, string[] setNames)
@@ -1329,7 +1340,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Get the Reference documents for this requirement
             var allDocs = GetReferencesForRequirement(requirement.RequirementID);
             requirement.SourceDocs = allDocs.SourceDocs;
-            requirement.ResourceDocs = allDocs.ResourceDocs;
+            requirement.AdditionalDocs = allDocs.AdditionalDocs;
 
 
 
@@ -1411,7 +1422,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Package the two lists together
             ReferenceDocLists response = new ReferenceDocLists();
             response.SourceDocs = sourceList;
-            response.ResourceDocs = resourceList;
+            response.AdditionalDocs = resourceList;
             return response;
         }
 

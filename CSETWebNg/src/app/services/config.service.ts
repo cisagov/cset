@@ -30,7 +30,6 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class ConfigService {
 
-  reportsUrl: string;
   apiUrl: string;
   appUrl: string;
   docUrl: string;
@@ -41,6 +40,8 @@ export class ConfigService {
   assetsUrl: string;
   analyticsUrl: string;
   config: any;
+
+  isCsetOnline = false;
 
   // button labels
   buttonLabels = {};
@@ -56,6 +57,17 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   installationMode = '';
+
+  /**
+   * Specifies the mobile ecosystem that the app is running on.
+   * This is set by the build process when building CSET as
+   * a mobile app.  If not being built for mobile, this property
+   * will contain an empty string or "none".
+   */
+  mobileEnvironment = '';
+
+
+  canDeleteCustomModules = false;
 
 
   /**
@@ -90,16 +102,18 @@ export class ConfigService {
           this.analyticsUrl = data.analyticsUrl;
           this.appUrl = appProtocol + data.app.appUrl + appPort;
           this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
-          if (localStorage.getItem("reportsApiUrl") != null) {
-            this.reportsUrl = localStorage.getItem("reportsApiUrl");
-          } else {
-            this.reportsUrl = data.reportsApi;
-          }
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
 
+          this.isCsetOnline = this.config.isCsetOnline ?? false;
+
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
+
+
+          this.mobileEnvironment = (this.config.mobileEnvironment);
+
+          this.canDeleteCustomModules = (this.config.debug.canDeleteCustomModules ?? false);
 
           this.populateLabelValues();
 
@@ -122,6 +136,7 @@ export class ConfigService {
     if (this.installationMode === 'ACET') {
       this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
     }
+    this.buttonLabels['Iss'] = this.config.buttonLabelIss;
     this.buttonLabels['I'] = this.config.buttonLabelI;
 
     this.answerLabels['Y'] = this.config.answerLabelY;
@@ -131,6 +146,7 @@ export class ConfigService {
     if (this.installationMode === 'ACET') {
       this.answerLabels['A'] = this.config.answerLabelA_ACET;
     }
+    this.answerLabels['Iss'] = this.config.answerLabelIss;
     this.answerLabels['U'] = this.config.answerLabelU;
     this.answerLabels[''] = this.config.answerLabelU;
     this.answerLabels['I'] = this.config.answerLabelI;
@@ -150,7 +166,20 @@ export class ConfigService {
     this.buttonClasses['N'] = 'btn-no';
     this.buttonClasses['NA'] = 'btn-na';
     this.buttonClasses['A'] = 'btn-alt';
+    this.buttonClasses['Iss'] = 'btn-iss';
     this.buttonClasses['I'] = 'btn-inc';
+  }
+
+  /**
+   * A convenience method so that consumers can quickly know whether
+   * CSET is currently running as a mobile app or not.
+   */
+  isMobile(): boolean {
+    if (this.mobileEnvironment.toUpperCase() == 'NONE'
+      || this.mobileEnvironment == '') {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -158,7 +187,7 @@ export class ConfigService {
    * question and requirement IDs for debugging purposes.
    */
   showQuestionAndRequirementIDs() {
-    return this.config.showQuestionAndRequirementIDs || false;
+    return this.config.debug.showQuestionAndRequirementIDs || false;
   }
 
   /**
@@ -167,7 +196,7 @@ export class ConfigService {
    * @returns
    */
   showBuildTime() {
-    return this.config.showBuildTime || false;
+    return this.config.debug.showBuildTime || false;
   }
 }
 
