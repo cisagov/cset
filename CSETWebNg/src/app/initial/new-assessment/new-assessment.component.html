@@ -17,8 +17,8 @@
                     <p class="card-text" ellipsis [ellipsis-content]="c.plainText" style="max-height:80px; min-height:80px;"></p>
                 </div>
                 <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.gallery_Item_Id!=hoverIndex">
-                    <button  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-                    <button  class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.gallery_Item_Id)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
+                    <button matTooltip="View Detail" class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
+                    <button matTooltip="Create Assessment" class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.gallery_Item_Id)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
                 </div>
             </div>
         </ng-template>
