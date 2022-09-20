@@ -11,6 +11,9 @@ import { filter } from 'rxjs/operators';
 export class LandingPageTabsComponent implements OnInit {
 
   currentTab: string;
+  isSearch: boolean= false;
+  searchString:string="";
+  
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
@@ -30,5 +33,13 @@ export class LandingPageTabsComponent implements OnInit {
 
   checkActive(tab) {
     return this.currentTab === tab;
+  }
+  changeToSearch(val){
+    this.isSearch = true;
+    this.searchString = val;
+  }
+  cancelSearch(){
+    this.isSearch = false;
+    this.searchString = '';
   }
 }

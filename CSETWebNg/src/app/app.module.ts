@@ -489,6 +489,7 @@ import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.com
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
+import { SearchPageComponent } from './initial/search-page/search-page.component';
 
 @NgModule({
     imports: [
@@ -933,7 +934,8 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
-        PrivacyWarningRejectComponent
+        PrivacyWarningRejectComponent, 
+        SearchPageComponent
     ],
     providers: [
         ConfigService,
