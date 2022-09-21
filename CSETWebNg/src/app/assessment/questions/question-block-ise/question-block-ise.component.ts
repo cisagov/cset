@@ -31,11 +31,11 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
-import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 import { FindingsService } from '../../../services/findings.service';
+import { IssuesComponent } from '../issues/issues.component';
 
 
 /**
@@ -577,13 +577,7 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditDiscovery(findid) {
-    //this.saveAnswer();
-  
-    // TODO Always send an empty one for now.
-    // At some juncture we need to change this to
-    // either send the finding to be edited or
-    // send an empty one.
+  addEditIssue(findid) {
     const find: Finding = {
       question_Id: this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
@@ -599,8 +593,8 @@ export class QuestionBlockIseComponent implements OnInit {
       vulnerabilities: ''
     };
   
-    this.dialog.open(FindingsComponent, { 
-      data: find, 
+    this.dialog.open(IssuesComponent, { 
+      //data: find, 
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '1200px',
       maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
@@ -621,7 +615,7 @@ export class QuestionBlockIseComponent implements OnInit {
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteDiscovery(findingToDelete) {
+  deleteIssue(findingToDelete) {
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
   
