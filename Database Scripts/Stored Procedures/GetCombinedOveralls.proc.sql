@@ -42,23 +42,23 @@ BEGIN
 	
 	
 	IF OBJECT_ID('tempdb..##componentAnswers') IS NOT NULL DROP TABLE #componentAnswers
-	create table #componentAnswers (UniqueKey int, Assessment_Id int, Answer_Id int, Question_Id int, Answer_Text varchar(50), Comment varchar(2048),
-		Alternate_JustificaTion ntext, FeedBack varchar(2048), Question_Number int, QuestionText varchar(7338), ComponentName varchar(200), Symbol_Name varchar(100),
-		Question_Group_Heading nvarchar(250), GroupHeadingId int, Universal_Sub_Category varchar(100), SubCategoryId int, Is_Component bit, Component_Guid uniqueidentifier,
-		Layer_Id int, LayerName varchar(250),Container_Id int, ZoneName varchar(250), SAL varchar(20), Mark_For_Review bit, Is_Requirement bit,
-		Is_Framework bit, Reviewed bit, Simple_Question varchar(7338), Sub_Heading_Question_Description varchar(200), heading_pair_id int,
-		label varchar(200), Component_Symbol_Id int)
+	create table #componentAnswers (UniqueKey int, Assessment_Id int, Answer_Id int, Question_Id int, Answer_Text nvarchar(50), Comment nvarchar(2048),
+		Alternate_JustificaTion ntext, FeedBack nvarchar(2048), Question_Number int, QuestionText nvarchar(4000), ComponentName nvarchar(200), Symbol_Name nvarchar(100),
+		Question_Group_Heading nvarchar(250), GroupHeadingId int, Universal_Sub_Category nvarchar(100), SubCategoryId int, Is_Component bit, Component_Guid uniqueidentifier,
+		Layer_Id int, LayerName nvarchar(250),Container_Id int, ZoneName nvarchar(250), SAL nvarchar(20), Mark_For_Review bit, Is_Requirement bit,
+		Is_Framework bit, Reviewed bit, Simple_Question nvarchar(4000), Sub_Heading_Question_Description nvarchar(200), heading_pair_id int,
+		label nvarchar(200), Component_Symbol_Id int)
 	insert into #componentAnswers exec [usp_getExplodedComponent] @assessment_id
 
 
 
 	if exists (select * from INFORMATION_SCHEMA.TABLES where TABLE_NAME = '#assessmentAnswers')
 		drop table #asessmentAnswers;
-	create table #assessmentAnswers (answer_text varchar(50), assessment_id int, is_requirement bit, is_component bit, is_framework bit)
+	create table #assessmentAnswers (answer_text nvarchar(50), assessment_id int, is_requirement bit, is_component bit, is_framework bit)
 
 
 	-- Populate #assessmentAnswers from the correct source table
-	declare @applicationMode varchar(50)
+	declare @applicationMode nvarchar(50)
 	exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 
 	if(@ApplicationMode = 'Questions Based')

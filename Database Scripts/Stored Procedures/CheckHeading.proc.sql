@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[CheckHeading]
 	-- Add the parameters for the stored procedure here
-	@Heading varchar(250)
+	@Heading nvarchar(250)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

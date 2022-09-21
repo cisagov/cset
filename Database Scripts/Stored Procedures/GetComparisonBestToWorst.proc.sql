@@ -7,7 +7,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[GetComparisonBestToWorst]	
 @assessment_id int,
-@applicationMode varchar(100) = null
+@applicationMode nvarchar(100) = null
 AS
 BEGIN
 	SET NOCOUNT ON;

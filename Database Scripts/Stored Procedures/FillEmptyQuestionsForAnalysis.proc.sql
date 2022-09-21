@@ -14,8 +14,8 @@ BEGIN
 	--for the given mode 
 	--select the new_questions_sets or requirement_sets table with left join answers (possibly on the view)
 	-- and do the insert
-	declare @ApplicationMode varchar(100)
-	declare @SALevel varchar(10)
+	declare @ApplicationMode nvarchar(100)
+	declare @SALevel nvarchar(10)
 	declare @NumRowsChanged int
 
 	select @SALevel = ul.Universal_Sal_Level from STANDARD_SELECTION ss join UNIVERSAL_SAL_LEVEL ul on ss.Selected_Sal_Level = ul.Full_Name_Sal
