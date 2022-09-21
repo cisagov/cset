@@ -4,13 +4,13 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[analytics_Compute_standard_all]
 	@assessment_id int, --default assessment_id the mode will be pulled from this assessment
-	@set_name varchar(20), --this is the standard set name key
+	@set_name nvarchar(20), --this is the standard set name key
 	@sector_id int,
 	@industry_id int	
 AS
 BEGIN
 	SET NOCOUNT ON;
-	declare @ApplicationMode varchar(20)
+	declare @ApplicationMode nvarchar(20)
 
 	exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 
@@ -86,7 +86,7 @@ begin
                  (
                          select QUESTION_GROUP_HEADING, 
                                     isnull(PERCENTILE_disc(0.5) WITHIN GROUP (ORDER BY [percentage]) OVER (PARTITION BY Question_Group_Heading),0) AS median,
-                                 ROW_NUMBER() OVER (PARTITION BY question_group_heading ORDER BY question_group_heading) rown
+                                   ROW_NUMBER() OVER (PARTITION BY question_group_heading ORDER BY question_group_heading) rown
                          from (
                                            select question_group_heading, 
                                                   round((ISNULL([percentage],0) *100),0) [percentage]

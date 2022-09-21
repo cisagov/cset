@@ -8,7 +8,7 @@ CREATE PROCEDURE [dbo].[usp_MaturityDetailsCalculations]
 	@Assessment_Id int
 AS
 BEGIN
-	declare @applicationMode varchar(50)
+	declare @applicationMode nvarchar(50)
 
 	exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 

@@ -1,3 +1,4 @@
+
 CREATE PROCEDURE [dbo].[usp_Assessments_Completion_For_User]
 @User_Id int
 AS
@@ -34,7 +35,7 @@ BEGIN
 			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
 
 
-	select a.Assessment_Id, mq.Mat_Question_Id into #AvailableMatQuestionsWithLevels
+	select a.Assessment_Id, mq.Mat_Question_Id, mq.Maturity_Level_Id into #AvailableMatQuestionsWithLevels
 		from MATURITY_QUESTIONS mq
 			join AVAILABLE_MATURITY_MODELS amm on amm.model_id = mq.Maturity_Model_Id
 			full join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
@@ -111,7 +112,10 @@ BEGIN
 			and --This ensures the completed question counts are accurate even if users switch assessments types later on
 			(ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestions)
 			or
-			ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestionsWithLevels)
+			ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestionsWithLevels amql
+												join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id 
+												join MATURITY_LEVELS ml on ml.Maturity_Level_Id = amql.Maturity_Level_Id 
+												where asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level >= ml.Level)
 			or
 			ans.Question_Or_Requirement_Id in (select Question_Id from #AvailableQuestionBasedStandard)
 			or

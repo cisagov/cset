@@ -6,7 +6,7 @@
 --              use an argument of -1 to delete all users.
 -- =============================================
 CREATE PROCEDURE [dbo].[DeleteUser]
-	@userid varchar(10)
+	@userid nvarchar(10)
 
 AS
 BEGIN
