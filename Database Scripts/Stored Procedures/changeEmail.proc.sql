@@ -4,8 +4,8 @@
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [dbo].[changeEmail]
-	@originalEmail varchar(200),
-	@newEmail varchar(200)
+	@originalEmail nvarchar(200),
+	@newEmail nvarchar(200)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
