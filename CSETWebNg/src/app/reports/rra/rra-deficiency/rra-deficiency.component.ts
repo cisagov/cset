@@ -46,7 +46,7 @@ export class RraDeficiencyComponent implements OnInit {
         let advancedList = [];
 
         this.response.deficienciesList.forEach(element => {
-          let level = this.getStringLevel(element.mat.maturity_Level);
+          let level = this.getStringLevel(element.mat.maturity_Level_Id);
           switch (level) {
             case 'Basic':
               basicList.push(element);

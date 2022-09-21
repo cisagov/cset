@@ -113,9 +113,16 @@ namespace CSETWebCore.Business.Reports
 
             NullOutNavigationPropeties(responseList);
 
+            // RRA should be always be defaulted to its maximum available level (3)
+            // since the user can't configure it
+            if (myModel.model_id == 5) 
+            {
+                selectedLevel = 3;
+            }
+
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_Level_Id <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
             }
 
 
@@ -1513,9 +1520,9 @@ namespace CSETWebCore.Business.Reports
                 }
 
                 if (a.Mat.Maturity_LevelNavigation != null) 
-                { 
-                    a.Mat.Maturity_Level_Id = a.Mat.Maturity_LevelNavigation.Level;
-                    a.Mat.Maturity_LevelNavigation = null;
+                {
+                    a.Mat.Maturity_LevelNavigation.MATURITY_QUESTIONS = null;
+                    a.Mat.Maturity_LevelNavigation.Maturity_Model = null;
                 }
             }
         }
