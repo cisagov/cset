@@ -98,56 +98,128 @@
             </table>
         </div>
         <div class="page-break"></div>
-        <div class="page-break pb-5">
-            <div class="d-flex flex-row" style="justify-content: space-between">
-                <div>
-                    <div class="report-text-blue text-underline">
-                        Maturity Level Key:
-                    </div>
-                    B - Baseline<br>
-                    E - Evolving<br>
-                    INT - Intermediate<br>
-                    ADV - Advanced<br>
-                    INN - Innovative
-                </div>
-                <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Answered Statements</div>
-                </div>
+       
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Statement Overview</div>
             </div>
-            <table class="table-responsive td-align-top td-padding-half-rem">
-                <tr class="report-text-blue">
-                    <td></td>
-                    <td></td>
-                    <td>Answers</td>
-                    <td>Maturity Level</td>
-                    <td>Comments</td>
+        </div>
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td></td>
+                <td>Answers</td>
+                <td>Exam Level</td>
+                <td>   </td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <tr class="rkw-domain">
+                    <!-- <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td> -->
+                    <td colspan="5" class="background-1 h4 color-white"></td>
                 </tr>
-                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                    <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <tr>
+                        <!-- <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor</td> -->
+                        <td colspan="5" class="background-1 color-white font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
                     </tr>
-                    <ng-container *ngFor="let f of d.assessmentFactors">
+                    <ng-container *ngFor="let c of f.components">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
+                            <!-- <td colspan="5" class="background-3 pl-5">{{c.title}} - Component -->
+                            <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
+                                <label class="btn form-check-label" style="float: right">
+                                    <input name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
+                                </label>
                             </td>
                         </tr>
-                        <ng-container *ngFor="let c of f.components">
-                            <tr>
-                                <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="requiredQuestion(q) && shouldExpand(c.title)">
+                                <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+
+                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
+
+                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
+
+                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3">
+                                    {{acetSvc.getAbbrev(q.maturityLevel)}}
+                                    <label class="btn form-check-label" style="float: right">
+                                        <input name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                    </label>
+                                </td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                             </tr>
-                            <ng-container *ngFor="let q of c.questions">
-                                <tr>
-                                    <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td class="pr-3">{{configSvc.answerLabels[q.answerText]}}</td>
-                                    <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
-                                    <td>{{q.comments}}</td>
-                                </tr>
-                            </ng-container>
                         </ng-container>
                     </ng-container>
                 </ng-container>
-            </table>
+            </ng-container>
+        </table>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Comments</div>
+            </div>
         </div>
 
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td>Comments</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <ng-container *ngFor="let c of f.components">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="q.comments === 'Yes'">
+                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td class="pr-3">{{ q.comment }}</td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </table>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">ISE Profile</div>
+            </div>
+        </div>
+
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td></td>
+                <td>Response</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <ng-container *ngFor="let c of f.components">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="requiredQuestion(q)">
+                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td class="pr-3" [innerHTML]="q.questionText"></td>
+
+                                <td *ngIf="isParentQuestion(q)" class="pr-3"> </td>
+                                <td *ngIf="!isParentQuestion(q)" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </table>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">EF and DOR Report</div>
+            </div>
+        </div>
     </div>
+</div>

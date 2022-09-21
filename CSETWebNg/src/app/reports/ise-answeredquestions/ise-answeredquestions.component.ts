@@ -84,22 +84,5 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     } 
     return false;
   }
-
-  answerText (q: any) {
-    let text = this.configSvc.answerLabels[q.answerText];
-    if(text == "Yes Compensating Control") {
-      return "Comment";
-    }
-    return text;
-  }
-
-  isAltAnswer (q: any) {
-    let text = this.configSvc.answerLabels[q.answerText];
-    if(text == "Yes Compensating Control") {
-      return "Yes";
-    }
-    return "No";
-  }
-
   
 }

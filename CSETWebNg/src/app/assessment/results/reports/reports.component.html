@@ -240,15 +240,6 @@
         Some reports are disabled until all statements have been answered.
       </span>
     </div>
-    <p *ngIf="disableIseReportLinks"></p>
-    <button (click)="clickReportLink('isegaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableIseReportLinks">
-      ISE Gap Report
-    </button>
-    <button (click)="clickReportLink('isecommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-      [disabled]="disableIseReportLinks">
-      ISE Comments and Marked for Review
-    </button>
     <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       ISE Answered Statements
     </button>
@@ -256,7 +247,7 @@
       [disabled]="disableIseReportLinks">
       ISE Scope Report
     </button>
-    <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+    <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
       [disabled]="disableIseReportLinks">
       ISE Examination Report
     </button>

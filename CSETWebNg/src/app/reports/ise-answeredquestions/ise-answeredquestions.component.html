@@ -90,8 +90,7 @@
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
-                            </td>
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
                             <tr>
@@ -101,7 +100,7 @@
                                 <tr *ngIf="requiredQuestion(q)">
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                     <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td *ngIf="!parentQuestion(q)" class="pr-3">{{ answerText(q) }}</td>
+                                    <td *ngIf="!parentQuestion(q)" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
                                     <td *ngIf="parentQuestion(q)" class="pr-3"> </td>
                                     <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                 </tr>
