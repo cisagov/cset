@@ -32,11 +32,44 @@ import { AssessmentService } from '../../../services/assessment.service';
   selector: 'app-issues',
   templateUrl: './issues.component.html',
   host: {
-    'style': 'max-width: 100%'
+    'style': 'max-width: 100%', 'width':'1200px'
   }
 })
 
+
 export class IssuesComponent implements OnInit {
+
+  riskAreas: string[] = ["Strategic", "Compliance", "Transaction", "Reputation"];
+
+  strategicSubRisks: string[] = [
+    "Other", "Organizational Risk Management Program", "Staffing", "Field of Membership", 
+    "Product/Service Outsourcing", "Program Monitoring, Oversight, & Reporting",
+    "Business/Strategic/Budgeting", "Board of Director Oversight", "Training", "Capital Plans"
+  ];
+
+  complianceSubRisks: string[] = [
+    "Regulatory Compliance", "Policies & Procedures", "Other",
+    "Consumer Compliance", "BSA", "Reporting", "Fair Lending"
+  ];
+
+  transactionSubRisks: string[] = [
+    "Audit", "Account out of Balance/Misstatement", "Internal Controls",
+    "Information Systems & Technology Controls", "Fraud", "Other",
+    "Supervisory Committee Activites", "Full and Fair Disclosure",
+    "Electronic Payment & Card Services", "Recordkeeping-Significant",
+    "Security Program", "Account Verification", "Policies & Procedures",
+    "Program Monitoring, Oversight, & Reporting", "Internal Audit & Review"
+  ];
+
+  reputationSubRisks: string[] = [
+    "Other", "Management", "Insider Activities", "Legal", "Reporting"
+  ];
+
+  ratings: string[] = [
+    "Low", "Medium", "High"
+  ];
+
+  selectedRiskArea: string = "";
 
   constructor(
     private ncuaSvc: NCUAService,
@@ -46,9 +79,21 @@ export class IssuesComponent implements OnInit {
   ) {}
   
   ngOnInit() {
-    }
+  }
 
-    update() {
-      
-    }
+  updateRiskArea(e) {
+    this.selectedRiskArea = e.target.value;
+  }
+
+  update() {
+    this.dialog.close(true);
+  }
+
+  saveIssue() {
+    this.dialog.close(true);
+  }
+
+  cancel() {
+    this.dialog.close(true);
+  }
 }
