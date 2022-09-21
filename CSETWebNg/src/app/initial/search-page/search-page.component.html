@@ -14,7 +14,7 @@
           </div>
           <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px; z-index:1">
               <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-              <p class="card-text" ellipsis [ellipsis-content]="c.item.description" style="max-height:80px; min-height:80px;"></p>
+              <p class="card-text" ellipsis [ellipsis-content]="c.item.plainText" style="max-height:80px; min-height:80px;"></p>
           </div>
           <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.item.gallery_Item_Id!=hoverIndex">
               <button  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
