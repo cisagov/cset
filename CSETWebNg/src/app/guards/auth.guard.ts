@@ -51,7 +51,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
    * 
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log('canActivate');
     if (!this.authSvc.hasUserAgreedToPrivacyWarning()) {
       this.router.navigate(['/home/privacy-warning'], { queryParamsHandling: "preserve" });
       return false;
