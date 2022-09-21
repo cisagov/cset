@@ -6,11 +6,11 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 
 @Component({
-  selector: 'app-ise-issues',
-  templateUrl: './ise-issues.component.html',
+  selector: 'app-ise-merit',
+  templateUrl: './ise-merit.component.html',
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
-export class IseIssuesComponent implements OnInit {
+export class IseMeritComponent implements OnInit {
   response: any = null; 
 
   constructor(
@@ -21,13 +21,13 @@ export class IseIssuesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Issues Report - ISE");
+    this.titleService.setTitle("Merit Report - ISE");
 
     this.reportSvc.getAltList().subscribe(
       (r: any) => {
         this.response = r;        
       },
-      error => console.log('Issues Report Error: ' + (<Error>error).message)
+      error => console.log('Merit Report Error: ' + (<Error>error).message)
     );
   }
 

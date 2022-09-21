@@ -475,3 +475,9 @@ textarea.form-control {
   margin-right: 0.3125rem;
   margin-left: 0;
 }
+.cset-icons-chevron-down:before {
+  content: "\6a";
+}
+.cset-icons-chevron-down:after {
+  content: "\6d";
+}
