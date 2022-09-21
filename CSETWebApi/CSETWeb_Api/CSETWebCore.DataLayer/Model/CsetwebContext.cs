@@ -1525,6 +1525,8 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_ITEM>(entity =>
             {
+                entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
             });
 
@@ -1925,9 +1927,9 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_LevelNavigation)
+                entity.HasOne(d => d.Maturity_Level)
                     .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Maturity_Level)
+                    .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MATURITY___Matur__5B638405");
 

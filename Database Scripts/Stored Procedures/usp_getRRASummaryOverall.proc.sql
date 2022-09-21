@@ -18,7 +18,7 @@ BEGIN
 	where answer_text in ('Y','N','U') ) a left join (
 SELECT a.Answer_Text, isnull(count(question_or_requirement_id),0) qc , SUM(count(Question_Or_Requirement_Id)) OVER(PARTITION BY assessment_id) AS Total
 			FROM Answer_Maturity a 
-			join MATURITY_LEVELS l on a.Maturity_Level = l.Maturity_Level_Id
+			join MATURITY_LEVELS l on a.Maturity_Level_Id = l.Maturity_Level_Id
 			where a.Assessment_Id = @assessment_id and Is_Maturity = 1 --@assessment_id 
 			group by a.Assessment_Id, a.Answer_Text)
 			m on a.Answer_Text=m.Answer_Text		
