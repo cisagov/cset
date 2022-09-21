@@ -477,7 +477,7 @@ namespace CSETWebCore.Business.Question
                 RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
                 ShowRequirementStandards = true;
 
-                var l = _context.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
+                var l = _context.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level_Id).FirstOrDefault();
                 if (l != null)
                 {
                     LevelName = l.Level_Name;
