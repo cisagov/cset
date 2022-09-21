@@ -13,7 +13,7 @@ BEGIN
   --SELECT @NumRowsChanged = @@ROWCOUNT only call
   --if rowcount from the previous was actually greater than zeror
   --to eliminate unnecessary calls
-  declare @ApplicationMode varchar(100)  
+  declare @ApplicationMode nvarchar(100)  
   declare @answer_id int, @question_group_heading_id int, @next int, @previousH int
 
 	exec GetApplicationModeDefault @assessment_id,@applicationmode output
@@ -48,7 +48,7 @@ BEGIN
 	else
 	begin
 		
-		declare @standard_category varchar(250), @previous_std varchar(250)
+		declare @standard_category nvarchar(250), @previous_std nvarchar(250)
 		set @next = 1; 
 		set @previousH = 0; 
 		declare me cursor Fast_forward

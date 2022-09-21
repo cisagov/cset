@@ -1,7 +1,7 @@
 CREATE PROCEDURE [dbo].[GetApplicationModeDefault]
 	-- Add the parameters for the stored procedure here
 	@Assessment_Id int,
-	@Application_Mode varchar(100) output
+	@Application_Mode nvarchar(100) output
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

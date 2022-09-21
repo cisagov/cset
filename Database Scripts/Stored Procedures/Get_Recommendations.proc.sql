@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[Get_Recommendations]
 	-- Add the parameters for the stored procedure here
-	@value int, @industry int, @organization varchar(50) ,@assetvalue varchar(50)
+	@value int, @industry int, @organization nvarchar(50) ,@assetvalue nvarchar(50)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
