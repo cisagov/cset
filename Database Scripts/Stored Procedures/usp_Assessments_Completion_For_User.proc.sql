@@ -1,4 +1,3 @@
-
 CREATE PROCEDURE [dbo].[usp_Assessments_Completion_For_User]
 @User_Id int
 AS
@@ -14,6 +13,15 @@ BEGIN
 	declare @AssessmentTotalStandardQuestionsCount table(AssessmentId INT, TotalStandardQuestionsCount INT)
 	declare @AssessmentTotalDiagramQuestionsCount table(AssessmentId INT, TotalDiagramQuestionsCount INT)
 
+	-- I don't like hardcoding in these model ids, but we have to manually declare which models utilize user selected levels to 
+	-- filter questions since some maturity models default to ML 1, but also have questions above that level.
+	declare @MaturityModelsWithLevels table(ModelId INT)
+	declare @MaturityModelsWithoutLevels table (ModelId INT)
+	insert into @MaturityModelsWithLevels values (1), (2), (6), (7), (9), (10)
+	insert into @MaturityModelsWithoutLevels values (3), (4), (8), (5)
+
+	declare @ParentMatIds table(Id INT)
+	insert into @ParentMatIds select Parent_Question_Id from MATURITY_QUESTIONS where Parent_Question_Id is not null
 
 	--Creating temp tables to hold applicable questions for each type of question
 	select a.Assessment_Id, mq.Mat_Question_Id into #AvailableMatQuestions
@@ -22,7 +30,8 @@ BEGIN
 			full join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
 			join USERS u on a.AssessmentCreatorId = u.UserId
 			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseMaturity = 1 and amm.model_id != 1 and amm.model_id != 2 and amm.model_id != 6
+			where u.UserId = @User_Id and a.UseMaturity = 1 and amm.model_id in (select ModelId from @MaturityModelsWithoutLevels)
+			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
 
 
 	select a.Assessment_Id, mq.Mat_Question_Id into #AvailableMatQuestionsWithLevels
@@ -32,9 +41,10 @@ BEGIN
 			join USERS u on a.AssessmentCreatorId = u.UserId
 			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
 			join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id
-			join MATURITY_LEVELS ml on ml.Maturity_Level_Id = mq.Maturity_Level
-			where u.UserId = @User_Id
-			and asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level >= ml.Level
+			join MATURITY_LEVELS ml on ml.Maturity_Level_Id = mq.Maturity_Level_Id
+			where u.UserId = @User_Id and a.UseMaturity = 1
+			and asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level >= ml.Level and amm.model_id in (select ModelId from @MaturityModelsWithLevels)
+			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
 
 
 	select a.Assessment_Id, q.question_Id into #AvailableQuestionBasedStandard
@@ -50,7 +60,7 @@ BEGIN
 			join UNIVERSAL_SAL_LEVEL usl on ss.Selected_Sal_Level = usl.Full_Name_Sal
 			join USERS u on a.AssessmentCreatorId = u.UserId
 			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and stand.Selected = 1 and nql.Universal_Sal_Level = usl.Universal_Sal_Level and a.UseStandard = 1
+			where u.UserId = @User_Id and a.UseStandard = 1 and stand.Selected = 1 and nql.Universal_Sal_Level = usl.Universal_Sal_Level
 
 
 	select a.Assessment_Id, r.Requirement_Id into #AvailableRequirementBasedStandard
@@ -63,7 +73,7 @@ BEGIN
 			join REQUIREMENT_LEVELS rl on rl.Requirement_Id = r.Requirement_Id
 			join USERS u on a.AssessmentCreatorId = u.UserId
 			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and rl.Standard_Level = usl.Universal_Sal_Level
+			where u.UserId = @User_Id and a.UseStandard = 1 and rl.Standard_Level = usl.Universal_Sal_Level
 
 
 	select a.Assessment_Id, q.Question_Id into #AvailableDiagramQuestions
@@ -131,7 +141,7 @@ BEGIN
 		group by Assessment_Id
 
 
-	--Total Maturity questions count (for maturity models without levels) available to answer
+	--Total Maturity questions count (for maturity models without level selection) available to answer
 	insert into @AssessmentTotalMaturityQuestionsCount
 	select
 		AssessmentId = Assessment_Id,
