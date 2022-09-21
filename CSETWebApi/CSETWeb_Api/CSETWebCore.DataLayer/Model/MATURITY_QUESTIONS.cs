@@ -56,7 +56,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual MATURITY_QUESTION_TYPES Mat_Question_TypeNavigation { get; set; }
         [ForeignKey("Maturity_Level_Id")]
         [InverseProperty("MATURITY_QUESTIONS")]
-        public virtual MATURITY_LEVELS Maturity_Level { get; set; }
+        public virtual MATURITY_LEVELS Maturity_LevelNavigation { get; set; }
         [ForeignKey("Maturity_Model_Id")]
         [InverseProperty("MATURITY_QUESTIONS")]
         public virtual MATURITY_MODELS Maturity_Model { get; set; }
