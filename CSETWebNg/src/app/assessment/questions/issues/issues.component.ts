@@ -30,10 +30,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-issues',
-  templateUrl: './issues.component.html',
-  host: {
-    'style': 'max-width: 100%', 'width':'1200px'
-  }
+  templateUrl: './issues.component.html'
 })
 
 
