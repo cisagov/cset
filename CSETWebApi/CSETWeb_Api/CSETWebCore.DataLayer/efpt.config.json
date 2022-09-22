@@ -8,6 +8,7 @@
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Model",
+   "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
@@ -678,6 +679,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RISK_AREA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RISK_SUB_RISK_AREA]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[SAL_DETERMINATION_TYPES]",
          "ObjectType": 0
       },
@@ -1255,5 +1264,6 @@
    "UseNodaTime": false,
    "UseNullableReferences": false,
    "UseSchemaFolders": false,
-   "UseSpatial": false
+   "UseSpatial": false,
+   "UseT4": false
 }
