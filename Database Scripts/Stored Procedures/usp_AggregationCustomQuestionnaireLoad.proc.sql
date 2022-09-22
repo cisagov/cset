@@ -7,15 +7,15 @@
 -- not be the same name that went in. 
 -- =============================================
 CREATE PROCEDURE [dbo].[usp_AggregationCustomQuestionnaireLoad]
-	@AssessmentDBName varchar(5000),	
-	@entity_name varchar(50)
+	@AssessmentDBName nvarchar(4000),	
+	@entity_name nvarchar(50)
 AS
 BEGIN
 
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-declare @tempEntityName varchar(50)
+declare @tempEntityName nvarchar(50)
 declare @i int
 declare @addNew bit
 declare @sql nvarchar(max)
@@ -27,7 +27,7 @@ BEGIN
     SET FMTONLY OFF 
     if @entity_name is null 
         begin
-            select cast(null as varchar(50)) as [entity_name]            
+            select cast(null as nvarchar(50)) as [entity_name]            
         END
 END   
 
@@ -63,7 +63,7 @@ print @sql
 
 EXECUTE sp_executesql   
           @sql, 
-		  N'@entity_name varchar(50), @tempEntityName varchar(50) output, @i int, @addNew bit',
+		  N'@entity_name nvarchar(50), @tempEntityName nvarchar(50) output, @i int, @addNew bit',
           @entity_name,
 		  @tempEntityName out,
 		  @i,

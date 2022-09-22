@@ -20,7 +20,7 @@ then calculate the total risk in each question_group_heading(category)
 then calculate the actual percentage of the total risk in each category 
 order by the total
 */
-declare @applicationMode varchar(50)
+declare @applicationMode nvarchar(50)
 
 exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 

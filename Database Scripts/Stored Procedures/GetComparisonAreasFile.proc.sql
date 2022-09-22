@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[GetComparisonAreasFile]		
 @assessment_id int,
-@applicationMode varchar(100) = null
+@applicationMode nvarchar(100) = null
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -15,7 +15,7 @@ BEGIN
 
 	if(@assessment_id is null)  
 	begin
-		declare @ghq varchar(150), @alias varchar(255)
+		declare @ghq nvarchar(150), @alias nvarchar(255)
 		set @ghq = 'Access Control'
 		set @alias = 'Test'
 		SELECT Alias=@alias,Question_group_heading=@ghq,Total=0, 
@@ -74,7 +74,7 @@ BEGIN
 			   join QUESTION_GROUP_HEADING h on h.Question_Group_Heading_Id = c.Question_Group_Heading_Id
 			   join ASSESSMENTS f on a.assessment_id=f.Assessment_Id
 			   group by Question_Group_Heading, Answer_Text
-   ) p
+ ) p
 		PIVOT
 		(
 		sum(acount)

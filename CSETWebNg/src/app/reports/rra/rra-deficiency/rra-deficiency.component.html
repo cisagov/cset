@@ -103,8 +103,8 @@
         <hr class="page-line m-0">
         <table role="presentation">
           <ng-template ngFor let-s [ngForOf]="response?.deficienciesList">
-            <tr *ngIf="shouldDisplay(s.mat.maturity_Level)">
-                    <td colspan="4"><h2>{{getStringLevel(s.mat.maturity_Level)}}</h2></td>
+            <tr *ngIf="shouldDisplay(s.mat.maturity_Level_Id)">
+                    <td colspan="4"><h2>{{getStringLevel(s.mat.maturity_Level_Id)}}</h2></td>
                   </tr>
                   <tr>
                     <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b></td>

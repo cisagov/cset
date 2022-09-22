@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[GetAreasOverall]		
 @Assessment_Id int,
-@applicationMode varchar(100) = null
+@applicationMode nvarchar(100) = null
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -14,7 +14,7 @@ BEGIN
 		exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 	if(@Assessment_Id is null)  
 	begin
-		declare @ghq varchar(150)
+		declare @ghq nvarchar(150)
 		set @ghq = 'Access Control'
 		declare @value float 
 		set @value = 1.0001;
