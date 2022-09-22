@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -80,6 +80,8 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlus: boolean = false;
   showIssues: boolean = false;
   coreChecked: boolean = false;
+
+  dialogRef: MatDialogRef <any>;
 
   /**
    * Constructor.
@@ -577,38 +579,15 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue(findid) {
-    const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: ''
-    };
-  
-    this.dialog.open(IssuesComponent, { 
-      //data: find, 
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '1200px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
-    }).afterClosed().subscribe(result => {
-        const answerID = find.answer_Id;
-        this.findSvc.getAllDiscoveries(answerID).subscribe(
-          (response: Finding[]) => {
-            this.extras.findings = response;
-            this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-            this.myGrouping.questions[0].answer_Id = find.answer_Id;
-          },
-          error => console.log('Error updating findings | ' + (<Error>error).message)
-        );
-      });
+  addEditIssue() {
+    this.dialogRef = this.dialog.open(IssuesComponent, {
+      height: '800px',
+      width: '1200px',
+      minWidth: '1200px'
+    });
+      this.dialogRef.afterClosed().subscribe(result => {
+        this.dialogRef = null;
+    });
   }
   
   /**
