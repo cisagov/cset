@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.Reports
                             && m.Maturity_Model_Id == myModel.model_id
                             && a.Question_Type == "Maturity"
                             && !this.OutOfScopeQuestions.Contains(m.Mat_Question_Id)
-                        orderby m.Grouping_Id, m.Maturity_Level, m.Mat_Question_Id ascending
+                        orderby m.Grouping_Id, m.Maturity_Level_Id, m.Mat_Question_Id ascending
                         select new MatRelevantAnswers()
                         {
                             ANSWER = a,
@@ -113,9 +113,16 @@ namespace CSETWebCore.Business.Reports
 
             NullOutNavigationPropeties(responseList);
 
+            // RRA should be always be defaulted to its maximum available level (3)
+            // since the user can't configure it
+            if (myModel.model_id == 5) 
+            {
+                selectedLevel = 3;
+            }
+
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
             }
 
 
@@ -239,7 +246,7 @@ namespace CSETWebCore.Business.Reports
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
-                && targetRange.Contains(q.Maturity_Level)).ToList();
+                && targetRange.Contains(q.Maturity_Level_Id)).ToList();
 
 
             // Get all MATURITY answers for the assessment
@@ -372,7 +379,7 @@ namespace CSETWebCore.Business.Reports
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
-                && targetRange.Contains(q.Maturity_Level)).ToList();
+                && targetRange.Contains(q.Maturity_Level_Id)).ToList();
 
 
             // Get all MATURITY answers for the assessment
@@ -550,7 +557,7 @@ namespace CSETWebCore.Business.Reports
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        MaturityLevel = myQ.Maturity_Level,
+                        MaturityLevel = myQ.Maturity_Level_Id,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
@@ -1442,7 +1449,7 @@ namespace CSETWebCore.Business.Reports
                 newQuestion.Examination_Approach = queryItem.mq.Examination_Approach;
                 newQuestion.Grouping_Id = queryItem.mq.Grouping_Id ?? 0;
                 newQuestion.Parent_Question_Id = queryItem.mq.Parent_Question_Id;
-                newQuestion.Maturity_Level = queryItem.mq.Maturity_Level;
+                newQuestion.Maturity_Level = queryItem.mq.Maturity_Level_Id;
                 newQuestion.Set_Name = queryItem.mm.Model_Name;
                 newQuestion.Sequence = queryItem.mq.Sequence;
                 newQuestion.Maturity_Model_Id = queryItem.mm.Maturity_Model_Id;
@@ -1513,9 +1520,9 @@ namespace CSETWebCore.Business.Reports
                 }
 
                 if (a.Mat.Maturity_LevelNavigation != null) 
-                { 
-                    a.Mat.Maturity_Level = a.Mat.Maturity_LevelNavigation.Level;
-                    a.Mat.Maturity_LevelNavigation = null;
+                {
+                    a.Mat.Maturity_LevelNavigation.MATURITY_QUESTIONS = null;
+                    a.Mat.Maturity_LevelNavigation.Maturity_Model = null;
                 }
             }
         }

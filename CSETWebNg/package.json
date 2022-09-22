@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "11.2.0",
+  "version": "12.0.0",
   "license": "MIT",
   "main": "main-electron.js",
   "private": true,
@@ -60,6 +60,7 @@
     "electron-log": "^4.4.1",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
+    "fuse.js": "^6.6.2",
     "gutenberg-css": "^0.6.1",
     "handlebars": "^4.7.7",
     "intersection-observer": "^0.12.0",

@@ -4,6 +4,7 @@
 
 
 
+
 /**
 The default consists of one one question 
 joined on the types in the diagram
@@ -15,7 +16,7 @@ AS
 
 SELECT                   
 	-- This guarantees a unique column to key on in the model
-	CONVERT(nvarchar(100), ROW_NUMBER() OVER (ORDER BY q.Question_id)) as UniqueKey,
+	Isnull(CONVERT(int,  ROW_NUMBER() OVER (ORDER BY q.Question_id)),0) as UniqueKey,
 	a.Assessment_Id, a.Answer_Id, q.Question_Id, a.Answer_Text, 
 	CONVERT(nvarchar(1000), a.Comment) AS Comment, CONVERT(nvarchar(1000), a.Alternate_Justification) AS Alternate_Justification, 
 	a.Question_Number, q.Simple_Question AS QuestionText, 		
@@ -27,7 +28,7 @@ SELECT
 	a.Mark_For_Review, a.Is_Requirement, a.Is_Framework,	
 	q.heading_pair_id, h.Sub_Heading_Question_Description,
 	q.Simple_Question, 
-	a.Reviewed, label = null, ComponentName = null, Symbol_Name = null, Component_Symbol_id = 0
+	a.Reviewed, Cast(null as nvarchar) as label, cast(null as nvarchar) as ComponentName, cast(null as nvarchar) as Symbol_Name, Component_Symbol_id = 0
 from   STANDARD_SELECTION ss
 		 join 
 		 (SELECT distinct q.question_id,adc.assessment_id
