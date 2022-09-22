@@ -1934,7 +1934,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_Level)
+                entity.HasOne(d => d.Maturity_LevelNavigation)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
