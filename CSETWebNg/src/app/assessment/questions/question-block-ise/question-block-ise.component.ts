@@ -581,9 +581,9 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   addEditIssue() {
     this.dialogRef = this.dialog.open(IssuesComponent, {
-      height: '800px',
-      width: '1200px',
-      minWidth: '1200px'
+      height: '630px',
+      width: '600px',
+      minWidth: '200px'
     });
       this.dialogRef.afterClosed().subscribe(result => {
         this.dialogRef = null;
