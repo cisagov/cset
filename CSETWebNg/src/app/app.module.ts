@@ -489,11 +489,8 @@ import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.com
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
-<<<<<<< HEAD
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
-=======
 import { SearchPageComponent } from './initial/search-page/search-page.component';
->>>>>>> develop
 
 @NgModule({
     imports: [
