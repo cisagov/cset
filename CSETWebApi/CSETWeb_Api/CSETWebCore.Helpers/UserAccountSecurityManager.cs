@@ -48,7 +48,7 @@ namespace CSETWebCore.Helpers
                 // Create the USER and USER_DETAIL_INFORMATION records for this new user
                 var ud = new UserDetail()
                 {
-                    UserId = info.UserId,
+                    UserId = (int)info.UserId,
                     Email = info.PrimaryEmail,
                     FirstName = info.FirstName,
                     LastName = info.LastName
