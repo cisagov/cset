@@ -159,7 +159,11 @@ export class NavigationService {
       this.maturitySvc.cisGroupings.forEach(t => {
         const e = this.workflow.getElementById('maturity-questions-nested-' + t.id);
         if (!!e) {
-          e.setAttribute('displaytext', t.title);
+          if (!!t.titlePrefix) {
+            e.setAttribute('displaytext', t.titlePrefix + '. ' + t.title);
+          } else {
+            e.setAttribute('displaytext', t.title);
+          }
         }
       });
 

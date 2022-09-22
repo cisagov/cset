@@ -1950,7 +1950,8 @@ namespace CSETWebCore.Business.Maturity
                 response.Add(new GroupingTitle() 
                 { 
                     Id = x.Grouping_Id,
-                    Title = x.Title
+                    Title = x.Title,
+                    TitlePrefix = x.Title_Prefix
                 });
             });
 
