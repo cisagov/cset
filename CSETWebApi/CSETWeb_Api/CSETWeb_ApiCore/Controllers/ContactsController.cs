@@ -296,12 +296,35 @@ namespace CSETWebCore.Api.Controllers
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
             // know its UserId. In that case we will attempt to determine it via the primary email.
 
-            if (userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
+            if (userBeingUpdated.UserId == null || userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
             {
                 var u = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefault();
                 if (u != null)
                 {
                     userBeingUpdated.UserId = u.UserId;
+                }
+                else
+                {
+                    // This contact's user record does not exist ... create one
+                    UserDetail userDetail = new UserDetail
+                    {
+                        Email = userBeingUpdated.PrimaryEmail,
+                        FirstName = userBeingUpdated.FirstName,
+                        LastName = userBeingUpdated.LastName,
+                        IsSuperUser = false,
+                        PasswordResetRequired = true
+                    };            
+
+                    var uuu = _user.CreateUser(userDetail, _context);
+                    userBeingUpdated.UserId = uuu.UserId;
+                }
+
+                // save the assessment_contacts record with the new userid before things start getting updated
+                var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == userBeingUpdated.AssessmentContactId).FirstOrDefault();
+                if (ac != null)
+                {
+                    ac.UserId = userBeingUpdated.UserId;
+                    _context.SaveChanges();
                 }
             }
 
@@ -320,12 +343,14 @@ namespace CSETWebCore.Api.Controllers
 
             if (userid != userBeingUpdated.UserId)
             {
+                // I (current user) am updating another contact
+
                 if (assessmentId >= 0)
                 {
                     // Updating a Contact in the context of the current Assessment.  
                     (_token).AuthorizeAdminRole();
 
-                    int newUserId = userBeingUpdated.UserId;
+                    int newUserId = (int)userBeingUpdated.UserId;
 
                     // If there is already a user with the same email as the newly updated email, use that existing user's id to connect them
                     // to the assessment after editing a contact
@@ -337,6 +362,7 @@ namespace CSETWebCore.Api.Controllers
 
                     ContactDetail updatedContact = new ContactDetail
                     {
+                        AssessmentContactId = userBeingUpdated.AssessmentContactId,
                         AssessmentId = assessmentId,
                         AssessmentRoleId = userBeingUpdated.AssessmentRoleId,
                         FirstName = userBeingUpdated.FirstName,
@@ -354,7 +380,7 @@ namespace CSETWebCore.Api.Controllers
                         EmergencyCommunicationsProtocol = userBeingUpdated.EmergencyCommunicationsProtocol
                     };
 
-                    _contact.UpdateContact(updatedContact, userBeingUpdated.UserId);
+                    _contact.UpdateContact(updatedContact, (int)userBeingUpdated.UserId);
                     _assessmentUtil.TouchAssessment(assessmentId);
 
                     return Ok(updatedContact);
@@ -364,7 +390,7 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                // Updating myself
+                // I (current user) am updating myself
 
                 // update user detail                    
                 var user = _context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();

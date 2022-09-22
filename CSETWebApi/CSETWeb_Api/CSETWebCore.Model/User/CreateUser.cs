@@ -2,7 +2,7 @@
 {
     public class CreateUser
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PrimaryEmail { get; set; }
@@ -18,6 +18,7 @@
         public string SiteName { get; set; }
 
         public string ConfirmEmail { get; set; }
+        public int AssessmentContactId { get; set; }
         public int AssessmentRoleId { get; set; }
         public string SecurityQuestion1 { get; set; }
         public string SecurityQuestion2 { get; set; }
