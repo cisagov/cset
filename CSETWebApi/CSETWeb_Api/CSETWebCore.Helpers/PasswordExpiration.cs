@@ -25,14 +25,6 @@ namespace CSETWebCore.Helpers
             }
 
 
-            // TEMP TEMP
-            //return true;
-            if (hist.Created.AddSeconds(120) < DateTime.UtcNow)
-            {
-                return true;
-            }
-
-
             if (hist.Created.AddDays(_expiryTermDays) < DateTime.UtcNow)
             {
                 // the password is old

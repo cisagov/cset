@@ -18,6 +18,9 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [StringLength(250)]
         public string Password { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string Salt { get; set; }
 
         [ForeignKey("UserId")]
         [InverseProperty("PASSWORD_HISTORY")]

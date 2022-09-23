@@ -102,7 +102,7 @@ export class LoginCsetComponent implements OnInit {
     this.loading = true;
     this.incorrect = false;
     this.passwordExpired = false;
-    
+
     this.authenticationService
       .login(this.model.email, this.model.password)
       .subscribe(
@@ -140,7 +140,6 @@ export class LoginCsetComponent implements OnInit {
 
           // see if the password is expired
           if (error.error.isPasswordExpired) {
-            console.log('password is expired');
             this.passwordExpired = true;
             return;
           }
