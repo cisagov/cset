@@ -89,7 +89,10 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
+        /// Changes the user's password and logs the new password in PASSWORD_HISTORY.
         /// 
+        /// NOTE:  This method should not be called without first validating the password's 
+        /// suitability against the password policy rules.
         /// </summary>
         /// <param name="changePass"></param>
         /// <returns></returns>
@@ -101,9 +104,21 @@ namespace CSETWebCore.Helpers
                 var info = _context.USER_DETAIL_INFORMATION.Where(x => x.PrimaryEmail == user.PrimaryEmail).FirstOrDefault();
 
                 new PasswordHash().HashPassword(changePass.NewPassword, out string hash, out string salt);
+
+                // update the user password
                 user.Password = hash;
                 user.Salt = salt;
                 user.PasswordResetRequired = false;
+
+
+                // log the password to history
+                var history = new PASSWORD_HISTORY() { 
+                    Created = DateTime.UtcNow,
+                    UserId = user.UserId,
+                    Password = hash
+                };
+                _context.PASSWORD_HISTORY.Add(history);
+
                 _context.SaveChanges();
                 return true;
             }
