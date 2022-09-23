@@ -8,6 +8,7 @@
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         public bool ResetRequired { get; set; }
+        public bool IsPasswordExpired { get; set; }
         public bool IsSuperUser { get; set; }
         public string ExportExtension { get; set; }
         public string ImportExtensions { get; set; }

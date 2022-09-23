@@ -26,8 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
-import { PasswordStatusResponse } from "../../models/reset-pass.model";
+
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -108,6 +107,10 @@ export class MyAssessmentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('a');
+
+    this.getAssessments();
+
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
@@ -138,49 +141,11 @@ export class MyAssessmentsComponent implements OnInit {
       localStorage.removeItem('tree');
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
-    this.checkPasswordReset();
-
+    
     this.ncuaSvc.assessmentsToMerge = [];
   }
 
-  /**
-   *
-   */
-  checkPasswordReset() {
-    if (this.authSvc.isLocal) {
-      this.getAssessments();
-      this.continueStandAlone();
-      return;
-    }
-
-    this.authSvc.passwordStatus()
-      .subscribe((result: PasswordStatusResponse) => {
-        if (result) {
-          if (!result.resetRequired) {
-            this.openPasswordDialog(true);
-          }
-        } else {
-          this.getAssessments();
-        }
-      });
-  }
-
-  openPasswordDialog(showWarning: boolean) {
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
-      }
-    }
-    this.dialog
-      .open(ChangePasswordComponent, {
-        width: "300px",
-        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
-      })
-      .afterClosed()
-      .subscribe(() => {
-        this.checkPasswordReset();
-      });
-  }
+  
 
   getAssessments() {
     this.sortedAssessments = null;
@@ -347,10 +312,6 @@ export class MyAssessmentsComponent implements OnInit {
    */
   exportToExcelAllAcet() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
-  }
-
-  continueStandAlone() {
-    this.router.navigate(['/home']);
   }
 
   proceedToMerge() {
