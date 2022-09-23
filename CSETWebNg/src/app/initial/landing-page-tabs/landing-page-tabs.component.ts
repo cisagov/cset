@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { PasswordStatusResponse } from '../../models/reset-pass.model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
+
 
 @Component({
   selector: 'app-landing-page-tabs',
@@ -14,10 +19,17 @@ export class LandingPageTabsComponent implements OnInit {
   isSearch: boolean= false;
   searchString:string="";
   
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    public authSvc: AuthenticationService,
+    public dialog: MatDialog,
+    ) { }
 
   ngOnInit(): void {
     this.setTab('newAssessment');
+
+    this.checkPasswordReset();
 
     // setting the tab when we get a query parameter.
     this.route.queryParamMap.pipe(filter(params => params.has('tab'))).subscribe(params => {
@@ -41,5 +53,54 @@ export class LandingPageTabsComponent implements OnInit {
   cancelSearch(){
     this.isSearch = false;
     this.searchString = '';
+  }
+
+  hasPath(rpath: string) {
+    if (rpath != null) {
+      localStorage.removeItem("returnPath");
+      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+    }
+  }
+
+  /**
+   *
+   */
+   checkPasswordReset() {
+    console.log('b');
+    if (this.authSvc.isLocal) {
+      this.continueStandAlone();
+      return;
+    }
+
+    this.authSvc.passwordStatus()
+      .subscribe((result: PasswordStatusResponse) => {
+        console.log('c');
+        if (result) {
+          if (!result.resetRequired) {
+            this.openPasswordDialog(true);
+          }
+        }
+      });
+  }
+
+  openPasswordDialog(showWarning: boolean) {
+    if (localStorage.getItem("returnPath")) {
+      if (!Number(localStorage.getItem("redirectid"))) {
+        this.hasPath(localStorage.getItem("returnPath"));
+      }
+    }
+    this.dialog
+      .open(ChangePasswordComponent, {
+        width: "300px",
+        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.checkPasswordReset();
+      });
+  }
+
+  continueStandAlone() {
+    this.router.navigate(['/home']);
   }
 }
