@@ -121,11 +121,11 @@ namespace CSETWebCore.Api.Controllers
                 {
                     var complexityMsg = "<div>Password must meet the following rules:<div>" +
                         "<ul>" +
-                        "<li>Length between 8 and 25 characters</li>" +
+                        $"<li>Length between {resetter.PasswordLengthMin} and {resetter.PasswordLengthMax} characters</li>" +
                         "<li>Must contain at least 2 numbers</li>" +
                         "<li>Must contain at least 1 lowercase letter</li>" +
                         "<li>Must contain at least 1 special character</li>" +
-                        "<li>Must not re-use previous 24 passwords</li>" +
+                        $"<li>Must not re-use previous {resetter.NumberOfHistoricalPasswords} passwords</li>" +
                         "</ul>";
                     return BadRequest(complexityMsg);
                 }

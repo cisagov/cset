@@ -24,7 +24,6 @@ namespace CSETWebCore.Helpers
                 return true;
             }
 
-
             if (hist.Created.AddDays(_expiryTermDays) < DateTime.UtcNow)
             {
                 // the password is old
