@@ -115,6 +115,22 @@ namespace CSETWebCore.Api.Controllers
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
 
+                // does this new password follow the complexity rules?
+                bool complexEnough = resetter.ComplexityRulesMet(changePass);
+                if (!complexEnough)
+                {
+                    var complexityMsg = "<div>Password must meet the following rules:<div>" +
+                        "<ul>" +
+                        "<li>Length between 8 and 25 characters</li>" +
+                        "<li>Must contain at least 2 numbers</li>" +
+                        "<li>Must contain at least 1 lowercase letter</li>" +
+                        "<li>Must contain at least 1 special character</li>" +
+                        "<li>Must not re-use previous 24 passwords</li>" +
+                        "</ul>";
+                    return BadRequest(complexityMsg);
+                }
+
+
                 bool rval = resetter.ChangePassword(changePass);
                 if (rval)
                 {
@@ -236,7 +252,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 if (_context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault() == null)
-                { 
+                {
                     return BadRequest();
                 }
 

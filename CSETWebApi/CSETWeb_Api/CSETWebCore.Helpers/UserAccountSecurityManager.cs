@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Notification;
 
@@ -23,6 +24,8 @@ namespace CSETWebCore.Helpers
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
 
+        private int passwordLengthMin = 8;
+        private int passwordLengthMax = 25;
 
         /// <summary>
         /// 
@@ -115,7 +118,8 @@ namespace CSETWebCore.Helpers
                 var history = new PASSWORD_HISTORY() { 
                     Created = DateTime.UtcNow,
                     UserId = user.UserId,
-                    Password = hash
+                    Password = hash,
+                    Salt = salt
                 };
                 _context.PASSWORD_HISTORY.Add(history);
 
@@ -197,6 +201,66 @@ namespace CSETWebCore.Helpers
                      SecurityQuestionId = a.SecurityQuestionId
                  }).ToList<PotentialQuestions>();
             return questions;
+        }
+
+
+        /// <summary>
+        /// Checks the proposed password to see if it meets the 
+        /// complexity rules and has not been used in the past 24 passwords.
+        /// </summary>
+        /// <param name="pw"></param>
+        /// <returns></returns>
+        public bool ComplexityRulesMet(ChangePassword cp)
+        {
+            var pw = cp.NewPassword;
+
+
+            // can't be in the last 24 passwords (PASSWORD-HISTORY)
+            var user = _context.USERS.Where(x => x.PrimaryEmail == cp.PrimaryEmail).FirstOrDefault();
+            if (user == null)
+            {
+                return false;
+            }
+
+            var listPasswordHistory = _context.PASSWORD_HISTORY.Where(x => x.UserId == user.UserId).OrderByDescending(y => y.Created).Take(24).ToList();
+            var pwHash = new PasswordHash();
+            foreach (var hist in listPasswordHistory)
+            {
+                var passwordFound = pwHash.ValidatePassword(pw, hist.Password, hist.Salt);
+                if (passwordFound)
+                {
+                    return false;
+                }
+            }
+
+
+            // length (8 to 25 characters)
+            if (pw.Length < passwordLengthMin || pw.Length > passwordLengthMax)
+            {
+                return false;
+            }
+
+            // at least 2 numbers
+            if (!Regex.IsMatch(pw, "[0-9].*[0-9]"))
+            {
+                return false;
+            }
+
+            // at least 1 lowercase letter
+            if (!Regex.IsMatch(pw, "[a-z]"))
+            {
+                return false;
+            }
+
+            // at least 1 special character
+            if (!Regex.IsMatch(pw, "[*.!@$%^&(){}\\[\\]:;<>,.?/~_+\\-=|]"))
+            {
+                return false;
+            }
+
+
+
+            return true;
         }
     }
 }
