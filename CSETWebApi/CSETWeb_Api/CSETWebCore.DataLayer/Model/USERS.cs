@@ -18,6 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             ASSESSMENTS = new HashSet<ASSESSMENTS>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
+            PASSWORD_HISTORY = new HashSet<PASSWORD_HISTORY>();
         }
 
         [Required]
@@ -44,5 +45,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<ASSESSMENTS> ASSESSMENTS { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
     }
 }
