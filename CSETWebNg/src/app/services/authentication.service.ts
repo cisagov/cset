@@ -39,6 +39,7 @@ import { parse } from 'querystring';
 export interface LoginResponse {
     token: string;
     resetRequired: boolean;
+    isPasswordExpired: boolean;
     isSuperUser: boolean;
     userLastName: string;
     userFirstName: string;

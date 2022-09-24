@@ -171,6 +171,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
         public virtual DbSet<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
+        public virtual DbSet<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
         public virtual DbSet<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCY { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
@@ -2311,6 +2312,17 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.PARAMETER_VALUES)
                     .HasForeignKey(d => d.Parameter_Id)
                     .HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
+            });
+
+            modelBuilder.Entity<PASSWORD_HISTORY>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.Created });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PASSWORD_HISTORY)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PASSWORD_HISTORY_USERS");
             });
 
             modelBuilder.Entity<PROCUREMENT_DEPENDENCY>(entity =>
