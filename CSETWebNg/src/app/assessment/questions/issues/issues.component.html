@@ -25,136 +25,154 @@
   <h2 style="color: white;">Examiner Finding</h2>
 </div>
 
-<mat-dialog-content class="mat-typography">
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="title" class="form-label">Title</label>
-        <input id="title" type="text" autocomplete="off" class="form-control">
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="issueType" class="form-label">Issue Type</label>
-        <select name="issueType" id="issueType" class="form-control">
-          <option value="finding">Examiner Finding</option>
-          <option value="dor">DOR</option>
-          <option value="option3">Option 3</option>
-        </select>
-      </div>
+<mat-dialog-content>
+<div class="row">
+  <div class="col-6">
+    <div class="form-group">
+      <label for="title" class="form-label">Title</label>
+      <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.title">
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="description" class="form-label">Description</label>
-        <textarea id="description" type="text" autocomplete="off" class="form-control"></textarea>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-    <!-- Main Risk Area Selection -->
-      <div class="form-group">
-        <label for="risk-area" class="form-label">Risk Area</label>
-        <select name="riskarea" id="riskarea" class="form-control" (change)="updateRiskArea($event)">
-          <option *ngFor="let area of riskAreas" [value]="area">
-            {{ area }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="col-6">
-    <!-- Strategic Sub Risk Selection -->
-      <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === ''">
-        <div class="form-group">
-          <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
-          <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" (change)="updateSubRisk($event)">
-            <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk">
-              {{ subRisk }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-    <!-- Compliance Sub Risk Selection -->
-      <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
-        <div class="form-group">
-          <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
-          <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" (change)="updateSubRisk($event)">
-            <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk">
-              {{ subRisk }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-    <!-- Transaction Sub Risk Selection -->
-      <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
-        <div class="form-group">
-          <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
-          <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" (change)="updateSubRisk($event)">
-            <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk">
-              {{ subRisk }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-    <!-- Reputation Sub Risk Selection -->
-      <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
-        <div class="form-group">
-          <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
-          <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" (change)="updateSubRisk($event)">
-            <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk">
-              {{ subRisk }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="disposition" class="form-label">Disposition</label>
-        <select name="disposition" id="disposition" class="form-control">
-          <option value="reportable">Reportable</option>
-          <option value="option2">Option 2</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="dateFound" class="form-label">Identified On</label>
-        <input matInput MatDatepickerInput class="form-control" id="dateFound" name="dateFound"
-          [matDatepicker]="identifiedPicker" (focus)="identifiedPicker.open()" (click)="identifiedPicker.open()"
-          (change)="update()">
-        <mat-datepicker #identifiedPicker></mat-datepicker>
-      </div>
-    </div>
-    <div class="col-6">
-      <div class="form-group">
-        <label for="dueDate" class="form-label">Due Date</label>
-        <input matInput MatDatepickerInput class="form-control" id="dueDate" name="dueDate"
-          [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
-          (change)="update()">
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <label for="importance" class="form-label">Rating</label>
-      <select name="importance" id="importance" class="form-control">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
+  <div class="col-6">
+    <div class="form-group">
+      <label for="issueType" class="form-label">Issue Type</label>
+      <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type">
+        <option value="finding">Examiner Finding</option>
+        <option value="dor">DOR</option>
+        <option value="fact">Supplemental Fact</option>
       </select>
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="form-group">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
+    </div>
+  </div>
+</div>
+<!--
+<div class="row">
+  <div class="col-6">
+    <div class="form-group">
+      <label for="risk-area" class="form-label">Risk Area</label>
+      <select name="riskarea" id="riskarea" class="form-control" (change)="updateRiskArea($event)">
+        <option *ngFor="let area of riskAreas" [value]="area">
+          {{ area }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6">
+    <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === ''">
+      <div class="form-group">
+        <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
+        <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk">
+            {{ subRisk }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
+      <div class="form-group">
+        <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
+        <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk">
+            {{ subRisk }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
+      <div class="form-group">
+        <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
+        <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk">
+            {{ subRisk }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
+      <div class="form-group">
+        <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
+        <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk">
+            {{ subRisk }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="form-group">
+      <label for="disposition" class="form-label">Disposition</label>
+      <select name="disposition" id="disposition" class="form-control">
+        <option value="reportable">Reportable</option>
+        <option value="option2">Option 2</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="form-group">
+      <label for="dateFound" class="form-label">Identified On</label>
+      <input matInput MatDatepickerInput class="form-control" id="dateFound" name="dateFound"
+        [matDatepicker]="identifiedPicker" (focus)="identifiedPicker.open()" (click)="identifiedPicker.open()"
+        (change)="update()" [(ngModel)]="finding.identified_Date">
+      <mat-datepicker #identifiedPicker></mat-datepicker>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="form-group">
+      <label for="dueDate" class="form-label">Due Date</label>
+      <input matInput MatDatepickerInput class="form-control" id="dueDate" name="dueDate"
+        [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
+        (change)="update()" [(ngModel)]="finding.due_Date">
+      <mat-datepicker #picker></mat-datepicker>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <label for="importance" class="form-label">Importance</label>
+    <select name="importance" id="importance" class="form-control" [(ngModel)]="finding.importance_Id">
+      <option *ngFor="let importance of importances" [value]="importance?.importance_Id"> {{importance?.value}} </option>
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="mt-3 d-flex justify-content-between align-items-center flex-11a">
+    <label for="contacts" class="form-label">Individuals Responsible</label>
+    <button class="btn-link fs-smaller">Clear Selections</button>
+  </div>
+</div>-->
+ 
+<!--  <div class="pl-3">
+    <div *ngFor="let contact of issue.issue_Contacts" class="indiv-responsible">
+      <input class="checkbox-custom" type="checkbox" id="{{contact.assessment_Contact_Id}}"
+        [(ngModel)]="contact.selected">
+      <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
+    </div>
+  </div>
+
+  <br/><br/>
+  <app-assessment-contacts class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+</div>
+-->
+<p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
+  questions in the assessment. Findings can be added manually, or created automatically if the program 
+  identifies a need.</p>
 </mat-dialog-content>
 
 <mat-dialog-actions class="p-3 mb-0" align="end">
   <button mat-button mat-dialog-close class="btn btn-secondary">Cancel</button>
   <button mat-button [mat-dialog-close]="true" cdkFocusInitia class="btn btn-primary">Done</button>
 </mat-dialog-actions>
+

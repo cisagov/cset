@@ -337,7 +337,14 @@ export class QuestionExtrasComponent implements OnInit {
       issue: '',
       recommendations: '',
       resolution_Date: null,
-      vulnerabilities: ''
+      vulnerabilities: '',
+      title: null,
+      type: null,
+      description: null,
+      subRiskArea_Id: null,
+      Disposition: null,
+      identified_Date: null,
+      due_Date: null
     };
 
     this.dialog.open(FindingsComponent, { 

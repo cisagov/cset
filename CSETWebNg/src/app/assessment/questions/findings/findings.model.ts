@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 export interface Finding {
+  // ACET fields
   question_Id: number;
   answer_Id: number;
   finding_Id: number;
@@ -32,6 +33,15 @@ export interface Finding {
   vulnerabilities: string;
   resolution_Date: Date;
   importance_Id: number;
+  // ISE fields
+  title: string;
+  type: string;
+  description: string;
+  subRiskArea_Id: number;
+  Disposition: string;
+  identified_Date: Date;
+  due_Date: Date;
+  // Shared fields
   importance: Importance;
   finding_Contacts: FindingContact[];
 }

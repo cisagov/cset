@@ -579,14 +579,44 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue() {
-    this.dialogRef = this.dialog.open(IssuesComponent, {
-      height: '630px',
-      width: '600px',
-      minWidth: '200px'
-    });
-      this.dialogRef.afterClosed().subscribe(result => {
-        this.dialogRef = null;
+  addEditIssue(findid) {
+    const find: Finding = {
+      question_Id: this.myGrouping.questions[0].questionId,
+      answer_Id: this.myGrouping.questions[0].answer_Id,
+      finding_Id: findid,
+      summary: '',
+      finding_Contacts: null,
+      impact: '',
+      importance: null,
+      importance_Id: 1,
+      issue: '',
+      recommendations: '',
+      resolution_Date: null,
+      vulnerabilities: '',
+      title: null,
+      type: null,
+      description: null,
+      subRiskArea_Id: null,
+      Disposition: null,
+      identified_Date: null,
+      due_Date: null
+    };
+
+    this.dialog.open(IssuesComponent, {
+      data: find,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '60vh',
+      height: this.layoutSvc.hp ? '90%' : '85vh',
+    }).afterClosed().subscribe(result => {
+      const answerID = find.answer_Id;
+      this.findSvc.getAllDiscoveries(answerID).subscribe(
+        (response: Finding[]) => {
+          this.extras.findings = response;
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+          this.myGrouping.questions[0].answer_Id = find.answer_Id;
+        },
+        error => console.log('Error updating findings | ' + (<Error>error).message)
+      );
     });
   }
   
