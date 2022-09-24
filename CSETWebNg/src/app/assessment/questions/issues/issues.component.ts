@@ -23,18 +23,25 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import * as _ from 'lodash';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { Finding, FindingContact, Importance } from '../findings/findings.model';
+import { FindingsService } from '../../../services/findings.service';
 
 @Component({
   selector: 'app-issues',
   templateUrl: './issues.component.html'
 })
-
+ 
 
 export class IssuesComponent implements OnInit {
+  finding: Finding;
+  importances: Importance[];
+  contactsmodel: any[];
+  answerID: number;
+  questionID: number;
 
   riskAreas: string[] = ["Strategic", "Compliance", "Transaction", "Reputation"];
 
@@ -71,19 +78,88 @@ export class IssuesComponent implements OnInit {
   constructor(
     private ncuaSvc: NCUAService,
     private dialog: MatDialogRef<IssuesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
-    public assessSvc: AssessmentService
-  ) {}
+    public assessSvc: AssessmentService,
+    private findSvc: FindingsService,
+
+  ) {
+    this.finding = data;
+    this.answerID = data.answer_Id;
+    this.questionID = data.question_Id;
+  }
   
   ngOnInit() {
+    this.dialog.backdropClick()
+    .subscribe(() => {
+      this.update();
+    });
+    this.findSvc.getImportance().subscribe((result: Importance[]) => {
+      this.importances = result;
+      let questionType = localStorage.getItem('questionSet');
+      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+        .subscribe((response: Finding) => {
+          console.log("response: " + JSON.stringify(response, null, 4));
+          this.finding = response;
+          this.answerID = this.finding.answer_Id;
+          this.questionID = this.finding.question_Id;
+          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
+            { 'selected': true }),
+            'Assessment_Contact_Id');
+          this.data.answer_Id = this.answerID;
+        });
+    });
   }
 
-  updateRiskArea(e) {
-    this.selectedRiskArea = e.target.value;
+  refreshContacts():void{
+    let questionType = localStorage.getItem('questionSet');
+    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+        .subscribe((response: Finding) => {
+          this.finding = response;
+          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
+            { 'selected': true }),
+            'Assessment_Contact_Id');
+        });
+  }
+
+  clearMulti() {
+    this.finding.finding_Contacts.forEach(c => {
+      c.selected = false;
+    });
+  }
+
+  checkFinding(finding: Finding) {
+    let findingCompleted = true;
+
+    findingCompleted = (finding.impact == null);
+    findingCompleted = (finding.importance == null) && (findingCompleted);
+    findingCompleted = (finding.issue == null) && (findingCompleted);
+    findingCompleted = (finding.recommendations == null) && (findingCompleted);
+    findingCompleted = (finding.resolution_Date == null) && (findingCompleted);
+    findingCompleted = (finding.summary == null) && (findingCompleted);
+    findingCompleted = (finding.vulnerabilities == null) && (findingCompleted);
+
+    return !finding;
   }
 
   update() {
-    this.dialog.close(true);
+    this.finding.answer_Id = this.answerID;
+    this.finding.question_Id = this.questionID;
+    this.findSvc.saveDiscovery(this.finding).subscribe(() => {
+      this.dialog.close(true);
+    });
+  }
+
+  updateImportance(importid) {
+    this.finding.importance_Id = importid;
+  }
+
+  updateContact(contactid) {
+    this.finding.finding_Contacts.forEach((fc: FindingContact) => {
+      if (fc.assessment_Contact_Id === contactid.assessment_Contact_Id) {
+        fc.selected = contactid.selected;
+      }
+    });
   }
 
   saveIssue() {
@@ -92,5 +168,9 @@ export class IssuesComponent implements OnInit {
 
   cancel() {
     this.dialog.close(true);
+  }
+
+  updateRiskArea(e) {
+    this.selectedRiskArea = e.target.value;
   }
 }
