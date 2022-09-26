@@ -507,9 +507,9 @@ export class QuestionBlockIseComponent implements OnInit {
       if (!this.showCorePlus) {
         switch (id) {
           case (7233): case (7238): case (7244): case (7249): 
-          case (7256): case (7265): case (7273): case (7276): 
-          case (7281): case (7285): case (7289): case (7293): 
-          case (7296): case (7301): case (7304):
+          case (7256): case (7259): case (7265): case (7273): 
+          case (7276): case (7281): case (7285): case (7289): 
+          case (7293): case (7296): case (7301): case (7304):
             return true;
         }
         return false;
@@ -531,8 +531,23 @@ export class QuestionBlockIseComponent implements OnInit {
     }
   }
 
+  /**
+   * allows isFinalQuestion() to include CORE Stmt 6, which doesn't currently have any CORE+ questions
+   * @param id 
+   */
+  hasCorePlusQuestions (id: number) {
+    switch(id) {
+      case (7257): case(7258): case(7259):
+        return false;
+    }
+    if(this.isScuep()) {
+      return false;
+    }
+    return true;
+  }
+
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && !this.isScuep()) {
+    if (this.isFinalQuestion(id) && !this.isScuep() && this.hasCorePlusQuestions(id)) {
       return true;
     }
     return false;
@@ -569,5 +584,4 @@ export class QuestionBlockIseComponent implements OnInit {
     return true;
   }
 
-  
 }

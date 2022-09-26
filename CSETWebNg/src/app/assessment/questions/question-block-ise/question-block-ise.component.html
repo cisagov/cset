@@ -183,7 +183,6 @@
     <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
         <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
         [class.display-none]="q.maturityLevelName === 'CORE+' && this.showCorePlus === false">
-
             <div class="w-100 d-flex flex-row">
                 <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
                    <!--<div [class.display-hidden]="!!q.parentQuestionId">-->
@@ -210,17 +209,12 @@
                             {{ q.shortName }}
                         </div>
 
-                        <div *ngIf="!!q.isParentQuestion; else childQuestion" style="font-size: 1.25rem;">
-                            <app-question-text [questionText]="q.questionText"></app-question-text>
-                        </div>
-                        <ng-template #childQuestion>
-                            <app-question-text [questionText]="q.questionText"></app-question-text>
-                        </ng-template>
+                        <app-question-text [ngStyle]="{'font-size': q.isParentQuestion ? '1.25rem' : '1rem'}"
+                            [questionText]="q.questionText"></app-question-text>
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                     </div>
                 </div>
-
 
                 <div *ngIf="!q.isParentQuestion">
                     <!-- build the list of answer options -->
