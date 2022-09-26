@@ -18,16 +18,16 @@ export class LandingPageTabsComponent implements OnInit {
   currentTab: string;
   isSearch: boolean= false;
   searchString:string="";
-  
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router,
     public authSvc: AuthenticationService,
     public dialog: MatDialog,
     ) { }
 
   ngOnInit(): void {
-    this.setTab('newAssessment');
+    this.setTab('myAssessments');
 
     this.checkPasswordReset();
 
