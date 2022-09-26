@@ -12,6 +12,8 @@ import { ACETService } from '../../services/acet.service';
 })
 export class IseMeritComponent implements OnInit {
   response: any = null; 
+  workPerformedText: string = null;
+  resultsOfReviewText: string = null;
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -21,14 +23,20 @@ export class IseMeritComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Merit Report - ISE");
+    this.titleService.setTitle("MERIT Scope Report - ISE");
 
     this.reportSvc.getAltList().subscribe(
       (r: any) => {
         this.response = r;        
       },
-      error => console.log('Merit Report Error: ' + (<Error>error).message)
+      error => console.log('MERIT Report Error: ' + (<Error>error).message)
     );
+
+    this.workPerformedText= 'Completed the ISE work program.';
+    this.resultsOfReviewText = 'No Issues were noted.';
+
   }
+
+
 
 }
