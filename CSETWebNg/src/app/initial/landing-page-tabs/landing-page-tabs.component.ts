@@ -48,9 +48,9 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
       const tabsEl = this.tabsElementRef.nativeElement;
       tabsEl.classList.add('sticky-tabs');
       if (this.authSvc.isLocal) {
-        tabsEl.style.top = '80.5px';
+        tabsEl.style.top = '81px';
       } else {
-        tabsEl.style.top = '61.5px';
+        tabsEl.style.top = '62px';
       }
     }
   }
