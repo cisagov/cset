@@ -25,8 +25,8 @@ namespace CSETWebCore.Helpers
         private readonly INotificationBusiness _notificationBusiness;
 
         // Password length limits
-        public readonly int PasswordLengthMin = 8;
-        public readonly int PasswordLengthMax = 25;
+        public readonly int PasswordLengthMin = 13;
+        public readonly int PasswordLengthMax = 50;
 
         // The number of old passwords that cannot be reused
         public readonly int NumberOfHistoricalPasswords = 24;
@@ -112,7 +112,7 @@ namespace CSETWebCore.Helpers
 
                 new PasswordHash().HashPassword(changePass.NewPassword, out string hash, out string salt);
 
-                // update the user password
+                // update the password on the USERS record
                 user.Password = hash;
                 user.Salt = salt;
                 user.PasswordResetRequired = false;
@@ -123,12 +123,17 @@ namespace CSETWebCore.Helpers
                 {
                     Created = DateTime.UtcNow,
                     UserId = user.UserId,
+                    Is_Temp = false,
                     Password = hash,
                     Salt = salt
                 };
-                _context.PASSWORD_HISTORY.Add(history);
+                _context.PASSWORD_HISTORY.Add(history);                
 
                 _context.SaveChanges();
+
+                // clean up
+                CleanUpPasswordHistory(user.UserId, true);
+
                 return true;
             }
             catch (Exception exc)
@@ -167,7 +172,7 @@ namespace CSETWebCore.Helpers
 
                 // add complexity:  insert random lower case letter, digits and special character
                 password = InsertRandom(password, "abcdefghijklmnopqrstuvwxyz", 1);
-                password = InsertRandom(password, "01234567890", 2);
+                password = InsertRandom(password, "0123456789", 2);
                 password = InsertRandom(password, "*!@$%^&:;,.?/~_+-=|", 1);
 
 
@@ -183,9 +188,27 @@ namespace CSETWebCore.Helpers
                 user.Password = hash;
                 user.Salt = salt;
 
-                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appCode);
+
+                // log the temp password to history
+                var history = new PASSWORD_HISTORY()
+                {
+                    Created = DateTime.UtcNow,
+                    UserId = user.UserId,
+                    Is_Temp = true,
+                    Password = hash,
+                    Salt = salt
+                };
+                _context.PASSWORD_HISTORY.Add(history);
+
 
                 _context.SaveChanges();
+
+
+                CleanUpPasswordHistory(user.UserId, false);
+
+
+                // send the notification email
+                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appCode);
 
                 return true;
             }
@@ -208,6 +231,34 @@ namespace CSETWebCore.Helpers
                 s = s.Insert(new Random().Next(1, s.Length), choices[new Random().Next(0, choices.Length)].ToString());
             }
             return s;
+        }
+
+
+        /// <summary>
+        /// Keeps the last 24 password history records and deletes the rest.
+        /// </summary>
+        /// <param name="userId"></param>
+        private void CleanUpPasswordHistory(int userId, bool deleteTemps)
+        {
+            // delete temps
+            if (deleteTemps)
+            {
+                var temps = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId && x.Is_Temp).ToList();
+                _context.PASSWORD_HISTORY.RemoveRange(temps);
+            }
+
+
+            // only keep the last 24 entries
+            var last24 = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Created)
+                .Take(24).ToList().Select(x => x.Created);
+
+            // build a list of any extraneous entries prior to the last 24 and delete them
+            var deleteThese = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId && !last24.Contains(x.Created)).ToList();
+            _context.PASSWORD_HISTORY.RemoveRange(deleteThese);
+            
+
+            _context.SaveChanges();
         }
 
 
@@ -244,7 +295,7 @@ namespace CSETWebCore.Helpers
                 return false;
             }
 
-            // length (8 to 25 characters)
+            // length (13 to 50 characters)
             if (pw.Length < PasswordLengthMin || pw.Length > PasswordLengthMax)
             {
                 return false;
