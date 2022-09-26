@@ -121,6 +121,17 @@ export class FeatureOptionComponent implements OnInit {
     this.navSvc.buildTree(this.navSvc.getMagic());
   }
 
+  acetOnlyOption(feature: any, event: any) {
+    if (event.srcElement.checked) {
+      this.assessSvc.setAcetDefaults();
+      this.onChange(feature, event);
+    } else {
+      this.assessSvc.assessment.isAcetOnly = false;
+      this.assessSvc.assessment.maturityModel = undefined;
+      this.onChange(feature, event);
+    }
+  }
+
   onChange(feature: any, event: any){
 
     var checkboxes = (<HTMLInputElement[]><any>document.getElementsByClassName("checkbox-custom"));
@@ -170,6 +181,9 @@ export class FeatureOptionComponent implements OnInit {
   }
 
   selectFeature(feature:any, value: boolean){
+    if (feature.code === 'maturity' && this.assessSvc.assessment.isAcetOnly === false) {
+      value = true;
+    }
     switch (feature.code) {
       case 'maturity':
         this.assessSvc.assessment.useMaturity = value;
