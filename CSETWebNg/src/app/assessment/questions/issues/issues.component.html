@@ -44,6 +44,7 @@
     </div>
   </div>
 </div>
+<!--
 <div class="row">
   <div class="col-12">
     <div class="form-group">
@@ -52,29 +53,31 @@
     </div>
   </div>
 </div>
-<!--
 <div class="row">
   <div class="col-6">
     <div class="form-group">
       <label for="risk-area" class="form-label">Risk Area</label>
-      <select name="riskarea" id="riskarea" class="form-control" (change)="updateRiskArea($event)">
-        <option *ngFor="let area of riskAreas" [value]="area">
-          {{ area }}
-        </option>
+      <select name="riskarea" id="riskarea" class="form-control" 
+        (change)="updateRiskArea($event.target.value)">
+        <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
       </select>
     </div>
   </div>
   <div class="col-6">
-    <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === ''">
-      <div class="form-group">
-        <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
-        <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" (change)="updateSubRisk($event)">
-          <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk">
-            {{ subRisk }}
-          </option>
-        </select>
-      </div>
-    </ng-container>
+    <div class="form-group">
+      <label for="strategic-sub-risk" class="form-label">{{ this.selectedRiskArea }} Sub Risk</label>
+      <select name="strategicSubRisk" id="strategicSubRisk" class="form-control"  [(ngModel)]="finding.subRisk_Id"
+        (change)="updateSubRisk($event.target.value)">
+        <option *ngFor="let subRisk of this.subRiskAreas" [value]="subRisk?.sub_Risk_Area_Id">
+          <ng-container *ngIf="subRisk?.risk_Area === this.selectedRiskArea">
+            {{ subRisk?.sub_Risk_Area }}
+          </ng-container>
+        </option>
+      </select>
+    </div>
+
+
+
     <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
       <div class="form-group">
         <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
@@ -152,10 +155,10 @@
     <label for="contacts" class="form-label">Individuals Responsible</label>
     <button class="btn-link fs-smaller">Clear Selections</button>
   </div>
-</div>-->
+</div>
  
-<!--  <div class="pl-3">
-    <div *ngFor="let contact of issue.issue_Contacts" class="indiv-responsible">
+  <div class="pl-3">
+    <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible">
       <input class="checkbox-custom" type="checkbox" id="{{contact.assessment_Contact_Id}}"
         [(ngModel)]="contact.selected">
       <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
@@ -164,15 +167,13 @@
 
   <br/><br/>
   <app-assessment-contacts class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
-</div>
--->
+
 <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
   questions in the assessment. Findings can be added manually, or created automatically if the program 
   identifies a need.</p>
 </mat-dialog-content>
-
+-->
 <mat-dialog-actions class="p-3 mb-0" align="end">
-  <button mat-button mat-dialog-close class="btn btn-secondary">Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitia class="btn btn-primary">Done</button>
+  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button mat-button class="btn btn-primary" (click)="update()">Done</button>
 </mat-dialog-actions>
-

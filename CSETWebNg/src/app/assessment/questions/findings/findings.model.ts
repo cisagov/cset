@@ -37,7 +37,8 @@ export interface Finding {
   title: string;
   type: string;
   description: string;
-  subRiskArea_Id: number;
+  sub_Risk_Area_Id: number;
+  subRiskArea: SubRiskArea;
   Disposition: string;
   identified_Date: Date;
   due_Date: Date;
@@ -45,6 +46,13 @@ export interface Finding {
   importance: Importance;
   finding_Contacts: FindingContact[];
 }
+
+export interface SubRiskArea {
+  subRisk_Id: number;
+  value: string;
+  riskArea: string;
+}
+
 export interface Importance {
   importance_Id: number;
   value: string;

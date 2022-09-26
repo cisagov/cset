@@ -23,11 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
 import * as _ from 'lodash';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Finding, FindingContact, Importance } from '../findings/findings.model';
+import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
 
 @Component({
@@ -38,40 +38,16 @@ import { FindingsService } from '../../../services/findings.service';
 
 export class IssuesComponent implements OnInit {
   finding: Finding;
+  subRiskAreas: SubRiskArea[];
   importances: Importance[];
+  
+  riskAreaOptions: string[] = [];
+
+
+
   contactsmodel: any[];
   answerID: number;
   questionID: number;
-
-  riskAreas: string[] = ["Strategic", "Compliance", "Transaction", "Reputation"];
-
-  strategicSubRisks: string[] = [
-    "Other", "Organizational Risk Management Program", "Staffing", "Field of Membership", 
-    "Product/Service Outsourcing", "Program Monitoring, Oversight, & Reporting",
-    "Business/Strategic/Budgeting", "Board of Director Oversight", "Training", "Capital Plans"
-  ];
-
-  complianceSubRisks: string[] = [
-    "Regulatory Compliance", "Policies & Procedures", "Other",
-    "Consumer Compliance", "BSA", "Reporting", "Fair Lending"
-  ];
-
-  transactionSubRisks: string[] = [
-    "Audit", "Account out of Balance/Misstatement", "Internal Controls",
-    "Information Systems & Technology Controls", "Fraud", "Other",
-    "Supervisory Committee Activites", "Full and Fair Disclosure",
-    "Electronic Payment & Card Services", "Recordkeeping-Significant",
-    "Security Program", "Account Verification", "Policies & Procedures",
-    "Program Monitoring, Oversight, & Reporting", "Internal Audit & Review"
-  ];
-
-  reputationSubRisks: string[] = [
-    "Other", "Management", "Insider Activities", "Legal", "Reporting"
-  ];
-
-  ratings: string[] = [
-    "Low", "Medium", "High"
-  ];
 
   selectedRiskArea: string = "";
 
@@ -94,12 +70,23 @@ export class IssuesComponent implements OnInit {
     .subscribe(() => {
       this.update();
     });
+
+    this.findSvc.getSubRisks().subscribe((result: any[]) => {
+      this.subRiskAreas = result;
+      console.log("result: " + JSON.stringify(this.subRiskAreas, null, 4))
+      for (let i = 0; i < result.length; i++) {
+        if (!this.riskAreaOptions.includes(result[i].risk_Area)) {
+          this.riskAreaOptions.push(result[i].risk_Area);
+        }
+      }
+    });
+
     this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
       let questionType = localStorage.getItem('questionSet');
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
-          console.log("response: " + JSON.stringify(response, null, 4));
+          console.log("finding response: " + JSON.stringify(response, null, 4));
           this.finding = response;
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
@@ -145,9 +132,19 @@ export class IssuesComponent implements OnInit {
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
+    this.finding.sub_Risk_Area_Id = 1;
+    this.finding.subRiskArea = {'subRisk_Id': 1, 'value': 'Other', 'riskArea': 'Strategic'};
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
+  }
+
+  updateRiskArea(riskArea) {
+    this.selectedRiskArea = riskArea;
+  }
+
+  updateSubRisk(sub_id) {
+    this.finding.subRiskArea = {'subRisk_Id': 1, 'value': 'Other', 'riskArea': this.selectedRiskArea};
   }
 
   updateImportance(importid) {
@@ -170,7 +167,4 @@ export class IssuesComponent implements OnInit {
     this.dialog.close(true);
   }
 
-  updateRiskArea(e) {
-    this.selectedRiskArea = e.target.value;
-  }
 }
