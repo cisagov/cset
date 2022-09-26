@@ -379,6 +379,18 @@ namespace CSETWebCore.Api.Controllers
             return Ok(rlist);
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetSubRisks")]
+        public IActionResult GetSubRisks()
+        {
+            var tableData = _context.RISK_SUB_RISK_AREA.ToList();
+
+            return Ok(tableData);
+        } 
 
         /// <summary>
         /// 

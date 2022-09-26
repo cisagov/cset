@@ -596,7 +596,8 @@ export class QuestionBlockIseComponent implements OnInit {
       title: null,
       type: null,
       description: null,
-      subRiskArea_Id: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
       Disposition: null,
       identified_Date: null,
       due_Date: null

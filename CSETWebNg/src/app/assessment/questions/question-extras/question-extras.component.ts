@@ -341,14 +341,15 @@ export class QuestionExtrasComponent implements OnInit {
       title: null,
       type: null,
       description: null,
-      subRiskArea_Id: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
       Disposition: null,
       identified_Date: null,
       due_Date: null
     };
 
     this.dialog.open(FindingsComponent, { 
-        data: find, 
+        data: find,
         disableClose: true,
         width: this.layoutSvc.hp ? '90%' : '600px',
         maxWidth: this.layoutSvc.hp ? '90%' : '600px'
