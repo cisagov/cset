@@ -50,7 +50,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
       if (this.authSvc.isLocal) {
         tabsEl.style.top = '80.5px';
       } else {
-        tabsEl.nativeElement.style.top = '61.5px';
+        tabsEl.style.top = '61.5px';
       }
     }
   }
