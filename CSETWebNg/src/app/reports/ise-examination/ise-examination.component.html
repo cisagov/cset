@@ -110,7 +110,6 @@
                 <td></td>
                 <td>Answers</td>
                 <td>Exam Level</td>
-                <td>   </td>
             </tr>
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <tr class="rkw-domain">
@@ -126,8 +125,8 @@
                         <tr>
                             <!-- <td colspan="5" class="background-3 pl-5">{{c.title}} - Component -->
                             <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
-                                <label class="btn form-check-label" style="float: right">
-                                    <input name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
+                                <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                    <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
                                 </label>
                             </td>
                         </tr>
@@ -144,8 +143,10 @@
 
                                 <td *ngIf="isParentQuestion(q)" class="background-3 pr-3">
                                     {{acetSvc.getAbbrev(q.maturityLevel)}}
-                                    <label class="btn form-check-label" style="float: right">
-                                        <input name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                </td>
+                                <td *ngIf="isParentQuestion(q)" class="background-3">
+                                    <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                        <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
                                     </label>
                                 </td>
                                 <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
