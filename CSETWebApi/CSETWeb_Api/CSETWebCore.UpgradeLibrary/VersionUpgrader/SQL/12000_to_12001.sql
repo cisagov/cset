@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 9/26/2022 8:47:00 AM
+Script created by SQL Compare version 14.6.10.20102 from Red Gate Software Ltd at 9/26/2022 10:43:24 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -37,7 +37,8 @@ CREATE TABLE [dbo].[PASSWORD_HISTORY]
 [UserId] [int] NOT NULL,
 [Created] [datetime] NOT NULL,
 [Password] [nvarchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Salt] [nvarchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL
+[Salt] [nvarchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Is_Temp] [bit] NOT NULL CONSTRAINT [DF_PASSWORD_HISTORY_Is_Temp] DEFAULT ((0))
 )
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -49,8 +50,6 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 PRINT N'Adding foreign keys to [dbo].[PASSWORD_HISTORY]'
-GO
-ALTER TABLE [dbo].[PASSWORD_HISTORY] ADD CONSTRAINT [FK_PASSWORD_HISTORY_PASSWORD_HISTORY] FOREIGN KEY ([UserId], [Created]) REFERENCES [dbo].[PASSWORD_HISTORY] ([UserId], [Created])
 GO
 ALTER TABLE [dbo].[PASSWORD_HISTORY] ADD CONSTRAINT [FK_PASSWORD_HISTORY_USERS] FOREIGN KEY ([UserId]) REFERENCES [dbo].[USERS] ([UserId])
 GO
