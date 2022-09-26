@@ -76,15 +76,12 @@ namespace CSETWebCore.Helpers
             };
 
 
-            // The password is valid, but is it expired? (don't check temp passwords)
-            if (!resp.ResetRequired)
+            // The password is valid, but is it expired?
+            var isExpired = new PasswordExpiration().IsExpired(_context, loginUser.UserId, loginUser.Password);
+            if (isExpired)
             {
-                var isExpired = new PasswordExpiration().IsExpired(_context, loginUser.UserId, loginUser.Password);
-                if (isExpired)
-                {
-                    resp.IsPasswordExpired = true;
-                    return resp;
-                }
+                resp.IsPasswordExpired = true;
+                return resp;
             }
 
 
