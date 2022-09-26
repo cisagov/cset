@@ -863,7 +863,7 @@ namespace CSETWebCore.Business.Maturity
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetIseTopMatLevelForRisk(irp);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -878,6 +878,37 @@ namespace CSETWebCore.Business.Maturity
 
             return ((double)answeredCount / (double)totalCount) * 100d;
         }
+
+
+        ///// <summary>
+        ///// Returns the percentage of maturity questions that have been answered for the 
+        ///// current maturity level (IRP).
+        ///// </summary>
+        ///// <param name="assessmentId"></param>
+        ///// <returns></returns>
+        //public List<MaturityDomain> GetIseIssues(int assessmentId)
+        //{
+        //    var issues = _context.
+        //    var irp = GetOverallIrpNumber(assessmentId);
+
+        //    // get the highest maturity level for the risk level (use the stairstep model)
+        //    var topMatLevel = GetIseTopMatLevelForRisk(irp);
+
+        //    var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+
+        //    var answeredCount = 0;
+        //    var totalCount = 0;
+        //    foreach (var d in answerDistribution)
+        //    {
+        //        if (d.Answer_Text != "U")
+        //        {
+        //            answeredCount += d.Count;
+        //        }
+        //        totalCount += d.Count;
+        //    }
+
+        //    return ((double)answeredCount / (double)totalCount) * 100d;
+        //}
 
 
         /// <summary>

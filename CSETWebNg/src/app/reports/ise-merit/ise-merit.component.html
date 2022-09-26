@@ -26,7 +26,7 @@
         <div class="column">
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                MERIT
+                MERIT SCOPE
             </p>
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
@@ -59,6 +59,89 @@
                 </div>
             </div>
         </div>
+        <div class="page-break">
+            <div class="ml-3 mr-3 form">
+                <h1 class="page-header">
+                    Demographics
+                </h1>
+                <hr class="page-line">
+                
+                <table class="table-site-info">
+                    <tr>
+                        <td>Assessment Name:</td>
+                        <td>{{response?.information?.assessment_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessment Date:</td>
+                        <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Credit Union:</td>
+                        <td>{{response?.information?.credit_Union_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>City or Site Name:</td>
+                        <td>{{response?.information?.city_Or_Site_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>State, Province or Region:</td>
+                        <td>{{response?.information?.state_Province_Or_Region}}</td>
+                    </tr>
+                    <tr>
+                        <td>Charter:</td>
+                        <td>{{response?.information?.charter}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assets:</td>
+                        <td>{{response?.information?.assets | currency}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <h1 class="page-header">
+                    Execution Result
+                </h1>
+                <hr class="page-line">
+                <p>
+                    <strong>INSTRUCTIONS:</strong><br>
+                    Copy/Paste the contents of <strong>ISE Work Performed</strong> below into the Execution Result, Work Performed section of the MERIT ISE Scope.
+                    <br><br>
+                    Copy/Paste the contents of <strong>ISE Results of Review</strong> below into the Execution Result, Results of Review portion of the MERIT ISE Scope.
+                </p>
+                
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <h1 class="page-header">
+                    Work Performed
+                </h1>
+                <hr class="page-line">
+                <p>
+                    <strong>{{ workPerformedText }}</strong>
+                </p>
+                
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <h1 class="page-header">
+                    Results of Review
+                </h1>
+                <hr class="page-line">
+                <p>
+                    {{ resultsOfReviewText }}
+                </p>
+                
+            </div>
+        </div>
+
+
     </div>
     <div class="page-break">
         <div class="ml-3 mr-3 form">
