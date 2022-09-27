@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { PasswordStatusResponse } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -13,21 +14,23 @@ import { ChangePasswordComponent } from "../../dialogs/change-password/change-pa
   styleUrls: ['./landing-page-tabs.component.scss'],
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class LandingPageTabsComponent implements OnInit {
+export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
   currentTab: string;
   isSearch: boolean= false;
   searchString:string="";
-  
+  @ViewChild('tabs') tabsElementRef: ElementRef;
+
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router,
     public authSvc: AuthenticationService,
     public dialog: MatDialog,
+    private configSvc: ConfigService
     ) { }
 
   ngOnInit(): void {
-    this.setTab('newAssessment');
+    this.setTab('myAssessments');
 
     this.checkPasswordReset();
 
@@ -37,6 +40,19 @@ export class LandingPageTabsComponent implements OnInit {
       // clear the query parameters from the url.
       this.router.navigate([], { queryParams: {} });
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Only implementing sticky tabs on main CSET installation mode for now.
+    if ((this.configSvc.installationMode || 'CSET') === 'CSET') {
+      const tabsEl = this.tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
   }
 
   setTab(tab) {
