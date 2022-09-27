@@ -5,3 +5,11 @@
 ::ng-deep .alert-light{
     border-color:#ccc !important;
 }
+
+.sticky-description {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  z-index: 999;
+  top: 0;
+}
