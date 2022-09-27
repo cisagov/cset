@@ -53,6 +53,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -301,6 +302,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>2.3 MIL Scale</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The CRR uses Maturity Indicator Levels (MILs) to provide organizations with an approximation of the maturity of their practices in the 10 cybersecurity domains. The CRR’s approach to maturity is based on an underlying capability maturity model, the CERT Resilience Management Model.<sup> 1 </sup>In this approach, the organization’s maturity is based on how completely the cybersecurity practices in each of the domains are institutionalized within the organization.</span></div>
@@ -313,10 +319,10 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The following example illustrates how MILs may be applied to the CRR Incident Management domain in a fictitious organization:</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><table class="de_tbl_576 detbl" style="width: 100%; margin-left: 0; margin-right: auto;">
-<col style="width: 100%;" class="de_col_1_576" />
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><table class="de_tbl_575 detbl" style="width: 100%; margin-left: 0; margin-right: auto;">
+<col style="width: 100%;" class="de_col_1_575" />
 <tr style="height: 0px;">
-<td class="de_td_576" style = "padding: 2px; padding-bottom: 1px; border-left-style: solid; border-left-width: 1px; border-left-color: #000000; border-right-style: solid; border-right-width: 1px; border-right-color: #000000; border-top-style: solid; border-top-width: 1px; border-top-color: #000000; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #000000;  width: 100%; vertical-align: top; background-color: #cae1e6;" colspan = "1" rowspan = "1" >
+<td class="de_td_575" style = "padding: 2px; padding-bottom: 1px; border-left-style: solid; border-left-width: 1px; border-left-color: #000000; border-right-style: solid; border-right-width: 1px; border-right-color: #000000; border-top-style: solid; border-top-width: 1px; border-top-color: #000000; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #000000;  width: 100%; vertical-align: top; background-color: #cae1e6;" colspan = "1" rowspan = "1" >
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC">Santa Barbara Manufacturing (SBM) is a medium-sized company that produces precision parts used in certain healthcare applications. The company benefits from having a skilled, capable Chief Information Security Officer (CISO). The CISO has worked hard to ensure that not only does SBM perform incident management practices, but that it also plans the processes around incident management. In other words, among other requirements, the company has a documented policy to govern ownership and participation in incident management, and stakeholders know and understand their roles.</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC">At the start of this fiscal year, a significant industry peer to SBM suffers a major theft of intellectual property because of a computer intrusion originating in another country. This incident causes SBM’s executive leadership to place additional emphasis on incident management. They begin to provide oversight to incident management, ensure that staff are qualified, and dedicate adequate funding to incident management. They also evaluate and make decisions about the risks of deficiencies in the way that SBM does incident management. This level of maturity is roughly equivalent to </span><span class="de_4AF4BF9DD6">MIL3 Managed </span><span class="de_E0D79DE1AC">in the CRR.</span></div>
@@ -326,19 +332,19 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_4AF4BF9DD6">The MIL scale itself uses six maturity levels, each with rigorous, defined components:</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><table class="de_tbl_576 detbl" style="width: 100%; margin-left: 0; margin-right: auto;">
-<col style="width: 16%;" class="de_col_1_101" />
-<col style="width: 17%;" class="de_col_2_99" />
-<col style="width: 17%;" class="de_col_3_95" />
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><table class="de_tbl_575 detbl" style="width: 100%; margin-left: 0; margin-right: auto;">
+<col style="width: 16%;" class="de_col_1_100" />
+<col style="width: 17%;" class="de_col_2_98" />
+<col style="width: 17%;" class="de_col_3_96" />
 <col style="width: 16%;" class="de_col_4_91" />
 <col style="width: 17%;" class="de_col_5_97" />
 <col style="width: 17%;" class="de_col_6_93" />
 <tr style="height: 0px;">
-<td class="de_td_101" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 16%; vertical-align: top;" colspan = "1" rowspan = "1" >
+<td class="de_td_100" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 16%; vertical-align: top;" colspan = "1" rowspan = "1" >
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC"><strong>Incomplete</strong></span><span class="de_EAC77E742C"><strong> -&gt;</strong></span></div>
-</td><td class="de_td_99" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 17%; vertical-align: top;" colspan = "1" rowspan = "1" >
+</td><td class="de_td_98" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 17%; vertical-align: top;" colspan = "1" rowspan = "1" >
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC"><strong>Performed -</strong></span><span class="de_EAC77E742C"><strong>&gt;</strong></span></div>
-</td><td class="de_td_95" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 17%; vertical-align: top;" colspan = "1" rowspan = "1" >
+</td><td class="de_td_96" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 17%; vertical-align: top;" colspan = "1" rowspan = "1" >
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC"><strong>Planned -</strong></span><span class="de_EAC77E742C"><strong>&gt;</strong></span></div>
 </td><td class="de_td_91" style = "padding: 2px; padding-bottom: 1px; border-left-style: none; border-left-width: 1px; border-left-color: #000000; border-right-style: none; border-right-width: 1px; border-right-color: #000000; border-top-style: none; border-top-width: 1px; border-top-color: #000000; border-bottom-style: none; border-bottom-width: 1px; border-bottom-color: #000000;  width: 16%; vertical-align: top;" colspan = "1" rowspan = "1" >
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_E0D79DE1AC"><strong>Managed </strong></span><span class="de_EAC77E742C"><strong>-&gt;</strong></span></div>
