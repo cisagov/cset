@@ -22,57 +22,94 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
-import { FindingsService } from '../../../services/findings.service';
-import { AssessmentService } from '../../../services/assessment.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Finding, Importance, FindingContact } from './findings.model';
 import * as _ from 'lodash';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { NCUAService } from '../../../services/ncua.service';
+import { AssessmentService } from '../../../services/assessment.service';
+import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
+import { FindingsService } from '../../../services/findings.service';
 
 @Component({
-  selector: 'app-findings',
-  templateUrl: './findings.component.html',
-  host: {
-    'style': 'max-width: 100%'
-  }
+  selector: 'app-issues',
+  templateUrl: './issues.component.html'
 })
-export class FindingsComponent implements OnInit {
+ 
 
+export class IssuesComponent implements OnInit {
   finding: Finding;
+  subRiskAreas: SubRiskArea[];
   importances: Importance[];
+  
+  riskAreaOptions: string[] = [];
+  selectedRiskArea: string = "";
+  strategicSubRisks: any[] = [];
+  complianceSubRisks: any[] = [];
+  transactionSubRisks: any[] = [];
+  reputationSubRisks: any[] = [];
+
   contactsmodel: any[];
   answerID: number;
   questionID: number;
 
+
   constructor(
-    private findSvc: FindingsService,
-    private dialog: MatDialogRef<FindingsComponent>,
+    private ncuaSvc: NCUAService,
+    private dialog: MatDialogRef<IssuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
-    public assessSvc: AssessmentService
+    public assessSvc: AssessmentService,
+    private findSvc: FindingsService,
+
   ) {
     this.finding = data;
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
   }
-
+  
   ngOnInit() {
     this.dialog.backdropClick()
-      .subscribe(() => {
-        this.update();
-      });
+    .subscribe(() => {
+      this.update();
+    });
 
-    // send the finding to the server
-    // if it is empty or new let the server
-    // worry about it
+    this.findSvc.getSubRisks().subscribe((result: any[]) => {
+      this.subRiskAreas = result;
+
+      // Generate the select drop down options for risk area & sub risk areas
+      for (let i = 0; i < result.length; i++) {
+        if (!this.riskAreaOptions.includes(result[i].risk_Area)) {
+          this.riskAreaOptions.push(result[i].risk_Area);
+        }
+        if (result[i].risk_Area === 'Strategic') {
+          this.strategicSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Compliance') {
+          this.complianceSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Transaction') {
+          this.transactionSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Reputation') {
+          this.reputationSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        }
+      }
+    });
+
     this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
       let questionType = localStorage.getItem('questionSet');
+
+      // Grab the finding from the db if there is one.
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
+          
+          if (this.finding.sub_Risk_Area_Id === null) {
+            this.selectedRiskArea = 'Strategic';
+          } else {
+            this.selectedRiskArea = this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
+          }
+
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
             { 'selected': true }),
             'Assessment_Contact_Id');
@@ -99,9 +136,6 @@ export class FindingsComponent implements OnInit {
   }
 
   checkFinding(finding: Finding) {
-    // and a bunch of fields together
-    // if they are all null then false
-    // else true;
     let findingCompleted = true;
 
     findingCompleted = (finding.impact == null);
@@ -115,6 +149,17 @@ export class FindingsComponent implements OnInit {
     return !finding;
   }
 
+  getSelectedRiskArea(id: number) {
+    if (id >= 1 && id <= 10) {
+      return ('Strategic');
+    } else if (id > 10 && id <= 17) {
+      return ('Compliance');
+    } else if (id > 17 && id <= 32) {
+      return ('Transaction');
+    } else if (id > 32 && id <= 37) {
+      return ('Reputation');
+    }
+  }
 
   update() {
     this.finding.answer_Id = this.answerID;
@@ -124,8 +169,20 @@ export class FindingsComponent implements OnInit {
     });
   }
 
+  updateRiskArea(riskArea) {
+    this.selectedRiskArea = riskArea;
+  }
+
+  updateSubRisk(value) {
+    this.finding.sub_Risk_Area_Id = value;
+  }
+
   updateImportance(importid) {
     this.finding.importance_Id = importid;
+  }
+
+  updateDisposition(value) {
+    this.finding.disposition = value;
   }
 
   updateContact(contactid) {
@@ -134,6 +191,10 @@ export class FindingsComponent implements OnInit {
         fc.selected = contactid.selected;
       }
     });
+  }
+
+  cancel() {
+    this.dialog.close(true);
   }
 
 }

@@ -337,11 +337,19 @@ export class QuestionExtrasComponent implements OnInit {
       issue: '',
       recommendations: '',
       resolution_Date: null,
-      vulnerabilities: ''
+      vulnerabilities: '',
+      title: null,
+      type: null,
+      description: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
+      disposition: null,
+      identified_Date: null,
+      due_Date: null
     };
 
     this.dialog.open(FindingsComponent, { 
-        data: find, 
+        data: find,
         disableClose: true,
         width: this.layoutSvc.hp ? '90%' : '600px',
         maxWidth: this.layoutSvc.hp ? '90%' : '600px'

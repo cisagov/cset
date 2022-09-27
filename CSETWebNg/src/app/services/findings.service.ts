@@ -42,6 +42,10 @@ export class FindingsService {
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
 
+  getSubRisks(): any {
+    const qstring = this.configSvc.apiUrl + 'GetSubRisks';
+    return this.http.get(qstring, headers);
+  }
 
   getImportance(): any {
     const qstring = this.configSvc.apiUrl + 'GetImportance';
