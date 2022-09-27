@@ -1,16 +1,20 @@
 <div class="d-flex flex-column justify-content-center flex-11a h-100 w-100">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
       <span class="fs-base-6 mr-3"><i class="fa-solid fa-file"></i></span>
-      <span>{{data.title}}</span>
+      <span>Assesment Description</span>
     </div>
     <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a h-100" style="position:relative; overflow-x:hidden;">
       <div class="card-image-parent">
         <img class="card-image-child" src="{{data.path}}">
       </div>
-       {{ data.description }}
+      <div class="p-4">
+        <h3 class="mb-4">{{ data.title }}</h3>
+        <div [innerHTML]="data.description">
+        </div>
+      </div>
     </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0" align="end">
-      <button class="btn btn-danger" (click)="close()" style="margin-right:5px;"><i class="fa-solid fa-xmark"></i></button>
-      <button class="btn btn-primary" (click)="launchAssessment()"><i class="fa-solid fa-play"></i></button>
+    <mat-dialog-actions class="pb-3 pt-0 mb-0" style="padding-right: 4rem" align="end">
+      <button matTooltip="Close" class="btn btn-secondary" (click)="close()" style="margin-right:5px;"><i class="fa-solid fa-xmark"></i></button>
+      <button matTooltip="Create Assessment" class="btn btn-primary" (click)="launchAssessment()"><i class="fa-solid fa-play"></i></button>
     </mat-dialog-actions>
   </div>

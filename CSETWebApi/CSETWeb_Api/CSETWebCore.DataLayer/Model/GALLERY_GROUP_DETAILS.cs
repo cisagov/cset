@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    [Index("Group_Id", "Column_Index", Name = "IX_GALLERY_GROUP_DETAILS", IsUnique = true)]
     public partial class GALLERY_GROUP_DETAILS
     {
         public int Group_Id { get; set; }

@@ -12,9 +12,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b25580-a5ec-4449-bbd4-b9199772bb21" name="Changes" comment="">
+    <list default="true" id="4ccffa1d-6055-4a2a-ab82-b408144db376" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CSETWebCore.Model/Auth/PasswordComplexity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Helpers/UserAccountSecurityManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Helpers/UserAccountSecurityManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ResetPasswordController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ResetPasswordController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/assessment.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/assessment.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page-tabs/landing-page-tabs.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page-tabs/landing-page-tabs.component.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +33,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9dde5a1c17304cc381f2398d38f0ea6d1749f0/34/2c203d9a/SqlCommand.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/134622bcf8ad016d3faf7776eb0457b76a5798c537458aa82651ab2cee6e1/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2ff32d9e6a8ae52479379f35545f9a152fde5adb58a20dc4526c1c59bafe3/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3b6e6a47179af0cc67d5434bad6aca4c7b77f9b7ba6b4a67bed78c8d3b9e80/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/44b1161d866765c6ec11ee821b79d9bff8660b65aef1d48c273eb26a29d4a/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
@@ -35,6 +41,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6f2c3a317ee06bc1b0766b94d4e6a045ea25c9a3da49cb9075bcee751250d4/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7262732eee179af215faab36a7f3c3cfac93ba12af52a3888d839fe7e53420/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bcae882191178c8bf44c9add4cdeffa874a7afe629e3e56e9280f5896e953425/Monitor.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bebd253e21dcf766929bfdfd74615bfe46e6e1693b289273dbdb82152893/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c7f6322b139ebc72ce44bf58444bb78ff0dfde58de66a127227ef1e829481c4/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/caccb9a16b7398be8d7bb6172f25e9c31e7d93eca254e79c3c6ff3ce733da8c/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d4f98ebdd878db4fbd98872756eb7be6ad9e468fe5cd6b16385d8c4993109a/List.cs" root0="SKIP_HIGHLIGHTING" />
@@ -47,7 +54,9 @@
     <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="259w2smrOemX0rCcFtwQRoPJ7bJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -111,6 +120,7 @@
       <workItem from="1661449037828" duration="19032000" />
       <workItem from="1663170992285" duration="2498000" />
       <workItem from="1663182082910" duration="1231000" />
+      <workItem from="1663715832938" duration="1436000" />
     </task>
     <servers />
   </component>
@@ -130,76 +140,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/FileUploadController.cs</url>
-          <line>50</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/FileUploadController.cs" initialLine="48" containingFunctionPresentation="method 'Upload'">
-            <startOffsets>
-              <option value="1572" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1615" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs</url>
-          <line>251</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/CisQuestionsBusiness.cs" initialLine="251" containingFunctionPresentation="method 'GetDeficiencyChartData'">
-            <startOffsets>
-              <option value="9394" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9454" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
-          <line>360</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="360" containingFunctionPresentation="method 'GetAllModels'">
-            <startOffsets>
-              <option value="12888" />
-            </startOffsets>
-            <endOffsets>
-              <option value="12944" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
-          <line>379</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="379" containingFunctionPresentation="method 'GetAllModels'">
-            <startOffsets>
-              <option value="13727" />
-            </startOffsets>
-            <endOffsets>
-              <option value="13743" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs</url>
-          <line>35</line>
-          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/AuthController.cs" initialLine="35" containingFunctionPresentation="method 'Login'">
-            <startOffsets>
-              <option value="1330" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1391" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

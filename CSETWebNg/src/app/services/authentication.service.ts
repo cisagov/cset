@@ -39,6 +39,7 @@ import { parse } from 'querystring';
 export interface LoginResponse {
     token: string;
     resetRequired: boolean;
+    isPasswordExpired: boolean;
     isSuperUser: boolean;
     userLastName: string;
     userFirstName: string;
@@ -281,6 +282,10 @@ export class AuthenticationService {
 
     changePassword(data: ChangePassword) {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
+    }
+
+    checkPassword(data: ChangePassword):Observable<any> {
+        return this.http.post(this.configSvc.apiUrl + 'ResetPassword/CheckPassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
     updateUser(data: CreateUser): Observable<CreateUser> {

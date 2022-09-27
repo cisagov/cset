@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CSETWebCore.Model.Auth;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -115,6 +116,27 @@ namespace CSETWebCore.Api.Controllers
 
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
 
+                // does this new password follow the complexity rules?
+                PasswordComplexity complexEnough = resetter.ComplexityRulesMet(changePass);
+                if (!complexEnough.PasswordContainsLower || !complexEnough.PasswordContainsUpper || !complexEnough.PasswordLengthMet ||
+                    !complexEnough.PasswordContainsSpecial || !complexEnough.PasswordNotReused)
+                {
+                    /*string checkIcon = "<i class=\"fa-solid fa-check change-check\"></i>";
+                    string errorIcon = "<i class=\"fa-solid fa-xmark change-error\"></i>";
+                    var complexityMsg = "<div>Password must meet the following rules:<div>" +
+                        "<ul class=\"list-group list-group-flush\">" +
+                        $"<li class=\"list-group-item\"> Length between {resetter.PasswordLengthMin} and {resetter.PasswordLengthMax} characters</li>" +
+                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsNumbers?checkIcon:errorIcon)}  Must contain at least 2 numbers</li>" +
+                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsLower?checkIcon:errorIcon)}  Must contain at least 1 lowercase letter</li>" +
+                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsUpper?checkIcon:errorIcon)}  Must contain at least 1 uppercase letter</li>" +
+                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsSpecial?checkIcon:errorIcon)}  Must contain at least 1 special character</li>" +
+                        $"<li class=\"list-group-item\">{(complexEnough.PasswordLenghtMet?checkIcon:errorIcon)}  Must not re-use previous {resetter.NumberOfHistoricalPasswords} passwords</li>" +
+                        "</ul>";
+                        */
+                    return BadRequest(complexEnough);
+                }
+
+
                 bool rval = resetter.ChangePassword(changePass);
                 if (rval)
                 {
@@ -132,6 +154,32 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/ResetPassword/CheckPassword")]
+        public IActionResult CheckPassoword([FromBody] ChangePassword changePass)
+        {
+            UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+
+            // does this new password follow the complexity rules?
+            if (changePass.NewPassword == null)
+            {
+                return Ok(new PasswordComplexity
+                {
+                    PasswordLengthMin = resetter.PasswordLengthMin,
+                    PasswordLengthMax = resetter.PasswordLengthMax,
+                    NumberOfHistoricalPasswords = resetter.NumberOfHistoricalPasswords,
+                    PasswordLengthMet = false,
+                    PasswordContainsNumbers = false,
+                    PasswordContainsLower = false,
+                    PasswordContainsUpper = false,
+                    PasswordContainsSpecial = false,
+                    PasswordNotReused = false
+                });
+            }
+
+            PasswordComplexity complexEnough = resetter.ComplexityRulesMet(changePass);
+            return Ok(complexEnough);
+        }
 
         [HttpPost]
         [Route("api/ResetPassword/RegisterUser")]
@@ -236,7 +284,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 if (_context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault() == null)
-                { 
+                {
                     return BadRequest();
                 }
 

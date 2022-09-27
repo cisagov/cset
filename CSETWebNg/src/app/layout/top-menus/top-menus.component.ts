@@ -177,9 +177,50 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
+   * Considers whether the app is running as CSET Online 
+   * or on a mobile device and decides if the item should show.
+   */
+  showMenuItem(item: string) {
+
+    // This is not applicable to a large enterprise setup.  
+    // Also, we are hiding the FAA gallery cards for now.
+    if (item == 'enable protected features') {
+      return (!this.configSvc.isCsetOnline);
+    }
+
+    if (item == 'parameter editor') {
+      return (!this.configSvc.isMobile());
+    }
+
+    // This should not be offered in mobile or CSET Online
+    if (item == 'import modules') {
+      return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
+    }
+
+    // This should not be offered in mobile or CSET Online
+    if (item == 'module builder') {
+      return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
+    }
+    
+    if (item == 'module content report') {
+      return (!this.configSvc.isMobile());
+    }
+    
+    if (item == 'trend') {
+      return (!this.configSvc.isMobile());
+    }
+
+    if (item == 'compare') {
+      return (!this.configSvc.isMobile());
+    }
+
+    return true;
+  }
+
+  /**
    * Allows us to hide items for certain skins
    */
-   showItem(item: string) {
+   showItemForCurrentSkin(item: string) {
 
     // custom behavior for ACET
     if (this.skin === 'ACET') {
@@ -191,6 +232,9 @@ export class TopMenusComponent implements OnInit {
     return true;
   }
 
+  /**
+   * 
+   */
   showUserMenuItem() {
     if (this.auth.isLocal) {
       return false;
@@ -200,9 +244,9 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * Hides user guide menu items that are not relevant to the current assessment.
+   * Hides User Guide menu items that are not relevant to the current assessment.
    */
-  isVisible(module: string) {
+  isGuideVisible(module: string) {
     // we hide these on the phone
     if (this.configSvc.isMobile()) {
       return false;

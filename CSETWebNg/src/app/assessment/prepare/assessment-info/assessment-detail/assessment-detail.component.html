@@ -75,6 +75,8 @@
         <div class="col-md-6"></div>
     </div>
 </form>
-<h4>Assessment Type</h4>
-<h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
-<p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
+<div class="mt-4">
+    <h4>Assessment Type</h4>
+    <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
+    <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
+</div>
