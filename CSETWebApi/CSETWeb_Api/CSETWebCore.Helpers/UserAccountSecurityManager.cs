@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Notification;
+using CSETWebCore.Model.Auth;
 
 namespace CSETWebCore.Helpers
 {
@@ -25,7 +26,7 @@ namespace CSETWebCore.Helpers
         private readonly INotificationBusiness _notificationBusiness;
 
         // Password length limits
-        public readonly int PasswordLengthMin = 8;
+        public readonly int PasswordLengthMin = 13;
         public readonly int PasswordLengthMax = 25;
 
         // The number of old passwords that cannot be reused
@@ -234,41 +235,24 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="pw"></param>
         /// <returns></returns>
-        public bool ComplexityRulesMet(ChangePassword cp)
+        public PasswordComplexity ComplexityRulesMet(ChangePassword cp)
         {
             var pw = cp.NewPassword;
-
+            var checkPassword = new PasswordComplexity();
             // can't be in the last 24 passwords (PASSWORD-HISTORY)
-            if (IsPasswordInHistory(cp))
-            {
-                return false;
-            }
+            checkPassword.PasswordNotReused = IsPasswordInHistory(cp) ? false : true;
+            checkPassword.PasswordLengthMet =
+                pw.Length < PasswordLengthMin || pw.Length > PasswordLengthMax ? false : true;
+            checkPassword.PasswordContainsNumbers = !Regex.IsMatch(pw, "[0-9].*[0-9]") ? false : true;
+            checkPassword.PasswordContainsLower = !Regex.IsMatch(pw, "[a-z]") ? false : true;
+            checkPassword.PasswordContainsUpper = !Regex.IsMatch(pw, "[A-Z]") ? false : true;
+            checkPassword.PasswordContainsSpecial =
+                !Regex.IsMatch(pw, "[*.!@$%^&(){}\\[\\]:;<>,.?/~_+\\-=|]") ? false : true;
+            checkPassword.PasswordLengthMin = PasswordLengthMin;
+            checkPassword.PasswordLengthMax = PasswordLengthMax;
+            checkPassword.NumberOfHistoricalPasswords = NumberOfHistoricalPasswords;
 
-            // length (8 to 25 characters)
-            if (pw.Length < PasswordLengthMin || pw.Length > PasswordLengthMax)
-            {
-                return false;
-            }
-
-            // at least 2 numbers
-            if (!Regex.IsMatch(pw, "[0-9].*[0-9]"))
-            {
-                return false;
-            }
-
-            // at least 1 lowercase letter
-            if (!Regex.IsMatch(pw, "[a-z]"))
-            {
-                return false;
-            }
-
-            // at least 1 special character
-            if (!Regex.IsMatch(pw, "[*.!@$%^&(){}\\[\\]:;<>,.?/~_+\\-=|]"))
-            {
-                return false;
-            }
-
-            return true;
+            return checkPassword;
         }
 
 
