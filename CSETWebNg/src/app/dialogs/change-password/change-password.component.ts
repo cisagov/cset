@@ -21,30 +21,52 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, OnInit } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, NgZone, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { delay } from 'lodash';
 import { environment } from '../../../environments/environment';
 import { ChangePassword } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./change-password.component.scss'], 
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangePasswordComponent implements OnInit {
   message = '';
   warning = false;
   cpwd: ChangePassword = {};
   forceChangePassword = false;
-  msgChangeTempPw = 'Temporary password must be changed on first logon.';
+  
+  private _passwordContainsNumbers: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public passwordContainsNumbers: Observable<boolean> = this._passwordContainsNumbers.asObservable();
 
+  msgChangeTempPw = 'Temporary password must be changed on first logon.';
+  check = true;
+  complexEnough:any = {
+    passwordLengthMin:13,
+    passwordLengthMax:50,
+    numberOfHistoricalPasswords:24,
+    passwordLengthMet:false,
+    passwordContainsNumbers:false,
+    passwordContainsLower :false,
+    passwordContainsUpper:false,
+    passwordContainsSpecial :false,
+    passwordNotReused :false
+  };
+ 
   constructor(private auth: AuthenticationService,
     private router: Router,
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
+    private ref:ChangeDetectorRef,
+    private appRef:ApplicationRef,
     @Inject(MAT_DIALOG_DATA) public data: { primaryEmail: string; warning: boolean }) {
     this.cpwd.primaryEmail = data.primaryEmail;
     this.cpwd.appCode = environment.appCode;
@@ -52,26 +74,33 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.checkPassword(null);
     if (this.warning) {
       this.message = this.msgChangeTempPw;
     }
   }
-
+  
   onPasswordChangeClick(fReg: NgForm): void {
     if (fReg.valid) {
       this.auth.changePassword(this.cpwd).subscribe(
         (response: any) => {
-          console.log('changePassword:');
-          console.log(response);
           this.dialogRef.close();
         },
         error => {
-          console.log('changePassword error');
-          console.log(error);
-          this.warning = true;
           this.message = error.error;
+          //this.complexEnough = error.error;
         });
     }
+  }
+
+
+  checkPassword(event){
+    var temp:ChangePassword = {newPassword:event, currentPassword:this.cpwd.currentPassword, confirmPassword:this.cpwd.confirmPassword, primaryEmail:this.cpwd.primaryEmail, appCode:this.cpwd.appCode};
+    this.auth.checkPassword(temp).subscribe((response: any )=> {
+      this.complexEnough = JSON.parse(response);
+      this.ref.detectChanges();
+    });
   }
 
   cancel() {
