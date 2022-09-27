@@ -2,7 +2,7 @@ li.active {
     position:relative;
     bottom:6px !important;
     border-radius: 5px 5px 0 0;
-    
+
 }
 ul.nav-tabs li.active button{
     font-size:1rem !important;
@@ -30,4 +30,9 @@ li button span{
 
 .input-bar-item > button {
     margin-left: 5px;
+}
+
+.sticky-tabs {
+  position: sticky;
+  z-index: 999;
 }
