@@ -2,14 +2,7 @@ li.active {
     position:relative;
     bottom:6px !important;
     border-radius: 5px 5px 0 0;
-    
-}
-.btn{
-    line-height:1.6 !important;
-    border-radius:0 !important;
-    outline-style: none !important;
-    box-shadow: none;
-    border-color: transparent;
+
 }
 ul.nav-tabs li.active button{
     font-size:1rem !important;
@@ -17,6 +10,7 @@ ul.nav-tabs li.active button{
 
 ul.nav-tabs li {
     padding-top:2px;
+    padding-bottom:2px;
 }
 
 li.active button span{
@@ -25,4 +19,21 @@ li.active button span{
 
 li button span{
     padding-bottom:6px;
+}
+.input-bar {
+    display: table;
+    width: 100%;
+}
+
+.input-bar-item {
+    display: table-cell;
+}
+
+.input-bar-item > button {
+    margin-left: 5px;
+}
+
+.sticky-tabs {
+  position: sticky;
+  z-index: 999;
 }

@@ -1,5 +1,5 @@
 CREATE PROCEDURE [dbo].[Get_Assess_Detail_Filter_Data]
-   @model VARCHAR(100) = ''
+   @model nvarchar(100) = ''
 
 AS
 BEGIN

@@ -47,8 +47,11 @@ export class LoginCsetComponent implements OnInit {
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
+  
   loading = false;
   incorrect = false;
+  passwordExpired = false;
+
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -97,6 +100,9 @@ export class LoginCsetComponent implements OnInit {
    */
   login() {
     this.loading = true;
+    this.incorrect = false;
+    this.passwordExpired = false;
+
     this.authenticationService
       .login(this.model.email, this.model.password)
       .subscribe(
@@ -130,6 +136,14 @@ export class LoginCsetComponent implements OnInit {
 
           this.loading = false;
           console.log('Error logging in: ' + (<Error>error).message);
+
+
+          // see if the password is expired
+          if (error.error.isPasswordExpired) {
+            this.passwordExpired = true;
+            return;
+          }
+
           this.incorrect = true;
         }
       );

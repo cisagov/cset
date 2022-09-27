@@ -363,38 +363,6 @@
                 </table>
                 <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Observation</button>
             </div>
-
-            <div *ngIf="!!this.assessSvc.isISE()">
-                <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
-                    <tr>
-                        <th>Issue Title</th>
-                        <th>Importance</th>
-                        <th style="width:5%;"></th>
-                        <th style="width:5%;"></th>
-                    </tr>
-                    <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
-                        <td style="height:20px">
-                            <div>{{find.summary}}</div>
-                        </td>
-                        <td>
-                            <div>{{find.importance?.value}}</div>
-                        </td>
-                        <td>
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                (click)="addEditDiscovery(find.finding_Id)">
-                                <span class="mr-1 cset-icons-pencil"></span>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                                (click)="deleteDiscovery(find)">
-                                <span class="mr-1 cset-icons-trash-can"></span>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-                <button class="btn btn-primary add" (click)="addEditDiscovery(0)">Add an Issue</button>
-            </div>
       </div>
   </div>
 </div>

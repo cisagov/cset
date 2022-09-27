@@ -489,6 +489,8 @@ import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-char
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
+import { IssuesComponent } from './assessment/questions/issues/issues.component';
+import { SearchPageComponent } from './initial/search-page/search-page.component';
 
 @NgModule({
     imports: [
@@ -639,6 +641,7 @@ import { IseExaminationComponent } from './reports/ise-examination/ise-examinati
         ResourceLibraryComponent,
         OkayComponent,
         FindingsComponent,
+        IssuesComponent,
         SafePipe,
         LinebreakPipe,
         NullishCoalescePipe,
@@ -933,7 +936,8 @@ import { IseExaminationComponent } from './reports/ise-examination/ise-examinati
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
-        PrivacyWarningRejectComponent
+        PrivacyWarningRejectComponent, 
+        SearchPageComponent
     ],
     providers: [
         ConfigService,
@@ -1008,6 +1012,7 @@ import { IseExaminationComponent } from './reports/ise-examination/ise-examinati
         OkayComponent,
         TermsOfUseComponent,
         FindingsComponent,
+        IssuesComponent,
         EnableProtectedComponent,
         QuestionFiltersComponent,
         AssessmentDocumentsComponent,

@@ -15,7 +15,7 @@ BEGIN
 	EXECUTE [dbo].[FillEmptyQuestionsForAnalysis]  @Assessment_Id
 
 	-- get the application mode
-	declare @applicationMode varchar(50)
+	declare @applicationMode nvarchar(50)
 	exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 
 	-- get currently selected sets

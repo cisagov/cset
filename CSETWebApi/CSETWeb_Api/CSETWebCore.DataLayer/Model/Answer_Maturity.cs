@@ -33,7 +33,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool Reviewed { get; set; }
         [StringLength(2048)]
         public string FeedBack { get; set; }
-        public int? Maturity_Level { get; set; }
+        public int? Maturity_Level_Id { get; set; }
         public string Question_Text { get; set; }
     }
 }

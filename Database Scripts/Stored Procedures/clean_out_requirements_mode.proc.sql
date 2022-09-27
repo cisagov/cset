@@ -4,7 +4,7 @@
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE [dbo].[clean_out_requirements_mode]
-	   @standard_name varchar(50), @standard_name_with_mode varchar(50)
+	   @standard_name nvarchar(50), @standard_name_with_mode nvarchar(50)
 AS
 BEGIN	
 	SET NOCOUNT ON;
@@ -22,13 +22,10 @@ SELECT * INTO #tempSetList FROM dbo.REQUIREMENT_sets WHERE Set_Name = @standard_
 BEGIN TRANSACTION
 IF @standard_name = 'ICS'
 BEGIN
-	delete  [CSET_Control].[dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
+	delete  [dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
 end
 ELSE
 begin
-
-	DELETE FROM dbo.REQUIREMENT_USER_NUMBERS
-	FROM dbo.REQUIREMENT_USER_NUMBERS a INNER JOIN #tempSetList b on a.Requirement_Id=b.Requirement_Id
 	DELETE FROM dbo.REQUIREMENT_SOURCE_FILES
 	FrOM dbo.REQUIREMENT_SOURCE_FILES a INNER JOIN #tempSetList b ON a.Requirement_Id = b.Requirement_Id
 	DELETE FROM dbo.REQUIREMENT_REFERENCES
@@ -37,7 +34,7 @@ begin
 	FROM dbo.REQUIREMENT_levels a INNER JOIN #tempSetList b ON a.Requirement_Id = b.Requirement_Id
 	DELETE FROM dbo.REQUIREMENT_QUESTIONS
 	FROM dbo.REQUIREMENT_QUESTIONS a INNER JOIN #tempSetList b ON a.Requirement_Id=b.Requirement_Id
-	delete  [CSET_Control].[dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
+	delete  [dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
 end
 COMMIT TRANSACTION
 

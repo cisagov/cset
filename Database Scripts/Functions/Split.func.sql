@@ -1,9 +1,9 @@
-CREATE FUNCTION [dbo].[Split](@string VARCHAR(500))
+CREATE FUNCTION [dbo].[Split](@string nvarchar(500))
 RETURNS @TableValues TABLE (Value nvarchar(4000),Id bigint identity(1,1))
 AS
 BEGIN
 declare @pos int
-declare @piece varchar(500)
+declare @piece nvarchar(500)
 DECLARE @id INT
 SET @id = 1
 
