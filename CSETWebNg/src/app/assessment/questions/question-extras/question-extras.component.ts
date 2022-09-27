@@ -343,7 +343,7 @@ export class QuestionExtrasComponent implements OnInit {
       description: null,
       sub_Risk_Area_Id: null,
       subRiskArea: null,
-      Disposition: null,
+      disposition: null,
       identified_Date: null,
       due_Date: null
     };

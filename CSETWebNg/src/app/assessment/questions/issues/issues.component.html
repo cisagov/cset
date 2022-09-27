@@ -44,7 +44,6 @@
     </div>
   </div>
 </div>
-<!--
 <div class="row">
   <div class="col-12">
     <div class="form-group">
@@ -57,33 +56,31 @@
   <div class="col-6">
     <div class="form-group">
       <label for="risk-area" class="form-label">Risk Area</label>
-      <select name="riskarea" id="riskarea" class="form-control" 
+      <select name="riskarea" id="riskarea" class="form-control"
         (change)="updateRiskArea($event.target.value)">
-        <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
+        <option *ngFor="let riskArea of this.riskAreaOptions" [selected]="this.selectedRiskArea" [value]="riskArea">{{ riskArea }}</option>
       </select>
     </div>
-  </div>
+  </div>  
   <div class="col-6">
-    <div class="form-group">
-      <label for="strategic-sub-risk" class="form-label">{{ this.selectedRiskArea }} Sub Risk</label>
-      <select name="strategicSubRisk" id="strategicSubRisk" class="form-control"  [(ngModel)]="finding.subRisk_Id"
-        (change)="updateSubRisk($event.target.value)">
-        <option *ngFor="let subRisk of this.subRiskAreas" [value]="subRisk?.sub_Risk_Area_Id">
-          <ng-container *ngIf="subRisk?.risk_Area === this.selectedRiskArea">
-            {{ subRisk?.sub_Risk_Area }}
-          </ng-container>
-        </option>
-      </select>
-    </div>
-
-
-
+    <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === '' || this.selectedRiskArea === null">
+      <div class="form-group">
+        <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
+        <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
+          (change)="updateSubRisk($event.target.value)">
+          <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk.id">
+            {{ subRisk.name }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
     <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
       <div class="form-group">
         <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
-        <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" (change)="updateSubRisk($event)">
-          <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk">
-            {{ subRisk }}
+        <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
+          (change)="updateSubRisk($event.target.value)">
+          <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk.id">
+            {{ subRisk.name }}
           </option>
         </select>
       </div>
@@ -91,9 +88,10 @@
     <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
       <div class="form-group">
         <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
-        <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" (change)="updateSubRisk($event)">
-          <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk">
-            {{ subRisk }}
+        <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
+          (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk.id">
+            {{ subRisk.name }}
           </option>
         </select>
       </div>
@@ -101,9 +99,10 @@
     <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
       <div class="form-group">
         <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
-        <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" (change)="updateSubRisk($event)">
-          <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk">
-            {{ subRisk }}
+        <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
+          (change)="updateSubRisk($event)">
+          <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk.id">
+            {{ subRisk.name }}
           </option>
         </select>
       </div>
@@ -114,7 +113,8 @@
   <div class="col-12">
     <div class="form-group">
       <label for="disposition" class="form-label">Disposition</label>
-      <select name="disposition" id="disposition" class="form-control">
+      <select name="disposition" id="disposition" class="form-control" [(ngModel)]="finding.disposition"
+        (change)="updateDisposition($event.target.value)">
         <option value="reportable">Reportable</option>
         <option value="option2">Option 2</option>
       </select>
@@ -172,7 +172,7 @@
   questions in the assessment. Findings can be added manually, or created automatically if the program 
   identifies a need.</p>
 </mat-dialog-content>
--->
+
 <mat-dialog-actions class="p-3 mb-0" align="end">
   <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
   <button mat-button class="btn btn-primary" (click)="update()">Done</button>

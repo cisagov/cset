@@ -42,14 +42,16 @@ export class IssuesComponent implements OnInit {
   importances: Importance[];
   
   riskAreaOptions: string[] = [];
-
-
+  selectedRiskArea: string = "";
+  strategicSubRisks: any[] = [];
+  complianceSubRisks: any[] = [];
+  transactionSubRisks: any[] = [];
+  reputationSubRisks: any[] = [];
 
   contactsmodel: any[];
   answerID: number;
   questionID: number;
 
-  selectedRiskArea: string = "";
 
   constructor(
     private ncuaSvc: NCUAService,
@@ -73,10 +75,20 @@ export class IssuesComponent implements OnInit {
 
     this.findSvc.getSubRisks().subscribe((result: any[]) => {
       this.subRiskAreas = result;
-      console.log("result: " + JSON.stringify(this.subRiskAreas, null, 4))
+
+      // Generate the select drop down options for risk area & sub risk areas
       for (let i = 0; i < result.length; i++) {
         if (!this.riskAreaOptions.includes(result[i].risk_Area)) {
           this.riskAreaOptions.push(result[i].risk_Area);
+        }
+        if (result[i].risk_Area === 'Strategic') {
+          this.strategicSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Compliance') {
+          this.complianceSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Transaction') {
+          this.transactionSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
+        } else if (result[i].risk_Area === 'Reputation') {
+          this.reputationSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
         }
       }
     });
@@ -84,12 +96,20 @@ export class IssuesComponent implements OnInit {
     this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
       let questionType = localStorage.getItem('questionSet');
+
+      // Grab the finding from the db if there is one.
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
-          console.log("finding response: " + JSON.stringify(response, null, 4));
           this.finding = response;
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
+          
+          if (this.finding.sub_Risk_Area_Id === null) {
+            this.selectedRiskArea = 'Strategic';
+          } else {
+            this.selectedRiskArea = this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
+          }
+
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
             { 'selected': true }),
             'Assessment_Contact_Id');
@@ -129,11 +149,21 @@ export class IssuesComponent implements OnInit {
     return !finding;
   }
 
+  getSelectedRiskArea(id: number) {
+    if (id >= 1 && id <= 10) {
+      return ('Strategic');
+    } else if (id > 10 && id <= 17) {
+      return ('Compliance');
+    } else if (id > 17 && id <= 32) {
+      return ('Transaction');
+    } else if (id > 32 && id <= 37) {
+      return ('Reputation');
+    }
+  }
+
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-    this.finding.sub_Risk_Area_Id = 1;
-    this.finding.subRiskArea = {'subRisk_Id': 1, 'value': 'Other', 'riskArea': 'Strategic'};
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
@@ -143,12 +173,16 @@ export class IssuesComponent implements OnInit {
     this.selectedRiskArea = riskArea;
   }
 
-  updateSubRisk(sub_id) {
-    this.finding.subRiskArea = {'subRisk_Id': 1, 'value': 'Other', 'riskArea': this.selectedRiskArea};
+  updateSubRisk(value) {
+    this.finding.sub_Risk_Area_Id = value;
   }
 
   updateImportance(importid) {
     this.finding.importance_Id = importid;
+  }
+
+  updateDisposition(value) {
+    this.finding.disposition = value;
   }
 
   updateContact(contactid) {
@@ -157,10 +191,6 @@ export class IssuesComponent implements OnInit {
         fc.selected = contactid.selected;
       }
     });
-  }
-
-  saveIssue() {
-    this.dialog.close(true);
   }
 
   cancel() {
