@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -31,11 +31,11 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
-import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 import { FindingsService } from '../../../services/findings.service';
+import { IssuesComponent } from '../issues/issues.component';
 
 
 /**
@@ -80,6 +80,8 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlus: boolean = false;
   showIssues: boolean = false;
   coreChecked: boolean = false;
+
+  dialogRef: MatDialogRef <any>;
 
   /**
    * Constructor.
@@ -577,13 +579,7 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditDiscovery(findid) {
-    //this.saveAnswer();
-  
-    // TODO Always send an empty one for now.
-    // At some juncture we need to change this to
-    // either send the finding to be edited or
-    // send an empty one.
+  addEditIssue(findid) {
     const find: Finding = {
       question_Id: this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
@@ -596,32 +592,40 @@ export class QuestionBlockIseComponent implements OnInit {
       issue: '',
       recommendations: '',
       resolution_Date: null,
-      vulnerabilities: ''
+      vulnerabilities: '',
+      title: null,
+      type: null,
+      description: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
+      disposition: null,
+      identified_Date: null,
+      due_Date: null
     };
-  
-    this.dialog.open(FindingsComponent, { 
-      data: find, 
+
+    this.dialog.open(IssuesComponent, {
+      data: find,
       disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '1200px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
+      width: this.layoutSvc.hp ? '90%' : '60vh',
+      height: this.layoutSvc.hp ? '90%' : '85vh',
     }).afterClosed().subscribe(result => {
-        const answerID = find.answer_Id;
-        this.findSvc.getAllDiscoveries(answerID).subscribe(
-          (response: Finding[]) => {
-            this.extras.findings = response;
-            this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-            this.myGrouping.questions[0].answer_Id = find.answer_Id;
-          },
-          error => console.log('Error updating findings | ' + (<Error>error).message)
-        );
-      });
+      const answerID = find.answer_Id;
+      this.findSvc.getAllDiscoveries(answerID).subscribe(
+        (response: Finding[]) => {
+          this.extras.findings = response;
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+          this.myGrouping.questions[0].answer_Id = find.answer_Id;
+        },
+        error => console.log('Error updating findings | ' + (<Error>error).message)
+      );
+    });
   }
   
   /**
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteDiscovery(findingToDelete) {
+  deleteIssue(findingToDelete) {
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
   

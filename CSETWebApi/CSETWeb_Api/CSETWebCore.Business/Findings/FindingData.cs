@@ -53,7 +53,14 @@ namespace CSETWebCore.Business.Findings
                     Issue = f.Issue,
                     Recommendations = f.Recommendations,
                     Vulnerabilities = f.Vulnerabilities,
-                    Resolution_Date = f.Resolution_Date
+                    Resolution_Date = f.Resolution_Date,
+                    Title = f.Title,
+                    Type = f.Type,
+                    Description = f.Description,
+                    Sub_Risk_Area_Id = 1,
+                    Disposition = f.Disposition,
+                    Identified_Date = f.Identified_Date,
+                    Due_Date = f.Due_Date
                 };
 
                 this._dbFinding = finding;
