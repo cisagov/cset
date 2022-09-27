@@ -27,4 +27,8 @@ export class GroupingBlockNestedComponent implements OnInit {
     }
   }
 
+  shouldDescriptionBeSticky() {
+    return this.assessSvc.assessment.maturityModel?.modelName === 'MVRA';
+  }
+
 }
