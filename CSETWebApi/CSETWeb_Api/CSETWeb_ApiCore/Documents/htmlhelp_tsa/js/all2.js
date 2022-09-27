@@ -3844,9 +3844,13 @@ function onDocumentReady(app) {
 
     app.tabController.doSetScrollTopByUrlEncoder();
 
-    // Crutch for Firefox
-    if (window.location.hash !== "" && window.location.hash !== "#")
-        window.location.hash = window.location.hash;
+    var hash = window.location.hash;
+    if (hash != "" && hash != "#")
+    {
+        if (hash[0] != "#") // just in case
+            hash = "#" + hash;
+        window.location.replace(hash);
+    }
 
     $("#pageLayout").removeClass("loading");
 }
