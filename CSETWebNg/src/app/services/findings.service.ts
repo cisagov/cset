@@ -70,7 +70,6 @@ export class FindingsService {
    * saves the given discovery
    */
   saveDiscovery(finding: Finding) {
-    console.log("Saving Finding: " + JSON.stringify(finding, null, 4));
     return this.http.post(this.configSvc.apiUrl + 'AnswerSaveDiscovery', finding, headers);
   }
 
