@@ -11,14 +11,19 @@ import { isNgTemplate } from '@angular/compiler';
   styleUrls: ['./list-items.component.css']
 })
 export class ListItemsComponent implements OnInit {
-  @Input() listTest: ListTest;
+  @Input()
+  listTest!: ListTest;
   @Input() isRoot: boolean = false;
   faArrows = faArrows;
+  layoutName: string = '';
+
+  response: any;
 
   options: Options = {    
     handle: '.handle'
   };
-  constructor(private svcGalleryEditor: GalleryEditorService ){    
+  constructor(private svcGalleryEditor: GalleryEditorService ){   
+    
     this.options = {
       group: 'test',
       onUpdate: (event: any) => {
@@ -36,7 +41,7 @@ export class ListItemsComponent implements OnInit {
         item.toId = event.to.id;
         item.newIndex = event.newIndex;
         item.oldIndex = event.oldIndex;
-        item.Layout_Name = "CSET";
+        item.Layout_Name = event.Layout_Name;
 
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
@@ -61,4 +66,41 @@ export class ListItemsComponent implements OnInit {
     if(item.gallery_Item_Id!==undefined)
       this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();
   }
+
+  layoutChange(event: any) {
+    this.layoutName = event.target.value;
+    console.log("Layout is: " + this.layoutName);
+    this.svcGalleryEditor.getGalleryItems(this.layoutName).subscribe(
+      (r: any) => {
+        this.response = r;
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
+
+  deleteGalleryGroup(title: string) {
+    console.log(title + " would be deleted");
+  }
+  deleteGalleryItem(title: string) {
+    console.log(title + " would be deleted");
+  }
+
+  addGalleryGroup(title: string) {
+    console.log(title + " would be added");
+  }
+  addGalleryItem(group: string, title: string) {
+    console.log(title + " would be added");
+  }
+
+  cloneGalleryItem(item: any) {
+    console.log(item.title + " would be cloned");
+    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
+      (r: any) => {
+        this.response = r;
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
+
+
 }

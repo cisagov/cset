@@ -68,6 +68,46 @@ namespace CSETWebCore.Business.GalleryParser
             return rvalue;
         }
 
+        /// <summary>
+        /// Returns the gallery page structure
+        /// </summary>
+        /// <param name="item_to_clone"></param>
+        /// <returns></returns>
+        public GalleryBoardData CloneGalleryItem(GalleryItem item_to_clone)
+        {
+            var clone = insert into _context.GALLERY_ITEM
+                        values ();
+            //var data = from r in _context.GALLERY_ROWS
+            //           join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
+            //           join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
+            //           join i in _context.GALLERY_ITEM on d.Gallery_Item_Id equals i.Gallery_Item_Id
+            //           where r.Layout_Name == layout_name
+            //           orderby r.Row_Index, d.Column_Index
+            //           select new { r, g, d, i };
+            var rvalue = new GalleryBoardData();
+
+
+            int row = -1;
+            GalleryGroup galleryGroup = null;
+            foreach (var item in data)
+            {
+                if (row != item.r.Row_Index)
+                {
+                    rvalue.Layout_Name = item.r.Layout_Name;
+                    galleryGroup = new GalleryGroup();
+                    galleryGroup.Group_Title = item.g.Group_Title;
+                    galleryGroup.Group_Id = item.g.Group_Id;
+                    rvalue.Rows.Add(galleryGroup);
+                    row = item.r.Row_Index;
+                }
+
+                galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+            }
+
+            return rvalue;
+        }
+
+
         public List<string> GetLayout()
         {
             return _context.GALLERY_LAYOUT.Select(x=> x.Layout_Name).ToList();

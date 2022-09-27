@@ -1,12 +1,41 @@
 <div [class.item]="!isRoot" id="g{{listTest.group_Id}}">
-	<div *ngIf="isRoot">Type Enter to Update a value <span>Layout <Select><option>CSET</option></Select> </span> </div>
-	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
-            <fa-icon [icon]="faArrows" class="handle"></fa-icon>
-            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> <button>Delete</button>
-        </div>
-	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
-		<div *ngFor="let listChild of listTest.children">            
-			<app-list-items [listTest]="listChild"></app-list-items>
+	<span>Type "Enter" or click the dropdown to select a Layout
+		<Select (change)="layoutChange($event)">
+			<option></option>
+			<option>CSET</option>
+			<option>Florida</option>
+			<option>NCUA</option>
+			<option>TSA</option>
+		</Select>
+	</span>
+
+	<div *ngIf="layoutName" class="handle">
+		<div *ngFor="let group of this.response?.rows">
+			<fa-icon [icon]="faArrows" class="handle group"></fa-icon>{{ group.group_Title }}
+			<div *ngFor="let item of group?.galleryItems">
+				<fa-icon [icon]="faArrows" class="handle item"></fa-icon>
+				<span>{{ item.title }}</span> 
+			</div>
 		</div>
+
+		Add (fill only 'Group' box if adding a group, fill 'Group' and 'Item' if adding as an item):
+		<br>Group
+		<input style="width: 400px;" type="text" #boxAddGroup>
+		<button (click)="addGalleryGroup(boxAddGroup.value)">Add as Group only</button>
+		<br>Item
+		<input style="width: 400px;" type="text" #boxAddItem>
+		<button (click)="addGalleryItem(boxAddGroup.value, boxAddItem.value)">Add as Item</button>
+		<br><br>
+
+		Clone
+		<input style="width: 400px;" type="text" #boxClone>
+		<button (click)="cloneGalleryItem(boxClone.value)">Clone</button>
+		<br><br>
+
+		Delete
+		<input style="width: 400px;" type="text" #boxDelete>
+		<button (click)="deleteGalleryGroup(boxDelete.value)">Delete a Group</button>
+		<button (click)="deleteGalleryItem(boxDelete.value)">Delete an Item</button>
+
 	</div>
 </div>

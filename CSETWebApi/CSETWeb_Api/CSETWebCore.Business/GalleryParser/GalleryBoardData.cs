@@ -29,7 +29,11 @@ namespace CSETWebCore.Business.GalleryParser
     /// that is reserved for when the item returns from the client.
     /// </summary>
     public class GalleryItem
-    {   
+    {
+        public GalleryItem()
+        {
+        }
+
         public GalleryItem(GALLERY_ITEM i)
         {
 
