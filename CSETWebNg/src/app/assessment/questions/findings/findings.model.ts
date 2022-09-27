@@ -39,7 +39,7 @@ export interface Finding {
   description: string;
   sub_Risk_Area_Id: number;
   subRiskArea: SubRiskArea;
-  Disposition: string;
+  disposition: string;
   identified_Date: Date;
   due_Date: Date;
   // Shared fields
