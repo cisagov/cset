@@ -30,7 +30,7 @@
     },
     
     "installationMode": "",
-    "mobileEnvironment": "iOS",
+    "mobileEnvironment": "",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",

@@ -333,36 +333,52 @@
           case "fill":
               container.html(oembedData.code);
               break;
-		  case "replace_with_new_size":
-			  container.wrap('<div class="oembedall-container"></div>');
+          case "replace_with_new_size":
+              container.wrap('<div class="oembedall-container"></div>');
               var oembedContainer = container.parent();
-			  try {
-				  oembedData.code.clone().appendTo(oembedContainer);
-			  } catch(e) {
-              oembedContainer.append(oembedData.code);
-			  }			
+              try {
+                  oembedData.code.clone().appendTo(oembedContainer);
+              } catch(e) {
+                  oembedContainer.append(oembedData.code);
+              }	
               /* Make videos semi-responsive
               * If parent div width less than embeded iframe video then iframe gets shrunk to fit smaller width
               * If parent div width greater thans embed iframe use the max widht
               * - works on youtubes and vimeo
               */
-			 var attrTitle = container.attr("title");
-			 var  sizeArray = attrTitle.split("_");
-			 var Width = sizeArray[0];
-			 var Height = sizeArray[1];
-             if(Width){
-				  $('iframe',oembedContainer).width(parseInt(Width));
-			  }
-			  else {
-				  $('iframe',oembedContainer).width(480);
-			  }
-			  if(Height){
-				  $('iframe',oembedContainer).height(parseInt(Height));
-			  }
-			  else {
-				  $('iframe',oembedContainer).width(360);
-			  }
-			  container.remove();
+              var attrTitle = container.attr("title");
+              var sizeArray = attrTitle.split("_");
+              var Width = sizeArray[0];
+              var Height = sizeArray[1];
+              if (Width)
+                  Width = parseInt(Width);
+              else
+                  Width = 480;
+              if (Height)
+                  Height = parseInt(Height)
+              else
+                  Height = 360;
+              if (_.contains(['xs'], DR_EXPLAIN.dom.getPageLayoutType()))
+              {
+                  var post_width = oembedContainer.parent().width();
+                  if (post_width < Width)
+                  {
+                      var ratio = Width / Height;
+                      $('iframe', oembedContainer).width(post_width);
+                      $('iframe', oembedContainer).height(post_width / ratio);
+                  }
+                  else
+                  {
+                      $('iframe', oembedContainer).width(Width);
+                      $('iframe', oembedContainer).height(Height);
+                  }
+              }
+              else
+              {
+                  $('iframe', oembedContainer).width(Width);
+                  $('iframe', oembedContainer).height(Height);
+              }
+              container.remove();
               break;
           case "append":
               container.wrap('<div class="oembedall-container"></div>');
@@ -378,7 +394,7 @@
 			  try {
 				  oembedData.code.clone().appendTo(oembedContainer);
 			  } catch(e) {
-              oembedContainer.append(oembedData.code);
+				  oembedContainer.append(oembedData.code);
 			  }			
               /* Make videos semi-responsive
               * If parent div width less than embeded iframe video then iframe gets shrunk to fit smaller width
