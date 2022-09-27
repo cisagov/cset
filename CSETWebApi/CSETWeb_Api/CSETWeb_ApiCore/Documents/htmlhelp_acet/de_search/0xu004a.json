@@ -1,10 +1,10 @@
 [
-	{ "s": "J", "p": [15] },
-	{ "s": "JAVASCRIPT", "p": [68] },
-	{ "s": "JSON", "p": [18, 68] },
-	{ "s": "JSON/XML", "p": [18] },
-	{ "s": "JUDGMENT", "p": [46] },
-	{ "s": "JUMP", "p": [22] },
-	{ "s": "JUNE", "p": [69] },
-	{ "s": "JUSTIFICATIONS", "p": [53] }
+	{ "s": "J", "p": [14] },
+	{ "s": "JAVASCRIPT", "p": [67] },
+	{ "s": "JSON", "p": [17, 67] },
+	{ "s": "JSON/XML", "p": [17] },
+	{ "s": "JUDGMENT", "p": [45] },
+	{ "s": "JUMP", "p": [21] },
+	{ "s": "JUNE", "p": [68] },
+	{ "s": "JUSTIFICATIONS", "p": [52] }
 ]
