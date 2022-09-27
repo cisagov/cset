@@ -21,9 +21,10 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-   this.gallerySvc.getGalleryItems("CSET").subscribe(  (x: any) => {
-      this.list = this.gallerySvc.transformGallery(x.rows);
-    }
-   );
+  //  this.gallerySvc.getGalleryItems("CSET").subscribe(  (x: any) => {
+  //     this.list = this.gallerySvc.transformGallery(x.rows);
+  //   }
+  //  );
+  //  console.log('init thingy');
   }
 }
