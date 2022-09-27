@@ -284,6 +284,10 @@ export class AuthenticationService {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
+    checkPassword(data: ChangePassword):Observable<any> {
+        return this.http.post(this.configSvc.apiUrl + 'ResetPassword/CheckPassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
+    }
+
     updateUser(data: CreateUser): Observable<CreateUser> {
         return this.http.post(this.configSvc.apiUrl + 'contacts/UpdateUser', data, headers);
     }
