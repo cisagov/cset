@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -300,6 +301,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>2.4. MIL Scale</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_CC7DAF531E">The EDM Assessment uses Maturity Indicator Levels (MILs) to provide organizations with an approximation of the maturity of their practices in the three domains. The EDM Assessment’s approach to maturity is based on an underlying capability maturity model, the CERT Resilience Management Model.<sup>2</sup> In this approach, the organization’s maturity is based on how completely the cybersecurity practices in each of the domains are institutionalized within the organization.</span></div>

@@ -22,33 +22,34 @@
 -------------------------->
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
-    <div
-      class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
-      *ngIf="auth.isLocal">
-      <span class="col-sm-12">Local Installation</span>
+    <div class="sticky-navbar">
+      <div
+        class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+        *ngIf="auth.isLocal">
+        <span class="col-sm-12">Local Installation</span>
+      </div>
+
+      <!-- Navbar -->
+      <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+        *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+        <!-- Brand (BASE) -->
+        <span
+          [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
+          (click)="this.router.url!='/resource-library' && goHome()">
+          <!-- CSET Lock Logo -->
+          <div class="d-flex justify-content-start align-items-center flex-00a">
+            <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
+          </div>
+        </span>
+
+        <!-- Navbar Toggler Button -->
+        <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
+          <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+        </button>
+        <!-- Menus -->
+      <app-top-menus class="w-100"></app-top-menus>
+      </nav>
     </div>
-
-    <!-- Navbar -->
-    <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
-      *ngIf="auth.userToken() && auth.userToken() !== 'null'">
-      <!-- Brand (BASE) -->
-      <span
-        [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
-        (click)="this.router.url!='/resource-library' && goHome()">
-        <!-- CSET Lock Logo -->
-        <div class="d-flex justify-content-start align-items-center flex-00a">
-          <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
-        </div>
-      </span>
-
-      <!-- Navbar Toggler Button -->
-      <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
-        <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
-      </button>
-
-      <!-- Menus -->
-     <app-top-menus class="w-100"></app-top-menus>
-    </nav>
 
     <!-- Body -->
     <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
@@ -59,7 +60,7 @@
     </div>
 
     <!-- Footer -->
-    <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"
+    <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters sticky-footer"
       *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
       <ngb-panel id="footerPanel">
         <ng-template ngbPanelTitle>

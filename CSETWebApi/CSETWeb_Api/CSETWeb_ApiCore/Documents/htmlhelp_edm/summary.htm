@@ -54,6 +54,7 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
+    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -298,6 +299,11 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
+    <script>
+    //<![CDATA[
+        $("#hiddenContent").addClass("loading");
+    //]]>
+    </script>
                 <div class="description_on_page"><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>6. SUMMARY</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_922EDE2353">&#160;</span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="de_CC7DAF531E">This document describes the External Dependency Management Assessment (EDM Assessment) architecture and provides detailed descriptions of the three EDM Assessment domains and six Maturity Indicator Levels (MILs). This document also contains information about how to prepare for an EDM Assessment and how a facilitator assists the organization in assessing the maturity of its cybersecurity capabilities. It also gives guidance on follow-on activities to prioritize and implement a plan to close capability gaps that are identified through analysis of the EDM Assessment Report.</span></div>
