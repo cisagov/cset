@@ -1401,6 +1401,7 @@ th.data-table {
 
 ul.nav-tabs li.active {
   background: $gray-50;
+  z-index:1000;
 }
 
 ul.nav-tabs li.active button {
@@ -1432,9 +1433,7 @@ ul.nav-tabs li button:hover {
 ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
-.nav{
-  z-index:10000 !important;
-}
+
 
 .fs-head-lock {
   font-size: 2rem;
