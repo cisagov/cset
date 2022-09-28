@@ -20,7 +20,9 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
+                Console.WriteLine("passed in path");
                 Console.WriteLine(path);
+                Console.WriteLine("application path");
                 Console.WriteLine(this.applicationPath);
                 if (String.IsNullOrWhiteSpace(this.applicationPath))
                 {
