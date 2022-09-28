@@ -5,9 +5,11 @@ namespace UpgradeLibrary.Upgrade
 {
     internal class ConvertDatabase12001 : ConvertSqlDatabase
     {
+        private string path; 
         public ConvertDatabase12001(string path) : base(path)
         {
             myVersion = new Version("12.0.0.1");
+            this.path = path;
         }
 
         /// <summary>
@@ -18,6 +20,12 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
+                Console.WriteLine(path);
+                Console.WriteLine(this.applicationPath);
+                if (String.IsNullOrWhiteSpace(this.applicationPath))
+                {
+                    this.applicationPath = path;
+                }
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12000_to_12001.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12000_to_12001_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
