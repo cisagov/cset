@@ -13,13 +13,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ccffa1d-6055-4a2a-ab82-b408144db376" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CSETWebCore.Model/Auth/PasswordComplexity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWebCore.Helpers/UserAccountSecurityManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Helpers/UserAccountSecurityManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ResetPasswordController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/ResetPasswordController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/assessment.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/assessment/assessment.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page-tabs/landing-page-tabs.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/initial/landing-page-tabs/landing-page-tabs.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -490,6 +490,7 @@ import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-char
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
+import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 
 @NgModule({
     imports: [
@@ -935,7 +936,7 @@ import { SearchPageComponent } from './initial/search-page/search-page.component
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent
+        SearchPageComponent, LogoTsaComponent
     ],
     providers: [
         ConfigService,
