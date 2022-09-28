@@ -18,8 +18,8 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\12000_to_12001.sql"), conn);
-                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\12000_to_12001_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12000_to_12001.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12000_to_12001_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
