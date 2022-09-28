@@ -47,7 +47,7 @@ export class AboutCsetComponent implements OnInit {
      * 
      */
     ngOnInit() {
-      if (this.configSvc.showBuildTime()) {
+      if (this.configSvc.development.showBuildTime ?? false) {
         this.linkerTime = localStorage.getItem('cset.linkerDate');
       }
     }

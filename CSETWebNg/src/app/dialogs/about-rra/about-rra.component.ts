@@ -44,7 +44,7 @@ export class AboutRraComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.configSvc.showBuildTime()) {
+    if (this.configSvc.development.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
   }
