@@ -50,11 +50,11 @@
                                     padding-right: 2em;
                                 ">
 
-                    <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.assessment_Date  |
+                    <div class="title-page-name">{{this.demographics?.information?.assessment_Name}}</div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessment_Date  |
                         date:'dd-MMM-yyyy'}}
                     </div>
-                    <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessor_Name}}</div>
                 </div>
             </div>
         </div>
@@ -69,31 +69,31 @@
                 <table class="table-site-info">
                     <tr>
                         <td>Assessment Name:</td>
-                        <td>{{response?.information?.assessment_Name}}</td>
+                        <td>{{this.demographics?.information?.assessment_Name}}</td>
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{this.demographics?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
                     </tr>
                     <tr>
                         <td>Credit Union:</td>
-                        <td>{{response?.information?.credit_Union_Name}}</td>
+                        <td>{{this.demographics?.information?.credit_Union_Name}}</td>
                     </tr>
                     <tr>
                         <td>City or Site Name:</td>
-                        <td>{{response?.information?.city_Or_Site_Name}}</td>
+                        <td>{{this.demographics?.information?.city_Or_Site_Name}}</td>
                     </tr>
                     <tr>
                         <td>State, Province or Region:</td>
-                        <td>{{response?.information?.state_Province_Or_Region}}</td>
+                        <td>{{this.demographics?.information?.state_Province_Or_Region}}</td>
                     </tr>
                     <tr>
                         <td>Charter:</td>
-                        <td>{{response?.information?.charter}}</td>
+                        <td>{{this.demographics?.information?.charter}}</td>
                     </tr>
                     <tr>
                         <td>Assets:</td>
-                        <td>{{response?.information?.assets | currency}}</td>
+                        <td>{{this.demographics?.information?.assets | currency}}</td>
                     </tr>
                 </table>
             </div>
@@ -140,7 +140,7 @@
                 <p>
                     Performed review of the security program using the ISE Toolbox.
                 </p>
-                <div *ngIf="this.response">
+                <div *ngIf="this.response?.length > 0">
                     <div *ngIf="this.examinerFindings.length > 0">
                         {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
                         <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
@@ -163,7 +163,7 @@
                         <br>
                     </div>
                 </div>
-                <div *ngIf="!this.response">
+                <div *ngIf="this.response?.length === 0">
                     <p>
                         No Issues were noted.
                     </p>
@@ -178,41 +178,44 @@
                         <div class="h2 report-text-blue">Issues</div>
                     </div>
                 </div>
-                <div *ngIf="this.response">
+                <div *ngIf="this.response?.length > 0">
                     <div *ngFor="let finding of this.response">
                         <div>
-                            <strong>Question:</strong> {{ finding.question.question_Title }}
+                            <strong>Question:</strong> {{ finding?.question?.question_Title }}
                         </div>
                         <div>
-                            <strong>Title:</strong> {{ finding.finding.title }}
+                            <strong>Title:</strong> {{ finding?.finding?.title }}
                         </div>
                         <div>
-                            <strong>Issue Type:</strong> {{ finding.finding.type }}
+                            <strong>Issue Type:</strong> {{ finding?.finding?.type }}
                         </div>
                         <div>
-                            <strong>Description:</strong> {{ finding.finding.description }}
+                            <strong>Description:</strong> {{ finding?.finding?.description }}
                         </div>
                         <div>
-                            <strong>Risk Area:</strong> {{ finding.risk.risk_Area }}
+                            <strong>Risk Area:</strong> {{ finding?.risk.risk_Area }}
                         </div>
                         <div>
-                            <strong>Sub Risk Area:</strong> {{ finding.risk.sub_Risk_Area }}
+                            <strong>Sub Risk Area:</strong> {{ finding?.risk.sub_Risk_Area }}
                         </div>
                         <div>
-                            <strong>Disposition:</strong> {{ finding.finding.disposition }}
+                            <strong>Disposition:</strong> {{ finding?.finding.disposition }}
                         </div>
                         <div>
-                            <strong>Identified On:</strong> {{ finding.finding.identified_Date }}
+                            <strong>Identified On:</strong> {{ finding?.finding.identified_Date }}
                         </div>
                         <div>
-                            <strong>Due Date:</strong> {{ finding.finding.due_Date }}
+                            <strong>Due Date:</strong> {{ finding?.finding.due_Date }}
                         </div>
                         <div>
-                            <strong>Importance:</strong> {{ finding.importance.value }}
+                            <strong>Importance:</strong> {{ finding?.importance.value }}
                         </div>
                         
                         <hr class="page-line">
                     </div>
+                </div>
+                <div *ngIf="this.response?.length === 0">
+                    No Issues were noted.
                 </div>
             </div>
         </div>
