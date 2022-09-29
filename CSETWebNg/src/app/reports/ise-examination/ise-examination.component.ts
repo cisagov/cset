@@ -28,6 +28,7 @@ import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
+import { FindingsService } from '../../services/findings.service';
 
 @Component({
   selector: 'app-ise-examination',
@@ -36,7 +37,12 @@ import { GroupingDescriptionComponent } from '../../assessment/questions/groupin
 })
 export class IseExaminationComponent implements OnInit {
   response: any = {};
+  findingsResponse: any = {};
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
+
+  examinerFindings: string[] = [];
+  dors: string[] = [];
+  supplementalFacts: string[] = [];
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -45,7 +51,8 @@ export class IseExaminationComponent implements OnInit {
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public findSvc: FindingsService
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +65,27 @@ export class IseExaminationComponent implements OnInit {
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
+
+    this.findSvc.GetAssessmentFindings().subscribe(
+      (f: any) => {
+        this.findingsResponse = f;  
+
+        for(let i = 0; i < this.findingsResponse?.length; i++) {
+          let finding = this.findingsResponse[i];
+          if(finding.finding.type === 'Examiner Finding') {
+            this.examinerFindings.push(finding.category.title);
+          }
+          if(finding.finding.type === 'DOR') {
+            this.dors.push(finding.category.title);
+          }
+          if(finding.finding.type === 'Supplemental Fact') {
+            this.supplementalFacts.push(finding.category.title);
+          }
+        }
+      },
+      error => console.log('MERIT Report Error: ' + (<Error>error).message)
+    );
+
     // initializing all assessment factors / categories / parent questions to false
     // used in checking if the section / question should be expanded or collapsed 
     this.expandedOptions
