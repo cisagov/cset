@@ -1,6 +1,6 @@
 namespace CSETWebCore.Model.Auth;
 
-public class PasswordComplexity
+public class PasswordResponse
 {
     public int PasswordLengthMin { get; set; }
     public int PasswordLengthMax { get; set; }
@@ -11,4 +11,7 @@ public class PasswordComplexity
     public bool PasswordContainsUpper { get; set; }
     public bool PasswordContainsSpecial { get; set; }
     public bool PasswordNotReused { get; set; }
+
+    public bool IsValid { get; set; }
+    public string Message { get; set; }
 }

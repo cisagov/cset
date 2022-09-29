@@ -107,8 +107,6 @@ export class MyAssessmentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('a');
-
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);

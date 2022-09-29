@@ -16,6 +16,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Password;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _reports;
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
+        private readonly IConfiguration _configuration;
 
         public ResetPasswordController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, IUserBusiness userBusiness, INotificationBusiness notificationBusiness)
+             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
+             IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
@@ -49,6 +52,7 @@ namespace CSETWebCore.Api.Controllers
             _reports = reports;
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
+            _configuration = configuration;
         }
 
 
@@ -95,11 +99,21 @@ namespace CSETWebCore.Api.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest("Invalid Model State");
+                    return Ok(
+                        new PasswordResponse()
+                        {
+                            IsValid = false,
+                            Message = "Invalid Model State"
+                        });
                 }
                 if (!emailvalidator.IsMatch(changePass.PrimaryEmail.Trim()))
                 {
-                    return BadRequest("Invalid PrimaryEmail");
+                    return Ok(
+                        new PasswordResponse()
+                        {
+                            IsValid = false,
+                            Message = "Invalid Primary Email"
+                        });
                 }
 
                 Login login = new Login()
@@ -110,30 +124,23 @@ namespace CSETWebCore.Api.Controllers
 
                 LoginResponse resp = _userAuthentication.Authenticate(login);
                 if (resp == null)
-                {
-                    return BadRequest("Current password is invalid. Try again or request a new temporary password.");
+                {                    
+                    return Ok(
+                        new PasswordResponse() { 
+                            IsValid = false,
+                            Message = "Current password is invalid.<br>Correct it or request a new temporary password."
+                        });
                 }
 
-                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
 
                 // does this new password follow the complexity rules?
-                PasswordComplexity complexEnough = resetter.ComplexityRulesMet(changePass);
-                if (!complexEnough.PasswordContainsLower || !complexEnough.PasswordContainsUpper || !complexEnough.PasswordLengthMet ||
-                    !complexEnough.PasswordContainsSpecial || !complexEnough.PasswordNotReused)
+                PasswordResponse respComplex = resetter.ComplexityRulesMet(changePass);
+                if (!respComplex.PasswordContainsLower || !respComplex.PasswordContainsUpper || !respComplex.PasswordLengthMet ||
+                    !respComplex.PasswordContainsSpecial || !respComplex.PasswordNotReused)
                 {
-                    /*string checkIcon = "<i class=\"fa-solid fa-check change-check\"></i>";
-                    string errorIcon = "<i class=\"fa-solid fa-xmark change-error\"></i>";
-                    var complexityMsg = "<div>Password must meet the following rules:<div>" +
-                        "<ul class=\"list-group list-group-flush\">" +
-                        $"<li class=\"list-group-item\"> Length between {resetter.PasswordLengthMin} and {resetter.PasswordLengthMax} characters</li>" +
-                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsNumbers?checkIcon:errorIcon)}  Must contain at least 2 numbers</li>" +
-                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsLower?checkIcon:errorIcon)}  Must contain at least 1 lowercase letter</li>" +
-                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsUpper?checkIcon:errorIcon)}  Must contain at least 1 uppercase letter</li>" +
-                        $"<li class=\"list-group-item\">{(complexEnough.PasswordContainsSpecial?checkIcon:errorIcon)}  Must contain at least 1 special character</li>" +
-                        $"<li class=\"list-group-item\">{(complexEnough.PasswordLenghtMet?checkIcon:errorIcon)}  Must not re-use previous {resetter.NumberOfHistoricalPasswords} passwords</li>" +
-                        "</ul>";
-                        */
-                    return BadRequest(complexEnough);
+                    respComplex.IsValid = false;
+                    return Ok(respComplex);
                 }
 
 
@@ -142,11 +149,17 @@ namespace CSETWebCore.Api.Controllers
                 {
                     resp.ResetRequired = false;
                     _context.SaveChanges();
-                    return Ok("Created Successfully");
+                    return Ok(new PasswordResponse() { 
+                        IsValid = true,
+                        Message = "Created Successfully"
+                    });
                 }
                 else
-                    return BadRequest("Unknown error");
-
+                    return Ok(new PasswordResponse()
+                    {
+                        IsValid = false,
+                        Message = "Unknown error"
+                    });
             }
             catch (Exception e)
             {
@@ -156,14 +169,14 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/ResetPassword/CheckPassword")]
-        public IActionResult CheckPassoword([FromBody] ChangePassword changePass)
+        public IActionResult CheckPassword([FromBody] ChangePassword changePass)
         {
-            UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+            UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
 
             // does this new password follow the complexity rules?
             if (changePass.NewPassword == null)
             {
-                return Ok(new PasswordComplexity
+                return Ok(new PasswordResponse
                 {
                     PasswordLengthMin = resetter.PasswordLengthMin,
                     PasswordLengthMax = resetter.PasswordLengthMax,
@@ -177,9 +190,10 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            PasswordComplexity complexEnough = resetter.ComplexityRulesMet(changePass);
+            PasswordResponse complexEnough = resetter.ComplexityRulesMet(changePass);
             return Ok(complexEnough);
         }
+
 
         [HttpPost]
         [Route("api/ResetPassword/RegisterUser")]
@@ -210,7 +224,7 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest("An account already exists for that email address");
                 }
 
-                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                 bool rval = resetter.CreateUserSendEmail(user);
                 if (rval)
                     return Ok("Created Successfully");
@@ -241,7 +255,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (IsSecurityAnswerCorrect(answer))
                 {
-                    UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+                    UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                     bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
                     if (rval)
                         return Ok();
@@ -267,7 +281,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                 return Ok(resetter.GetSecurityQuestionList());
             }
             catch (Exception e)
@@ -305,7 +319,7 @@ namespace CSETWebCore.Api.Controllers
                 if (questions.Count == 0
                     || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
-                    UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness);
+                    UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                     bool rval = resetter.ResetPassword(email, "Password Reset", appCode);
 
                     return Ok(new List<SecurityQuestions>());
