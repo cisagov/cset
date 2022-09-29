@@ -67,6 +67,14 @@ export class GalleryEditorService {
       }
     });
   }
+
+  addGalleryItem(item: any) {
+    return  this.http.get("https://localhost:44310/api/gallery/addItem",  {
+      params: {
+        Item_To_Clone: item
+      }
+    });
+  }
 }
 
 

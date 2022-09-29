@@ -29,6 +29,9 @@ namespace CSETWebCore.DataLayer.Model
         public string Description { get; set; }
         [StringLength(200)]
         public string Title { get; set; }
+        public DateTime CreationDate { get; set; }
+        public bool Is_Visible { get; set; }
+
 
         [InverseProperty("Gallery_Item")]
         public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }

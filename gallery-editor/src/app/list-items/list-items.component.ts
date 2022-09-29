@@ -18,6 +18,8 @@ export class ListItemsComponent implements OnInit {
   layoutName: string = '';
 
   response: any;
+  responseAdd: any;
+
 
   options: Options = {    
     handle: '.handle'
@@ -88,8 +90,14 @@ export class ListItemsComponent implements OnInit {
   addGalleryGroup(title: string) {
     console.log(title + " would be added");
   }
-  addGalleryItem(group: string, title: string) {
+  addGalleryItem(group: string, title: string, description: string, iconSmall: string, iconLarge: string) {
     console.log(title + " would be added");
+    this.svcGalleryEditor.addGalleryItem(group, title, description, iconSmall, iconLarge).subscribe(
+      (r: any) => {
+        this.responseAdd = r;
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
   }
 
   cloneGalleryItem(item: any) {

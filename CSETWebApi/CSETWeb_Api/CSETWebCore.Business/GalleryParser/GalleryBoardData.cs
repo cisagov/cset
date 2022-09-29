@@ -51,6 +51,7 @@ namespace CSETWebCore.Business.GalleryParser
         public string Configuration_Setup { get; set; }
         public string Configuration_Setup_Client { get; set; }
         public string Description { get; set; }
-        public object Title { get; private set; }
+        public object Title { get; set; }
     }
+
 }

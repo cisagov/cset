@@ -51,7 +51,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// Returns the gallery card structure
+        /// Clones the specified item
         /// </summary>
         /// <param name="Item_To_Clone"></param>
         /// <returns></returns>
@@ -68,6 +68,34 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+        /// <summary>
+        /// Adds the item
+        /// </summary>
+        /// <param name="newGallery_Item_Id"></param>
+        /// <param name="newIcon_File_Name_Small"></param>
+        /// <param name="newIcon_File_Name_Large"></param>
+        /// <param name="newConfiguration_Setup"></param>
+        /// <param name="newConfiguration_Setup_Client"></param>
+        /// <param name="newDescription"></param>
+        /// <param name="newTitle"></param>
+
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/addItem")]
+        public IActionResult AddItem(int newGallery_Item_Id, string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newConfiguration_Setup, string newConfiguration_Setup_Client, string newDescription, string newTitle)
+        {
+            try
+            {
+                return Ok(_stateManager.AddGalleryItem(newGallery_Item_Id, newIcon_File_Name_Small, newIcon_File_Name_Large, newConfiguration_Setup, newConfiguration_Setup_Client, newDescription, newTitle));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [HttpGet]
         [Route("api/gallery/getLayouts")]
