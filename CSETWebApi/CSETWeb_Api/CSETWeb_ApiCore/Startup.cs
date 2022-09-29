@@ -115,7 +115,7 @@ namespace CSETWeb_ApiCore
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
-                options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
+                options => options.UseSqlServer(Configuration.GetConnectionString("CSET_DB")));
 
             //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
