@@ -124,6 +124,7 @@
     "webpack": "^5.63.0"
   },
   "resolutions": {
-    "minimist": "1.2.6"
+    "minimist": "1.2.6",
+    "d3-color": "3.1.0"
   }
 }
