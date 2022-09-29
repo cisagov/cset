@@ -68,7 +68,7 @@
     "lodash": "^4.17.21",
     "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
-    "monaco-editor": "^0.22.3",
+    "monaco-editor": "^0.34.0",
     "mousetrap": "^1.6.5",
     "ng-sidebar": "^9.4.3",
     "ng2-currency-mask": "^13.0.0",
