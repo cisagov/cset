@@ -191,6 +191,9 @@ namespace CSETWeb_ApiCore
                  app.UseRewriter(options);
             }
 
+            // Serve up index.html from webapp when root url is hit
+            app.UseRewriter(new RewriteOptions().AddRewrite("^$", "index.html", true));
+ 
             //app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
