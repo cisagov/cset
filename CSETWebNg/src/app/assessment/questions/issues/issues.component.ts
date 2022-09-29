@@ -36,6 +36,7 @@ import { FindingsService } from '../../../services/findings.service';
 
 export class IssuesComponent implements OnInit {
   finding: Finding;
+  issueTitle = "";
   subRiskAreas: SubRiskArea[];
   importances: Importance[];
   
@@ -58,6 +59,7 @@ export class IssuesComponent implements OnInit {
 
   ) {
     this.finding = data;
+    this.issueTitle = this.finding.title; // storing a temp name that may or may not be used later
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
   }
@@ -96,7 +98,11 @@ export class IssuesComponent implements OnInit {
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
-          this.finding.title = this.getIssueTitle();
+
+          if (this.finding.title === null) {
+            this.finding.title = this.issueTitle;
+          }
+
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
           
@@ -151,14 +157,6 @@ export class IssuesComponent implements OnInit {
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
-  }
-
-  getIssueTitle() {
-    if (this.finding.title === null) {
-      return (this.findSvc.tempIssueTitle);
-    } else {
-      return (this.finding.title);
-    }
   }
 
   getSelectedRiskArea(id: number) {

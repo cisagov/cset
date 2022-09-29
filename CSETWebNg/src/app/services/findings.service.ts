@@ -37,9 +37,6 @@ const headers = {
 })
 export class FindingsService {
 
-  tempIssueTitle: string = "";
-
-
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
 
