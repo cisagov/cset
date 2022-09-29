@@ -22,9 +22,11 @@
 		<br>Group
 		<input style="width: 400px;" type="text" #boxAddGroup>
 		<button (click)="addGalleryGroup(boxAddGroup.value)">Add as Group only</button>
-		<br>Item
+		<br>Item Name
 		<input style="width: 400px;" type="text" #boxAddItem>
 		<button (click)="addGalleryItem(boxAddGroup.value, boxAddItem.value)">Add as Item</button>
+
+		<button (click)="addGalleryItem(boxAddGroup.value, boxAddItem.value, boxAddDescription.value, boxAddIconSmall.value, boxAddIconLarge.value )">Add as Item</button>
 		<br><br>
 
 		Clone
