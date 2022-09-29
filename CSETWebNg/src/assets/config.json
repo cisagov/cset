@@ -28,8 +28,8 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
-    "installationMode": "CSET",
+
+    "installationMode": "",
     "mobileEnvironment": "",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
