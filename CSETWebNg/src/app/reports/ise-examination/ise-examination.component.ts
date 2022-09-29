@@ -38,6 +38,7 @@ import { FindingsService } from '../../services/findings.service';
 export class IseExaminationComponent implements OnInit {
   response: any = {};
   findingsResponse: any = {};
+
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
 
   examinerFindings: string[] = [];
@@ -63,7 +64,7 @@ export class IseExaminationComponent implements OnInit {
         this.response = r;
         console.log(this.response);
       },
-      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+      error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
 
     this.findSvc.GetAssessmentFindings().subscribe(
@@ -83,7 +84,7 @@ export class IseExaminationComponent implements OnInit {
           }
         }
       },
-      error => console.log('MERIT Report Error: ' + (<Error>error).message)
+      error => console.log('Findings Error: ' + (<Error>error).message)
     );
 
     // initializing all assessment factors / categories / parent questions to false

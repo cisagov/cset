@@ -223,7 +223,7 @@
                 <div class="h2 report-text-blue">EF, DOR, and SF Summary</div>
             </div>
         </div>
-        <div *ngIf="this.findingsResponse">
+        <div *ngIf="this.findingsResponse?.length > 0">
             <div *ngIf="this.examinerFindings.length > 0">
                 {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
                 <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
@@ -246,7 +246,7 @@
                 <br>
             </div>
         </div>
-        <div *ngIf="!this.findingsResponse">
+        <div *ngIf="this.findingsResponse?.length === 0">
             <p>
                 No Issues were noted.
             </p>

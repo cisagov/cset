@@ -13,6 +13,8 @@ import { FindingsService } from '../../services/findings.service';
 })
 export class IseMeritComponent implements OnInit {
   response: any = null; 
+  demographics: any = null; 
+
   workPerformed: boolean = null;
   resultsOfReviewText: string = null;
 
@@ -25,6 +27,7 @@ export class IseMeritComponent implements OnInit {
     public findSvc: FindingsService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
+    public acetSvc: ACETService,
     private titleService: Title
   ) { }
 
@@ -52,6 +55,14 @@ export class IseMeritComponent implements OnInit {
       },
       error => console.log('MERIT Report Error: ' + (<Error>error).message)
     );
+
+    this.acetSvc.getAssessmentInformation().subscribe(
+      (r: any) => {
+        this.demographics = r;
+        console.log(this.response);
+      },
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+    )
 
     // console.log('length is: ' + this.response?.length);
 
