@@ -17,9 +17,9 @@ namespace CSETWebCore.Api.Controllers.Tests
         [TestMethod()]
         public void processUpdatedJsonTest()
         {
-            AngularConfigController controller = new AngularConfigController(new TestWebHostEnvironment() );
+            AngularConfigController controller = new AngularConfigController(new TestWebHostEnvironment());
             HttpRequest test = new TestHttpRequest();
-            var doc =  controller.processUpdatedJson(test);
+            var doc = controller.processUpdatedJson(test);
             Assert.IsNotNull(doc);
 
         }
@@ -30,7 +30,7 @@ namespace CSETWebCore.Api.Controllers.Tests
         public override HttpContext HttpContext => throw new NotImplementedException();
 
         public override string Method { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string Scheme { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override string Scheme { get{ return "http"; } set => throw new NotImplementedException(); }
         public override bool IsHttps { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override HostString Host { get {
                 return new HostString("http://localhost"); } set => throw new NotImplementedException(); }
@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers.Tests
         public override IQueryCollection Query { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override string Protocol { get { return "http"; } set => throw new NotImplementedException(); }
 
-        public override IHeaderDictionary Headers => throw new NotImplementedException();
+        public override IHeaderDictionary Headers { get { return new HeaderDictionary(); } }
 
         public override IRequestCookieCollection Cookies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override long? ContentLength { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
