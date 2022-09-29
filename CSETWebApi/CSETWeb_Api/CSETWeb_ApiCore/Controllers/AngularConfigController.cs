@@ -86,6 +86,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 element = document["api"];
+                element["url"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
