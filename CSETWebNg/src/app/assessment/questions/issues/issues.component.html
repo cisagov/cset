@@ -56,9 +56,9 @@
   <div class="col-6">
     <div class="form-group">
       <label for="risk-area" class="form-label">Risk Area</label>
-      <select name="riskarea" id="riskarea" class="form-control"
+      <select name="riskarea" id="riskarea" class="form-control" [(ngModel)]="this.selectedRiskArea"
         (change)="updateRiskArea($event.target.value)">
-        <option *ngFor="let riskArea of this.riskAreaOptions" [selected]="this.selectedRiskArea" [value]="riskArea">{{ riskArea }}</option>
+        <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
       </select>
     </div>
   </div>  
@@ -89,7 +89,7 @@
       <div class="form-group">
         <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
         <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event)">
+          (change)="updateSubRisk($event.target.value)">
           <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk.id">
             {{ subRisk.name }}
           </option>
@@ -100,7 +100,7 @@
       <div class="form-group">
         <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
         <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event)">
+          (change)="updateSubRisk($event.target.value)">
           <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk.id">
             {{ subRisk.name }}
           </option>
@@ -116,7 +116,7 @@
       <select name="disposition" id="disposition" class="form-control" [(ngModel)]="finding.disposition"
         (change)="updateDisposition($event.target.value)">
         <option value="reportable">Reportable</option>
-        <option value="option2">Option 2</option>
+        <option value="nonreportable">Non-Reportable</option>
       </select>
     </div>
   </div>

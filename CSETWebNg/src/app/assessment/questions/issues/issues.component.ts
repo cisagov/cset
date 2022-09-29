@@ -21,11 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
@@ -52,12 +50,9 @@ export class IssuesComponent implements OnInit {
   answerID: number;
   questionID: number;
 
-
   constructor(
-    private ncuaSvc: NCUAService,
     private dialog: MatDialogRef<IssuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
-    private router: Router,
     public assessSvc: AssessmentService,
     private findSvc: FindingsService,
 
@@ -101,13 +96,14 @@ export class IssuesComponent implements OnInit {
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
+          this.finding.title = this.getIssueTitle();
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
           
           if (this.finding.sub_Risk_Area_Id === null) {
-            this.selectedRiskArea = 'Strategic';
+            this.updateRiskArea('Strategic');
           } else {
-            this.selectedRiskArea = this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
+            this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
           }
 
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
@@ -149,24 +145,35 @@ export class IssuesComponent implements OnInit {
     return !finding;
   }
 
-  getSelectedRiskArea(id: number) {
-    if (id >= 1 && id <= 10) {
-      return ('Strategic');
-    } else if (id > 10 && id <= 17) {
-      return ('Compliance');
-    } else if (id > 17 && id <= 32) {
-      return ('Transaction');
-    } else if (id > 32 && id <= 37) {
-      return ('Reputation');
-    }
-  }
-
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
+  }
+
+  getIssueTitle() {
+    if (this.finding.title === null) {
+      return (this.findSvc.tempIssueTitle);
+    } else {
+      return (this.finding.title);
+    }
+  }
+
+  getSelectedRiskArea(id: number) {
+    let area = "";
+    if (id >= 1 && id <= 10) {
+      area = 'Strategic';
+    } else if (id > 10 && id <= 17) {
+      area = 'Compliance';
+    } else if (id > 17 && id <= 32) {
+      area = 'Transaction';
+    } else if (id > 32 && id <= 37) {
+      area = 'Reputation';
+    }
+
+    this.updateRiskArea(area);
   }
 
   updateRiskArea(riskArea) {
