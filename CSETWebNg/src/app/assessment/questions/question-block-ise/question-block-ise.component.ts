@@ -579,7 +579,7 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue(findid) {
+  addEditIssue(findid, questionId?) {
     const find: Finding = {
       question_Id: this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
@@ -603,6 +603,20 @@ export class QuestionBlockIseComponent implements OnInit {
       due_Date: null
     };
 
+    console.log("questionId: " + questionId);
+    // Per the customer's requests, an Issue's title should include the main 
+    // grouping header text and the sub grouping header text.
+    // this is an attempt to re-create that data which is outside of an Issue's scope.
+    if (questionId !== undefined) {
+      // SCUEP q's 1- 7 and CORE/CORE+ q's 1 - 10 use one domain, CORE/CORE+ q's 11+ have a different domain
+      // this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
+      if (questionId <= 7281) {
+        this.findSvc.tempIssueTitle = (this.myGrouping.title + ", Information Security Program");
+      } else {
+        this.findSvc.tempIssueTitle = (this.myGrouping.title + ", Cybersecurity Controls");
+      }
+    }
+    
     this.dialog.open(IssuesComponent, {
       data: find,
       disableClose: true,
