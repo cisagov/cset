@@ -67,6 +67,14 @@ export class FindingsService {
   }
 
   /**
+   * retrieves all the discoveries for an assessment
+   */
+   GetAssessmentFindings() {
+    const qstring = 'GetAssessmentFindings';
+    return this.http.post(this.configSvc.apiUrl + qstring, headers);
+  }
+
+  /**
    * saves the given discovery
    */
   saveDiscovery(finding: Finding) {

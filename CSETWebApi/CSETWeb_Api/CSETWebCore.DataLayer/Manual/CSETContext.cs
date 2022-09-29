@@ -667,7 +667,7 @@ namespace CSETWebCore.DataLayer.Model
                 throw new ApplicationException("parameters may not be null");
 
             IList<AcetAnswerDistribution_Result> myrval = null;
-            this.LoadStoredProc("IseAnswerDistribution")
+            this.LoadStoredProc("AcetAnswerDistribution")
                      .WithSqlParam("assessment_id", assessment_id)
                      .WithSqlParam("targetLevel", targetLevel)
 

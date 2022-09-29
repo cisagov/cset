@@ -35,7 +35,7 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/ACET_shield_logo.png">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
             </p>
             <div class="cover-page-bottom mb-4">
                 <div>
@@ -55,16 +55,16 @@
                         date:'dd-MMM-yyyy'}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.assets | currency}}</div>
                 </div>
             </div>
         </div>
         <div class="page-break">
             <div class="ml-3 mr-3 form">
-                <h1 class="page-header">
-                    Demographics
-                </h1>
-                <hr class="page-line">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Demographics</div>
+                    </div>
+                </div>
                 
                 <table class="table-site-info">
                     <tr>
@@ -101,10 +101,11 @@
 
         <div class="page-break">
             <div class="ml-3 mr-3">
-                <h1 class="page-header">
-                    Execution Result
-                </h1>
-                <hr class="page-line">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Execution Result</div>
+                    </div>
+                </div>
                 <p>
                     <strong>INSTRUCTIONS:</strong><br>
                     Copy/Paste the contents of <strong>ISE Work Performed</strong> below into the Execution Result, Work Performed section of the MERIT ISE Scope.
@@ -117,12 +118,13 @@
 
         <div class="page-break">
             <div class="ml-3 mr-3">
-                <h1 class="page-header">
-                    Work Performed
-                </h1>
-                <hr class="page-line">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Work Performed</div>
+                    </div>
+                </div>
                 <p>
-                    <strong>{{ workPerformedText }}</strong>
+                    <strong>Completed the ISE work program</strong>
                 </p>
                 
             </div>
@@ -130,20 +132,92 @@
 
         <div class="page-break">
             <div class="ml-3 mr-3">
-                <h1 class="page-header">
-                    Results of Review
-                </h1>
-                <hr class="page-line">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Results of Review</div>
+                    </div>
+                </div>
                 <p>
-                    {{ resultsOfReviewText }}
+                    Performed review of the security program using the ISE Toolbox.
                 </p>
-                
+                <div *ngIf="this.response">
+                    <div *ngIf="this.examinerFindings.length > 0">
+                        {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
+                        <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                    <div *ngIf="this.dors.length > 0">
+                        {{ this.dors.length }} DORs were drafted in the following categories:
+                        <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                    <div *ngIf="this.supplementalFacts.length > 0">
+                        {{ this.supplementalFacts.length }} Supplemental Facts were drafted in the following categories:
+                        <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div *ngIf="!this.response">
+                    <p>
+                        No Issues were noted.
+                    </p>
+                </div>
             </div>
         </div>
 
-
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Issues</div>
+                    </div>
+                </div>
+                <div *ngIf="this.response">
+                    <div *ngFor="let finding of this.response">
+                        <div>
+                            <strong>Question:</strong> {{ finding.question.question_Title }}
+                        </div>
+                        <div>
+                            <strong>Title:</strong> {{ finding.finding.title }}
+                        </div>
+                        <div>
+                            <strong>Issue Type:</strong> {{ finding.finding.type }}
+                        </div>
+                        <div>
+                            <strong>Description:</strong> {{ finding.finding.description }}
+                        </div>
+                        <div>
+                            <strong>Risk Area:</strong> {{ finding.risk.risk_Area }}
+                        </div>
+                        <div>
+                            <strong>Sub Risk Area:</strong> {{ finding.risk.sub_Risk_Area }}
+                        </div>
+                        <div>
+                            <strong>Disposition:</strong> {{ finding.finding.disposition }}
+                        </div>
+                        <div>
+                            <strong>Identified On:</strong> {{ finding.finding.identified_Date }}
+                        </div>
+                        <div>
+                            <strong>Due Date:</strong> {{ finding.finding.due_Date }}
+                        </div>
+                        <div>
+                            <strong>Importance:</strong> {{ finding.importance.value }}
+                        </div>
+                        
+                        <hr class="page-line">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="page-break">
+    <!-- <div class="page-break">
         <div class="ml-3 mr-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
                 <div>
@@ -236,5 +310,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

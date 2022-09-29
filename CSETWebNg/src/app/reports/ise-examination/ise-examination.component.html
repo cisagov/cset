@@ -33,7 +33,7 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/ACET_shield_logo.png" alt="acet">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
             </p>
         </div>
 
@@ -55,15 +55,16 @@
                     date:'dd-MMM-yyyy'}}
                 </div>
                 <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
         </div>
     </div>
     <div class="page-break">
         <div class="ml-3 mr-3 form">
-            <h1 class="page-header">
-                Demographics
-            </h1>
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Demographics</div>
+                </div>
+            </div>
             <hr class="page-line">
             
             <table class="table-site-info">
@@ -219,8 +220,36 @@
 
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">EF and DOR Report</div>
+                <div class="h2 report-text-blue">EF, DOR, and SF Summary</div>
             </div>
+        </div>
+        <div *ngIf="this.findingsResponse">
+            <div *ngIf="this.examinerFindings.length > 0">
+                {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
+                <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+            <div *ngIf="this.dors.length > 0">
+                {{ this.dors.length }} DORs were drafted in the following categories:
+                <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+            <div *ngIf="this.supplementalFacts.length > 0">
+                {{ this.supplementalFacts.length }} Supplemental Facts were drafted in the following categories:
+                <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+        </div>
+        <div *ngIf="!this.findingsResponse">
+            <p>
+                No Issues were noted.
+            </p>
         </div>
     </div>
 </div>
