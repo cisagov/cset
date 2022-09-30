@@ -16,7 +16,7 @@
 			<div *ngFor="let item of group?.galleryItems">
 				<fa-icon [icon]="faArrows" class="handle item"></fa-icon>
 				<span>{{ item.title }} </span><button (click)="deleteGalleryItem(item.gallery_Item_Id)">Delete an Item</button>
-
+<button (click)="cloneGalleryItem(item)">Clone</button>
 			</div>
 		</div>
 
@@ -49,7 +49,7 @@
 
 		Clone
 		<input style="width: 400px;" type="text" #boxClone>
-		<button (click)="cloneGalleryItem(boxClone.value)">Clone</button>
+		
 		<br><br>
 
 		Delete
