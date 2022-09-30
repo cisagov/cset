@@ -45,7 +45,7 @@ namespace CSETWebCore.Business.User
 
             string password = CreateTempPassword();
 
-            new PasswordHash().HashPassword(password, out string hash, out string salt);     
+            new PasswordHash().HashPassword(password, out string hash, out string salt);
 
 
             // create new records for USER and USER_DETAIL_INFORMATION
@@ -270,27 +270,25 @@ namespace CSETWebCore.Business.User
         /// <returns></returns>
         public UserDetail GetUserDetail(int userId)
         {
-            using (var db = new CSETContext())
+            var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+
+            if (user == null)
             {
-                var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
-
-                if (user == null)
-                {
-                    return null;
-                }
-
-                UserDetail ud = new UserDetail
-                {
-                    UserId = user.UserId,
-                    Email = user.PrimaryEmail,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    IsSuperUser = user.IsSuperUser,
-                    PasswordResetRequired = user.PasswordResetRequired ?? true
-                };
-
-                return ud;
+                return null;
             }
+
+            UserDetail ud = new UserDetail
+            {
+                UserId = user.UserId,
+                Email = user.PrimaryEmail,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsSuperUser = user.IsSuperUser,
+                PasswordResetRequired = user.PasswordResetRequired ?? true
+            };
+
+            return ud;
+
         }
 
 

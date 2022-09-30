@@ -33,16 +33,18 @@ namespace CSETWebCore.Business.AssessmentIO.Import
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
+        private CSETContext _context;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil)
+        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, CSETContext context)
         {
             this._token = token;
             this._assessmentUtil = assessmentUtil;
+            this._context = context;
         }
 
 
@@ -109,7 +111,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         foreach (var testSet in sets)
                         {
                             setModel.shortName = testSet.Short_Name;
-                            var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(), Newtonsoft.Json.Formatting.Indented);
+                            var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(_context), Newtonsoft.Json.Formatting.Indented);
                             if (testSetJson == setJson)
                             {
                                 set = testSet;
@@ -129,12 +131,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 setModel.shortName = originalSetName + " " + incr;
                                 incr++;
                             }
-                            var setResult = await setModel.ToSet();
+                            var setResult = await setModel.ToSet(_context);
                             if (setResult.IsSuccess)
                             {
                                 context.SETS.Add(setResult.Result);
 
-                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
+                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs(_context)).Where(s => s.Question_Id != 0).ToList())
                                 {
                                     context.Entry(question).State = EntityState.Unchanged;
                                 }
