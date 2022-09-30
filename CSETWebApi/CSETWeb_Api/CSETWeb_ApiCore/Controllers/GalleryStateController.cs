@@ -61,7 +61,8 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                return Ok(_stateManager.CloneGalleryItem(Item_To_Clone));
+                _stateManager.CloneGalleryItem(Item_To_Clone);
+                return Ok();
             }
             catch (Exception e)
             {

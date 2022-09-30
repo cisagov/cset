@@ -71,50 +71,53 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
         /// <summary>
-        /// Returns the gallery page structure
+        /// Clones the specified item
         /// </summary>
         /// <param name="item_to_clone"></param>
         /// <returns></returns>
-        public GalleryBoardData CloneGalleryItem(GalleryItem item_to_clone)
+        public void CloneGalleryItem(GalleryItem item_to_clone)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
             //clone the gallery_item and gallery_group_details need to clone that 
             //plus max column number +1
 
-            TinyMapper.Bind<GalleryItem, GalleryItem>();
-            var oldItem = _context.GALLERY_ITEM.Where(itemto)
-            var newItem = TinyMapper.Map<GalleryItem>(item_to_clone); 
-            // var clone = insert into _context.GALLERY_ITEM
-            //            values ();
-            //var data = from r in _context.GALLERY_ROWS
-            //           join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
-            //           join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
-            //           join i in _context.GALLERY_ITEM on d.Gallery_Item_Id equals i.Gallery_Item_Id
-            //           where r.Layout_Name == layout_name
-            //           orderby r.Row_Index, d.Column_Index
-            //           select new { r, g, d, i };
-            var rvalue = new GalleryBoardData();
+            TinyMapper.Bind<GalleryItem, GALLERY_ITEM>(
+                //config => {
+                //config.Ignore(source => source.Gallery_Item_Id);
+                //}
+            );
 
+            //var oldItem = _context.GALLERY_ITEM.Where(itemto)
+            var newItem = TinyMapper.Map<GALLERY_ITEM>(item_to_clone);
+            newItem.CreationDate = DateTime.Now;
+            newItem.Is_Visible = true;
 
-            //int row = -1;
-            //GalleryGroup galleryGroup = null;
-            //foreach (var item in data)
-            //{
-            //    if (row != item.r.Row_Index)
-            //    {
-            //        rvalue.Layout_Name = item.r.Layout_Name;
-            //        galleryGroup = new GalleryGroup();
-            //        galleryGroup.Group_Title = item.g.Group_Title;
-            //        galleryGroup.Group_Id = item.g.Group_Id;
-            //        rvalue.Rows.Add(galleryGroup);
-            //        row = item.r.Row_Index;
-            //    }
+            _context.GALLERY_ITEM.Add(newItem);
+        }
 
-            //    galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="group_to_clone"></param>
+        /// <returns></returns>
+        public void CloneGalleryGroup(GalleryGroup group_to_clone)
+        {
+            //determine if it is an item or a parent (node vs leaf)
+            //for leaf nodes create a new Gallery_item and copy everything into it.
+            //clone the gallery_item and gallery_group_details need to clone that 
+            //plus max column number +1
+
+            TinyMapper.Bind<GalleryGroup, GALLERY_GROUP>(
+            //config => {
+            //config.Ignore(source => source.Gallery_Item_Id);
             //}
+            );
 
-            return rvalue;
+            //var oldItem = _context.GALLERY_ITEM.Where(itemto)
+            var newGroup = TinyMapper.Map<GALLERY_GROUP>(group_to_clone);
+
+            _context.GALLERY_GROUP.Add(newGroup);
         }
 
 
@@ -177,10 +180,10 @@ namespace CSETWebCore.Business.GalleryParser
             var groups = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == id); //.FirstOrDefault();
             foreach (GALLERY_GROUP_DETAILS row in groups) {
                 _context.GALLERY_GROUP_DETAILS.Remove(row);
-                _context.SaveChanges();
+                //_context.SaveChanges();
             }
 
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
 
 
