@@ -116,9 +116,6 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            using (CSETContext tmpcontext = new CSETContext())
-            {
-
 
                 string name = null;
 
@@ -127,33 +124,33 @@ namespace CSETWebCore.Helpers
 
                 primaryEmailSO = name;
                 //check for legacy default email for local installation and set to new standard
-                var userOrg = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+                var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
                 if (userOrg != null)
                 {
                     string tmp = userOrg.PrimaryEmail.Split('@')[0];
                     userOrg.PrimaryEmail = tmp;
-                    if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                        tmpcontext.SaveChanges();
+                    if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                        _context.SaveChanges();
                     primaryEmailSO = userOrg.PrimaryEmail;
                 }
                 else
                 {
                     //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
                     string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                    var allUsers = tmpcontext.USERS.ToList();
+                    var allUsers = _context.USERS.ToList();
                     var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
                     if (legacyUser != null)
                     {
                         string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
                         legacyUser.PrimaryEmail = tmp;
-                        if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                            tmpcontext.SaveChanges();
+                        if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                            _context.SaveChanges();
                         primaryEmailSO = legacyUser.PrimaryEmail;
                     }
                 }
 
 
-                var user = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)
                 {
                     UserDetail ud = new UserDetail()
@@ -162,14 +159,14 @@ namespace CSETWebCore.Helpers
                         FirstName = name,
                         LastName = ""
                     };
-                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, tmpcontext);
+                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
 
-                    tmpcontext.SaveChanges();
+                    _context.SaveChanges();
                     //update the userid 1 to the new user
-                    var tempu = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                     if (tempu != null)
                         userIdSO = tempu.UserId;
-                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, tmpcontext);
+                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
                 }
                 else
                 {
@@ -202,7 +199,6 @@ namespace CSETWebCore.Helpers
 
 
                 return resp;
-            }
         }
     }
 }
