@@ -21,8 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/overlay-directives';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, APP_INITIALIZER } from '@angular/core';
+import { debug } from 'console';
 import { environment } from '../../environments/environment';
 
 
@@ -40,8 +42,12 @@ export class ConfigService {
   assetsUrl: string;
   analyticsUrl: string;
   config: any;
-
+  
   isCsetOnline = false;
+
+  // Contains settings from an option config.development.json that will not 
+  // be deployed in any delivery or production setting.
+  development: any;
 
   // button labels
   buttonLabels = {};
@@ -67,9 +73,6 @@ export class ConfigService {
   mobileEnvironment = '';
 
 
-  canDeleteCustomModules = false;
-
-
   /**
    * Constructor.
    * @param http
@@ -86,6 +89,13 @@ export class ConfigService {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
       this.assetsUrl = this.isRunningInElectron ? 'assets/' : '/assets/';
       this.configUrl = this.assetsUrl + 'config.json';
+
+      this.http.get(this.assetsUrl + 'config.development.json').toPromise().then((data: any) => {
+        this.development = data;
+      },
+      (error) => {
+        this.development = {};
+      });
 
       return this.http.get(this.configUrl)
         .toPromise()
@@ -112,8 +122,6 @@ export class ConfigService {
 
 
           this.mobileEnvironment = (this.config.mobileEnvironment);
-
-          this.canDeleteCustomModules = (this.config.debug.canDeleteCustomModules ?? false);
 
           this.populateLabelValues();
 
@@ -187,7 +195,7 @@ export class ConfigService {
    * question and requirement IDs for debugging purposes.
    */
   showQuestionAndRequirementIDs() {
-    return this.config.debug.showQuestionAndRequirementIDs || false;
+    return this.development.showQuestionAndRequirementIDs ?? false;
   }
 
   /**
@@ -196,7 +204,7 @@ export class ConfigService {
    * @returns
    */
   showBuildTime() {
-    return this.config.debug.showBuildTime || false;
+    return this.development.showBuildTime ?? false;
   }
 }
 

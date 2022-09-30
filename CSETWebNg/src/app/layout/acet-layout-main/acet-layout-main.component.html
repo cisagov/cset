@@ -20,9 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100 ncua-header"
-  id="cset-app">
-  <div class="row no-gutters local-install mt-0 pl-1 d-flex justify-content-center align-items-center flex-00a"
+<div class="bgc-page d-flex flex-column flex-11a w-100">
+  <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+    <div class="sticky-navbar">
+      <div
+        class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
     *ngIf="auth.isLocal">
     <span class="col-sm-12">Local Installation</span>
   </div>
@@ -35,7 +37,7 @@
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
-      <div class="d-flex justify-content-start align-items-center flex-00a mt-3">
+      <div class="d-flex justify-content-start align-items-center flex-00a">
         <img height="28" src="{{configSvc.assetsUrl}}images/NCUA/logo.svg" tabindex="0" alt="acet" />
       </div>
     </span>
@@ -45,20 +47,17 @@
       data-toggle="collapse" data-target="#csetNavbarCollapse" tabindex="0">
       <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
     </button>
-
      <!-- Menus -->
-     <app-top-menus skin="ACET" class="w-100"></app-top-menus>
+      <app-top-menus class="w-100"></app-top-menus>
   </nav>
+    </div>
 
   <!-- Body -->
   <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-    <!-- gradient-background -->
-    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
     <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-    <div class="p-0 d-flex col-xl-8" style="background-color:#fff">
+      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
       <router-outlet></router-outlet>
     </div>
-    <div class="p-0 d-none d-xl-flex col-xl-2 ncua-wells"></div>
   </div>
 
   <!-- Footer -->

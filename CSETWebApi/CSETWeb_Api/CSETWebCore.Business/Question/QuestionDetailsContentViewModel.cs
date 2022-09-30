@@ -206,11 +206,11 @@ namespace CSETWebCore.Business.Question
                 if (IsMaturity)
                 {
                     var matQuestion = this._context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
-                    qp = new QuestionPoco(newAnswer, matQuestion);
+                    qp = new QuestionPoco(_context, newAnswer, matQuestion);
                 }
                 else
                 {
-                    qp = new QuestionPoco(newAnswer, newqp);
+                    qp = new QuestionPoco(_context, newAnswer, newqp);
                 }
 
                 qp.DictionaryStandards = (from a in this._context.AVAILABLE_STANDARDS
@@ -285,7 +285,7 @@ namespace CSETWebCore.Business.Question
                     Set = question.SetName == null ? null : question.DictionaryStandards[question.SetName],
                     Sets = question.DictionaryStandards,
                     Question = question.Question,
-                    Requirement = question.NEW_REQUIREMENT ?? question.Question.NEW_REQUIREMENTs().FirstOrDefault(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(question.SetName ?? question.DictionaryStandards.Keys.FirstOrDefault()))
+                    Requirement = question.NEW_REQUIREMENT ?? question.Question.NEW_REQUIREMENTs(_context).FirstOrDefault(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(question.SetName ?? question.DictionaryStandards.Keys.FirstOrDefault()))
                 };
                 list = informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }
