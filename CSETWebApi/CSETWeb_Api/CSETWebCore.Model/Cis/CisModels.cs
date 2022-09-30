@@ -63,6 +63,8 @@ namespace CSETWebCore.Model.Cis
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
+
+        public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
 
         public List<CustomDocument> SourceDocuments { get; set; }
