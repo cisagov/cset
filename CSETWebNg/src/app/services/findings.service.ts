@@ -37,8 +37,6 @@ const headers = {
 })
 export class FindingsService {
 
-
-
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
 
