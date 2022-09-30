@@ -145,7 +145,7 @@ namespace CSETWebCore.Business.ModuleIO
                             }
                         }
 
-                        foreach (var question in requirementResult.NEW_QUESTIONs().ToList())
+                        foreach (var question in requirementResult.NEW_QUESTIONs(_context).ToList())
                         {
                             DataLayer.Model.NEW_QUESTION existingQuestion;
                             if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
