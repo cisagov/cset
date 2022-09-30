@@ -8,5 +8,6 @@ namespace CSETWebCore.Business.GalleryParser
         List<string> GetLayout();
         GalleryBoardData CloneGalleryItem(GalleryItem item_To_Clone);
         List<string> AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string group, int columnId);
+        void DeleteGalleryItem(int id);
     }
 }

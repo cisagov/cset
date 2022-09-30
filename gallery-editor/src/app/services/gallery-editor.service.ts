@@ -80,6 +80,22 @@ export class GalleryEditorService {
       }
     });
   }
+
+  deleteGalleryItem(id: number) {
+    return  this.http.get("https://localhost:44310/api/gallery/deleteGalleryItem",  {
+      params: {
+        id: id
+      }
+    });
+  }
+
+  deleteGalleryGroup(id: number) {
+    return  this.http.get("https://localhost:44310/api/gallery/deleteGalleryGroup",  {
+      params: {
+        id: id
+      }
+    });
+  }
 }
 
 

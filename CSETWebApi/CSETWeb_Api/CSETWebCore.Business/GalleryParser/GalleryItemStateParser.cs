@@ -114,6 +114,7 @@ namespace CSETWebCore.Business.GalleryParser
             return _context.GALLERY_LAYOUT.Select(x=> x.Layout_Name).ToList();
         }
 
+        //
         public List<string> AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string groupName, int columnId)
         {
             // Setup for adding to GALLERY_ITEM table
@@ -151,6 +152,26 @@ namespace CSETWebCore.Business.GalleryParser
             _context.SaveChanges();
 
             return _context.GALLERY_ITEM.Select(x => x.Title).ToList();
+        }
+
+
+        public void DeleteGalleryItem(int id)
+        {
+            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == id).FirstOrDefault();
+            _context.GALLERY_GROUP_DETAILS.Remove(item);
+            _context.SaveChanges();
+
+        }
+
+        public void DeleteGalleryGroup(int id)
+        {
+            var groups = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == id); //.FirstOrDefault();
+            foreach (GALLERY_GROUP_DETAILS row in groups) {
+                _context.GALLERY_GROUP_DETAILS.Remove(row);
+                _context.SaveChanges();
+            }
+
+            //_context.SaveChanges();
         }
 
 

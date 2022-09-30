@@ -94,6 +94,46 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/deleteGalleryItem")]
+        public IActionResult DeleteItem(int id)
+        {
+            try
+            {
+                _stateManager.DeleteGalleryItem(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/deleteGalleryGroup")]
+        public IActionResult DeleteGroup(int id)
+        {
+            try
+            {
+                _stateManager.DeleteGalleryGroup(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [HttpGet]
         [Route("api/gallery/getLayouts")]
