@@ -1,6 +1,6 @@
 {
     "isCsetOnline": false,
-    "appCode": "ACET",
+    "appCode": "CSET",
     "app": {
         "protocol": "http",
         "url": "localhost",
@@ -28,8 +28,8 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
-    "installationMode": "ACET",
+
+    "installationMode": "",
     "mobileEnvironment": "",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

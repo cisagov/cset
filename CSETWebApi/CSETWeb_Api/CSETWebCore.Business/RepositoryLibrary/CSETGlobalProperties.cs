@@ -9,6 +9,8 @@ namespace CSETWebCore.Api.Models
 {
     public class CSETGlobalProperties : ICSETGlobalProperties
     {
+        private CSETContext _context;
+
         public string Main_Executive_Summary_Template
         {
             get { return GetProperty("MainExecutiveSummary"); }
@@ -233,8 +235,9 @@ namespace CSETWebCore.Api.Models
         public string ProfileFolder { get { return System.IO.Path.Combine(CSETFolder, "Profiles"); } }
         public string ReportsFolder { get { return System.IO.Path.Combine(CSETFolder, "Reports"); } }
 
-        public CSETGlobalProperties()
+        public CSETGlobalProperties(CSETContext context)
         {
+            this._context = context;
         }
 
 
@@ -247,31 +250,29 @@ namespace CSETWebCore.Api.Models
                  * performance on this pair of requests is really bad.
                  * putting this into a dictionary to reduce the footprint.
                  */
-                using (var data = new CSETContext())
+                IQueryable<GLOBAL_PROPERTIES> query = _context.GLOBAL_PROPERTIES.Where(x => x.Property == name);
+
+                if (query.ToList().Count > 0)
                 {
+                    query.ToList()[0].Property_Value = value;
+                }
+                else
+                {
+                    GLOBAL_PROPERTIES gp = new GLOBAL_PROPERTIES();
+                    gp.Property = name;
+                    gp.Property_Value = value;
+                    _context.GLOBAL_PROPERTIES.Add(gp);
+                }
 
-                    IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
+                _context.SaveChanges();
 
-                    if (query.ToList().Count > 0)
-                    {
-                        query.ToList()[0].Property_Value = value;
-                    }
-                    else
-                    {
-                        GLOBAL_PROPERTIES gp = new GLOBAL_PROPERTIES();
-                        gp.Property = name;
-                        gp.Property_Value = value;
-                        data.GLOBAL_PROPERTIES.Add(gp);
-                    }
-                    data.SaveChanges();
-                    if (propertiesDictionary.ContainsKey(name))
-                    {
-                        propertiesDictionary[name] = value;
-                    }
-                    else
-                    {
-                        propertiesDictionary.Add(name, value);
-                    }
+                if (propertiesDictionary.ContainsKey(name))
+                {
+                    propertiesDictionary[name] = value;
+                }
+                else
+                {
+                    propertiesDictionary.Add(name, value);
                 }
             }
             catch (Exception exc)
@@ -338,17 +339,15 @@ namespace CSETWebCore.Api.Models
                 }
                 else
                 {
-                    using (var data = new CSETContext())
+                    IQueryable<GLOBAL_PROPERTIES> query = _context.GLOBAL_PROPERTIES.Where(x => x.Property == name);
+                    if (query.ToList().Count > 0)
                     {
-                        IQueryable<GLOBAL_PROPERTIES> query = data.GLOBAL_PROPERTIES.Where(x => x.Property == name);
-                        if (query.ToList().Count > 0)
-                        {
-                            string rval = query.First().Property_Value;
-                            propertiesDictionary.Add(name, rval);
-                            return rval; //ToList()[0].Property_Value
-                        }
-
+                        string rval = query.First().Property_Value;
+                        propertiesDictionary.Add(name, rval);
+                        return rval; //ToList()[0].Property_Value
                     }
+
+
                 }
                 return null;
             }

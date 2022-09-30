@@ -13,13 +13,23 @@ namespace CSETWebCore.Business.Question
 {
     public class QuestionPoco : IQuestionPoco
     {
-        public QuestionPoco() { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public QuestionPoco(CSETContext context)
+        {
+            this._context = context;
+        }
 
         public static String CreateCategoryAndNumber(String category, string number)
         {
             return category + " " + number;
         }
+
+        private CSETContext _context;
+
         public bool IsFrameworkMode { get; set; }
+
         public String QuestionGroupHeadingCategory
         {
             get
@@ -28,24 +38,19 @@ namespace CSETWebCore.Business.Question
                     return ProfileQuestionData.UniversalCategory;
                 else if (NEW_REQUIREMENT != null)
                 {
-                    using (var db = new CSETContext())
-                    {
-                        return db.QUESTION_GROUP_HEADING
-                            .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
-                            .Question_Group_Heading1;
-                    }
+                    return _context.QUESTION_GROUP_HEADING
+                        .First(h => h.Question_Group_Heading_Id == NEW_REQUIREMENT.Question_Group_Heading_Id)
+                        .Question_Group_Heading1;
+
                 }
                 else if (Question != null)
                 {
-                    using (var db = new CSETContext())
-                    {
-                        var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
-                                 join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                                 where usch.Heading_Pair_Id == Question.Heading_Pair_Id
-                                 select qgh.Question_Group_Heading1;
+                    var qq = from usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             where usch.Heading_Pair_Id == Question.Heading_Pair_Id
+                             select qgh.Question_Group_Heading1;
 
-                        return qq.First();
-                    }
+                    return qq.First();
                 }
                 else
                     return "";
@@ -64,7 +69,6 @@ namespace CSETWebCore.Business.Question
                 _parameters = value;
                 _textSub = null;
                 _textSubNoLinks = null;
-
             }
         }
 
@@ -79,15 +83,12 @@ namespace CSETWebCore.Business.Question
                 else if (Question != null)
                 {
                     //return Question.Question_Group_Heading;
-                    using (var db = new CSETContext())
-                    {
-                        var qq = from usch in db.UNIVERSAL_SUB_CATEGORY_HEADINGS
-                                 join qgh in db.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                                 where usch.Heading_Pair_Id == Question.Heading_Pair_Id
-                                 select qgh.Question_Group_Heading1;
+                    var qq = from usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS
+                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             where usch.Heading_Pair_Id == Question.Heading_Pair_Id
+                             select qgh.Question_Group_Heading1;
 
-                        return qq.First();
-                    }
+                    return qq.First();
                 }
                 else
                     return "";
@@ -97,6 +98,7 @@ namespace CSETWebCore.Business.Question
         {
             get; set;
         }
+
         //This Property is just used in deciding to dictionary of question by Universal Category or by Framework Category.
         public String CategoryAnalysis
         {
@@ -113,17 +115,6 @@ namespace CSETWebCore.Business.Question
             }
         }
 
-        // RKW - while refactoring for data structure changes I found that this property is not called from
-        //       anywhere -- so I'm not going to waste time re-writing it.
-        //public String UniversalSubCategory
-        //{
-        //    get
-        //    {
-        //        if (Question == null || Question.Universal_Sub_Category == null)
-        //            return null;
-        //        return Question.Universal_Sub_Category.Trim();
-        //    }
-        //}
 
         public QUESTION_GROUP_HEADING QuestionGroupHeading { get; set; }
 
@@ -277,7 +268,7 @@ namespace CSETWebCore.Business.Question
         {
             get
             {
-                return (ICollection<DOCUMENT_FILE>)Answer.DOCUMENT_FILEs();
+                return (ICollection<DOCUMENT_FILE>)Answer.DOCUMENT_FILEs(_context);
             }
         }
 
@@ -369,19 +360,13 @@ namespace CSETWebCore.Business.Question
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null && IsComponent == false)
-                    return String.Join(", ", Question.NEW_REQUIREMENTs().Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category != null && s.Original_Set_NameNavigation.Set_Category.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
+                    return String.Join(", ", Question.NEW_REQUIREMENTs(_context).Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category != null && s.Original_Set_NameNavigation.Set_Category.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
                 else
                     return "";
             }
         }
 
-        //public ObservableCollection<Tuple<string,string>> QuestionRequirements
-        //{
-        //    get
-        //    {
-        //        return Question.NEW_REQUIREMENT.GroupJoin(DictionaryStandards.Keys, s=>s.REQUIREMENT_SETS.Select(t=>t.Set_Name), s=>s,(s,t)=>new Tuple<string,string>(string.Join("/r/n",t), s.Requirement_Text));
-        //    }
-        //}
+
         private String text;
         public String Text
         {
@@ -401,7 +386,6 @@ namespace CSETWebCore.Business.Question
             set
             {
                 text = value;
-
             }
         }
 
@@ -856,7 +840,7 @@ namespace CSETWebCore.Business.Question
             if (!IsRequirement)
             {
                 SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
-                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs(_context).FirstOrDefault() : set.Requirement;
             }
         }
 
@@ -894,36 +878,37 @@ namespace CSETWebCore.Business.Question
         public bool IsFrameworkRelatedQuestion { get; set; }
         public int NercRankNumber { get; set; }
 
-        public QuestionPoco(ANSWER answer, NEW_REQUIREMENT new_requirement, RequirementLevel requirementLevel)
-            : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, NEW_REQUIREMENT new_requirement, RequirementLevel requirementLevel)
+            : this(answer, context)
         {
             this.NEW_REQUIREMENT = new_requirement;
             this.RequirementLevel = requirementLevel;
         }
 
-        public QuestionPoco(ANSWER answer, NEW_QUESTION question) : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, NEW_QUESTION question) : this(answer, context)
         {
             this.Question = question;
-
         }
 
-        public QuestionPoco(ANSWER answer, SETS set, ProfileQuestion profileQuestion)
-            : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, SETS set, ProfileQuestion profileQuestion)
+            : this(answer, context)
         {
             this.ProfileQuestionData = profileQuestion;
             this.DictionaryStandards[set.Set_Name] = set;
         }
 
-        public QuestionPoco(ANSWER answer, MATURITY_QUESTIONS question) : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, MATURITY_QUESTIONS question) : this(answer, context)
         {
             this.MaturityQuestion = question;
         }
 
-        private QuestionPoco(ANSWER answer, bool setParams = true)
+        private QuestionPoco(ANSWER answer, CSETContext context, bool setParams = true)
         {
+            this._context = context;
+
             this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
-            this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
+            this.setDocumentIds = answer.DOCUMENT_FILEs(_context).Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
             if (setParams)
                 this.Parameters = new ObservableCollection<ParameterContainer>();
@@ -1068,7 +1053,7 @@ namespace CSETWebCore.Business.Question
                     var requirements = new List<NEW_REQUIREMENT>();
                     NEW_REQUIREMENT standardRequirement = null;
                     var standardList = new List<string>();
-                    if (Question?.NEW_REQUIREMENTs() != null)
+                    if (Question?.NEW_REQUIREMENTs(_context) != null)
                     {
                         foreach (var item in DictionaryStandards)
                         {
@@ -1081,7 +1066,7 @@ namespace CSETWebCore.Business.Question
                         }
                         foreach (var setName in standardList)
                         {
-                            standardRequirement = Question?.NEW_REQUIREMENTs()?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info) && t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
+                            standardRequirement = Question?.NEW_REQUIREMENTs(_context)?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info) && t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
                             if (standardRequirement != null)
                             {
                                 break;
@@ -1090,7 +1075,7 @@ namespace CSETWebCore.Business.Question
                     }
                     var supplemental = ProfileQuestionData?.SupplementalInfo ??
                         (standardRequirement ??
-                        Question?.NEW_REQUIREMENTs()?.FirstOrDefault() ??
+                        Question?.NEW_REQUIREMENTs(_context)?.FirstOrDefault() ??
                         NEW_REQUIREMENT)?.Supplemental_Info.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
                     if (String.IsNullOrEmpty(supplemental))
                     {
