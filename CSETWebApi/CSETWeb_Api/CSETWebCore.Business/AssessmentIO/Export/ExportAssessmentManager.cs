@@ -324,7 +324,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
                     
-                    var extStandard = StandardConverter.ToExternalStandard(set);
+                    var extStandard = StandardConverter.ToExternalStandard(set, _context);
                     var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
 
                     // Export Set

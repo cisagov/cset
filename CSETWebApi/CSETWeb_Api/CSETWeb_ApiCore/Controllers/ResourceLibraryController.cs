@@ -43,7 +43,7 @@ namespace CSETWebCore.Api.Controllers
             if (String.IsNullOrWhiteSpace(searchRequest.term))
                 return Ok(new List<ResourceNode>());
 
-            CSETGlobalProperties props = new CSETGlobalProperties();
+            CSETGlobalProperties props = new CSETGlobalProperties(_context);
             SearchDocs search = new SearchDocs(props, new ResourceLibraryRepository(_context, props));
             return Ok(search.Search(searchRequest));
         }
@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ResourceLibrary/tree")]
         public List<SimpleNode> GetTree()
         {
-            IResourceLibraryRepository resource = new ResourceLibraryRepository(_context, new CSETGlobalProperties());
+            IResourceLibraryRepository resource = new ResourceLibraryRepository(_context, new CSETGlobalProperties(_context));
             return resource.GetTreeNodes();
         }
 
