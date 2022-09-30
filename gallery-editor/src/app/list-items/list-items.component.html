@@ -11,10 +11,12 @@
 
 	<div *ngIf="layoutName" class="handle">
 		<div *ngFor="let group of this.response?.rows">
-			<fa-icon [icon]="faArrows" class="handle group"></fa-icon>{{ group.group_Title }}
+			<fa-icon [icon]="faArrows" class="handle group"></fa-icon>{{ group.group_Title }}<button (click)="deleteGalleryGroup(group.group_Id)">Delete a Group</button>
+
 			<div *ngFor="let item of group?.galleryItems">
 				<fa-icon [icon]="faArrows" class="handle item"></fa-icon>
-				<span>{{ item.title }}</span> 
+				<span>{{ item.title }} </span><button (click)="deleteGalleryItem(item.gallery_Item_Id)">Delete an Item</button>
+
 			</div>
 		</div>
 
@@ -52,8 +54,6 @@
 
 		Delete
 		<input style="width: 400px;" type="text" #boxDelete>
-		<button (click)="deleteGalleryGroup(boxDelete.value)">Delete a Group</button>
-		<button (click)="deleteGalleryItem(boxDelete.value)">Delete an Item</button>
 
 	</div>
 </div>

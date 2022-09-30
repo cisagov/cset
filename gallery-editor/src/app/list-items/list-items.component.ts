@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Options } from 'sortablejs';
-import { ListTest, MoveItem } from './listtest.model'
+import { GalleryItem, ListTest, MoveItem } from './listtest.model'
 import { faArrows } from '@fortawesome/free-solid-svg-icons';
 import { GalleryEditorService } from '../services/gallery-editor.service';
 import { isNgTemplate } from '@angular/compiler';
@@ -19,7 +19,6 @@ export class ListItemsComponent implements OnInit {
 
   response: any;
   responseAdd: any;
-
 
   options: Options = {    
     handle: '.handle'
@@ -73,19 +72,32 @@ export class ListItemsComponent implements OnInit {
   layoutChange(event: any) {
     this.layoutName = event.target.value;
     console.log("Layout is: " + this.layoutName);
-    this.svcGalleryEditor.getGalleryItems(this.layoutName).subscribe(
+    this.updateItems(this.layoutName);
+    
+  }
+
+  deleteGalleryItem(id: number) {
+    console.log(id + " would be deleted");
+    this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
       (r: any) => {
-        this.response = r;
+        // this.response = r;
+        console.log(this.response);
+        this.updateItems(this.layoutName);
       },
-      error => console.log('Gallery Layout error ' + (<Error>error).message)
+      error => console.log('Gallery Item delete error ' + (<Error>error).message)
     );
   }
 
-  deleteGalleryGroup(title: string) {
-    console.log(title + " would be deleted");
-  }
-  deleteGalleryItem(title: string) {
-    console.log(title + " would be deleted");
+  deleteGalleryGroup(id: number) {
+    console.log(id + " would be deleted");
+    this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
+      (r: any) => {
+        // this.response = r;
+        console.log(this.response);
+        this.updateItems(this.layoutName);
+      },
+      error => console.log('Gallery Group delete error ' + (<Error>error).message)
+    );
   }
 
   addGalleryGroup(title: string) {
@@ -121,8 +133,15 @@ export class ListItemsComponent implements OnInit {
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
   }
-
-  
+  updateItems(layout: string) {
+    this.svcGalleryEditor.getGalleryItems(layout).subscribe(
+      (r: any) => {
+        this.response = r;
+        console.log(this.response);
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
 
 
 }
