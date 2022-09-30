@@ -34,7 +34,7 @@ namespace UpgradeLibrary.Upgrade
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 9.2.0 file to 9.2.1: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 9.2.0 file to 9.2.1: " + e.Message);
             }
         }
     }
