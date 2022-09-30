@@ -10,7 +10,7 @@ namespace CSETWebCore.Helpers
 {
     public static class RequirementConverter
     {
-        public static async Task<ConverterResult<NEW_REQUIREMENT>> ToRequirement(this ExternalRequirement externalRequirement, string setName, ILogger logger)
+        public static async Task<ConverterResult<NEW_REQUIREMENT>> ToRequirement(this ExternalRequirement externalRequirement, string setName, ILogger logger, CSETContext context)
         {
             var result = new ConverterResult<NEW_REQUIREMENT>(logger);
             var newRequirement = result.Result;
@@ -28,25 +28,24 @@ namespace CSETWebCore.Helpers
             QUESTION_GROUP_HEADING questionGroupHeading = null;
             UNIVERSAL_SUB_CATEGORY_HEADINGS subcategory = null;
 
-            var db = new CSETContext();
 
             try
             {
-                questionGroupHeading = db.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
+                questionGroupHeading = context.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
                 try
                 {
-                    var subcatId = db.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
+                    var subcatId = context.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
                     if (subcatId == 0)
                     {
                         var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.subheading };
-                        db.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
-                        await db.SaveChangesAsync();
+                        context.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
+                        await context.SaveChangesAsync();
                         subcatId = subcat.Universal_Sub_Category_Id;
                     }
 
                     try
                     {
-                        subcategory = db.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
+                        subcategory = context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
                         if (subcategory == null)
                         {
                             subcategory = new UNIVERSAL_SUB_CATEGORY_HEADINGS()
@@ -55,8 +54,8 @@ namespace CSETWebCore.Helpers
                                 Universal_Sub_Category_Id = subcatId,
                                 Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id
                             };
-                            db.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(subcategory);
-                            await db.SaveChangesAsync();
+                            context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(subcategory);
+                            await context.SaveChangesAsync();
                         }
                     }
                     catch (Exception exc)
@@ -93,7 +92,7 @@ namespace CSETWebCore.Helpers
             }
 
             externalRequirement.category = string.IsNullOrWhiteSpace(externalRequirement.category) ? externalRequirement.heading : externalRequirement.category;
-            var category = db.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.category);
+            var category = context.STANDARD_CATEGORY.FirstOrDefault(s => s.Standard_Category1 == externalRequirement.category);
             if (category == null)
             {
                 newRequirement.Standard_CategoryNavigation = new STANDARD_CATEGORY() { Standard_Category1 = externalRequirement.category };
@@ -115,7 +114,7 @@ namespace CSETWebCore.Helpers
             }
 
 
-            var importer = new DocumentImporter();
+            var importer = new DocumentImporter(context);
             if (externalRequirement.references != null)
             {
 
@@ -169,7 +168,7 @@ namespace CSETWebCore.Helpers
                 result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
             }
 
-            db.SaveChanges();
+            context.SaveChanges();
 
 
             // --------------
@@ -191,7 +190,7 @@ namespace CSETWebCore.Helpers
                 };
 
                 // Look for existing question by question text
-                newQuestion = db.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
+                newQuestion = context.NEW_QUESTION.FirstOrDefault(s => s.Simple_Question.ToLower().Trim() == question.ToLower().Trim());
 
                 if (newQuestion == null)
                 {
@@ -239,14 +238,14 @@ namespace CSETWebCore.Helpers
                 );
 
 
-                db.NEW_QUESTION.Add(newQuestion);
+                context.NEW_QUESTION.Add(newQuestion);
             }
 
 
             // null this out so that we don't try to insert it
             questionGroupHeading = null;
 
-            db.SaveChanges();
+            context.SaveChanges();
 
             return result;
         }

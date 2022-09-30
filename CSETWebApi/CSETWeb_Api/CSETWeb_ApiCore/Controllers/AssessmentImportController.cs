@@ -102,7 +102,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                var manager = new ImportManager(_tokenManager, _assessmentUtil);
+                var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
                 await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
             }
             catch (Exception)
@@ -143,7 +143,7 @@ namespace CSETWebCore.Api.Controllers
                     var bytes = target.ToArray();
 
 
-                    var manager = new ImportManager(_tokenManager, _assessmentUtil);
+                    var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
                     await manager.ProcessCSETAssessmentImport(bytes, currentUserId, _context);
                 }
             }

@@ -439,16 +439,13 @@ namespace CSETWebCore.Business.Contact
         /// <param name="assessmentId"></param>
         public void MarkContactInvited(int userId, int assessmentId)
         {
-            using (var db = new CSETContext())
+            var assessmentContact = _context.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId)
+                .FirstOrDefault();
+            if (assessmentContact != null)
             {
-                var assessmentContact = db.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId)
-                    .FirstOrDefault();
-                if (assessmentContact != null)
-                {
-                    assessmentContact.Invited = true;
-                    db.ASSESSMENT_CONTACTS.Update(assessmentContact);
-                    db.SaveChangesAsync();
-                }
+                assessmentContact.Invited = true;
+                _context.ASSESSMENT_CONTACTS.Update(assessmentContact);
+                _context.SaveChangesAsync();
             }
         }
 
