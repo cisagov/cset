@@ -23,11 +23,11 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
-        
+
         //private IHttpContextAccessor _httpContext;
 
         public DiagramManager(CSETContext context)
-        { 
+        {
             _context = context;
             //_httpContext = httpContext;
         }
@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.Diagram
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
                     differenceManager.SaveDifferences(assessmentID);
-                
+
                 }
                 catch (Exception exc)
                 {
@@ -118,20 +118,20 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public DiagramResponse GetDiagram(int assessmentID)
         {
-           
-                var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
-                DiagramResponse resp = new DiagramResponse();
+            var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
-                if (assessmentRecord != null)
-                {
-                    resp.DiagramXml = assessmentRecord.Diagram_Markup;
-                    resp.LastUsedComponentNumber = assessmentRecord.LastUsedComponentNumber;
-                    resp.AnalyzeDiagram = assessmentRecord.AnalyzeDiagram;
-                    return resp;
-                }
+            DiagramResponse resp = new DiagramResponse();
 
-                return null;           
+            if (assessmentRecord != null)
+            {
+                resp.DiagramXml = assessmentRecord.Diagram_Markup;
+                resp.LastUsedComponentNumber = assessmentRecord.LastUsedComponentNumber;
+                resp.AnalyzeDiagram = assessmentRecord.AnalyzeDiagram;
+                return resp;
+            }
+
+            return null;
         }
 
 
@@ -142,7 +142,7 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public bool HasDiagram(int assessmentID)
         {
-           
+
             var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
             DiagramResponse resp = new DiagramResponse();
@@ -185,7 +185,7 @@ namespace CSETWebCore.Business.Diagram
 
 
             // Make sure any paths to embedded svg images are correctly qualified with this server's URL
-            
+
             //var serverHostUrl = System.Web.HttpContext.Current.Request.Url;
             //var contextFeature = http.HttpContext.Features.Get<IHttpRequestFeature>();
             //var urlContext = url.ActionContext.HttpContext.Request.Scheme;
@@ -239,10 +239,10 @@ namespace CSETWebCore.Business.Diagram
                 foreach (COMPONENT_SYMBOLS s in symbols)
                 {
                     var symbol = new ComponentSymbol
-                    {   
+                    {
                         Symbol_Name = s.Symbol_Name,
                         Abbreviation = s.Abbreviation,
-                        FileName = s.File_Name,                            
+                        FileName = s.File_Name,
                         ComponentFamilyName = s.Component_Family_Name,
                         Search_Tags = s.Search_Tags,
                         Width = (int)s.Width,
@@ -252,19 +252,19 @@ namespace CSETWebCore.Business.Diagram
                     group.Symbols.Add(symbol);
                 }
             }
-            
+
             return resp;
         }
 
         public string ImportOldCSETDFile(string diagramXml, int assessmentId)
         {
             var t = new TranslateCsetdToDrawio();
-            string newDiagramXml = t.Translate(diagramXml).OuterXml;
+            string newDiagramXml = t.Translate(_context, diagramXml).OuterXml;
             _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).First().Diagram_Markup = null;
             //string sql =
             //"delete ASSESSMENT_DIAGRAM_COMPONENTS  where assessment_id = @id;" +
             //"delete [DIAGRAM_CONTAINER] where assessment_id = @id;";
-            
+
             //db.Database.ExecuteSqlCommand(sql,
             //    new SqlParameter("@Id", assessmentId));
             var diagramComponents = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId);
@@ -297,7 +297,7 @@ namespace CSETWebCore.Business.Diagram
             foreach (COMPONENT_SYMBOLS s in symbols)
             {
                 var symbol = new ComponentSymbol
-                {   
+                {
                     Abbreviation = s.Abbreviation,
                     FileName = s.File_Name,
                     Symbol_Name = s.Symbol_Name,
@@ -309,7 +309,7 @@ namespace CSETWebCore.Business.Diagram
                 };
 
                 resp.Add(symbol);
-            
+
             }
 
             return resp;
@@ -323,7 +323,7 @@ namespace CSETWebCore.Business.Diagram
         public StringReader GetDiagramXml(int assessmentId)
         {
             var diagram = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId)?.Diagram_Markup;
-           
+
             if (diagram != null)
             {
                 var stream = new StringReader(diagram);
@@ -355,13 +355,13 @@ namespace CSETWebCore.Business.Diagram
                 {
                     if (item.GetType() == objectType)
                     {
-                       
-                        var addLayerVisible = (mxGraphModelRootObject) item;
-                        string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent??"0";
+
+                        var addLayerVisible = (mxGraphModelRootObject)item;
+                        string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent ?? "0";
                         var layerVisibility = layers.GetLastLayer(parentId);
-                        addLayerVisible.visible = layerVisibility.visible??"true";
-                        addLayerVisible.layerName = layerVisibility.layerName??string.Empty;
-                        
+                        addLayerVisible.visible = layerVisibility.visible ?? "true";
+                        addLayerVisible.layerName = layerVisibility.layerName ?? string.Empty;
+
                         vertices.Add(addLayerVisible);
                     }
 
@@ -479,8 +479,8 @@ namespace CSETWebCore.Business.Diagram
                 var symbols = GetAllComponentSymbols();
                 for (int i = 0; i < diagramComponents.Count(); i++)
                 {
-                    var imageTag = diagramComponents[i].mxCell.style.Split(';').FirstOrDefault(x=>x.Contains("image="));
-                   
+                    var imageTag = diagramComponents[i].mxCell.style.Split(';').FirstOrDefault(x => x.Contains("image="));
+
                     if (!string.IsNullOrEmpty(imageTag))
                     {
                         var image = imageTag.Split('/').LastOrDefault();
@@ -489,7 +489,7 @@ namespace CSETWebCore.Business.Diagram
 
                     mxGraphModelRootObject parent = diagramZones.FirstOrDefault(x => x.id == diagramComponents[i].mxCell.parent);
 
-                    if (string.IsNullOrEmpty(diagramComponents[i].SAL)) 
+                    if (string.IsNullOrEmpty(diagramComponents[i].SAL))
                     {
                         diagramComponents[i].SAL = parent?.SAL;
                     }
@@ -620,7 +620,7 @@ namespace CSETWebCore.Business.Diagram
 
                     if (diagramXml.root.Items[i].GetType() == objectType)
                     {
-                        item = (mxGraphModelRootObject) diagramXml.root.Items[i];
+                        item = (mxGraphModelRootObject)diagramXml.root.Items[i];
                     }
 
                     if (item.id == vertice.id)
@@ -647,23 +647,19 @@ namespace CSETWebCore.Business.Diagram
             {
             }
 
-            
+
         }
 
-        private static Dictionary<string, COMPONENT_SYMBOLS> legacyNamesList =null; 
+        private static Dictionary<string, COMPONENT_SYMBOLS> legacyNamesList = null;
 
         public COMPONENT_SYMBOLS getFromLegacyName(string name)
         {
             if (legacyNamesList == null)
             {
-                using (CSETContext db = new CSETContext())
-                {
-
-                    legacyNamesList =  (from a in db.COMPONENT_NAMES_LEGACY
-                            join b in db.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
-                            b.Component_Symbol_Id
-                            select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
-                }
+                legacyNamesList = (from a in _context.COMPONENT_NAMES_LEGACY
+                                   join b in _context.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
+                                   b.Component_Symbol_Id
+                                   select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
             }
             return legacyNamesList[name];
 
@@ -767,8 +763,9 @@ namespace CSETWebCore.Business.Diagram
                     var xDoc = new XmlDocument();
                     xDoc.LoadXml(xml);
                     if (assessment != null)
-                        SaveDiagram(assessmentId, xDoc, new DiagramRequest(){
-                           LastUsedComponentNumber =  assessment.LastUsedComponentNumber,
+                        SaveDiagram(assessmentId, xDoc, new DiagramRequest()
+                        {
+                            LastUsedComponentNumber = assessment.LastUsedComponentNumber,
                             DiagramSvg = assessment.Diagram_Image
                         });
                 }
@@ -791,7 +788,7 @@ namespace CSETWebCore.Business.Diagram
 
             foreach (var s in styles)
             {
-                newStyle += !string.IsNullOrEmpty(s) ? s + ";": string.Empty;
+                newStyle += !string.IsNullOrEmpty(s) ? s + ";" : string.Empty;
             }
 
             return newStyle;
@@ -804,18 +801,18 @@ namespace CSETWebCore.Business.Diagram
         public IEnumerable<DiagramTemplate> GetDiagramTemplates()
         {
             var templates = Enumerable.Empty<DiagramTemplate>();
-            using (var db = new CSETContext())
-            {
-                templates = db.DIAGRAM_TEMPLATES
-                    .Where(x => x.Is_Visible ?? false)
-                    .OrderBy(x => x.Id)
-                    .Select(x => new DiagramTemplate {
-                        Name = x.Template_Name,
-                        ImageSource = x.Image_Source,
-                        Markup = x.Diagram_Markup
-                    })
-                    .ToArray();
-            }
+
+            templates = _context.DIAGRAM_TEMPLATES
+                .Where(x => x.Is_Visible ?? false)
+                .OrderBy(x => x.Id)
+                .Select(x => new DiagramTemplate
+                {
+                    Name = x.Template_Name,
+                    ImageSource = x.Image_Source,
+                    Markup = x.Diagram_Markup
+                })
+                .ToArray();
+
             return templates;
         }
     }

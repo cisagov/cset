@@ -117,11 +117,11 @@ namespace CSETWebCore.Business.Question
                 if (questionType == "Maturity")
                 {
                     var matQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
-                    qp = new QuestionPoco(newAnswer, matQuestion);
+                    qp = new QuestionPoco(_context, newAnswer, matQuestion);
                 }
                 else
                 {
-                    qp = new QuestionPoco(newAnswer, newqp);
+                    qp = new QuestionPoco(_context, newAnswer, newqp);
                 }
 
                 qp.DictionaryStandards = (from a in _context.AVAILABLE_STANDARDS

@@ -53,7 +53,7 @@ namespace CSETWebCore.Business.ModuleIO
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
 
-            var documentImporter = new DocumentImporter();
+            var documentImporter = new DocumentImporter(_context);
             var set = new SETS();
 
 
@@ -298,7 +298,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
 
 
-            var importer = new DocumentImporter();
+            var importer = new DocumentImporter(_context);
             if (externalRequirement.references != null)
             {
                 foreach (var reference in externalRequirement.references)

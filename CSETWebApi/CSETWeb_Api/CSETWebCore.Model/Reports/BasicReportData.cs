@@ -195,36 +195,32 @@ namespace CSETWebCore.Business.Reports
         public bool Reviewed { get; set; }
 
 
-        
+       
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public RelevantAnswers()
-        {
-        }
+        public RelevantAnswers() { }
+
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <returns></returns>
-        public List<RelevantAnswers> GetAnswersForAssessment(int assessmentID)
+        public List<RelevantAnswers> GetAnswersForAssessment(int assessmentID, CSETContext context)
         {
             List<RelevantAnswers> answers = new List<RelevantAnswers>();
-            using (var _context = new CSETContext())
-            {
-                _context.LoadStoredProc("[RelevantAnswers]")
+
+                context.LoadStoredProc("[RelevantAnswers]")
                     .WithSqlParam("assessment_id", assessmentID)
                     .ExecuteStoredProc((handler) =>
                     {
                         answers = handler.ReadToList<RelevantAnswers>().ToList();
                     });
 
-                return answers;
-            }
-           
+                return answers;                       
         }
     }
 
