@@ -166,6 +166,7 @@ namespace CSETWebCore.Helpers
                     if (_includeText)
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
+                        question.SupplementalInfo = myQ.Supplemental_Info;
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
 
                         GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
@@ -219,6 +220,7 @@ namespace CSETWebCore.Helpers
                 if (_includeText)
                 {
                     question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
+                    question.SupplementalInfo = myQ.Supplemental_Info;
                     question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
 
                     GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
@@ -279,6 +281,7 @@ namespace CSETWebCore.Helpers
                     if (_includeText)
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
+                        question.SupplementalInfo = myQ.Supplemental_Info;
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
 
                         GetReferences(myQ.Mat_Question_Id, out List<CustomDocument> s, out List<CustomDocument> r);
