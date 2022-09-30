@@ -50,7 +50,7 @@
         <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
             <label class="mb-1" for="creditUnion">Credit Union</label>
             <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-                (change)="update($event)" tabindex="0">
+                (change)="update($event)" (click)="update($event)" tabindex="0">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">

@@ -21,11 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
@@ -38,6 +36,9 @@ import { FindingsService } from '../../../services/findings.service';
 
 export class IssuesComponent implements OnInit {
   finding: Finding;
+  issueTitle = "";
+  issueDescription: string = "";
+  
   subRiskAreas: SubRiskArea[];
   importances: Importance[];
   
@@ -52,17 +53,15 @@ export class IssuesComponent implements OnInit {
   answerID: number;
   questionID: number;
 
-
   constructor(
-    private ncuaSvc: NCUAService,
     private dialog: MatDialogRef<IssuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
-    private router: Router,
     public assessSvc: AssessmentService,
     private findSvc: FindingsService,
 
   ) {
     this.finding = data;
+    this.issueTitle = this.finding.title; // storing a temp name that may or may not be used later
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
   }
@@ -101,13 +100,22 @@ export class IssuesComponent implements OnInit {
       this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
+
+          if (this.finding.title === null) {
+            this.finding.title = this.issueTitle;
+          }
+
+          if (this.finding.description === null) {
+            this.finding.description = this.generateIssueDescription();
+          }
+          
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
           
           if (this.finding.sub_Risk_Area_Id === null) {
-            this.selectedRiskArea = 'Strategic';
+            this.updateRiskArea('Strategic');
           } else {
-            this.selectedRiskArea = this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
+            this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
           }
 
           this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
@@ -149,24 +157,36 @@ export class IssuesComponent implements OnInit {
     return !finding;
   }
 
-  getSelectedRiskArea(id: number) {
-    if (id >= 1 && id <= 10) {
-      return ('Strategic');
-    } else if (id > 10 && id <= 17) {
-      return ('Compliance');
-    } else if (id > 17 && id <= 32) {
-      return ('Transaction');
-    } else if (id > 32 && id <= 37) {
-      return ('Reputation');
-    }
-  }
-
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
+  }
+
+  generateIssueDescription(): string {
+    // Formatting it this way for demo purposes. Will fix it later.
+    let description = `The information security program policies and procedures are not commensurable to its size, complexity, and risk. Each credit union must identify and evaluate risks to its information, develop a plan to mitigate the risks, implement the plan, test the plan, and monitor the need to update the plan.
+
+As information security program is the written plan created and implemented by a credit union to identify and control risks to information and information systems and to properly dispose of information. The plan includes policies and procedures regarding the institution's risk assessment, controls, testing, service-provider oversight, periodic review and updating, and reporting to its board of directors.`;
+
+    return description;
+  }
+
+  getSelectedRiskArea(id: number) {
+    let area = "";
+    if (id >= 1 && id <= 10) {
+      area = 'Strategic';
+    } else if (id > 10 && id <= 17) {
+      area = 'Compliance';
+    } else if (id > 17 && id <= 32) {
+      area = 'Transaction';
+    } else if (id > 32 && id <= 37) {
+      area = 'Reputation';
+    }
+
+    this.updateRiskArea(area);
   }
 
   updateRiskArea(riskArea) {
