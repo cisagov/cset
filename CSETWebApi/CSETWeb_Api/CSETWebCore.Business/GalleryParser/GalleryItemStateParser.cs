@@ -114,24 +114,40 @@ namespace CSETWebCore.Business.GalleryParser
             return _context.GALLERY_LAYOUT.Select(x=> x.Layout_Name).ToList();
         }
 
-        public List<string> AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newConfiguration_Setup, string newConfiguration_Setup_Client, string newDescription, string newTitle)
+        public List<string> AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string groupName, int columnId)
         {
-            // Create a new GalleryItem object.
+            // Setup for adding to GALLERY_ITEM table
             GALLERY_ITEM newItem = new GALLERY_ITEM()
             {
                 //Gallery_Item_Id = newGallery_Item_Id,
                 Icon_File_Name_Small = newIcon_File_Name_Small,
                 Icon_File_Name_Large = newIcon_File_Name_Large,
-                Configuration_Setup = newConfiguration_Setup,
-                Configuration_Setup_Client = newConfiguration_Setup_Client,
+                Configuration_Setup = "",
+                Configuration_Setup_Client = null,
                 Description = newDescription,
                 Title = newTitle,
                 CreationDate = DateTime.Now,
                 Is_Visible = true
             };
 
-            // Add the new object to the GALLERY_ITEM table (not atually submitted yet)
             _context.GALLERY_ITEM.Add(newItem);
+
+            // Setup for adding to GALLERY_GROUP_DETAILS table
+            var groupId = from g in _context.GALLERY_GROUP.AsEnumerable()
+                       where g.Group_Title == groupName
+                       select g.Group_Id;
+
+            var galleryId  = from g in _context.GALLERY_ITEM.AsEnumerable()
+                       select g.Gallery_Item_Id;
+
+            GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS() {
+                Group_Id = groupId.Single(),
+                Column_Index = columnId,
+                Gallery_Item_Id = galleryId.Last() + 1,
+                Click_Count = 0
+            };
+
+            _context.GALLERY_GROUP_DETAILS.Add(newDetailsRow);
             _context.SaveChanges();
 
             return _context.GALLERY_ITEM.Select(x => x.Title).ToList();

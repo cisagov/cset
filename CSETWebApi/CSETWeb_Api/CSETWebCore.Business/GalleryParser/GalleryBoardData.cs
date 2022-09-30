@@ -36,7 +36,6 @@ namespace CSETWebCore.Business.GalleryParser
 
         public GalleryItem(GALLERY_ITEM i)
         {
-
             this.Gallery_Item_Id = i.Gallery_Item_Id;
             this.Icon_File_Name_Small = i.Icon_File_Name_Small;
             this.Icon_File_Name_Large = i.Icon_File_Name_Large;

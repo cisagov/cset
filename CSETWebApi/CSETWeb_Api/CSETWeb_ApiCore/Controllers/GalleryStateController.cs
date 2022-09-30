@@ -73,22 +73,20 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Adds the item
         /// </summary>
-        /// <param name="newGallery_Item_Id"></param>
         /// <param name="newIcon_File_Name_Small"></param>
         /// <param name="newIcon_File_Name_Large"></param>
-        /// <param name="newConfiguration_Setup"></param>
-        /// <param name="newConfiguration_Setup_Client"></param>
         /// <param name="newDescription"></param>
         /// <param name="newTitle"></param>
-
+        /// <param name="group"></param>
+        /// <param name="columnId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addItem")]
-        public IActionResult AddItem(int newGallery_Item_Id, string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newConfiguration_Setup, string newConfiguration_Setup_Client, string newDescription, string newTitle)
+        public IActionResult AddItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string group, int columnId)
         {
             try
             {
-                return Ok(_stateManager.AddGalleryItem(newGallery_Item_Id, newIcon_File_Name_Small, newIcon_File_Name_Large, newConfiguration_Setup, newConfiguration_Setup_Client, newDescription, newTitle));
+                return Ok(_stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId));
             }
             catch (Exception e)
             {
