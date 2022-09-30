@@ -76,6 +76,12 @@ namespace CSETWebCore.Business.GalleryParser
         /// <returns></returns>
         public GalleryBoardData CloneGalleryItem(GalleryItem item_to_clone)
         {
+            //determine if it is an item or a parent (node vs leaf)
+            //for leaf nodes create a new Gallery_item and copy everything into it.
+            //clone the gallery_item and gallery_group_details need to clone that 
+            //plus max column number +1
+            
+            
             // var clone = insert into _context.GALLERY_ITEM
             //            values ();
             //var data = from r in _context.GALLERY_ROWS
