@@ -1,14 +1,15 @@
-namespace CSETWebCore.Model.Auth;
-
-public class PasswordComplexity
+namespace CSETWebCore.Model.Auth
 {
-    public int PasswordLengthMin { get; set; }
-    public int PasswordLengthMax { get; set; }
-    public int NumberOfHistoricalPasswords { get; set; }
-    public bool PasswordLengthMet { get; set; }
-    public bool PasswordContainsNumbers { get; set; }
-    public bool PasswordContainsLower { get; set; }
-    public bool PasswordContainsUpper { get; set; }
-    public bool PasswordContainsSpecial { get; set; }
-    public bool PasswordNotReused { get; set; }
+    public class PasswordComplexity
+    {
+        public int PasswordLengthMin { get; set; }
+        public int PasswordLengthMax { get; set; }
+        public int NumberOfHistoricalPasswords { get; set; }
+        public bool PasswordLengthMet { get; set; }
+        public bool PasswordContainsNumbers { get; set; }
+        public bool PasswordContainsLower { get; set; }
+        public bool PasswordContainsUpper { get; set; }
+        public bool PasswordContainsSpecial { get; set; }
+        public bool PasswordNotReused { get; set; }
+    }
 }

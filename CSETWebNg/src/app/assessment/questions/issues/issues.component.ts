@@ -37,6 +37,8 @@ import { FindingsService } from '../../../services/findings.service';
 export class IssuesComponent implements OnInit {
   finding: Finding;
   issueTitle = "";
+  issueDescription: string = "";
+  
   subRiskAreas: SubRiskArea[];
   importances: Importance[];
   
@@ -103,6 +105,10 @@ export class IssuesComponent implements OnInit {
             this.finding.title = this.issueTitle;
           }
 
+          if (this.finding.description === null) {
+            this.finding.description = this.generateIssueDescription();
+          }
+          
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
           
@@ -157,6 +163,15 @@ export class IssuesComponent implements OnInit {
     this.findSvc.saveDiscovery(this.finding).subscribe(() => {
       this.dialog.close(true);
     });
+  }
+
+  generateIssueDescription(): string {
+    // Formatting it this way for demo purposes. Will fix it later.
+    let description = `The information security program policies and procedures are not commensurable to its size, complexity, and risk. Each credit union must identify and evaluate risks to its information, develop a plan to mitigate the risks, implement the plan, test the plan, and monitor the need to update the plan.
+
+As information security program is the written plan created and implemented by a credit union to identify and control risks to information and information systems and to properly dispose of information. The plan includes policies and procedures regarding the institution's risk assessment, controls, testing, service-provider oversight, periodic review and updating, and reporting to its board of directors.`;
+
+    return description;
   }
 
   getSelectedRiskArea(id: number) {
