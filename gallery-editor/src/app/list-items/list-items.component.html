@@ -18,15 +18,31 @@
 			</div>
 		</div>
 
-		Add (fill only 'Group' box if adding a group, fill 'Group' and 'Item' if adding as an item):
-		<br>Group
-		<input style="width: 400px;" type="text" #boxAddGroup>
-		<button (click)="addGalleryGroup(boxAddGroup.value)">Add as Group only</button>
-		<br>Item Name
-		<input style="width: 400px;" type="text" #boxAddItem>
-		<button (click)="addGalleryItem(boxAddGroup.value, boxAddItem.value)">Add as Item</button>
+		<br><br>
 
-		<button (click)="addGalleryItem(boxAddGroup.value, boxAddItem.value, boxAddDescription.value, boxAddIconSmall.value, boxAddIconLarge.value )">Add as Item</button>
+		Add (fill only 'Group' box if adding a group, fill 'Group' and 'Item' if adding as an item):
+		<br> 
+		<span style="padding-left: 15px">Group
+			<input style="width: 400px;" type="text" #boxAddGroup>
+		</span>
+		<br>
+		<span style="padding-left: 15px">Item Name
+			<input style="width: 400px;" type="text" #boxAddItem>
+		</span>
+		<br>
+		<span style="padding-left: 15px">Item Description
+			<input style="width: 400px;" type="text" #boxAddDescription>
+		</span>
+		<br>
+		<span style="padding-left: 15px">Icon File Name (small)
+			<input style="width: 200px;" type="text" #boxAddIconSmall>
+		</span>
+		<br>
+		<span style="padding-left: 15px">Icon File Name (large)
+			<input style="width: 200px;" type="text" #boxAddIconLarge>
+		</span>
+		<br>
+		<button (click)="addGalleryItem(boxAddIconSmall.value, boxAddIconLarge.value, boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add as Item</button>
 		<br><br>
 
 		Clone

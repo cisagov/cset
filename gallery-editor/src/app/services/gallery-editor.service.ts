@@ -68,10 +68,15 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryItem(item: any) {
+  addGalleryItem(iconSmall: string, iconLarge: string, description: string, title: string, group: string, columnId: number) {
     return  this.http.get("https://localhost:44310/api/gallery/addItem",  {
       params: {
-        Item_To_Clone: item
+        newIcon_File_Name_Small: iconSmall,
+        newIcon_File_Name_Large: iconLarge,
+        newDescription: description,
+        newTitle: title,
+        group: group,
+        columnId: columnId
       }
     });
   }

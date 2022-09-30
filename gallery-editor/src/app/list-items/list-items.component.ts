@@ -24,6 +24,7 @@ export class ListItemsComponent implements OnInit {
   options: Options = {    
     handle: '.handle'
   };
+
   constructor(private svcGalleryEditor: GalleryEditorService ){   
     
     this.options = {
@@ -90,13 +91,24 @@ export class ListItemsComponent implements OnInit {
   addGalleryGroup(title: string) {
     console.log(title + " would be added");
   }
-  addGalleryItem(group: string, title: string, description: string, iconSmall: string, iconLarge: string) {
+  addGalleryItem(iconSmall: string, iconLarge: string, description: string, title: string, group: string) {
     console.log(title + " would be added");
-    this.svcGalleryEditor.addGalleryItem(group, title, description, iconSmall, iconLarge).subscribe(
+
+    let columnId = 0;
+    for (let i = 0; i < this.response?.rows?.length; i++) {
+      if (this.response?.rows[i]?.group_Title === group) {
+        columnId = this.response?.rows[i]?.galleryItems?.length; //becomes one more than the last columnId
+        break;
+      }
+    }
+    console.log(columnId);
+
+    this.svcGalleryEditor.addGalleryItem(iconSmall, iconLarge, description, title, group, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
+        console.log(this.responseAdd);
       },
-      error => console.log('Gallery Layout error ' + (<Error>error).message)
+      error => console.log('Gallery add item error ' + (<Error>error).message)
     );
   }
 
@@ -109,6 +121,8 @@ export class ListItemsComponent implements OnInit {
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
   }
+
+  
 
 
 }
