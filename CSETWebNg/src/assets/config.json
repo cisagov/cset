@@ -23,7 +23,12 @@
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
 
-    
+    "debug": {
+        "showBuildTime": false,
+        "showQuestionAndRequirementIDs": false,
+        "canDeleteCustomModules": true
+    },
+
     "installationMode": "",
     "mobileEnvironment": "",
     "buttonLabelY": "Yes",
