@@ -15,12 +15,20 @@ export class IseMeritComponent implements OnInit {
   response: any = null; 
   demographics: any = null; 
 
-  workPerformed: boolean = null;
-  resultsOfReviewText: string = null;
-
   examinerFindings: string[] = [];
+  examinerFindingsTotal: number = 0;
+
   dors: string[] = [];
+  dorsTotal: number = 0;
+
   supplementalFacts: string[] = [];
+  supplementalFactsTotal: number = 0;
+
+
+  subCategories: string[] = [];
+
+  previousIssue: any = null;
+
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -37,19 +45,18 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;  
-        console.log(this.response); 
 
-        console.log('length is: ' + this.response?.length);
         for(let i = 0; i < this.response?.length; i++) {
           let finding = this.response[i];
           if(finding.finding.type === 'Examiner Finding') {
-            this.examinerFindings.push(finding.category.title);
+            this.addExaminerFinding(finding.category.title);
           }
           if(finding.finding.type === 'DOR') {
-            this.dors.push(finding.category.title);
+            this.addDOR(finding.category.title);
           }
           if(finding.finding.type === 'Supplemental Fact') {
-            this.supplementalFacts.push(finding.category.title);
+            console.log(i);
+            this.addSupplementalFact(finding.category.title);
           }
         }
       },
@@ -73,21 +80,27 @@ export class IseMeritComponent implements OnInit {
     // }
   }
 
-  addExaminerFinding(finding: any) {
-    this.examinerFindings.push(finding.category.title);
+  addExaminerFinding(title: any) {
+    if (!this.examinerFindings.includes(title)) {
+      this.examinerFindings.push(title);
+    }
+    this.examinerFindingsTotal ++;
   }
 
-  addDOR(finding: any) {
-    this.dors.push(finding.category.title);
+  addDOR(title: any) {
+    if (!this.dors.includes(title)) {
+      this.dors.push(title);
+    }
+    this.dorsTotal = this.dorsTotal + 1;
   }
 
-  addSupplementalFact(finding: any) {
-    this.supplementalFacts.push(finding.category.title);
+  addSupplementalFact(title: any) {
+    console.log(title + 'here');
+    if (!this.supplementalFacts.includes(title)) {
+      console.log(title);
+      this.supplementalFacts.push(title);
+    }
+    this.supplementalFactsTotal ++;
   }
-
-  wastedSpace(){
-    return;
-  }
-
 
 }

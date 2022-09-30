@@ -224,22 +224,46 @@
             </div>
         </div>
         <div *ngIf="this.findingsResponse?.length > 0">
-            <div *ngIf="this.examinerFindings.length > 0">
-                {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
+            <div *ngIf="this.examinerFindingsTotal > 0">
+                <span *ngIf="this.examinerFindingsTotal === 1">
+                    1 Examiner Finding was drafted in the following category:
+                </span>
+                <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length === 1">
+                    {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following category:
+                </span>
+                <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length > 1">
+                    {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following categories:
+                </span>
                 <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                     {{ issue }}
                 </div>
                 <br>
             </div>
-            <div *ngIf="this.dors.length > 0">
-                {{ this.dors.length }} DORs were drafted in the following categories:
+            <div *ngIf="this.dorsTotal > 0">
+                <span *ngIf="this.dorsTotal === 1">
+                    1 DOR was drafted in the following category:
+                </span>
+                <span *ngIf="this.dorsTotal > 1 && this.dors.length === 1">
+                    {{ this.dorsTotal }} DORs were drafted in the following category:
+                </span>
+                <span *ngIf="this.dorsTotal > 1 && this.dors.length > 1">
+                    {{ this.dorsTotal }} DORs were drafted in the following categories:
+                </span>
                 <div *ngFor="let issue of this.dors" style="padding-left: 30px">
                     {{ issue }}
                 </div>
                 <br>
             </div>
-            <div *ngIf="this.supplementalFacts.length > 0">
-                {{ this.supplementalFacts.length }} Supplemental Facts were drafted in the following categories:
+            <div *ngIf="this.supplementalFactsTotal > 0">
+                <span *ngIf="this.supplementalFactsTotal === 1">
+                    1 Supplemental Fact was drafted in the following category:
+                </span>
+                <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length === 1">
+                    {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following category:
+                </span>
+                <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length > 1">
+                    {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following categories:
+                </span>
                 <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
                     {{ issue }}
                 </div>
