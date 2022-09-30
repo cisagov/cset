@@ -141,22 +141,46 @@
                     Performed review of the security program using the ISE Toolbox.
                 </p>
                 <div *ngIf="this.response?.length > 0">
-                    <div *ngIf="this.examinerFindings.length > 0">
-                        {{ this.examinerFindings.length }} Examiner Findings were drafted in the following categories:
+                    <div *ngIf="this.examinerFindingsTotal > 0">
+                        <span *ngIf="this.examinerFindingsTotal === 1">
+                            1 Examiner Finding was drafted in the following category:
+                        </span>
+                        <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length === 1">
+                            {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following category:
+                        </span>
+                        <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length > 1">
+                            {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following categories:
+                        </span>
                         <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
                     </div>
-                    <div *ngIf="this.dors.length > 0">
-                        {{ this.dors.length }} DORs were drafted in the following categories:
+                    <div *ngIf="this.dorsTotal > 0">
+                        <span *ngIf="this.dorsTotal === 1">
+                            1 DOR was drafted in the following category:
+                        </span>
+                        <span *ngIf="this.dorsTotal > 1 && this.dors.length === 1">
+                            {{ this.dorsTotal }} DORs were drafted in the following category:
+                        </span>
+                        <span *ngIf="this.dorsTotal > 1 && this.dors.length > 1">
+                            {{ this.dorsTotal }} DORs were drafted in the following categories:
+                        </span>
                         <div *ngFor="let issue of this.dors" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
                     </div>
-                    <div *ngIf="this.supplementalFacts.length > 0">
-                        {{ this.supplementalFacts.length }} Supplemental Facts were drafted in the following categories:
+                    <div *ngIf="this.supplementalFactsTotal > 0">
+                        <span *ngIf="this.supplementalFactsTotal === 1">
+                            1 Supplemental Fact was drafted in the following category:
+                        </span>
+                        <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length === 1">
+                            {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following category:
+                        </span>
+                        <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length > 1">
+                            {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following categories:
+                        </span>
                         <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
                             {{ issue }}
                         </div>
@@ -190,25 +214,21 @@
                             <strong>Issue Type:</strong> {{ finding?.finding?.type }}
                         </div>
                         <div>
-                            <strong>Description:</strong> {{ finding?.finding?.description }}
+                            <strong>Description:</strong> <br>{{ finding?.finding?.description }} <br> <button>Copy</button>
+                        </div>
+                        <div>
+                            <strong>Action Item: </strong> <button>Copy All</button>
+                            <br> <button>Copy</button>1.	The security program must be approved by the Board of Directors
+                            <br>2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report. <button>Copy</button> 
+                        </div>
+                        <div>
+                            <strong>Regulatory Citation: </strong> <a href="https://www.ecfr.gov/current/title-12/chapter-VII/subchapter-A/part-748/section-748.0#p-748.0(b)(2)" target="_blank">12 C.F.R § 748.0 (b)(2)</a>
                         </div>
                         <div>
                             <strong>Risk Area:</strong> {{ finding?.risk?.risk_Area }}
                         </div>
                         <div>
                             <strong>Sub Risk Area:</strong> {{ finding?.risk?.sub_Risk_Area }}
-                        </div>
-                        <div>
-                            <strong>Disposition:</strong> {{ finding?.finding?.disposition }}
-                        </div>
-                        <div>
-                            <strong>Identified On:</strong> {{ finding?.finding?.identified_Date }}
-                        </div>
-                        <div>
-                            <strong>Due Date:</strong> {{ finding?.finding?.due_Date }}
-                        </div>
-                        <div>
-                            <strong>Importance:</strong> {{ finding?.importance?.value }}
                         </div>
                         
                         <hr class="page-line">

@@ -42,8 +42,13 @@ export class IseExaminationComponent implements OnInit {
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
 
   examinerFindings: string[] = [];
+  examinerFindingsTotal: number = 0;
+
   dors: string[] = [];
+  dorsTotal: number = 0;
+
   supplementalFacts: string[] = [];
+  supplementalFactsTotal: number = 0;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -74,13 +79,14 @@ export class IseExaminationComponent implements OnInit {
         for(let i = 0; i < this.findingsResponse?.length; i++) {
           let finding = this.findingsResponse[i];
           if(finding.finding.type === 'Examiner Finding') {
-            this.examinerFindings.push(finding.category.title);
+            this.addExaminerFinding(finding.category.title);
           }
           if(finding.finding.type === 'DOR') {
-            this.dors.push(finding.category.title);
+            this.addDOR(finding.category.title);
           }
           if(finding.finding.type === 'Supplemental Fact') {
-            this.supplementalFacts.push(finding.category.title);
+            console.log(i);
+            this.addSupplementalFact(finding.category.title);
           }
         }
       },
@@ -174,6 +180,29 @@ export class IseExaminationComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  addExaminerFinding(title: any) {
+    if (!this.examinerFindings.includes(title)) {
+      this.examinerFindings.push(title);
+    }
+    this.examinerFindingsTotal ++;
+  }
+
+  addDOR(title: any) {
+    if (!this.dors.includes(title)) {
+      this.dors.push(title);
+    }
+    this.dorsTotal = this.dorsTotal + 1;
+  }
+
+  addSupplementalFact(title: any) {
+    console.log(title + 'here');
+    if (!this.supplementalFacts.includes(title)) {
+      console.log(title);
+      this.supplementalFacts.push(title);
+    }
+    this.supplementalFactsTotal ++;
   }
   
 }
