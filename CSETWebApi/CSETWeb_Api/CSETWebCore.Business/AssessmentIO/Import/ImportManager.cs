@@ -136,7 +136,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             {
                                 context.SETS.Add(setResult.Result);
 
-                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs()).Where(s => s.Question_Id != 0).ToList())
+                                foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs(_context)).Where(s => s.Question_Id != 0).ToList())
                                 {
                                     context.Entry(question).State = EntityState.Unchanged;
                                 }

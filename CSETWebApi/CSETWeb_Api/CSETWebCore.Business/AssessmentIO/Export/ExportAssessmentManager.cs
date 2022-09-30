@@ -176,7 +176,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer).Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jDOCUMENT_FILE.Add(TinyMapper.Map<DOCUMENT_FILE,jDOCUMENT_FILE>(item));
-                foreach (var a in item.ANSWERs())
+                foreach (var a in item.ANSWERs(_context))
                 {
                     model.jDOCUMENT_ANSWERS.Add(new jDOCUMENT_ANSWERS()
                     {

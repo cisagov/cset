@@ -268,7 +268,7 @@ namespace CSETWebCore.Business.Question
         {
             get
             {
-                return (ICollection<DOCUMENT_FILE>)Answer.DOCUMENT_FILEs();
+                return (ICollection<DOCUMENT_FILE>)Answer.DOCUMENT_FILEs(_context);
             }
         }
 
@@ -360,7 +360,7 @@ namespace CSETWebCore.Business.Question
                 else if (NEW_REQUIREMENT != null)
                     return NEW_REQUIREMENT.Requirement_Title;
                 else if (Question != null && IsComponent == false)
-                    return String.Join(", ", Question.NEW_REQUIREMENTs().Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category != null && s.Original_Set_NameNavigation.Set_Category.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
+                    return String.Join(", ", Question.NEW_REQUIREMENTs(_context).Where(s => DictionaryStandards.Keys.Contains(s.Original_Set_NameNavigation.Set_Name) && s.Original_Set_NameNavigation.Set_Category != null && s.Original_Set_NameNavigation.Set_Category.Set_Category_Id != 9).OrderBy(s => s.Original_Set_NameNavigation.Set_Name).ThenBy(s => s.Requirement_Title).Select(s => s.Requirement_Title).Distinct());
                 else
                     return "";
             }
@@ -840,7 +840,7 @@ namespace CSETWebCore.Business.Question
             if (!IsRequirement)
             {
                 SortSet = set == null ? Question.Original_Set_NameNavigation : set.Set_NameNavigation;
-                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs().FirstOrDefault() : set.Requirement;
+                NEW_REQUIREMENT = set == null ? Question.NEW_REQUIREMENTs(_context).FirstOrDefault() : set.Requirement;
             }
         }
 
@@ -908,8 +908,7 @@ namespace CSETWebCore.Business.Question
 
             this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
-            this.setDocumentIds = context.DOCUMENT_ANSWERS.Where(x => x.Answer_Id == answer.Answer_Id).Select(x => x.Document_Id).ToHashSet();
-            //this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
+            this.setDocumentIds = answer.DOCUMENT_FILEs(_context).Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
             if (setParams)
                 this.Parameters = new ObservableCollection<ParameterContainer>();
@@ -1054,7 +1053,7 @@ namespace CSETWebCore.Business.Question
                     var requirements = new List<NEW_REQUIREMENT>();
                     NEW_REQUIREMENT standardRequirement = null;
                     var standardList = new List<string>();
-                    if (Question?.NEW_REQUIREMENTs() != null)
+                    if (Question?.NEW_REQUIREMENTs(_context) != null)
                     {
                         foreach (var item in DictionaryStandards)
                         {
@@ -1067,7 +1066,7 @@ namespace CSETWebCore.Business.Question
                         }
                         foreach (var setName in standardList)
                         {
-                            standardRequirement = Question?.NEW_REQUIREMENTs()?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info) && t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
+                            standardRequirement = Question?.NEW_REQUIREMENTs(_context)?.FirstOrDefault(t => !String.IsNullOrEmpty(t.Supplemental_Info) && t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName));
                             if (standardRequirement != null)
                             {
                                 break;
@@ -1076,7 +1075,7 @@ namespace CSETWebCore.Business.Question
                     }
                     var supplemental = ProfileQuestionData?.SupplementalInfo ??
                         (standardRequirement ??
-                        Question?.NEW_REQUIREMENTs()?.FirstOrDefault() ??
+                        Question?.NEW_REQUIREMENTs(_context)?.FirstOrDefault() ??
                         NEW_REQUIREMENT)?.Supplemental_Info.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
                     if (String.IsNullOrEmpty(supplemental))
                     {

@@ -104,7 +104,7 @@ namespace CSETWebCore.Helpers
                                 }
                             }
 
-                            foreach (var question in requirementResult.Result.NEW_QUESTIONs().ToList())
+                            foreach (var question in requirementResult.Result.NEW_QUESTIONs(_context).ToList())
                             {
                                 NEW_QUESTION existingQuestion;
                                 if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
@@ -125,7 +125,7 @@ namespace CSETWebCore.Helpers
                         }
                     }
                 }
-                var questions = requirements.SelectMany(s => s.NEW_QUESTIONs()).ToList();
+                var questions = requirements.SelectMany(s => s.NEW_QUESTIONs(_context)).ToList();
                 for (var i = 1; i <= questions.Count(); i++)
                 {
                     var question = questions[i - 1];
@@ -168,7 +168,7 @@ namespace CSETWebCore.Helpers
             Dictionary<int, List<QuestionAndHeading>> reqQuestions = reqs.Select(s => new
             {
                 s.Requirement_Id,
-                Questions = s.NEW_QUESTIONs().Select(t =>
+                Questions = s.NEW_QUESTIONs(_context).Select(t =>
 new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id = t.Heading_Pair_Id })
             })
                 .ToDictionary(s => s.Requirement_Id, s => s.Questions.ToList());
