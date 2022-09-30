@@ -879,38 +879,37 @@ namespace CSETWebCore.Business.Question
         public int NercRankNumber { get; set; }
 
         public QuestionPoco(CSETContext context, ANSWER answer, NEW_REQUIREMENT new_requirement, RequirementLevel requirementLevel)
-            : this(answer)
+            : this(answer, context)
         {
-            this._context = context;
             this.NEW_REQUIREMENT = new_requirement;
             this.RequirementLevel = requirementLevel;
         }
 
-        public QuestionPoco(CSETContext context, ANSWER answer, NEW_QUESTION question) : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, NEW_QUESTION question) : this(answer, context)
         {
-            this._context = context;
             this.Question = question;
         }
 
         public QuestionPoco(CSETContext context, ANSWER answer, SETS set, ProfileQuestion profileQuestion)
-            : this(answer)
+            : this(answer, context)
         {
-            this._context = context;
             this.ProfileQuestionData = profileQuestion;
             this.DictionaryStandards[set.Set_Name] = set;
         }
 
-        public QuestionPoco(CSETContext context, ANSWER answer, MATURITY_QUESTIONS question) : this(answer)
+        public QuestionPoco(CSETContext context, ANSWER answer, MATURITY_QUESTIONS question) : this(answer, context)
         {
-            this._context = context;
             this.MaturityQuestion = question;
         }
 
-        private QuestionPoco(ANSWER answer, bool setParams = true)
+        private QuestionPoco(ANSWER answer, CSETContext context, bool setParams = true)
         {
+            this._context = context;
+
             this.DictionaryStandards = new Dictionary<String, SETS>();
             this.Answer = answer;
-            this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
+            this.setDocumentIds = context.DOCUMENT_ANSWERS.Where(x => x.Answer_Id == answer.Answer_Id).Select(x => x.Document_Id).ToHashSet();
+            //this.setDocumentIds = answer.DOCUMENT_FILEs().Select(x => x.Document_Id).ToHashSet();
             DocumentCount = setDocumentIds.Count;
             if (setParams)
                 this.Parameters = new ObservableCollection<ParameterContainer>();
