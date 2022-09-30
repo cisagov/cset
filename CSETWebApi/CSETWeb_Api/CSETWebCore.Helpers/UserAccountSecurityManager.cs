@@ -176,12 +176,7 @@ namespace CSETWebCore.Helpers
                 user.PasswordResetRequired = true;
 
                 // generate a temp password
-                var password = UniqueIdGenerator.Instance.GetBase32UniqueId(6);
-
-                // add complexity:  insert random lower case letter, digits and special character
-                password = InsertRandom(password, "abcdefghijklmnopqrstuvwxyz", 1);
-                password = InsertRandom(password, "0123456789", 2);
-                password = InsertRandom(password, "*!@$%^&:;,.?/~_+-=|", 1);
+                var password = _userBusiness.CreateTempPassword();
 
 
 #if DEBUG
@@ -226,19 +221,6 @@ namespace CSETWebCore.Helpers
 
                 return false;
             }
-        }
-
-
-        /// <summary>
-        /// Inserts a number of characters randomly pulled from the choices string.
-        /// </summary>
-        private string InsertRandom(string s, string choices, int number)
-        {
-            for (int i = 1; i <= number; i++)
-            {
-                s = s.Insert(new Random().Next(1, s.Length), choices[new Random().Next(0, choices.Length)].ToString());
-            }
-            return s;
         }
 
 
