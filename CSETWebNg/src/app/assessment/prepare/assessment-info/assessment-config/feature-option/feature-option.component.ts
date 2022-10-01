@@ -66,7 +66,12 @@ export class FeatureOptionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { 
+    console.log("this.assessSvc.assessment: " + JSON.stringify(this.assessSvc.assessment, null, 4));
     this.isNotLegacy = !this.checkIfLegacy();
+    
+    if (this.assessSvc.assessment.useMaturity && this.assessSvc.assessment.maturityModel?.modelName !== 'ACET') {
+      this.assessSvc.assessment.isAcetOnly = false;
+    }
   } 
 
   /**
