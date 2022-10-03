@@ -136,11 +136,4 @@ export class FindingsComponent implements OnInit {
     });
   }
 
-  observationOrIssue () {
-    if (this.assessSvc.isISE()) {
-      return 'Observation';
-    }
-    return 'Issue';
-  }
-
 }

@@ -48,7 +48,7 @@ namespace CSETWebCore.Business.Document
             List<Model.Document.Document> list = new List<Model.Document.Document>();
 
             var files = _context.ANSWER
-                .Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs().ToList();
+                .Where(a => a.Answer_Id == answerId).FirstOrDefault()?.DOCUMENT_FILEs(_context).ToList();
 
             if (files == null)
             {
@@ -134,7 +134,7 @@ namespace CSETWebCore.Business.Document
         public List<int> GetQuestionsForDocument(int id)
         {
             var ans = _context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS)
-                .Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs().ToList();
+                .Where(d => d.Document_Id == id).FirstOrDefault().ANSWERs(_context).ToList();
 
             List<int> qlist = new List<int>();
 

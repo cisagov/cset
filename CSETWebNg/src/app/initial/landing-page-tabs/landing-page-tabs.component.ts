@@ -82,7 +82,6 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
    *
    */
    checkPasswordReset() {
-    console.log('b');
     if (this.authSvc.isLocal) {
       this.continueStandAlone();
       return;
@@ -90,7 +89,6 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
     this.authSvc.passwordStatus()
       .subscribe((result: PasswordStatusResponse) => {
-        console.log('c');
         if (result) {
           if (!result.resetRequired) {
             this.openPasswordDialog(true);

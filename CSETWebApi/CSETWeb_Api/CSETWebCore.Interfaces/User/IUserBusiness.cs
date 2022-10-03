@@ -12,5 +12,9 @@ namespace CSETWebCore.Interfaces.User
         CreateUser GetUserInfo(int userId);
         UserCreateResponse CheckUserExists(UserDetail userDetail);
         UserDetail GetUserDetail(int userId);
+
+        string CreateTempPassword();
+
+        string InsertRandom(string s, string choices, int number);
     }
 }

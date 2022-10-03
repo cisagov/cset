@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
+import { LayoutService } from '../../services/layout.service';
 
 
 /**
@@ -22,6 +23,7 @@ export class RraMiniUserGuideComponent {
   constructor(
     private dialog: MatDialogRef<RraMiniUserGuideComponent>,
     public configSvc: ConfigService,
+    public layoutSvc: LayoutService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
