@@ -3,12 +3,13 @@ using Microsoft.Data.SqlClient;
 using System.IO;
 namespace UpgradeLibrary.Upgrade
 {
-    internal class ConvertDatabase11013 : ConvertSqlDatabase
+    internal class ConvertDatabase12002 : ConvertSqlDatabase
     {
-        public ConvertDatabase11013(string path) : base(path)
+        public ConvertDatabase12002(string path) : base(path)
         {
-            myVersion = new Version("11.0.1.3");
+            myVersion = new Version("12.0.0.2");
         }
+
         /// <summary>
         /// Runs the database update script
         /// </summary>
@@ -17,11 +18,12 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12001_to_12002.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading database version 11.0.1.2 to 11.0.1.3: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 12.0.0.1 to 12.0.0.2: " + e.Message);
             }
         }
     }
