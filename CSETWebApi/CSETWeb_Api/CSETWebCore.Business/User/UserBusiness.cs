@@ -20,6 +20,8 @@ namespace CSETWebCore.Business.User
             _context = context;
             _password = password;
         }
+
+
         /// <summary>
         /// Creates a new USER record.  Generates a temporary password and 
         /// returns it as part of the response.  
@@ -41,26 +43,25 @@ namespace CSETWebCore.Business.User
             }
 
 
-            // generate and hash a temporary password 
-            string temporaryPassword = UniqueIdGenerator.Instance.GetBase32UniqueId(10);
-            string hashedPassword;
-            string salt;
-            _password.HashPassword(temporaryPassword, out hashedPassword, out salt);
+            string password = CreateTempPassword();
+
+            new PasswordHash().HashPassword(password, out string hash, out string salt);
 
 
             // create new records for USER and USER_DETAIL_INFORMATION
-
             var u = new USERS()
             {
                 PrimaryEmail = userDetail.Email,
                 FirstName = userDetail.FirstName,
                 LastName = userDetail.LastName,
-                Password = hashedPassword,
+                Password = hash,
                 Salt = salt,
                 IsSuperUser = false,
                 PasswordResetRequired = true
             };
             tmpContext.USERS.Add(u);
+
+
             try
             {
                 tmpContext.SaveChanges();
@@ -80,14 +81,29 @@ namespace CSETWebCore.Business.User
                 tmpContext.USERS.Remove(u);
             }
 
+
+            // log the temp password to history
+            var history = new PASSWORD_HISTORY()
+            {
+                Created = DateTime.UtcNow,
+                UserId = u.UserId,
+                Is_Temp = true,
+                Password = hash,
+                Salt = salt
+            };
+            _context.PASSWORD_HISTORY.Add(history);
+
+
             UserCreateResponse resp = new UserCreateResponse
             {
                 UserId = u.UserId == 0 ? 1 : u.UserId,
                 PrimaryEmail = u.PrimaryEmail,
-                TemporaryPassword = temporaryPassword
+                TemporaryPassword = password
             };
+
             return resp;
         }
+
 
         /// <summary>
         /// Note that for now we are limiting the number of questions to two.
@@ -193,6 +209,8 @@ namespace CSETWebCore.Business.User
 
             return u;
         }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -252,27 +270,56 @@ namespace CSETWebCore.Business.User
         /// <returns></returns>
         public UserDetail GetUserDetail(int userId)
         {
-            using (var db = new CSETContext())
+            var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+
+            if (user == null)
             {
-                var user = db.USERS.Where(x => x.UserId == userId).FirstOrDefault();
-
-                if (user == null)
-                {
-                    return null;
-                }
-
-                UserDetail ud = new UserDetail
-                {
-                    UserId = user.UserId,
-                    Email = user.PrimaryEmail,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    IsSuperUser = user.IsSuperUser,
-                    PasswordResetRequired = user.PasswordResetRequired ?? true
-                };
-
-                return ud;
+                return null;
             }
+
+            UserDetail ud = new UserDetail
+            {
+                UserId = user.UserId,
+                Email = user.PrimaryEmail,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsSuperUser = user.IsSuperUser,
+                PasswordResetRequired = user.PasswordResetRequired ?? true
+            };
+
+            return ud;
+
+        }
+
+
+        /// <summary>
+        /// Inserts a number of characters randomly pulled from the choices string.
+        /// </summary>
+        public string InsertRandom(string s, string choices, int number)
+        {
+            for (int i = 1; i <= number; i++)
+            {
+                s = s.Insert(new Random().Next(1, s.Length), choices[new Random().Next(0, choices.Length)].ToString());
+            }
+            return s;
+        }
+
+
+        /// <summary>
+        /// Generates a temporary password with some complexity.
+        /// </summary>
+        /// <returns></returns>
+        public string CreateTempPassword()
+        {
+            // generate a temp password
+            var password = UniqueIdGenerator.Instance.GetBase32UniqueId(10);
+
+            // add complexity:  insert random lower case letter, digits and special character
+            password = InsertRandom(password, "abcdefghijklmnopqrstuvwxyz", 1);
+            password = InsertRandom(password, "0123456789", 2);
+            password = InsertRandom(password, "*!@$%^&:;,.?/~_+-=|", 1);
+
+            return password;
         }
     }
 }

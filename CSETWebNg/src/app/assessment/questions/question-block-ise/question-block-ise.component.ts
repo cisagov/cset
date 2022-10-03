@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -31,11 +31,11 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
-import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 import { FindingsService } from '../../../services/findings.service';
+import { IssuesComponent } from '../issues/issues.component';
 
 
 /**
@@ -75,11 +75,20 @@ export class QuestionBlockIseComponent implements OnInit {
   convoBuffer = '\n- - End of Comment - -\n';
   // altAnswerConversation = [];
 
+  // To do: Add this to a db table and pull in dynamically.
+  issueAutoPopulate = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
+    7206, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7216, 7217, 7219, 7220, 7222, 7223, 7224, 
+    7225, 7227, 7233, 7235, 7236, 7237, 7238, 7240, 7241, 7242, 7243, 7244, 7246, 7247, 7248, 
+    7249, 7251, 7252, 7253, 7256, 7258, 7259, 7263, 7264, 7267, 7268, 7269, 7270, 7271, 7272, 
+    7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]);
+
   showQuestionIds = false;
 
   showCorePlus: boolean = false;
   showIssues: boolean = false;
   coreChecked: boolean = false;
+
+  dialogRef: MatDialogRef <any>;
 
   /**
    * Constructor.
@@ -209,6 +218,11 @@ export class QuestionBlockIseComponent implements OnInit {
       is_Maturity: q.is_Maturity,
       componentGuid: q.componentGuid
     };
+
+    if (q.answer === 'N' && this.issueAutoPopulate.has(q.questionId)) {
+      console.log("You've anwered no on an important question. Generating a new Issue.");
+      this.autoGenerateIssue(0);
+    }
 
     this.refreshReviewIndicator();
 
@@ -577,13 +591,21 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditDiscovery(findid) {
-    //this.saveAnswer();
-  
-    // TODO Always send an empty one for now.
-    // At some juncture we need to change this to
-    // either send the finding to be edited or
-    // send an empty one.
+  addEditIssue(findid) {
+    /* 
+    * Per the customer's requests, an Issue's title should include the main 
+    * grouping header text and the sub grouping header text.
+    * this is an attempt to re-create that data which is outside of an Issue's scope.
+    * SCUEP q's 1- 7 and CORE/CORE+ q's 1 - 10 use one domain, CORE/CORE+ q's 11+ have a different domain
+    * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
+    */
+    let name = "";
+    if (this.myGrouping.questions[0].questionId <= 7281) {
+      name = ("Information Security Program, " + this.myGrouping.title);
+    } else {
+      name = ("Cybersecurity Controls, " + this.myGrouping.title);
+    }
+
     const find: Finding = {
       question_Id: this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
@@ -596,32 +618,91 @@ export class QuestionBlockIseComponent implements OnInit {
       issue: '',
       recommendations: '',
       resolution_Date: null,
-      vulnerabilities: ''
+      vulnerabilities: '',
+      title: name,
+      type: null,
+      description: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
+      disposition: null,
+      identified_Date: null,
+      due_Date: null
     };
-  
-    this.dialog.open(FindingsComponent, { 
-      data: find, 
+    
+    this.dialog.open(IssuesComponent, {
+      data: find,
       disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '1200px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '1200px'
+      width: this.layoutSvc.hp ? '90%' : '60vh',
+      height: this.layoutSvc.hp ? '90%' : '85vh',
     }).afterClosed().subscribe(result => {
-        const answerID = find.answer_Id;
-        this.findSvc.getAllDiscoveries(answerID).subscribe(
-          (response: Finding[]) => {
-            this.extras.findings = response;
-            this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-            this.myGrouping.questions[0].answer_Id = find.answer_Id;
-          },
-          error => console.log('Error updating findings | ' + (<Error>error).message)
-        );
-      });
+      const answerID = find.answer_Id;
+      this.findSvc.getAllDiscoveries(answerID).subscribe(
+        (response: Finding[]) => {
+          this.extras.findings = response;
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+          this.myGrouping.questions[0].answer_Id = find.answer_Id;
+        },
+        error => console.log('Error updating findings | ' + (<Error>error).message)
+      );
+    });
+  }
+
+  // Making a separate function ahead of the demo in case client wants custom functionality for
+  // auto generated issues vs manually created ones.
+  autoGenerateIssue(findid) {
+    let name = "";
+    if (this.myGrouping.questions[0].questionId <= 7281) {
+      name = ("Information Security Program, " + this.myGrouping.title);
+    } else {
+      name = ("Cybersecurity Controls, " + this.myGrouping.title);
+    }
+
+    const find: Finding = {
+      question_Id: this.myGrouping.questions[0].questionId,
+      answer_Id: this.myGrouping.questions[0].answer_Id,
+      finding_Id: findid,
+      summary: '',
+      finding_Contacts: null,
+      impact: '',
+      importance: null,
+      importance_Id: 1,
+      issue: '',
+      recommendations: '',
+      resolution_Date: null,
+      vulnerabilities: '',
+      title: name,
+      type: null,
+      description: null,
+      sub_Risk_Area_Id: null,
+      subRiskArea: null,
+      disposition: null,
+      identified_Date: null,
+      due_Date: null
+    };
+
+    this.dialog.open(IssuesComponent, {
+      data: find,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '60vh',
+      height: this.layoutSvc.hp ? '90%' : '85vh',
+    }).afterClosed().subscribe(result => {
+      const answerID = find.answer_Id;
+      this.findSvc.getAllDiscoveries(answerID).subscribe(
+        (response: Finding[]) => {
+          this.extras.findings = response;
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+          this.myGrouping.questions[0].answer_Id = find.answer_Id;
+        },
+        error => console.log('Error updating findings | ' + (<Error>error).message)
+      );
+    });
   }
   
   /**
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteDiscovery(findingToDelete) {
+  deleteIssue(findingToDelete) {
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
   

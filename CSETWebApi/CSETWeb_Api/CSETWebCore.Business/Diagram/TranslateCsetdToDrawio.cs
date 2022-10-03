@@ -15,8 +15,9 @@ namespace CSETWebCore.Business.Diagram
 {
     public class TranslateCsetdToDrawio
     {
-
         #region class-level variables
+
+        CSETContext _context;
 
         /// <summary>
         /// The origin document (CSETD)
@@ -59,7 +60,7 @@ namespace CSETWebCore.Business.Diagram
         /// Store the properties we know about each symbol.
         /// </summary>
         List<COMPONENT_SYMBOLS> symbols = null;
-        Dictionary<string,COMPONENT_SYMBOLS> legacyNames = null;
+        Dictionary<string, COMPONENT_SYMBOLS> legacyNames = null;
         #endregion
 
         /// <summary>
@@ -67,8 +68,10 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="csetd"></param>
         /// <returns></returns>
-        public XmlDocument Translate(string csetd)
+        public XmlDocument Translate(CSETContext context, string csetd)
         {
+            this._context = context;
+
             InitializeSymbolFilenames();
 
             xCsetd.LoadXml(csetd);
@@ -123,8 +126,8 @@ namespace CSETWebCore.Business.Diagram
                 xL.SetAttribute("id", GetID(""));
                 xL.SetAttribute("parent", "0");
                 xL.SetAttribute("value", ChildValue(layer, "c:layername"));
-                string visible = ChildValue(layer, "c:visible"); 
-                if(visible == null)
+                string visible = ChildValue(layer, "c:visible");
+                if (visible == null)
                 {
                     visible = "true";
                 }
@@ -167,7 +170,7 @@ namespace CSETWebCore.Business.Diagram
                 if (zoneType == null)
                 {
                     zoneType = "Other";
-                }                    
+                }
 
                 if (zoneType.ToLower() == "externaldmz")
                 {
@@ -663,14 +666,11 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         private void InitializeSymbolFilenames()
         {
-            using (CSETContext db = new CSETContext())
-            {
-                symbols = db.COMPONENT_SYMBOLS.ToList();
-                legacyNames = (from a in db.COMPONENT_NAMES_LEGACY
-                               join b in db.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
-                               b.Component_Symbol_Id
-                               select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
-            }
+            symbols = _context.COMPONENT_SYMBOLS.ToList();
+            legacyNames = (from a in _context.COMPONENT_NAMES_LEGACY
+                           join b in _context.COMPONENT_SYMBOLS on a.Component_Symbol_id equals
+                           b.Component_Symbol_Id
+                           select new { a, b }).ToDictionary(x => x.a.Old_Symbol_Name, x => x.b);
         }
 
 

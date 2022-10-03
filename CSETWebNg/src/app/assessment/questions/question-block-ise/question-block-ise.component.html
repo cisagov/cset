@@ -301,26 +301,26 @@
                             <div>Issue {{ i+1 }}</div>
                         </td>
                         <td style="height:20px">
-                            <div>{{find.summary}}</div>
+                            <div>{{find.title}}</div>
                         </td>
                         <td>
                             <div>{{find.importance?.value}}</div>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                (click)="addEditDiscovery(find.finding_Id)">
+                                (click)="addEditIssue(find.finding_Id)">
                                 <span class="mr-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                                (click)="deleteDiscovery(find)">
+                                (click)="deleteIssue(find)">
                                 <span class="mr-1 cset-icons-trash-can"></span>
                             </button>
                         </td>
                     </tr>
                 </table>
-                <button class="btn btn-primary add mt-2 mb-4" (click)="addEditDiscovery(0)">Add an Issue</button>
+                <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(0)">Add an Issue</button>
             </div>
 
             <div *ngIf="isFinalQuestion(q.questionId)">
