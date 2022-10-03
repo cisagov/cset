@@ -11,7 +11,7 @@ BEGIN
 	DECLARE @result int;  
 	begin
 	BEGIN TRANSACTION;  
-	EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';
+	EXEC @result = sp_getapplock @Resource = '[Answer]', @LockMode = 'Exclusive';
 	INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id],[Answer_Text],[Question_Type],[Assessment_Id])     
 		select mq.Mat_Question_Id,Answer_Text = 'U', Question_Type='Maturity', Assessment_Id =@Assessment_Id
 		from [dbo].[MATURITY_QUESTIONS] mq
@@ -27,7 +27,7 @@ BEGIN
 		END  
 		ELSE  
 		BEGIN  
-			EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
+			EXEC sp_releaseapplock @Resource = '[Answer]'; 	
 			COMMIT TRANSACTION;  
 		END
 	end
