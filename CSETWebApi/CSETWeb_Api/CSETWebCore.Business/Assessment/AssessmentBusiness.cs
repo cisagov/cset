@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.Assessment
                 // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
-                assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : 0;
+                assessment.Assets = result.aa.Assets != null ? long.Parse(result.aa.Assets) : 0;
 
 
                 // Fields located on the Overview page
