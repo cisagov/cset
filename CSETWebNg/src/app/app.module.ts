@@ -491,6 +491,7 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
+import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 
 @NgModule({
     imports: [
@@ -762,6 +763,7 @@ import { SearchPageComponent } from './initial/search-page/search-page.component
         IseAnsweredQuestionsComponent,
         IseMeritComponent,
         IseExaminationComponent,
+        IseExaminerComponent,
         IseDonutChartComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,

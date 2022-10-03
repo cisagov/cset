@@ -181,6 +181,7 @@ import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-char
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
+import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -455,6 +456,7 @@ const appRoutes: Routes = [
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
       { path: 'iseexamination', component: IseExaminationComponent },
+      { path: 'iseexaminer', component: IseExaminerComponent },
       { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
       { path: 'isedonutchart', component: IseDonutChartComponent },
       { path: 'isemerit', component: IseMeritComponent },
