@@ -671,6 +671,7 @@ namespace CSETWebCore.Business.Assessment
                     "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
             }
 
+            if(assessment.TypeTitle!=null)
             if (assessment.TypeTitle.IndexOf(",") == 0)
             {
                 assessment.TypeTitle = assessment.TypeTitle.Substring(2);
