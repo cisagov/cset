@@ -209,7 +209,7 @@ namespace CSETWebCore.Api.Controllers
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true);
+            var resp = mm.GetMaturityQuestions(assessmentId, "", true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
             var dict = mm.GetReferences(assessmentId);
@@ -289,7 +289,7 @@ namespace CSETWebCore.Api.Controllers
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true);
+            var resp = mm.GetMaturityQuestions(assessmentId, "", true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);

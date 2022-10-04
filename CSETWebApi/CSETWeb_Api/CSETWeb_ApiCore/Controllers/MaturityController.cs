@@ -130,11 +130,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill)
+        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId));
         }
 
         [HttpGet]
@@ -244,6 +244,23 @@ namespace CSETWebCore.Api.Controllers
             return Ok(biz.MyModel);
         }
 
+
+        [HttpGet]
+        [Route("api/maturity/questions/grouping")]
+        public IActionResult GetRandy([FromQuery] int groupingId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CisStructure(assessmentId, groupingId, _context);
+            var mmmmm = biz.MyModel;
+
+            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(mmmmm);
+
+           
+
+            return Ok(resp);
+
+        }
 
         /// <summary>
         /// Returns list of CIS assessments accessible to the current user.

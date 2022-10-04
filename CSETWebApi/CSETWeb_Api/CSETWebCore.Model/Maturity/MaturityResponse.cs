@@ -12,7 +12,7 @@ namespace CSETWebCore.Model.Maturity
         /// <summary>
         /// Lists the display names of the maturity levels in this assessment's maturity model.
         /// </summary>
-        public List<MaturityLevel> Levels { get; set; }
+        public List<MaturityLevel> Levels { get; set; } = new List<MaturityLevel>();
 
         /// <summary>
         /// The target level selected for the assessment.
@@ -37,11 +37,11 @@ namespace CSETWebCore.Model.Maturity
         /// <summary>
         /// The top level of groupings.  This will usually be Domains.
         /// </summary>
-        public List<MaturityGrouping> Groupings { get; set; }
+        public List<MaturityGrouping> Groupings { get; set; } = new List<MaturityGrouping>();
 
         /// <summary>
         /// All known glossary terms for the maturity model.
         /// </summary>
-        public List<GlossaryEntry> Glossary { get; set; }
+        public List<GlossaryEntry> Glossary { get; set; } = new List<GlossaryEntry>();
     }
 }

@@ -33,6 +33,8 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { GlossaryService } from '../../../services/glossary.service';
+import { CisService } from '../../../services/cis.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -48,6 +50,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   loaded = false;
 
+  grouping: QuestionGrouping;
+  groupingId: Number;
+  title: string;
+
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
   constructor(
@@ -55,12 +61,25 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public cisSvc: CisService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
     public glossarySvc: GlossaryService,
     public navSvc: NavigationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+
+    // listen for NavigationEnd to know when the page changed
+    // this._routerSub = this.router.events.pipe(
+    //   filter(event => event instanceof NavigationEnd)
+    // ).subscribe((e: any) => {
+    //   if (e.urlAfterRedirects.includes('/maturity-questions-nested/')) {
+    //     this.loadGroupingQuestions();
+    //   }
+    // });
+
 
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
@@ -74,9 +93,18 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'questions';
-    this.loadQuestions();
+
+    this.grouping = null;
+    this.groupingId = +this.route.snapshot.params['grp'];
+    console.log(this.groupingId);
+
+    if (!this.groupingId) {
+      this.loadQuestions();
+    } else {
+      this.loadGrouping(this.groupingId);
+    }
   }
-  
+
   /**
    *
    */
@@ -122,6 +150,35 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+  }
+
+  /**
+   * 
+   */
+  loadGrouping(groupingId: Number) {
+    this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
+      this.modelName = response.modelName;
+      this.questionsAlias = response.questionsAlias;
+      this.groupings = response.groupings;
+      this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+
+      this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+      this.filterSvc.answerOptions = response.answerOptions;
+
+      this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+      this.glossarySvc.glossaryEntries = response.glossary;
+      this.loaded = true;
+
+      this.refreshQuestionVisibility();
+    },
+      error => {
+        console.log(
+          'Error getting questions: ' +
+          (<Error>error).name +
+          (<Error>error).message
+        );
+        console.log('Error getting questions: ' + (<Error>error).stack);
+      });
   }
 
   /**
