@@ -17,17 +17,25 @@ export class IseMeritComponent implements OnInit {
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
+  examinerFindingsInCat: string = '';
 
   dors: string[] = [];
   dorsTotal: number = 0;
+  dorsInCat: string = '';
 
   supplementalFacts: string[] = [];
   supplementalFactsTotal: number = 0;
-
+  supplementalFactsInCat: string = '';
 
   subCategories: string[] = [];
 
-  previousIssue: any = null;
+  resultsOfReviewStatic: string = 'Performed review of the security program using the ISE Toolbox.';
+  resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
+
+  actionItemExample1: string = '1.	The security program must be approved by the Board of Directors.';
+  actionItemExample2: string = '2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.';
+
+  examLevel: string = '';
 
 
   constructor(
@@ -45,6 +53,8 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;  
+        console.log(this.response);
+        this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
 
         for(let i = 0; i < this.response?.length; i++) {
           let finding = this.response[i];
@@ -55,10 +65,19 @@ export class IseMeritComponent implements OnInit {
             this.addDOR(finding.category.title);
           }
           if(finding.finding.type === 'Supplemental Fact') {
-            console.log(i);
             this.addSupplementalFact(finding.category.title);
           }
         }
+
+        this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+        this.categoryBuilder(this.examinerFindings);
+
+        this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+        this.categoryBuilder(this.dors);
+
+        this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+        this.categoryBuilder(this.supplementalFacts);
+
       },
       error => console.log('MERIT Report Error: ' + (<Error>error).message)
     );
@@ -66,7 +85,6 @@ export class IseMeritComponent implements OnInit {
     this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.demographics = r;
-        console.log(this.response);
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     )
@@ -95,12 +113,40 @@ export class IseMeritComponent implements OnInit {
   }
 
   addSupplementalFact(title: any) {
-    console.log(title + 'here');
     if (!this.supplementalFacts.includes(title)) {
-      console.log(title);
       this.supplementalFacts.push(title);
     }
     this.supplementalFactsTotal ++;
+  }
+
+  translateExamLevel(examLevel: number) {
+    if(examLevel === 17) {
+      this.examLevel = 'SCUEP';
+    } else if (examLevel === 18) {
+      this.examLevel = 'CORE';
+    } else {
+      this.examLevel = 'Unknown';
+    }
+  }
+
+  inCatStringBuilder(total: number, length: number, findingName: string) {
+    let inCategory = '';
+    if (total === 1) {
+      inCategory = total + ' ' + findingName + ' was drafted in the following category:';
+    } else if (total > 1 && length === 1) {
+      inCategory = total +  ' ' + findingName + 's were drafted in the following category:';
+    } else if (total > 1 && length > 1) {
+      inCategory = total +  ' ' + findingName + 's were drafted in the following categories:';
+    }
+
+    return inCategory;
+  }
+
+  categoryBuilder(categories: string[]) {
+    for(let i = 0; i < categories.length; i++) {
+      this.resultsOfReviewString += '\n\t ' + categories[i];
+    }
+    this.resultsOfReviewString += '\n\n';
   }
 
 }

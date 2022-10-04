@@ -95,6 +95,10 @@
                         <td>Assets:</td>
                         <td>{{this.demographics?.information?.assets | currency}}</td>
                     </tr>
+                    <tr>
+                        <td>Exam Level:</td>
+                        <td>{{this.examLevel}}</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -103,11 +107,10 @@
             <div class="ml-3 mr-3">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
-                        <div class="h2 report-text-blue">Execution Result</div>
+                        <div class="h2 report-text-blue">Instructions</div>
                     </div>
                 </div>
                 <p>
-                    <strong>INSTRUCTIONS:</strong><br>
                     Copy/Paste the contents of <strong>ISE Work Performed</strong> below into the Execution Result, Work Performed section of the MERIT ISE Scope.
                     <br><br>
                     Copy/Paste the contents of <strong>ISE Results of Review</strong> below into the Execution Result, Results of Review portion of the MERIT ISE Scope.
@@ -134,53 +137,32 @@
             <div class="ml-3 mr-3">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
-                        <div class="h2 report-text-blue">Results of Review</div>
+                        <span class="h2 report-text-blue">Results of Review</span> 
+                        <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                            [cdkCopyToClipboard]="this.resultsOfReviewString">Copy
+                </label>
                     </div>
                 </div>
                 <p>
-                    Performed review of the security program using the ISE Toolbox.
+                    {{ this.resultsOfReviewStatic }}
                 </p>
                 <div *ngIf="this.response?.length > 0">
                     <div *ngIf="this.examinerFindingsTotal > 0">
-                        <span *ngIf="this.examinerFindingsTotal === 1">
-                            1 Examiner Finding was drafted in the following category:
-                        </span>
-                        <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length === 1">
-                            {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following category:
-                        </span>
-                        <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length > 1">
-                            {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following categories:
-                        </span>
+                        {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
                         <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
                     </div>
                     <div *ngIf="this.dorsTotal > 0">
-                        <span *ngIf="this.dorsTotal === 1">
-                            1 DOR was drafted in the following category:
-                        </span>
-                        <span *ngIf="this.dorsTotal > 1 && this.dors.length === 1">
-                            {{ this.dorsTotal }} DORs were drafted in the following category:
-                        </span>
-                        <span *ngIf="this.dorsTotal > 1 && this.dors.length > 1">
-                            {{ this.dorsTotal }} DORs were drafted in the following categories:
-                        </span>
+                        {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
                         <div *ngFor="let issue of this.dors" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
                     </div>
                     <div *ngIf="this.supplementalFactsTotal > 0">
-                        <span *ngIf="this.supplementalFactsTotal === 1">
-                            1 Supplemental Fact was drafted in the following category:
-                        </span>
-                        <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length === 1">
-                            {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following category:
-                        </span>
-                        <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length > 1">
-                            {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following categories:
-                        </span>
+                        {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
                         <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
                             {{ issue }}
                         </div>
@@ -214,12 +196,12 @@
                             <strong>Issue Type:</strong> {{ finding?.finding?.type }}
                         </div>
                         <div>
-                            <strong>Description:</strong> <br>{{ finding?.finding?.description }} <br> <button>Copy</button>
+                            <strong>Description:</strong> <button>Copy</button><br>{{ finding?.finding?.description }}
                         </div>
                         <div>
                             <strong>Action Item: </strong> <button>Copy All</button>
-                            <br> <button>Copy</button>1.	The security program must be approved by the Board of Directors
-                            <br>2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report. <button>Copy</button> 
+                            <br><button [cdkCopyToClipboard]="this.actionItemExample1">Copy</button>{{ this.actionItemExample1 }} 
+                            <br><button [cdkCopyToClipboard]="this.actionItemExample2">Copy</button>{{ this.actionItemExample2 }}  
                         </div>
                         <div>
                             <strong>Regulatory Citation: </strong> <a href="https://www.ecfr.gov/current/title-12/chapter-VII/subchapter-A/part-748/section-748.0#p-748.0(b)(2)" target="_blank">12 C.F.R § 748.0 (b)(2)</a>
