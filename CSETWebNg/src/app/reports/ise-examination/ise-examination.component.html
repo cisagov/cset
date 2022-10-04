@@ -65,7 +65,6 @@
                     <div class="h2 report-text-blue">Demographics</div>
                 </div>
             </div>
-            <hr class="page-line">
             
             <table class="table-site-info">
                 <tr>
@@ -96,10 +95,98 @@
                     <td>Assets:</td>
                     <td>{{response?.information?.assets | currency}}</td>
                 </tr>
+                <tr>
+                    <td>Exam Level:</td>
+                    <td>{{ this.examLevel }}</td>
+                </tr>
             </table>
         </div>
         <div class="page-break"></div>
-       
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <span class="h2 report-text-blue">EF, DOR, and SF Summary</span> 
+                <!-- Comment bubble button -->
+                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                    [cdkCopyToClipboard]="this.summaryForCopy">Copy
+                </label>
+                <!-- <button [cdkCopyToClipboard]="this.resultsOfReviewString">Copy</button> -->
+            </div>
+        </div>
+        <p>
+            {{ this.summaryStatic }}
+        </p>
+        <div *ngIf="this.findingsResponse?.length > 0">
+            <div *ngIf="this.examinerFindingsTotal > 0">
+                {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+            <div *ngIf="this.dorsTotal > 0">
+                {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+            <div *ngIf="this.supplementalFactsTotal > 0">
+                {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
+                <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                    {{ issue }}
+                </div>
+                <br>
+            </div>
+        </div>
+        <div *ngIf="this.findingsResponse?.length === 0">
+            <p>
+                No Issues were noted.
+            </p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <span class="h2 report-text-blue">Results of Review</span>
+                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                    [cdkCopyToClipboard]="this.resultsOfReviewForCopy">Copy All
+                </label>
+            </div>
+        </div>
+
+        <div *ngFor="let d of response?.matAnsweredQuestions">
+            <div *ngFor="let f of d.assessmentFactors">
+                <div *ngFor="let c of f.components">
+                    <div *ngFor="let q of c.questions">
+                        <div *ngIf="isParentQuestion(q)">
+                            <div>
+                                <span class="font-weight-bold">Title: </span>
+                                <span class="pr-3">{{ q.title }}</span>
+                                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                    [cdkCopyToClipboard]="this.storeIndividualIssues.get(q.title)">Copy
+                                </label>
+                            </div>
+                            <div>
+                                <span class="font-weight-bold">Question Text: </span>
+                                <span class="pr-3">{{ q.questionText }}</span>
+                            </div>
+                            <div>
+                                <span class="font-weight-bold">Results of Review: </span>
+                                <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Results of Review given. ]' }}</span>
+                            </div>
+
+                            <hr class="page-line">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
                 <div class="h2 report-text-blue">Statement Overview</div>
@@ -157,123 +244,5 @@
                 </ng-container>
             </ng-container>
         </table>
-
-        <div class="page-break"></div>
-
-        <div class="d-flex flex-row" style="justify-content: space-between">
-            <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">Comments</div>
-            </div>
-        </div>
-
-        <table class="table-responsive td-align-top td-padding-half-rem">
-            <tr class="report-text-blue">
-                <td></td>
-                <td>Comments</td>
-            </tr>
-            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                <ng-container *ngFor="let f of d.assessmentFactors">
-                    <ng-container *ngFor="let c of f.components">
-                        <ng-container *ngFor="let q of c.questions">
-                            <tr *ngIf="q.comments === 'Yes'">
-                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td class="pr-3">{{ q.comment }}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </table>
-
-        <div class="page-break"></div>
-
-        <div class="d-flex flex-row" style="justify-content: space-between">
-            <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">ISE Profile</div>
-            </div>
-        </div>
-
-        <table class="table-responsive td-align-top td-padding-half-rem">
-            <tr class="report-text-blue">
-                <td></td>
-                <td></td>
-                <td>Response</td>
-            </tr>
-            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                <ng-container *ngFor="let f of d.assessmentFactors">
-                    <ng-container *ngFor="let c of f.components">
-                        <ng-container *ngFor="let q of c.questions">
-                            <tr *ngIf="requiredQuestion(q)">
-                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td class="pr-3" [innerHTML]="q.questionText"></td>
-
-                                <td *ngIf="isParentQuestion(q)" class="pr-3"> </td>
-                                <td *ngIf="!isParentQuestion(q)" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </table>
-
-        <div class="page-break"></div>
-
-        <div class="d-flex flex-row" style="justify-content: space-between">
-            <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">EF, DOR, and SF Summary</div>
-            </div>
-        </div>
-        <div *ngIf="this.findingsResponse?.length > 0">
-            <div *ngIf="this.examinerFindingsTotal > 0">
-                <span *ngIf="this.examinerFindingsTotal === 1">
-                    1 Examiner Finding was drafted in the following category:
-                </span>
-                <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length === 1">
-                    {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following category:
-                </span>
-                <span *ngIf="this.examinerFindingsTotal > 1 && this.examinerFindings.length > 1">
-                    {{ this.examinerFindingsTotal }} Examiner Findings were drafted in the following categories:
-                </span>
-                <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
-                    {{ issue }}
-                </div>
-                <br>
-            </div>
-            <div *ngIf="this.dorsTotal > 0">
-                <span *ngIf="this.dorsTotal === 1">
-                    1 DOR was drafted in the following category:
-                </span>
-                <span *ngIf="this.dorsTotal > 1 && this.dors.length === 1">
-                    {{ this.dorsTotal }} DORs were drafted in the following category:
-                </span>
-                <span *ngIf="this.dorsTotal > 1 && this.dors.length > 1">
-                    {{ this.dorsTotal }} DORs were drafted in the following categories:
-                </span>
-                <div *ngFor="let issue of this.dors" style="padding-left: 30px">
-                    {{ issue }}
-                </div>
-                <br>
-            </div>
-            <div *ngIf="this.supplementalFactsTotal > 0">
-                <span *ngIf="this.supplementalFactsTotal === 1">
-                    1 Supplemental Fact was drafted in the following category:
-                </span>
-                <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length === 1">
-                    {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following category:
-                </span>
-                <span *ngIf="this.supplementalFactsTotal > 1 && this.supplementalFacts.length > 1">
-                    {{ this.supplementalFactsTotal }} Supplemental Facts were drafted in the following categories:
-                </span>
-                <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
-                    {{ issue }}
-                </div>
-                <br>
-            </div>
-        </div>
-        <div *ngIf="this.findingsResponse?.length === 0">
-            <p>
-                No Issues were noted.
-            </p>
-        </div>
     </div>
 </div>

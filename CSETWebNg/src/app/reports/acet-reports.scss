@@ -1,5 +1,10 @@
 @import '_variables.scss';
 
+$white: #ffffff;
+$na-color: #367190;
+$na-hover-color: #0A4B6E;
+$active-text-color: $white;
+
    .page-title {
     color: #1274d2;
     font-size: 22px;
@@ -475,12 +480,29 @@ textarea.form-control {
   margin-right: 0.3125rem;
   margin-left: 0;
 }
-.cset-icons-chevron-down:before {
-  content: "\6a";
-}
-.cset-icons-chevron-down:after {
-  content: "\6d";
-}
 .hide {
   visibility: hidden;
+}
+.cset-icons-copy:before {
+  src: "assets/images/icons/save-arrow.svg";
+}
+.btn {
+  line-height:1.6 !important;
+  border-radius:0 !important;
+  outline-style: none !important;
+  box-shadow: none;
+  border-color: transparent;
+}
+.btn-copy {
+  background-color: $white;
+  border-color: $na-color;
+  color: $na-color;
+}
+.btn-copy:hover {
+  background-color: $na-color;
+  color: $active-text-color;
+}
+.fs-base {
+  font-size: 1rem !important;
+  line-height: 1.1rem;
 }
