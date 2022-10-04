@@ -321,6 +321,33 @@ namespace CSETWebCore.Api.Controllers
             return Ok(questions);
         }
 
+
+
+
+        //--------------------------------
+        // MVRA Controllers
+        //--------------------------------
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/mvradetail")]
+        public IActionResult MvraDetail()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MvraSummary summary = new MvraSummary(_context);
+
+            object o = new object();
+            return Ok(o);
+        }
+
+
         /// <summary>
         /// Returns the information for a report containing 
         /// questions with alternate justification.
