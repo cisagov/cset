@@ -113,7 +113,7 @@
         <!-- MVRA questions displayed in tree structure -->
         <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
             <node id="maturity-questions-nested-2338" displaytext="Anticipate">
-                <node id="maturity-questions-nested-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions-nested/2343" />
+                <node id="maturity-questions-nested-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions/2343" />
                 <node id="maturity-questions-nested-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions-nested/2344" />                
                 <node id="maturity-questions-nested-2345" displaytext="Contextual Awareness" path="assessment/{:id}/maturity-questions-nested/2345"/>
                 <node id="maturity-questions-nested-2346" displaytext="Coordinated Protection" path="assessment/{:id}/maturity-questions-nested/2346"/>
