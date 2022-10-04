@@ -27,6 +27,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-issues',
@@ -36,6 +37,8 @@ import { FindingsService } from '../../../services/findings.service';
 
 export class IssuesComponent implements OnInit {
   finding: Finding;
+  suppGuidance: string = "";
+
   issueTitle = "";
   issueDescription: string = "";
   
@@ -58,6 +61,7 @@ export class IssuesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     public assessSvc: AssessmentService,
     private findSvc: FindingsService,
+    public questionsSvc: QuestionsService,
 
   ) {
     this.finding = data;
@@ -70,6 +74,30 @@ export class IssuesComponent implements OnInit {
     this.dialog.backdropClick()
     .subscribe(() => {
       this.update();
+    });
+
+    let questionType = localStorage.getItem('questionSet');
+
+    // Grab the finding from the db if there is one.
+    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
+      this.finding = response;
+
+      if (this.finding.title === null) {
+        this.finding.title = this.issueTitle;
+      }
+
+      if (this.finding.description === null) {
+        this.finding.description = this.generateIssueDescription();
+      }
+          
+      this.answerID = this.finding.answer_Id;
+      this.questionID = this.finding.question_Id;
+          
+      if (this.finding.sub_Risk_Area_Id === null) {
+        this.updateRiskArea('Strategic');
+      } else {
+        this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
+      }
     });
 
     this.findSvc.getSubRisks().subscribe((result: any[]) => {
@@ -92,55 +120,21 @@ export class IssuesComponent implements OnInit {
       }
     });
 
-    this.findSvc.getImportance().subscribe((result: Importance[]) => {
-      this.importances = result;
-      let questionType = localStorage.getItem('questionSet');
-
-      // Grab the finding from the db if there is one.
-      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
-        .subscribe((response: Finding) => {
-          this.finding = response;
-
-          if (this.finding.title === null) {
-            this.finding.title = this.issueTitle;
-          }
-
-          if (this.finding.description === null) {
-            this.finding.description = this.generateIssueDescription();
-          }
-          
-          this.answerID = this.finding.answer_Id;
-          this.questionID = this.finding.question_Id;
-          
-          if (this.finding.sub_Risk_Area_Id === null) {
-            this.updateRiskArea('Strategic');
-          } else {
-            this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
-          }
-
-          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-          this.data.answer_Id = this.answerID;
-        });
+    this.questionsSvc.getDetails(this.finding.question_Id, questionType).subscribe((details) => {
+      this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalInfo);
     });
   }
 
-  refreshContacts():void{
-    let questionType = localStorage.getItem('questionSet');
-    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
-        .subscribe((response: Finding) => {
-          this.finding = response;
-          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-        });
-  }
-
-  clearMulti() {
-    this.finding.finding_Contacts.forEach(c => {
-      c.selected = false;
-    });
+  cleanText(input: string) {
+    let text = input;
+    text = text.replace(/<.*?>/g, '');
+    text = text.replace(/&#10;/g, ' ');
+    text = text.replace(/&#8217;/g, '\'');
+    text = text.replace(/&#160;/g, '');
+    text = text.replace (/&#8221;/g, '');
+    text = text.replace(/&#34;/g, '\'');
+    text = text.replace('/\s/g', ' ');
+    return (text);
   }
 
   checkFinding(finding: Finding) {
@@ -195,22 +189,6 @@ As information security program is the written plan created and implemented by a
 
   updateSubRisk(value) {
     this.finding.sub_Risk_Area_Id = value;
-  }
-
-  updateImportance(importid) {
-    this.finding.importance_Id = importid;
-  }
-
-  updateDisposition(value) {
-    this.finding.disposition = value;
-  }
-
-  updateContact(contactid) {
-    this.finding.finding_Contacts.forEach((fc: FindingContact) => {
-      if (fc.assessment_Contact_Id === contactid.assessment_Contact_Id) {
-        fc.selected = contactid.selected;
-      }
-    });
   }
 
   cancel() {
