@@ -29,6 +29,7 @@ import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
 import { FindingsService } from '../../services/findings.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-ise-examination',
@@ -40,20 +41,32 @@ export class IseExaminationComponent implements OnInit {
   findingsResponse: any = {};
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
+  storeIndividualIssues: Map<String, String> = new Map<String, String>();
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
+  examinerFindingsInCat: string = '';
 
   dors: string[] = [];
   dorsTotal: number = 0;
+  dorsInCat: string = '';
 
   supplementalFacts: string[] = [];
   supplementalFactsTotal: number = 0;
+  supplementalFactsInCat: string = '';
+
+  summaryStatic: string = 'Performed review of the security program using the ISE Toolbox.';
+  summaryForCopy: string = this.summaryStatic + '\n\n';
+
+  resultsOfReviewForCopy: string = '';
+
+  examLevel: string = '';
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
     public reportSvc: ReportService,
+    public assessSvc: AssessmentService,
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
@@ -68,6 +81,37 @@ export class IseExaminationComponent implements OnInit {
       (r: any) => {
         this.response = r;
         console.log(this.response);
+        this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+
+        // goes through domains
+        for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for(let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            // goes through questions
+            for(let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
+              if (this.requiredQuestion(question) && this.isParentQuestion(question)) {
+                let issueText = '';
+                issueText += 'Title: ' + question.title + '\n';
+                issueText += 'Question Text: ' + question.questionText + '\n';
+                issueText += 'Results of Review: ';
+
+                if (question.comments === 'Yes') {
+                  issueText += question.comment + '\n';
+                } else {
+                  issueText += '[ No Results of Review given. ]\n';
+                }
+
+                issueText += '\n';
+                this.storeIndividualIssues.set(question.title, issueText); //stores the issue for individual copy buttons
+
+                this.resultsOfReviewForCopy += issueText;
+              }
+            }
+          }
+        }
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
@@ -85,40 +129,62 @@ export class IseExaminationComponent implements OnInit {
             this.addDOR(finding.category.title);
           }
           if(finding.finding.type === 'Supplemental Fact') {
-            console.log(i);
             this.addSupplementalFact(finding.category.title);
           }
         }
+
+        this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+        this.categoryBuilder(this.examinerFindings);
+
+        this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+        this.categoryBuilder(this.dors);
+
+        this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+        this.categoryBuilder(this.supplementalFacts);
       },
       error => console.log('Findings Error: ' + (<Error>error).message)
     );
 
-    // initializing all assessment factors / categories / parent questions to false
+    // initializing all assessment factors / categories / parent questions to true (expanded)
     // used in checking if the section / question should be expanded or collapsed 
     this.expandedOptions
-      .set('Information Security Program', false)       .set('Governance', false)
-      .set('Risk Assessment', false)                    .set('Incident Response', false)
-      .set('Technology Service Providers', false)       .set('Business Continuity / Disaster Recovery', false)
-      .set('Cybersecurity Controls', false)             .set('Information Security Program', false)
-      .set('Controls Testing', false)                   .set('Corrective Actions', false)
-      .set('Training', false)                           .set('Vulnerability & Patch Management', false)
-      .set('Anti-Virus/Anti-Malware', false)            .set('Access Controls', false)
-      .set('Network Security', false)                   .set('Data Leakage Protection', false)
-      .set('Change & Configuration Management', false)  .set('Monitoring', false)
-      .set('Logging', false)                            .set('Data Governance', false)
-      .set('Conversion', false)                         .set('Software Development Process', false)
-      .set('Internal Audit Program', false)             .set('Stmt 1', false)
-      .set('Stmt 2', false)                             .set('Stmt 3', false)
-      .set('Stmt 4', false)                             .set('Stmt 5', false)
-      .set('Stmt 6', false)                             .set('Stmt 7', false)
-      .set('Stmt 8', false)                             .set('Stmt 9', false)
-      .set('Stmt 10', false)                            .set('Stmt 11', false)
-      .set('Stmt 12', false)                            .set('Stmt 13', false)
-      .set('Stmt 14', false)                            .set('Stmt 15', false)
-      .set('Stmt 16', false)                            .set('Stmt 17', false)
-      .set('Stmt 18', false)                            .set('Stmt 19', false)
-      .set('Stmt 20', false)                            .set('Stmt 21', false)
-      .set('Stmt 22', false);
+      .set('Information Security Program', true)       .set('Governance', true)
+      .set('Risk Assessment', true)                    .set('Incident Response', true)
+      .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
+      .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
+      .set('Controls Testing', true)                   .set('Corrective Actions', true)
+      .set('Training', true)                           .set('Vulnerability & Patch Management', true)
+      .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
+      .set('Network Security', true)                   .set('Data Leakage Protection', true)
+      .set('Change & Configuration Management', true)  .set('Monitoring', true)
+      .set('Logging', true)                            .set('Data Governance', true)
+      .set('Conversion', true)                         .set('Software Development Process', true)
+      .set('Internal Audit Program', true)             .set('Stmt 1', true)
+      .set('Stmt 2', true)                             .set('Stmt 3', true)
+      .set('Stmt 4', true)                             .set('Stmt 5', true)
+      .set('Stmt 6', true)                             .set('Stmt 7', true)
+      .set('Stmt 8', true)                             .set('Stmt 9', true)
+      .set('Stmt 10', true)                            .set('Stmt 11', true)
+      .set('Stmt 12', true)                            .set('Stmt 13', true)
+      .set('Stmt 14', true)                            .set('Stmt 15', true)
+      .set('Stmt 16', true)                            .set('Stmt 17', true)
+      .set('Stmt 18', true)                            .set('Stmt 19', true)
+      .set('Stmt 20', true)                            .set('Stmt 21', true)
+      .set('Stmt 22', true)                            .set('Asset Inventory', true);
+
+    this.storeIndividualIssues
+      .set('Stmt 1', '')
+      .set('Stmt 2', '')                             .set('Stmt 3', '')
+      .set('Stmt 4', '')                             .set('Stmt 5', '')
+      .set('Stmt 6', '')                             .set('Stmt 7', '')
+      .set('Stmt 8', '')                             .set('Stmt 9', '')
+      .set('Stmt 10', '')                            .set('Stmt 11', '')
+      .set('Stmt 12', '')                            .set('Stmt 13', '')
+      .set('Stmt 14', '')                            .set('Stmt 15', '')
+      .set('Stmt 16', '')                            .set('Stmt 17', '')
+      .set('Stmt 18', '')                            .set('Stmt 19', '')
+      .set('Stmt 20', '')                            .set('Stmt 21', '')
+      .set('Stmt 22', '');
   }
 
   /**
@@ -164,7 +230,7 @@ export class IseExaminationComponent implements OnInit {
     return false;
   }
   /**
-   * trims the '.<#>' off the given 'title', leaving what the parent 'title' should be
+   * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
    */ 
   getParentQuestionTitle(title: string) {
     if(!this.isParentQuestion(title)) {
@@ -173,7 +239,7 @@ export class IseExaminationComponent implements OnInit {
     }
   }
   /**
-   * checks if the quesiton needs to appear
+   * checks if the question needs to appear
    */ 
   requiredQuestion(q: any) {
     if (this.configSvc.answerLabels[q.answerText] == 'Unanswered' && q.maturityLevel == 'CORE+') {
@@ -197,12 +263,30 @@ export class IseExaminationComponent implements OnInit {
   }
 
   addSupplementalFact(title: any) {
-    console.log(title + 'here');
     if (!this.supplementalFacts.includes(title)) {
-      console.log(title);
       this.supplementalFacts.push(title);
     }
     this.supplementalFactsTotal ++;
+  }
+
+  inCatStringBuilder(total: number, length: number, findingName: string) {
+    let inCategory = '';
+    if (total === 1) {
+      inCategory = total + ' ' + findingName + ' was drafted in the following category:';
+    } else if (total > 1 && length === 1) {
+      inCategory = total +  ' ' + findingName + 's were drafted in the following category:';
+    } else if (total > 1 && length > 1) {
+      inCategory = total +  ' ' + findingName + 's were drafted in the following categories:';
+    }
+
+    return inCategory;
+  }
+
+  categoryBuilder(categories: string[]) {
+    for(let i = 0; i < categories.length; i++) {
+      this.summaryForCopy += '\n\t ' + categories[i];
+    }
+    this.summaryForCopy += '\n\n';
   }
   
 }
