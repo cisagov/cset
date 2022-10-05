@@ -245,4 +245,18 @@ let headers = {
     this.acetFilteringSvc.resetDomainFilters(level);
   }
 
+  getExamLevel() {
+    if (this.usingExamLevelOverride === false) {
+      return (this.proposedExamLevel);
+    } else if (this.usingExamLevelOverride === true) {
+      return (this.chosenOverrideLevel);
+    }
+  }
+
+  showCorePlusOnlySubCat(id: number) {
+    if (id >= 2564 && this.getExamLevel() === 'CORE') {
+      return true;
+    }
+  }
+
 }
