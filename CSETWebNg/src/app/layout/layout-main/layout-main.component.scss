@@ -79,12 +79,6 @@ $primary-900: map-get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map-get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(to right,
-    #0f3c7a,
-    #5290e5,
-    #0f3c7a);
-$ncua-secondary-color: #0f3c7a;
-
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
 
@@ -269,14 +263,6 @@ input[type="radio"]:focus {
   outline: dashed 2px lightgrey;
   outline-offset: 5px;
 }
-
-.gutter-background {
-  background-image: url("../../../assets/images/bgGradient1.png");
-  background-repeat: repeat-x;
-  background-position: top left;
-  background-size: auto 100%;
-}
-
 a,
 a:not([href]) {
   color: $link-color-dark;
@@ -391,6 +377,23 @@ label[required]::after {
 /* --- header --- */
 .cset-header {
   background-color: $primary-color;
+  height: 62px;
+}
+
+.sticky-navbar {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.sticky-footer {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
 }
 
 /* --- footer --- */
@@ -835,6 +838,21 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-iss {
+  background-color: $white;
+  border-color: $black;
+  color: $black;
+}
+
+.btn-iss.answer-selected:hover {
+  background-color: $black;
+}
+
+.btn-iss.answer-selected,
+.btn-iss:hover {
+  background-color: $black;
+  color: $active-text-color;
+}
 .btn-inc {
   background-color: $white;
   border-color: $alt-color;
@@ -1398,6 +1416,7 @@ th.data-table {
 
 ul.nav-tabs li.active {
   background: $gray-50;
+  z-index:1000;
 }
 
 ul.nav-tabs li.active button {
@@ -1429,7 +1448,6 @@ ul.nav-tabs li button:hover {
 ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
-
 
 .fs-head-lock {
   font-size: 2rem;
@@ -2253,7 +2271,18 @@ mat-sidenav {
 .mat-drawer .btn-link:focus {
   color: $white;
 }
+.btn-chevron {
+  padding-left: 0;
+}
 
+.no-underline, .no-underline:hover {
+ text-decoration: none !important;
+ outline: none !important;
+}
+
+.u-hover:hover {
+  text-decoration: underline;
+}
 /* Something like this? */
 .content::-webkit-scrollbar {
   display: none;
@@ -3573,7 +3602,7 @@ h6.dropdown-header {
   height: 65px !important;
   top: 94px !important;
   background-color: rgba(0, 0, 0,0.3) !important;
-  padding: 0px 20px !important;  
+  padding: 0px 20px !important;
   margin: 0 5px;
   border-radius:5px;
 }
@@ -3589,7 +3618,7 @@ h6.dropdown-header {
   font-size: 22px !important;
 }
 .swiper-wrapper {
-  padding: 35px 0 20px 0; 
+  padding: 35px 0 20px 0;
 }
 
 .gallery-card-body{
@@ -3618,7 +3647,7 @@ h6.dropdown-header {
   .swiper-slide {
     transition: 300ms all;
     min-width:230px;
-  
+
     border-radius:5px;
     background-color: white;
     &:hover {
@@ -3629,19 +3658,19 @@ h6.dropdown-header {
     }
 
     &:first-child:hover{
-      
+
     }
 
     &:last-child:hover{
-      
+
     }
 
     &:hover .gallery-card-body {
-    
+
       transform:none;
     }
     &:hover .gallery-card-footer .btn {
-    
+
       transform: none;
     }
   }
@@ -3650,10 +3679,10 @@ h6.dropdown-header {
 .swiper-slide {
   transition: 300ms all;
   min-width:230px;
-  
+
   border-radius:5px;
   background-color: white;
-  
+
   &:hover {
       z-index: 1000;
       box-shadow: 0 0px 6px 0 rgb(0 0 0 / 20%);
@@ -3662,7 +3691,7 @@ h6.dropdown-header {
   }
 
   &:only-child{
-   
+
   }
 
   &:first-child:hover{
@@ -3674,11 +3703,11 @@ h6.dropdown-header {
   }
 
   &:hover .gallery-card-body {
-   
+
     transform: scale(.93);
   }
   &:hover .gallery-card-footer .btn {
-   
+
     transform: scale(.93);
   }
 }
@@ -3691,7 +3720,7 @@ h6.dropdown-header {
 
 .gallery-card:hover{
   border:1px solid rgba(54,113,144,.40);
-  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(183,204,215,.30) 60%, rgba(54,113,144,.30) 100%) !important; 
+  background:linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(183,204,215,.30) 60%, rgba(54,113,144,.30) 100%) !important;
 }
 
 .gallery-card-footer{

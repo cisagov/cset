@@ -618,7 +618,7 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 myModel.model_id == q.Maturity_Model_Id).ToList();
 
-
+            
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -1950,7 +1950,8 @@ namespace CSETWebCore.Business.Maturity
                 response.Add(new GroupingTitle() 
                 { 
                     Id = x.Grouping_Id,
-                    Title = x.Title
+                    Title = x.Title,
+                    TitlePrefix = x.Title_Prefix
                 });
             });
 

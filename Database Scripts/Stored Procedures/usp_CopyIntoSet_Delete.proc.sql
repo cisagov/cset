@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[usp_CopyIntoSet_Delete]
 	-- Add the parameters for the stored procedure here	
-	@DestinationSetName varchar(50)
+	@DestinationSetName nvarchar(50)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

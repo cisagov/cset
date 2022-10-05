@@ -1,0 +1,26 @@
+<div style="height:235px; margin:0 1.5rem" *ngFor="let row of rows" >
+  <swiper class="gallery-slider"
+      [config]="config"
+      (slideChange)="onSlideChange()"
+      #swiper
+  >
+      <ng-template swiperSlide *ngFor="let c of row; let i = index">
+
+        <div 
+        class="card gallery-card" 
+        (mouseover)="onHover(c.item.gallery_Item_Id)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Id)">
+          <div class="card-image-parent">
+              <img class="card-image-child" [src]="getImageSrc(c.item.icon_File_Name_Small)">
+          </div>
+          <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px; z-index:1">
+              <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
+              <p class="card-text" ellipsis [ellipsis-content]="c.item.plainText" style="max-height:80px; min-height:80px;"></p>
+          </div>
+          <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.item.gallery_Item_Id!=hoverIndex">
+              <button  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
+              <button  class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.item.gallery_Item_Id)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
+          </div>
+        </div>
+      </ng-template>
+  </swiper>
+</div>

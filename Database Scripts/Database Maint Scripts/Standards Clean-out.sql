@@ -1,7 +1,7 @@
 ------------
 -- Cleans out all custom sets/questions/requirements
 ------------
-
+SET QUOTED_IDENTIFIER ON
 
 IF OBJECT_ID('tempdb..#custom_sets') IS NOT NULL DROP TABLE #custom_sets
 select [set_name] 

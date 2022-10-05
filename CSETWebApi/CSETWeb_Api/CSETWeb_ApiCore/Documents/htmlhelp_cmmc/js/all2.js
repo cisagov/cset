@@ -3822,6 +3822,7 @@ function onDocumentReady(app) {
         var $hc = $("#hiddenContent");
         $hc.detach();
         $hc.removeClass("hiddenContent");
+        $hc.removeClass("loading");
         $hc.appendTo("#description_on_page_placeholder");
         $("iframe").each(function() {
             $(this).prop("src", $(this).prop("real_src"));
@@ -3843,9 +3844,15 @@ function onDocumentReady(app) {
 
     app.tabController.doSetScrollTopByUrlEncoder();
 
-    // Crutch for Firefox
-    if (window.location.hash !== "" && window.location.hash !== "#")
-        window.location.hash = window.location.hash;
+    var hash = window.location.hash;
+    if (hash != "" && hash != "#")
+    {
+        if (hash[0] != "#") // just in case
+            hash = "#" + hash;
+        window.location.replace(hash);
+    }
+
+    $("#pageLayout").removeClass("loading");
 }
 
 $(document).ready(function() {

@@ -130,7 +130,7 @@ namespace CSETWebCore.Business.Question
                 var tempRequires = new List<NEW_REQUIREMENT>();
                 foreach (var setName in set.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation.Select(s => s.Base_Standard).ToList())
                 {
-                    tempRequires = tempRequires.Concat(question.NEW_REQUIREMENTs().Where(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName)).ToList()).ToList();
+                    tempRequires = tempRequires.Concat(question.NEW_REQUIREMENTs(_context).Where(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(setName)).ToList()).ToList();
                 }
                 requires = tempRequires;
             }
@@ -364,7 +364,7 @@ namespace CSETWebCore.Business.Question
                     Question_or_Requirement_Id = t.Requirement_Id,
                     Text = FormatRequirementText(t.Requirement_Text),
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info),
-                    Questions = t.NEW_QUESTIONs().Select(s => new RelatedQuestion
+                    Questions = t.NEW_QUESTIONs(_context).Select(s => new RelatedQuestion
                     {
                         QuestionID = s.Question_Id,
                         QuestionText = s.Simple_Question
@@ -477,7 +477,7 @@ namespace CSETWebCore.Business.Question
                 RequirementFrameworkTitle = info.MaturityQuestion.Question_Title;
                 ShowRequirementStandards = true;
 
-                var l = _context.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level).FirstOrDefault();
+                var l = _context.MATURITY_LEVELS.Where(x => x.Level == info.MaturityQuestion.Maturity_Level_Id).FirstOrDefault();
                 if (l != null)
                 {
                     LevelName = l.Level_Name;
@@ -526,7 +526,7 @@ namespace CSETWebCore.Business.Question
 
 
             var newQuestionItems = (from nr in _context.NEW_REQUIREMENT
-                                    from newquestions in nr.NEW_QUESTIONs()
+                                    from newquestions in nr.NEW_QUESTIONs(_context)
                                     join newquestionSets in _context.NEW_QUESTION_SETS on newquestions.Question_Id equals newquestionSets.Question_Id into questionSets
                                     join level in _context.UNIVERSAL_SAL_LEVEL on newquestions.Universal_Sal_Level equals level.Universal_Sal_Level1
                                     join subheading in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on newquestions.Heading_Pair_Id equals subheading.Heading_Pair_Id

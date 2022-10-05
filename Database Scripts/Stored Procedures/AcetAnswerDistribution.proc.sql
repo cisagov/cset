@@ -19,7 +19,7 @@ BEGIN
 
     select a.Answer_Text, count(*) as [Count] from maturity_questions q 
 	left join answer a on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-	left join maturity_levels l on q.Maturity_Level = l.Maturity_Level_Id
+	left join maturity_levels l on q.Maturity_Level_Id = l.Maturity_Level_Id
 	where a.Question_Type = 'Maturity' and q.Maturity_Model_Id = @model_id
 	and l.Level <= @targetLevel
 	and a.Assessment_Id = @assessment_id
