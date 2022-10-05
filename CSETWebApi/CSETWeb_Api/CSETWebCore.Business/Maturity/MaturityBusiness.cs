@@ -1969,9 +1969,9 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="mmmmm"></param>
+        /// <param name="cisStructure"></param>
         /// <returns></returns>
-        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions mmmmm)
+        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
         {
             var resp = new MaturityResponse();
 
@@ -1980,7 +1980,7 @@ namespace CSETWebCore.Business.Maturity
             
 
 
-            foreach (var g in mmmmm.Groupings)
+            foreach (var g in cisStructure.Groupings)
             {
                 resp.Groupings = MapGroupings(g);
             }
@@ -2030,6 +2030,7 @@ namespace CSETWebCore.Business.Maturity
                 var newQ = new QuestionAnswer()
                 {
                     Answer = q.AnswerText,
+                    AltAnswerText = q.AltAnswerText,
                     QuestionId = q.QuestionId,
                     DisplayNumber = q.DisplayNumber,
                     Sequence = q.Sequence,

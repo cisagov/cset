@@ -34,7 +34,9 @@ import { ConfigService } from '../../../services/config.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { GlossaryService } from '../../../services/glossary.service';
 import { CisService } from '../../../services/cis.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -45,6 +47,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   groupings: QuestionGrouping[] = null;
   pageTitle: string = '';
   modelName: string = '';
+  groupingTitle: string = '';
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
@@ -55,6 +58,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   title: string;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+
+  private _routerSub = Subscription.EMPTY;
 
   constructor(
     public assessSvc: AssessmentService,
@@ -72,13 +77,14 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   ) {
 
     // listen for NavigationEnd to know when the page changed
-    // this._routerSub = this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // ).subscribe((e: any) => {
-    //   if (e.urlAfterRedirects.includes('/maturity-questions-nested/')) {
-    //     this.loadGroupingQuestions();
-    //   }
-    // });
+    this._routerSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      if (e.urlAfterRedirects.includes('/maturity-questions/')) {
+        this.groupingId = +this.route.snapshot.params['grp'];
+        this.loadGrouping(this.groupingId);
+      }
+    });
 
 
     if (this.assessSvc.assessment == null) {
@@ -94,9 +100,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.assessSvc.currentTab = 'questions';
 
+    // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
-    console.log(this.groupingId);
 
     if (!this.groupingId) {
       this.loadQuestions();
@@ -120,7 +126,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Retrieves the complete list of questions
+   * Retrieves the complete list of questions for the model.
    */
   loadQuestions() {
     const magic = this.navSvc.getMagic();
@@ -153,7 +159,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   * Retrieves questions for a single grouping.
    */
   loadGrouping(groupingId: Number) {
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
@@ -166,6 +172,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.filterSvc.answerOptions = response.answerOptions;
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+      this.groupingTitle = response.title;
       this.glossarySvc.glossaryEntries = response.glossary;
       this.loaded = true;
 

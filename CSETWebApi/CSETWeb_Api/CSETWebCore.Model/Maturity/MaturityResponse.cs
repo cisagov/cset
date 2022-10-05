@@ -10,6 +10,11 @@ namespace CSETWebCore.Model.Maturity
         public string ModelName { get; set; }
 
         /// <summary>
+        /// The name of the current grouping represented in the response;
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// Lists the display names of the maturity levels in this assessment's maturity model.
         /// </summary>
         public List<MaturityLevel> Levels { get; set; } = new List<MaturityLevel>();

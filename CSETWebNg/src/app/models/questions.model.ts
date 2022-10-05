@@ -42,6 +42,7 @@ export interface QuestionResponse {
 export interface MaturityQuestionResponse {
     modelName: string;
     questionsAlias: string;
+    title: string;
     levels: [];
     maturityTargetLevel: number;
     glossary: GlossaryEntry[];
