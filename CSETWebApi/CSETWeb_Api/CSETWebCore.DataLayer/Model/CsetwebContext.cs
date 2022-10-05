@@ -171,6 +171,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
         public virtual DbSet<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
+        public virtual DbSet<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
         public virtual DbSet<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCY { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
         public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
@@ -197,6 +198,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
+        public virtual DbSet<RISK_AREA> RISK_AREA { get; set; }
+        public virtual DbSet<RISK_SUB_RISK_AREA> RISK_SUB_RISK_AREA { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -1432,6 +1435,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Importance_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_FINDING_IMPORTANCE1");
+
+                entity.HasOne(d => d.Sub_Risk_Area)
+                    .WithMany(p => p.FINDING)
+                    .HasForeignKey(d => d.Sub_Risk_Area_Id)
+                    .HasConstraintName("FK_FINDING_SUB_RISK_AREA");
             });
 
             modelBuilder.Entity<FINDING_CONTACT>(entity =>
@@ -1511,8 +1519,6 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
             {
-                entity.HasKey(e => new { e.Group_Id, e.Column_Index });
-
                 entity.HasOne(d => d.Gallery_Item)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Id)
@@ -1523,6 +1529,13 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Group_Id)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
+            });
+
+            modelBuilder.Entity<GALLERY_ITEM>(entity =>
+            {
+                entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<GALLERY_ROWS>(entity =>
@@ -1924,7 +1937,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.HasOne(d => d.Maturity_LevelNavigation)
                     .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Maturity_Level)
+                    .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MATURITY___Matur__5B638405");
 
@@ -2078,7 +2091,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
 
-                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([varchar](50),[Std_Ref_Number],(0)) end)", false);
+                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
 
                 entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
 
@@ -2299,6 +2312,17 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.PARAMETER_VALUES)
                     .HasForeignKey(d => d.Parameter_Id)
                     .HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
+            });
+
+            modelBuilder.Entity<PASSWORD_HISTORY>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.Created });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PASSWORD_HISTORY)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PASSWORD_HISTORY_USERS");
             });
 
             modelBuilder.Entity<PROCUREMENT_DEPENDENCY>(entity =>
@@ -2747,6 +2771,17 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.REQUIREMENT_SOURCE_FILES)
                     .HasForeignKey(d => d.Requirement_Id)
                     .HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
+            });
+
+            modelBuilder.Entity<RISK_SUB_RISK_AREA>(entity =>
+            {
+                entity.HasKey(e => e.Sub_Risk_Area_Id)
+                    .HasName("PK_SUB_RISK_AREA_1");
+
+                entity.HasOne(d => d.Risk_AreaNavigation)
+                    .WithMany(p => p.RISK_SUB_RISK_AREA)
+                    .HasForeignKey(d => d.Risk_Area)
+                    .HasConstraintName("FK_RISK_SUB_RISK_AREA_RISK_AREA");
             });
 
             modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>

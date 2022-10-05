@@ -148,7 +148,7 @@
         <ng-template ngFor let-q [ngForOf]="d.questions">
           <tr>
             <td class="text-nowrap align-top" [class.font-weight-bold]="q.score != 0">{{q.id}}</td>
-            <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.questionText}}</td>
+            <td class="align-top" [class.font-weight-bold]="q.score != 0" [innerHtml]="q.questionText | safe"></td>
             <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.answerText}}</td>
             <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
           </tr>

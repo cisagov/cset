@@ -170,19 +170,17 @@ export class MergeExaminationsComponent implements OnInit {
   getAltText(altText: any) {
     let commentString = "";
 
-    if (altText === null || altText === undefined || altText === "") {
+    if (altText === null || altText === "") {
       return "";
     } else {
-      let tempArray = altText.split("- - End of Issue - -");
+      let tempArray = altText.split("- - End of Comment - -");
       for (let i = 0; i < tempArray.length; i++) {
-        if (!tempArray[i].includes("- - End of Issue - -")) {
+        if (!tempArray[i].includes("- - End of Comment - -")) {
           commentString += tempArray[i];
         }
       }
-
       return commentString;
     }
-    
   }
 
 
@@ -267,34 +265,34 @@ export class MergeExaminationsComponent implements OnInit {
 
   combineAltText(i: number) {
     let myString = "";
-    if (this.mergeConflicts[i].alt_Text1 !== null) {
+    if (this.mergeConflicts[i].alt_Text1 !== null && this.mergeConflicts[i].alt_Text1 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text1 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text2 !== null) {
+    if (this.mergeConflicts[i].alt_Text2 !== null && this.mergeConflicts[i].alt_Text2 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text2 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text3 !== null) {
+    if (this.mergeConflicts[i].alt_Text3 !== null && this.mergeConflicts[i].alt_Text3 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text3 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text4 !== null) {
+    if (this.mergeConflicts[i].alt_Text4 !== null && this.mergeConflicts[i].alt_Text4 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text4 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text5 !== null) {
+    if (this.mergeConflicts[i].alt_Text5 !== null && this.mergeConflicts[i].alt_Text5 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text5 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text6 !== null) {
+    if (this.mergeConflicts[i].alt_Text6 !== null && this.mergeConflicts[i].alt_Text6 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text6 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text7 !== null) {
+    if (this.mergeConflicts[i].alt_Text7 !== null && this.mergeConflicts[i].alt_Text7 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text7 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text8 !== null) {
+    if (this.mergeConflicts[i].alt_Text8 !== null && this.mergeConflicts[i].alt_Text8 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text8 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text9 !== null) {
+    if (this.mergeConflicts[i].alt_Text9 !== null && this.mergeConflicts[i].alt_Text9 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text9 + "\n";
     }
-    if (this.mergeConflicts[i].alt_Text10 !== null) {
+    if (this.mergeConflicts[i].alt_Text10 !== null && this.mergeConflicts[i].alt_Text10 !== undefined) {
       myString += this.mergeConflicts[i].alt_Text10 + "\n";
     }
   return myString;

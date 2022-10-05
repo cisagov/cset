@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace UpgradeLibrary.Upgrade
 {
@@ -27,8 +28,13 @@ namespace UpgradeLibrary.Upgrade
         /// Constructor.
         /// </summary>
         public ConvertSqlDatabase(string path)
-        {   
-            this.applicationPath = new FileInfo(path).Directory.FullName;
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                this.applicationPath = path;
+            }
+            else
+                this.applicationPath = new FileInfo(path).Directory.FullName;
         }
 
 

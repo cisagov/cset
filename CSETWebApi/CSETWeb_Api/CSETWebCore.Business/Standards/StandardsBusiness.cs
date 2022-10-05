@@ -108,21 +108,14 @@ namespace CSETWebCore.Business.Standards
 
         public bool GetFramework(int assessmentId)
         {
-            using (var db = new CSETContext())
-            {
-                return db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
-                    .FirstOrDefault() == null ? false : true;
-            }
-
+            return _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "NCSF_V1" && x.Selected)
+                .FirstOrDefault() == null ? false : true;
         }
 
 
         public bool GetACET(int assessmentId)
         {
-            using (var db = new CSETContext())
-            {
-                return !(db.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "ACET_V1" && x.Selected).FirstOrDefault() == null);
-            }
+            return !(_context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Set_Name == "ACET_V1" && x.Selected).FirstOrDefault() == null);
         }
 
 

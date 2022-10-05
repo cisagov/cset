@@ -113,8 +113,7 @@ namespace CSETWebCore.Business.Question
         {
             var response = new QuestionResponse();
 
-
-            foreach (var req in requirements)
+            foreach (var req in requirements.OrderBy(x => x.SetShortName).ToList())
             {
                 var dbR = req.Requirement;
 
@@ -137,7 +136,7 @@ namespace CSETWebCore.Business.Question
 
 
                 // find or create the category
-                var category = response.Categories.Where(cat => cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
+                var category = response.Categories.Where(cat => cat.SetName == req.SetName && cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
                 if (category == null)
                 {
                     category = new QuestionGroup()
@@ -206,7 +205,6 @@ namespace CSETWebCore.Business.Question
             response.QuestionCount = _questionRequirement.NumberOfQuestions();
             response.RequirementCount = _questionRequirement.NumberOfRequirements();
 
-            var j = JsonConvert.SerializeObject(response);
             return response;
         }
 

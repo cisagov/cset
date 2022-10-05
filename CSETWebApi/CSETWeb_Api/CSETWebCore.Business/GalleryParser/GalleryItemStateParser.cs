@@ -64,7 +64,10 @@ namespace CSETWebCore.Business.GalleryParser
                     row = item.r.Row_Index;
                 }
 
-                galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+                if ((bool)item.i.Is_Visible)
+                {
+                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+                }
             }
 
             return rvalue;

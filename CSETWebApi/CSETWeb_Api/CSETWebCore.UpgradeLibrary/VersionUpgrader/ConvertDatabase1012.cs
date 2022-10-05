@@ -33,7 +33,7 @@ namespace UpgradeLibrary.Upgrade
             }
             catch (Exception e) 
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 10.1.1.0 to 10.1.2.0: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 10.1.1.0 to 10.1.2.0: " + e.Message);
             }
         }
     }

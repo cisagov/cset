@@ -50,7 +50,7 @@
         <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
             <label class="mb-1" for="creditUnion">Credit Union</label>
             <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-                (change)="update($event)" tabindex="0">
+                (change)="update($event)" (click)="update($event)" tabindex="0">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -125,7 +125,7 @@
                     (change)="update($event)" tabindex="0">
             </div>
             <div class="form-group col-md-6">
-                <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+                <label class="mb-1" for="stateProvRegion">State or Province</label>
                 <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                     (change)="update($event)" tabindex="0">
             </div>
@@ -164,10 +164,6 @@
                     <option>SCUEP</option>
                     <option>CORE</option>
                 </select>
-
-                <div class="invalid-feedback d-block text-muted ml-1" *ngIf="this.ncuaSvc.proposedExamLevel === 'CORE'">
-                    A CORE exam level cannot be changed
-                </div>
             </div>
         </div>
     </ng-container>

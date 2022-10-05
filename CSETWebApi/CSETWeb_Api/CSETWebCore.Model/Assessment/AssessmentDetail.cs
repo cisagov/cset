@@ -18,7 +18,7 @@ namespace CSETWebCore.Model.Assessment
 
         public string Charter { get; set; }
         public string CreditUnion { get; set; }
-        public int? Assets { get; set; }
+        public long Assets { get; set; }
 
         public string DiagramMarkup { get; set; }
         public string DiagramImage { get; set; }

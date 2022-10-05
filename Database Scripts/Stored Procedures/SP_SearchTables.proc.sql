@@ -1,5 +1,5 @@
 CREATE PROCEDURE [dbo].[SP_SearchTables] 
- @Tablenames VARCHAR(500) 
+ @Tablenames nvarchar(500) 
 ,@SearchStr NVARCHAR(60) 
 ,@GenerateSQLOnly Bit = 0 
 AS 
@@ -61,14 +61,14 @@ AS
     DECLARE @SQLTbl TABLE 
     ( 
      Tablename        SYSNAME 
-    ,WHEREClause    VARCHAR(MAX) 
-    ,SQLStatement   VARCHAR(MAX) 
+    ,WHEREClause    nvarchar(MAX) 
+    ,SQLStatement   nvarchar(MAX) 
     ,Execstatus        BIT  
     ) 
  
-    DECLARE @SQL VARCHAR(MAX) 
+    DECLARE @SQL nvarchar(MAX) 
     DECLARE @tmpTblname sysname 
-    DECLARE @ErrMsg VARCHAR(100) 
+    DECLARE @ErrMsg nvarchar(100) 
  
     IF LTRIM(RTRIM(@Tablenames)) IN ('' ,'%') 
     BEGIN 

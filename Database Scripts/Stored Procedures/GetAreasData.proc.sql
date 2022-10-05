@@ -5,7 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[GetAreasData]		
 @Assessment_Id int,
-@applicationMode varchar(100) = null
+@applicationMode nvarchar(100) = null
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -15,7 +15,7 @@ BEGIN
 
 	if(@Assessment_Id is null)  
 	begin
-		declare @ghq varchar(150)
+		declare @ghq nvarchar(150)
 		set @ghq = 'Access Control'
 		 select [Assessment_id]=0,Question_Group_Heading=@ghq,    AreasPercent= 0.200000000, Assessment_Date=GETDATE()
 		 union
