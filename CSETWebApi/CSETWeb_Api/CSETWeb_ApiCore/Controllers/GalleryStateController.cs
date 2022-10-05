@@ -57,11 +57,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(GalleryItem Item_To_Clone)
+        public IActionResult CloneItem(GalleryItem Item_To_Clone, int Group_Id)
         {
             try
             {
-                _stateManager.CloneGalleryItem(Item_To_Clone);
+                _stateManager.CloneGalleryItem(Item_To_Clone, Group_Id);
                 return Ok();
             }
             catch (Exception e)
@@ -83,11 +83,16 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addItem")]
-        public IActionResult AddItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string group, int columnId)
+        public IActionResult AddItem(string newDescription, string newTitle, string group, int columnId)
         {
+            string newIcon_File_Name_Small = "";
+            string newIcon_File_Name_Large = "";
+
             try
             {
-                return Ok(_stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId));
+                _stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
+                //_stateManager.AddGalleryDetail(columnId);
+                return Ok();
             }
             catch (Exception e)
             {
