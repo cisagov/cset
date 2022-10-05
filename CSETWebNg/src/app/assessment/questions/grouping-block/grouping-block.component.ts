@@ -7,6 +7,7 @@ import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { NCUAService } from '../../../services/ncua.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class GroupingBlockComponent implements OnInit {
     public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public ncuaSvc: NCUAService
   ) { }
 
   /**
