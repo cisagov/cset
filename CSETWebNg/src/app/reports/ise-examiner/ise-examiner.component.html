@@ -102,7 +102,7 @@
             </table>
         </div>
 
-        <div class="page-break"></div>
+        <!-- <div class="page-break"></div>
 
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
@@ -124,14 +124,14 @@
                             <tr *ngIf="q.comments === 'Yes' && this.requiredQuestion(q)">
                                 <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                 <td class="pr-3">{{ q.questionText }}</td>
-                                <td class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
+                                <td class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</td>
                                 <td class="pr-3">{{ q.comment }}</td>
                             </tr>
                         </ng-container>
                     </ng-container>
                 </ng-container>
             </ng-container>
-        </table>
+        </table> -->
 
         <div class="page-break"></div>
 
@@ -145,7 +145,7 @@
             <div *ngFor="let f of d.assessmentFactors">
                 <div *ngFor="let c of f.components">
                     <div *ngFor="let q of c.questions">
-                        <div *ngIf="this.requiredQuestion(q) && q.comments === 'Yes'">
+                        <div *ngIf="q.comments === 'Yes'">
                             <div>
                                 <span class="font-weight-bold">Title: </span>
                                 <span class="pr-3">{{ q.title }}</span>
@@ -156,7 +156,7 @@
                             </div>
                             <div>
                                 <span class="font-weight-bold">Response: </span>
-                                <span class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</span>
+                                <span class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</span>
                             </div>
                             <div>
                                 <div class="font-weight-bold">Comments: </div>
