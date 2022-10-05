@@ -20,22 +20,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         static Rule7()
         {
-            using(var db = new CSETContext())
-            {
-                sals= db.UNIVERSAL_SAL_LEVEL.ToDictionary(x => x.Full_Name_Sal.ToLower(), x => x);
-            }
+           // sals = context.UNIVERSAL_SAL_LEVEL.ToDictionary(x => x.Full_Name_Sal.ToLower(), x => x);
         }
 
 
-        public Rule7(SimplifiedNetwork simplifiedNetwork)
+        public Rule7(SimplifiedNetwork simplifiedNetwork, CSETContext context)
         {
+            sals = context.UNIVERSAL_SAL_LEVEL.ToDictionary(x => x.Full_Name_Sal.ToLower(), x => x);
             this.simplifiedNetwork = simplifiedNetwork;
         }
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             var unidirectional = this.simplifiedNetwork.Nodes.Values.Where(x => x.IsUnidirectional);
-            foreach(var comp in unidirectional.ToList())
+            foreach (var comp in unidirectional.ToList())
             {
                 CheckRule7(comp);
             }
@@ -58,21 +56,21 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         private void CheckRule7(NetworkComponent component)
         {
             if (component.IsUnidirectional)
-            {   
+            {
                 //determine the zone type of the zone the unidirectional device
                 //is in if the zone is anything but classified information 
                 //should flow from high to low
 
-                bool isHighToLow = true; 
+                bool isHighToLow = true;
                 //if it is a classified zone it should flow from low to high
-                if(component.Zone!=null)
-                if (component.Zone.ZoneType == "Classified")
-                {
-                    //must flow from low to high
-                    isHighToLow = false;
-                }
+                if (component.Zone != null)
+                    if (component.Zone.ZoneType == "Classified")
+                    {
+                        //must flow from low to high
+                        isHighToLow = false;
+                    }
                 //else must flow from high to low
-                
+
 
                 //look to see if the items connected are in the same zone
                 //if they are not then start moving out

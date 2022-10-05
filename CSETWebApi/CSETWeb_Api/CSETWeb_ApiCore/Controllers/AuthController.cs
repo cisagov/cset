@@ -34,12 +34,18 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult Login([FromBody] Login login)
         {
             LoginResponse resp = _userAuthentication.Authenticate(login);
-            if (resp != null)
+
+            if (resp == null)
             {
-                return Ok(resp);
+                return BadRequest(new LoginResponse());
             }
 
-            return BadRequest(new LoginResponse());
+            if (resp.IsPasswordExpired)
+            {
+                return BadRequest(resp);
+            }
+
+            return Ok(resp);
         }
 
         /// <summary>
@@ -74,7 +80,7 @@ namespace CSETWebCore.Api.Controllers
 
                 _logger.Error(exc.Message);
                 return StatusCode(500);
-            } 
+            }
         }
 
         /// <summary>
@@ -150,7 +156,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Simple endpoint to check if API is running
         /// </summary>
-        public IActionResult IsRunning() 
+        public IActionResult IsRunning()
         {
             return Ok();
         }

@@ -33,7 +33,7 @@ namespace UpgradeLibrary.Upgrade
             }
             catch (Exception e) 
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 9.0.1 to 9.0.2: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 9.0.1 to 9.0.2: " + e.Message);
             }
         }
     }
