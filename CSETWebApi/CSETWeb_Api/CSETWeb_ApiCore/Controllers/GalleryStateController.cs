@@ -57,11 +57,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(GalleryItem Item_To_Clone)
+        public IActionResult CloneItem(GalleryItem Item_To_Clone, int Group_Id)
         {
             try
             {
-                _stateManager.CloneGalleryItem(Item_To_Clone);
+                _stateManager.CloneGalleryItem(Item_To_Clone, Group_Id);
                 return Ok();
             }
             catch (Exception e)
