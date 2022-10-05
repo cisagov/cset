@@ -60,10 +60,11 @@ export class GalleryEditorService {
     });
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, groupId: number) {
     return  this.http.get("https://localhost:44310/api/gallery/cloneItem",  {
       params: {
-        Item_To_Clone: item
+        Item_To_Clone: item,
+        Group_Id: groupId
       }
     });
   }
@@ -76,11 +77,9 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryItem(iconSmall: string, iconLarge: string, description: string, title: string, group: string, columnId: number) {
+  addGalleryItem(description: string, title: string, group: string, columnId: number) {
     return  this.http.get("https://localhost:44310/api/gallery/addItem",  {
       params: {
-        newIcon_File_Name_Small: iconSmall,
-        newIcon_File_Name_Large: iconLarge,
         newDescription: description,
         newTitle: title,
         group: group,

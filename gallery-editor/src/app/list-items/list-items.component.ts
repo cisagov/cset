@@ -103,7 +103,7 @@ export class ListItemsComponent implements OnInit {
   addGalleryGroup(title: string) {
     console.log(title + " would be added");
   }
-  addGalleryItem(iconSmall: string, iconLarge: string, description: string, title: string, group: string) {
+  addGalleryItem(description: string, title: string, group: string) {
     console.log(title + " would be added");
 
     let columnId = 0;
@@ -115,18 +115,19 @@ export class ListItemsComponent implements OnInit {
     }
     console.log(columnId);
 
-    this.svcGalleryEditor.addGalleryItem(iconSmall, iconLarge, description, title, group, columnId).subscribe(
+    this.svcGalleryEditor.addGalleryItem(description, title, group, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
         console.log(this.responseAdd);
+        this.updateItems(this.layoutName);
       },
       error => console.log('Gallery add item error ' + (<Error>error).message)
     );
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, groupId: number) {
     console.log(item.title + " would be cloned");
-    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
+    this.svcGalleryEditor.cloneGalleryItem(item, groupId).subscribe(
       (r: any) => {
         this.updateItems(this.layoutName);
       },

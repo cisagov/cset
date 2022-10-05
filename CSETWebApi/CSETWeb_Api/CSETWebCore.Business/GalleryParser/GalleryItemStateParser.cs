@@ -95,8 +95,10 @@ namespace CSETWebCore.Business.GalleryParser
             var newItem = TinyMapper.Map<GALLERY_ITEM>(item_to_clone);
             newItem.CreationDate = DateTime.Now;
             newItem.Is_Visible = true;
+            newItem.Configuration_Setup = "";
 
             _context.GALLERY_ITEM.Add(newItem);
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
         //
-        public List<string> AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string groupName, int columnId)
+        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string groupName, int columnId)
         {
             // Setup for adding to GALLERY_ITEM table
             GALLERY_ITEM newItem = new GALLERY_ITEM()
@@ -147,26 +149,50 @@ namespace CSETWebCore.Business.GalleryParser
             };
 
             _context.GALLERY_ITEM.Add(newItem);
+            _context.SaveChanges();
 
             // Setup for adding to GALLERY_GROUP_DETAILS table
             var groupId = from g in _context.GALLERY_GROUP.AsEnumerable()
-                       where g.Group_Title == groupName
-                       select g.Group_Id;
+                          where g.Group_Title == groupName
+                          select g.Group_Id;
 
-            var galleryId  = from g in _context.GALLERY_ITEM.AsEnumerable()
-                       select g.Gallery_Item_Id;
+            var galleryId = newItem.Gallery_Item_Id;
 
-            GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS() {
-                Group_Id = groupId.Single(),
+            GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS()
+            {
+                Group_Id = groupId.First(),
                 Column_Index = columnId,
-                Gallery_Item_Id = galleryId.Last() + 1,
+                Gallery_Item_Id = galleryId,
                 Click_Count = 0
             };
 
             _context.GALLERY_GROUP_DETAILS.Add(newDetailsRow);
             _context.SaveChanges();
 
-            return _context.GALLERY_ITEM.Select(x => x.Title).ToList();
+        }
+
+
+        public void AddGalleryDetail(string groupName, int columnId)
+        {
+            // Setup for adding to GALLERY_GROUP_DETAILS table
+            var groupId = from g in _context.GALLERY_GROUP.AsEnumerable()
+                          where g.Group_Title == groupName
+                          select g.Group_Id;
+
+            var galleryId = from g in _context.GALLERY_ITEM.AsEnumerable()
+                            select g.Gallery_Item_Id;
+
+            GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS()
+            {
+                Group_Id = groupId.Single(),
+                Column_Index = columnId,
+                Gallery_Item_Id = galleryId.Last(),
+                Click_Count = 0
+            };
+
+            _context.GALLERY_GROUP_DETAILS.Add(newDetailsRow);
+            _context.SaveChanges();
+
         }
 
 
