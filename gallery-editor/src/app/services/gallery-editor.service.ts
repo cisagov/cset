@@ -60,10 +60,11 @@ export class GalleryEditorService {
     });
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, groupId: number) {
     return  this.http.get("https://localhost:44310/api/gallery/cloneItem",  {
       params: {
-        Item_To_Clone: item
+        Item_To_Clone: item,
+        Group_Id: groupId
       }
     });
   }

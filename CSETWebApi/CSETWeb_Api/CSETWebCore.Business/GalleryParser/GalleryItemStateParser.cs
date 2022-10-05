@@ -95,8 +95,10 @@ namespace CSETWebCore.Business.GalleryParser
             var newItem = TinyMapper.Map<GALLERY_ITEM>(item_to_clone);
             newItem.CreationDate = DateTime.Now;
             newItem.Is_Visible = true;
+            newItem.Configuration_Setup = "";
 
             _context.GALLERY_ITEM.Add(newItem);
+            _context.SaveChanges();
         }
 
         /// <summary>

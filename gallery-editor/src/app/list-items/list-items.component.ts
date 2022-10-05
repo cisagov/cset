@@ -119,14 +119,15 @@ export class ListItemsComponent implements OnInit {
       (r: any) => {
         this.responseAdd = r;
         console.log(this.responseAdd);
+        this.updateItems(this.layoutName);
       },
       error => console.log('Gallery add item error ' + (<Error>error).message)
     );
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, groupId: number) {
     console.log(item.title + " would be cloned");
-    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
+    this.svcGalleryEditor.cloneGalleryItem(item, groupId).subscribe(
       (r: any) => {
         this.updateItems(this.layoutName);
       },
