@@ -70,10 +70,36 @@ export class IseExaminerComponent implements OnInit {
    * checks if the quesiton needs to appear
    */ 
   requiredQuestion(q: any) {
-    if (q.maturityLevel == 'U' && q.maturityLevel == 'CORE+') {
+    if (q.answerText == 'U' && q.maturityLevel == 'CORE+') {
       return false;
     }
     return true;
+  }
+
+  /**
+   * checks if q is a parent question
+   */ 
+   isParentQuestion(q: any) {
+    if ( this.requiredQuestion(q)
+    &&   q.title == 'Stmt 1' 
+    ||   q.title == 'Stmt 2'
+    ||   q.title == 'Stmt 3'
+    ||   q.title == 'Stmt 4'
+    ||   q.title == 'Stmt 5'
+    ||   q.title == 'Stmt 6'
+    ||   q.title == 'Stmt 7'
+    ||   q.title == 'Stmt 8'
+    ||   q.title == 'Stmt 9'
+    ||   q.title == 'Stmt 10'
+    ||   q.title == 'Stmt 11'
+    ||   q.title == 'Stmt 12'
+    ||   q.title == 'Stmt 13'
+    ||   q.title == 'Stmt 14'
+    ||   q.title == 'Stmt 15'
+    ||   q.title == 'Stmt 16') {
+      return true;
+    } 
+    return false;
   }
   
 }
