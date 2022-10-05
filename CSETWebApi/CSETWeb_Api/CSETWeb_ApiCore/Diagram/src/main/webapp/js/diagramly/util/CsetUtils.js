@@ -277,7 +277,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
  */
 CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
     const req = {
-        diagramXml: xml,
+        diagramXml: testForBase64(xml),
         lastUsedComponentNumber: sessionStorage.getItem("last.number"),
         revision: revision
     };
@@ -296,11 +296,12 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
 
 function testForBase64(strValue){
     var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-    if(!base64regex.test(strValue));{
+    if (!base64regex.test(strValue)) {
         return btoa(strValue);
     }
     return strValue;
 }
+
 /**
  * Send the diagram to the API for analysis
  */
