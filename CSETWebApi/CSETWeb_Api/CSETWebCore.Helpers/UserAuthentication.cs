@@ -23,7 +23,7 @@ namespace CSETWebCore.Helpers
         private readonly ITokenManager _transactionSecurity;
         private CSETContext _context;
 
-        public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness, 
+        public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness,
             ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity, CSETContext context)
         {
             _password = password;
@@ -51,20 +51,19 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-                // Validate the supplied password against the hashed password and its salt
-            bool success = _password.ValidatePassword(login.Password, loginUser.Password, loginUser.Salt);
-            if (!success)
+
+            // Validate the supplied password against the hashed password and its salt
+            bool passwordIsValid = _password.ValidatePassword(login.Password, loginUser.Password, loginUser.Salt);
+
+            if (!passwordIsValid)
             {
                 return null;
             }
 
-            // Generate a token for this user
-            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
 
             // Build response object
             LoginResponse resp = new LoginResponse
             {
-                Token = token,
                 UserId = loginUser.UserId,
                 Email = login.Email,
                 UserFirstName = loginUser.FirstName,
@@ -75,6 +74,21 @@ namespace CSETWebCore.Helpers
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime()
             };
+
+
+            // The password is valid, but is it expired?
+            var isExpired = new PasswordExpiration().IsExpired(_context, loginUser.UserId, loginUser.Password);
+            if (isExpired)
+            {
+                resp.IsPasswordExpired = true;
+                return resp;
+            }
+
+
+            // Generate a token for this user and add to the response
+            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            resp.Token = token;
+
 
             return resp;
         }
@@ -89,8 +103,8 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
-            int?  assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
-            
+            int? assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+
             assessmentId = assessmentId == 0 ? null : assessmentId;
 
             int userIdSO = 100;
@@ -102,43 +116,41 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            using (CSETContext tmpcontext = new CSETContext()) {
-                
 
                 string name = null;
-                
+
                 name = Environment.UserName;
                 name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
 
                 primaryEmailSO = name;
                 //check for legacy default email for local installation and set to new standard
-                var userOrg = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+                var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
                 if (userOrg != null)
                 {
                     string tmp = userOrg.PrimaryEmail.Split('@')[0];
                     userOrg.PrimaryEmail = tmp;
-                    if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                        tmpcontext.SaveChanges();
+                    if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                        _context.SaveChanges();
                     primaryEmailSO = userOrg.PrimaryEmail;
                 }
-                else 
-                { 
+                else
+                {
                     //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
                     string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                    var allUsers = tmpcontext.USERS.ToList();
+                    var allUsers = _context.USERS.ToList();
                     var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
                     if (legacyUser != null)
                     {
                         string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
                         legacyUser.PrimaryEmail = tmp;
-                        if (tmpcontext.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                            tmpcontext.SaveChanges();
+                        if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                            _context.SaveChanges();
                         primaryEmailSO = legacyUser.PrimaryEmail;
                     }
                 }
 
 
-                var user = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                 if (user == null)
                 {
                     UserDetail ud = new UserDetail()
@@ -147,21 +159,21 @@ namespace CSETWebCore.Helpers
                         FirstName = name,
                         LastName = ""
                     };
-                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud,tmpcontext);
+                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
 
-                    tmpcontext.SaveChanges();
+                    _context.SaveChanges();
                     //update the userid 1 to the new user
-                    var tempu = tmpcontext.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                    var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
                     if (tempu != null)
                         userIdSO = tempu.UserId;
-                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO,tmpcontext);
+                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
                 }
                 else
                 {
                     userIdSO = user.UserId;
                 }
 
-                    if (string.IsNullOrEmpty(primaryEmailSO))
+                if (string.IsNullOrEmpty(primaryEmailSO))
                 {
                     return null;
                 }
@@ -187,7 +199,6 @@ namespace CSETWebCore.Helpers
 
 
                 return resp;
-            }
-        }        
+        }
     }
 }

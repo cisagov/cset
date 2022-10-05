@@ -4,10 +4,10 @@
 -- Description:	Parses XML string and writes the data to the temporary table.
 -- =============================================
 CREATE PROCEDURE [dbo].[Parse_XML](
-                                   @XMLString VARCHAR(MAX),
+                                   @XMLString nvarchar(MAX),
                                    @strtX BIGINT,
 					 			   @endX BIGINT OUTPUT,
-								   @DataStr VARCHAR(MAX) OUTPUT
+								   @DataStr nvarchar(MAX) OUTPUT
 								  )
 AS
 BEGIN

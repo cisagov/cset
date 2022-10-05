@@ -204,7 +204,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         {
             string newSetName = GenerateNewSetName();
 
-            ModuleCloner cloner = new ModuleCloner();
+            ModuleCloner cloner = new ModuleCloner(_context);
             bool cloneSuccess = cloner.CloneModule(setName, newSetName);
 
             if (cloneSuccess)

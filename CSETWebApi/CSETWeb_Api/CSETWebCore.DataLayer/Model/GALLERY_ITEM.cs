@@ -25,13 +25,14 @@ namespace CSETWebCore.DataLayer.Model
         public string Configuration_Setup { get; set; }
         public string Configuration_Setup_Client { get; set; }
         [Required]
-        [StringLength(1000)]
+        [StringLength(2000)]
         public string Description { get; set; }
         [StringLength(200)]
         public string Title { get; set; }
+        [Column(TypeName = "datetime")]
         public DateTime CreationDate { get; set; }
-        public bool Is_Visible { get; set; }
-
+        [Required]
+        public bool? Is_Visible { get; set; }
 
         [InverseProperty("Gallery_Item")]
         public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }

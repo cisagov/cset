@@ -5,11 +5,11 @@
 -- =============================================
 CREATE PROCEDURE [dbo].[analytics_compute_single_averages_standard]
 	@assessment_id int,
-	@set_name varchar(20)
+	@set_name nvarchar(20)
 AS
 BEGIN
 SET NOCOUNT ON;
-	declare @ApplicationMode varchar(20)
+	declare @ApplicationMode nvarchar(20)
 
 	exec dbo.GetApplicationModeDefault @assessment_id, @ApplicationMode output
 

@@ -115,7 +115,7 @@ namespace CSETWeb_ApiCore
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
-                options => options.UseSqlServer("name=ConnectionStrings:CSET_DB"));
+                options => options.UseSqlServer(Configuration.GetConnectionString("CSET_DB")));
 
             //Services
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
@@ -191,6 +191,9 @@ namespace CSETWeb_ApiCore
                  app.UseRewriter(options);
             }
 
+            // Serve up index.html from webapp when root url is hit
+            app.UseRewriter(new RewriteOptions().AddRewrite("^$", "index.html", true));
+ 
             //app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
@@ -203,6 +206,12 @@ namespace CSETWeb_ApiCore
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Documents")),
                 RequestPath = "/Documents"
+            });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "WebApp")),
+                RequestPath = ""
             });
             app.UseRouting();
             app.UseCors("AllowAll");

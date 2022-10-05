@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -30,6 +32,17 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
+                Console.WriteLine("Reading the path test");
+                if(System.IO.File.Exists(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"))){
+                    Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
+                    
+                    //process this as if we are running internally else do what ever used to be the case
+                    //in this case they are running together and we can just replace the config document. 
+                    var jd = processUpdatedJson(HttpContext.Request);
+                    return Ok(jd);
+                }
+                Console.WriteLine("Path didn't exist");
+
                 return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
             }
             catch (Exception)
@@ -37,6 +50,66 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest("assets/config.json file not found");
             }
         }
+
+        Newtonsoft.Json.Linq.JObject processUpdatedJson(HttpRequest context)
+        {
+            string webpath = _webHost.ContentRootPath;
+            if (!webpath.Contains("WebApp"))
+            {
+                webpath = Path.Combine(_webHost.ContentRootPath, "WebApp");
+            }                
+            
+            var path = Path.Combine(webpath, "assets","config.json");
+            //if the files are there then assume we are running together
+            //replace and return it. 
+            if (System.IO.File.Exists(path))
+            {
+                JObject document = JObject.Parse(System.IO.File.ReadAllText(path));
+
+                JToken element = document["app"];
+
+                element["url"] = context.Host.Host;
+                if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
+                {   
+                    element["protocol"] = context.Scheme;
+                    string port = "443";
+                    if ((context.Host.Port == 80) || (context.Host.Port == 443))
+                        port = "";
+                    else
+                        port = (context.Host.Port ?? 80).ToString();
+                    element["port"] = port;
+                }
+                else
+                {
+                    element["protocol"] = context.Headers["X-Forwarded-Proto"].ToString();
+                    element["port"] = context.Headers["X-Forwarded-Port"].ToString();
+                }
+
+                element = document["api"];
+                element["url"] = context.Host.Host;
+                if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
+                {
+                    element["protocol"] = context.Scheme;
+                    string port = "443";
+                    if ((context.Host.Port == 80) || (context.Host.Port == 443))
+                        port = "";
+                    else
+                        port = (context.Host.Port ?? 80).ToString();
+                    element["port"] = port;
+                }
+                else
+                {
+                    element["protocol"] = context.Headers["X-Forwarded-Proto"].ToString();
+                    element["port"] = context.Headers["X-Forwarded-Port"].ToString();
+                }
+
+                Console.Write(document.ToString());
+                return document;
+            }
+            throw new Exception("Cannot Find config file" + path);
+        }
+
+        
 
 
         private JsonElement processConfig(HostString newBase, string scheme)
@@ -60,7 +133,7 @@ namespace CSETWebCore.Api.Controllers
 
                             // get the base appURL 
                             // then change it to include the new port. 
-                            string findString = root.GetProperty("appUrl").ToString();
+                            string findString = root.GetProperty("app").GetProperty("url").ToString();
                             string replaceString = newBase + "/";
 
                             if (findString.SequenceEqual(replaceString))

@@ -37,14 +37,14 @@ get the top 5 for most improved and the bottom 5 for least improved.
 	IF OBJECT_ID('tempdb..#TopBottomType') IS NOT NULL DROP TABLE #TopBottomType
 	
 	CREATE TABLE #TopBottomType(
-	[Question_Group_Heading] [varchar](100) NOT NULL,
+	[Question_Group_Heading] [nvarchar](100) NOT NULL,
 	[pdifference] [float] NULL,
-	[TopBottomType] [varchar](10) NOT NULL
+	[TopBottomType] [nvarchar](10) NOT NULL
 	)
 
 	create table #answers (assessment_id int, answer_id int, is_requirement bit, question_or_requirement_id int, mark_for_review bit, 
-	comment ntext, alternate_justification ntext, question_number int, answer_text varchar(50), 
-	component_guid varchar(36), is_component bit, custom_question_guid varchar(50), is_framework bit, old_answer_id int, reviewed bit)
+	comment ntext, alternate_justification ntext, question_number int, answer_text nvarchar(50), 
+	component_guid nvarchar(36), is_component bit, custom_question_guid nvarchar(50), is_framework bit, old_answer_id int, reviewed bit)
 
 	declare sse cursor for select Assessment_Id from AGGREGATION_ASSESSMENT where Aggregation_Id = @Aggregation_id
 	order by Sequence desc
