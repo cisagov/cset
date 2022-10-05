@@ -42,15 +42,7 @@
 			<input style="width: 400px;" type="text" #boxAddDescription>
 		</span>
 		<br>
-		<span style="padding-left: 15px">Icon File Name (small)
-			<input style="width: 200px;" type="text" #boxAddIconSmall>
-		</span>
-		<br>
-		<span style="padding-left: 15px">Icon File Name (large)
-			<input style="width: 200px;" type="text" #boxAddIconLarge>
-		</span>
-		<br>
-		<button (click)="addGalleryItem(boxAddIconSmall.value, boxAddIconLarge.value, boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add as Item</button>
+		<button (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add as Item</button>
 		<br><br>
 
 		Clone
