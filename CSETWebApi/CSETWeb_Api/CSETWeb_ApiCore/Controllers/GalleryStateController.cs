@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(GalleryItem Item_To_Clone, int Group_Id)
+        public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
         {
             try
             {
@@ -92,6 +92,26 @@ namespace CSETWebCore.Api.Controllers
             {
                 _stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
                 //_stateManager.AddGalleryDetail(columnId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/addGroup")]
+        public IActionResult AddGroup(string group, string layout)
+        {
+            try
+            {
+                _stateManager.AddGalleryGroup(group, layout);
                 return Ok();
             }
             catch (Exception e)
