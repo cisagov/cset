@@ -64,6 +64,8 @@ export class ConfigService {
 
   installationMode = '';
 
+  galleryLayout = 'CSET';
+
   /**
    * Specifies the mobile ecosystem that the app is running on.
    * This is set by the build process when building CSET as
@@ -119,7 +121,7 @@ export class ConfigService {
           this.isCsetOnline = this.config.isCsetOnline ?? false;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
-
+          this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
 
           this.mobileEnvironment = (this.config.mobileEnvironment);
 

@@ -29,7 +29,9 @@
         "canDeleteCustomModules": true
     },
     "installationMode": "",
+    "galleryLayout": "CSET",
     "mobileEnvironment": "",
+
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",
     "buttonLabelNA": "NA",
