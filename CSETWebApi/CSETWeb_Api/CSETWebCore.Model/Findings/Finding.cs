@@ -26,7 +26,7 @@ namespace CSETWebCore.Model.Findings
         public Nullable<System.DateTime> Identified_Date { get; set; }
         public Nullable<System.DateTime> Due_Date { get; set; }
 
-        public List<FindingContact> Finding_Contacts { get; set; } = new List<FindingContact>();
+        public List<FindingContact> Finding_Contacts { get; set; }
 
         public bool IsFindingEmpty()
         {
@@ -40,7 +40,6 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
-            noValue = noValue && Finding_Contacts.Count(x => x.Selected) == 0;
             noValue = noValue && String.IsNullOrWhiteSpace(Title);
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
