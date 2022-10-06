@@ -139,7 +139,7 @@ function makeRequest(e) {
             case 'GET':
                 xhr.send();
                 break;
-            case 'POST':
+            case 'POST':                
                 xhr.send(e.payload);
                 break;
         }
@@ -261,9 +261,9 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     if (model) {
         const enc = new mxCodec();
         const node = enc.encode(model);
-        const sXML = xmlserializer.serializeToString(node);
+        const sXML =  xmlserializer.serializeToString(node);
         if (sXML !== EditorUi.prototype.emptyDiagramXml) {
-            analysisReq.DiagramXml = sXML;
+            analysisReq.DiagramXml = testForBase64(sXML);
         }
     }
 
@@ -277,7 +277,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
  */
 CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
     const req = {
-        diagramXml: xml,
+        diagramXml: testForBase64(xml),
         lastUsedComponentNumber: sessionStorage.getItem("last.number"),
         revision: revision
     };
@@ -286,12 +286,20 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
     const xmlserializer = new XMLSerializer();
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
     svgRoot = xmlserializer.serializeToString(svgRoot);
-    req.diagramSvg = svgRoot;
+    req.diagramSvg = testForBase64(svgRoot);
 
     //may need to add this in to the save
     //editor.menubarContainer;
 
     await CsetUtils.saveDiagram(req);
+}
+
+function testForBase64(strValue){
+    var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+    if (!base64regex.test(strValue)) {
+        return btoa(strValue);
+    }
+    return strValue;
 }
 
 /**
@@ -408,7 +416,7 @@ CsetUtils.importFilesCSETD = function (files, editor) {
  */
 async function TranslateToMxGraph(editor, sXML) {
     var req = {};
-    req.DiagramXml = sXML;
+    req.DiagramXml = testForBase64(sXML);
 
     await makeRequest({
         method: 'POST',

@@ -2033,6 +2033,16 @@ input[type="checkbox"]+label {
   padding: 0.1rem 0.5rem;
 }
 
+.core-plus-mat-level-name {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: $white;
+  background-color: #cd9a02;
+  border: 1px solid #cd9a02;//#ffc107;
+  border-radius: 1rem;
+  padding: 0.1rem 0.5rem;
+}
+
 .answer-group {
   display: flex;
   flex-wrap: nowrap;

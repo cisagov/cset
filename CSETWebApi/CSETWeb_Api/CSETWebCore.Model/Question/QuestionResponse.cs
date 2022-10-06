@@ -20,6 +20,10 @@ namespace CSETWebCore.Model.Question
         // The current mode of the assessment
         public string ApplicationMode { get; set; }
 
+        // Indicates if only the current mode should be available.
+        // (e.g. if 'requirements only', the Questions Mode toggle would not display)
+        public bool OnlyMode { get; set; }
+
         // The count of all questions in the response.
         public int QuestionCount { get; set; }
 
