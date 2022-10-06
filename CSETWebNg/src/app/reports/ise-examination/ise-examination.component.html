@@ -107,9 +107,9 @@
             <div style="align-self: flex-end;">
                 <span class="h2 report-text-blue">EF, DOR, and SF Summary</span> 
                 <!-- Comment bubble button -->
-                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                <!-- <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
                     [cdkCopyToClipboard]="this.summaryForCopy">Copy
-                </label>
+                </label> -->
                 <!-- <button [cdkCopyToClipboard]="this.resultsOfReviewString">Copy</button> -->
             </div>
         </div>
@@ -150,9 +150,9 @@
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
                 <span class="h2 report-text-blue">Results of Review</span>
-                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                <!-- <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
                     [cdkCopyToClipboard]="this.resultsOfReviewForCopy">Copy All
-                </label>
+                </label> -->
             </div>
         </div>
 
@@ -164,9 +164,9 @@
                             <div>
                                 <span class="font-weight-bold">Title: </span>
                                 <span class="pr-3">{{ q.title }}</span>
-                                <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                <!-- <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
                                     [cdkCopyToClipboard]="this.storeIndividualIssues.get(q.title)">Copy
-                                </label>
+                                </label> -->
                             </div>
                             <div>
                                 <span class="font-weight-bold">Question Text: </span>
@@ -210,35 +210,36 @@
                         <td colspan="5" class="background-1 color-white font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
                     </tr>
                     <ng-container *ngFor="let c of f.components">
-                        <tr>
-                            <!-- <td colspan="5" class="background-3 pl-5">{{c.title}} - Component -->
-                            <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
-                                <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
-                                    <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
-                                </label>
-                            </td>
-                        </tr>
-                        <ng-container *ngFor="let q of c.questions">
-                            <tr *ngIf="requiredQuestion(q) && shouldExpand(c.title)">
-                                <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
-
-                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
-
-                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
-
-                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3">
-                                    {{acetSvc.getAbbrev(q.maturityLevel)}}
-                                </td>
-                                <td *ngIf="isParentQuestion(q)" class="background-3">
-                                    <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
-                                        <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                        <ng-container *ngIf="this.showSubcats.get(c.title)">
+                            <tr>
+                                <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
+                                    <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                        <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
                                     </label>
                                 </td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                             </tr>
+                            <ng-container *ngFor="let q of c.questions">
+                                <tr *ngIf="(requiredQuestion(q) || isParentQuestion(q)) && shouldExpand(c.title)">
+                                    <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                    <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+
+                                    <td *ngIf="isParentQuestion(q)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
+                                    <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
+
+                                    <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
+                                    <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ this.configSvc.answerLabels[q.answerText] }}</td>
+
+                                    <td *ngIf="isParentQuestion(q)" class="background-3 pr-3">
+                                        {{acetSvc.getAbbrev(q.maturityLevel)}}
+                                    </td>
+                                    <td *ngIf="isParentQuestion(q)" class="background-3">
+                                        <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                        </label>
+                                    </td>
+                                    <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
                 </ng-container>
