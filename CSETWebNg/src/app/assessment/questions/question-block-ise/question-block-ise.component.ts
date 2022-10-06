@@ -526,26 +526,10 @@ export class QuestionBlockIseComponent implements OnInit {
       if (this.ncuaSvc.getExtraQuestionStatus() === true && this.finalExtraQuestion.has(id)) {
         return true;
       }
-    if(this.isScuep()) {
-      return false;
     }
 
   }
 
-  /**
-   * allows isFinalQuestion() to include CORE Stmt 6, which doesn't currently have any CORE+ questions
-   * @param id 
-   */
-  hasCorePlusQuestions (id: number) {
-    switch(id) {
-      case (7257): case(7258): case(7259):
-        return false;
-    }
-    if(this.isScuep()) {
-      return false;
-    }
-    return true;
-  }
 
   showCorePlusButton(id: number) {
     if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP') {
@@ -743,10 +727,5 @@ export class QuestionBlockIseComponent implements OnInit {
     });
   }
 
-  isScuep() {
-    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
-      return false;
-    }
-    return true;
-  }
+  
 }
