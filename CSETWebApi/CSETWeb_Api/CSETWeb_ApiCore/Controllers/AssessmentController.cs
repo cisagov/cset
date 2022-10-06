@@ -88,13 +88,40 @@ namespace CSETWebCore.Api.Controllers
             // create new empty assessment
             var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
 
-            // now add the options
+
+            // build a list of Sets to be selected
+            var setNames = new List<string>();
+
+            if (config.Sets1 != null)
+            {
+                foreach (var s in config.Sets1)
+                {
+                    setNames.Add(s.SetName);
+                }
+            }
+
             if (config.Sets != null)
             {
-                var counts = _standards.PersistSelectedStandards(assessment.Id, config.Sets);
-                assessment.QuestionRequirementCounts = counts;                
-                assessment.UseStandard = true;                
+                setNames.AddRange(config.Sets);
             }
+
+            if (setNames.Count > 0)
+            {
+                var counts = _standards.PersistSelectedStandards(assessment.Id, setNames);
+                assessment.QuestionRequirementCounts = counts;
+                assessment.UseStandard = true;
+            }
+
+            // apply any 'suppress mode' flags
+            if (config.Sets1.Exists(x => x.SuppressMode != null))
+            {
+                var xyz = 1;
+            }
+
+
+
+
+
 
             var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
 
