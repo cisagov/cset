@@ -78,27 +78,60 @@ namespace CSETWebCore.Business.GalleryParser
         /// </summary>
         /// <param name="item_to_clone"></param>
         /// <returns></returns>
-        public void CloneGalleryItem(GalleryItem item_to_clone)
+        public void CloneGalleryItem(int item_to_clone, int group_Id)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
             //clone the gallery_item and gallery_group_details need to clone that 
             //plus max column number +1
 
-            TinyMapper.Bind<GalleryItem, GALLERY_ITEM>(
-                //config => {
-                //config.Ignore(source => source.Gallery_Item_Id);
-                //}
+            TinyMapper.Bind<GALLERY_ITEM, GALLERY_ITEM>(
+                config =>
+                {
+                    config.Ignore(source => source.Gallery_Item_Id);
+                }
             );
 
-            //var oldItem = _context.GALLERY_ITEM.Where(itemto)
-            var newItem = TinyMapper.Map<GALLERY_ITEM>(item_to_clone);
+            TinyMapper.Bind<GALLERY_GROUP_DETAILS, GALLERY_GROUP_DETAILS>(
+                config =>
+                {
+                    config.Ignore(source => source.Group_Detail_Id);
+                }
+            );
+
+            var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item_to_clone).FirstOrDefault();
+
+            if (oldItem == null) { return; }
+
+            var newItem = TinyMapper.Map<GALLERY_ITEM>(oldItem);
             newItem.CreationDate = DateTime.Now;
             newItem.Is_Visible = true;
             newItem.Configuration_Setup = "";
 
             _context.GALLERY_ITEM.Add(newItem);
             _context.SaveChanges();
+
+            // Setup for adding to GALLERY_GROUP_DETAILS table
+            var detailList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == item_to_clone && x.Group_Id == group_Id).ToList();
+
+            if (detailList.Count == 0) { return; }
+
+            var maxColumn = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == group_Id).Max(x => x.Column_Index);
+            var newDetail = detailList[0];
+
+            var newDetailItem = new GALLERY_GROUP_DETAILS()
+            {
+                Group_Id = newDetail.Group_Id,
+                Column_Index = maxColumn + 1,
+                Gallery_Item_Id = newDetail.Gallery_Item_Id,
+                Click_Count = newDetail.Click_Count
+            };
+
+            //newDetailItem = TinyMapper.Map<GALLERY_GROUP_DETAILS>(newDetail);
+
+            _context.GALLERY_GROUP_DETAILS.Add(newDetailItem);
+            _context.SaveChanges();
+
         }
 
         /// <summary>
@@ -158,6 +191,8 @@ namespace CSETWebCore.Business.GalleryParser
 
             var galleryId = newItem.Gallery_Item_Id;
 
+            //var columnMax = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == groupId).Max(x => x.Column_Index);
+
             GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS()
             {
                 Group_Id = groupId.First(),
@@ -172,8 +207,39 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
 
+        public void AddGalleryGroup(string group, string layout)
+        {
+            // Setup for adding to GALLERY_ITEM table
+            GALLERY_GROUP newGroup = new GALLERY_GROUP()
+            {
+                Group_Title = group
+            };
+
+            _context.GALLERY_GROUP.Add(newGroup);
+            _context.SaveChanges();
+
+            var newGroupId = _context.GALLERY_GROUP.Where(x => x.Group_Title == group).Max(x => x.Group_Id);
+            var newRowIndex = _context.GALLERY_ROWS.Where(x => x.Layout_Name == layout).Max(x => x.Row_Index) + 1;
+
+
+            GALLERY_ROWS newRow = new GALLERY_ROWS()
+            {
+                Layout_Name = layout,
+                Row_Index = newRowIndex,
+                Group_Id = newGroupId
+            };
+
+            _context.GALLERY_ROWS.Add(newRow);
+            _context.SaveChanges();
+
+            AddGalleryItem("", "", "", "This is a placeholder", group, 0);
+
+        }
+
+
         public void AddGalleryDetail(string groupName, int columnId)
         {
+
             // Setup for adding to GALLERY_GROUP_DETAILS table
             var groupId = from g in _context.GALLERY_GROUP.AsEnumerable()
                           where g.Group_Title == groupName

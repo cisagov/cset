@@ -28,7 +28,7 @@
 
 		<br><br>
 
-		Add (fill only 'Group' box if adding a group, fill 'Group' and 'Item' if adding as an item):
+		Add Item:
 		<br> 
 		<span style="padding-left: 15px">Group
 			<input style="width: 400px;" type="text" #boxAddGroup>
@@ -45,13 +45,13 @@
 		<button (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add as Item</button>
 		<br><br>
 
-		Clone
-		<input style="width: 400px;" type="text" #boxClone>
-		
+		Add Group:
+		<br>
+		<span style="padding-left: 15px">Group
+			<input style="width: 400px;" type="text" #boxAddGroupOnly>
+		</span>
+		<br>
+		<button (click)="addGalleryGroup(boxAddGroupOnly.value)">Add as Group</button>
 		<br><br>
-
-		Delete
-		<input style="width: 400px;" type="text" #boxDelete>
-
 	</div>
 </div>

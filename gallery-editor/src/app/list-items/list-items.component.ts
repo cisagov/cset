@@ -92,20 +92,25 @@ export class ListItemsComponent implements OnInit {
     console.log(id + " would be deleted");
     this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
       (r: any) => {
-        // this.response = r;
-        console.log(this.response);
-        this.updateItems(this.layoutName);
       },
       error => console.log('Gallery Group delete error ' + (<Error>error).message)
     );
   }
 
-  addGalleryGroup(title: string) {
-    console.log(title + " would be added");
-  }
-  addGalleryItem(description: string, title: string, group: string) {
-    console.log(title + " would be added");
+  addGalleryGroup(group: string) {
+    this.svcGalleryEditor.addGalleryGroup(group, this.layoutName).subscribe(
+      (r: any) => {
+        this.responseAdd = r;
+        console.log(this.responseAdd);
+        this.updateItems(this.layoutName);
 
+        
+      },
+      error => console.log('Gallery add item error ' + (<Error>error).message)
+    );
+  }
+
+  addGalleryItem(description: string, title: string, group: string) {
     let columnId = 0;
     for (let i = 0; i < this.response?.rows?.length; i++) {
       if (this.response?.rows[i]?.group_Title === group) {
@@ -113,12 +118,10 @@ export class ListItemsComponent implements OnInit {
         break;
       }
     }
-    console.log(columnId);
 
     this.svcGalleryEditor.addGalleryItem(description, title, group, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
-        console.log(this.responseAdd);
         this.updateItems(this.layoutName);
       },
       error => console.log('Gallery add item error ' + (<Error>error).message)
@@ -126,7 +129,6 @@ export class ListItemsComponent implements OnInit {
   }
 
   cloneGalleryItem(item: any, groupId: number) {
-    console.log(item.title + " would be cloned");
     this.svcGalleryEditor.cloneGalleryItem(item, groupId).subscribe(
       (r: any) => {
         this.updateItems(this.layoutName);
@@ -136,7 +138,6 @@ export class ListItemsComponent implements OnInit {
   }
 
   cloneGalleryGroup(group: any) {
-    console.log(group.title + " would be cloned");
     this.svcGalleryEditor.cloneGalleryGroup(group).subscribe(
       (r: any) => {
         this.updateItems(this.layoutName);
