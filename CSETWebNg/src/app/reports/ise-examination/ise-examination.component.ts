@@ -42,6 +42,7 @@ export class IseExaminationComponent implements OnInit {
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
   storeIndividualIssues: Map<String, String> = new Map<String, String>();
+  showSubcats: Map<String, boolean> = new Map<String, boolean>();
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -92,6 +93,10 @@ export class IseExaminationComponent implements OnInit {
             // goes through questions
             for(let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+
+              if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
+                this.showSubcats.set(subcat?.title, true);
+              }
               if (this.requiredQuestion(question) && this.isParentQuestion(question)) {
                 let issueText = '';
                 issueText += 'Title: ' + question.title + '\n';
@@ -185,15 +190,29 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 18', '')                            .set('Stmt 19', '')
       .set('Stmt 20', '')                            .set('Stmt 21', '')
       .set('Stmt 22', '');
+
+    this.showSubcats
+    .set('Information Security Program', true)       .set('Governance', true)
+    .set('Risk Assessment', true)                    .set('Incident Response', true)
+    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
+    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
+    .set('Controls Testing', true)                   .set('Corrective Actions', true)
+    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
+    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
+    .set('Network Security', true)                   .set('Data Leakage Protection', true)
+    .set('Change & Configuration Management', true)  .set('Monitoring', false)
+    .set('Logging', false)                            .set('Data Governance', false)
+    .set('Conversion', false)                         .set('Software Development Process', false)
+    .set('Internal Audit Program', false)             .set('Asset Inventory', true);
   }
 
   /**
    * Flips the 'expand' boolean value based off the given 'title' key
    */
   toggleExpansion(title: string) {
-    let extend = this.expandedOptions.get(title);
-    this.expandedOptions.set(title, !extend);
-    return extend;
+    let expand = this.expandedOptions.get(title);
+    this.expandedOptions.set(title, !expand);
+    return expand;
   }
   /**
    * checks if section should expand by checking the boolean value attached to the 'title'
@@ -208,8 +227,7 @@ export class IseExaminationComponent implements OnInit {
    * checks if q is a parent question
    */ 
   isParentQuestion(q: any) {
-    if ( this.requiredQuestion(q)
-    &&   q.title == 'Stmt 1' 
+    if ( q.title == 'Stmt 1' 
     ||   q.title == 'Stmt 2'
     ||   q.title == 'Stmt 3'
     ||   q.title == 'Stmt 4'
@@ -224,7 +242,13 @@ export class IseExaminationComponent implements OnInit {
     ||   q.title == 'Stmt 13'
     ||   q.title == 'Stmt 14'
     ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16') {
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22') {
       return true;
     } 
     return false;
@@ -234,8 +258,12 @@ export class IseExaminationComponent implements OnInit {
    */ 
   getParentQuestionTitle(title: string) {
     if(!this.isParentQuestion(title)) {
-      // console.log(title.substring(0, 6));
-      return title.substring(0, 6);
+      let endOfTitle = 6;
+      // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
+      if(title.charAt(6) != '.'){
+        endOfTitle = endOfTitle + 1;
+      }
+      return title.substring(0, endOfTitle);
     }
   }
   /**
