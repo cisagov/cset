@@ -30,7 +30,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="assessmentId"></param>
         public QuestionBusiness(ITokenManager tokenManager, IDocumentBusiness document,
-            IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement, 
+            IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
             IAssessmentUtil assessmentUtil, CSETContext context)
         {
             _tokenManager = tokenManager;
@@ -386,18 +386,17 @@ namespace CSETWebCore.Business.Question
                 sc.Questions.Add(qa);
             }
 
-            QuestionResponse resp = new QuestionResponse
+            QuestionResponse response = new QuestionResponse
             {
                 Categories = groupList,
-                ApplicationMode = _questionRequirement.ApplicationMode
+                ApplicationMode = _questionRequirement.ApplicationMode,
+                OnlyMode = _context.STANDARD_SELECTION.First(x => x.Assessment_Id == _questionRequirement.AssessmentId).Only_Mode
             };
 
+            response.QuestionCount = _questionRequirement.NumberOfQuestions();
+            response.RequirementCount = _questionRequirement.NumberOfRequirements();
 
-            resp.QuestionCount = _questionRequirement.NumberOfQuestions();
-            _questionRequirement.AssessmentId = _questionRequirement.AssessmentId;
-            resp.RequirementCount = _questionRequirement.NumberOfRequirements();
-
-            return resp;
+            return response;
         }
 
 
@@ -447,8 +446,8 @@ namespace CSETWebCore.Business.Question
             dbAnswer.Assessment_Id = assessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Type = answer.QuestionType ?? questionType;
-            int tQuestionNumber = 0; 
-            if(int.TryParse(answer.QuestionNumber,out tQuestionNumber))
+            int tQuestionNumber = 0;
+            if (int.TryParse(answer.QuestionNumber, out tQuestionNumber))
             {
                 dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
             }
