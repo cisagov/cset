@@ -79,12 +79,6 @@ $primary-900: map-get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map-get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(to right,
-    #0f3c7a,
-    #5290e5,
-    #0f3c7a);
-$ncua-secondary-color: #0f3c7a;
-
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
 
@@ -269,14 +263,6 @@ input[type="radio"]:focus {
   outline: dashed 2px lightgrey;
   outline-offset: 5px;
 }
-
-.gutter-background {
-  background-image: url("../../../assets/images/bgGradient1.png");
-  background-repeat: repeat-x;
-  background-position: top left;
-  background-size: auto 100%;
-}
-
 a,
 a:not([href]) {
   color: $link-color-dark;
@@ -852,6 +838,21 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-iss {
+  background-color: $white;
+  border-color: $black;
+  color: $black;
+}
+
+.btn-iss.answer-selected:hover {
+  background-color: $black;
+}
+
+.btn-iss.answer-selected,
+.btn-iss:hover {
+  background-color: $black;
+  color: $active-text-color;
+}
 .btn-inc {
   background-color: $white;
   border-color: $alt-color;
@@ -1415,6 +1416,7 @@ th.data-table {
 
 ul.nav-tabs li.active {
   background: $gray-50;
+  z-index:1000;
 }
 
 ul.nav-tabs li.active button {
@@ -1446,7 +1448,6 @@ ul.nav-tabs li button:hover {
 ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
-
 
 .fs-head-lock {
   font-size: 2rem;
@@ -2270,7 +2271,18 @@ mat-sidenav {
 .mat-drawer .btn-link:focus {
   color: $white;
 }
+.btn-chevron {
+  padding-left: 0;
+}
 
+.no-underline, .no-underline:hover {
+ text-decoration: none !important;
+ outline: none !important;
+}
+
+.u-hover:hover {
+  text-decoration: underline;
+}
 /* Something like this? */
 .content::-webkit-scrollbar {
   display: none;

@@ -9,6 +9,7 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.Password;
 using CSETWebCore.Model.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace CSETWebCore.Helpers
         private readonly CSETContext _context;
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
+        private readonly IConfiguration _configuration;
 
         // Password length limits
         public readonly int PasswordLengthMin = 13;
@@ -36,11 +38,16 @@ namespace CSETWebCore.Helpers
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public UserAccountSecurityManager(CSETContext context, IUserBusiness userBusiness, INotificationBusiness notificationBusiness)
+        public UserAccountSecurityManager(
+            CSETContext context,
+            IUserBusiness userBusiness,
+            INotificationBusiness notificationBusiness,
+            IConfiguration configuration)
         {
             _context = context;
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
+            _configuration = configuration;
         }
 
 
@@ -128,7 +135,7 @@ namespace CSETWebCore.Helpers
                     Password = hash,
                     Salt = salt
                 };
-                _context.PASSWORD_HISTORY.Add(history);                
+                _context.PASSWORD_HISTORY.Add(history);
 
                 _context.SaveChanges();
 
@@ -169,12 +176,7 @@ namespace CSETWebCore.Helpers
                 user.PasswordResetRequired = true;
 
                 // generate a temp password
-                var password = UniqueIdGenerator.Instance.GetBase32UniqueId(6);
-
-                // add complexity:  insert random lower case letter, digits and special character
-                password = InsertRandom(password, "abcdefghijklmnopqrstuvwxyz", 1);
-                password = InsertRandom(password, "0123456789", 2);
-                password = InsertRandom(password, "*!@$%^&:;,.?/~_+-=|", 1);
+                var password = _userBusiness.CreateTempPassword();
 
 
 #if DEBUG
@@ -223,19 +225,6 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// Inserts a number of characters randomly pulled from the choices string.
-        /// </summary>
-        private string InsertRandom(string s, string choices, int number)
-        {
-            for (int i = 1; i <= number; i++)
-            {
-                s = s.Insert(new Random().Next(1, s.Length), choices[new Random().Next(0, choices.Length)].ToString());
-            }
-            return s;
-        }
-
-
-        /// <summary>
         /// Keeps the last 24 password history records and deletes the rest.
         /// </summary>
         /// <param name="userId"></param>
@@ -257,7 +246,7 @@ namespace CSETWebCore.Helpers
             // build a list of any extraneous entries prior to the last 24 and delete them
             var deleteThese = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId && !last24.Contains(x.Created)).ToList();
             _context.PASSWORD_HISTORY.RemoveRange(deleteThese);
-            
+
 
             _context.SaveChanges();
         }
@@ -286,24 +275,45 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="pw"></param>
         /// <returns></returns>
-        public PasswordComplexity ComplexityRulesMet(ChangePassword cp)
+        public PasswordResponse ComplexityRulesMet(ChangePassword cp)
         {
-            var pw = cp.NewPassword;
-            var checkPassword = new PasswordComplexity();
-            // can't be in the last 24 passwords (PASSWORD-HISTORY)
-            checkPassword.PasswordNotReused = IsPasswordInHistory(cp) ? false : true;
-            checkPassword.PasswordLengthMet =
-                pw.Length < PasswordLengthMin || pw.Length > PasswordLengthMax ? false : true;
-            checkPassword.PasswordContainsNumbers = !Regex.IsMatch(pw, "[0-9].*[0-9]") ? false : true;
-            checkPassword.PasswordContainsLower = !Regex.IsMatch(pw, "[a-z]") ? false : true;
-            checkPassword.PasswordContainsUpper = !Regex.IsMatch(pw, "[A-Z]") ? false : true;
-            checkPassword.PasswordContainsSpecial =
-                !Regex.IsMatch(pw, "[*.!@$%^&(){}\\[\\]:;<>,.?/~_+\\-=|]") ? false : true;
-            checkPassword.PasswordLengthMin = PasswordLengthMin;
-            checkPassword.PasswordLengthMax = PasswordLengthMax;
-            checkPassword.NumberOfHistoricalPasswords = NumberOfHistoricalPasswords;
+            var resp = new PasswordResponse
+            {
+                PasswordLengthMin = PasswordLengthMin,
+                PasswordLengthMax = PasswordLengthMax,
+                NumberOfHistoricalPasswords = NumberOfHistoricalPasswords
+            };
 
-            return checkPassword;
+
+            // check to see if configured to bypass policy (for development)
+            var bypassSection = _configuration.GetSection("BypassPasswordComplexityRules");
+            bool.TryParse(bypassSection.Value, out bool bypass);
+            if (bypass)
+            {
+                resp.PasswordLengthMet = true;
+                resp.PasswordContainsLower = true;
+                resp.PasswordContainsUpper = true;
+                resp.PasswordContainsNumbers = true;
+                resp.PasswordContainsSpecial = true;
+                resp.PasswordNotReused = true;
+                resp.IsValid = true;
+                return resp;
+            }
+
+
+            var pw = cp.NewPassword;
+
+            // can't be in the last 24 passwords (PASSWORD-HISTORY)
+            resp.PasswordNotReused = IsPasswordInHistory(cp) ? false : true;
+            resp.PasswordLengthMet =
+                pw.Length < PasswordLengthMin || pw.Length > PasswordLengthMax ? false : true;
+            resp.PasswordContainsNumbers = !Regex.IsMatch(pw, "[0-9].*[0-9]") ? false : true;
+            resp.PasswordContainsLower = !Regex.IsMatch(pw, "[a-z]") ? false : true;
+            resp.PasswordContainsUpper = !Regex.IsMatch(pw, "[A-Z]") ? false : true;
+            resp.PasswordContainsSpecial =
+                !Regex.IsMatch(pw, "[*.!@$%^&(){}\\[\\]:;<>,.?/~_+\\-=|]") ? false : true;
+
+            return resp;
         }
 
 

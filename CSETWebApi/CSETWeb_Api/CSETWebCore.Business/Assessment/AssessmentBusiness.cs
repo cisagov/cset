@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.Assessment
                 // ACET-specific fields
                 assessment.Charter = string.IsNullOrEmpty(result.aa.Charter) ? "" : result.aa.Charter;
                 assessment.CreditUnion = result.aa.CreditUnionName;
-                assessment.Assets = result.aa.Assets != null ? int.Parse(result.aa.Assets) : 0;
+                assessment.Assets = result.aa.Assets != null ? long.Parse(result.aa.Assets) : 0;
 
 
                 // Fields located on the Overview page
@@ -671,6 +671,7 @@ namespace CSETWebCore.Business.Assessment
                     "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
             }
 
+            if(assessment.TypeTitle!=null)
             if (assessment.TypeTitle.IndexOf(",") == 0)
             {
                 assessment.TypeTitle = assessment.TypeTitle.Substring(2);

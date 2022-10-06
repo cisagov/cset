@@ -10,6 +10,13 @@ namespace CSETWebCore.Helpers
         private string origSetName;
         private string newSetName;
 
+        CSETContext _context;
+
+        public ModuleCloner(CSETContext context)
+        {
+            this._context = context;
+        }
+
 
         /// <summary>
         /// 
@@ -22,32 +29,30 @@ namespace CSETWebCore.Helpers
             this.origSetName = setName;
             this.newSetName = newSetName;
 
-            using (var db = new CSETContext())
+
+            // clone the SETS record
+            var origSet = _context.SETS.Where(x => x.Set_Name == this.origSetName).FirstOrDefault();
+            if (origSet == null)
             {
-                // clone the SETS record
-                var origSet = db.SETS.Where(x => x.Set_Name == this.origSetName).FirstOrDefault();
-                if (origSet == null)
-                {
-                    return false;
-                }
-
-                var copySet = (SETS)db.Entry(origSet).CurrentValues.ToObject();
-
-                copySet.Set_Name = this.newSetName;
-                copySet.Full_Name = origSet.Full_Name
-                    .Substring(0, Math.Min(origSet.Full_Name.Length, 240))
-                    + " (copy)";
-                copySet.Is_Custom = true;
-
-                db.SETS.Add(copySet);
-                db.SaveChanges();
-
-
-                CloneRequirements(copySet);
-
-                // indicate that the cloning took place
-                return true;
+                return false;
             }
+
+            var copySet = (SETS)_context.Entry(origSet).CurrentValues.ToObject();
+
+            copySet.Set_Name = this.newSetName;
+            copySet.Full_Name = origSet.Full_Name
+                .Substring(0, Math.Min(origSet.Full_Name.Length, 240))
+                + " (copy)";
+            copySet.Is_Custom = true;
+
+            _context.SETS.Add(copySet);
+            _context.SaveChanges();
+
+
+            CloneRequirements(copySet);
+
+            // indicate that the cloning took place
+            return true;
         }
 
 
@@ -61,10 +66,9 @@ namespace CSETWebCore.Helpers
             Dictionary<int, int> questionSetIdMap = new Dictionary<int, int>();
 
 
-            using (var db = new CSETContext())
-            {
-                var queryReq = from r in db.NEW_REQUIREMENT
-                               from rs in db.REQUIREMENT_SETS.Where(x => x.Requirement_Id == r.Requirement_Id
+
+                var queryReq = from r in _context.NEW_REQUIREMENT
+                               from rs in _context.REQUIREMENT_SETS.Where(x => x.Requirement_Id == r.Requirement_Id
                                   && x.Set_Name == this.origSetName)
                                select new { r, rs };
 
@@ -75,23 +79,23 @@ namespace CSETWebCore.Helpers
                 // Clone NEW_REQUIREMENT and REQUIREMENT_SETS
                 foreach (var origRequirement in originalRequirements)
                 {
-                    var newReq = (NEW_REQUIREMENT)db.Entry(origRequirement.r).CurrentValues.ToObject();
+                    var newReq = (NEW_REQUIREMENT)_context.Entry(origRequirement.r).CurrentValues.ToObject();
                     newReq.Requirement_Id = 0;
-                    db.NEW_REQUIREMENT.Add(newReq);
-                    db.SaveChanges();
+                    _context.NEW_REQUIREMENT.Add(newReq);
+                    _context.SaveChanges();
 
                     requirementIdMap.Add(origRequirement.r.Requirement_Id, newReq.Requirement_Id);
 
 
-                    var copyReqSet = (REQUIREMENT_SETS)db.Entry(origRequirement.rs).CurrentValues.ToObject();
+                    var copyReqSet = (REQUIREMENT_SETS)_context.Entry(origRequirement.rs).CurrentValues.ToObject();
                     copyReqSet.Requirement_Id = newReq.Requirement_Id;
                     copyReqSet.Set_Name = copySet.Set_Name;
 
-                    db.REQUIREMENT_SETS.Add(copyReqSet);
+                    _context.REQUIREMENT_SETS.Add(copyReqSet);
 
 
                     // Clone SAL levels for requirement
-                    var dbRL = db.REQUIREMENT_LEVELS
+                    var dbRL = _context.REQUIREMENT_LEVELS
                         .Where(x => x.Requirement_Id == origRequirement.r.Requirement_Id).ToList();
                     foreach (REQUIREMENT_LEVELS origLevel in dbRL)
                     {
@@ -103,51 +107,51 @@ namespace CSETWebCore.Helpers
                             Id = origLevel.Id
                         };
 
-                        db.REQUIREMENT_LEVELS.Add(copyLevel);
+                        _context.REQUIREMENT_LEVELS.Add(copyLevel);
                     }
                 }
 
 
                 // Clone REQUIREMENT_QUESTIONS_SETS
-                var dbRQS = db.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == origSetName).ToList();
+                var dbRQS = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Set_Name == origSetName).ToList();
                 foreach (REQUIREMENT_QUESTIONS_SETS origRQS in dbRQS)
                 {
-                    var copyRQS = (REQUIREMENT_QUESTIONS_SETS)db.Entry(origRQS).CurrentValues.ToObject();
+                    var copyRQS = (REQUIREMENT_QUESTIONS_SETS)_context.Entry(origRQS).CurrentValues.ToObject();
                     copyRQS.Set_Name = copySet.Set_Name;
                     copyRQS.Requirement_Id = requirementIdMap[copyRQS.Requirement_Id];
 
-                    db.REQUIREMENT_QUESTIONS_SETS.Add(copyRQS);
+                    _context.REQUIREMENT_QUESTIONS_SETS.Add(copyRQS);
                 }
 
 
                 // Clone NEW_QUESTIONS_SETS
-                var dbQS = db.NEW_QUESTION_SETS.Where(x => x.Set_Name == origSetName).ToList();
+                var dbQS = _context.NEW_QUESTION_SETS.Where(x => x.Set_Name == origSetName).ToList();
                 foreach (NEW_QUESTION_SETS origQS in dbQS)
                 {
-                    var copyQS = (NEW_QUESTION_SETS)db.Entry(origQS).CurrentValues.ToObject();
+                    var copyQS = (NEW_QUESTION_SETS)_context.Entry(origQS).CurrentValues.ToObject();
                     copyQS.Set_Name = copySet.Set_Name;
                     // default the identity PK
                     copyQS.New_Question_Set_Id = 0;
 
-                    db.NEW_QUESTION_SETS.Add(copyQS);
-                    db.SaveChanges();
+                    _context.NEW_QUESTION_SETS.Add(copyQS);
+                    _context.SaveChanges();
 
                     questionSetIdMap.Add(origQS.New_Question_Set_Id, copyQS.New_Question_Set_Id);
                 }
 
                 // Clone NEW_QUESTION_LEVELS for the new NEW_QUESTIONS_SETS just created
-                var dbQL = from nql in db.NEW_QUESTION_LEVELS
-                           join nqs in db.NEW_QUESTION_SETS on nql.New_Question_Set_Id equals nqs.New_Question_Set_Id
+                var dbQL = from nql in _context.NEW_QUESTION_LEVELS
+                           join nqs in _context.NEW_QUESTION_SETS on nql.New_Question_Set_Id equals nqs.New_Question_Set_Id
                            where nqs.Set_Name == this.origSetName
                            select nql;
 
                 var listQL = dbQL.ToList();
                 foreach (NEW_QUESTION_LEVELS origQL in listQL)
                 {
-                    var copyQL = (NEW_QUESTION_LEVELS)db.Entry(origQL).CurrentValues.ToObject();
+                    var copyQL = (NEW_QUESTION_LEVELS)_context.Entry(origQL).CurrentValues.ToObject();
                     copyQL.New_Question_Set_Id = questionSetIdMap[origQL.New_Question_Set_Id];
 
-                    db.NEW_QUESTION_LEVELS.Add(copyQL);
+                    _context.NEW_QUESTION_LEVELS.Add(copyQL);
                 }
 
 
@@ -158,37 +162,37 @@ namespace CSETWebCore.Helpers
 
 
                 // Clone REQUIREMENT_SOURCE_FILES
-                var queryRSF = from rsf in db.REQUIREMENT_SOURCE_FILES
-                               join rs in db.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
+                var queryRSF = from rsf in _context.REQUIREMENT_SOURCE_FILES
+                               join rs in _context.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
                                where rs.Set_Name == this.origSetName
                                select rsf;
 
                 var listRSF = queryRSF.ToList();
                 foreach (var rsf in listRSF)
                 {
-                    var newRSF = (REQUIREMENT_SOURCE_FILES)db.Entry(rsf).CurrentValues.ToObject();
+                    var newRSF = (REQUIREMENT_SOURCE_FILES)_context.Entry(rsf).CurrentValues.ToObject();
                     newRSF.Requirement_Id = requirementIdMap[newRSF.Requirement_Id];
-                    db.REQUIREMENT_SOURCE_FILES.Add(newRSF);
+                    _context.REQUIREMENT_SOURCE_FILES.Add(newRSF);
                 }
 
 
                 // Clone REQUIREMENT_REFERENCES
-                var queryRR = from rr in db.REQUIREMENT_REFERENCES
-                              join rs in db.REQUIREMENT_SETS on rr.Requirement_Id equals rs.Requirement_Id
+                var queryRR = from rr in _context.REQUIREMENT_REFERENCES
+                              join rs in _context.REQUIREMENT_SETS on rr.Requirement_Id equals rs.Requirement_Id
                               where rs.Set_Name == this.origSetName
                               select rr;
 
                 var listRR = queryRR.ToList();
                 foreach (var rr in listRR)
                 {
-                    var newRR = (REQUIREMENT_REFERENCES)db.Entry(rr).CurrentValues.ToObject();
+                    var newRR = (REQUIREMENT_REFERENCES)_context.Entry(rr).CurrentValues.ToObject();
                     newRR.Requirement_Id = requirementIdMap[newRR.Requirement_Id];
-                    db.REQUIREMENT_REFERENCES.Add(newRR);
+                    _context.REQUIREMENT_REFERENCES.Add(newRR);
                 }
 
 
-                db.SaveChanges();
-            }
+                _context.SaveChanges();
+            
         }
     }
 }

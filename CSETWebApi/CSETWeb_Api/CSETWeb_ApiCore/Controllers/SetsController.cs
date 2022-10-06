@@ -103,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
                 BadRequest($"A Set named '{setName}' was not found.");
             }
 
-            return Ok(set.ToExternalStandard());
+            return Ok(set.ToExternalStandard(_context));
         }
     }
 }

@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -62,6 +63,7 @@ namespace CSETWebCore.Api.Controllers
             // get the assessment ID from the JWT
             int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            DecodeDiagram(req);
             lock (_object)
             {
                 try
@@ -90,8 +92,27 @@ namespace CSETWebCore.Api.Controllers
         {
             // get the assessment ID from the JWT
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            DecodeDiagram(req);
             return PerformAnalysis(req, assessmentId ?? 0);
 
+        }
+
+        private void DecodeDiagram(DiagramRequest req)
+        {
+            if (req.DiagramSvg != null)
+            {
+                byte[] data = Convert.FromBase64String(req.DiagramSvg);
+                string decodedString = Encoding.UTF8.GetString(data);
+                req.DiagramSvg = decodedString;
+
+
+            }
+            if (req.DiagramXml != null)
+            {
+                byte[] data = Convert.FromBase64String(req.DiagramXml);
+                string decodedString = Encoding.UTF8.GetString(data);
+                req.DiagramXml = decodedString;
+            }
         }
 
         private List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)

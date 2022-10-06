@@ -28,8 +28,7 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
-    "installationMode": "ACET",
+    "installationMode": "",
     "mobileEnvironment": "",
     "buttonLabelY": "Yes",
     "buttonLabelN": "No",

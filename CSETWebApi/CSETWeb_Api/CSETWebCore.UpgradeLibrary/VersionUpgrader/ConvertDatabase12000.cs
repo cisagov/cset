@@ -26,7 +26,7 @@ namespace UpgradeLibrary.Upgrade
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading assessment version 11.2.1.0 to 12.0.0.0: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 11.2.1.0 to 12.0.0.0: " + e.Message);
             }
         }
     }
