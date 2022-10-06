@@ -65,6 +65,9 @@ let headers = {
   // CORE+ question trigger/state manager
   showCorePlus: boolean = false;
 
+  // CORE+ Only questions (17+)
+  showExtraQuestions: boolean = false;
+
 
   constructor(
     private http: HttpClient,
@@ -253,10 +256,22 @@ let headers = {
     }
   }
 
-  showCorePlusOnlySubCat(id: number) {
+  showCorePlusOnlySubCats(id: number) {
     if (id >= 2564 && this.getExamLevel() === 'CORE') {
       return true;
     }
+  }
+
+  setExtraQuestionStatus(option: boolean) {
+    this.showExtraQuestions = option;
+  }
+
+  getExtraQuestionStatus() {
+    return this.showExtraQuestions;
+  }
+
+  toggleExtraQuestionStatus() {
+    this.showExtraQuestions = !this.showExtraQuestions;
   }
 
 }

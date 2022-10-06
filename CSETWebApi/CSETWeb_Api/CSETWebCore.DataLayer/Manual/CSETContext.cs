@@ -26,6 +26,7 @@ namespace CSETWebCore.DataLayer.Model
 
         public CSETContext(IConfiguration config)
         {
+            _connectionString = config.GetConnectionString("CSET_DB");
         }
 
         public CSETContext(DbContextOptions<CsetwebContext> options)
@@ -35,15 +36,8 @@ namespace CSETWebCore.DataLayer.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured && _connectionString != null)
             {
-                var builder = new ConfigurationBuilder();
-                builder.AddJsonFile("appsettings.json", optional: false);
-
-                var configuration = builder.Build();
-
-                if(_connectionString == null)
-                    _connectionString = configuration.GetConnectionString("CSET_DB").ToString();
                 optionsBuilder.UseSqlServer(_connectionString);
             }
         }

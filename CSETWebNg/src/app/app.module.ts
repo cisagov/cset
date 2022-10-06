@@ -491,6 +491,7 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
+import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 
 @NgModule({
@@ -939,7 +940,7 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent
+        SearchPageComponent, LogoTsaComponent
     ],
     providers: [
         ConfigService,
