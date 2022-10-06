@@ -52,12 +52,11 @@ import { IssuesComponent } from '../issues/issues.component';
 export class QuestionBlockIseComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
-
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   private _timeoutId: NodeJS.Timeout;
-
   extras: QuestionDetailsContentViewModel;
+  dialogRef: MatDialogRef <any>;
 
   percentAnswered = 0;
   answerOptions = [];
@@ -65,30 +64,34 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-
-  textForSummary = "Work Summary - insert comments";
+  textForSummary = "Results of Review (insert comments)";
   summaryCommentCopy = "";
-  summaryEditedCheck = false;
+  summaryEditedCheck = false; 
 
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Comment - -\n';
-  // altAnswerConversation = [];
 
   // To do: Add this to a db table and pull in dynamically.
   issueAutoPopulate = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
     7206, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7216, 7217, 7219, 7220, 7222, 7223, 7224, 
     7225, 7227, 7233, 7235, 7236, 7237, 7238, 7240, 7241, 7242, 7243, 7244, 7246, 7247, 7248, 
     7249, 7251, 7252, 7253, 7256, 7258, 7259, 7263, 7264, 7267, 7268, 7269, 7270, 7271, 7272, 
-    7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]);
+    7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]
+  );
+
+  // Used to place buttons/text boxes at the bottom of each subcategory
+  finalScuepQuestion = new Set ([7196, 7201, 7206, 7214, 7217, 7220, 7225]);
+  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
+  finalCorePlusQuestion = new Set ([7312, 7316, 7322, 7332, 7338, 7344, 7351, 7359, 7366, 7373, 7381, 7390, 7395, 7400, 7408]);
+  finalExtraQuestion = new Set ([7421, 7429, 7444, 7450, 7458, 7465]);
 
   showQuestionIds = false;
 
+  iseExamLevel: string = "";
   showCorePlus: boolean = false;
   showIssues: boolean = false;
   coreChecked: boolean = false;
-
-  dialogRef: MatDialogRef <any>;
 
   /**
    * Constructor.
@@ -113,25 +116,18 @@ export class QuestionBlockIseComponent implements OnInit {
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
 
+      this.iseExamLevel = this.ncuaSvc.getExamLevel();
+
       this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
         (details) => {
           this.extras = details;
           this.extras.questionId = this.myGrouping.questions[0].questionId;
         });
 
-          
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
-
-      // set sub questions' titles so that they align with their parent when hidden
-      // commented out now to maintain unique numbers for child statements
-      // this.myGrouping.questions.forEach(q => {
-      //   if (!!q.parentQuestionId) {
-      //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
-      //   }
-      // });
 
       if (this.configSvc.installationMode === "ACET") {
         if (this.assessSvc.isISE()) {
@@ -187,6 +183,24 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   showThisOption(ans: string) {
     return true;
+  }
+
+  shouldIShow(q: Question) {
+    if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
+      return true;
+    } else if (this.iseExamLevel === 'CORE') {
+      if (q.maturityLevel === 2) {
+        return true;
+      } else if (q.maturityLevel === 3) {
+        if (q.questionId < 7409 && this.showCorePlus === true) { 
+          return true;
+        } else if (q.questionId >= 7409 && this.ncuaSvc.showExtraQuestions === true) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -498,44 +512,27 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   isFinalQuestion(id: number) {
-    // If SCUEP examination
-    if (this.isScuep()) {
-      switch (id) {
-        case (7196): case(7201): case(7206): case(7214):
-        case (7217): case(7220): case(7225):
+    if (this.iseExamLevel === 'SCUEP' && this.finalScuepQuestion.has(id)) {
+      return true;
+    }
+
+    if (this.iseExamLevel === 'CORE') {
+      if (!this.showCorePlus && this.finalCoreQuestion.has(id)) {
           return true;
+      } else if (this.showCorePlus && this.finalCorePlusQuestion.has(id)) {
+        return true;
       }
-      return false;
-    } else { // If CORE examination
-      if (!this.showCorePlus) {
-        switch (id) {
-          case (7233): case (7238): case (7244): case (7249): 
-          case (7256): case (7265): case (7273): case (7276): 
-          case (7281): case (7285): case (7289): case (7293): 
-          case (7296): case (7301): case (7304):
-            return true;
-        }
-        return false;
-      } else if (this.showCorePlus) {
-        switch (id) {
-          // Final question under each CORE+ non-parent
-          case (7312): case (7316): case (7322): case (7332): 
-          case (7338): case (7344): case (7351): case (7359): 
-          case (7366): case (7373): case (7381): case (7390): 
-          case (7395): case (7400): case (7408): 
-          
-          // ID's of CORE+ only questions
-          case (7421): case (7429): case (7444): case (7450): 
-          case (7458): case (7465):
-            return true;
-        }
-        return false;
+
+      if (this.ncuaSvc.getExtraQuestionStatus() === true && this.finalExtraQuestion.has(id)) {
+        return true;
       }
     }
+
   }
 
+
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && !this.isScuep()) {
+    if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP') {
       return true;
     }
     return false;
@@ -587,7 +584,7 @@ export class QuestionBlockIseComponent implements OnInit {
     }
   }
 
-    /**
+  /**
    *
    * @param findid
    */
@@ -730,11 +727,5 @@ export class QuestionBlockIseComponent implements OnInit {
     });
   }
 
-  isScuep() {
-    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
-      return false;
-    }
-    return true;
-  }
   
 }
