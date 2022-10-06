@@ -28,7 +28,7 @@
 
 		<br><br>
 
-		Add Item:
+		Add (if adding a Group, an item must be added along with the Group so it shows up in this list):
 		<br> 
 		<span style="padding-left: 15px">Group
 			<input style="width: 400px;" type="text" #boxAddGroup>
@@ -42,16 +42,8 @@
 			<input style="width: 400px;" type="text" #boxAddDescription>
 		</span>
 		<br>
-		<button (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add as Item</button>
-		<br><br>
-
-		Add Group:
-		<br>
-		<span style="padding-left: 15px">Group
-			<input style="width: 400px;" type="text" #boxAddGroupOnly>
-		</span>
-		<br>
-		<button (click)="addGalleryGroup(boxAddGroupOnly.value)">Add as Group</button>
+		<button (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add Item to Group</button>
+		<button (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
 		<br><br>
 	</div>
 </div>

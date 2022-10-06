@@ -14,21 +14,21 @@ const headers = {
 })
 export class GalleryEditorService {
   updatePositionOfItem(moveItem: MoveItem) {
-    return  this.http.post("https://localhost:44310/api/galleryEdit/updatePosition",  moveItem,headers);
+    return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
   UpdateGalleryGroupName(Group_Id: any, value: string) {
     let newUpdateItem = new UpdateItem();
     newUpdateItem.Group_Id = Group_Id;
     newUpdateItem.IsGroup = true;
     newUpdateItem.Value = value;
-    return  this.http.post("https://localhost:44310/api/galleryEdit/updateItem", newUpdateItem, headers);
+    return  this.http.post("http://localhost:5000/api/galleryEdit/updateItem", newUpdateItem, headers);
   }
   UpdateGalleryItem(Group_Id: any, value: string) {
     let newUpdateItem = new UpdateItem();
     newUpdateItem.Group_Id = Group_Id;
     newUpdateItem.IsGroup = false;
     newUpdateItem.Value = value;
-    return  this.http.post("https://localhost:44310/api/galleryEdit/updateItem",  newUpdateItem, headers);
+    return  this.http.post("http://localhost:5000/api/galleryEdit/updateItem",  newUpdateItem, headers);
   }
 
   constructor(private http: HttpClient) { }
@@ -53,7 +53,7 @@ export class GalleryEditorService {
    * Retrieves the list of frameworks.
    */
   getGalleryItems(layout_name: string) {
-    return  this.http.get("https://localhost:44310/api/gallery/getboard",  {
+    return  this.http.get("http://localhost:5000/api/gallery/getboard",  {
       params: {
         Layout_Name: layout_name
       }
@@ -61,7 +61,7 @@ export class GalleryEditorService {
   }
 
   cloneGalleryItem(item: any, groupId: number) {
-    return  this.http.get("https://localhost:44310/api/gallery/cloneItem",  {
+    return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
         Item_To_Clone: item.gallery_Item_Id,
         Group_Id: groupId
@@ -70,7 +70,7 @@ export class GalleryEditorService {
   }
 
   cloneGalleryGroup(group: any) {
-    return  this.http.get("https://localhost:44310/api/gallery/cloneGroup",  {
+    return  this.http.get("http://localhost:5000/api/gallery/cloneGroup",  {
       params: {
         Group_To_Clone: group
       }
@@ -78,7 +78,7 @@ export class GalleryEditorService {
   }
 
   addGalleryItem(description: string, title: string, group: string, columnId: number) {
-    return  this.http.get("https://localhost:44310/api/gallery/addItem",  {
+    return  this.http.get("http://localhost:5000/api/gallery/addItem",  {
       params: {
         newDescription: description,
         newTitle: title,
@@ -88,17 +88,20 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryGroup(group: string, layout: string) {
-    return  this.http.get("https://localhost:44310/api/gallery/addGroup",  {
+  addGalleryGroup(group: string, layout: string, description: string, title: string, columnId: number) {
+    return this.http.get("http://localhost:5000/api/gallery/addGroup",  {
       params: {
         group: group,
-        layout: layout
+        layout: layout,
+        newDescription: description,
+        newTitle: title,
+        columnId: columnId
       }
     });
   }
 
   deleteGalleryItem(id: number) {
-    return  this.http.get("https://localhost:44310/api/gallery/deleteGalleryItem",  {
+    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
       params: {
         id: id
       }
@@ -106,7 +109,7 @@ export class GalleryEditorService {
   }
 
   deleteGalleryGroup(id: number) {
-    return  this.http.get("https://localhost:44310/api/gallery/deleteGalleryGroup",  {
+    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
       params: {
         id: id
       }

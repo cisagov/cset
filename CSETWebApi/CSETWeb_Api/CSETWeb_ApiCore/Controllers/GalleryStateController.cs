@@ -107,11 +107,15 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addGroup")]
-        public IActionResult AddGroup(string group, string layout)
+        public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
         {
+            string newIcon_File_Name_Small = "";
+            string newIcon_File_Name_Large = "";
+
             try
             {
                 _stateManager.AddGalleryGroup(group, layout);
+                _stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
                 return Ok();
             }
             catch (Exception e)
