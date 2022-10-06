@@ -92,16 +92,19 @@ export class ListItemsComponent implements OnInit {
     console.log(id + " would be deleted");
     this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
       (r: any) => {
+        this.updateItems(this.layoutName);
+
       },
       error => console.log('Gallery Group delete error ' + (<Error>error).message)
     );
   }
 
-  addGalleryGroup(group: string) {
-    this.svcGalleryEditor.addGalleryGroup(group, this.layoutName).subscribe(
+  addGalleryGroup(group: string, description: string, title: string) {
+    let firstColumnId = 0;
+    this.svcGalleryEditor.addGalleryGroup(group, this.layoutName, description, title, firstColumnId).subscribe(
       (r: any) => {
-        this.responseAdd = r;
-        console.log(this.responseAdd);
+        //this.responseAdd = r;
+        //console.log(this.responseAdd);
         this.updateItems(this.layoutName);
 
         

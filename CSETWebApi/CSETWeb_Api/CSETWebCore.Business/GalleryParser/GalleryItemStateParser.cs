@@ -232,7 +232,7 @@ namespace CSETWebCore.Business.GalleryParser
             _context.GALLERY_ROWS.Add(newRow);
             _context.SaveChanges();
 
-            AddGalleryItem("", "", "", "This is a placeholder", group, 0);
+            //AddGalleryItem("", "", "", "This is a placeholder", group, 0);
 
         }
 
@@ -275,10 +275,8 @@ namespace CSETWebCore.Business.GalleryParser
             var groups = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == id); //.FirstOrDefault();
             foreach (GALLERY_GROUP_DETAILS row in groups) {
                 _context.GALLERY_GROUP_DETAILS.Remove(row);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
-
-            _context.SaveChanges();
         }
 
 
