@@ -18,7 +18,7 @@
 
 <ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
-    <ng-container *ngIf="grouping.visible">
+    <ng-container *ngIf="grouping.visible || (assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
 
         <div class="capability-group-heading"
             *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
@@ -55,6 +55,21 @@
         </div>
 
     </ng-container>
+
+    <ng-container *ngIf="this.ncuaSvc.getExtraQuestionStatus() === false">
+        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2563"
+            class="btn btn-na form-check-label mt-2 mb-4" (click)="this.ncuaSvc.toggleExtraQuestionStatus()">
+            Show Extra Questions
+        </button>
+    </ng-container>
+    <ng-container *ngIf="this.ncuaSvc.getExtraQuestionStatus() === true">
+        <hr *ngIf="grouping.groupingID === 2563">
+        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2569"
+            class="btn btn-na form-check-label mt-2 mb-4" (click)="this.ncuaSvc.toggleExtraQuestionStatus()">
+            Hide Extra Questions
+        </button>
+    </ng-container>
+
 
 </ng-container>
 
