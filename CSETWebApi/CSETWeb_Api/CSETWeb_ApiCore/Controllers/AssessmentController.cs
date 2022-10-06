@@ -92,14 +92,6 @@ namespace CSETWebCore.Api.Controllers
             // build a list of Sets to be selected
             var setNames = new List<string>();
 
-            if (config.Sets1 != null)
-            {
-                foreach (var s in config.Sets1)
-                {
-                    setNames.Add(s.SetName);
-                }
-            }
-
             if (config.Sets != null)
             {
                 setNames.AddRange(config.Sets);
@@ -112,24 +104,25 @@ namespace CSETWebCore.Api.Controllers
                 assessment.UseStandard = true;
             }
 
-            // apply any 'suppress mode' flags
-            if (config.Sets1.Exists(x => x.SuppressMode != null))
-            {
-                var xyz = 1;
-            }
 
 
-
-
-
-
+            // Application Mode.  Including "only" will restrict the mode on the questions page.
             var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
-
-            // Application Mode
             if (config.QuestionMode != null && ss != null)
             {
-                ss.Application_Mode = $"{config.QuestionMode.Trim()} Based";
+                config.QuestionMode = config.QuestionMode.Trim();
+                var words = config.QuestionMode.Split(" ");
+
+
+                ss.Application_Mode = $"{words[0].Trim()} Based";
+
+                if (words.Length > 1 && words[1].ToLower() == "only")
+                {
+                    ss.Only_Mode = true;
+                }
             }
+
+
 
             // SAL 
             if (config.SALLevel != null && ss != null)
