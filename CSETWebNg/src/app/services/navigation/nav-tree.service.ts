@@ -50,14 +50,14 @@ export class NavTreeService {
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService
   ) {
-     // set up the mat tree control and its data source
-     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
-     this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
-     this.dataChange.subscribe(data => {
-       this.dataSource.data = data;
-       this.tocControl.dataNodes = data;
-       this.tocControl.expandAll();
-     });
+    // set up the mat tree control and its data source
+    this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
+    this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
+    this.dataChange.subscribe(data => {
+      this.dataSource.data = data;
+      this.tocControl.dataNodes = data;
+      this.tocControl.expandAll();
+    });
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
@@ -237,13 +237,18 @@ export class NavTreeService {
   setCurrentPage(id: string) {
     this.clearCurrentPage(this.dataSource?.data);
 
-    const currentNode = this.findInTree(this.dataSource.data, id);
+    let delay = !!this.dataSource.data ? 0 : 1000;
 
-    if (!!currentNode) {
-      currentNode.isCurrent = true;
-      this.currentPage = currentNode.value;
-    }
+    setTimeout(() => {
+      const currentNode = this.findInTree(this.dataSource.data, id);
+
+      if (!!currentNode) {
+        currentNode.isCurrent = true;
+        this.currentPage = currentNode.value;
+      }
+    }, delay);
   }
+
 
   /**
    * Sets all nodes in the tree to NOT be current
