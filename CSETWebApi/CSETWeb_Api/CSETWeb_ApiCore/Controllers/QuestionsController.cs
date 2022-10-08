@@ -126,6 +126,18 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetChildAnswers")]
+        public IActionResult GetChildAnswers()
+        {
+            string response = "response!";
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>

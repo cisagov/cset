@@ -114,6 +114,13 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    */
   ngOnInit(): void {
+    let myData: any;
+    this.questionsSvc.getChildAnswers(7189).subscribe(
+      (data) => {
+        myData = data;
+        console.log("myData: " + JSON.stringify(myData, null, 4));
+      }
+    )
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
 
       this.iseExamLevel = this.ncuaSvc.getExamLevel();

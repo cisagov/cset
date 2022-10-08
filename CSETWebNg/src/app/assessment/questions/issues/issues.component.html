@@ -29,13 +29,13 @@
 <div class="row">
   <div class="col-6">
     <div class="form-group">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.title">
+      <label for="title" class="form-label font-weight-bold">Title</label>
+      <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.title">
     </div>
   </div>
   <div class="col-6">
     <div class="form-group">
-      <label for="issueType" class="form-label">Issue Type</label>
+      <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
       <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type">
         <option value="finding">Examiner Finding</option>
         <option value="dor">DOR</option>
@@ -47,7 +47,7 @@
 <div class="row">
   <div class="col-12">
     <div class="form-group">
-      <label for="description" class="form-label">Description</label>
+      <label for="description" class="form-label font-weight-bold">Description</label>
       <textarea id="description" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
     </div>
   </div>
@@ -56,7 +56,7 @@
   <div class="row">
     <div class="col-12">
       <div class="form-group">
-        <label for="suppGuide" class="form-label">Supplemental Guidance</label>
+        <label for="suppGuide" class="form-label font-weight-bold">Supplemental Guidance</label>
         <textarea id="suppGuide" type="text" autocomplete="off" class="form-control">{{ this.suppGuidance }}</textarea>
       </div>
     </div>
@@ -64,16 +64,23 @@
 </ng-container>
 <ng-container *ngIf="finding.type !== 'fact'">
   <div class="row">
+    <div class="col-12">
+      <label for="questionText" class="form-label font-weight-bold">Statement Text</label>
+      <div class="ml-1">The credit unions written information security Policies/Procedures/Plans include the following:</div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
     <div class="col-3">
-      <label for="subStatementNumber" class="form-label">Sub Statement #</label>
-      <div>1.1 - Are approved by the board of directors</div>
+      <label for="subStatementNumber" class="form-label font-weight-bold">Sub Statement #</label>
+      <div class="ml-1">1.1 - Are approved by the board of directors</div>
     </div>
     <div class="col-3">
-      <label for="response" class="form-label">Response</label>
+      <label for="response" class="form-label font-weight-bold">Response</label>
       <div>No</div>
     </div>
     <div class="col-6">
-      <label for="actionItems" class="form-label">Action Items</label>
+      <label for="actionItems" class="form-label font-weight-bold">Action Items</label>
       <div>1. The security program must be approved by the board of directors.</div>
       <div>2. Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.</div>
     </div>
@@ -82,7 +89,7 @@
   <div class="row">
     <div class="col-6">
       <div class="form-group">
-        <label for="risk-area" class="form-label">Risk Area</label>
+        <label for="risk-area" class="form-label font-weight-bold">Risk Area</label>
         <select name="riskarea" id="riskarea" class="form-control" [(ngModel)]="this.selectedRiskArea"
           (change)="updateRiskArea($event.target.value)">
           <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
@@ -92,7 +99,7 @@
     <div class="col-6">
       <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === '' || this.selectedRiskArea === null">
         <div class="form-group">
-          <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
+          <label for="strategic-sub-risk" class="form-label font-weight-bold">Strategic Sub Risk Area</label>
           <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
             (change)="updateSubRisk($event.target.value)">
             <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk.id">
@@ -103,7 +110,7 @@
       </ng-container>
       <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
         <div class="form-group">
-          <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
+          <label for="compliance-sub-risk" class="form-label font-weight-bold">Compliance Sub Risk Area</label>
           <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
             (change)="updateSubRisk($event.target.value)">
             <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk.id">
@@ -114,7 +121,7 @@
       </ng-container>
       <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
         <div class="form-group">
-          <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
+          <label for="transaction-sub-risk" class="form-label font-weight-bold">Transaction Sub Risk Area</label>
           <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
             (change)="updateSubRisk($event.target.value)">
             <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk.id">
@@ -125,7 +132,7 @@
       </ng-container>
       <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
         <div class="form-group">
-          <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
+          <label for="reputation-sub-risk" class="form-label font-weight-bold">Reputation Sub Risk Area</label>
           <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
             (change)="updateSubRisk($event.target.value)">
             <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk.id">
@@ -138,11 +145,11 @@
   </div>
   <div class="row">
     <div class="col-4">
-      <label for="regulatoryCitation" class="form-label">Regulatory Citation</label>
+      <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
       <div>12 C.F.R. § 748.0 (b)(2)</div>
     </div>
     <div class="col-8">
-      <label for="additionalCitations" class="form-label">Additional Citations</label>
+      <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
       <textarea id="additionalCitations" type="text" autocomplete="off" class="form-control"></textarea>
     </div>
   </div>
