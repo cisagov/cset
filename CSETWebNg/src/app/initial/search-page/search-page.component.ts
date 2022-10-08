@@ -8,6 +8,7 @@ import { SwiperComponent } from 'swiper/angular';
 import { SwiperOptions } from 'swiper';
 import Fuse from 'fuse.js';
 import { map } from 'lodash';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-search-page',
@@ -68,8 +69,8 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
-    public assessSvc: AssessmentService) {
-
+    public assessSvc: AssessmentService,
+    public configSvc: ConfigService) {
 
   }
 
@@ -106,7 +107,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     const dom = document.createElement("div");
 
-    this.gallerySvc.getGalleryItems("CSET").subscribe(
+    this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
       (resp: any) => {
         resp.rows.forEach(element => {
           element.galleryItems.forEach(item => {

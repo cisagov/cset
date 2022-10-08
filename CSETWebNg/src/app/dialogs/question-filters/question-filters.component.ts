@@ -81,6 +81,11 @@ export class QuestionFiltersComponent implements OnInit {
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
       this.answerOptions.push({ value: o, text: this.configSvc.answerLabels[o] });
     });
+
+    if (this.assessSvc.isISE()) {
+      // Remove 'N/A' and 'Compensating Control' from ISE filters menu.
+      this.answerOptions = this.answerOptions.slice(0, 2);
+    }
   }
 
   /**

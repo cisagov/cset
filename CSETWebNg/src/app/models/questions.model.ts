@@ -30,6 +30,7 @@ export interface QuestionResponse {
     categories: Category[];
     maturityTargetLevel: number;
     applicationMode: string;
+    onlyMode: boolean;
     questionCount: number;
     requirementCount: number;
     overallIRP: number;
