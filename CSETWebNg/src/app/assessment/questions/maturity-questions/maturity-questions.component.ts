@@ -104,6 +104,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
 
+    console.log('mq init');
+
     if (!this.groupingId) {
       this.loadQuestions();
     } else {
@@ -143,6 +145,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
+
+        this.setAnswerLabels();
+
         this.loaded = true;
 
         this.refreshQuestionVisibility();
@@ -174,6 +179,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
       this.groupingTitle = response.title;
       this.glossarySvc.glossaryEntries = response.glossary;
+
+      this.setAnswerLabels();
+
       this.loaded = true;
 
       this.refreshQuestionVisibility();
@@ -186,6 +194,44 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         );
         console.log('Error getting questions: ' + (<Error>error).stack);
       });
+  }
+
+  /**
+   * Get the labels for the answer buttons from configuration
+   * and set them in the configSvc.
+   */
+  setAnswerLabels() {
+    this.assessSvc.assessment.maturityModel.answerOptions.forEach(a => {
+
+      let answerStuff = this.configSvc.config.answersDefault;
+
+      switch (this.assessSvc.assessment.maturityModel.modelName) {
+        case 'MVRA':
+          answerStuff = this.configSvc.config.answersMVRA;
+          break;
+        case 'ACET':
+          answerStuff = this.configSvc.config.answersACET;
+          break;
+      }
+
+
+      console.log('setanswerlabels');
+      console.log(answerStuff);
+
+
+      // find the button properties for the model or fallback to the default
+      const buttonCfg = answerStuff.find(x => x.code == a);
+      if (!!buttonCfg) {
+        this.configSvc.buttonLabels[a] = buttonCfg.buttonLabel;
+      } else {
+        const buttonDefault = this.configSvc.config.answersDefault.find(x => x.code == a);
+        if (!!buttonDefault) {
+          this.configSvc.buttonLabels[a] = buttonDefault.buttonLabel;
+        }
+      }
+    });
+
+    console.log(this.configSvc.buttonLabels);
   }
 
   /**
