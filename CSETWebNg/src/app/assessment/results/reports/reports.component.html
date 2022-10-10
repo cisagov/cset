@@ -32,7 +32,7 @@
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile">
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile && !this.assessSvc.isISE()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
@@ -243,16 +243,16 @@
     <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       ISE Answered Statements
     </button>
-    <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-      <!-- [disabled]="disableIseReportLinks"> -->
+    <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Scope Report
     </button>
-    <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-      <!-- [disabled]="disableIseReportLinks"> -->
+    <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Examination Report
     </button>
-    <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-      <!-- [disabled]="disableIseReportLinks"> -->
+    <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      [disabled]="disableIseReportLinks">
       ISE Examiner Report
     </button>
   </div>

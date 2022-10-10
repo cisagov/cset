@@ -660,10 +660,25 @@ namespace CSETWebCore.DataLayer.Model
             if (!assessment_id.HasValue)
                 throw new ApplicationException("parameters may not be null");
 
+            var matLevel = 0;
+
+            switch (targetLevel)
+            {
+                case 1:
+                    matLevel = 17; // SCUEP
+                    break;
+                case 2:
+                    matLevel = 18; // CORE
+                    break;
+                case 3:
+                    matLevel = 19; // CORE+
+                    break;
+            }
+
             IList<AcetAnswerDistribution_Result> myrval = null;
-            this.LoadStoredProc("AcetAnswerDistribution")
+            this.LoadStoredProc("IseAnswerDistribution")
                      .WithSqlParam("assessment_id", assessment_id)
-                     .WithSqlParam("targetLevel", targetLevel)
+                     .WithSqlParam("targetLevel", matLevel)
 
                      .ExecuteStoredProc((handler) =>
                      {
