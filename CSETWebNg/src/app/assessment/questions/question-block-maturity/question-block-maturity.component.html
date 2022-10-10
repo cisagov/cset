@@ -79,9 +79,11 @@
                             {{ q.shortName }}
                         </div>
 
-                        <app-question-text [questionText]="q.questionText"></app-question-text>
+                        <app-question-text [questionText]="q.questionText"></app-question-text>                        
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+
+                        <app-option-block *ngIf="q.options?.length > 0" [question]="q"></app-option-block>
                     </div>
                 </div>
 
@@ -117,6 +119,7 @@
             </div>
 
             <div class="w-100" *ngIf="layoutSvc.hp">
+                <!-- handset portrait -->
                 <div>
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         class="d-flex align-items-center mt-3 mb-2 text-nowrap">

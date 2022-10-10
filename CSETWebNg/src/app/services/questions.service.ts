@@ -271,4 +271,11 @@ export class QuestionsService {
     }
     return '';
   }
+
+  /**
+   * 
+   */
+  setAnswerLabels() {
+
+  }
 }

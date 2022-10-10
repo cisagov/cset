@@ -492,6 +492,7 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
+import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 
 @NgModule({
     imports: [
@@ -938,7 +939,9 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent, LogoTsaComponent
+        SearchPageComponent, 
+        LogoTsaComponent, 
+        OptionBlockComponent
     ],
     providers: [
         ConfigService,

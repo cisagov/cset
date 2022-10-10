@@ -247,15 +247,15 @@ namespace CSETWebCore.Api.Controllers
 
         /// <summary>
         /// Returns a single grouping's worth of questions.  This is done by 
-        /// calling the CisStructure for the grouping and then converting
-        /// that result to a MaturityResponse, which is the packaging that
+        /// instantiating a CisStructure for the grouping and then converting
+        /// that object to a MaturityResponse, which is the packaging that
         /// the maturity-questions page needs.
         /// </summary>
         /// <param name="groupingId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/maturity/questions/grouping")]
-        public IActionResult GetRandy([FromQuery] int groupingId)
+        public IActionResult GetGrouping([FromQuery] int groupingId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -265,22 +265,16 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest("Unknown maturity grouping");
             }
 
-            var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
 
-           
-
-
-
-
-
-
-
+            // get grouping CisStructure
             var biz = new CisStructure(assessmentId, groupingId, _context);
-            var mmmmm = biz.MyModel;
+            var resp1 = biz.MyModel;
 
-            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(mmmmm);
+            // convert it to a MaturityResponse
+            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(resp1);
 
 
+            var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
             resp.ModelName = model.Model_Name;
             resp.QuestionsAlias = model.Questions_Alias ?? "Questions";
 

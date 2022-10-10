@@ -1967,7 +1967,7 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
+        /// Converts a CisQuestions structure to a MaturityResponse structure.
         /// </summary>
         /// <param name="cisStructure"></param>
         /// <returns></returns>
@@ -1975,10 +1975,7 @@ namespace CSETWebCore.Business.Maturity
         {
             var resp = new MaturityResponse();
 
-            resp.MaturityTargetLevel = 1;
-            //resp.ModelName = mmmmm.m
-            
-
+            resp.MaturityTargetLevel = 1;         
 
             foreach (var g in cisStructure.Groupings)
             {
@@ -1994,7 +1991,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private List<MaturityGrouping> MapGroupings(Model.Cis.Grouping g)
         {
-            var ggggg = new List<MaturityGrouping>();
+            var list = new List<MaturityGrouping>();
 
             foreach (var cisG in g.Groupings)
             {
@@ -2007,14 +2004,14 @@ namespace CSETWebCore.Business.Maturity
                     Title = cisG.Title
                 };
 
-                ggggg.Add(newG);
+                list.Add(newG);
 
                 newG.Questions = MapQuestions(cisG);
 
                 newG.SubGroupings = MapGroupings(cisG);
             }
 
-            return ggggg;
+            return list;
         }
 
 
@@ -2023,7 +2020,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private List<QuestionAnswer> MapQuestions(Model.Cis.Grouping g)
         {
-            var qqqq = new List<QuestionAnswer>();
+            var questionAnswer = new List<QuestionAnswer>();
 
             foreach (var q in g.Questions)
             {
@@ -2040,12 +2037,14 @@ namespace CSETWebCore.Business.Maturity
                     MaturityLevelName = q.MaturityLevelName
                 };
 
-                qqqq.Add(newQ);
+                q.Options.ForEach(o => {
+                    newQ.Options.Add(o);
+                });
 
-
+                questionAnswer.Add(newQ);
             }
 
-            return qqqq;
+            return questionAnswer;
         }
     }
 }
