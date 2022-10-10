@@ -36,6 +36,8 @@ import { NCUAService } from '../../services/ncua.service';
 export class IseAnsweredQuestionsComponent implements OnInit {
   response: any = {};
 
+  showSubcats: Map<String, boolean> = new Map<String, boolean>();
+
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
@@ -51,9 +53,41 @@ export class IseAnsweredQuestionsComponent implements OnInit {
       (r: any) => {
         this.response = r;
         console.log(this.response);
+
+        // goes through domains
+        for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for(let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            // goes through questions
+            for(let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
+
+              if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
+                this.showSubcats.set(subcat?.title, true);
+              }
+            }
+          }
+        }
+        
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
+
+    this.showSubcats
+    .set('Information Security Program', true)       .set('Governance', true)
+    .set('Risk Assessment', true)                    .set('Incident Response', true)
+    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
+    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
+    .set('Controls Testing', true)                   .set('Corrective Actions', true)
+    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
+    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
+    .set('Network Security', true)                   .set('Data Leakage Protection', true)
+    .set('Change & Configuration Management', true)  .set('Monitoring', false)
+    .set('Logging', false)                            .set('Data Governance', false)
+    .set('Conversion', false)                         .set('Software Development Process', false)
+    .set('Internal Audit Program', false)             .set('Asset Inventory', true);
   }
 
   requiredQuestion(q: any) {
@@ -79,7 +113,13 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     ||   q.title == 'Stmt 13'
     ||   q.title == 'Stmt 14'
     ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16') {
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22') {
       return true;
     } 
     return false;
