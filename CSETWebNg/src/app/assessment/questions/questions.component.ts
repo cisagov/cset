@@ -231,6 +231,7 @@ export class QuestionsComponent implements AfterViewChecked {
         this.categories = response.categories;
 
         this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.maturityModelId = 0;
 
         this.filterSvc.evaluateFiltersForCategories(this.categories);
 

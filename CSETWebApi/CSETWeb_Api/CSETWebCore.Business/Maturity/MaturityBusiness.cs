@@ -585,6 +585,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
+            response.ModelId = myModelDefinition.Maturity_Model_Id;
             response.ModelName = myModelDefinition.Model_Name;
 
             response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
