@@ -78,7 +78,8 @@
 
   </div>
 
-  <app-nav-back-next *ngIf="!groupingId" [page]="'maturity-questions'"></app-nav-back-next>
+  <app-nav-back-next *ngIf="isNcuaModel()" [page]="'maturity-questions-ncua'"></app-nav-back-next>
+  <app-nav-back-next *ngIf="!isNcuaModel() && !groupingId" [page]="'maturity-questions'"></app-nav-back-next>
   <app-nav-back-next *ngIf="!!groupingId" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
 
 </div>
