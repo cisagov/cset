@@ -276,6 +276,7 @@ namespace CSETWebCore.Api.Controllers
 
             var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
             resp.ModelName = model.Model_Name;
+            resp.ModelId = model.Maturity_Model_Id;
             resp.QuestionsAlias = model.Questions_Alias ?? "Questions";
 
             if (model.Answer_Options != null)

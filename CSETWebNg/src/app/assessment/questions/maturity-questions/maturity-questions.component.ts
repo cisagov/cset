@@ -104,8 +104,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
 
-    console.log('mq init');
-
     if (!this.groupingId) {
       this.loadQuestions();
     } else {
@@ -142,6 +140,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.maturityModelId = response.modelId;
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
@@ -166,6 +165,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   loadGrouping(groupingId: Number) {
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
+     
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;
@@ -173,6 +173,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
       this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
       this.filterSvc.answerOptions = response.answerOptions;
+      this.filterSvc.maturityModelId = response.modelId;
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
       this.groupingTitle = response.title;

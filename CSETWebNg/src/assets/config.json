@@ -28,27 +28,10 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
+    
     "installationMode": "",
-    "galleryLayout": "Florida",
+    "galleryLayout": "",
     "mobileEnvironment": "",
-
-    "buttonLabelY": "Yes",
-    "buttonLabelN": "No",
-    "buttonLabelNA": "NA",
-    "buttonLabelA": "Alt",
-    "buttonLabelA_ACET": "Yes(C)",
-    "buttonLabelIss": "Issue(N)",
-    "buttonLabelI": "Inc",
-    "answerLabelY": "Yes",
-    "answerLabelN": "No",
-    "answerLabelNA": "N/A",
-    "answerLabelA": "Alternate",
-    "answerLabelA_ACET": "Yes Compensating Control",
-    "answerLabelIss": "No with Issue(s)",
-    "answerLabelU": "Unanswered",
-    "answerLabelI": "Incomplete",
-
-
 
 
     "answersDefault": [

@@ -293,7 +293,9 @@ export class QuestionsService {
       answers: this.configSvc.config.answersMVRA
     });
 
+    // ACET labels are only used in the ACET skin
     this.answerLabelModels.push({ 
+      skin: 'ACET',
       modelId: 1,
       answers: this.configSvc.config.answersACET
     });
@@ -317,12 +319,21 @@ export class QuestionsService {
    * Find the answer in the default object or the model-specific object.
    */
   findAns(modelId: Number, answerCode: string) {
-    let ans = this.answerLabelModels.find(x => x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+
+    // first look for a skin-specific label set
+    let ans = this.answerLabelModels.find(x => x.skin == this.configSvc.installationMode
+      && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
     if (ans) {
       return ans;
     }
 
-    // fallback to default
-    return this.answerLabelModels[0].answers.find(x => x.code == answerCode);    
+    // next, look for a model-specific label set with no skin defined
+    ans = this.answerLabelModels.find(x => !x.skin && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+    if (ans) {
+      return ans;
+    }
+
+    // fallback to default label set
+    return this.answerLabelModels[0].answers.find(x => x.code == answerCode);
   }
 }

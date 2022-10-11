@@ -52,7 +52,6 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );

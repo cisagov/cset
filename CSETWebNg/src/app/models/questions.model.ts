@@ -34,6 +34,7 @@ export interface QuestionResponse {
     questionCount: number;
     requirementCount: number;
     overallIRP: number;
+    modelId: number;
     modelName: string;
 
     // the answer options to be displayed
@@ -41,6 +42,7 @@ export interface QuestionResponse {
 }
 
 export interface MaturityQuestionResponse {
+    modelId: number;
     modelName: string;
     questionsAlias: string;
     title: string;

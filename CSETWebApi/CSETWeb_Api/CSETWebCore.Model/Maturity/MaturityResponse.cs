@@ -5,6 +5,10 @@ namespace CSETWebCore.Model.Maturity
     public class MaturityResponse
     {
         /// <summary>
+        /// The ID of the maturity model.
+        /// </summary>
+        public int ModelId { get; set; }
+        /// <summary>
         /// The name of the maturity model.
         /// </summary>
         public string ModelName { get; set; }
