@@ -18,7 +18,6 @@ export class OptionBlockComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    console.log(this.question);
   }
 
 }

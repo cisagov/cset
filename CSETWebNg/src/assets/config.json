@@ -29,7 +29,7 @@
         "canDeleteCustomModules": true
     },
     "installationMode": "",
-    "galleryLayout": "CSET",
+    "galleryLayout": "Florida",
     "mobileEnvironment": "",
 
     "buttonLabelY": "Yes",
@@ -46,5 +46,82 @@
     "answerLabelA_ACET": "Yes Compensating Control",
     "answerLabelIss": "No with Issue(s)",
     "answerLabelU": "Unanswered",
-    "answerLabelI": "Incomplete"
+    "answerLabelI": "Incomplete",
+
+
+
+
+    "answersDefault": [
+        {
+            "code": "U",
+            "answerLabel": "Unanswered"
+        },
+        {
+            "code": "Y",
+            "buttonLabel": "Yes",
+            "buttonColor": "",
+            "answerLabel": "Yes"
+        },
+        {
+            "code": "N",
+            "buttonLabel": "No",
+            "buttonColor": "",
+            "answerLabel": "No"
+        },
+        {
+            "code": "NA",
+            "buttonLabel": "N/A",
+            "buttonColor": "",
+            "answerLabel": "N/A"
+        },
+        {
+            "code": "A",
+            "buttonLabel": "Alt",
+            "buttonColor": "",
+            "answerLabel": "Alternate"
+        },
+        {
+            "code": "I",
+            "buttonLabel": "Inc",
+            "buttonColor": "",
+            "answerLabel": "Incomplete"
+        },
+        {
+            "code": "Iss",
+            "buttonLabel": "Issue(N)",
+            "buttonColor": "",
+            "answerLabel": "No with Issue(s)"
+        }
+    ],
+
+    "answersMVRA": [
+        {
+            "code": "Y",
+            "buttonLabel": "Fully",
+            "buttonColor": "",
+            "answerLabel": "Fully Implemented"
+        },
+        {
+            "code": "N",
+            "buttonLabel": "Not",
+            "buttonColor": "",
+            "answerLabel": "Not Implemented"
+        },
+        {
+            "code": "A",
+            "buttonLabel": "Partial",
+            "buttonColor": "",
+            "answerLabel": "Partially Implemented"
+        }
+    ],
+
+    "answersACET": [
+        {
+            "code": "A",
+            "buttonLabel": "Yes(C)",
+            "buttonColor": "",
+            "answerLabel": "Yes Compensating Control"
+        }
+    ]
+
 }
