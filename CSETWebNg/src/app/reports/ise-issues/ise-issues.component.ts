@@ -4,6 +4,7 @@ import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-ise-issues',
@@ -17,6 +18,7 @@ export class IseIssuesComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
     private titleService: Title
   ) { }
 

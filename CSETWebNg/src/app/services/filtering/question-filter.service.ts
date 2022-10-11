@@ -67,6 +67,11 @@ export class QuestionFilterService {
    */
   public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U'];
 
+  /**
+   * Consuming pages can set a model ID 
+   */
+  public maturityModelId: number;
+
 
   /**
    * Constructor
