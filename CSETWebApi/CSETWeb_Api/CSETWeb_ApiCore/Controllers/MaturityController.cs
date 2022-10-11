@@ -130,11 +130,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill)
+        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId));
         }
 
         [HttpGet]
@@ -244,6 +244,52 @@ namespace CSETWebCore.Api.Controllers
             return Ok(biz.MyModel);
         }
 
+
+        /// <summary>
+        /// Returns a single grouping's worth of questions.  This is done by 
+        /// instantiating a CisStructure for the grouping and then converting
+        /// that object to a MaturityResponse, which is the packaging that
+        /// the maturity-questions page needs.
+        /// </summary>
+        /// <param name="groupingId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/questions/grouping")]
+        public IActionResult GetGrouping([FromQuery] int groupingId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var grouping = _context.MATURITY_GROUPINGS.FirstOrDefault(x => x.Grouping_Id == groupingId);
+            if (grouping == null)
+            {
+                return BadRequest("Unknown maturity grouping");
+            }
+
+
+            // get grouping CisStructure
+            var biz = new CisStructure(assessmentId, groupingId, _context);
+            var resp1 = biz.MyModel;
+
+            // convert it to a MaturityResponse
+            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(resp1);
+
+
+            var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
+            resp.ModelName = model.Model_Name;
+            resp.ModelId = model.Maturity_Model_Id;
+            resp.QuestionsAlias = model.Questions_Alias ?? "Questions";
+
+            if (model.Answer_Options != null)
+            {
+                resp.AnswerOptions = model.Answer_Options.Split(',').ToList();
+                resp.AnswerOptions.ForEach(x => x = x.Trim());
+            }
+
+            resp.Title = grouping.Title;
+
+            return Ok(resp);
+
+        }
 
         /// <summary>
         /// Returns list of CIS assessments accessible to the current user.

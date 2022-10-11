@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-ranked-questions',
@@ -50,7 +51,7 @@ export class RankedQuestionsComponent implements OnInit {
   constructor(private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    private router: Router,
+    public questionsSvc: QuestionsService,
     private configSvc: ConfigService) { }
 
   ngOnInit() {
@@ -67,10 +68,10 @@ export class RankedQuestionsComponent implements OnInit {
       row.rank = i++;
       switch (row.answerText) {
         case 'U':
-          row.displayAnswer = this.configSvc.answerLabels['U'];
+          row.displayAnswer = this.questionsSvc.getAnswerDisplayLabel(0, 'U');
           break;
         case 'N':
-          row.displayAnswer = this.configSvc.answerLabels['N'];
+          row.displayAnswer = this.questionsSvc.getAnswerDisplayLabel(0, 'N');
           break;
       }
     }

@@ -637,7 +637,7 @@
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.question"></td>
-                <td class="tint2">{{configSvc.answerLabels[rq.answer]}}</td>
+                <td class="tint2">{{questionsSvc.getAnswerDisplayLabel(0, rq.answer)}}</td>
             </tr>
         </table>
     </div>
@@ -660,7 +660,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="c.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, c.answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
@@ -687,7 +687,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="t.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[t.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, t.answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Alternate Justification:</td>
@@ -711,7 +711,7 @@
             <tr *ngFor="let mfr of response?.questionsMarkedForReview">
                 <td class="tint2" style="width: 20%">{{mfr.categoryAndNumber}}</td>
                 <td [innerHTML]="mfr.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[mfr.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, mfr.answer)}}</td>
             </tr>
         </table>
 
@@ -732,7 +732,7 @@
             <tr *ngFor="let q of standard.questions">
                 <td class="tint2" style="width: 20%">{{q.categoryAndNumber}}</td>
                 <td [innerHTML]="q.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[q.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, q.answer)}}</td>
             </tr>
         </table>
     </div>
@@ -751,7 +751,7 @@
             <tr>
                 <td class="tint2">Question:</td>
                 <td colspan="2" class="tint2" style="width: 80% !important" [innerHTML]="q.question"></td>
-                <td class="tint2" style="width: 20% !important">{{configSvc.answerLabels[q.answer]}}</td>
+                <td class="tint2" style="width: 20% !important">{{questionsSvc.getAnswerDisplayLabel(0, q.answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Zone:</td>

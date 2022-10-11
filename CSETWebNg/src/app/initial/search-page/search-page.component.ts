@@ -188,7 +188,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   onSlideChange() { }
 
   sort() {
-    console.log(this.searchQuery);
     if (!this.fuse) {
       this.fuse = new Fuse(this.galleryItemsTmp, this.options);
     }
