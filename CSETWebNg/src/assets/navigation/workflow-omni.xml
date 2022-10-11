@@ -54,7 +54,7 @@
         <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
+        <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
 
         <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
         <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
