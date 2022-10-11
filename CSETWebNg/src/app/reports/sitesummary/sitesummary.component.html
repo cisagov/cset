@@ -646,7 +646,7 @@
             <tr>
                 <td class="tint2" style="width: 10%">Question:</td>
                 <td class="tint2" [innerHTML]="c.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[c.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, c.answer)}}</td>
             </tr>
             <tr>
                 <td class="tint2">Comment:</td>
@@ -696,7 +696,7 @@
             <tr *ngFor="let mfr of response?.questionsMarkedForReview">
                 <td class="tint2" style="width: 20%">{{mfr.categoryAndNumber}}</td>
                 <td [innerHTML]="mfr.question"></td>
-                <td class="tint2" style="width: 20%">{{configSvc.answerLabels[mfr.answer]}}</td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.getAnswerDisplayLabel(0, mfr.answer)}}</td>
             </tr>
         </table>
 

@@ -27,6 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-ise-answeredquestions',
@@ -41,6 +42,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
     public ncuaSvc: NCUAService
   ) { }
 
@@ -57,7 +59,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   }
 
   requiredQuestion(q: any) {
-    if (this.configSvc.answerLabels[q.answerText] == 'Unanswered' && q.maturityLevel == 'CORE+') {
+    if (q.answerText == 'U' && q.maturityLevel == 'CORE+') {
       return false;
     }
     return true;
@@ -86,7 +88,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   }
 
   answerText (q: any) {
-    let text = this.configSvc.answerLabels[q.answerText];
+    let text = this.questionsSvc.getAnswerDisplayLabel(10, q.answerText);
     if(text == "Yes Compensating Control") {
       return "Comment";
     }
@@ -94,7 +96,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   }
 
   isAltAnswer (q: any) {
-    let text = this.configSvc.answerLabels[q.answerText];
+    let text = this.questionsSvc.getAnswerDisplayLabel(10, q.answerText);
     if(text == "Yes Compensating Control") {
       return "Yes";
     }

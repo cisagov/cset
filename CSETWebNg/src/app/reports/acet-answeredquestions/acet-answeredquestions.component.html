@@ -112,7 +112,7 @@
                                 <tr>
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                     <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td class="pr-3">{{configSvc.answerLabels[q.answerText]}}</td>
+                                    <td class="pr-3">{{questionsSvc.getAnswerDisplayLabel(1, q.answerText)}}</td>
                                     <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     <td>{{q.comments}}</td>
                                 </tr>

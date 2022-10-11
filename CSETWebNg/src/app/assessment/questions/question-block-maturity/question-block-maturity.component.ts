@@ -59,6 +59,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+  maturityModelId: number;
+
 
   /**
    * Constructor.
@@ -81,6 +83,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+      this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
     }
 
     this.refreshReviewIndicator();

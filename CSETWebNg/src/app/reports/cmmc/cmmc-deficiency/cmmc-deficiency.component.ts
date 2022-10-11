@@ -4,6 +4,7 @@ import { CrrReportModel } from '../../../models/reports.model';
 import { ConfigService } from '../../../services/config.service';
 import { CrrService } from '../../../services/crr.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { QuestionsService } from '../../../services/questions.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 
@@ -24,7 +25,8 @@ export class CmmcDeficiencyComponent implements OnInit {
   constructor(
   public configSvc: ConfigService,
   private titleService: Title,
-  private maturitySvc: MaturityService
+  private maturitySvc: MaturityService,
+  public questionsSvc: QuestionsService
   ){}
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class CmmcDeficiencyComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.configSvc.config['answerLabel' + abb];
+    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
   }
 
   printReport() {
