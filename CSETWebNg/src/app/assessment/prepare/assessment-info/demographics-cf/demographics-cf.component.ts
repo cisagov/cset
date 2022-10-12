@@ -101,6 +101,33 @@ export class DemographicsCfComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   */
+  selectAllCounties(s: boolean) {
+    this.listGeoAreas.forEach(x => {
+      x.selected = s;
+    });
+    this.listCounties.forEach(x => {
+      x.selected = s;
+    });
+  }
+
+  /**
+   * 
+   */
+  toggleGeoArea(a) {
+    a.selected = !a.selected;
+
+    this.listCounties[5].selected = a.selected;
+  }
+
+  /**
+   * 
+   */
+  toggleCounty(c) {
+    c.selected = !c.selected;
+  }
 
 
   listGeoAreas = [

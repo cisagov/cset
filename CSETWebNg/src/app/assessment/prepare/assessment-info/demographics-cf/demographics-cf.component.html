@@ -20,175 +20,187 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h4>Demographics</h4>
-<form>
-    <div class="mb-5">
-        <p>
-            Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
-        </p>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label>
-                    Sector
-                    <button class="btn-link">
-                        <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
-                    </button>
-                </label>
-                <select class="form-control" id="sector" name="sector" tabindex="0"
-                    [(ngModel)]="demographicData.sectorId">
-                    <option [ngValue]="null">-- Select Sector --</option>
-                    <option *ngFor="let sector of sectorList" [value]="sector.sectorId">{{sector.sectorName}}</option>
-                </select>
+<h4>Infrastructure Taxonomy</h4>
 
-            </div>
-            <div class="form-group col-md-6">
-                <label>
-                    Subsector
-                </label>
-                <select class="form-control" id="subsector" name="subsector" tabindex="0"
-                    [(ngModel)]="demographicData.subsectorId" (change)="update($event)">
-                    <option [ngValue]="null">-- Select Subsector --</option>
-                    <option *ngFor="let subsector of subsectorList" [value]="subsector.subsectorId">
-                        {{subsector.subsectorName}}
-                    </option>
-                </select>
-            </div>
+<div class="mb-5">
+    <p>
+        Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
+    </p>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>
+                Sector
+                <button class="btn-link">
+                    <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
+                </button>
+            </label>
+            <select class="form-control" id="sector" name="sector" tabindex="0" [(ngModel)]="demographicData.sectorId">
+                <option [ngValue]="null">-- Select Sector --</option>
+                <option *ngFor="let sector of sectorList" [value]="sector.sectorId">{{sector.sectorName}}</option>
+            </select>
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>
+                Subsector
+            </label>
+            <select class="form-control" id="subsector" name="subsector" tabindex="0"
+                [(ngModel)]="demographicData.subsectorId" (change)="update($event)">
+                <option [ngValue]="null">-- Select Subsector --</option>
+                <option *ngFor="let subsector of subsectorList" [value]="subsector.subsectorId">
+                    {{subsector.subsectorName}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="mb-5">
+    <h4>Geographic</h4>
+    <p class="font-italic">
+        Select the geographic areas where your business/operations <u>primarily</u>
+        provide services.
+    </p>
+
+    <div class="mb-3 d-flex flex-row">
+        <h5>Statewide</h5>
+        <button class="btn btn-link" (click)="selectAllCounties(true)">Select All</button>
+        <button class="btn btn-link" (click)="selectAllCounties(false)">Select None</button>
+    </div>
+
+
+    <h5>Geographic Areas</h5>
+
+    <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-4">
+        <div class="btn-group btn-group-toggle">
+            <label *ngFor="let a of listGeoAreas" class="btn btn-level btn-rounded mx-1" [class.active]="a.selected">
+                <input type="checkbox" [id]="'geo-toggle-' + a.name" [name]="'geo-toggle-' + a.name"
+                    [checked]="a.selected" (click)="toggleGeoArea(a)" data-toggle="toggle" />{{a.name}}</label>
         </div>
     </div>
 
-    <hr>
 
-    <div class="mb-5">
-        <h4>Geographic</h4>
+    <h5>Counties</h5>
+    <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
+        <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
+            <label *ngFor="let c of listCounties" class="btn btn-level btn-rounded m-1" [class.active]="c.selected">
+                <input type="checkbox" [id]="'county-toggle-' + c.name" [name]="'county-toggle-' + c.name"
+                    [checked]="c.selected" (click)="toggleCounty(c)" data-toggle="toggle" />{{c.name}}</label>
+        </div>
+    </div>
+
+
+    <h5>Metropolitan Areas</h5>
+    <p class="font-italic">
+        Select the metropolitan areas where your business/operations provide services.
+    </p>
+    <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
+        <i style="color: red">This will be a list of metropolitan areas that is dynamically
+            generated on the fly based on the counties selected above. These metro area items
+            will also be selectable. Assuming they will be sorted by population
+            based on the requirement document and not alphabetical. Will they
+            need to appear in any sort of grouping like the "top 10" lists?
+        </i>
+    </div>
+</div>
+
+<hr>
+
+<div class="mb-5">
+
+    <h4>Consequence</h4>
+
+    <div class="form-group mb-4">
+        <label>Employees</label>
         <p class="font-italic">
-            Select the geographic area where your business/operations primarily provide services
+            How many total employees directly support business/operations in the geographic areas selected?
         </p>
-
-        <h5>State</h5>
-        <input type="checkbox"><label>All</label>
-        <input type="checkbox"><label>None</label>
-
-
-        <h5>Geographic Areas</h5>
-
-        <div class="mb-4">
-            <div class="btn-group btn-group-toggle">
-                <label *ngFor="let a of listGeoAreas" class="btn btn-level btn-rounded mx-1"
-                    [class.active]="a.selected">
-                    <input type="checkbox" [id]="'geo-toggle-' + a.name" [name]="'geo-toggle-' + a.name"
-                        [checked]="a.selected" (click)="a.selected = !a.selected"
-                        data-toggle="toggle" />{{a.name}}</label>
-            </div>
-        </div>
-
-
-
-        <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3">
-            <div class="btn-group-toggle">
-                <label *ngFor="let c of listCounties" class="btn btn-level btn-rounded m-1" [class.active]="c.selected">
-                    <input type="checkbox" [id]="'county-toggle-' + c.name" [name]="'county-toggle-' + c.name"
-                        [checked]="c.selected" (click)="a.selected = !c.selected"
-                        data-toggle="toggle" />{{c.name}}</label>
-            </div>
-        </div>
+        <select class="form-control" id="employees" name="employees" tabindex="0"
+            [(ngModel)]="demographicData.employees" (change)="update($event)">
+            <option [ngValue]="null">-- Select Employees --</option>
+            <option *ngFor="let e of employeesList" [value]="e">
+                {{industry.industryName}}
+            </option>
+        </select>
     </div>
 
-    <hr>
-
-    <div class="mb-5">
-
-        <h4>Consequence</h4>
-
-        <div class="form-group mb-4">
-            <label>Employees</label>
-            <p class="font-italic">
-                How many total employees directly support business/operations in the geographic areas selected?
-            </p>
-            <select class="form-control" id="employees" name="employees" tabindex="0"
-                [(ngModel)]="demographicData.employees" (change)="update($event)">
-                <option [ngValue]="null">-- Select Employees --</option>
-                <option *ngFor="let e of employeesList" [value]="e">
-                    {{industry.industryName}}
-                </option>
-            </select>
-        </div>
-
-        <div class="form-group mb-4">
-            <label>Customers Supported</label>
-            <p class="font-italic">
-                How many customers does your business/operations directly support (service/host) in the geographic areas
-                selected?
-            </p>
-            <select class="form-control" id="customers" name="customers" tabindex="0"
-                [(ngModel)]="demographicData.customers" (change)="update($event)">
-                <option [ngValue]="null">-- Select Customers --</option>
-                <option *ngFor="let c of customersList" [value]="c">
-                    {{industry.industryName}}
-                </option>
-            </select>
-        </div>
-
-
-        <div class="form-group mb-4">
-            <p class="font-italic">
-                For the following question do not consider available resilience/restoration capabilities such as back up
-                servers, alternate cyber systems, and disaster recovery plan:</p>
-            <p class="font-italic">
-                What would be the initial geographic impact (Municipality/County/State) of your decreased
-                business/operations as the result of a significant/major disruption to your critical cyber services?
-            </p>
-            <label>Geographic Scope</label>
-            <select class="form-control" id="scope" name="scope" tabindex="0" [(ngModel)]="demographicData.scope"
-                (change)="update($event)">
-                <option [ngValue]="null">-- Select Scope --</option>
-                <option *ngFor="let s of scopeList" [value]="s">
-                    {{industry.industryName}}
-                </option>
-            </select>
-        </div>
-
-
-        <div class="form-group mb-4">
-            <p class="font-italic">
-                Is there a Chief Information Officer (CIO) or equivalent responsible for the critical cyber services
-                supporting your business/operations?
-            </p>
-            <select class="form-control" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cio"
-                (change)="update($event)">
-                <option [ngValue]="null">-- Select --</option>
-                <option *ngFor="let i of cioList" [value]="i">
-                    {{i}}
-                </option>
-            </select>
-        </div>
-
-        <div class="form-group mb-4">
-            <p class="font-italic">
-                Is there a Chief Information Security Officer (CISO) or equivalent responsible for the critical cyber
-                services supporting your business/operations?
-            </p>
-            <select class="form-control" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.ciso"
-                (change)="update($event)">
-                <option [ngValue]="null">-- Select --</option>
-                <option *ngFor="let i of cisoList" [value]="i">
-                    {{i}}
-                </option>
-            </select>
-        </div>
-
-        <div class="form-group mb-4">
-            <p class="font-italic">
-                Does your organization have a formalized cybersecurity training program/function that provides employees
-                with more advanced information/skills than basic cyber awareness-level training?
-            </p>
-            <select class="form-control" id="training" name="training" tabindex="0"
-                [(ngModel)]="demographicData.training" (change)="update($event)">
-                <option [ngValue]="null">-- Select --</option>
-                <option *ngFor="let i of trainingList" [value]="i">
-                    {{i}}
-                </option>
-            </select>
-        </div>
-
+    <div class="form-group mb-4">
+        <label>Customers Supported</label>
+        <p class="font-italic">
+            How many customers does your business/operations directly support (service/host) in the geographic areas
+            selected?
+        </p>
+        <select class="form-control" id="customers" name="customers" tabindex="0"
+            [(ngModel)]="demographicData.customers" (change)="update($event)">
+            <option [ngValue]="null">-- Select Customers --</option>
+            <option *ngFor="let c of customersList" [value]="c">
+                {{industry.industryName}}
+            </option>
+        </select>
     </div>
-</form>
+
+
+    <div class="form-group mb-4">
+        <p class="font-italic">
+            For the following question do not consider available resilience/restoration capabilities such as back up
+            servers, alternate cyber systems, and disaster recovery plan:</p>
+        <p class="font-italic">
+            What would be the initial geographic impact (Municipality/County/State) of your decreased
+            business/operations as the result of a significant/major disruption to your critical cyber services?
+        </p>
+        <label>Geographic Scope</label>
+        <select class="form-control" id="scope" name="scope" tabindex="0" [(ngModel)]="demographicData.scope"
+            (change)="update($event)">
+            <option [ngValue]="null">-- Select Scope --</option>
+            <option *ngFor="let s of scopeList" [value]="s">
+                {{industry.industryName}}
+            </option>
+        </select>
+    </div>
+
+
+    <div class="form-group mb-4">
+        <p class="font-italic">
+            Is there a Chief Information Officer (CIO) or equivalent responsible for the critical cyber services
+            supporting your business/operations?
+        </p>
+        <select class="form-control" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cio"
+            (change)="update($event)">
+            <option [ngValue]="null">-- Select --</option>
+            <option *ngFor="let i of cioList" [value]="i">
+                {{i}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group mb-4">
+        <p class="font-italic">
+            Is there a Chief Information Security Officer (CISO) or equivalent responsible for the critical cyber
+            services supporting your business/operations?
+        </p>
+        <select class="form-control" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.ciso"
+            (change)="update($event)">
+            <option [ngValue]="null">-- Select --</option>
+            <option *ngFor="let i of cisoList" [value]="i">
+                {{i}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group mb-4">
+        <p class="font-italic">
+            Does your organization have a formalized cybersecurity training program/function that provides employees
+            with more advanced information/skills than basic cyber awareness-level training?
+        </p>
+        <select class="form-control" id="training" name="training" tabindex="0" [(ngModel)]="demographicData.training"
+            (change)="update($event)">
+            <option [ngValue]="null">-- Select --</option>
+            <option *ngFor="let i of trainingList" [value]="i">
+                {{i}}
+            </option>
+        </select>
+    </div>
+
+</div>
