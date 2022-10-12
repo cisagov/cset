@@ -102,7 +102,8 @@ export class DemographicsCfComponent implements OnInit {
 
 
   /**
-   * 
+   * Called when 'select all' or 'select none' is clicked
+   * at the state level.
    */
   selectAllCounties(s: boolean) {
     this.listGeoAreas.forEach(x => {
@@ -111,6 +112,8 @@ export class DemographicsCfComponent implements OnInit {
     this.listCounties.forEach(x => {
       x.selected = s;
     });
+
+    this.buildMetros();
   }
 
   /**
@@ -119,7 +122,14 @@ export class DemographicsCfComponent implements OnInit {
   toggleGeoArea(a) {
     a.selected = !a.selected;
 
-    this.listCounties[5].selected = a.selected;
+    a.counties?.forEach(c => {
+      const c1 = this.listCounties.find(x => x.name == c);
+      if (!!c1) {
+        c1.selected = a.selected;
+      }
+    });
+
+    this.buildMetros();
   }
 
   /**
@@ -127,17 +137,46 @@ export class DemographicsCfComponent implements OnInit {
    */
   toggleCounty(c) {
     c.selected = !c.selected;
+
+    this.buildMetros();
+  }
+
+  /**
+   * 
+   */
+  toggleMetro(m) {
+    m.selected = !m.selected;
+  }
+
+  /**
+   * Builds the list of metro areas based on county selection
+   */
+  buildMetros() {
+    this.listVisibleMetros = [];
+
+    this.listMetros.forEach(m => {
+      if (this.listCounties.some(c => (c.name == m.county || m.counties?.includes(c.name)) && c.selected)) {
+        this.listVisibleMetros.push(m);
+      }
+    });
   }
 
 
   listGeoAreas = [
-    { selected: false, name: 'Northwest Florida', code: 'nw' },
+    {
+      selected: false, name: 'Northwest Florida', code: 'nw', counties: [
+        'Escambia', 'Santa Rosa', 'Okaloosa', 'Walton', 'Holmes', 'Washington', 'Jackson', 'Calhoun',
+        'Gulf, Bay'
+      ]
+    },
     { selected: false, name: 'North Central Florida', code: 'nc' },
     { selected: false, name: 'Northeast Florida', code: 'ne' },
     { selected: false, name: 'Central West Florida ', code: 'cw' },
     { selected: false, name: 'Central East Florida', code: 'ce' },
     { selected: false, name: 'Southwest Florida', code: 'sw' },
-    { selected: false, name: 'Southeast Florida', code: 'se' }
+    { selected: false, name: 'Southeast Florida', code: 'se', counties: [
+      'Palm Beach', 'Broward', 'Miami-Dade', 'Monroe'
+    ] }
   ];
 
 
@@ -210,6 +249,60 @@ export class DemographicsCfComponent implements OnInit {
     { selected: false, name: 'Wakulla', code: 'sw' },
     { selected: false, name: 'Walton', code: 'sw' },
     { selected: false, name: 'Washington', code: 'sw' }
+  ];
+
+  listVisibleMetros = [];
+
+  listMetros = [
+    { selected: false, name: 'Jacksonville', county: 'Duval' },
+    { selected: false, name: 'Miami', county: 'Miami-Dade' },
+    { selected: false, name: 'Tampa', county: 'Hillsborough' },
+    { selected: false, name: 'Orlando', county: 'Orange' },
+    { selected: false, name: 'St. Petersburg', county: 'Pinellas' },
+    { selected: false, name: 'Hialeah', county: 'Miami-Dade' },
+    { selected: false, name: 'Port St. Lucie', county: 'St. Lucie' },
+    { selected: false, name: 'Cape Coral', county: 'Lee' },
+    { selected: false, name: 'Tallahassee', county: 'Leon' },
+    { selected: false, name: 'Fort Lauderdale', county: 'Broward' },
+    { selected: false, name: 'Pembroke Pines', county: 'Broward' },
+    { selected: false, name: 'Hollywood', county: 'Broward' },
+    { selected: false, name: 'Gainesville', county: 'Alachua' },
+    { selected: false, name: 'Miramar', county: 'Broward' },
+    { selected: false, name: 'Coral Springs', county: 'Broward' },
+    { selected: false, name: 'Palm Bay', county: 'Brevard' },
+    { selected: false, name: 'West Palm Beach', county: 'Palm Beach' },
+    { selected: false, name: 'Leigh Acres', county: 'Lee' },
+    { selected: false, name: 'Clearwater', county: 'Pinellas' },
+    { selected: false, name: 'Brandon', county: 'Hillsborough' },
+    { selected: false, name: 'Spring Hill', county: 'Hernando' },
+    { selected: false, name: 'Lakeland', county: 'Polk' },
+    { selected: false, name: 'Riverview', county: 'Hillsborough' },
+    { selected: false, name: 'Pompano Beach', county: 'Broward' },
+    { selected: false, name: 'Miami Gardens', county: 'Miami-Dade' },
+    { selected: false, name: 'Davie', county: 'Broward' },
+    { selected: false, name: 'Bocas Raton', county: 'Palm Beach' },
+    { selected: false, name: 'Sunrise', county: 'Broward' },
+    { selected: false, name: 'Deltona', county: 'Volusia' },
+    { selected: false, name: 'Alafaya', county: 'Orange' },
+    { selected: false, name: 'Plantation', county: 'Broward' },
+    { selected: false, name: 'Palm Coast', county: 'Flagler' },
+    { selected: false, name: 'Fort Myers', county: 'Lee' },
+    { selected: false, name: 'Deerfield Beach', county: 'Broward' },
+    { selected: false, name: 'Town ‘n’ Country', county: 'Hillsborough' },
+    { selected: false, name: 'Melbourne', county: 'Brevard' },
+    { selected: false, name: 'The Villages', county: 'Sumter' },
+    { selected: false, name: 'Largo', county: 'Pinellas' },
+    { selected: false, name: 'Kissimmee', county: 'Osceola' },
+    { selected: false, name: 'Boynton Beach', county: 'Palm Beach' },
+    { selected: false, name: 'Miami Beach', county: 'Miami-Dade' },
+    { selected: false, name: 'Doral', county: 'Miami-Dade' },
+    { selected: false, name: 'Kendall', county: 'Miami-Dade' },
+    { selected: false, name: 'North Port', county: 'Sarasota' },
+    { selected: false, name: 'Lauderhill', county: 'Broward' },
+    { selected: false, name: 'Daytona Beach', county: 'Volusia' },
+    { selected: false, name: 'Tamarac', county: 'Broward' },
+    { selected: false, name: 'Poinciana', counties: ['Osceola', 'Polk'] },
+    { selected: false, name: 'Westley Chapel', county: 'Pasco' }
   ];
 
 }

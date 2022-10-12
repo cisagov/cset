@@ -183,7 +183,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Counties]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[COUNTRIES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[County_MetropolitanArea]",
          "ObjectType": 0
       },
       {
@@ -248,6 +256,30 @@
       },
       {
          "Name": "[dbo].[DOCUMENT_FILE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedDemographicAnswer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedDemographicCountyAnswers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedDemographicMetropolitanAnswers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedDemographicRegionAnswers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedSector]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ExtendedSubSector]",
          "ObjectType": 0
       },
       {
@@ -503,6 +535,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MetropolitanArea]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MODES_SETS_MATURITY_MODELS]",
          "ObjectType": 0
       },
@@ -572,6 +608,10 @@
       },
       {
          "Name": "[dbo].[PARAMETERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PASSWORD_HISTORY]",
          "ObjectType": 0
       },
       {
