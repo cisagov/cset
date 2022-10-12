@@ -138,8 +138,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/cf/sectors")]
         public IActionResult GetSectorsCf()
         {
-
-            return Ok();
+            var list = _context.ExtendedSector.OrderBy(x => x.SectorName).ToList();
+            return Ok(list);
 
 
 
@@ -158,10 +158,11 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpGet]
-        [Route("api/demographics/cf/subsector/{id}")]
-        public IActionResult GetSubectorCf(int id)
+        [Route("api/demographics/cf/subsector/{sectorName}")]
+        public IActionResult GetSubectorCf(string sectorName)
         {
-            return Ok();
+            var list = _context.ExtendedSubSector.Where(x => x.SectorName == sectorName).OrderBy(x => x.SubSectorName).ToList();
+            return Ok(list);
 
 
             //var list = _context.ExtendedSubsector.Where(x => x.SectorId == id).OrderBy(a => a.IndustryName).ToList();

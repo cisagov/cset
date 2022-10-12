@@ -791,6 +791,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[StateRegion]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[STATES_AND_PROVINCES]",
          "ObjectType": 0
       },

@@ -228,6 +228,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
+        public virtual DbSet<StateRegion> StateRegion { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -990,6 +991,11 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Counties>(entity =>
             {
                 entity.Property(e => e.TBRB_ISO_CODE_COUNTY).ValueGeneratedNever();
+
+                entity.HasOne(d => d.TBRB_Region_ISO_CodeNavigation)
+                    .WithMany(p => p.Counties)
+                    .HasForeignKey(d => d.TBRB_Region_ISO_Code)
+                    .HasConstraintName("FK_Counties_StateRegion");
             });
 
             modelBuilder.Entity<County_MetropolitanArea>(entity =>
@@ -1264,6 +1270,12 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.ExtendedDemographicRegionAnswers)
                     .HasForeignKey(d => d.Assessment_Id)
                     .HasConstraintName("FK_ExtendedDemographicRegionAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.Region)
+                    .WithMany(p => p.ExtendedDemographicRegionAnswers)
+                    .HasForeignKey(d => d.Region_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_StateRegion");
             });
 
             modelBuilder.Entity<ExtendedSubSector>(entity =>
@@ -3173,6 +3185,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Symbol_Group_Name).HasComment("The Symbol Group Name is used to");
 
                 entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
+            });
+
+            modelBuilder.Entity<StateRegion>(entity =>
+            {
+                entity.Property(e => e.TBRB_Region_ISO_Code).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>

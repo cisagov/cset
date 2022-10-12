@@ -18,5 +18,8 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ExtendedDemographicRegionAnswers")]
         public virtual ASSESSMENTS Assessment { get; set; }
+        [ForeignKey("Region_Id")]
+        [InverseProperty("ExtendedDemographicRegionAnswers")]
+        public virtual StateRegion Region { get; set; }
     }
 }
