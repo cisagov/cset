@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
+import { DemographicCf } from '../models/demographics-cf.model';
 
 
 const headers = {
@@ -71,6 +72,23 @@ export class DemographicService {
    * @param demographic
    */
   updateDemographic(demographic: Demographic) {
+    this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
+    .subscribe();
+  }
+
+
+
+  //////    CF 
+
+  getAllSectorsCf() {
+    return this.http.get(this.apiUrl + 'cf/sectors');
+  }
+
+  getSubsectorCf(sectorId: number) {
+    return this.http.get(this.apiUrl + 'cf/subsector/' + sectorId);
+  }
+
+  updateDemographicCf(demographic: DemographicCf) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
     .subscribe();
   }

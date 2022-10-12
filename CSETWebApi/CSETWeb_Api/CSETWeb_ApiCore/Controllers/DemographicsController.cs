@@ -127,5 +127,52 @@ namespace CSETWebCore.Api.Controllers
             List<DEMOGRAPHICS_SIZE> assetValues = await _context.DEMOGRAPHICS_SIZE.ToListAsync();
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList());
         }
+
+
+
+        /// <summary>
+        /// Returns Cyber Florida sector list
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/demographics/cf/sectors")]
+        public IActionResult GetSectorsCf()
+        {
+
+            return Ok();
+
+
+
+            //var list = _context.ExtendedSector.ToList();
+            //var tmplist = list.OrderBy(s => s.SectorName).ToList();
+
+            //var otherItem = list.Find(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
+            //if (otherItem != null)
+            //{
+            //    list.Remove(otherItem);
+            //    list.Add(otherItem);
+            //}
+
+            //return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
+        }
+
+
+        [HttpGet]
+        [Route("api/demographics/cf/subsector/{id}")]
+        public IActionResult GetSubectorCf(int id)
+        {
+            return Ok();
+
+
+            //var list = _context.ExtendedSubsector.Where(x => x.SectorId == id).OrderBy(a => a.IndustryName).ToList();
+            //var otherItem = list.Find(x => x.IndustryName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
+            //if (otherItem != null)
+            //{
+            //    list.Remove(otherItem);
+            //    list.Add(otherItem);
+            //}
+
+            //return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
+        }
     }
 }

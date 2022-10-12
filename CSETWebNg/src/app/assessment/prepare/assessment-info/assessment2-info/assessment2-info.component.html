@@ -29,6 +29,8 @@
   <app-assessment-demographics #demographics *ngIf="isDisplayed() && configSvc.installationMode !== 'CYOTE'  && (!this.ncuaSvc.switchStatus)" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
   <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>
 
+  <app-demographics-cf></app-demographics-cf>
+  
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
 
 </div>
