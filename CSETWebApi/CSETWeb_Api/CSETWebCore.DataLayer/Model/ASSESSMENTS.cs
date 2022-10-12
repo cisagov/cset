@@ -27,6 +27,9 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
+            ExtendedDemographicCountyAnswers = new HashSet<ExtendedDemographicCountyAnswers>();
+            ExtendedDemographicMetropolitanAnswers = new HashSet<ExtendedDemographicMetropolitanAnswers>();
+            ExtendedDemographicRegionAnswers = new HashSet<ExtendedDemographicRegionAnswers>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
@@ -81,6 +84,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual CIS_CSI_SERVICE_DEMOGRAPHICS CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ExtendedDemographicAnswer ExtendedDemographicAnswer { get; set; }
         [InverseProperty("IdNavigation")]
         public virtual INFORMATION INFORMATION { get; set; }
         [InverseProperty("Assessment")]
@@ -109,6 +114,12 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<ExtendedDemographicCountyAnswers> ExtendedDemographicCountyAnswers { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<ExtendedDemographicMetropolitanAnswers> ExtendedDemographicMetropolitanAnswers { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<ExtendedDemographicRegionAnswers> ExtendedDemographicRegionAnswers { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
         [InverseProperty("Assessment")]

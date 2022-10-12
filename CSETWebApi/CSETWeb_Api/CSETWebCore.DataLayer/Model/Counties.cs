@@ -30,6 +30,9 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(10)]
         public string ISO_StateCode { get; set; }
 
+        [ForeignKey("TBRB_Region_ISO_Code")]
+        [InverseProperty("Counties")]
+        public virtual StateRegion TBRB_Region_ISO_CodeNavigation { get; set; }
         [InverseProperty("County_CodeNavigation")]
         public virtual ICollection<County_MetropolitanArea> County_MetropolitanArea { get; set; }
         [InverseProperty("County")]
