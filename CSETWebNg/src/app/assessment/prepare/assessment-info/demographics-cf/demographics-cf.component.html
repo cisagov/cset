@@ -30,7 +30,7 @@
         <div class="form-group col-md-6">
             <label>
                 Sector
-                <button class="btn-link">
+                <button style="background-color: transparent; border: none">
                     <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
                 </button>
             </label>
@@ -75,7 +75,7 @@
 
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-4">
         <div class="btn-group btn-group-toggle">
-            <label *ngFor="let a of listGeoAreas" class="btn btn-level btn-rounded mx-1" [class.active]="a.selected">
+            <label *ngFor="let a of listGeoAreas" class="btn btn-geo btn-rounded mx-1" [class.active]="a.selected">
                 <input type="checkbox" [id]="'geo-toggle-' + a.name" [name]="'geo-toggle-' + a.name"
                     [checked]="a.selected" (click)="toggleGeoArea(a)" data-toggle="toggle" />{{a.name}}</label>
         </div>
@@ -85,7 +85,7 @@
     <h5>Counties</h5>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
         <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
-            <label *ngFor="let c of listCounties" class="btn btn-level btn-rounded m-1" [class.active]="c.selected">
+            <label *ngFor="let c of listCounties" class="btn btn-geo btn-rounded m-1" [class.active]="c.selected">
                 <input type="checkbox" [id]="'county-toggle-' + c.name" [name]="'county-toggle-' + c.name"
                     [checked]="c.selected" (click)="toggleCounty(c)" data-toggle="toggle" />{{c.name}}</label>
         </div>
@@ -95,14 +95,19 @@
     <h5>Metropolitan Areas</h5>
     <p class="font-italic">
         Select the metropolitan areas where your business/operations provide services.
-    </p>
+    </p>    
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
-        <i style="color: red">This will be a list of metropolitan areas that is dynamically
-            generated on the fly based on the counties selected above. These metro area items
-            will also be selectable. Assuming they will be sorted by population
-            based on the requirement document and not alphabetical. Will they
-            need to appear in any sort of grouping like the "top 10" lists?
-        </i>
+        <div *ngIf="listVisibleMetros.length == 0" class="alert alert-warning">
+            This list will grow as populous counties are selected
+        </div>
+        <div class="btn-group-toggle" *ngFor="let m of listVisibleMetros">
+            <ng-container >
+                <label class="btn btn-geo btn-rounded m-1" [class.active]="m.selected">
+                    <input type="checkbox" [id]="'metro-toggle-' + m.name"
+                        [name]="'metro-toggle-' + m.name" [checked]="m.selected" (click)="toggleMetro(m)"
+                        data-toggle="toggle" />{{m.name}}</label>
+            </ng-container>
+        </div>
     </div>
 </div>
 

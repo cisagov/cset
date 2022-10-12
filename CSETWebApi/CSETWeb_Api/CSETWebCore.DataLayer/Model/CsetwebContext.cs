@@ -78,6 +78,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
         public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
+        public virtual DbSet<Counties> Counties { get; set; }
+        public virtual DbSet<County_MetropolitanArea> County_MetropolitanArea { get; set; }
         public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
@@ -91,6 +93,12 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
         public virtual DbSet<ExcelExport> ExcelExport { get; set; }
+        public virtual DbSet<ExtendedDemographicAnswer> ExtendedDemographicAnswer { get; set; }
+        public virtual DbSet<ExtendedDemographicCountyAnswers> ExtendedDemographicCountyAnswers { get; set; }
+        public virtual DbSet<ExtendedDemographicMetropolitanAnswers> ExtendedDemographicMetropolitanAnswers { get; set; }
+        public virtual DbSet<ExtendedDemographicRegionAnswers> ExtendedDemographicRegionAnswers { get; set; }
+        public virtual DbSet<ExtendedSector> ExtendedSector { get; set; }
+        public virtual DbSet<ExtendedSubSector> ExtendedSubSector { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
         public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
@@ -154,6 +162,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
+        public virtual DbSet<MetropolitanArea> MetropolitanArea { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
         public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
@@ -978,6 +987,26 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
             });
 
+            modelBuilder.Entity<Counties>(entity =>
+            {
+                entity.Property(e => e.TBRB_ISO_CODE_COUNTY).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<County_MetropolitanArea>(entity =>
+            {
+                entity.HasKey(e => new { e.County_Code, e.MetropolitanArea });
+
+                entity.HasOne(d => d.County_CodeNavigation)
+                    .WithMany(p => p.County_MetropolitanArea)
+                    .HasForeignKey(d => d.County_Code)
+                    .HasConstraintName("FK_County_MetropolitanArea_Counties");
+
+                entity.HasOne(d => d.MetropolitanAreaNavigation)
+                    .WithMany(p => p.County_MetropolitanArea)
+                    .HasForeignKey(d => d.MetropolitanArea)
+                    .HasConstraintName("FK_County_MetropolitanArea_MetropolitanArea");
+            });
+
             modelBuilder.Entity<DEMOGRAPHICS>(entity =>
             {
                 entity.HasComment("A collection of DEMOGRAPHICS records");
@@ -1174,6 +1203,77 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<ExcelExport>(entity =>
             {
                 entity.ToView("ExcelExport");
+            });
+
+            modelBuilder.Entity<ExtendedDemographicAnswer>(entity =>
+            {
+                entity.HasKey(e => e.Assessment_Id)
+                    .HasName("PK_FloridaDemographicRenameMe");
+
+                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Assessment)
+                    .WithOne(p => p.ExtendedDemographicAnswer)
+                    .HasForeignKey<ExtendedDemographicAnswer>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicAnswer_ASSESSMENTS");
+
+                entity.HasOne(d => d.S)
+                    .WithMany(p => p.ExtendedDemographicAnswer)
+                    .HasForeignKey(d => new { d.SectorName, d.SubSectorName })
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_FloridaDemographicRenameMe_ExtendedSubSector");
+            });
+
+            modelBuilder.Entity<ExtendedDemographicCountyAnswers>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.County_Id });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ExtendedDemographicCountyAnswers)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.County)
+                    .WithMany(p => p.ExtendedDemographicCountyAnswers)
+                    .HasForeignKey(d => d.County_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_Counties");
+            });
+
+            modelBuilder.Entity<ExtendedDemographicMetropolitanAnswers>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Metropolitan_Id });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ExtendedDemographicMetropolitanAnswers)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicMetropolitanAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.Metropolitan)
+                    .WithMany(p => p.ExtendedDemographicMetropolitanAnswers)
+                    .HasForeignKey(d => d.Metropolitan_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedDemographicMetropolitanAnswers_MetropolitanArea");
+            });
+
+            modelBuilder.Entity<ExtendedDemographicRegionAnswers>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Region_Id });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ExtendedDemographicRegionAnswers)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_ASSESSMENTS");
+            });
+
+            modelBuilder.Entity<ExtendedSubSector>(entity =>
+            {
+                entity.HasKey(e => new { e.SectorName, e.SubSectorName });
+
+                entity.HasOne(d => d.SectorNameNavigation)
+                    .WithMany(p => p.ExtendedSubSector)
+                    .HasForeignKey(d => d.SectorName)
+                    .HasConstraintName("FK_ExtendedSubSector_ExtendedSector");
             });
 
             modelBuilder.Entity<FILE_KEYWORDS>(entity =>
@@ -1935,7 +2035,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_LevelNavigation)
+                entity.HasOne(d => d.Maturity_Level)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2025,6 +2125,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Set_Name)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
+            });
+
+            modelBuilder.Entity<MetropolitanArea>(entity =>
+            {
+                entity.Property(e => e.ToBeReplaceByISOCode).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<NAVIGATION_STATE>(entity =>
