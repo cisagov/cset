@@ -334,6 +334,11 @@ export class QuestionsService {
     }
 
     // fallback to default label set
-    return this.answerLabelModels[0].answers.find(x => x.code == answerCode);
+    ans = this.answerLabelModels[0].answers.find(x => x.code == answerCode);
+    if (ans) {
+      return ans;
+    }
+
+    return answerCode;
   }
 }
