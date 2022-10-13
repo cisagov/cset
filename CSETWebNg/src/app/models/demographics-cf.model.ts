@@ -24,9 +24,8 @@
 
 
 export interface DemographicCf {
-    assessment_Id?: number;
     sectorId?: number;
-    subsectorId?: number;
+    subSectorId?: number;
 
     employees?: number;
     customers?: number;
@@ -37,18 +36,39 @@ export interface DemographicCf {
     training?: number;
 }
 
-export interface DemographicsAssetValue {
-    demographicsAssetId: number;
-    assetValue: string;
-}
-
 export interface Sector {
     sectorId: number;
     sectorName: string;
+    sectorHelp: string;
 }
 
 export interface Subsector {
     sectorId: number;
     subsectorId: number;
     subsectorName: string;
+}
+
+export interface Region {
+    selected: boolean;
+    state: string;
+    regionCode: string;
+    regionName: string;
+    counties: County[];
+}
+export interface County {
+    selected: boolean;
+    fips: string;
+    name: string;
+    state: string;
+    regionCode: string;
+}
+
+export interface EmployeeRange {
+    id: number;
+    range: string;
+}
+
+export interface CustomerRange {
+    id: number;
+    range: string;
 }

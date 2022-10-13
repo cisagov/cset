@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
             ExtendedSubSector = new HashSet<ExtendedSubSector>();
         }
 
+        public int SectorId { get; set; }
         [Key]
         [StringLength(150)]
         public string SectorName { get; set; }

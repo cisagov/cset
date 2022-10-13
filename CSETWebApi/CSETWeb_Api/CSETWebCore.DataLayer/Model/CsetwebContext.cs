@@ -226,6 +226,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
         public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
         public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
+        public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
         public virtual DbSet<StateRegion> StateRegion { get; set; }
@@ -239,6 +240,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
         public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
         public virtual DbSet<WEIGHT> WEIGHT { get; set; }
+        public virtual DbSet<counties1> counties1 { get; set; }
         public virtual DbSet<vFinancialGroups> vFinancialGroups { get; set; }
         public virtual DbSet<vParameters> vParameters { get; set; }
         public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
@@ -2047,7 +2049,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_Level)
+                entity.HasOne(d => d.Maturity_LevelNavigation)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -3142,6 +3144,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Country_Code)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_STATES_AND_PROVINCES_COUNTRIES");
+            });
+
+            modelBuilder.Entity<STATE_REGION>(entity =>
+            {
+                entity.HasKey(e => new { e.State, e.RegionCode });
             });
 
             modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>

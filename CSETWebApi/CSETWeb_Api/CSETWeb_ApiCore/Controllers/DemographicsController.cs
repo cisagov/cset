@@ -9,6 +9,9 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -20,7 +23,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsController(ITokenManager token, IAssessmentBusiness assessment, 
+        public DemographicsController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;
@@ -140,40 +143,122 @@ namespace CSETWebCore.Api.Controllers
         {
             var list = _context.ExtendedSector.OrderBy(x => x.SectorName).ToList();
             return Ok(list);
-
-
-
-            //var list = _context.ExtendedSector.ToList();
-            //var tmplist = list.OrderBy(s => s.SectorName).ToList();
-
-            //var otherItem = list.Find(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
-            //if (otherItem != null)
-            //{
-            //    list.Remove(otherItem);
-            //    list.Add(otherItem);
-            //}
-
-            //return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
 
 
         [HttpGet]
-        [Route("api/demographics/cf/subsector/{sectorName}")]
-        public IActionResult GetSubectorCf(string sectorName)
+        [Route("api/demographics/cf/subsector/{sectorId}")]
+        public IActionResult GetSubsectorCf(int sectorId)
         {
-            var list = _context.ExtendedSubSector.Where(x => x.SectorName == sectorName).OrderBy(x => x.SubSectorName).ToList();
+            var list = _context.ExtendedSubSector.Where(x => x.SectorId == sectorId).OrderBy(x => x.SubSectorName).ToList();
             return Ok(list);
-
-
-            //var list = _context.ExtendedSubsector.Where(x => x.SectorId == id).OrderBy(a => a.IndustryName).ToList();
-            //var otherItem = list.Find(x => x.IndustryName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
-            //if (otherItem != null)
-            //{
-            //    list.Remove(otherItem);
-            //    list.Add(otherItem);
-            //}
-
-            //return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
         }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/demographics/cf/regions/{state}")]
+        public IActionResult GetRegionList(string state)
+        {
+            var list = new List<Model.Demographic.StateRegion>();
+            TinyMapper.Bind<STATE_REGION, Model.Demographic.StateRegion>();
+
+            var dbCounties = _context.counties1.Where(x => x.State == state).OrderBy(x => x.Name).ToList();
+
+            var dbRegions = _context.STATE_REGION.Where(x => x.State == state).OrderBy(x => x.RegionName).ToList();
+            dbRegions.ForEach(x =>
+            {
+                var r = TinyMapper.Map<Model.Demographic.StateRegion>(x);
+
+                foreach (var c in dbCounties.Where(x => x.RegionCode == r.RegionCode).ToList())
+                {
+                    r.Counties.Add(new County()
+                    {
+                        FIPS = c.FIPS,
+                        Name = c.Name,
+                        State = c.State
+                    });
+                }
+
+                list.Add(r);
+            });
+
+            return Ok(list);
+        }
+
+
+        [HttpGet]
+        [Route("api/demographics/cf/counties/{state}")]
+        public IActionResult GetCountyList(string state)
+        {
+            var list = _context.counties1.Where(x => x.State == state).ToList();
+            return Ok(list);
+        }
+
+
+        [HttpGet]
+        [Route("api/demographics/cf/employees")]
+        public IActionResult GetEmployeeRanges()
+        {
+            var list = new List<EmployeeRange>();
+
+            list.Add(new EmployeeRange() { Id = 1, Range = "< 100" });
+            list.Add(new EmployeeRange() { Id = 1, Range = "101 - 250" });
+            list.Add(new EmployeeRange() { Id = 2, Range = "251 - 500" });
+            list.Add(new EmployeeRange() { Id = 3, Range = "501 - 1,000" });
+            list.Add(new EmployeeRange() { Id = 4, Range = "1,001 - 5,000" });
+            list.Add(new EmployeeRange() { Id = 5, Range = "5,001 - 10,000" });
+            list.Add(new EmployeeRange() { Id = 6, Range = "10,000 - 25,000" });
+            list.Add(new EmployeeRange() { Id = 7, Range = "> 25,000" });
+
+            return Ok(list);
+        }
+
+
+        [HttpGet]
+        [Route("api/demographics/cf/customers")]
+        public IActionResult GetCustomerRanges()
+        {
+            var list = new List<CustomerRange>();
+
+            list.Add(new CustomerRange() { Id = 1, Range = "< 100" });
+            list.Add(new CustomerRange() { Id = 2, Range = "101 - 500" });
+            list.Add(new CustomerRange() { Id = 3, Range = "501 - 2,500" });
+            list.Add(new CustomerRange() { Id = 4, Range = "2,501 - 10,000" });
+            list.Add(new CustomerRange() { Id = 5, Range = "10,001 - 50,000" });
+            list.Add(new CustomerRange() { Id = 6, Range = "50,001 - 250,000" });
+            list.Add(new CustomerRange() { Id = 7, Range = "250,001 - 1,000,000" });
+            list.Add(new CustomerRange() { Id = 8, Range = "1,100,001 - 5,000,000" });
+            list.Add(new CustomerRange() { Id = 9, Range = "> 5,000,001" });
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [Route("api/demographics/cf/geographicimpact")]
+        public IActionResult GetGeographicImpact()
+        {
+            var list = new List<GeographicImpact>();
+
+            list.Add(new GeographicImpact() { Id = 1, Value = "No Impact" });
+            list.Add(new GeographicImpact() { Id = 2, Value = "Local(Municipality or Single County)" });
+            list.Add(new GeographicImpact() { Id = 3, Value = "Area(More than one county and less than 50% of the state)" });
+            list.Add(new GeographicImpact() { Id = 4, Value = "Statewide" });
+
+            return Ok(list);
+        }
+
+
+
+
+        //Yes, Full-Time
+        //Yes, Part-Time
+        //No
+
+
+
+
+
+
     }
 }

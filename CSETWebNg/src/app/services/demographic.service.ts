@@ -88,6 +88,26 @@ export class DemographicService {
     return this.http.get(this.apiUrl + 'cf/subsector/' + sectorId);
   }
 
+  getRegions(state: string) {
+    return this.http.get(this.apiUrl + 'cf/regions/' + state)
+  }
+
+  getCounties(state: string) {
+    return this.http.get(this.apiUrl + 'cf/counties/' + state);
+  }
+
+  getEmployeeRanges() {
+    return this.http.get(this.apiUrl + 'cf/employees');
+  }
+
+  getCustomerRanges() {
+    return this.http.get(this.apiUrl + 'cf/customers');
+  }
+
+  getGeoImpact() {
+    return this.http.get(this.apiUrl + 'cf/geoimpact');
+  }
+
   updateDemographicCf(demographic: DemographicCf) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
     .subscribe();

@@ -187,6 +187,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[counties1]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[COUNTRIES]",
          "ObjectType": 0
       },
@@ -788,6 +792,10 @@
       },
       {
          "Name": "[dbo].[STANDARD_TO_UNIVERSAL_MAP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[STATE_REGION]",
          "ObjectType": 0
       },
       {
