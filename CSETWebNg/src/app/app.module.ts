@@ -493,7 +493,8 @@ import { IssuesComponent } from './assessment/questions/issues/issues.component'
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
-import { DemographicsCfComponent } from './assessment/prepare/assessment-info/demographics-cf/demographics-cf.component';
+import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
+import { DemographicExtendedService } from './services/demographic-extended.service';
 
 @NgModule({
     imports: [
@@ -942,7 +943,8 @@ import { DemographicsCfComponent } from './assessment/prepare/assessment-info/de
         PrivacyWarningRejectComponent, 
         SearchPageComponent, 
         LogoTsaComponent, 
-        OptionBlockComponent, DemographicsCfComponent
+        OptionBlockComponent, 
+        DemographicsExtendedComponent
     ],
     providers: [
         ConfigService,
@@ -969,6 +971,7 @@ import { DemographicsCfComponent } from './assessment/prepare/assessment-info/de
         AssessGuard,
         AggregationGuard,
         DemographicService,
+        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,

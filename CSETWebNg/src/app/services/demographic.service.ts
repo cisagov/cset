@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
-import { ExtendedDemographics } from '../models/demographics-cf.model';
+import { ExtendedDemographics } from '../models/demographics-extended.model';
 
 
 const headers = {
@@ -73,62 +73,6 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe();
-  }
-
-
-
-  //////    CF 
-
-  getDemographicCf() {
-    return this.http.get(this.apiUrl + 'cf');
-  }
-
-  getAllSectorsCf() {
-    return this.http.get(this.apiUrl + 'cf/sectors');
-  }
-
-  getSubsectorCf(sectorId: number) {
-    return this.http.get(this.apiUrl + 'cf/subsector/' + sectorId);
-  }
-
-  getRegions(state: string) {
-    return this.http.get(this.apiUrl + 'cf/regions/' + state)
-  }
-
-  getCounties(state: string) {
-    return this.http.get(this.apiUrl + 'cf/counties/' + state);
-  }
-
-  getEmployeeRanges() {
-    return this.http.get(this.apiUrl + 'cf/employees');
-  }
-
-  getCustomerRanges() {
-    return this.http.get(this.apiUrl + 'cf/customers');
-  }
-
-  getGeoScope() {
-    return this.http.get(this.apiUrl + 'cf/geoscope');
-  }
-
-  getCio() {
-    return this.http.get(this.apiUrl + 'cf/cio');
-  }
-
-  getCiso() {
-    return this.http.get(this.apiUrl + 'cf/ciso');
-  }
-
-  getTraining() {
-    return this.http.get(this.apiUrl + 'cf/training');
-  }
-
-  /**
-   * Persist the model to the API.
-   */
-  updateExtendedDemographics(demographic: ExtendedDemographics) {
-    this.http.post(this.configSvc.apiUrl + 'extendeddemographics', JSON.stringify(demographic), headers)
     .subscribe();
   }
 }

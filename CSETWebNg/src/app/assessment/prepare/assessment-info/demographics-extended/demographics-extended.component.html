@@ -75,7 +75,6 @@
 
 
     <h5>Geographic Areas</h5>
-
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-4">
         <div class="btn-group btn-group-toggle">
             <label *ngFor="let r of regionList" class="btn btn-geo btn-rounded mx-1" [class.active]="r.selected">
@@ -116,12 +115,11 @@
 
 <hr>
 
-<div class="mb-5">
-
+<div>
     <h4>Consequence</h4>
 
-    <div class="form-group mb-4">
-        <label>Employees</label>
+    <div class="form-group mb-5">
+        <h5>Employees</h5>
         <p class="font-italic">
             How many total employees <u>directly support</u> 
             business/operations in the geographic areas selected?
@@ -135,8 +133,8 @@
         </select>
     </div>
 
-    <div class="form-group mb-4">
-        <label>Customers Supported</label>
+    <div class="form-group mb-5">
+        <h5>Customers Supported</h5>
         <p class="font-italic">
             How many customers does your business/operations <u>directly support</u> 
             (service/host) in the geographic areas selected?
@@ -151,8 +149,8 @@
     </div>
 
 
-    <div class="form-group mb-4">
-        <label>Geographic Scope</label>
+    <div class="form-group mb-5">
+        <h5>Geographic Scope</h5>
         <p class="font-italic">
             For the following question <u>do not</u> consider available resilience/restoration capabilities such as back up
             servers, alternate cyber systems, and disaster recovery plan:</p>
@@ -170,7 +168,7 @@
     </div>
 
 
-    <div class="form-group mb-4">
+    <div class="form-group mb-5">
         <p class="font-italic">
             Is there a Chief Information Officer (CIO) or equivalent responsible for the critical cyber services
             supporting your business/operations?
@@ -184,7 +182,8 @@
         </select>
     </div>
 
-    <div class="form-group mb-4">
+
+    <div class="form-group mb-5">
         <p class="font-italic">
             Is there a Chief Information Security Officer (CISO) or equivalent responsible for the critical cyber
             services supporting your business/operations?
@@ -198,7 +197,8 @@
         </select>
     </div>
 
-    <div class="form-group mb-4">
+    
+    <div class="form-group mb-5">
         <p class="font-italic">
             Does your organization have a formalized cybersecurity training program/function that provides employees
             with more advanced information/skills than basic cyber awareness-level training?

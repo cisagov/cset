@@ -31,7 +31,7 @@
     <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>
   </div>
 
-  <app-demographics-cf *ngIf="assessSvc.assessment.origin == 'CF'"></app-demographics-cf>
+  <app-demographics-extended *ngIf="assessSvc.assessment.origin == 'CF'"></app-demographics-extended>
   
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
 
