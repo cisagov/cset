@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
             ExtendedDemographicAnswer = new HashSet<ExtendedDemographicAnswer>();
         }
 
+        public int? SectorId { get; set; }
         [Key]
         [StringLength(150)]
         public string SectorName { get; set; }
