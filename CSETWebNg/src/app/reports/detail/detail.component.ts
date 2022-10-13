@@ -24,6 +24,7 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
@@ -79,6 +80,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
     public acetSvc: ACETService,
