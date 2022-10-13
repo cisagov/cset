@@ -131,6 +131,27 @@ namespace CSETWebCore.Api.Controllers
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList());
         }
 
+        //--------------------
+
+
+        [HttpGet]
+        [Route("api/demographics/cf")]
+        public IActionResult GetDemographicsCf()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var demo = _context.ExtendedDemographicAnswer.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            if (demo == null)
+            {
+                demo = new ExtendedDemographicAnswer()
+                {
+                    Assessment_Id = assessmentId
+                };
+            }
+
+            return Ok(demo);
+        }
 
 
         /// <summary>
@@ -200,16 +221,16 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/cf/employees")]
         public IActionResult GetEmployeeRanges()
         {
-            var list = new List<EmployeeRange>();
+            var list = new List<ListItem>();
 
-            list.Add(new EmployeeRange() { Id = 1, Range = "< 100" });
-            list.Add(new EmployeeRange() { Id = 1, Range = "101 - 250" });
-            list.Add(new EmployeeRange() { Id = 2, Range = "251 - 500" });
-            list.Add(new EmployeeRange() { Id = 3, Range = "501 - 1,000" });
-            list.Add(new EmployeeRange() { Id = 4, Range = "1,001 - 5,000" });
-            list.Add(new EmployeeRange() { Id = 5, Range = "5,001 - 10,000" });
-            list.Add(new EmployeeRange() { Id = 6, Range = "10,000 - 25,000" });
-            list.Add(new EmployeeRange() { Id = 7, Range = "> 25,000" });
+            list.Add(new ListItem() { Id = 1, Value = "< 100" });
+            list.Add(new ListItem() { Id = 2, Value = "101 - 250" });
+            list.Add(new ListItem() { Id = 3, Value = "251 - 500" });
+            list.Add(new ListItem() { Id = 4, Value = "501 - 1,000" });
+            list.Add(new ListItem() { Id = 5, Value = "1,001 - 5,000" });
+            list.Add(new ListItem() { Id = 6, Value = "5,001 - 10,000" });
+            list.Add(new ListItem() { Id = 7, Value = "10,000 - 25,000" });
+            list.Add(new ListItem() { Id = 8, Value = "> 25,000" });
 
             return Ok(list);
         }
@@ -219,46 +240,88 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/cf/customers")]
         public IActionResult GetCustomerRanges()
         {
-            var list = new List<CustomerRange>();
+            var list = new List<ListItem>();
 
-            list.Add(new CustomerRange() { Id = 1, Range = "< 100" });
-            list.Add(new CustomerRange() { Id = 2, Range = "101 - 500" });
-            list.Add(new CustomerRange() { Id = 3, Range = "501 - 2,500" });
-            list.Add(new CustomerRange() { Id = 4, Range = "2,501 - 10,000" });
-            list.Add(new CustomerRange() { Id = 5, Range = "10,001 - 50,000" });
-            list.Add(new CustomerRange() { Id = 6, Range = "50,001 - 250,000" });
-            list.Add(new CustomerRange() { Id = 7, Range = "250,001 - 1,000,000" });
-            list.Add(new CustomerRange() { Id = 8, Range = "1,100,001 - 5,000,000" });
-            list.Add(new CustomerRange() { Id = 9, Range = "> 5,000,001" });
+            list.Add(new ListItem() { Id = 1, Value = "< 100" });
+            list.Add(new ListItem() { Id = 2, Value = "101 - 500" });
+            list.Add(new ListItem() { Id = 3, Value = "501 - 2,500" });
+            list.Add(new ListItem() { Id = 4, Value = "2,501 - 10,000" });
+            list.Add(new ListItem() { Id = 5, Value = "10,001 - 50,000" });
+            list.Add(new ListItem() { Id = 6, Value = "50,001 - 250,000" });
+            list.Add(new ListItem() { Id = 7, Value = "250,001 - 1,000,000" });
+            list.Add(new ListItem() { Id = 8, Value = "1,100,001 - 5,000,000" });
+            list.Add(new ListItem() { Id = 9, Value = "> 5,000,001" });
 
             return Ok(list);
         }
 
         [HttpGet]
-        [Route("api/demographics/cf/geographicimpact")]
-        public IActionResult GetGeographicImpact()
+        [Route("api/demographics/cf/geoscope")]
+        public IActionResult GetGeographicScope()
         {
-            var list = new List<GeographicImpact>();
+            var list = new List<ListItem>();
 
-            list.Add(new GeographicImpact() { Id = 1, Value = "No Impact" });
-            list.Add(new GeographicImpact() { Id = 2, Value = "Local(Municipality or Single County)" });
-            list.Add(new GeographicImpact() { Id = 3, Value = "Area(More than one county and less than 50% of the state)" });
-            list.Add(new GeographicImpact() { Id = 4, Value = "Statewide" });
+            list.Add(new ListItem() { Id = 1, Value = "No Impact" });
+            list.Add(new ListItem() { Id = 2, Value = "Local (Municipality or Single County)" });
+            list.Add(new ListItem() { Id = 3, Value = "Area (More than one county and less than 50% of the state)" });
+            list.Add(new ListItem() { Id = 4, Value = "Statewide" });
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [Route("api/demographics/cf/cio")]
+        public IActionResult GetCioOptions()
+        {
+            var list = new List<ListItem>();
+
+            list.Add(new ListItem() { Id = 1, Value = "Yes, Full-Time" });
+            list.Add(new ListItem() { Id = 2, Value = "Yes, Part-Time" });
+            list.Add(new ListItem() { Id = 3, Value = "No" });
 
             return Ok(list);
         }
 
 
+        [HttpGet]
+        [Route("api/demographics/cf/ciso")]
+        public IActionResult GetCisoOptions()
+        {
+            var list = new List<ListItem>();
+
+            list.Add(new ListItem() { Id = 1, Value = "Yes, Full-Time" });
+            list.Add(new ListItem() { Id = 2, Value = "Yes, Part-Time" });
+            list.Add(new ListItem() { Id = 3, Value = "No" });
+
+            return Ok(list);
+        }
 
 
-        //Yes, Full-Time
-        //Yes, Part-Time
-        //No
+        [HttpGet]
+        [Route("api/demographics/cf/training")]
+        public IActionResult GetTrainingOptions()
+        {
+            var list = new List<ListItem>();
+
+            list.Add(new ListItem() { Id = 1, Value = "Yes" });
+            list.Add(new ListItem() { Id = 2, Value = "No" });
+
+            return Ok(list);
+        }
 
 
+        /// <summary>
+        /// Persists extended demographics.
+        /// </summary>
+        /// <param name="demographics"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/extendeddemographics")]
+        public IActionResult PostExtended([FromBody] ExtendedDemographic demographics)
+        {
+            demographics.AssessmentId = _token.AssessmentForUser();
 
-
-
-
+            return Ok(_demographic.SaveDemographics(demographics));
+        }
     }
 }

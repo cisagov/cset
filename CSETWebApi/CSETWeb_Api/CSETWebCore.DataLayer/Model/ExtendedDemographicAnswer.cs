@@ -12,28 +12,24 @@ namespace CSETWebCore.DataLayer.Model
     {
         [Key]
         public int Assessment_Id { get; set; }
-        [Required]
         [StringLength(100)]
         public string Employees { get; set; }
-        [Required]
         [StringLength(100)]
         public string CustomersSupported { get; set; }
-        [Required]
         [StringLength(100)]
         public string GeographicScope { get; set; }
-        [Required]
         [StringLength(50)]
         public string CIOExists { get; set; }
-        [Required]
         [StringLength(50)]
         public string CISOExists { get; set; }
-        [Required]
         [StringLength(10)]
         public string CyberTrainingProgramExists { get; set; }
         [StringLength(150)]
         public string SectorName { get; set; }
         [StringLength(250)]
         public string SubSectorName { get; set; }
+        public int? SectorId { get; set; }
+        public int? SubSectorId { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("ExtendedDemographicAnswer")]

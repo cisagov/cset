@@ -23,17 +23,18 @@
 ////////////////////////////////
 
 
-export interface DemographicCf {
+export interface ExtendedDemographics {
+    assessmentId?: number;
+
     sectorId?: number;
     subSectorId?: number;
 
-    employees?: number;
-    customers?: number;
-
-    scope?: number;
-    cio?: number;
-    ciso?: number;
-    training?: number;
+    employees?: string;
+    customersSupported?: string;
+    geographicScope?: string;
+    cioExists?: string;
+    cisoExists?: string;
+    cyberTrainingProgramExists?: string;
 }
 
 export interface Sector {
@@ -44,8 +45,8 @@ export interface Sector {
 
 export interface Subsector {
     sectorId: number;
-    subsectorId: number;
-    subsectorName: string;
+    subSectorId: number;
+    subSectorName: string;
 }
 
 export interface Region {
@@ -71,4 +72,9 @@ export interface EmployeeRange {
 export interface CustomerRange {
     id: number;
     range: string;
+}
+
+export interface ListItem {
+    id: number;
+    value: string;
 }

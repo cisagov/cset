@@ -26,12 +26,12 @@
 
   <app-assessment-contacts class="mb-5 d-flex justify-content-end flex-00a" (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 
-  <div *ngIf="!configSvc.config.debug?.cyberflorida">
+  <div *ngIf="assessSvc.assessment.origin != 'CF'">
     <app-assessment-demographics #demographics *ngIf="isDisplayed() && configSvc.installationMode !== 'CYOTE'  && (!this.ncuaSvc.switchStatus)" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
     <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>
   </div>
 
-  <app-demographics-cf *ngIf="configSvc.config.debug?.cyberflorida"></app-demographics-cf>
+  <app-demographics-cf *ngIf="assessSvc.assessment.origin == 'CF'"></app-demographics-cf>
   
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
 

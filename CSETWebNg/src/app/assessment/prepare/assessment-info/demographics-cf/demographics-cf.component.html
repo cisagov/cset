@@ -37,7 +37,9 @@
             <select class="form-control" id="sector" name="sector" tabindex="0" 
                 [(ngModel)]="demographicData.sectorId" (change)="getSubsectors($event.target.value)">
                 <option [ngValue]="null">-- Select Sector --</option>
-                <option *ngFor="let sector of sectorList" [value]="sector.sectorId">{{sector.sectorName}}</option>
+                <option *ngFor="let sector of sectorList" [value]="sector.sectorId">
+                    {{sector.sectorName}}
+                </option>
             </select>
 
         </div>
@@ -46,9 +48,9 @@
                 Subsector
             </label>
             <select class="form-control" id="subsector" name="subsector" tabindex="0"
-                [(ngModel)]="demographicData.subSectorId" (change)="update($event)">
+                [(ngModel)]="demographicData.subSectorId" (change)="update($event.target.value)">
                 <option [ngValue]="null">-- Select Subsector --</option>
-                <option *ngFor="let subsector of subsectorList" [value]="subsector.subSectorId">
+                <option *ngFor="let subsector of subSectorList" [value]="subsector.subSectorId">
                     {{subsector.subSectorName}}
                 </option>
             </select>
@@ -127,8 +129,8 @@
         <select class="form-control" id="employees" name="employees" tabindex="0"
             [(ngModel)]="demographicData.employees" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Employees --</option>
-            <option *ngFor="let e of employeeRanges" [value]="e.id">
-                {{e.range}}
+            <option *ngFor="let e of employeeRanges" [value]="e.value">
+                {{e.value}}
             </option>
         </select>
     </div>
@@ -140,16 +142,17 @@
             (service/host) in the geographic areas selected?
         </p>
         <select class="form-control" id="customers" name="customers" tabindex="0"
-            [(ngModel)]="demographicData.customers" (change)="update($event.target.value)">
+            [(ngModel)]="demographicData.customersSupported" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Customers --</option>
-            <option *ngFor="let c of customerRanges" [value]="c.id">
-                {{c.range}}
+            <option *ngFor="let c of customerRanges" [value]="c.value">
+                {{c.value}}
             </option>
         </select>
     </div>
 
 
     <div class="form-group mb-4">
+        <label>Geographic Scope</label>
         <p class="font-italic">
             For the following question <u>do not</u> consider available resilience/restoration capabilities such as back up
             servers, alternate cyber systems, and disaster recovery plan:</p>
@@ -157,12 +160,11 @@
             What would be the initial <u>geographic impact</u> (Municipality/County/State) of your decreased
             business/operations as the result of a significant/major disruption to your critical cyber services?
         </p>
-        <label>Geographic Scope</label>
-        <select class="form-control" id="scope" name="scope" tabindex="0" [(ngModel)]="demographicData.scope"
-            (change)="update($event)">
+        <select class="form-control" id="geoScope" name="geoScope" tabindex="0" 
+            [(ngModel)]="demographicData.geographicScope" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Scope --</option>
-            <option *ngFor="let s of scopeList" [value]="s">
-                {{industry.industryName}}
+            <option *ngFor="let s of geoScopeList" [value]="s.value">
+                {{s.value}}
             </option>
         </select>
     </div>
@@ -173,11 +175,11 @@
             Is there a Chief Information Officer (CIO) or equivalent responsible for the critical cyber services
             supporting your business/operations?
         </p>
-        <select class="form-control" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cio"
+        <select class="form-control" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cioExists"
             (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
-            <option *ngFor="let i of cioList" [value]="i">
-                {{i}}
+            <option *ngFor="let i of cioList" [value]="i.value">
+                {{i.value}}
             </option>
         </select>
     </div>
@@ -187,11 +189,11 @@
             Is there a Chief Information Security Officer (CISO) or equivalent responsible for the critical cyber
             services supporting your business/operations?
         </p>
-        <select class="form-control" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.ciso"
+        <select class="form-control" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.cisoExists"
             (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
-            <option *ngFor="let i of cisoList" [value]="i">
-                {{i}}
+            <option *ngFor="let i of cisoList" [value]="i.value">
+                {{i.value}}
             </option>
         </select>
     </div>
@@ -201,11 +203,11 @@
             Does your organization have a formalized cybersecurity training program/function that provides employees
             with more advanced information/skills than basic cyber awareness-level training?
         </p>
-        <select class="form-control" id="training" name="training" tabindex="0" [(ngModel)]="demographicData.training"
+        <select class="form-control" id="training" name="training" tabindex="0" [(ngModel)]="demographicData.cyberTrainingProgramExists"
             (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
-            <option *ngFor="let i of trainingList" [value]="i">
-                {{i}}
+            <option *ngFor="let i of trainingList" [value]="i.value">
+                {{i.value}}
             </option>
         </select>
     </div>

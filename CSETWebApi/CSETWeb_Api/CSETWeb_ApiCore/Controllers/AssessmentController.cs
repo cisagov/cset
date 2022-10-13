@@ -157,6 +157,14 @@ namespace CSETWebCore.Api.Controllers
                 assessment.UseDiagram = true;
             }
 
+            
+            // Origin
+            if (config.Origin != null)
+            {
+                assessment.Origin = config.Origin;
+            }
+
+
             _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
 
             return Ok(assessment);

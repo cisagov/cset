@@ -22,8 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { Demographic } from '../../../../models/assessment-info.model';
-import { County, CustomerRange, DemographicCf, EmployeeRange, Region, Sector, Subsector } from '../../../../models/demographics-cf.model';
+import { County, CustomerRange, ExtendedDemographics, EmployeeRange, ListItem, Region, Sector, Subsector } from '../../../../models/demographics-cf.model';
 import { User } from '../../../../models/user.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -37,17 +38,14 @@ import { DemographicService } from '../../../../services/demographic.service';
 export class DemographicsCfComponent implements OnInit {
 
   sectorList: Sector[];
-  subsectorList: Subsector[];
+  subSectorList: Subsector[];
 
   regionList: Region[];
   countyList: County[];
 
-  scopeList: any[];
-  employeeRanges: EmployeeRange[];
-  customerRanges: CustomerRange[];
-
-  geoImpactList: any[];
-
+  employeeRanges: ListItem[];
+  customerRanges: ListItem[];
+  geoScopeList: ListItem[];
   cioList: any[];
   cisoList: any[];
   trainingList: any[];
@@ -55,7 +53,7 @@ export class DemographicsCfComponent implements OnInit {
   /**
    * This is the model that contains the current answers
    */
-  demographicData: DemographicCf = {};
+  demographicData: ExtendedDemographics = {};
 
 
   /**
@@ -80,33 +78,64 @@ export class DemographicsCfComponent implements OnInit {
         console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
       });
 
-      this.demoSvc.getRegions('FL').subscribe((data: any) => {
-        this.regionList = data;
+    this.demoSvc.getRegions('FL').subscribe((data: any) => {
+      this.regionList = data;
 
-        this.countyList = [];
-        this.regionList.forEach(r => {
-          this.countyList.push(...r.counties);
-        });
-        this.countyList.sort((a, b) => {
-          if (a.name < b.name) { return -1; }
-          if (a.name > b.name) { return 1; }
-          return 0;
-        });
+      this.countyList = [];
+      this.regionList.forEach(r => {
+        this.countyList.push(...r.counties);
       });
-
-
-      this.demoSvc.getEmployeeRanges().subscribe((data: EmployeeRange[]) => {
-        this.employeeRanges = data;
+      this.countyList.sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
       });
+    });
 
-      this.demoSvc.getCustomerRanges().subscribe((data: CustomerRange[]) => {
-        this.customerRanges = data;
-      });
 
-      this.demoSvc.getGeoImpact().subscribe((data: CustomerRange[]) => {
-        this.geoImpactList = data;
-      });
+    this.demoSvc.getEmployeeRanges().subscribe((data: ListItem[]) => {
+      this.employeeRanges = data;
+    });
+
+    this.demoSvc.getCustomerRanges().subscribe((data: ListItem[]) => {
+      this.customerRanges = data;
+    });
+
+    this.demoSvc.getGeoScope().subscribe((data: ListItem[]) => {
+      this.geoScopeList = data;
+    });
+
+    this.demoSvc.getCio().subscribe((data: ListItem[]) => {
+      this.cioList = data;
+    });
+
+    this.demoSvc.getCiso().subscribe((data: ListItem[]) => {
+      this.cisoList = data;
+    });
+
+    this.demoSvc.getTraining().subscribe((data: ListItem[]) => {
+      this.trainingList = data;
+    });
+
+    this.getDemographics();
   }
+
+  /**
+   * Get any existing answers for the page.
+   */
+  getDemographics() {
+    this.demoSvc.getDemographicCf().subscribe(
+      (data: Demographic) => {
+        this.demographicData = data;
+
+        // populate Industry dropdown based on Sector
+        //this.populateIndustryOptions(this.demographicData.sectorId);
+      },
+      error => console.log('Demographic load Error: ' + (<Error>error).message)
+    );
+  }
+
+
 
   /**
    * 
@@ -114,9 +143,12 @@ export class DemographicsCfComponent implements OnInit {
   getSubsectors(sectorId: number) {
     if (!sectorId) {
       return;
-  }
+    }
+
+    this.updateDemographics();
+
     this.demoSvc.getSubsectorCf(sectorId).subscribe((data: Subsector[]) => {
-      this.subsectorList = data;
+      this.subSectorList = data;
     });
   }
 
@@ -131,7 +163,9 @@ export class DemographicsCfComponent implements OnInit {
    * 
    */
   updateDemographics() {
-    this.demoSvc.updateDemographic(this.demographicData);
+    this.demographicData.subSectorId = null;
+    console.log(this.demographicData);
+    this.demoSvc.updateExtendedDemographics(this.demographicData);
   }
 
 
