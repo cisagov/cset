@@ -22,22 +22,20 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { Demographic } from '../../../../models/assessment-info.model';
-import { County, CustomerRange, ExtendedDemographics, EmployeeRange, ListItem, Region, Sector, Subsector } from '../../../../models/demographics-cf.model';
-import { User } from '../../../../models/user.model';
+import { County, ExtendedDemographics, ListItem, Region, Sector, Subsector } from '../../../../models/demographics-extended.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
-import { DemographicService } from '../../../../services/demographic.service';
+import { DemographicExtendedService } from '../../../../services/demographic-extended.service';
 
 
 @Component({
-  selector: 'app-demographics-cf',
-  templateUrl: './demographics-cf.component.html'
+  selector: 'app-demographics-extended',
+  templateUrl: './demographics-extended.component.html'
 })
-export class DemographicsCfComponent implements OnInit {
+export class DemographicsExtendedComponent implements OnInit {
 
-  sectorList: Sector[];
+  sectorList: Sector[];ks
   subSectorList: Subsector[];
 
   regionList: Region[];
@@ -60,7 +58,7 @@ export class DemographicsCfComponent implements OnInit {
    * 
    */
   constructor(
-    private demoSvc: DemographicService,
+    private demoSvc: DemographicExtendedService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService
   ) { }
@@ -69,7 +67,7 @@ export class DemographicsCfComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.demoSvc.getAllSectorsCf().subscribe(
+    this.demoSvc.getAllSectors().subscribe(
       (data: Sector[]) => {
         this.sectorList = data;
       },
@@ -124,7 +122,7 @@ export class DemographicsCfComponent implements OnInit {
    * Get any existing answers for the page.
    */
   getDemographics() {
-    this.demoSvc.getDemographicCf().subscribe(
+    this.demoSvc.getDemographics().subscribe(
       (data: Demographic) => {
         this.demographicData = data;
 
@@ -147,7 +145,7 @@ export class DemographicsCfComponent implements OnInit {
 
     this.updateDemographics();
 
-    this.demoSvc.getSubsectorCf(sectorId).subscribe((data: Subsector[]) => {
+    this.demoSvc.getSubsector(sectorId).subscribe((data: Subsector[]) => {
       this.subSectorList = data;
     });
   }
@@ -164,7 +162,6 @@ export class DemographicsCfComponent implements OnInit {
    */
   updateDemographics() {
     this.demographicData.subSectorId = null;
-    console.log(this.demographicData);
     this.demoSvc.updateExtendedDemographics(this.demographicData);
   }
 

@@ -11,11 +11,24 @@ namespace CSETWebCore.Business.Demographic
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="assessmentUtil"></param>
         public DemographicBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public Demographics GetDemographics(int assessmentId)
         {
             Demographics demographics = new Demographics
@@ -48,6 +61,8 @@ namespace CSETWebCore.Business.Demographic
 
             return demographics;
         }
+
+
         /// <summary>
         /// Returns the Demographics instance for the assessment.
         /// </summary>
@@ -147,7 +162,7 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
-        /// Persists data to the EXTENDEDDEMOGRAPHIC table.
+        /// Persists data to the ExtendedDemographicAnswer database table.
         /// </summary>
         /// <param name="demographics"></param>
         /// <returns></returns>
@@ -164,8 +179,6 @@ namespace CSETWebCore.Business.Demographic
                 _context.SaveChanges();
             }
 
-
-            /// update the dbDemog instance with the stuff coming in...
             dbDemog.SectorId = demographics.SectorId;
             dbDemog.SubSectorId = demographics.SubSectorId;
             dbDemog.Employees = demographics.Employees;
@@ -173,19 +186,15 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.GeographicScope = demographics.GeographicScope;
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
-            dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            
-
+            dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;        
 
             _context.ExtendedDemographicAnswer.Update(dbDemog);
             _context.SaveChanges();
 
-            demographics.AssessmentId = dbDemog.Assessment_Id;
-
 
             _assessmentUtil.TouchAssessment(dbDemog.Assessment_Id);
 
-            return demographics.AssessmentId;
+            return dbDemog.Assessment_Id;
         }
     }
 }
