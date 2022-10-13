@@ -23,10 +23,10 @@ namespace CSETWebCore.Business.Demographic
                 AssessmentId = assessmentId
             };
             var query = from ddd in _context.DEMOGRAPHICS
-                from ds in _context.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
-                from dav in _context.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
-                where ddd.Assessment_Id == assessmentId
-                select new { ddd, ds, dav };
+                        from ds in _context.DEMOGRAPHICS_SIZE.Where(x => x.Size == ddd.Size).DefaultIfEmpty()
+                        from dav in _context.DEMOGRAPHICS_ASSET_VALUES.Where(x => x.AssetValue == ddd.AssetValue).DefaultIfEmpty()
+                        where ddd.Assessment_Id == assessmentId
+                        select new { ddd, ds, dav };
 
 
             var hit = query.FirstOrDefault();
@@ -134,13 +134,56 @@ namespace CSETWebCore.Business.Demographic
             dbDemographics.IsScoped = demographics.IsScoped;
             dbDemographics.Agency = demographics.Agency;
             dbDemographics.OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType;
-            dbDemographics.OrganizationName = demographics.OrganizationName;            
+            dbDemographics.OrganizationName = demographics.OrganizationName;
 
             _context.DEMOGRAPHICS.Update(dbDemographics);
             _context.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
 
             _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);
+
+            return demographics.AssessmentId;
+        }
+
+
+        /// <summary>
+        /// Persists data to the EXTENDEDDEMOGRAPHIC table.
+        /// </summary>
+        /// <param name="demographics"></param>
+        /// <returns></returns>
+        public int SaveDemographics(Model.Demographic.ExtendedDemographic demographics)
+        {
+            var dbDemog = _context.ExtendedDemographicAnswer.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
+            if (dbDemog == null)
+            {
+                dbDemog = new ExtendedDemographicAnswer()
+                {
+                    Assessment_Id = demographics.AssessmentId                               
+                };
+                _context.ExtendedDemographicAnswer.Add(dbDemog);
+                _context.SaveChanges();
+            }
+
+
+            /// update the dbDemog instance with the stuff coming in...
+            dbDemog.SectorId = demographics.SectorId;
+            dbDemog.SubSectorId = demographics.SubSectorId;
+            dbDemog.Employees = demographics.Employees;
+            dbDemog.CustomersSupported = demographics.CustomersSupported;
+            dbDemog.GeographicScope = demographics.GeographicScope;
+            dbDemog.CIOExists = demographics.CioExists;
+            dbDemog.CISOExists = demographics.CisoExists;
+            dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
+            
+
+
+            _context.ExtendedDemographicAnswer.Update(dbDemog);
+            _context.SaveChanges();
+
+            demographics.AssessmentId = dbDemog.Assessment_Id;
+
+
+            _assessmentUtil.TouchAssessment(dbDemog.Assessment_Id);
 
             return demographics.AssessmentId;
         }

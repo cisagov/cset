@@ -8,6 +8,18 @@ namespace CSETWebCore.Model.Demographic
 {
     public class ExtendedDemographic
     {
+        public int AssessmentId { get; set; }
+
+        public int? SectorId { get; set; }
+        public int? SubSectorId { get; set; }
+
+        public string Employees { get; set; }
+        public string CustomersSupported { get; set; }
+
+        public string GeographicScope { get; set; }
+        public string CioExists { get; set; }
+        public string CisoExists { get; set; }
+        public string CyberTrainingProgramExists { get; set; }
     }
 
     public class StateRegion
@@ -25,21 +37,8 @@ namespace CSETWebCore.Model.Demographic
         public string State { get; set; }
     }
 
-    public class EmployeeRange
-    {
-        public int Id { get; set; }
-        public string Range { get; set; }
 
-    }
-
-    public class CustomerRange
-    {
-        public int Id { get; set; }
-        public string Range { get; set; }
-    }
-
-
-    public class GeographicImpact
+    public class ListItem
     {
         public int Id { get; set; }
         public string Value { get; set; }

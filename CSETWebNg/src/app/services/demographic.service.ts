@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
-import { DemographicCf } from '../models/demographics-cf.model';
+import { ExtendedDemographics } from '../models/demographics-cf.model';
 
 
 const headers = {
@@ -80,6 +80,10 @@ export class DemographicService {
 
   //////    CF 
 
+  getDemographicCf() {
+    return this.http.get(this.apiUrl + 'cf');
+  }
+
   getAllSectorsCf() {
     return this.http.get(this.apiUrl + 'cf/sectors');
   }
@@ -104,12 +108,27 @@ export class DemographicService {
     return this.http.get(this.apiUrl + 'cf/customers');
   }
 
-  getGeoImpact() {
-    return this.http.get(this.apiUrl + 'cf/geoimpact');
+  getGeoScope() {
+    return this.http.get(this.apiUrl + 'cf/geoscope');
   }
 
-  updateDemographicCf(demographic: DemographicCf) {
-    this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
+  getCio() {
+    return this.http.get(this.apiUrl + 'cf/cio');
+  }
+
+  getCiso() {
+    return this.http.get(this.apiUrl + 'cf/ciso');
+  }
+
+  getTraining() {
+    return this.http.get(this.apiUrl + 'cf/training');
+  }
+
+  /**
+   * Persist the model to the API.
+   */
+  updateExtendedDemographics(demographic: ExtendedDemographics) {
+    this.http.post(this.configSvc.apiUrl + 'extendeddemographics', JSON.stringify(demographic), headers)
     .subscribe();
   }
 }
