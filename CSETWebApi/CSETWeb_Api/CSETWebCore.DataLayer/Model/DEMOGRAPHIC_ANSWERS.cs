@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class ExtendedDemographicAnswer
+    public partial class DEMOGRAPHIC_ANSWERS
     {
         [Key]
         public int Assessment_Id { get; set; }
@@ -24,18 +24,17 @@ namespace CSETWebCore.DataLayer.Model
         public string CISOExists { get; set; }
         [StringLength(10)]
         public string CyberTrainingProgramExists { get; set; }
-        [StringLength(150)]
-        public string SectorName { get; set; }
-        [StringLength(250)]
-        public string SubSectorName { get; set; }
         public int? SectorId { get; set; }
         public int? SubSectorId { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("ExtendedDemographicAnswer")]
+        [InverseProperty("DEMOGRAPHIC_ANSWERS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("SectorName,SubSectorName")]
-        [InverseProperty("ExtendedDemographicAnswer")]
-        public virtual ExtendedSubSector S { get; set; }
+        [ForeignKey("SectorId")]
+        [InverseProperty("DEMOGRAPHIC_ANSWERS")]
+        public virtual EXT_SECTOR Sector { get; set; }
+        [ForeignKey("SubSectorId")]
+        [InverseProperty("DEMOGRAPHIC_ANSWERS")]
+        public virtual EXT_SUB_SECTOR SubSector { get; set; }
     }
 }

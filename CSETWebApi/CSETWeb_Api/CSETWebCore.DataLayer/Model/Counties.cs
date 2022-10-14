@@ -8,34 +8,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class Counties
+    public partial class COUNTIES
     {
-        public Counties()
+        public COUNTIES()
         {
-            County_MetropolitanArea = new HashSet<County_MetropolitanArea>();
-            ExtendedDemographicCountyAnswers = new HashSet<ExtendedDemographicCountyAnswers>();
+            COUNTY_ANSWERS = new HashSet<COUNTY_ANSWERS>();
+            COUNTY_METRO_AREA = new HashSet<COUNTY_METRO_AREA>();
         }
 
         [Key]
-        public int TBRB_ISO_CODE_COUNTY { get; set; }
-        public int TBRB_Region_ISO_Code { get; set; }
+        [StringLength(10)]
+        public string County_FIPS { get; set; }
+        [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string CountyName { get; set; }
+        [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string State { get; set; }
-        [StringLength(10)]
-        public string ISO_CountyCode { get; set; }
-        [StringLength(10)]
-        public string ISO_StateCode { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string RegionCode { get; set; }
 
-        [ForeignKey("TBRB_Region_ISO_Code")]
-        [InverseProperty("Counties")]
-        public virtual StateRegion TBRB_Region_ISO_CodeNavigation { get; set; }
-        [InverseProperty("County_CodeNavigation")]
-        public virtual ICollection<County_MetropolitanArea> County_MetropolitanArea { get; set; }
-        [InverseProperty("County")]
-        public virtual ICollection<ExtendedDemographicCountyAnswers> ExtendedDemographicCountyAnswers { get; set; }
+        [ForeignKey("State,RegionCode")]
+        [InverseProperty("COUNTIES")]
+        public virtual STATE_REGION STATE_REGION { get; set; }
+        [InverseProperty("County_FIPSNavigation")]
+        public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
+        [InverseProperty("County_FIPSNavigation")]
+        public virtual ICollection<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
     }
 }

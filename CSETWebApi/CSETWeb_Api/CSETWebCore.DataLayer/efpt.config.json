@@ -183,11 +183,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Counties]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[counties1]",
+         "Name": "[dbo].[COUNTIES]",
          "ObjectType": 0
       },
       {
@@ -195,7 +191,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[County_MetropolitanArea]",
+         "Name": "[dbo].[COUNTY_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[COUNTY_METRO_AREA]",
          "ObjectType": 0
       },
       {
@@ -216,6 +216,10 @@
       },
       {
          "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DEMOGRAPHIC_ANSWERS]",
          "ObjectType": 0
       },
       {
@@ -263,27 +267,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ExtendedDemographicAnswer]",
+         "Name": "[dbo].[EXT_SECTOR]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ExtendedDemographicCountyAnswers]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ExtendedDemographicMetropolitanAnswers]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ExtendedDemographicRegionAnswers]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ExtendedSector]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ExtendedSubSector]",
+         "Name": "[dbo].[EXT_SUB_SECTOR]",
          "ObjectType": 0
       },
       {
@@ -467,6 +455,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ISE_ACTIONS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[JWT]",
          "ObjectType": 0
       },
@@ -539,7 +531,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[MetropolitanArea]",
+         "Name": "[dbo].[METRO_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[METRO_AREA]",
          "ObjectType": 0
       },
       {
@@ -660,6 +656,10 @@
       },
       {
          "Name": "[dbo].[REFERENCES_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[REGION_ANSWERS]",
          "ObjectType": 0
       },
       {
@@ -796,10 +796,6 @@
       },
       {
          "Name": "[dbo].[STATE_REGION]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[StateRegion]",
          "ObjectType": 0
       },
       {

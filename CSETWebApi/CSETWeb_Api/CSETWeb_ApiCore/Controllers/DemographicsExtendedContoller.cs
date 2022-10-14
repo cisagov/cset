@@ -43,11 +43,11 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var demo = _context.ExtendedDemographicAnswer.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var demo = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             if (demo == null)
             {
-                demo = new ExtendedDemographicAnswer()
+                demo = new DEMOGRAPHIC_ANSWERS()
                 {
                     Assessment_Id = assessmentId
                 };
@@ -65,7 +65,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext/sectors")]
         public IActionResult GetSectors()
         {
-            var list = _context.ExtendedSector.OrderBy(x => x.SectorName).ToList();
+            var list = _context.EXT_SECTOR.OrderBy(x => x.SectorName).ToList();
             return Ok(list);
         }
 
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext/subsector/{sectorId}")]
         public IActionResult GetSubsector(int sectorId)
         {
-            var list = _context.ExtendedSubSector.Where(x => x.SectorId == sectorId).OrderBy(x => x.SubSectorName).ToList();
+            var list = _context.EXT_SUB_SECTOR.Where(x => x.SectorId == sectorId).OrderBy(x => x.SubSectorName).ToList();
             return Ok(list);
         }
 
@@ -87,7 +87,7 @@ namespace CSETWebCore.Api.Controllers
             var list = new List<Model.Demographic.StateRegion>();
             TinyMapper.Bind<STATE_REGION, Model.Demographic.StateRegion>();
 
-            var dbCounties = _context.counties1.Where(x => x.State == state).OrderBy(x => x.Name).ToList();
+            var dbCounties = _context.COUNTIES.Where(x => x.State == state).OrderBy(x => x.CountyName).ToList();
 
             var dbRegions = _context.STATE_REGION.Where(x => x.State == state).OrderBy(x => x.RegionName).ToList();
             dbRegions.ForEach(x =>
@@ -98,8 +98,8 @@ namespace CSETWebCore.Api.Controllers
                 {
                     r.Counties.Add(new County()
                     {
-                        FIPS = c.FIPS,
-                        Name = c.Name,
+                        FIPS = c.County_FIPS,
+                        Name = c.CountyName,
                         State = c.State
                     });
                 }
@@ -115,7 +115,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext/counties/{state}")]
         public IActionResult GetCountyList(string state)
         {
-            var list = _context.counties1.Where(x => x.State == state).ToList();
+            var list = _context.COUNTIES.Where(x => x.State == state).ToList();
             return Ok(list);
         }
 
