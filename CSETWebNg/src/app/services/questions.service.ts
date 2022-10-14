@@ -113,8 +113,8 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
    */
-  getChildAnswers(id: number) {
-    headers.params = headers.params.set('id', id);
+  getChildAnswers(parentId: number, assessId: number) {
+    headers.params = headers.params.set('parentId', parentId).set('assessId', assessId);
     return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
   }
 

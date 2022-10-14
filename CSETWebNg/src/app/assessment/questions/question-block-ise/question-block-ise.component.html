@@ -281,7 +281,6 @@
                         <tr>
                             <th>Issue</th>
                             <th>Title</th>
-                            <th>Importance</th>
                             <th style="width:5%;"></th>
                             <th style="width:5%;"></th>
                         </tr>
@@ -293,17 +292,14 @@
                                 <div>{{find.title}}</div>
                             </td>
                             <td>
-                                <div>{{find.importance?.value}}</div>
-                            </td>
-                            <td>
                                 <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
                                         (click)="addEditIssue(find.finding_Id)">
                                     <span class="mr-1 cset-icons-pencil"></span>
                                 </button>
                             </td>
-                            <td>
-                                <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                                    (click)="deleteIssue(find)">
+                            <td>                     
+                                <button *ngIf="(find.auto_Generated !== 1)" class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                    (click)="deleteIssue(find.finding_Id, false)">
                                     <span class="mr-1 cset-icons-trash-can"></span>
                                 </button>
                             </td>

@@ -73,16 +73,20 @@ export class QuestionBlockIseComponent implements OnInit {
   convoBuffer = '\n- - End of Comment - -\n';
 
   // To do: Add this to a db table and pull in dynamically.
-  issueAutoPopulate = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
+  importantQuestions = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
     7206, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7216, 7217, 7219, 7220, 7222, 7223, 7224, 
     7225, 7227, 7233, 7235, 7236, 7237, 7238, 7240, 7241, 7242, 7243, 7244, 7246, 7247, 7248, 
     7249, 7251, 7252, 7253, 7256, 7258, 7259, 7263, 7264, 7267, 7268, 7269, 7270, 7271, 7272, 
     7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]
   );
 
+  issueCheck = new Map();
+  issueFindingId = new Map();
+  
+
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7196, 7201, 7206, 7214, 7217, 7220, 7225]);
-  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
+  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7259, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
   finalCorePlusQuestion = new Set ([7312, 7316, 7322, 7332, 7338, 7344, 7351, 7359, 7366, 7373, 7381, 7390, 7395, 7400, 7408]);
   finalExtraQuestion = new Set ([7421, 7429, 7444, 7450, 7458, 7465]);
 
@@ -114,22 +118,26 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    let myData: any;
-    this.questionsSvc.getChildAnswers(7189).subscribe(
-      (data) => {
-        myData = data;
-        console.log("myData: " + JSON.stringify(myData, null, 4));
-      }
-    )
+    this.setIssueMap();
+    
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
-
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
       this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
         (details) => {
           this.extras = details;
           this.extras.questionId = this.myGrouping.questions[0].questionId;
+
+          this.extras.findings.forEach(find => {
+            if (find.auto_Generated === 1) {
+              find.question_Id = this.myGrouping.questions[0].questionId;
+              
+              if (!this.issueFindingId.has(find.question_Id)) {
+                this.issueFindingId.set(find.question_Id, find.finding_Id);
+              }
+            }
         });
+      });
 
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
@@ -182,6 +190,24 @@ export class QuestionBlockIseComponent implements OnInit {
       return "normal";
     }
     return "break-all";
+  }
+
+  /**
+  * Repopulates the map variables to correctly track/delete issues
+  */
+  setIssueMap() {
+    let parentId = 0;
+    let count = 0;
+
+    this.myGrouping.questions.forEach(question => {
+      if (question.answer === 'N') {
+        if (this.importantQuestions.has(question.questionId)) {
+          parentId = question.parentQuestionId;
+          count++;
+        }
+        this.issueCheck.set(parentId, count);
+      }
+    });
   }
 
   /**
@@ -240,17 +266,54 @@ export class QuestionBlockIseComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
-    if (q.answer === 'N' && this.issueAutoPopulate.has(q.questionId)) {
-      console.log("You've anwered no on an important question. Generating a new Issue.");
-      this.autoGenerateIssue(0);
-    }
-
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+    this.questionsSvc.storeAnswer(answer).subscribe
+    (result => {
+      this.checkForIssues(q, newAnswerValue);
+    });
+  }
+
+  checkForIssues(q: Question, newAnswerValue: string) {
+    if (q.answer === 'N') {
+      if (this.importantQuestions.has(q.questionId)) {
+        if (!this.issueCheck.has(q.parentQuestionId)) {
+          this.issueCheck.set(q.parentQuestionId, 1);
+        } else {
+          let num = this.issueCheck.get(q.parentQuestionId);
+          num += 1;
+          this.issueCheck.set(q.parentQuestionId, num);
+          
+          if (num >= 2 && !this.issueFindingId.has(q.parentQuestionId)) {
+            this.autoGenerateIssue(q.parentQuestionId, 0);
+          }
+        }
+      }
+    } else if (q.answer === 'Y' || q.answer === 'U') {
+      if (this.issueCheck.has(q.parentQuestionId)) {
+        if (this.importantQuestions.has(q.questionId)) {
+          let num = this.issueCheck.get(q.parentQuestionId);
+          num -= 1;
+        
+          if (num < 2) {
+            if (this.issueFindingId.has(q.parentQuestionId)) {
+              let findId = this.issueFindingId.get(q.parentQuestionId);
+              this.deleteIssue(findId, true);
+              this.issueFindingId.delete(q.parentQuestionId);
+            }
+          }
+
+          if (num <= 0) {
+            this.issueCheck.delete(q.parentQuestionId);
+          } else {
+            this.issueCheck.set(q.parentQuestionId, num);
+          }
+        }
+      }
+    }
+
   }
 
   /**
@@ -539,8 +602,11 @@ export class QuestionBlockIseComponent implements OnInit {
 
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP') {
-      return true;
+    if (this.iseExamLevel !== 'SCUEP') {
+      // Question 6 (Maturity question id 7259) does not have any CORE+ questions and does not need this.
+      if (this.isFinalQuestion(id) && id !== 7259) {
+        return true;
+      }
     }
     return false;
   }
@@ -630,7 +696,9 @@ export class QuestionBlockIseComponent implements OnInit {
       subRiskArea: null,
       disposition: null,
       identified_Date: null,
-      due_Date: null
+      due_Date: null,
+      citations: null,
+      auto_Generated: 0
     };
     
     this.dialog.open(IssuesComponent, {
@@ -651,20 +719,20 @@ export class QuestionBlockIseComponent implements OnInit {
     });
   }
 
-  // Making a separate function ahead of the demo in case client wants custom functionality for
-  // auto generated issues vs manually created ones.
-  autoGenerateIssue(findid) {
+  // ISE "issues" should be generated if an examiner answers 'No' to
+  // 2 or more important questions.
+  autoGenerateIssue(parentId, findId) {
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    if (parentId <= 7281) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
     const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
+      question_Id: parentId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
+      finding_Id: findId,
       summary: '',
       finding_Contacts: null,
       impact: '',
@@ -681,7 +749,9 @@ export class QuestionBlockIseComponent implements OnInit {
       subRiskArea: null,
       disposition: null,
       identified_Date: null,
-      due_Date: null
+      due_Date: null,
+      citations: null,
+      auto_Generated: 1
     };
 
     this.dialog.open(IssuesComponent, {
@@ -693,6 +763,7 @@ export class QuestionBlockIseComponent implements OnInit {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
         (response: Finding[]) => {
+          this.issueFindingId.set(parentId, response[0].finding_Id);
           this.extras.findings = response;
           this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
@@ -706,33 +777,41 @@ export class QuestionBlockIseComponent implements OnInit {
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteIssue(findingToDelete) {
-    // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
-  
-    if (findingToDelete.summary === null) {
+  deleteIssue(findingId, autoGenerated: boolean) {
+    let msg = "";
+    
+    if (autoGenerated === false) {
       msg = "Are you sure you want to delete this issue?";
-    }
 
-    const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.componentInstance.confirmMessage = msg;
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage = msg;
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.findSvc.deleteFinding(findingId).subscribe();
+          let deleteIndex = null;
+  
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
+          }
+          this.extras.findings.splice(deleteIndex, 1);
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+        }
+      });
+    } else if (autoGenerated === true) {
+        this.findSvc.deleteFinding(findingId).subscribe();
         let deleteIndex = null;
   
-        for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
-            deleteIndex = i;
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
           }
-        }
         this.extras.findings.splice(deleteIndex, 1);
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-  
       }
-    });
   }
-
   
 }
