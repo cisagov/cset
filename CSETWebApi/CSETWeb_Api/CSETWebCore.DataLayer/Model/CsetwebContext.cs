@@ -135,6 +135,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
+        public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
@@ -1784,6 +1785,22 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of IRP_HEADER records");
 
                 entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
+            });
+
+            modelBuilder.Entity<ISE_ACTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Question_Id)
+                    .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
+
+                entity.HasComment("ISE specific fields for issues");
+
+                entity.Property(e => e.Question_Id).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.Question)
+                    .WithOne(p => p.ISE_ACTIONS)
+                    .HasForeignKey<ISE_ACTIONS>(d => d.Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
             });
 
             modelBuilder.Entity<JWT>(entity =>
