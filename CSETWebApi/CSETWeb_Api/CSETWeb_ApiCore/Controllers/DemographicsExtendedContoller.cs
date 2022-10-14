@@ -226,5 +226,16 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_demographic.SaveDemographics(demographics));
         }
+
+
+        /// <summary>
+        /// Persists the selected region/county/metro areas.
+        /// </summary>
+        [HttpPost]
+        [Route("api/demographics/ext/geographics")]
+        public IActionResult PostGeographicLocations([FromBody] object geographics)
+        {
+            return Ok();
+        }
     }
 }
