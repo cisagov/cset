@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
-import { forEach } from 'lodash';
-import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
@@ -21,6 +20,7 @@ export class AcetDeficencyComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
     public acetSvc: ACETService
