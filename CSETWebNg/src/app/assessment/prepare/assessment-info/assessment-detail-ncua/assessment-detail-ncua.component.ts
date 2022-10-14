@@ -82,7 +82,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.acetDashboard = data;
         this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
         this.examOverride = this.ncuaSvc.chosenOverrideLevel;
-        if (this.examOverride !== "") {
+        if (this.examOverride !== "" || this.assessSvc.assessment.maturityModel.modelName !== 'ISE') {
           this.loading = false;
         }
       });
