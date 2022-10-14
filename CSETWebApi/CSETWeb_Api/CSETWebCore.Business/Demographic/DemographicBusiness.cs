@@ -168,14 +168,14 @@ namespace CSETWebCore.Business.Demographic
         /// <returns></returns>
         public int SaveDemographics(Model.Demographic.ExtendedDemographic demographics)
         {
-            var dbDemog = _context.ExtendedDemographicAnswer.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
+            var dbDemog = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
             if (dbDemog == null)
             {
-                dbDemog = new ExtendedDemographicAnswer()
+                dbDemog = new DEMOGRAPHIC_ANSWERS()
                 {
                     Assessment_Id = demographics.AssessmentId                               
                 };
-                _context.ExtendedDemographicAnswer.Add(dbDemog);
+                _context.DEMOGRAPHIC_ANSWERS.Add(dbDemog);
                 _context.SaveChanges();
             }
 
@@ -188,7 +188,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;        
 
-            _context.ExtendedDemographicAnswer.Update(dbDemog);
+            _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();
 
 

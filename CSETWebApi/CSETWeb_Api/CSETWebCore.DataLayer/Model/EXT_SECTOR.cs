@@ -8,22 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class ExtendedSector
+    public partial class EXT_SECTOR
     {
-        public ExtendedSector()
+        public EXT_SECTOR()
         {
-            ExtendedSubSector = new HashSet<ExtendedSubSector>();
+            DEMOGRAPHIC_ANSWERS = new HashSet<DEMOGRAPHIC_ANSWERS>();
+            EXT_SUB_SECTOR = new HashSet<EXT_SUB_SECTOR>();
         }
 
-        public int SectorId { get; set; }
         [Key]
+        public int SectorId { get; set; }
+        [Required]
         [StringLength(150)]
         public string SectorName { get; set; }
         [Required]
         [StringLength(4000)]
         public string SectorHelp { get; set; }
 
-        [InverseProperty("SectorNameNavigation")]
-        public virtual ICollection<ExtendedSubSector> ExtendedSubSector { get; set; }
+        [InverseProperty("Sector")]
+        public virtual ICollection<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
+        [InverseProperty("Sector")]
+        public virtual ICollection<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
     }
 }

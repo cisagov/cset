@@ -8,18 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class ExtendedDemographicMetropolitanAnswers
+    public partial class REGION_ANSWERS
     {
         [Key]
         public int Assessment_Id { get; set; }
         [Key]
-        public int Metropolitan_Id { get; set; }
+        [StringLength(50)]
+        public string State { get; set; }
+        [Key]
+        [StringLength(50)]
+        public string RegionCode { get; set; }
 
         [ForeignKey("Assessment_Id")]
-        [InverseProperty("ExtendedDemographicMetropolitanAnswers")]
+        [InverseProperty("REGION_ANSWERS")]
         public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Metropolitan_Id")]
-        [InverseProperty("ExtendedDemographicMetropolitanAnswers")]
-        public virtual MetropolitanArea Metropolitan { get; set; }
+        [ForeignKey("State,RegionCode")]
+        [InverseProperty("REGION_ANSWERS")]
+        public virtual STATE_REGION STATE_REGION { get; set; }
     }
 }

@@ -26,18 +26,18 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_MATURITY_MODELS = new HashSet<AVAILABLE_MATURITY_MODELS>();
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
+            COUNTY_ANSWERS = new HashSet<COUNTY_ANSWERS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
-            ExtendedDemographicCountyAnswers = new HashSet<ExtendedDemographicCountyAnswers>();
-            ExtendedDemographicMetropolitanAnswers = new HashSet<ExtendedDemographicMetropolitanAnswers>();
-            ExtendedDemographicRegionAnswers = new HashSet<ExtendedDemographicRegionAnswers>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
             MATURITY_DOMAIN_REMARKS = new HashSet<MATURITY_DOMAIN_REMARKS>();
+            METRO_ANSWERS = new HashSet<METRO_ANSWERS>();
             NETWORK_WARNINGS = new HashSet<NETWORK_WARNINGS>();
             PARAMETER_ASSESSMENT = new HashSet<PARAMETER_ASSESSMENT>();
+            REGION_ANSWERS = new HashSet<REGION_ANSWERS>();
             REPORT_DETAIL_SECTION_SELECTION = new HashSet<REPORT_DETAIL_SECTION_SELECTION>();
             REPORT_OPTIONS_SELECTION = new HashSet<REPORT_OPTIONS_SELECTION>();
             REPORT_STANDARDS_SELECTION = new HashSet<REPORT_STANDARDS_SELECTION>();
@@ -85,7 +85,7 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Assessment")]
         public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
-        public virtual ExtendedDemographicAnswer ExtendedDemographicAnswer { get; set; }
+        public virtual DEMOGRAPHIC_ANSWERS DEMOGRAPHIC_ANSWERS { get; set; }
         [InverseProperty("IdNavigation")]
         public virtual INFORMATION INFORMATION { get; set; }
         [InverseProperty("Assessment")]
@@ -113,13 +113,9 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Assessment")]
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment")]
+        public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
+        [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<ExtendedDemographicCountyAnswers> ExtendedDemographicCountyAnswers { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<ExtendedDemographicMetropolitanAnswers> ExtendedDemographicMetropolitanAnswers { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<ExtendedDemographicRegionAnswers> ExtendedDemographicRegionAnswers { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
         [InverseProperty("Assessment")]
@@ -133,9 +129,13 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Assessment")]
         public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         [InverseProperty("Assessment")]
+        public virtual ICollection<METRO_ANSWERS> METRO_ANSWERS { get; set; }
+        [InverseProperty("Assessment")]
         public virtual ICollection<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<REGION_ANSWERS> REGION_ANSWERS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
         [InverseProperty("Assessment")]

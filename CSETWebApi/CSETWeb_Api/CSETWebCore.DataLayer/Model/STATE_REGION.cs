@@ -10,17 +10,25 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class STATE_REGION
     {
+        public STATE_REGION()
+        {
+            COUNTIES = new HashSet<COUNTIES>();
+            REGION_ANSWERS = new HashSet<REGION_ANSWERS>();
+        }
+
         [Key]
-        [StringLength(2)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string State { get; set; }
         [Key]
-        [StringLength(5)]
-        [Unicode(false)]
+        [StringLength(50)]
         public string RegionCode { get; set; }
         [Required]
         [StringLength(50)]
-        [Unicode(false)]
         public string RegionName { get; set; }
+
+        [InverseProperty("STATE_REGION")]
+        public virtual ICollection<COUNTIES> COUNTIES { get; set; }
+        [InverseProperty("STATE_REGION")]
+        public virtual ICollection<REGION_ANSWERS> REGION_ANSWERS { get; set; }
     }
 }

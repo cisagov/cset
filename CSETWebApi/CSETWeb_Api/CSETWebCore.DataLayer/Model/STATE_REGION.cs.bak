@@ -8,22 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class counties1
+    public partial class STATE_REGION
     {
         [Key]
-        [StringLength(10)]
-        [Unicode(false)]
-        public string FIPS { get; set; }
-        [Required]
-        [StringLength(50)]
-        [Unicode(false)]
-        public string Name { get; set; }
-        [Required]
         [StringLength(2)]
         [Unicode(false)]
         public string State { get; set; }
+        [Key]
         [StringLength(5)]
         [Unicode(false)]
         public string RegionCode { get; set; }
+        [Required]
+        [StringLength(50)]
+        [Unicode(false)]
+        public string RegionName { get; set; }
     }
 }
