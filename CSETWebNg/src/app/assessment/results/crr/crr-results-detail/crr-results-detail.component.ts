@@ -1,3 +1,4 @@
+import { QuestionsService } from './../../../../services/questions.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../../models/questions.model';
 import { ConfigService } from '../../../../services/config.service';
@@ -17,7 +18,8 @@ export class CrrResultsDetailComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public questionsSvc: QuestionsService
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +28,7 @@ export class CrrResultsDetailComponent implements OnInit {
 
   /**
   * Sets the coloring of a cell based on its answer.
-  * @param answer 
+  * @param answer
   */
   answerCellClass(answer: string) {
     switch (answer) {
@@ -43,7 +45,7 @@ export class CrrResultsDetailComponent implements OnInit {
 
   /**
    * Actually, "non-child questions"
-   * @param q 
+   * @param q
    */
   parentQuestions(q: Question): Question[] {
     // q might be a single question or might be an array of questions
@@ -61,7 +63,7 @@ export class CrrResultsDetailComponent implements OnInit {
   /**
    * Until question numbers are broken out into their own data element,
    * we'll parse them from the question text.
-   * @param q 
+   * @param q
    */
   getQuestionNumber(q: any): string {
     const dot = q.questiontext.trim().indexOf('.');
@@ -72,8 +74,8 @@ export class CrrResultsDetailComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getDomainRemark(remarks: string) {
     if (remarks.trim().length > 0) {
