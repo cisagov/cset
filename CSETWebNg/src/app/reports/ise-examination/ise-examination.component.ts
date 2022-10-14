@@ -21,9 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from '../../services/questions.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
@@ -39,6 +40,7 @@ export class IseExaminationComponent implements OnInit {
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
+    public questionsSvc: QuestionsService,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService
