@@ -31,13 +31,17 @@ import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-issues',
-  templateUrl: './issues.component.html'
+  templateUrl: './issues.component.html',
 })
  
 
 export class IssuesComponent implements OnInit {
+  assessmentId: any;
   finding: Finding;
+  questionData: any = null;
   suppGuidance: string = "";
+  regCitation: string = "";
+  autoGen: number;
 
   issueTitle = "";
   issueDescription: string = "";
@@ -68,19 +72,32 @@ export class IssuesComponent implements OnInit {
     this.issueTitle = this.finding.title; // storing a temp name that may or may not be used later
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
+    this.autoGen = data.auto_Generated;
   }
   
   ngOnInit() {
+    this.assessmentId = localStorage.getItem('assessmentId');
+
     this.dialog.backdropClick()
     .subscribe(() => {
       this.update();
     });
+
+    this.questionsSvc.getChildAnswers(this.finding.question_Id, this.assessmentId).subscribe(
+      (data: any) => {
+        this.questionData = data;
+      });
 
     let questionType = localStorage.getItem('questionSet');
 
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
+      if (this.autoGen === 1) {
+        this.finding.auto_Generated = 1;
+      } else if (this.autoGen === 0 && this.finding.auto_Generated !== 1) {
+        this.finding.auto_Generated = 0;
+      }
 
       if (this.finding.title === null) {
         this.finding.title = this.issueTitle;
@@ -89,10 +106,10 @@ export class IssuesComponent implements OnInit {
       if (this.finding.description === null) {
         this.finding.description = this.generateIssueDescription();
       }
-          
+      
       this.answerID = this.finding.answer_Id;
       this.questionID = this.finding.question_Id;
-          
+
       if (this.finding.sub_Risk_Area_Id === null) {
         this.updateRiskArea('Strategic');
       } else {
@@ -122,9 +139,15 @@ export class IssuesComponent implements OnInit {
 
     this.questionsSvc.getDetails(this.finding.question_Id, questionType).subscribe((details) => {
       this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalInfo);
+      let citation = details.listTabs[0].referenceTextList.toString();
+      this.regCitation = this.cleanText(citation);
     });
   }
 
+  /*
+  * Function used to remove HTML formatting pulled in from the API when all we want
+  * in the UI is basic text. (No tags or special characters, etc).
+  */
   cleanText(input: string) {
     let text = input;
     text = text.replace(/<.*?>/g, '');
@@ -133,6 +156,8 @@ export class IssuesComponent implements OnInit {
     text = text.replace(/&#160;/g, '');
     text = text.replace (/&#8221;/g, '');
     text = text.replace(/&#34;/g, '\'');
+    text = text.replace(/&#167;/g, '');
+    text = text.replace('ISE Reference', '');
     text = text.replace('/\s/g', ' ');
     return (text);
   }
@@ -161,6 +186,7 @@ export class IssuesComponent implements OnInit {
 
   generateIssueDescription(): string {
     // Formatting it this way for demo purposes. Will fix it later.
+    // To-do: better formatting & correct "information security program" word
     let description = `The information security program policies and procedures are not commensurable to its size, complexity, and risk. Each credit union must identify and evaluate risks to its information, develop a plan to mitigate the risks, implement the plan, test the plan, and monitor the need to update the plan.
 
 As information security program is the written plan created and implemented by a credit union to identify and control risks to information and information systems and to properly dispose of information. The plan includes policies and procedures regarding the institution's risk assessment, controls, testing, service-provider oversight, periodic review and updating, and reporting to its board of directors.`;

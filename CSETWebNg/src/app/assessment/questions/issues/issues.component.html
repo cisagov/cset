@@ -63,29 +63,37 @@
   </div>
 </ng-container>
 <ng-container *ngIf="finding.type !== 'fact'">
+  <br>
   <div class="row">
     <div class="col-12">
-      <label for="questionText" class="form-label font-weight-bold">Statement Text</label>
-      <div class="ml-1">The credit unions written information security Policies/Procedures/Plans include the following:</div>
+      <table role="presentation" aria-label="childAnswers" style="width: 100%; border: 1px solid black; border-collapse: collapse">
+        <colgroup>
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 30%;">
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 40%;">
+        </colgroup>
+        <tr style="border: 1px solid black; border-collapse: collapse">
+          <th style="text-align: center;">Sub Statement</th>
+          <th style="text-align: center;">Statement Text</th>
+          <th style="text-align: center;">Response</th>
+          <th style="text-align: center;">Action Items</th>
+        </tr>
+        <ng-container *ngFor="let q of this.questionData; let i = index;">
+          <tr *ngIf="q.answer_Text !== 'U'">
+            <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
+            <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
+            <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
+            <td *ngIf="i === 0" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="margin-left: 1em;">Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.</td>
+          </tr>
+        </ng-container>
+      </table>
+      <div class="mt-2 ml-2 invalid-feedback d-block text-muted">
+        <p>Items marked in red indicate a high level of risk</p>
+      </div>
     </div>
   </div>
   <br>
-  <div class="row">
-    <div class="col-3">
-      <label for="subStatementNumber" class="form-label font-weight-bold">Sub Statement #</label>
-      <div class="ml-1">1.1 - Are approved by the board of directors</div>
-    </div>
-    <div class="col-3">
-      <label for="response" class="form-label font-weight-bold">Response</label>
-      <div>No</div>
-    </div>
-    <div class="col-6">
-      <label for="actionItems" class="form-label font-weight-bold">Action Items</label>
-      <div>1. The security program must be approved by the board of directors.</div>
-      <div>2. Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.</div>
-    </div>
-  </div>
-  <br><br>
   <div class="row">
     <div class="col-6">
       <div class="form-group">
@@ -144,13 +152,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-4">
+    <div class="col-6">
       <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
-      <div>12 C.F.R. § 748.0 (b)(2)</div>
+      <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.regCitation }}">
     </div>
-    <div class="col-8">
-      <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
-      <textarea id="additionalCitations" type="text" autocomplete="off" class="form-control"></textarea>
+    <div class="col-6">
+      <div class="form-group">
+        <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
+        <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
+      </div>
     </div>
   </div>
   <br>
@@ -162,6 +172,5 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="p-3 mb-0" align="end">
-  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
   <button mat-button class="btn btn-primary" (click)="update()">Done</button>
 </mat-dialog-actions>

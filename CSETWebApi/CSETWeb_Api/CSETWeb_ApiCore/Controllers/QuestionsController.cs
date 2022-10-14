@@ -131,10 +131,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetChildAnswers")]
-        public IActionResult GetChildAnswers()
+        public IList<GetChildAnswersResult> GetChildAnswers([FromQuery] int parentId, [FromQuery] int assessId)
         {
-            string response = "response!";
-            return Ok(response);
+            return _context.GetChildAnswers(parentId, assessId);
         }
 
         /// <summary>
@@ -399,9 +398,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetSubRisks")]
         public IActionResult GetSubRisks()
         {
-            var tableData = _context.RISK_SUB_RISK_AREA.ToList();
+            var data = _context.RISK_SUB_RISK_AREA.ToList();
 
-            return Ok(tableData);
+            return Ok(data);
         } 
 
         /// <summary>

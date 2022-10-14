@@ -345,7 +345,9 @@ export class QuestionExtrasComponent implements OnInit {
       subRiskArea: null,
       disposition: null,
       identified_Date: null,
-      due_Date: null
+      due_Date: null,
+      citations: null,
+      auto_Generated: null,
     };
 
     this.dialog.open(FindingsComponent, { 

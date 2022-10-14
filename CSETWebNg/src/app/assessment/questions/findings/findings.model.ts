@@ -42,6 +42,8 @@ export interface Finding {
   disposition: string;
   identified_Date: Date;
   due_Date: Date;
+  citations: string;
+  auto_Generated: number;
   // Shared fields
   importance: Importance;
   finding_Contacts: FindingContact[];
