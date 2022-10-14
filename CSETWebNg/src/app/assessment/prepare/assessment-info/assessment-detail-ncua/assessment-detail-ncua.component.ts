@@ -59,6 +59,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   acetDashboard: AcetDashboard;
   examOverride: string = "";
 
+  loading: boolean;
+
   /**
    * 
    */
@@ -72,6 +74,19 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
+
+    // Load dashboard to keep track of irp overriding
+    this.acetSvc.getAcetDashboard().subscribe(
+      (data: AcetDashboard) => {
+        this.acetDashboard = data;
+        this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
+        this.examOverride = this.ncuaSvc.chosenOverrideLevel;
+        if (this.examOverride !== "") {
+          this.loading = false;
+        }
+      });
+
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
@@ -101,14 +116,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-
-    // Load dashboard to keep track of irp overriding
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
-        this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
-        this.examOverride = this.ncuaSvc.chosenOverrideLevel;
-    });
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {

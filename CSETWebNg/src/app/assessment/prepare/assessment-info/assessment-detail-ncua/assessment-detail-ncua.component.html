@@ -21,7 +21,13 @@
   SOFTWARE. 
 -------------------------->
 <h4>Organization Details</h4>
+<div *ngIf="loading; else mainContent" class="w-100">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
 
+<ng-template #mainContent>
 <form #f="ngForm">
     <!-- Normal ACET Detail Boxes -->
     <ng-container *ngIf="this.assessment.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
@@ -168,3 +174,4 @@
         </div>
     </ng-container>
 </form>
+</ng-template>
