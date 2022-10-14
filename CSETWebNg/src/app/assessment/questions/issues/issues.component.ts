@@ -32,9 +32,9 @@ import { QuestionsService } from '../../../services/questions.service';
 @Component({
   selector: 'app-issues',
   templateUrl: './issues.component.html',
+  styleUrls: ['./issues.component.scss']
 })
  
-
 export class IssuesComponent implements OnInit {
   assessmentId: any;
   finding: Finding;

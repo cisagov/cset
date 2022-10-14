@@ -63,7 +63,9 @@
   </div>
 </ng-container>
 <ng-container *ngIf="finding.type !== 'fact'">
-  <br>
+  <div class="mt-2 invalid-feedback d-block text-muted">
+    <p>Items marked in red indicate a higher level of risk</p>
+  </div>
   <div class="row">
     <div class="col-12">
       <table role="presentation" aria-label="childAnswers" style="width: 100%; border: 1px solid black; border-collapse: collapse">
@@ -82,75 +84,18 @@
         <ng-container *ngFor="let q of this.questionData; let i = index;">
           <tr *ngIf="q.answer_Text !== 'U'">
             <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
-            <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
+            <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
             <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
-            <td *ngIf="i === 0" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="margin-left: 1em;">Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.</td>
+            <td>
+              <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.
+              </textarea>
+            </td>
           </tr>
         </ng-container>
       </table>
-      <div class="mt-2 ml-2 invalid-feedback d-block text-muted">
-        <p>Items marked in red indicate a high level of risk</p>
-      </div>
     </div>
   </div>
   <br>
-  <div class="row">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="risk-area" class="form-label font-weight-bold">Risk Area</label>
-        <select name="riskarea" id="riskarea" class="form-control" [(ngModel)]="this.selectedRiskArea"
-          (change)="updateRiskArea($event.target.value)">
-          <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
-        </select>
-      </div>
-    </div>  
-    <div class="col-6">
-      <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === '' || this.selectedRiskArea === null">
-        <div class="form-group">
-          <label for="strategic-sub-risk" class="form-label font-weight-bold">Strategic Sub Risk Area</label>
-          <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-            (change)="updateSubRisk($event.target.value)">
-            <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk.id">
-              {{ subRisk.name }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
-        <div class="form-group">
-          <label for="compliance-sub-risk" class="form-label font-weight-bold">Compliance Sub Risk Area</label>
-          <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-            (change)="updateSubRisk($event.target.value)">
-            <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk.id">
-              {{ subRisk.name }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
-        <div class="form-group">
-          <label for="transaction-sub-risk" class="form-label font-weight-bold">Transaction Sub Risk Area</label>
-          <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-            (change)="updateSubRisk($event.target.value)">
-            <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk.id">
-              {{ subRisk.name }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
-        <div class="form-group">
-          <label for="reputation-sub-risk" class="form-label font-weight-bold">Reputation Sub Risk Area</label>
-          <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-            (change)="updateSubRisk($event.target.value)">
-            <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk.id">
-              {{ subRisk.name }}
-            </option>
-          </select>
-        </div>
-      </ng-container>
-    </div>
-  </div>
   <div class="row">
     <div class="col-6">
       <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
@@ -166,9 +111,9 @@
   <br>
 </ng-container>
 
-<p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
-  questions in the assessment. Findings can be added manually, or created automatically if the program 
-  identifies a need.</p>
+<!--<p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
+  questions in the assessment.</p>-->
+
 </mat-dialog-content>
 
 <mat-dialog-actions class="p-3 mb-0" align="end">
