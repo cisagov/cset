@@ -4,6 +4,7 @@ import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-edm-deficiency',
@@ -19,6 +20,7 @@ export class EdmDeficiencyComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
       public reportSvc: ReportService,
       public configSvc: ConfigService,
+      public questionsSvc: QuestionsService,
       private titleService: Title,
       public maturitySvc: MaturityService
     ) { }

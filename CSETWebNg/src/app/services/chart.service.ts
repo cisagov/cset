@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import { Utilities } from './utilities.service';
 import Chart from 'chart.js/auto';
 import { debug } from 'console';
+import { QuestionsService } from './questions.service';
 
 
 /**
@@ -40,7 +41,8 @@ export class ChartService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private questionsSvc: QuestionsService
   ) { }
 
   /**
@@ -198,7 +200,7 @@ export class ChartService {
     let segmentLabels = [];
     x.labels.forEach(element => {
       segmentColors.push(this.segmentColor(element));
-      segmentLabels.push(this.configSvc.answerLabels[element]);
+      segmentLabels.push(this.questionsSvc.getAnswerDisplayLabel(0, element));
     });
 
 
