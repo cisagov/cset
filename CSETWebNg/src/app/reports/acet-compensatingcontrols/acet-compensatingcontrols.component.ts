@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 
 @Component({
@@ -11,11 +12,12 @@ import { ACETService } from '../../services/acet.service';
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class AcetCompensatingcontrolsComponent implements OnInit {
-  response: any = null; 
+  response: any = null;
 
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title
   ) { }
@@ -25,7 +27,7 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
 
     this.reportSvc.getAltList().subscribe(
       (r: any) => {
-        this.response = r;        
+        this.response = r;
       },
       error => console.log('Compensating Controls Report Error: ' + (<Error>error).message)
     );

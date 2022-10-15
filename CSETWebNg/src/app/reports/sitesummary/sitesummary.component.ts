@@ -30,6 +30,7 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
 import { MaturityService } from '../../services/maturity.service';
+import { QuestionsService } from './../../services/questions.service';
 import  Chart  from 'chart.js/auto';
 
 @Component({
@@ -83,11 +84,12 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
     public acetSvc: ACETService,
-    private sanitizer: DomSanitizer, 
-    private maturitySvc: MaturityService
+    private sanitizer: DomSanitizer,
+    private maturitySvc: MaturityService,
   ) { }
 
   ngOnInit() {

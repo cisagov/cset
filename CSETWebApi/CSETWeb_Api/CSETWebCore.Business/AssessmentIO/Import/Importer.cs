@@ -137,7 +137,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 item.Assessment_Id = _assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
                
-                if (oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
+                if (a?.PrimaryEmail != null 
+                    && oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
                 {
                     item.UserId = userid;
                 }
