@@ -1436,11 +1436,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Importance_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_FINDING_IMPORTANCE1");
-
-                entity.HasOne(d => d.Sub_Risk_Area)
-                    .WithMany(p => p.FINDING)
-                    .HasForeignKey(d => d.Sub_Risk_Area_Id)
-                    .HasConstraintName("FK_FINDING_SUB_RISK_AREA");
             });
 
             modelBuilder.Entity<FINDING_CONTACT>(entity =>
