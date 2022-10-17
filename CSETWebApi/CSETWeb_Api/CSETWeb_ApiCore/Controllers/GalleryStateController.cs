@@ -12,14 +12,10 @@ using System;
 
 namespace CSETWebCore.Api.Controllers
 {
-#if DEBUG
     public class GalleryStateController : ControllerBase
     {
         private ITokenManager _tokenManager;
         private IGalleryState _stateManager;
-
-        // if you want to use the gallery editor, change this to true
-        private bool inDev = false;
 
         public GalleryStateController(ITokenManager tokenManager, 
             IGalleryState parser            
@@ -39,10 +35,6 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/getboard")]
         public IActionResult GetBoard(string Layout_Name)
         {
-            if (!inDev)
-            {
-                return Ok(200);
-            }
             try
             {   
                 return Ok(_stateManager.GetGalleryBoard(Layout_Name));
@@ -53,5 +45,4 @@ namespace CSETWebCore.Api.Controllers
             }
         }
     }
-#endif
 }
