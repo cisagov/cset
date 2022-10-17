@@ -24,8 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { Demographic } from '../models/assessment-info.model';
-import { ExtendedDemographics } from '../models/demographics-extended.model';
+import { ExtendedDemographics, Geographics } from '../models/demographics-extended.model';
 
 
 const headers = {
@@ -34,45 +33,81 @@ const headers = {
 };
 
 @Injectable()
-export class DemographicService {
+export class DemographicExtendedService {
   apiUrl: string;
   id: number;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
+    this.apiUrl = this.configSvc.apiUrl + 'demographics/ext';
   }
 
-  // calls to retrieve static data
-  getAllSectors() {
-    return this.http.get(this.apiUrl + 'Sectors');
-  }
+ 
 
-  getAllAssetValues() {
-    return this.http.get(this.apiUrl + 'AssetValues');
-  }
-
-  getSizeValues() {
-    return this.http.get(this.apiUrl + 'Size');
-  }
-
-  // calls to dependent data
-  getIndustry(sectorId: number) {
-    return this.http.get(this.apiUrl + 'Sectors_Industry/' + sectorId);
-  }
-
-  /**
-   * GETs the screen data for this assessment.
-   */
-  getDemographic() {
+  getDemographics() {
     return this.http.get(this.apiUrl);
   }
 
+  getGeographics() {
+    return this.http.get(this.apiUrl + '/geographics');
+  }
+
+  getAllSectors() {
+    return this.http.get(this.apiUrl + '/sectors');
+  }
+
+  getSubsector(sectorId: number) {
+    return this.http.get(this.apiUrl + '/subsector/' + sectorId);
+  }
+
+  getRegions(state: string) {
+    return this.http.get(this.apiUrl + '/regions/' + state)
+  }
+
+  getCounties(state: string) {
+    return this.http.get(this.apiUrl + '/counties/' + state);
+  }
+
+  getMetros(state: string) {
+    return this.http.get(this.apiUrl + '/metros/' + state);
+  }
+
+  getEmployeeRanges() {
+    return this.http.get(this.apiUrl + '/employees');
+  }
+
+  getCustomerRanges() {
+    return this.http.get(this.apiUrl + '/customers');
+  }
+
+  getGeoScope() {
+    return this.http.get(this.apiUrl + '/geoscope');
+  }
+
+  getCio() {
+    return this.http.get(this.apiUrl + '/cio');
+  }
+
+  getCiso() {
+    return this.http.get(this.apiUrl + '/ciso');
+  }
+
+  getTraining() {
+    return this.http.get(this.apiUrl + '/training');
+  }
+
   /**
-   * POSTs the screen data to the API.
-   * @param demographic
+   * Persist the model to the API.
    */
-  updateDemographic(demographic: Demographic) {
+  updateExtendedDemographics(demographic: ExtendedDemographics) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
+    .subscribe();
+  }
+
+  /**
+   * 
+   */
+  persistGeographicSelections(x: Geographics) {
+    this.http.post(this.apiUrl + '/geographics', JSON.stringify(x), headers)
     .subscribe();
   }
 }
