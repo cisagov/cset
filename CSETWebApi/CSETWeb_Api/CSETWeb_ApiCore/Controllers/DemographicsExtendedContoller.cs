@@ -67,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var resp = new GEO();
+            var resp = new GeographicSelections();
 
             _context.REGION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList().ForEach(x =>
             {
@@ -284,7 +284,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/demographics/ext/geographics")]
-        public IActionResult PostGeographicLocations([FromBody] GEO geographics)
+        public IActionResult PostGeographicLocations([FromBody] GeographicSelections geographics)
         {
             int assessmentId = _token.AssessmentForUser();
 
