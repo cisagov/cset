@@ -388,13 +388,11 @@ namespace CSETWebCore.Api.Controllers
                             on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
                          join category in _context.MATURITY_GROUPINGS
                             on question.Grouping_Id equals category.Grouping_Id
-                         join risk in _context.RISK_SUB_RISK_AREA
-                            on finding.Sub_Risk_Area_Id equals risk.Sub_Risk_Area_Id
                          join importance in _context.IMPORTANCE
                             on finding.Importance_Id equals importance.Importance_Id
                          where answer.Assessment_Id == assessmentId
                          orderby finding.Type, question.Mat_Question_Id
-                         select new { finding, answer, question, category, risk, importance };
+                         select new { finding, answer, question, category, importance };
 
             return Ok(result.ToList());
         }
@@ -420,19 +418,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok(rlist);
         }
 
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetSubRisks")]
-        public IActionResult GetSubRisks()
-        {
-            var data = _context.RISK_SUB_RISK_AREA.ToList();
-
-            return Ok(data);
-        } 
 
         /// <summary>
         /// 
