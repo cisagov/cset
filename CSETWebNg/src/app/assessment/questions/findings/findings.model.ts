@@ -37,11 +37,6 @@ export interface Finding {
   title: string;
   type: string;
   description: string;
-  sub_Risk_Area_Id: number;
-  subRiskArea: SubRiskArea;
-  disposition: string;
-  identified_Date: Date;
-  due_Date: Date;
   citations: string;
   auto_Generated: number;
   // Shared fields
