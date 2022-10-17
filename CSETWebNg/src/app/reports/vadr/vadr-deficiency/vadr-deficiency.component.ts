@@ -4,6 +4,7 @@ import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class VadrDeficiencyComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService

@@ -1,5 +1,6 @@
 {
     "isCsetOnline": false,
+    "isCyberFlorida": false,
     "appCode": "ACET",
     "app": {
         "protocol": "http",
