@@ -120,7 +120,6 @@ export class ConfigService {
           this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
 
           this.isCyberFlorida = this.isCyberFloridaCheck();
-          console.log(this.isCyberFlorida);
 
           this.mobileEnvironment = (this.config.mobileEnvironment);
 
