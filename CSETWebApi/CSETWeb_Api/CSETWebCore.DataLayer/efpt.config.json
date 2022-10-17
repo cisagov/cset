@@ -723,14 +723,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[RISK_AREA]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RISK_SUB_RISK_AREA]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[SAL_DETERMINATION_TYPES]",
          "ObjectType": 0
       },
@@ -1003,6 +995,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[GetChildrenAnswers]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[GetCombinedOveralls]",
          "ObjectType": 1
       },
@@ -1052,6 +1048,10 @@
       },
       {
          "Name": "[dbo].[InScopeRequirements]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[IseAnswerDistribution]",
          "ObjectType": 1
       },
       {
