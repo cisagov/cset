@@ -650,6 +650,43 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<AcetAnswerDistribution_Result> IseAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            var matLevel = 0;
+
+            switch (targetLevel)
+            {
+                case 1:
+                    matLevel = 17; // SCUEP
+                    break;
+                case 2:
+                    matLevel = 18; // CORE
+                    break;
+                case 3:
+                    matLevel = 19; // CORE+
+                    break;
+            }
+
+            IList<AcetAnswerDistribution_Result> myrval = null;
+            this.LoadStoredProc("IseAnswerDistribution")
+                     .WithSqlParam("assessment_id", assessment_id)
+                     .WithSqlParam("targetLevel", matLevel)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
+                     });
+            return myrval;
+        }
+
 
         /// <summary>
         /// Executes stored procedure usp_StatementsReviewed.

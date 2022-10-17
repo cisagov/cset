@@ -60,6 +60,7 @@ export class ConfigService {
   installationMode = '';
 
   galleryLayout = 'CSET';
+  isCyberFlorida = false;
 
   /**
    * Specifies the mobile ecosystem that the app is running on.
@@ -118,6 +119,8 @@ export class ConfigService {
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
           this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
 
+          this.isCyberFlorida = this.isCyberFloridaCheck();
+
           this.mobileEnvironment = (this.config.mobileEnvironment);
 
           this.populateLabelValues();
@@ -162,6 +165,18 @@ export class ConfigService {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Checks whether CSET is in Florida gallery mode or not
+   */
+  isCyberFloridaCheck() {
+    if (this.galleryLayout !== null && this.galleryLayout !== undefined &&  this.galleryLayout === 'Florida') {
+      this.config.isCyberFlorida = true;
+      return true;
+    }
+    this.config.isCyberFlorida = false;
+    return false;
   }
 
   /**

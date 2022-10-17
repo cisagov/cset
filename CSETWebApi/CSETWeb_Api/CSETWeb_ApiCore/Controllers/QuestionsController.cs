@@ -342,7 +342,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok(fm.AllFindings(Answer_Id));
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -376,6 +375,37 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        [Route("api/GetAssessmentFindings")]
+        public IActionResult GetAssessmentFindings()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var result = from finding in _context.FINDING
+                         join answer in _context.ANSWER
+                            on finding.Answer_Id equals answer.Answer_Id
+                         join question in _context.MATURITY_QUESTIONS
+                            on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
+                         join category in _context.MATURITY_GROUPINGS
+                            on question.Grouping_Id equals category.Grouping_Id
+                         join risk in _context.RISK_SUB_RISK_AREA
+                            on finding.Sub_Risk_Area_Id equals risk.Sub_Risk_Area_Id
+                         join importance in _context.IMPORTANCE
+                            on finding.Importance_Id equals importance.Importance_Id
+                         where answer.Assessment_Id == assessmentId
+                         orderby finding.Type, question.Mat_Question_Id
+                         select new { finding, answer, question, category, risk, importance };
+
+            return Ok(result.ToList());
+        }
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/GetImportance")]
         public IActionResult GetImportance()
@@ -389,6 +419,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(rlist);
         }
+
 
         /// <summary>
         ///

@@ -1,0 +1,251 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                MERIT SCOPE
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
+            </p>
+            <div class="cover-page-bottom mb-4">
+                <div>
+                    <img src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua" style="height: 185px" alt="ncua" />
+                </div>
+                <div style="
+                                    text-align: right;
+                                    font-weight: normal;
+                                    font-size: 18px;
+                                    flex-direction: column;
+                                    line-height: 150%;
+                                    padding-right: 2em;
+                                ">
+
+                    <div class="title-page-name">{{this.demographics?.information?.assessment_Name}}</div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessment_Date  |
+                        date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessor_Name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="page-break">
+            <div class="ml-3 mr-3 form">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Demographics</div>
+                    </div>
+                </div>
+                
+                <table class="table-site-info">
+                    <tr>
+                        <td>Assessment Name:</td>
+                        <td>{{this.demographics?.information?.assessment_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessment Date:</td>
+                        <td>{{this.demographics?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Credit Union:</td>
+                        <td>{{this.demographics?.information?.credit_Union_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>City or Site Name:</td>
+                        <td>{{this.demographics?.information?.city_Or_Site_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>State, Province or Region:</td>
+                        <td>{{this.demographics?.information?.state_Province_Or_Region}}</td>
+                    </tr>
+                    <tr>
+                        <td>Charter:</td>
+                        <td>{{this.demographics?.information?.charter}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assets:</td>
+                        <td>{{this.demographics?.information?.assets | currency}}</td>
+                    </tr>
+                    <tr>
+                        <td>Exam Level:</td>
+                        <td>{{this.examLevel}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Instructions</div>
+                    </div>
+                </div>
+                <p>
+                    Copy/Paste the contents of <strong>ISE Work Performed</strong> below into the Execution Result, Work Performed section of the MERIT ISE Scope.
+                    <br><br>
+                    Copy/Paste the contents of <strong>ISE Results of Review</strong> below into the Execution Result, Results of Review portion of the MERIT ISE Scope.
+                </p>
+                
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <span class="h2 report-text-blue">Work Performed </span>
+                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                            [cdkCopyToClipboard]="'Completed the ISE work program'">Copy
+                        </label>
+                    </div>
+                </div>
+                <p>
+                    <strong>Completed the ISE work program</strong>
+                </p>
+                
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <span class="h2 report-text-blue">Results of Review </span> 
+                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                            [cdkCopyToClipboard]="this.resultsOfReviewString">Copy
+                        </label>
+                    </div>
+                </div>
+                <p>
+                    {{ this.resultsOfReviewStatic }}
+                </p>
+                <div *ngIf="this.response?.length > 0">
+                    <div *ngIf="this.examinerFindingsTotal > 0">
+                        {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                        <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                    <div *ngIf="this.dorsTotal > 0">
+                        {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                        <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                    <div *ngIf="this.supplementalFactsTotal > 0">
+                        {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
+                        <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                            {{ issue }}
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div *ngIf="this.response?.length === 0">
+                    <p>
+                        No Issues were noted.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break">
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Issues</div>
+                    </div>
+                </div>
+                <div *ngIf="this.response?.length > 0">
+                    <div *ngFor="let finding of this.response">
+                        <div>
+                            <strong>Question: </strong> {{ finding?.question?.question_Title }}
+                        </div>
+                        <div>
+                            <strong>Title: </strong> {{ finding?.finding?.title }}
+                        </div>
+                        <div>
+                            <strong>Issue Type: </strong> {{ finding?.finding?.type }}
+                        </div>
+                        <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="finding?.finding?.description">Copy
+                            </label>
+                            <strong> Description: </strong><br>
+                            {{ finding?.finding?.description }}
+                            <br>
+
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="finding?.finding?.description">Copy All
+                            </label>
+                            <strong> Action Item: </strong>
+                            <br>
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="this.actionItemExample1">Copy
+                            </label> {{ this.actionItemExample1 }} 
+                            <br>
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="this.actionItemExample2">Copy
+                            </label> {{ this.actionItemExample2 }}
+                        </div>
+                        <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="cleanText(finding?.question?.supplemental_Info)">Copy
+                            </label>
+                            <strong> Supplemental Guidance: </strong> 
+                            
+                            <br>
+                            <span [innerHtml]="finding?.question?.supplemental_Info"></span>
+                        </div>
+                        <div>
+                            <strong>Regulatory Citation: </strong> <a href="https://www.ecfr.gov/current/title-12/chapter-VII/subchapter-A/part-748/section-748.0#p-748.0(b)(2)" target="_blank">12 C.F.R § 748.0 (b)(2)</a>
+                        </div>
+
+                        <hr class="page-line">
+                    </div>
+                </div>
+                <div *ngIf="this.response?.length === 0">
+                    No Issues were noted.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

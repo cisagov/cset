@@ -21,42 +21,49 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ViewChild } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
-import { QuestionsService } from '../../services/questions.service';
+import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
+import { FindingsService } from '../../services/findings.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'app-ise-answeredquestions',
-  templateUrl: './ise-answeredquestions.component.html',
+  selector: 'app-ise-examiner',
+  templateUrl: './ise-examiner.component.html',
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
-export class IseAnsweredQuestionsComponent implements OnInit {
+export class IseExaminerComponent implements OnInit {
   response: any = {};
 
-  showSubcats: Map<String, boolean> = new Map<String, boolean>();
+  hasComments: any[] = [];
+
+  examLevel: string = '';
+
+  @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
     public reportSvc: ReportService,
+    public assessSvc: AssessmentService,
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
-    public questionsSvc: QuestionsService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public findSvc: FindingsService
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Answered Statements Report - ISE");
+    this.titleService.setTitle("Examiner Report - ISE");
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
         console.log(this.response);
+        this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-        // goes through domains
         for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
@@ -66,32 +73,27 @@ export class IseAnsweredQuestionsComponent implements OnInit {
             for(let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-              if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
-                this.showSubcats.set(subcat?.title, true);
+              if(this.examLevel === 'CORE') {
+                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                  this.examLevel = 'CORE+';
+                }
+              }
+              
+              if (question.comments === 'Yes' && question.comment !== '') {
+                this.hasComments.push(question);
+                console.log(this.hasComments);
               }
             }
           }
         }
-        
       },
-      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+      error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
-
-    this.showSubcats
-    .set('Information Security Program', true)       .set('Governance', true)
-    .set('Risk Assessment', true)                    .set('Incident Response', true)
-    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
-    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
-    .set('Controls Testing', true)                   .set('Corrective Actions', true)
-    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
-    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
-    .set('Network Security', true)                   .set('Data Leakage Protection', true)
-    .set('Change & Configuration Management', true)  .set('Monitoring', false)
-    .set('Logging', false)                            .set('Data Governance', false)
-    .set('Conversion', false)                         .set('Software Development Process', false)
-    .set('Internal Audit Program', false)             .set('Asset Inventory', true);
   }
-
+  
+  /**
+   * checks if the quesiton needs to appear
+   */ 
   requiredQuestion(q: any) {
     if (q.answerText == 'U' && q.maturityLevel == 'CORE+') {
       return false;
@@ -99,7 +101,10 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     return true;
   }
 
-  parentQuestion(q: any) {
+  /**
+   * checks if q is a parent question
+   */ 
+   isParentQuestion(q: any) {
     if ( q.title == 'Stmt 1' 
     ||   q.title == 'Stmt 2'
     ||   q.title == 'Stmt 3'

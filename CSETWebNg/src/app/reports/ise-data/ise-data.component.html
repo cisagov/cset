@@ -1,0 +1,169 @@
+<!---------------------- 
+   Copyright 2022 Battelle Energy Alliance, LLC  
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                DATA
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom mb-4">
+            <div>
+                <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
+            </div>
+            <div style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date  |
+                    date:'dd-MM-yyyy'}}
+                </div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Data</div>
+            </div>
+        </div>
+
+        <div class="report-text-blue text-underline">
+            Assessment Information:
+        </div>
+
+        <strong>Filename:</strong> {{ response?.information?.assessment_Date 
+            | date:'yyyyMMdd' }}{{ response?.information?.charter }}{{ replaceSpaces(response?.information?.credit_Union_Name) }}{{ this.currentDate 
+            | date:'h_mm_ss' }}.csv<br>
+        <strong>Exam Type:</strong> {{ this.examLevel }}<br>
+        <strong>Version:</strong> {{ this.versionName }}<br>
+        <strong>Credit Union Name:</strong> {{ response?.information?.credit_Union_Name }}<br>
+        <strong>Asset Size:</strong> {{ response?.information?.assets }}<br>
+        <strong>Charter:</strong> {{ response?.information?.charter }}<br>
+        <strong>Type:</strong> FCU<br>
+        <strong>User:</strong> {{ response?.information?.assessor_Name }}<br>
+
+        <br>
+        <div class="report-text-blue text-underline">
+            Response Key:
+        </div>
+
+        0 - No<br>
+        1 - Yes<br>
+        2 - Unanswered<br>
+
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td>Response</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <ng-container *ngFor="let c of f.components">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr>
+                                <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+
+                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
+                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ answerToNumber(q.answerText) }}</td>
+
+                                <td *ngIf="isParentQuestion(q)" class="background-3">
+                                    <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                        <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                    </label>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </table>
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td>IRP Response</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 1</td>
+                    <td class=" pr-3">5</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 2</td>
+                    <td class=" pr-3">2</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 3</td>
+                    <td class=" pr-3">3</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 4</td>
+                    <td class=" pr-3">2</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 5</td>
+                    <td class=" pr-3">1</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 6</td>
+                    <td class=" pr-3">3</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 7</td>
+                    <td class=" pr-3">2</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 8</td>
+                    <td class=" pr-3">1</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 9</td>
+                    <td class=" pr-3">4</td>
+                </tr>
+                <tr>
+                    <td class=" font-weight-bold text-nowrap">Profile 10</td>
+                    <td class=" pr-3">5</td>
+                </tr>
+            </ng-container>
+        </table>
+        <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below">Submit
+        </label>
+    </div>
+</div>

@@ -79,6 +79,7 @@
     "ngx-csv": "^0.3.2",
     "ngx-device-detector": "^3.0.0",
     "ngx-ellipsis": "^4.0.0",
+    "ngx-print": "^1.2.1",
     "ngx-textarea-autosize": "^2.0.3",
     "request": "^2.88.2",
     "rxjs": "^6.6.3",
