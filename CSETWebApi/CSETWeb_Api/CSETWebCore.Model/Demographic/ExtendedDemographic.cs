@@ -22,6 +22,7 @@ namespace CSETWebCore.Model.Demographic
         public string CyberTrainingProgramExists { get; set; }
     }
 
+
     public class StateRegion
     {
         public string State { get; set; }
@@ -29,6 +30,7 @@ namespace CSETWebCore.Model.Demographic
         public string RegionName { get; set; }
         public List<County> Counties { get; set; } = new List<County>();
     }
+
 
     public class County
     {
@@ -42,5 +44,18 @@ namespace CSETWebCore.Model.Demographic
     {
         public int Id { get; set; }
         public string Value { get; set; }
+    }
+
+    public class GEO
+    {
+        public List<GeoRegion> Regions { get; set; } = new List<GeoRegion>();
+        public List<string> CountyFips { get; set; } = new List<string>();
+        public List<string> MetroFips { get; set; } = new List<string>();
+    }
+
+    public class GeoRegion
+    {
+        public string State { get; set; }
+        public string RegionCode { get; set; }
     }
 }
