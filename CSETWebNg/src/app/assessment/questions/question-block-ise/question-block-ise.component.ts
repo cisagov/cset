@@ -82,7 +82,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7196, 7201, 7206, 7214, 7217, 7220, 7225]);
-  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
+  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7259, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
   finalCorePlusQuestion = new Set ([7312, 7316, 7322, 7332, 7338, 7344, 7351, 7359, 7366, 7373, 7381, 7390, 7395, 7400, 7408]);
   finalExtraQuestion = new Set ([7421, 7429, 7444, 7450, 7458, 7465]);
 
@@ -146,6 +146,7 @@ export class QuestionBlockIseComponent implements OnInit {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
+      console.log(response);
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
       let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
       this.contactInitials = firstInitial + lastInitial;
@@ -489,6 +490,7 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   getSummaryComment(q: Question) {
+    console.log(q.displayNumber);
     let parentId = q.parentQuestionId;
     let comment = "";
 
@@ -532,7 +534,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP') {
+    if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP' && id !== 7259) {
       return true;
     }
     return false;

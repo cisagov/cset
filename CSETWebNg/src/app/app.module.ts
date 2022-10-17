@@ -493,6 +493,8 @@ import { IssuesComponent } from './assessment/questions/issues/issues.component'
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
+import { NgxPrintModule } from 'ngx-print';
+import { IseDataComponent } from './reports/ise-data/ise-data.component';
 
 @NgModule({
     imports: [
@@ -590,6 +592,7 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
         TooltipModule,
         SwiperModule,
         EllipsisModule,
+        NgxPrintModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
@@ -766,6 +769,7 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
         IseExaminationComponent,
         IseExaminerComponent,
         IseDonutChartComponent,
+        IseDataComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,

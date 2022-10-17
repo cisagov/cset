@@ -94,6 +94,10 @@ export class IseExaminationComponent implements OnInit {
             for(let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
+              if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                this.examLevel = 'CORE+';
+              }
+
               if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
                 this.showSubcats.set(subcat?.title, true);
               }

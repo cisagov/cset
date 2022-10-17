@@ -137,38 +137,34 @@
 
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">Comments (List)</div>
+                <div class="h2 report-text-blue">Comments</div>
             </div>
         </div>
-
-        <div *ngFor="let d of response?.matAnsweredQuestions">
-            <div *ngFor="let f of d.assessmentFactors">
-                <div *ngFor="let c of f.components">
-                    <div *ngFor="let q of c.questions">
-                        <div *ngIf="q.comments === 'Yes'">
-                            <div>
-                                <span class="font-weight-bold">Title: </span>
-                                <span class="pr-3">{{ q.title }}</span>
-                            </div>
-                            <div>
-                                <span class="font-weight-bold">Question Text: </span>
-                                <span class="pr-3">{{ q.questionText }}</span>
-                            </div>
-                            <div>
-                                <span class="font-weight-bold">Response: </span>
-                                <span class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</span>
-                            </div>
-                            <div>
-                                <div class="font-weight-bold">Comments: </div>
-                                <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Results of Review given. ]' }}</span>
-                            </div>
-
-                            <hr class="page-line">
-
-                        </div>
-                    </div>
+        <div *ngIf="this.hasComments.length > 0; else noComments">
+            <div *ngFor="let q of this.hasComments">
+                <div>
+                    <span class="font-weight-bold">Title: </span>
+                    <span class="pr-3">{{ q.title }}</span>
                 </div>
+                <div>
+                    <span class="font-weight-bold">Question Text: </span>
+                    <span class="pr-3">{{ q.questionText }}</span>
+                </div>
+                <div>
+                    <span class="font-weight-bold">Response: </span>
+                    <span class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</span>
+                </div>
+                <div>
+                    <div class="font-weight-bold">Comments: </div>
+                    <span class="pr-3">{{ q.comment }}</span>
+                </div>
+
+            <hr class="page-line">
+
             </div>
         </div>
+        <ng-template #noComments>
+            No comments were left.
+        </ng-template>
     </div>
 </div>
