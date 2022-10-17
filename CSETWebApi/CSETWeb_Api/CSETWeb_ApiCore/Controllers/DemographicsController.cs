@@ -9,6 +9,9 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -20,7 +23,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsController(ITokenManager token, IAssessmentBusiness assessment, 
+        public DemographicsController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;

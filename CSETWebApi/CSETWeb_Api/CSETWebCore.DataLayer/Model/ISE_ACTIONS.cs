@@ -18,8 +18,6 @@ namespace CSETWebCore.DataLayer.Model
         public string Description { get; set; }
         [StringLength(1000)]
         public string Action_Items { get; set; }
-        [StringLength(100)]
-        public string Regulatory_Citation { get; set; }
 
         [ForeignKey("Question_Id")]
         [InverseProperty("ISE_ACTIONS")]

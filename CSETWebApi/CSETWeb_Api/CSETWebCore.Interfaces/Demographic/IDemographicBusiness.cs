@@ -7,5 +7,6 @@ namespace CSETWebCore.Interfaces.Demographic
         Demographics GetDemographics(int assessmentId);
         AnalyticsDemographic GetAnonymousDemographics(int assessmentId);
         int SaveDemographics(Demographics demographics);
+        int SaveDemographics(Model.Demographic.ExtendedDemographic demographics);
     }
 }
