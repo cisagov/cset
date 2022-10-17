@@ -57,10 +57,6 @@ namespace CSETWebCore.Business.Findings
                     Title = f.Title,
                     Type = f.Type,
                     Description = f.Description,
-                    Sub_Risk_Area_Id = 1,
-                    Disposition = f.Disposition,
-                    Identified_Date = f.Identified_Date,
-                    Due_Date = f.Due_Date
                 };
 
                 this._dbFinding = finding;
