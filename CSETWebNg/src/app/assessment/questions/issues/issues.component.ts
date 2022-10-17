@@ -109,12 +109,6 @@ export class IssuesComponent implements OnInit {
       
       this.answerID = this.finding.answer_Id;
       this.questionID = this.finding.question_Id;
-
-      if (this.finding.sub_Risk_Area_Id === null) {
-        this.updateRiskArea('Strategic');
-      } else {
-        this.getSelectedRiskArea(this.finding.sub_Risk_Area_Id);
-      }
     });
 
     this.findSvc.getSubRisks().subscribe((result: any[]) => {
@@ -192,29 +186,6 @@ export class IssuesComponent implements OnInit {
 As information security program is the written plan created and implemented by a credit union to identify and control risks to information and information systems and to properly dispose of information. The plan includes policies and procedures regarding the institution's risk assessment, controls, testing, service-provider oversight, periodic review and updating, and reporting to its board of directors.`;
 
     return description;
-  }
-
-  getSelectedRiskArea(id: number) {
-    let area = "";
-    if (id >= 1 && id <= 10) {
-      area = 'Strategic';
-    } else if (id > 10 && id <= 17) {
-      area = 'Compliance';
-    } else if (id > 17 && id <= 32) {
-      area = 'Transaction';
-    } else if (id > 32 && id <= 37) {
-      area = 'Reputation';
-    }
-
-    this.updateRiskArea(area);
-  }
-
-  updateRiskArea(riskArea) {
-    this.selectedRiskArea = riskArea;
-  }
-
-  updateSubRisk(value) {
-    this.finding.sub_Risk_Area_Id = value;
   }
 
   cancel() {
