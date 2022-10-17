@@ -123,7 +123,11 @@
             <div class="ml-3 mr-3">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
-                        <div class="h2 report-text-blue">Work Performed</div>
+                        <span class="h2 report-text-blue">Work Performed </span>
+                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                            [cdkCopyToClipboard]="'Completed the ISE work program'">Copy
+                        </label>
                     </div>
                 </div>
                 <p>
@@ -137,10 +141,11 @@
             <div class="ml-3 mr-3">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
-                        <span class="h2 report-text-blue">Results of Review</span> 
-                        <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                        <span class="h2 report-text-blue">Results of Review </span> 
+                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
                             [cdkCopyToClipboard]="this.resultsOfReviewString">Copy
-                </label>
+                        </label>
                     </div>
                 </div>
                 <p>
@@ -187,32 +192,53 @@
                 <div *ngIf="this.response?.length > 0">
                     <div *ngFor="let finding of this.response">
                         <div>
-                            <strong>Question:</strong> {{ finding?.question?.question_Title }}
+                            <strong>Question: </strong> {{ finding?.question?.question_Title }}
                         </div>
                         <div>
-                            <strong>Title:</strong> {{ finding?.finding?.title }}
+                            <strong>Title: </strong> {{ finding?.finding?.title }}
                         </div>
                         <div>
-                            <strong>Issue Type:</strong> {{ finding?.finding?.type }}
+                            <strong>Issue Type: </strong> {{ finding?.finding?.type }}
                         </div>
-                        <div>
-                            <strong>Description:</strong> <button>Copy</button><br>{{ finding?.finding?.description }}
+                        <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="finding?.finding?.description">Copy
+                            </label>
+                            <strong> Description: </strong><br>
+                            {{ finding?.finding?.description }}
+                            <br>
+
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="finding?.finding?.description">Copy All
+                            </label>
+                            <strong> Action Item: </strong>
+                            <br>
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="this.actionItemExample1">Copy
+                            </label> {{ this.actionItemExample1 }} 
+                            <br>
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="this.actionItemExample2">Copy
+                            </label> {{ this.actionItemExample2 }}
                         </div>
-                        <div>
-                            <strong>Action Item: </strong> <button>Copy All</button>
-                            <br><button [cdkCopyToClipboard]="this.actionItemExample1">Copy</button>{{ this.actionItemExample1 }} 
-                            <br><button [cdkCopyToClipboard]="this.actionItemExample2">Copy</button>{{ this.actionItemExample2 }}  
+                        <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="cleanText(finding?.question?.supplemental_Info)">Copy
+                            </label>
+                            <strong> Supplemental Guidance: </strong> 
+                            
+                            <br>
+                            <span [innerHtml]="finding?.question?.supplemental_Info"></span>
                         </div>
                         <div>
                             <strong>Regulatory Citation: </strong> <a href="https://www.ecfr.gov/current/title-12/chapter-VII/subchapter-A/part-748/section-748.0#p-748.0(b)(2)" target="_blank">12 C.F.R § 748.0 (b)(2)</a>
                         </div>
-                        <div>
-                            <strong>Risk Area:</strong> {{ finding?.risk?.risk_Area }}
-                        </div>
-                        <div>
-                            <strong>Sub Risk Area:</strong> {{ finding?.risk?.sub_Risk_Area }}
-                        </div>
-                        
+
                         <hr class="page-line">
                     </div>
                 </div>

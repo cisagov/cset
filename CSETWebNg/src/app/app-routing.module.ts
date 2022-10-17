@@ -182,6 +182,8 @@ import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warni
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
+import { IseDataComponent } from './reports/ise-data/ise-data.component';
+
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -460,6 +462,7 @@ const appRoutes: Routes = [
       { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
       { path: 'isedonutchart', component: IseDonutChartComponent },
       { path: 'isemerit', component: IseMeritComponent },
+      { path: 'isedata', component: IseDataComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

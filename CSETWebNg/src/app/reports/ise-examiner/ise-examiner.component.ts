@@ -39,6 +39,8 @@ import { AssessmentService } from '../../services/assessment.service';
 export class IseExaminerComponent implements OnInit {
   response: any = {};
 
+  hasComments: any[] = [];
+
   examLevel: string = '';
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
@@ -61,6 +63,29 @@ export class IseExaminerComponent implements OnInit {
         this.response = r;
         console.log(this.response);
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+
+        for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for(let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            // goes through questions
+            for(let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
+
+              if(this.examLevel === 'CORE') {
+                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                  this.examLevel = 'CORE+';
+                }
+              }
+              
+              if (question.comments === 'Yes' && question.comment !== '') {
+                this.hasComments.push(question);
+                console.log(this.hasComments);
+              }
+            }
+          }
+        }
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
@@ -80,8 +105,7 @@ export class IseExaminerComponent implements OnInit {
    * checks if q is a parent question
    */ 
    isParentQuestion(q: any) {
-    if ( this.requiredQuestion(q)
-    &&   q.title == 'Stmt 1' 
+    if ( q.title == 'Stmt 1' 
     ||   q.title == 'Stmt 2'
     ||   q.title == 'Stmt 3'
     ||   q.title == 'Stmt 4'
@@ -96,7 +120,13 @@ export class IseExaminerComponent implements OnInit {
     ||   q.title == 'Stmt 13'
     ||   q.title == 'Stmt 14'
     ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16') {
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22') {
       return true;
     } 
     return false;

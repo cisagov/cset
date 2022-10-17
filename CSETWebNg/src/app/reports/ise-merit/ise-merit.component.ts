@@ -14,6 +14,7 @@ import { FindingsService } from '../../services/findings.service';
 export class IseMeritComponent implements OnInit {
   response: any = null; 
   demographics: any = null; 
+  answers: any = null;
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -89,6 +90,33 @@ export class IseMeritComponent implements OnInit {
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     )
 
+    this.acetSvc.getIseAnsweredQuestions().subscribe(
+      (r: any) => {
+        this.answers = r;
+        console.log(this.answers);
+        this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+
+        if(this.examLevel === 'CORE') {
+          // goes through domains
+          for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+            let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
+            // goes through subcategories
+            for(let j = 0; j < domain.components?.length; j++) {
+              let subcat = domain?.components[j];
+              // goes through questions
+              for(let k = 0; k < subcat?.questions?.length; k++) {
+                let question = subcat?.questions[k];
+
+                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                  this.examLevel = 'CORE+';
+                }
+              }
+            }
+          }
+        }
+      },
+    )
+
     // console.log('length is: ' + this.response?.length);
 
     // for(let i = 0; i < this.response?.length; i++) {
@@ -147,6 +175,21 @@ export class IseMeritComponent implements OnInit {
       this.resultsOfReviewString += '\n\t ' + categories[i];
     }
     this.resultsOfReviewString += '\n\n';
+  }
+
+  // gets rid of the html formatting
+  cleanText(input: string) {
+    let text = input;
+    text = text.replace(/<.*?>/g, '');
+    text = text.replace(/&#10;/g, ' ');
+    text = text.replace(/&#8217;/g, '\'');
+    text = text.replace(/&#160;/g, '');
+    text = text.replace (/&#8221;/g, '');
+    text = text.replace(/&#34;/g, '\'');
+    text = text.replace(/&#167;/g, '');
+    text = text.replace('ISE Reference', '');
+    text = text.replace('/\s/g', ' ');
+    return (text);
   }
 
 }
