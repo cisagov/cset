@@ -31,7 +31,7 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
             _context = context;
         }
-        
+
 
         /// <summary>
         /// Gets the extended demographics for the assessment.
@@ -54,6 +54,37 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok(demo);
+        }
+
+
+        /// <summary>
+        /// Gets the persisted Region / County / Metro selections.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/demographics/ext/geographics")]
+        public IActionResult GetGeographics()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var resp = new GEO();
+
+            _context.REGION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList().ForEach(x =>
+            {
+                resp.Regions.Add(new GeoRegion() { RegionCode = x.RegionCode, State = x.State });
+            });
+
+            _context.COUNTY_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList().ForEach(x =>
+            {
+                resp.CountyFips.Add(x.County_FIPS);
+            });
+
+            _context.METRO_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList().ForEach(x =>
+            {
+                resp.MetroFips.Add(x.Metro_FIPS);
+            });
+
+            return Ok(resp);
         }
 
 
@@ -116,6 +147,26 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCountyList(string state)
         {
             var list = _context.COUNTIES.Where(x => x.State == state).ToList();
+            return Ok(list);
+        }
+
+
+        /// <summary>
+        /// Returns all known metro areas for Florida "12-*".  
+        /// TODO:  Make this smarter to know the Florida FIPS (12) so that
+        /// the query can be run for any state.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/demographics/ext/metros/{state}")]
+        public IActionResult GetMetroList(string state)
+        {
+            var list = _context.METRO_AREA
+                .Include(x => x.COUNTY_METRO_AREA)
+                .Where(x => x.Metro_FIPS.StartsWith("12-"))
+                .ToList();
+
             return Ok(list);
         }
 
@@ -233,8 +284,52 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/demographics/ext/geographics")]
-        public IActionResult PostGeographicLocations([FromBody] object geographics)
+        public IActionResult PostGeographicLocations([FromBody] GEO geographics)
         {
+            int assessmentId = _token.AssessmentForUser();
+
+            // clean out all existing selections
+            var ra = _context.REGION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            _context.REGION_ANSWERS.RemoveRange(ra);
+            var ca = _context.COUNTY_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            _context.COUNTY_ANSWERS.RemoveRange(ca);
+            var ma = _context.METRO_ANSWERS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            _context.METRO_ANSWERS.RemoveRange(ma);
+            _context.SaveChanges();
+
+            // region_answers
+            geographics.Regions.ForEach(r =>
+            {
+                _context.REGION_ANSWERS.Add(new REGION_ANSWERS()
+                {
+                    Assessment_Id = assessmentId,
+                    State = r.State,
+                    RegionCode = r.RegionCode
+                });
+            });
+
+            // county_answers
+            geographics.CountyFips.ForEach(c =>
+            {
+                _context.COUNTY_ANSWERS.Add(new COUNTY_ANSWERS()
+                {
+                    Assessment_Id = assessmentId,
+                    County_FIPS = c
+                });
+            });
+
+            // metro_answers
+            geographics.MetroFips.ForEach(m =>
+            {
+                _context.METRO_ANSWERS.Add(new METRO_ANSWERS()
+                {
+                    Assessment_Id = assessmentId,
+                    Metro_FIPS = m
+                });
+            });
+
+            _context.SaveChanges();
+
             return Ok();
         }
     }

@@ -78,3 +78,16 @@ export interface ListItem {
     id: number;
     value: string;
 }
+
+
+/* used for saving geographic selections */
+export interface Geographics {
+    regions?: GeoRegion[];
+    countyFips?: string[];
+    metroFips?: string[];
+}
+
+export interface GeoRegion {
+    state: string;
+    regionCode: string;
+}

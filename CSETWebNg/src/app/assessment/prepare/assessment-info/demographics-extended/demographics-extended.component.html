@@ -34,8 +34,8 @@
                     <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
                 </button>
             </label>
-            <select class="form-control" id="sector" name="sector" tabindex="0" 
-                [(ngModel)]="demographicData.sectorId" (change)="getSubsectors($event.target.value)">
+            <select class="form-control" id="sector" name="sector" tabindex="0" [(ngModel)]="demographicData.sectorId"
+                (change)="getSubsectors($event.target.value, true)">
                 <option [ngValue]="null">-- Select Sector --</option>
                 <option *ngFor="let sector of sectorList" [value]="sector.sectorId">
                     {{sector.sectorName}}
@@ -97,18 +97,15 @@
     <h5>Metropolitan Areas</h5>
     <p class="font-italic">
         Select the metropolitan areas where your business/operations provide services.
-    </p>    
+    </p>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
-        <div *ngIf="listVisibleMetros.length == 0" class="alert alert-warning">
+        <div *ngIf="visibleMetroList.length == 0" class="alert alert-warning">
             This list will grow as populous counties are selected
         </div>
-        <div class="btn-group-toggle" *ngFor="let m of listVisibleMetros">
-            <ng-container >
-                <label class="btn btn-geo btn-rounded m-1" [class.active]="m.selected">
-                    <input type="checkbox" [id]="'metro-toggle-' + m.name"
-                        [name]="'metro-toggle-' + m.name" [checked]="m.selected" (click)="toggleMetro(m)"
-                        data-toggle="toggle" />{{m.name}}</label>
-            </ng-container>
+        <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
+            <label *ngFor="let m of visibleMetroList" class="btn btn-geo btn-rounded m-1" [class.active]="m.selected">
+                <input type="checkbox" [id]="'metro-toggle-' + m.name" [name]="'metro-toggle-' + m.name"
+                    [checked]="m.selected" (click)="toggleMetro(m)" data-toggle="toggle" />{{m.name}}</label>
         </div>
     </div>
 </div>
@@ -121,7 +118,7 @@
     <div class="form-group mb-5">
         <h5>Employees</h5>
         <p class="font-italic">
-            How many total employees <u>directly support</u> 
+            How many total employees <u>directly support</u>
             business/operations in the geographic areas selected?
         </p>
         <select class="form-control" id="employees" name="employees" tabindex="0"
@@ -136,7 +133,7 @@
     <div class="form-group mb-5">
         <h5>Customers Supported</h5>
         <p class="font-italic">
-            How many customers does your business/operations <u>directly support</u> 
+            How many customers does your business/operations <u>directly support</u>
             (service/host) in the geographic areas selected?
         </p>
         <select class="form-control" id="customers" name="customers" tabindex="0"
@@ -152,13 +149,14 @@
     <div class="form-group mb-5">
         <h5>Geographic Scope</h5>
         <p class="font-italic">
-            For the following question <u>do not</u> consider available resilience/restoration capabilities such as back up
+            For the following question <u>do not</u> consider available resilience/restoration capabilities such as back
+            up
             servers, alternate cyber systems, and disaster recovery plan:</p>
         <p class="font-italic">
             What would be the initial <u>geographic impact</u> (Municipality/County/State) of your decreased
             business/operations as the result of a significant/major disruption to your critical cyber services?
         </p>
-        <select class="form-control" id="geoScope" name="geoScope" tabindex="0" 
+        <select class="form-control" id="geoScope" name="geoScope" tabindex="0"
             [(ngModel)]="demographicData.geographicScope" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Scope --</option>
             <option *ngFor="let s of geoScopeList" [value]="s.value">
@@ -197,14 +195,14 @@
         </select>
     </div>
 
-    
+
     <div class="form-group mb-5">
         <p class="font-italic">
             Does your organization have a formalized cybersecurity training program/function that provides employees
             with more advanced information/skills than basic cyber awareness-level training?
         </p>
-        <select class="form-control" id="training" name="training" tabindex="0" [(ngModel)]="demographicData.cyberTrainingProgramExists"
-            (change)="update($event)">
+        <select class="form-control" id="training" name="training" tabindex="0"
+            [(ngModel)]="demographicData.cyberTrainingProgramExists" (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of trainingList" [value]="i.value">
                 {{i.value}}

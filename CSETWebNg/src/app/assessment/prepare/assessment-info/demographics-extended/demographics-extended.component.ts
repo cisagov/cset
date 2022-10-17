@@ -22,8 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { throwIfEmpty } from 'rxjs/operators';
 import { Demographic } from '../../../../models/assessment-info.model';
-import { County, ExtendedDemographics, ListItem, Region, Sector, Subsector } from '../../../../models/demographics-extended.model';
+import { County, ExtendedDemographics, ListItem, Region, Sector, Subsector, Geographics, GeoRegion } from '../../../../models/demographics-extended.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicExtendedService } from '../../../../services/demographic-extended.service';
@@ -40,6 +41,8 @@ export class DemographicsExtendedComponent implements OnInit {
 
   regionList: Region[];
   countyList: County[];
+  metroList: any[];
+  visibleMetroList = [];
 
   employeeRanges: ListItem[];
   customerRanges: ListItem[];
@@ -87,6 +90,25 @@ export class DemographicsExtendedComponent implements OnInit {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
+      });      
+    });
+
+    this.demoSvc.getMetros('FL').subscribe((data: any) => {
+      this.metroList = [];
+
+      data.forEach(m => {
+        const m1= {          
+            selected: false,
+            name: m.metropolitanAreaName,
+            fips: m.metro_FIPS,
+            counties: []    
+        };
+
+        m.countY_METRO_AREA.forEach(e => {
+          m1.counties.push(e.county_FIPS)
+        });
+
+        this.metroList.push(m1);
       });
     });
 
@@ -116,6 +138,10 @@ export class DemographicsExtendedComponent implements OnInit {
     });
 
     this.getDemographics();
+
+    setTimeout(() => {
+      this.getGeographics();
+    }, 1000);
   }
 
   /**
@@ -126,21 +152,45 @@ export class DemographicsExtendedComponent implements OnInit {
       (data: Demographic) => {
         this.demographicData = data;
 
-        // populate Industry dropdown based on Sector
-        //this.populateIndustryOptions(this.demographicData.sectorId);
+        // populate Subsector (industry) dropdown based on Sector
+        this.getSubsectors(this.demographicData.sectorId, false);
       },
       error => console.log('Demographic load Error: ' + (<Error>error).message)
     );
   }
 
-
-
   /**
    * 
    */
-  getSubsectors(sectorId: number) {
+  getGeographics() {
+    this.demoSvc.getGeographics().subscribe(
+      (data: any) => {
+        data.regions.forEach(x => {
+          this.regionList.find(y => y.regionCode == x.regionCode).selected = true;
+        });
+
+        data.countyFips.forEach(x => {
+          this.countyList.find(y => y.fips == x).selected = true;
+        });
+     
+        data.metroFips.forEach(x => {
+          this.metroList.find(y => y.fips == x).selected = true;
+        });
+        this.buildMetros();
+      }
+    );
+  }
+
+  /**
+   * Get the subsector list for the specified sector.
+   */
+  getSubsectors(sectorId: number, clearSubsector: boolean) {
     if (!sectorId) {
       return;
+    }
+
+    if (clearSubsector) {
+      this.demographicData.subSectorId = null;
     }
 
     this.updateDemographics();
@@ -161,10 +211,8 @@ export class DemographicsExtendedComponent implements OnInit {
    * 
    */
   updateDemographics() {
-    this.demographicData.subSectorId = null;
     this.demoSvc.updateExtendedDemographics(this.demographicData);
   }
-
 
   /**
    * Called when 'select all' or 'select none' is clicked
@@ -211,74 +259,54 @@ export class DemographicsExtendedComponent implements OnInit {
    */
   toggleMetro(m) {
     m.selected = !m.selected;
+    this.saveGeoSelections();
   }
 
   /**
    * Builds the list of metro areas based on county selection
    */
   buildMetros() {
-    this.listVisibleMetros = [];
+    this.visibleMetroList = [];
 
-    this.listMetros.forEach(m => {
-      if (this.countyList.some(c => (c.name == m.county || m.counties?.includes(c.name)) && c.selected)) {
-        this.listVisibleMetros.push(m);
+    this.metroList.forEach(m => {
+      if (this.countyList.some(c => (m.counties?.includes(c.fips)) && c.selected)) {
+        this.visibleMetroList.push(m);
       }
     });
+    this.visibleMetroList.sort((a, b) => {
+      if (a.name < b.name) { return -1; }
+      if (a.name > b.name) { return 1; }
+      return 0;
+    });
+
+    this.saveGeoSelections();
   }
 
 
-  listVisibleMetros = [];
+  /**
+   * 
+   */
+  saveGeoSelections() {
+    const x: Geographics = {};
 
-  listMetros = [
-    { selected: false, name: 'Jacksonville', county: 'Duval' },
-    { selected: false, name: 'Miami', county: 'Miami-Dade' },
-    { selected: false, name: 'Tampa', county: 'Hillsborough' },
-    { selected: false, name: 'Orlando', county: 'Orange' },
-    { selected: false, name: 'St. Petersburg', county: 'Pinellas' },
-    { selected: false, name: 'Hialeah', county: 'Miami-Dade' },
-    { selected: false, name: 'Port St. Lucie', county: 'St. Lucie' },
-    { selected: false, name: 'Cape Coral', county: 'Lee' },
-    { selected: false, name: 'Tallahassee', county: 'Leon' },
-    { selected: false, name: 'Fort Lauderdale', county: 'Broward' },
-    { selected: false, name: 'Pembroke Pines', county: 'Broward' },
-    { selected: false, name: 'Hollywood', county: 'Broward' },
-    { selected: false, name: 'Gainesville', county: 'Alachua' },
-    { selected: false, name: 'Miramar', county: 'Broward' },
-    { selected: false, name: 'Coral Springs', county: 'Broward' },
-    { selected: false, name: 'Palm Bay', county: 'Brevard' },
-    { selected: false, name: 'West Palm Beach', county: 'Palm Beach' },
-    { selected: false, name: 'Leigh Acres', county: 'Lee' },
-    { selected: false, name: 'Clearwater', county: 'Pinellas' },
-    { selected: false, name: 'Brandon', county: 'Hillsborough' },
-    { selected: false, name: 'Spring Hill', county: 'Hernando' },
-    { selected: false, name: 'Lakeland', county: 'Polk' },
-    { selected: false, name: 'Riverview', county: 'Hillsborough' },
-    { selected: false, name: 'Pompano Beach', county: 'Broward' },
-    { selected: false, name: 'Miami Gardens', county: 'Miami-Dade' },
-    { selected: false, name: 'Davie', county: 'Broward' },
-    { selected: false, name: 'Bocas Raton', county: 'Palm Beach' },
-    { selected: false, name: 'Sunrise', county: 'Broward' },
-    { selected: false, name: 'Deltona', county: 'Volusia' },
-    { selected: false, name: 'Alafaya', county: 'Orange' },
-    { selected: false, name: 'Plantation', county: 'Broward' },
-    { selected: false, name: 'Palm Coast', county: 'Flagler' },
-    { selected: false, name: 'Fort Myers', county: 'Lee' },
-    { selected: false, name: 'Deerfield Beach', county: 'Broward' },
-    { selected: false, name: 'Town ‘n’ Country', county: 'Hillsborough' },
-    { selected: false, name: 'Melbourne', county: 'Brevard' },
-    { selected: false, name: 'The Villages', county: 'Sumter' },
-    { selected: false, name: 'Largo', county: 'Pinellas' },
-    { selected: false, name: 'Kissimmee', county: 'Osceola' },
-    { selected: false, name: 'Boynton Beach', county: 'Palm Beach' },
-    { selected: false, name: 'Miami Beach', county: 'Miami-Dade' },
-    { selected: false, name: 'Doral', county: 'Miami-Dade' },
-    { selected: false, name: 'Kendall', county: 'Miami-Dade' },
-    { selected: false, name: 'North Port', county: 'Sarasota' },
-    { selected: false, name: 'Lauderhill', county: 'Broward' },
-    { selected: false, name: 'Daytona Beach', county: 'Volusia' },
-    { selected: false, name: 'Tamarac', county: 'Broward' },
-    { selected: false, name: 'Poinciana', counties: ['Osceola', 'Polk'] },
-    { selected: false, name: 'Westley Chapel', county: 'Pasco' }
-  ];
+    x.regions = [];
+    this.regionList.filter(x => x.selected).forEach(r => {
+      x.regions.push({
+        regionCode: r.regionCode,
+        state: r.state
+      });
+    });
 
+    x.countyFips = [];
+    this.countyList.filter(x => x.selected).forEach(c => {
+      x.countyFips.push(c.fips);
+    });
+
+    x.metroFips = [];
+    this.visibleMetroList.filter(x => x.selected).forEach(m => {
+      x.metroFips.push(m.fips);
+    });
+
+    this.demoSvc.persistGeographicSelections(x);
+  }
 }

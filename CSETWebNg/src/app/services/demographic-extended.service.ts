@@ -24,8 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { Demographic } from '../models/assessment-info.model';
-import { ExtendedDemographics } from '../models/demographics-extended.model';
+import { ExtendedDemographics, Geographics } from '../models/demographics-extended.model';
 
 
 const headers = {
@@ -48,6 +47,10 @@ export class DemographicExtendedService {
     return this.http.get(this.apiUrl);
   }
 
+  getGeographics() {
+    return this.http.get(this.apiUrl + '/geographics');
+  }
+
   getAllSectors() {
     return this.http.get(this.apiUrl + '/sectors');
   }
@@ -62,6 +65,10 @@ export class DemographicExtendedService {
 
   getCounties(state: string) {
     return this.http.get(this.apiUrl + '/counties/' + state);
+  }
+
+  getMetros(state: string) {
+    return this.http.get(this.apiUrl + '/metros/' + state);
   }
 
   getEmployeeRanges() {
@@ -93,6 +100,14 @@ export class DemographicExtendedService {
    */
   updateExtendedDemographics(demographic: ExtendedDemographics) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
+    .subscribe();
+  }
+
+  /**
+   * 
+   */
+  persistGeographicSelections(x: Geographics) {
+    this.http.post(this.apiUrl + '/geographics', JSON.stringify(x), headers)
     .subscribe();
   }
 }
