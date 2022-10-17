@@ -72,7 +72,10 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
         public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
         public virtual DbSet<CONFIDENTIAL_TYPE> CONFIDENTIAL_TYPE { get; set; }
+        public virtual DbSet<COUNTIES> COUNTIES { get; set; }
         public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
+        public virtual DbSet<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
+        public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
@@ -82,6 +85,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
+        public virtual DbSet<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
@@ -90,6 +94,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
+        public virtual DbSet<EXT_SECTOR> EXT_SECTOR { get; set; }
+        public virtual DbSet<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
         public virtual DbSet<ExcelExport> ExcelExport { get; set; }
         public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
         public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
@@ -154,6 +160,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+        public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
+        public virtual DbSet<METRO_AREA> METRO_AREA { get; set; }
         public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
         public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
         public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
@@ -184,6 +192,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REFERENCES_DATA> REFERENCES_DATA { get; set; }
         public virtual DbSet<REFERENCE_DOCS> REFERENCE_DOCS { get; set; }
         public virtual DbSet<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
+        public virtual DbSet<REGION_ANSWERS> REGION_ANSWERS { get; set; }
         public virtual DbSet<REPORT_DETAIL_SECTIONS> REPORT_DETAIL_SECTIONS { get; set; }
         public virtual DbSet<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
         public virtual DbSet<REPORT_OPTIONS> REPORT_OPTIONS { get; set; }
@@ -218,6 +227,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
         public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
         public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
+        public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
@@ -926,9 +936,56 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of COMPONENT_SYMBOLS_GM_TO_CSET records");
             });
 
+            modelBuilder.Entity<COUNTIES>(entity =>
+            {
+                entity.HasKey(e => e.County_FIPS)
+                    .HasName("PK_counties1");
+
+                entity.HasOne(d => d.STATE_REGION)
+                    .WithMany(p => p.COUNTIES)
+                    .HasForeignKey(d => new { d.State, d.RegionCode })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_COUNTIES_STATE_REGION");
+            });
+
             modelBuilder.Entity<COUNTRIES>(entity =>
             {
                 entity.HasComment("A collection of COUNTRIES records");
+            });
+
+            modelBuilder.Entity<COUNTY_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.County_FIPS })
+                    .HasName("PK_ExtendedDemographicCountyAnswers");
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.COUNTY_ANSWERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.County_FIPSNavigation)
+                    .WithMany(p => p.COUNTY_ANSWERS)
+                    .HasForeignKey(d => d.County_FIPS)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_COUNTIES");
+            });
+
+            modelBuilder.Entity<COUNTY_METRO_AREA>(entity =>
+            {
+                entity.HasKey(e => new { e.County_FIPS, e.Metro_FIPS })
+                    .HasName("PK_County_MetropolitanArea");
+
+                entity.HasOne(d => d.County_FIPSNavigation)
+                    .WithMany(p => p.COUNTY_METRO_AREA)
+                    .HasForeignKey(d => d.County_FIPS)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_County_MetropolitanArea_COUNTIES");
+
+                entity.HasOne(d => d.Metro_FIPSNavigation)
+                    .WithMany(p => p.COUNTY_METRO_AREA)
+                    .HasForeignKey(d => d.Metro_FIPS)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_COUNTY_METRO_AREA_METRO_AREA");
             });
 
             modelBuilder.Entity<CSET_VERSION>(entity =>
@@ -1060,6 +1117,29 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.DemographicId).ValueGeneratedOnAdd();
             });
 
+            modelBuilder.Entity<DEMOGRAPHIC_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => e.Assessment_Id)
+                    .HasName("PK_FloridaDemographicRenameMe");
+
+                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Assessment)
+                    .WithOne(p => p.DEMOGRAPHIC_ANSWERS)
+                    .HasForeignKey<DEMOGRAPHIC_ANSWERS>(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicAnswer_ASSESSMENTS");
+
+                entity.HasOne(d => d.Sector)
+                    .WithMany(p => p.DEMOGRAPHIC_ANSWERS)
+                    .HasForeignKey(d => d.SectorId)
+                    .HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSector");
+
+                entity.HasOne(d => d.SubSector)
+                    .WithMany(p => p.DEMOGRAPHIC_ANSWERS)
+                    .HasForeignKey(d => d.SubSectorId)
+                    .HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSubSector");
+            });
+
             modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>
             {
                 entity.HasComment("A collection of DIAGRAM_CONTAINER records");
@@ -1170,6 +1250,24 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => new { e.Set_Name, e.Question_Id });
 
                 entity.HasComment("A collection of EXTRA_ACET_MAPPING records");
+            });
+
+            modelBuilder.Entity<EXT_SECTOR>(entity =>
+            {
+                entity.HasKey(e => e.SectorId)
+                    .HasName("PK_ExtendedSector");
+            });
+
+            modelBuilder.Entity<EXT_SUB_SECTOR>(entity =>
+            {
+                entity.HasKey(e => e.SubSectorId)
+                    .HasName("PK_ExtendedSubSector_1");
+
+                entity.HasOne(d => d.Sector)
+                    .WithMany(p => p.EXT_SUB_SECTOR)
+                    .HasForeignKey(d => d.SectorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedSubSector_ExtendedSector");
             });
 
             modelBuilder.Entity<ExcelExport>(entity =>
@@ -1794,7 +1892,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Question_Id).ValueGeneratedNever();
+                entity.Property(e => e.Question_Id).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.Question)
                     .WithOne(p => p.ISE_ACTIONS)
@@ -2018,6 +2116,29 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.MATURITY_SOURCE_FILES)
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<METRO_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Metro_FIPS })
+                    .HasName("PK_ExtendedDemographicMetropolitanAnswers_1");
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.METRO_ANSWERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicMetropolitanAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.Metro_FIPSNavigation)
+                    .WithMany(p => p.METRO_ANSWERS)
+                    .HasForeignKey(d => d.Metro_FIPS)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_METRO_ANSWERS_METRO_AREA");
+            });
+
+            modelBuilder.Entity<METRO_AREA>(entity =>
+            {
+                entity.HasKey(e => e.Metro_FIPS)
+                    .HasName("PK_MetropolitanArea_1");
             });
 
             modelBuilder.Entity<MODES_SETS_MATURITY_MODELS>(entity =>
@@ -2566,6 +2687,23 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH");
             });
 
+            modelBuilder.Entity<REGION_ANSWERS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.State, e.RegionCode })
+                    .HasName("PK_ExtendedDemographicRegionAnswers");
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.REGION_ANSWERS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_ASSESSMENTS");
+
+                entity.HasOne(d => d.STATE_REGION)
+                    .WithMany(p => p.REGION_ANSWERS)
+                    .HasForeignKey(d => new { d.State, d.RegionCode })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_STATE_REGION");
+            });
+
             modelBuilder.Entity<REPORT_DETAIL_SECTIONS>(entity =>
             {
                 entity.HasComment("A collection of REPORT_DETAIL_SECTIONS records");
@@ -3042,6 +3180,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Country_Code)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_STATES_AND_PROVINCES_COUNTRIES");
+            });
+
+            modelBuilder.Entity<STATE_REGION>(entity =>
+            {
+                entity.HasKey(e => new { e.State, e.RegionCode });
             });
 
             modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>
