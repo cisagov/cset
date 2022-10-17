@@ -12,6 +12,7 @@ import {
 import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
+import { ConfigService } from '../../services/config.service';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -71,11 +72,12 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
-    public assessSvc: AssessmentService) {
+    public assessSvc: AssessmentService,
+    public configSvc: ConfigService) {
   }
 
   ngOnInit(): void {
-    this.gallerySvc.getGalleryItems("CSET").subscribe(
+    this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
       (resp: any) => {
         this.galleryData = resp;
         this.rows = this.galleryData.rows;

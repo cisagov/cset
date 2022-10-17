@@ -72,6 +72,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.navSvc.setCurrentPage('info1');
+    
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }

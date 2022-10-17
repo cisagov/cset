@@ -495,6 +495,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { NgxPrintModule } from 'ngx-print';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
+import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 
 @NgModule({
     imports: [
@@ -944,7 +945,9 @@ import { IseDataComponent } from './reports/ise-data/ise-data.component';
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent, LogoTsaComponent
+        SearchPageComponent, 
+        LogoTsaComponent, 
+        OptionBlockComponent
     ],
     providers: [
         ConfigService,

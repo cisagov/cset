@@ -2,10 +2,8 @@
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -202,6 +200,8 @@ namespace CSETWebCore.Business.Question
             }
 
             response.ApplicationMode = _questionRequirement.ApplicationMode;
+            response.OnlyMode = _context.STANDARD_SELECTION.First(x => x.Assessment_Id == _questionRequirement.AssessmentId).Only_Mode;
+
             response.QuestionCount = _questionRequirement.NumberOfQuestions();
             response.RequirementCount = _questionRequirement.NumberOfRequirements();
 
