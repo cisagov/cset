@@ -29,6 +29,8 @@ namespace CSETWebCore.Model.Assessment
         public string QuestionMode { get; set; }
 
         public bool Diagram { get; set; } = false;
+
+        public string Origin { get; set; }
     }
 
 
