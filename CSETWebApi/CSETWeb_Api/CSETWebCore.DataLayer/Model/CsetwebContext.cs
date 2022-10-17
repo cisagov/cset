@@ -1794,7 +1794,7 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Question_Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Question_Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Question)
                     .WithOne(p => p.ISE_ACTIONS)
