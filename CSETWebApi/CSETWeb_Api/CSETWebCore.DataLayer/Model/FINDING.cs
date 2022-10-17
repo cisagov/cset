@@ -24,17 +24,14 @@ namespace CSETWebCore.DataLayer.Model
         public string Recommendations { get; set; }
         public string Vulnerabilities { get; set; }
         public DateTime? Resolution_Date { get; set; }
+        public int? Importance_Id { get; set; }
         [StringLength(250)]
         public string Title { get; set; }
         [StringLength(50)]
         public string Type { get; set; }
         public string Description { get; set; }
-        public int? Sub_Risk_Area_Id { get; set; }
-        [StringLength(50)]
-        public string Disposition { get; set; }
-        public DateTime? Identified_Date { get; set; }
-        public DateTime? Due_Date { get; set; }
-        public int? Importance_Id { get; set; }
+        public string Citations { get; set; }
+        public int? Auto_Generated { get; set; }
 
         [ForeignKey("Answer_Id")]
         [InverseProperty("FINDING")]
@@ -42,9 +39,6 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Importance_Id")]
         [InverseProperty("FINDING")]
         public virtual IMPORTANCE Importance { get; set; }
-        [ForeignKey("Sub_Risk_Area_Id")]
-        [InverseProperty("FINDING")]
-        public virtual RISK_SUB_RISK_AREA Sub_Risk_Area { get; set; }
         [InverseProperty("Finding")]
         public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; }
     }
