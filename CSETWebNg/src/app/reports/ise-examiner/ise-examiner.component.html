@@ -1,0 +1,170 @@
+<!---------------------- 
+   Copyright 2022 Battelle Energy Alliance, LLC  
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                EXAMINER
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom mb-4">
+            <div>
+                <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
+            </div>
+            <div style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date  |
+                    date:'dd-MMM-yyyy'}}
+                </div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="page-break">
+        <div class="ml-3 mr-3 form">
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Demographics</div>
+                </div>
+            </div>
+            
+            <table class="table-site-info">
+                <tr>
+                    <td>Assessment Name:</td>
+                    <td>{{response?.information?.assessment_Name}}</td>
+                </tr>
+                <tr>
+                    <td>Assessment Date:</td>
+                    <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td>Credit Union:</td>
+                    <td>{{response?.information?.credit_Union_Name}}</td>
+                </tr>
+                <tr>
+                    <td>City or Site Name:</td>
+                    <td>{{response?.information?.city_Or_Site_Name}}</td>
+                </tr>
+                <tr>
+                    <td>State, Province or Region:</td>
+                    <td>{{response?.information?.state_Province_Or_Region}}</td>
+                </tr>
+                <tr>
+                    <td>Charter:</td>
+                    <td>{{response?.information?.charter}}</td>
+                </tr>
+                <tr>
+                    <td>Assets:</td>
+                    <td>{{response?.information?.assets | currency}}</td>
+                </tr>
+                <tr>
+                    <td>Exam Level:</td>
+                    <td>{{ this.examLevel }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Comments (Table)</div>
+            </div>
+        </div>
+
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td></td>
+                <td>Question</td>
+                <td>Response</td>
+                <td>Comments</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <ng-container *ngFor="let c of f.components">
+                        <ng-container *ngFor="let q of c.questions">
+                            <tr *ngIf="q.comments === 'Yes' && this.requiredQuestion(q)">
+                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td class="pr-3">{{ q.questionText }}</td>
+                                <td class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</td>
+                                <td class="pr-3">{{ q.comment }}</td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </table> -->
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Comments</div>
+            </div>
+        </div>
+        <div *ngIf="this.hasComments.length > 0; else noComments">
+            <div *ngFor="let q of this.hasComments">
+                <div>
+                    <span class="font-weight-bold">Title: </span>
+                    <span class="pr-3">{{ q.title }}</span>
+                </div>
+                <div>
+                    <span class="font-weight-bold">Question Text: </span>
+                    <span class="pr-3">{{ q.questionText }}</span>
+                </div>
+                <div>
+                    <span class="font-weight-bold">Response: </span>
+                    <span class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</span>
+                </div>
+                <div>
+                    <div class="font-weight-bold">Comments: </div>
+                    <span class="pr-3">{{ q.comment }}</span>
+                </div>
+
+            <hr class="page-line">
+
+            </div>
+        </div>
+        <ng-template #noComments>
+            No comments were left.
+        </ng-template>
+    </div>
+</div>

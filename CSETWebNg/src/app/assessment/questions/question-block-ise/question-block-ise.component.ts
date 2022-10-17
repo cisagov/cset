@@ -161,6 +161,7 @@ export class QuestionBlockIseComponent implements OnInit {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
+      console.log(response);
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
       let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
       this.contactInitials = firstInitial + lastInitial;
@@ -559,6 +560,7 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   getSummaryComment(q: Question) {
+    console.log(q.displayNumber);
     let parentId = q.parentQuestionId;
     let comment = "";
 

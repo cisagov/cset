@@ -871,7 +871,7 @@ namespace CSETWebCore.Business.Maturity
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetIseTopMatLevelForRisk(irp);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -941,14 +941,9 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-
-
-
-
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();

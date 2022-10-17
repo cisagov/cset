@@ -19,99 +19,170 @@
   SOFTWARE. 
 -------------------------->
 <div class="report-body mb-5">
-
-    <div class="flex-container">
-        <div class="column">
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                EXAMINATION
-            </p>
-            <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                REPORT
-            </p>
-        </div>
-        <div class="column">
-            <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/ACET_shield_logo.png" alt="acet">
-            </p>
-        </div>
-
-        <div class="cover-page-bottom mb-4">
-            <div>
-                <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
+    <div id="ExamReport">
+        <div class="flex-container">
+            <div class="column">
+                <p
+                    style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                    EXAMINATION
+                </p>
+                <p
+                    style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                    REPORT
+                </p>
             </div>
-            <div style="
-                            text-align: right;
-                            font-weight: normal;
-                            font-size: 18px;
-                            flex-direction: column;
-                            line-height: 150%;
-                            padding-right: 2em;
-                        ">
-
-                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                <div class="title-page-content">{{response?.information?.assessment_Date  |
-                    date:'dd-MMM-yyyy'}}
-                </div>
-                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
+            <div class="column">
+                <p style="text-align: center">
+                    <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
+                </p>
             </div>
-        </div>
-    </div>
-    <div class="page-break">
-        <div class="ml-3 mr-3 form">
-            <h1 class="page-header">
-                Demographics
-            </h1>
-            <hr class="page-line">
-            
-            <table class="table-site-info">
-                <tr>
-                    <td>Assessment Name:</td>
-                    <td>{{response?.information?.assessment_Name}}</td>
-                </tr>
-                <tr>
-                    <td>Assessment Date:</td>
-                    <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td>Credit Union:</td>
-                    <td>{{response?.information?.credit_Union_Name}}</td>
-                </tr>
-                <tr>
-                    <td>City or Site Name:</td>
-                    <td>{{response?.information?.city_Or_Site_Name}}</td>
-                </tr>
-                <tr>
-                    <td>State, Province or Region:</td>
-                    <td>{{response?.information?.state_Province_Or_Region}}</td>
-                </tr>
-                <tr>
-                    <td>Charter:</td>
-                    <td>{{response?.information?.charter}}</td>
-                </tr>
-                <tr>
-                    <td>Assets:</td>
-                    <td>{{response?.information?.assets | currency}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="page-break"></div>
-        <div class="page-break pb-5">
-            <div class="d-flex flex-row" style="justify-content: space-between">
+
+            <div class="cover-page-bottom mb-4">
                 <div>
-                    <div class="report-text-blue text-underline">
-                        Maturity Level Key:
-                    </div>
-                    B - Baseline<br>
-                    E - Evolving<br>
-                    INT - Intermediate<br>
-                    ADV - Advanced<br>
-                    INN - Innovative
+                    <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
                 </div>
+                <div style="
+                                text-align: right;
+                                font-weight: normal;
+                                font-size: 18px;
+                                flex-direction: column;
+                                line-height: 150%;
+                                padding-right: 2em;
+                            ">
+
+                    <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                    <div class="title-page-content">{{response?.information?.assessment_Date  |
+                        date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+                    <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
+                        printSectionId="ExamReport" printTitle="Examination Report" ngxPrint [useExistingCss]="true">Print to PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="page-break">
+            <div class="ml-3 mr-3 form">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Demographics</div>
+                    </div>
+                </div>
+                
+                <table class="table-site-info">
+                    <tr>
+                        <td>Assessment Name:</td>
+                        <td>{{response?.information?.assessment_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessment Date:</td>
+                        <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Credit Union:</td>
+                        <td>{{response?.information?.credit_Union_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>City or Site Name:</td>
+                        <td>{{response?.information?.city_Or_Site_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>State, Province or Region:</td>
+                        <td>{{response?.information?.state_Province_Or_Region}}</td>
+                    </tr>
+                    <tr>
+                        <td>Charter:</td>
+                        <td>{{response?.information?.charter}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assets:</td>
+                        <td>{{response?.information?.assets | currency}}</td>
+                    </tr>
+                    <tr>
+                        <td>Exam Level:</td>
+                        <td>{{ this.examLevel }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="page-break"></div>
+
+            <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Answered Statements</div>
+                    <span class="h2 report-text-blue">Results of Review</span> 
+                </div>
+            </div>
+            <p>
+                {{ this.summaryStatic }}
+            </p>
+            <div *ngIf="this.findingsResponse?.length > 0">
+                <div *ngIf="this.examinerFindingsTotal > 0">
+                    {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                    <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                        {{ issue }}
+                    </div>
+                    <br>
+                </div>
+                <div *ngIf="this.dorsTotal > 0">
+                    {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                    <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                        {{ issue }}
+                    </div>
+                    <br>
+                </div>
+                <div *ngIf="this.supplementalFactsTotal > 0">
+                    {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
+                    <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                        {{ issue }}
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div *ngIf="this.findingsResponse?.length === 0">
+                <p>
+                    No Issues were noted.
+                </p>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <span class="h2 report-text-blue">Statement Summary</span>
+                </div>
+            </div>
+
+            <div *ngFor="let d of response?.matAnsweredQuestions">
+                <div *ngFor="let f of d.assessmentFactors">
+                    <div *ngFor="let c of f.components">
+                        <div *ngFor="let q of c.questions">
+                            <div *ngIf="isParentQuestion(q)">
+                                <div>
+                                    <span class="font-weight-bold">Title: </span>
+                                    <span class="pr-3">{{ q.title }}</span>
+                                </div>
+                                <div>
+                                    <span class="font-weight-bold">Question Text: </span>
+                                    <span class="pr-3">{{ q.questionText }}</span>
+                                </div>
+                                <div>
+                                    <span class="font-weight-bold">Statement Summary: </span>
+                                    <br>
+                                    <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]' }}</span>
+                                </div>
+
+                                <hr class="page-line">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Statement Overview</div>
                 </div>
             </div>
             <table class="table-responsive td-align-top td-padding-half-rem">
@@ -119,35 +190,64 @@
                     <td></td>
                     <td></td>
                     <td>Answers</td>
-                    <td>Maturity Level</td>
-                    <td>Comments</td>
+                    <td>Exam Level</td>
                 </tr>
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
+                        <td colspan="5" class="background-1 h4 color-white"></td>
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
-                            </td>
+                            <td colspan="5" class="background-1 color-white font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
-                            <tr>
-                                <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
-                            </tr>
-                            <ng-container *ngFor="let q of c.questions">
+                            <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
-                                    <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td class="pr-3">{{questionsSvc.getAnswerDisplayLabel(10, answerText)}}</td>
-                                    <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
-                                    <td>{{q.comments}}</td>
+                                    <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
+                                        <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(c.title)">
+                                        </label>
+                                    </td>
                                 </tr>
+                                <ng-container *ngFor="let q of c.questions">
+                                    <tr *ngIf="(requiredQuestion(q) || isParentQuestion(q)) && shouldExpand(c.title)">
+                                        <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+
+                                        <td *ngIf="isParentQuestion(q)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
+
+                                        <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
+                                        <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, answerText) }}</td>
+
+                                        <td *ngIf="isParentQuestion(q)" class="background-3 pr-3">
+                                            {{acetSvc.getAbbrev(q.maturityLevel)}}
+                                        </td>
+                                        <td *ngIf="isParentQuestion(q)" class="background-3">
+                                            <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                                <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                            </label>
+                                        </td>
+                                        <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </ng-container>
                 </ng-container>
             </table>
         </div>
-
     </div>
+    <div style="
+                    text-align: right;
+                    font-weight: normal;
+                    font-size: 18px;
+                    flex-direction: column;
+                    line-height: 150%;
+                ">
+
+        <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
+            printSectionId="ExamReport" printTitle="Examination Report" ngxPrint [useExistingCss]="true">Print to PDF
+        </button>
+    </div>
+</div>
