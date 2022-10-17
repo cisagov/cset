@@ -21,9 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ViewChild } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from '../../services/questions.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
@@ -69,6 +70,7 @@ export class IseExaminationComponent implements OnInit {
     public reportSvc: ReportService,
     public assessSvc: AssessmentService,
     private titleService: Title,
+    public questionsSvc: QuestionsService,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
@@ -81,7 +83,6 @@ export class IseExaminationComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
@@ -274,7 +275,7 @@ export class IseExaminationComponent implements OnInit {
    * checks if the question needs to appear
    */ 
   requiredQuestion(q: any) {
-    if (this.configSvc.answerLabels[q.answerText] == 'Unanswered' && q.maturityLevel == 'CORE+') {
+    if (this.questionsSvc.getAnswerDisplayLabel(10, q.answerText) == 'Unanswered' && q.maturityLevel == 'CORE+') {
       return false;
     }
     return true;

@@ -26,6 +26,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-question-filters',
@@ -48,6 +49,7 @@ export class QuestionFiltersComponent implements OnInit {
     private dialog: MatDialogRef<QuestionFiltersComponent>,
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     if (!!data && !!data.showFilterAboveTargetLevel) {
@@ -79,7 +81,9 @@ export class QuestionFiltersComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      this.answerOptions.push({ value: o, text: this.configSvc.answerLabels[o] });
+      this.answerOptions.push({ 
+        value: o, 
+        text: this.questionsSvc.getAnswerDisplayLabel(this.filterSvc.maturityModelId, o) });
     });
 
     if (this.assessSvc.isISE()) {

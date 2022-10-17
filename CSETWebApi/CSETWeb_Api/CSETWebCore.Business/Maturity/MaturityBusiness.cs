@@ -226,7 +226,7 @@ namespace CSETWebCore.Business.Maturity
                     }
 
                     calculatedScore -= q.Score;
-                   
+
                     d.Questions.Add(q);
                 }
             }
@@ -259,7 +259,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 targetLevel = 1;
             }
-            else 
+            else
             {
                 targetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
             }
@@ -276,7 +276,7 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var l in levels)
             {
-                var levelAnswers = answers.Where(x => 
+                var levelAnswers = answers.Where(x =>
                     l.MATURITY_QUESTIONS.Select(q => q.Mat_Question_Id).Contains(x.Question_Or_Requirement_Id));
 
                 var distrib = StatUtils.CalculateDistribution(levelAnswers.Select(a => a.Answer_Text).ToList());
@@ -327,21 +327,21 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public Dictionary<int,string> GetSourceFiles()
+        public Dictionary<int, string> GetSourceFiles()
         {
             List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
-                                                   join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
-                                                   join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
-                                                   where q.Maturity_Model_Id == 7
-                                                   select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
+                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
+                                                    join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
+                                                    where q.Maturity_Model_Id == 7
+                                                    select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
                                                    .ToList();
-            
-            Dictionary<int,string> result = new Dictionary<int, string>();
-            foreach(var sourceFile in sourceFiles)
+
+            Dictionary<int, string> result = new Dictionary<int, string>();
+            foreach (var sourceFile in sourceFiles)
             {
-                if(result.TryGetValue(sourceFile.Item1, out var value))
+                if (result.TryGetValue(sourceFile.Item1, out var value))
                 {
-                    result[sourceFile.Item1] +=  "\r\n" +sourceFile.Item2;
+                    result[sourceFile.Item1] += "\r\n" + sourceFile.Item2;
                 }
                 else
                 {
@@ -565,7 +565,7 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId)
         {
             var response = new MaturityResponse();
 
@@ -585,6 +585,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
+            response.ModelId = myModelDefinition.Maturity_Model_Id;
             response.ModelName = myModelDefinition.Model_Name;
 
             response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
@@ -613,12 +614,19 @@ namespace CSETWebCore.Business.Maturity
 
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
-            var questions = _context.MATURITY_QUESTIONS
+            var questionQuery = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Where(q =>
-                myModel.model_id == q.Maturity_Model_Id).ToList();
+                myModel.model_id == q.Maturity_Model_Id);
 
-            
+            if (groupingId != 0)
+            {
+                questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
+            }
+
+            var questions = questionQuery.ToList();
+
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -709,7 +717,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer=answer?.a.Free_Response_Answer,
+                        freeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -1336,7 +1344,7 @@ namespace CSETWebCore.Business.Maturity
                                                                                 maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CoreMaturity) ? Constants.Constants.CoreMaturity :
                                                                                     maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CorePlusMaturity) ? Constants.Constants.CorePlusMaturity :
                                                                                         Constants.Constants.IncompleteMaturity;
-                        
+
                         maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
                         maturityDomain.Assessments.Add(maturityAssessment);
 
@@ -1776,7 +1784,7 @@ namespace CSETWebCore.Business.Maturity
             result.Assets = assessment.Assets;
 
             result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
-            
+
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
@@ -1940,10 +1948,10 @@ namespace CSETWebCore.Business.Maturity
             var dbList = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).ToList();
 
             var response = new List<GroupingTitle>();
-            dbList.ForEach(x => 
+            dbList.ForEach(x =>
             {
-                response.Add(new GroupingTitle() 
-                { 
+                response.Add(new GroupingTitle()
+                {
                     Id = x.Grouping_Id,
                     Title = x.Title,
                     TitlePrefix = x.Title_Prefix
@@ -1951,6 +1959,88 @@ namespace CSETWebCore.Business.Maturity
             });
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Converts a CisQuestions structure to a MaturityResponse structure.
+        /// </summary>
+        /// <param name="cisStructure"></param>
+        /// <returns></returns>
+        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
+        {
+            var resp = new MaturityResponse();
+
+            resp.MaturityTargetLevel = 1;         
+
+            foreach (var g in cisStructure.Groupings)
+            {
+                resp.Groupings = MapGroupings(g);
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<MaturityGrouping> MapGroupings(Model.Cis.Grouping g)
+        {
+            var list = new List<MaturityGrouping>();
+
+            foreach (var cisG in g.Groupings)
+            {
+                var newG = new MaturityGrouping()
+                {
+                    Description = cisG.Description,
+                    Abbreviation = cisG.Abbreviation,
+                    GroupingType = cisG.GroupType,
+                    GroupingID = cisG.GroupingId,
+                    Title = cisG.Title
+                };
+
+                list.Add(newG);
+
+                newG.Questions = MapQuestions(cisG);
+
+                newG.SubGroupings = MapGroupings(cisG);
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<QuestionAnswer> MapQuestions(Model.Cis.Grouping g)
+        {
+            var questionAnswer = new List<QuestionAnswer>();
+
+            foreach (var q in g.Questions)
+            {
+                var newQ = new QuestionAnswer()
+                {
+                    Answer = q.AnswerText,
+                    AltAnswerText = q.AltAnswerText,
+                    QuestionId = q.QuestionId,
+                    DisplayNumber = q.DisplayNumber,
+                    Sequence = q.Sequence,
+                    QuestionText = q.QuestionText,
+                    QuestionType = "Maturity",
+                    Comment = q.Comment,
+                    MaturityLevelName = q.MaturityLevelName
+                };
+
+                q.Options.ForEach(o => {
+                    newQ.Options.Add(o);
+                });
+
+                questionAnswer.Add(newQ);
+            }
+
+            return questionAnswer;
         }
     }
 }

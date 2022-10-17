@@ -359,6 +359,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
