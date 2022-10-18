@@ -51,8 +51,8 @@ export class TsaAnalyticsComponent implements OnInit {
   sampleSize: number = 0;
   assessmentId: string = "";
   chart: any = [];
-  answerStandard:string ='';
-  answerMaturity:boolean=false;
+  answerStandard: string = '';
+  answerMaturity: boolean = false;
   noData: boolean = false;
 
   initialized = false;
@@ -65,7 +65,7 @@ export class TsaAnalyticsComponent implements OnInit {
   sizeList: AssessmentSize[];
   assetValues: DemographicsAssetValue[];
   industryList: Industry[];
-  btnSearch:boolean=true;
+  btnSearch: boolean = true;
   demographicData: Demographic = {};
   orgTypes: any[];
   standards: StandardsNames[];
@@ -83,52 +83,52 @@ export class TsaAnalyticsComponent implements OnInit {
     private assessSvc: AssessmentService,
     private tsaAnalyticSvc: TsaAnalyticsService,
     public analysisSvc: ReportAnalysisService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.assessSvc.id()) {
       this.assessSvc.getAssessmentDetail().subscribe((data) => {
         this.standards = [];
         this.assessment = data;
-          if (!this.assessment.useMaturity && !this.assessment.useStandard) {
-            this.noData = true;
-          }
-          if (this.assessment.useMaturity) {
-            this.isMaturity = true;
-            this.maturityModelName = this.assessment.maturityModel.modelName;
-            this.maturityModelId = this.assessment.maturityModel.modelId;
-            this.tsaAnalyticSvc
-              .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
-              .subscribe((x) => {
-                this.setupChartMaturity(x);
-
-              });
-          }
-          if (this.assessment.useStandard && this.assessment.standards.length>0) {
-            this.isStandard = true;
-            this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
-              x.forEach((element) => {
-                this.standards.push(element);
-              });
+        if (!this.assessment.useMaturity && !this.assessment.useStandard) {
+          this.noData = true;
+        }
+        if (this.assessment.useMaturity) {
+          this.isMaturity = true;
+          this.maturityModelName = this.assessment.maturityModel.modelName;
+          this.maturityModelId = this.assessment.maturityModel.modelId;
+          this.tsaAnalyticSvc
+            .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
+            .subscribe((x) => {
+              this.setupChartMaturity(x);
 
             });
-            this.tsaAnalyticSvc
-              .getSectorIndustryStandardsTSA(
+        }
+        if (this.assessment.useStandard && this.assessment.standards.length > 0) {
+          this.isStandard = true;
+          this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
+            x.forEach((element) => {
+              this.standards.push(element);
+            });
+
+          });
+          this.tsaAnalyticSvc
+            .getSectorIndustryStandardsTSA(
               this.sectorId,
-                this.sectorindustryId
-              )
-              .subscribe((x) => {
-                this.chartDataArray = x;
-                // this.buildChart();
-              });
-          }
+              this.sectorindustryId
+            )
+            .subscribe((x) => {
+              this.chartDataArray = x;
+              // this.buildChart();
+            });
+        }
 
 
 
       });
     }
-    this.demographicData.organizationType=null;
-     this.demographicData.sectorId = null;
+    this.demographicData.organizationType = null;
+    this.demographicData.sectorId = null;
     this.currentAssessmentId = this.assessment.id?.toString();
     this.demoSvc.getAllSectors().subscribe(
       (data: Sector[]) => {
@@ -137,8 +137,8 @@ export class TsaAnalyticsComponent implements OnInit {
       (error) => {
         console.log(
           "Error Getting all sectors: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log(
           "Error Getting all sectors (cont): " + (<Error>error).stack
@@ -152,8 +152,8 @@ export class TsaAnalyticsComponent implements OnInit {
       (error) => {
         console.log(
           "Error Getting all asset values: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log(
           "Error Getting all asset values (cont): " + (<Error>error).stack
@@ -167,8 +167,8 @@ export class TsaAnalyticsComponent implements OnInit {
       (error) => {
         console.log(
           "Error Getting size values: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log(
           "Error Getting size values (cont): " + (<Error>error).stack
@@ -206,8 +206,8 @@ export class TsaAnalyticsComponent implements OnInit {
       median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
     }
-    if(x.data.every(x => x === 0)){
-  this.answerStandard="<mark>In order to create a comparison, please answer at least a few questions on the standard selected. "+x.label+"</mark>";
+    if (x.data.every(x => x === 0)) {
+      this.answerStandard = "<mark>In order to create a comparison, please answer at least a few questions on the standard selected. " + x.label + "</mark>";
     }
 
     document
@@ -215,12 +215,12 @@ export class TsaAnalyticsComponent implements OnInit {
       .insertAdjacentHTML(
         "afterend",
         "<div id='" +
-          x.label +
-          "' class='mt-2'> Model name: " +
-          x.label +
-          "<tr><td><div><p class='ml-3'>"+ this.answerStandard+"</p></div><canvas id='canvas" +
-          x.label +
-          "'></canvas></td></tr></div>"
+        x.label +
+        "' class='mt-2'> Model name: " +
+        x.label +
+        "<tr><td><div><p class='ml-3'>" + this.answerStandard + "</p></div><canvas id='canvas" +
+        x.label +
+        "'></canvas></td></tr></div>"
       );
     var can_id = "canvas" + x.label;
     const canvas = <HTMLCanvasElement>document.getElementById(can_id);
@@ -283,41 +283,41 @@ export class TsaAnalyticsComponent implements OnInit {
     return x;
   }
 
- onSelectSector(sectorId: string) {
-    this.sectorId=parseInt(sectorId);
+  onSelectSector(sectorId: string) {
+    this.sectorId = parseInt(sectorId);
     this.populateIndustryOptions(parseInt(sectorId));
-    this.btnSearch=false;
+    this.btnSearch = false;
     // invalidate the current Industry, as the Sector list has just changed
     this.demographicData.industryId = null;
     this.updateDemographics();
     // update maturity graph
-   if(this.assessment.useMaturity){
+    if (this.assessment.useMaturity) {
       this.tsaAnalyticSvc
-      .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId,this.sectorindustryId)
-      .subscribe((x) => {
-        this.setupChartMaturity(x);
+        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+        .subscribe((x) => {
+          this.setupChartMaturity(x);
 
-      });
+        });
     }
-       // Update standard graph
-   if(this.assessment.useStandard && this.assessment.standards.length>0){
-    this.tsaAnalyticSvc
-    .getSectorIndustryStandardsTSA(
-      this.sectorId,
-     this.sectorindustryId)
-    .subscribe((x) => {
-      this.chartDataArray = x;
-     this.standardsChecked.forEach(element => {
-      const oldchart = document.getElementById(element);
-      oldchart.remove();
-      var datachart = this.chartDataArray.find(
-        (x) => x.label ==element
-      );
-     this.answerStandard="";
-      this.setupChartStandard(datachart);
-      });
-    });
-   }
+    // Update standard graph
+    if (this.assessment.useStandard && this.assessment.standards.length > 0) {
+      this.tsaAnalyticSvc
+        .getSectorIndustryStandardsTSA(
+          this.sectorId,
+          this.sectorindustryId)
+        .subscribe((x) => {
+          this.chartDataArray = x;
+          this.standardsChecked.forEach(element => {
+            const oldchart = document.getElementById(element);
+            oldchart.remove();
+            var datachart = this.chartDataArray.find(
+              (x) => x.label == element
+            );
+            this.answerStandard = "";
+            this.setupChartStandard(datachart);
+          });
+        });
+    }
   }
 
   getDemographics() {
@@ -350,8 +350,8 @@ export class TsaAnalyticsComponent implements OnInit {
       (error) => {
         console.log(
           "Error Getting Industry: " +
-            (<Error>error).name +
-            (<Error>error).message
+          (<Error>error).name +
+          (<Error>error).message
         );
         console.log("Error Getting Industry (cont): " + (<Error>error).stack);
       }
@@ -364,38 +364,38 @@ export class TsaAnalyticsComponent implements OnInit {
     // this.updateDemographics();
   }
   update(event: any) {
-    this.sectorindustryId=event.target.value;
-    if(this.sectorindustryId.toString()=='0: null'){
-      this.sectorindustryId=null
+    this.sectorindustryId = event.target.value;
+    if (this.sectorindustryId.toString() == '0: null') {
+      this.sectorindustryId = null
     }
-     // update maturity graph
-     if(this.assessment.useMaturity){
+    // update maturity graph
+    if (this.assessment.useMaturity) {
       this.tsaAnalyticSvc
-      .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId,this.sectorindustryId)
-      .subscribe((x) => {
-        this.setupChartMaturity(x);
+        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+        .subscribe((x) => {
+          this.setupChartMaturity(x);
 
-      });
+        });
     }
-       // Update standard graph
-   if(this.assessment.useStandard && this.assessment.standards.length>0){
-    this.tsaAnalyticSvc
-    .getSectorIndustryStandardsTSA(
-      this.sectorId,
-     this.sectorindustryId)
-    .subscribe((x) => {
-      this.chartDataArray = x;
-     this.standardsChecked.forEach(element => {
-      const oldchart = document.getElementById(element);
-      oldchart.remove();
-      var datachart = this.chartDataArray.find(
-        (x) => x.label ==element
-      );
-      this.answerStandard="";
-      this.setupChartStandard(datachart);
-      });
-    });
-   }
+    // Update standard graph
+    if (this.assessment.useStandard && this.assessment.standards.length > 0) {
+      this.tsaAnalyticSvc
+        .getSectorIndustryStandardsTSA(
+          this.sectorId,
+          this.sectorindustryId)
+        .subscribe((x) => {
+          this.chartDataArray = x;
+          this.standardsChecked.forEach(element => {
+            const oldchart = document.getElementById(element);
+            oldchart.remove();
+            var datachart = this.chartDataArray.find(
+              (x) => x.label == element
+            );
+            this.answerStandard = "";
+            this.setupChartStandard(datachart);
+          });
+        });
+    }
   }
 
   updateDemographics() {
@@ -447,9 +447,9 @@ export class TsaAnalyticsComponent implements OnInit {
       median.push({ x: item.median, y: yHeight });
       yHeight = yHeight + 10;
     }
-    if(x.data.every(x => x === 0)){
-      this.answerMaturity=true;
-        }
+    if (x.data.every(x => x === 0)) {
+      this.answerMaturity = true;
+    }
     let tempChart = Chart.getChart("canvasStandardResult1");
     if (tempChart) {
       tempChart.destroy();
@@ -525,12 +525,12 @@ export class TsaAnalyticsComponent implements OnInit {
       var datachart = this.chartDataArray.find(
         (x) => x.label == event.target.value
       );
-      this.answerStandard="";
+      this.answerStandard = "";
       this.setupChartStandard(datachart);
     } else {
       this.standardIschecked = false;
     }
   }
 
-  getmodelId(modelId) {}
+  getmodelId(modelId) { }
 }
