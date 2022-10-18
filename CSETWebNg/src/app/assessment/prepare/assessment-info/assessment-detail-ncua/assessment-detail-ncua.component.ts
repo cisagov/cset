@@ -82,7 +82,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.acetDashboard = data;
         this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
         this.examOverride = this.ncuaSvc.chosenOverrideLevel;
-        if (this.examOverride !== "" || this.assessSvc.assessment.maturityModel.modelName !== 'ISE') {
+        if (this.examOverride !== "" || !this.assessSvc.isISE()) {
           this.loading = false;
         }
       });
@@ -121,7 +121,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
-      this.assessSvc.setNcuaDefaults();
+      //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
