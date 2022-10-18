@@ -126,7 +126,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
         let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-        this.contactInitials = firstInitial + lastInitial;
+        this.contactInitials = "_" + firstInitial + lastInitial;
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -134,7 +134,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       // This will keep the contact initials the same, even when importing an assessment changes the assessment owner
       if (this.assessment.assessmentName !== "New Assessment" && !(this.assessment.assessmentName.includes("merged"))) {
         let splitNameArray = this.assessment.assessmentName.split("_");
-        this.contactInitials = splitNameArray[1];
+        if (splitNameArray[1] !== "undefined" && splitNameArray[1] !== undefined) {
+          this.contactInitials = "_" + splitNameArray[1];
+        } else {
+          this.contactInitials = "";
+        }
       }
     }
     
@@ -178,8 +182,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
-    this.createAssessmentName();
-
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
       if (e.target !== undefined) {
         if (e.target.value === this.creditUnionOptions[i].name) {
@@ -194,6 +196,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
+    this.createAssessmentName();
     this.setCharterPad();
 
     
@@ -271,7 +274,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     if (this.isAnExamination()) {
-      this.assessment.assessmentName = this.assessment.assessmentName + "_" + this.contactInitials;
+      this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
     }
   }
 

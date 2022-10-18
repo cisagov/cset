@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class RISK_AREA
+    public partial class STATE_REGION
     {
-        public RISK_AREA()
-        {
-            RISK_SUB_RISK_AREA = new HashSet<RISK_SUB_RISK_AREA>();
-        }
-
         [Key]
-        [Column("Risk_Area")]
+        [StringLength(2)]
+        [Unicode(false)]
+        public string State { get; set; }
+        [Key]
+        [StringLength(5)]
+        [Unicode(false)]
+        public string RegionCode { get; set; }
+        [Required]
         [StringLength(50)]
-        public string Risk_Area1 { get; set; }
-
-        [InverseProperty("Risk_AreaNavigation")]
-        public virtual ICollection<RISK_SUB_RISK_AREA> RISK_SUB_RISK_AREA { get; set; }
+        [Unicode(false)]
+        public string RegionName { get; set; }
     }
 }

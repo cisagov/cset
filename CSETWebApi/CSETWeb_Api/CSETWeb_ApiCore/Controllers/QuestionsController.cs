@@ -133,7 +133,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetChildAnswers")]
         public IList<GetChildAnswersResult> GetChildAnswers([FromQuery] int parentId, [FromQuery] int assessId)
         {
-            return _context.GetChildAnswers(parentId, assessId);
+            return _context.Get_Children_Answers(parentId, assessId);
         }
 
         /// <summary>

@@ -496,6 +496,8 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
 import { NgxPrintModule } from 'ngx-print';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
+import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
+import { DemographicExtendedService } from './services/demographic-extended.service';
 
 @NgModule({
     imports: [
@@ -947,7 +949,8 @@ import { OptionBlockComponent } from './assessment/questions/maturity-questions/
         PrivacyWarningRejectComponent, 
         SearchPageComponent, 
         LogoTsaComponent, 
-        OptionBlockComponent
+        OptionBlockComponent, 
+        DemographicsExtendedComponent
     ],
     providers: [
         ConfigService,
@@ -974,6 +977,7 @@ import { OptionBlockComponent } from './assessment/questions/maturity-questions/
         AssessGuard,
         AggregationGuard,
         DemographicService,
+        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,
