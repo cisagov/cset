@@ -1022,6 +1022,25 @@ table.td-align-top td {
   color: $white;
 }
 
+
+.btn-geo {
+  background-color: $gray-150;
+  color: $primary-850;
+}
+
+.btn-geo:hover {
+  background-color: $gray-400;
+  color: $primary-850;
+}
+
+.btn-geo:not(.disabled).active,
+.btn-geo:not(.disabled).activeLevel,
+.show>.btn-geo.dropdown-toggle {
+  background-color: $primary-850;
+  color: $white;
+}
+
+
 .gauge {
   background-color: $white;
   fill: $primary-color;

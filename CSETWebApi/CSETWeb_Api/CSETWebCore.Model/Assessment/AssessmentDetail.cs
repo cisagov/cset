@@ -34,6 +34,11 @@ namespace CSETWebCore.Model.Assessment
 
         public string Workflow { get; set; }
 
+        /// <summary>
+        /// Created to be flexible to able to 'flag' an assessment for a special behavior
+        /// </summary>
+        public string Origin { get; set; }
+
         // Selected maturity model and the target level
         public MaturityModel MaturityModel { get; set; }
 
