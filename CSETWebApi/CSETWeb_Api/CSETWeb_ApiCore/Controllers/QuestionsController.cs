@@ -420,19 +420,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetSubRisks")]
-        public IActionResult GetSubRisks()
-        {
-            var data = _context.RISK_SUB_RISK_AREA.ToList();
-
-            return Ok(data);
-        } 
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="finding_Id"></param>
