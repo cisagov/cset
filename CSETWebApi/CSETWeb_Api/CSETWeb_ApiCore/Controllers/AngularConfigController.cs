@@ -62,6 +62,7 @@ namespace CSETWebCore.Api.Controllers
             var path = Path.Combine(webpath, "assets","config.json");
             //if the files are there then assume we are running together
             //replace and return it. 
+
             if (System.IO.File.Exists(path))
             {
                 JObject document = JObject.Parse(System.IO.File.ReadAllText(path));
@@ -76,7 +77,7 @@ namespace CSETWebCore.Api.Controllers
                     if ((context.Host.Port == 80) || (context.Host.Port == 443))
                         port = "";
                     else
-                        port = (context.Host.Port ?? 80).ToString();
+                        port = (context.Host.Port == null) ? "" : context.Host.Port.ToString();
                     element["port"] = port;
                 }
                 else
@@ -94,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
                     if ((context.Host.Port == 80) || (context.Host.Port == 443))
                         port = "";
                     else
-                        port = (context.Host.Port ?? 80).ToString();
+                        port = (context.Host.Port==null)?"":context.Host.Port.ToString();
                     element["port"] = port;
                 }
                 else

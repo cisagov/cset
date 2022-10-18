@@ -86,6 +86,9 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(30)]
         public string Workflow { get; set; }
         public int? Baseline_Assessment_Id { get; set; }
+        [StringLength(20)]
+        [Unicode(false)]
+        public string Origin { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("INFORMATION")]

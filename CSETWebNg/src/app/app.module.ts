@@ -492,6 +492,11 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
+import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
+import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
+import { DemographicExtendedService } from './services/demographic-extended.service';
+import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 
 @NgModule({
     imports: [
@@ -938,7 +943,11 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent, LogoTsaComponent
+        SearchPageComponent, 
+        LogoTsaComponent, 
+        OptionBlockComponent, 
+        DemographicsExtendedComponent, 
+        SectorHelpComponent, AnalyticsCompareComponent
     ],
     providers: [
         ConfigService,
@@ -965,6 +974,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         AssessGuard,
         AggregationGuard,
         DemographicService,
+        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,
@@ -1028,7 +1038,8 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
         DataloginComponent,
-        AwwaStandardComponent
+        AwwaStandardComponent,
+        SectorHelpComponent
     ]
 })
 

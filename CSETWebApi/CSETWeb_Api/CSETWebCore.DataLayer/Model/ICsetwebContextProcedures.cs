@@ -34,6 +34,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<int> GetApplicationModeDefaultAsync(int? Assessment_Id, OutputParameter<string> Application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetAreasDataResult>> GetAreasDataAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetAreasOverallResult>> GetAreasOverallAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? Parent_Id, int? Assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonAreasFileResult>> GetComparisonAreasFileAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonBestToWorstResult>> GetComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
@@ -47,6 +48,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<GetRelevantAnswersResult>> GetRelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<InScopeQuestionsResult>> InScopeQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<InScopeRequirementsResult>> InScopeRequirementsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<IseAnswerDistributionResult>> IseAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> Parse_XMLAsync(string XMLString, long? strtX, OutputParameter<long?> endX, OutputParameter<string> DataStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<RelevantAnswersResult>> RelevantAnswersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<requirement_final_movesResult>> requirement_final_movesAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

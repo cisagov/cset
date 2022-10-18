@@ -109,6 +109,12 @@ export class PageVisibilityService {
       }
 
 
+      // ORIGIN 
+      if (c.startsWith('ORIGIN:') || c.startsWith('ORIGIN-ANY(')) {
+        show = show && this.originAny(c);
+      }
+
+
 
       // look for the specified maturity model
       if (c.startsWith('MATURITY:') || c.startsWith('MATURITY-ANY(')) {
@@ -192,6 +198,19 @@ export class PageVisibilityService {
           has = has || this.assessSvc.assessment?.useDiagram;
           break;
       }
+    });
+    return has;
+  }
+
+  /**
+   * Returns true if the assessment's "origin" matches the specified value.
+   */
+  originAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has ||
+      (this.assessSvc.assessment?.origin == t.trim())
     });
     return has;
   }
