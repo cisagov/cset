@@ -357,7 +357,7 @@ export class QuestionBlockIseComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.isParentQuestion) {
+      if (q.parentQuestionId === null) {
         return;
       }
       if (q.visible) {
