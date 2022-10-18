@@ -1,5 +1,7 @@
 <!---------------------- 
+
    Copyright 2022 Battelle Energy Alliance, LLC  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
   in the Software without restriction, including without limitation the rights 
@@ -20,11 +22,9 @@
 -------------------------->
 <div class="question-group mb-3">
     <!-- Hides the ISE CORE+ only sub cats unless they need to be shown -->
-    <ng-container *ngIf="(myGrouping.groupingID < 2564 || (myGrouping.groupingID >= 2564 && ncuaSvc.getExtraQuestionStatus() === true))">
-
+    <ng-container *ngIf="(myGrouping.groupingID < 2565 || (myGrouping.groupingID >= 2565 && ncuaSvc.getExtraQuestionStatus() === true))">
         <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
-          (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
-          [attr.aria-expanded]="myGrouping.expanded">
+          (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()" [attr.aria-expanded]="myGrouping.expanded">
             <div class="sub-head-1" tabindex="0">
                 <div *ngIf="myGrouping.title != ''" class="sub-head-2">
                     {{ myGrouping.title }}
@@ -35,7 +35,6 @@
                     <span [class.display-hidden]="!myGrouping.hasReviewItems"
                       class="d-flex justify-content-center align-items-center flex-00a"
                       matTooltip="One or more controls in this category requires further review.">
-                        
                         <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                         <span class="mb-1 fs-small">Requires Review</span>
                     </span>
