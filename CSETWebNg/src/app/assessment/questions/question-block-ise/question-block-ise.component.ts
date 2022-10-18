@@ -720,7 +720,8 @@ export class QuestionBlockIseComponent implements OnInit {
   // 2 or more important questions.
   autoGenerateIssue(parentId, findId) {
     let name = "";
-    if (parentId <= 7281) {
+
+    if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
