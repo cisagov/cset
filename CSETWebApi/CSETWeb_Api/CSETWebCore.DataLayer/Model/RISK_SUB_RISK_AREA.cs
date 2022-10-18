@@ -24,9 +24,5 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Sub_Risk_Area_Id { get; set; }
 
-        [ForeignKey("Risk_Area")]
-        [InverseProperty("RISK_SUB_RISK_AREA")]
-        public virtual RISK_AREA Risk_AreaNavigation { get; set; }
-
     }
 }
