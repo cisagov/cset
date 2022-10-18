@@ -29,6 +29,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { SprsScoreComponent } from '../assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 const headers = {
   headers: new HttpHeaders()
@@ -67,6 +68,7 @@ export class QuestionsService {
     private questionFilterSvc: QuestionFilterService
   ) {
     this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
+    this.initializeAnswerButtonLabels();
   }
 
   /**
@@ -270,5 +272,73 @@ export class QuestionsService {
       return target.parent.toLowerCase().replace(/ /g, '-') + '-' + target.categoryID;
     }
     return '';
+  }
+
+
+  private answerLabelModels: any[] = [];
+
+  /**
+   * Incorporates settings from config.json into the
+   * service so that answer labels can be searched.
+   */
+  initializeAnswerButtonLabels() {
+    // load default answer set
+    this.answerLabelModels.push({ 
+      modelId: 0,
+      answers: this.configSvc.config.answersDefault
+    });
+
+    this.answerLabelModels.push({ 
+      modelId: 9,
+      answers: this.configSvc.config.answersMVRA
+    });
+
+    // ACET labels are only used in the ACET skin
+    this.answerLabelModels.push({ 
+      skin: 'ACET',
+      modelId: 1,
+      answers: this.configSvc.config.answersACET
+    });
+  }
+
+  /**
+   * 
+   */
+  getAnswerButtonLabel(modelId: Number, answerCode: string): string {
+    return this.findAns(modelId, answerCode).buttonLabel;
+  }
+
+  /**
+   * 
+   */
+  getAnswerDisplayLabel(modelId: Number, answerCode: string) {
+    return this.findAns(modelId, answerCode).answerLabel;
+  }
+
+  /**
+   * Find the answer in the default object or the model-specific object.
+   */
+  findAns(modelId: Number, answerCode: string) {
+
+    // first look for a skin-specific label set
+    let ans = this.answerLabelModels.find(x => x.skin == this.configSvc.installationMode
+      && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+    if (ans) {
+      return ans;
+    }
+
+    // next, look for a model-specific label set with no skin defined
+    ans = this.answerLabelModels.find(x => !x.skin && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+    if (ans) {
+      return ans;
+    }
+
+    // fallback to default label set
+    ans = this.answerLabelModels[0].answers.find(x => x.code == answerCode);
+    if (ans) {
+      return ans;
+    }
+
+    return answerCode;
   }
 }

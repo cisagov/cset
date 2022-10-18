@@ -34,11 +34,11 @@
     <div class="data" [hidden]="!initialized">
       <table class="table">
         <th class="align-left">Component</th>
-        <th class="align-right">{{configSvc.answerLabels['Y']}}</th>
-        <th class="align-right">{{configSvc.answerLabels['N']}}</th>
-        <th class="align-right">{{configSvc.answerLabels['NA']}}</th>
-        <th class="align-right">{{configSvc.answerLabels['A']}}</th>
-        <th class="align-right">{{configSvc.answerLabels['U']}}</th>
+        <th class="align-right">{{questionsSvc.getAnswerDisplayLabel(0, 'Y')}}</th>
+        <th class="align-right">{{questionsSvc.getAnswerDisplayLabel(0, 'N')}}</th>
+        <th class="align-right">{{questionsSvc.getAnswerDisplayLabel(0, 'NA')}}</th>
+        <th class="align-right">{{questionsSvc.getAnswerDisplayLabel(0, 'A')}}</th>
+        <th class="align-right">{{questionsSvc.getAnswerDisplayLabel(0, 'U')}}</th>
         <th class="align-right">Total</th>
         <tr class="align-right" *ngFor="let row of dataRows">
           <td class="align-left" style="width: 50%">{{row.title}}</td>
