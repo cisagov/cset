@@ -496,6 +496,7 @@ import { OptionBlockComponent } from './assessment/questions/maturity-questions/
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 
 @NgModule({
     imports: [
@@ -946,7 +947,7 @@ import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component
         LogoTsaComponent, 
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent
+        SectorHelpComponent, AnalyticsCompareComponent
     ],
     providers: [
         ConfigService,
