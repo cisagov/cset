@@ -126,7 +126,8 @@
                         <span class="h2 report-text-blue">Work Performed </span>
                         <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                             flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                            [cdkCopyToClipboard]="'Completed the ISE work program'">Copy
+                            [cdkCopyToClipboard]="'Completed the ISE work program'">
+                            <span class="cset-icons-copy"></span>
                         </label>
                     </div>
                 </div>
@@ -144,7 +145,8 @@
                         <span class="h2 report-text-blue">Results of Review </span> 
                         <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                             flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                            [cdkCopyToClipboard]="this.resultsOfReviewString">Copy
+                            [cdkCopyToClipboard]="this.resultsOfReviewString">
+                            <span class="cset-icons-copy"></span>
                         </label>
                     </div>
                 </div>
@@ -203,7 +205,8 @@
                         <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                                [cdkCopyToClipboard]="finding?.finding?.description">Copy
+                                [cdkCopyToClipboard]="finding?.finding?.description">
+                                <span class="cset-icons-copy"></span>
                             </label>
                             <strong> Description: </strong><br>
                             {{ finding?.finding?.description }}
@@ -211,24 +214,28 @@
 
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                                [cdkCopyToClipboard]="this.actionItemAll">Copy All
+                                [cdkCopyToClipboard]="this.actionItemAll">
+                                <span class="cset-icons-copy" ></span>
                             </label>
                             <strong> Action Item: </strong>
                             <br>
-                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
-                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                                [cdkCopyToClipboard]="this.actionItemExample1">Copy
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below">
+                                <!-- [cdkCopyToClipboard]="this.actionItemExample1"> -->
+                                <span class="cset-icons-copy fs-base" ></span>
                             </label> {{ this.actionItemExample1 }} 
                             <br>
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
-                            flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                                [cdkCopyToClipboard]="this.actionItemExample2">Copy
+                                flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
+                                [cdkCopyToClipboard]="this.actionItemExample2">
+                                <span class="cset-icons-copy"></span>
                             </label> {{ this.actionItemExample2 }}
                         </div>
                         <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below" 
-                                [cdkCopyToClipboard]="cleanText(finding?.question?.supplemental_Info)">Copy
+                                [cdkCopyToClipboard]="cleanText(finding?.question?.supplemental_Info)">
+                                <span class="cset-icons-copy"></span>
                             </label>
                             <strong> Supplemental Guidance: </strong> 
                             

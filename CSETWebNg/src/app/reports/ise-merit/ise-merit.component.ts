@@ -5,11 +5,13 @@ import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
+import { StylesheetMap } from '@angular/flex-layout';
+// import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-ise-merit',
   templateUrl: './ise-merit.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css']
 })
 export class IseMeritComponent implements OnInit {
   response: any = null; 
@@ -46,6 +48,7 @@ export class IseMeritComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
+    // public tooltip: MatTooltipModule,
     private titleService: Title
   ) { }
 
