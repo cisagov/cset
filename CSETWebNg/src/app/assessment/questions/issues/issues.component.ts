@@ -46,15 +46,7 @@ export class IssuesComponent implements OnInit {
   issueTitle = "";
   issueDescription: string = "";
   
-  subRiskAreas: SubRiskArea[];
   importances: Importance[];
-  
-  riskAreaOptions: string[] = [];
-  selectedRiskArea: string = "";
-  strategicSubRisks: any[] = [];
-  complianceSubRisks: any[] = [];
-  transactionSubRisks: any[] = [];
-  reputationSubRisks: any[] = [];
 
   contactsmodel: any[];
   answerID: number;
@@ -109,26 +101,6 @@ export class IssuesComponent implements OnInit {
       
       this.answerID = this.finding.answer_Id;
       this.questionID = this.finding.question_Id;
-    });
-
-    this.findSvc.getSubRisks().subscribe((result: any[]) => {
-      this.subRiskAreas = result;
-
-      // Generate the select drop down options for risk area & sub risk areas
-      for (let i = 0; i < result.length; i++) {
-        if (!this.riskAreaOptions.includes(result[i].risk_Area)) {
-          this.riskAreaOptions.push(result[i].risk_Area);
-        }
-        if (result[i].risk_Area === 'Strategic') {
-          this.strategicSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
-        } else if (result[i].risk_Area === 'Compliance') {
-          this.complianceSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
-        } else if (result[i].risk_Area === 'Transaction') {
-          this.transactionSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
-        } else if (result[i].risk_Area === 'Reputation') {
-          this.reputationSubRisks.push({'name':result[i].sub_Risk_Area, 'id':result[i].sub_Risk_Area_Id});
-        }
-      }
     });
 
     this.questionsSvc.getDetails(this.finding.question_Id, questionType).subscribe((details) => {
