@@ -296,6 +296,10 @@ export class NavigationService {
    * @returns
    */
   isLastVisiblePage(id: string): boolean {
+    if (!this.workflow) {
+      return false;
+    }
+
     let target = this.workflow.getElementById(id);
 
     do {
