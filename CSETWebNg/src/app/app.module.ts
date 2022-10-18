@@ -495,6 +495,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
+import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 
 @NgModule({
     imports: [
@@ -944,7 +945,8 @@ import { DemographicExtendedService } from './services/demographic-extended.serv
         SearchPageComponent, 
         LogoTsaComponent, 
         OptionBlockComponent, 
-        DemographicsExtendedComponent
+        DemographicsExtendedComponent, 
+        SectorHelpComponent
     ],
     providers: [
         ConfigService,
@@ -1035,7 +1037,8 @@ import { DemographicExtendedService } from './services/demographic-extended.serv
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
         DataloginComponent,
-        AwwaStandardComponent
+        AwwaStandardComponent,
+        SectorHelpComponent
     ]
 })
 
