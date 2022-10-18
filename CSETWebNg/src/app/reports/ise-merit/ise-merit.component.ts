@@ -35,6 +35,7 @@ export class IseMeritComponent implements OnInit {
 
   actionItemExample1: string = '1.	The security program must be approved by the Board of Directors.';
   actionItemExample2: string = '2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.';
+  actionItemAll: string = this.actionItemExample1 + '\n' + this.actionItemExample2;
 
   examLevel: string = '';
 
