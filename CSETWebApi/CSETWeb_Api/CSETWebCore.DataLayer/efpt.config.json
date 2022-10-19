@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Model2",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -183,7 +183,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[COUNTIES]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[COUNTRIES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[COUNTY_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[COUNTY_METRO_AREA]",
          "ObjectType": 0
       },
       {
@@ -204,6 +216,10 @@
       },
       {
          "Name": "[dbo].[CUSTOM_STANDARD_BASE_STANDARD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DEMOGRAPHIC_ANSWERS]",
          "ObjectType": 0
       },
       {
@@ -248,6 +264,14 @@
       },
       {
          "Name": "[dbo].[DOCUMENT_FILE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EXT_SECTOR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EXT_SUB_SECTOR]",
          "ObjectType": 0
       },
       {
@@ -431,6 +455,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ISE_ACTIONS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[JWT]",
          "ObjectType": 0
       },
@@ -500,6 +528,14 @@
       },
       {
          "Name": "[dbo].[MATURITY_SOURCE_FILES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[METRO_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[METRO_AREA]",
          "ObjectType": 0
       },
       {
@@ -575,6 +611,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PASSWORD_HISTORY]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PROCUREMENT_DEPENDENCY]",
          "ObjectType": 0
       },
@@ -616,6 +656,10 @@
       },
       {
          "Name": "[dbo].[REFERENCES_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[REGION_ANSWERS]",
          "ObjectType": 0
       },
       {
@@ -676,14 +720,6 @@
       },
       {
          "Name": "[dbo].[REQUIREMENT_SOURCE_FILES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RISK_AREA]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RISK_SUB_RISK_AREA]",
          "ObjectType": 0
       },
       {
@@ -748,6 +784,10 @@
       },
       {
          "Name": "[dbo].[STANDARD_TO_UNIVERSAL_MAP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[STATE_REGION]",
          "ObjectType": 0
       },
       {
@@ -955,6 +995,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[GetChildrenAnswers]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[GetCombinedOveralls]",
          "ObjectType": 1
       },
@@ -1004,6 +1048,10 @@
       },
       {
          "Name": "[dbo].[InScopeRequirements]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[IseAnswerDistribution]",
          "ObjectType": 1
       },
       {

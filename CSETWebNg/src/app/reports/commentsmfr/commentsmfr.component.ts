@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
@@ -43,6 +44,7 @@ export class CommentsMfrComponent implements OnInit {
   constructor(
     public analysisSvc: ReportAnalysisService,
     public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService
