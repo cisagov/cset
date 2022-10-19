@@ -183,7 +183,7 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
-
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -416,6 +416,7 @@ const appRoutes: Routes = [
 
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
+              { path: 'analytics-compare', component: AnalyticsCompareComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
