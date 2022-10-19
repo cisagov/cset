@@ -1,0 +1,99 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="bgc-page d-flex flex-column flex-11a w-100">
+    <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+      <div class="sticky-navbar">
+        <div
+          class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+          *ngIf="auth.isLocal">
+          <span class="col-sm-12">Local Installation</span>
+        </div>
+  
+        <!-- Navbar -->
+        <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+          *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+          <!-- Brand (BASE) -->
+          <span
+            [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
+            (click)="this.router.url!='/resource-library' && goHome()">
+            <!-- CSET Lock Logo -->
+            <div class="d-flex justify-content-start align-items-center flex-00a">
+              <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
+            </div>
+          </span>
+  
+          <!-- Navbar Toggler Button -->
+          <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
+            <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+          </button>
+          <!-- Menus -->
+        <app-top-menus class="w-100"></app-top-menus>
+        </nav>
+      </div>
+  
+      <!-- Body -->
+      <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+        <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
+        <div class="p-0 d-flex col-xl-12 bgc-gray-50">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+  
+      <!-- Footer -->
+      <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters sticky-footer"
+        *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
+        <ngb-panel id="footerPanel">
+          <ng-template ngbPanelTitle>
+            <button id="footerExpanderButton" class="cset-footer-expand-button"
+              [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="footer-section-2 p-2">
+              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
+                <span class="mr-2 ml-2">|</span>
+                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
+                <span class="mr-2 ml-2">|</span>
+                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
+                <span class="mr-2 ml-2">|</span>
+                <a target="_blank" rel="noopener noreferrer"
+                  href="http://www.us-cert.gov/accessibility/">Accessibility</a>
+              </div>
+              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a>
+                <span style="padding: 2px">is part of the</span>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  
+    <div class="bgc-white dhs-seal-background"
+      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+  </div>
+  
