@@ -30,8 +30,8 @@
         "canDeleteCustomModules": true
     },
     
+    "galleryLayout": "CSET",
     "installationMode": "CF",
-    "galleryLayout": "",
     "mobileEnvironment": "",
 
     "answersDefault": [
