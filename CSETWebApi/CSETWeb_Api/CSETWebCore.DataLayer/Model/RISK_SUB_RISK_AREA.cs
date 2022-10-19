@@ -12,7 +12,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public RISK_SUB_RISK_AREA()
         {
-            FINDING = new HashSet<FINDING>();
+            
         }
 
         [Required]
@@ -27,7 +27,6 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Risk_Area")]
         [InverseProperty("RISK_SUB_RISK_AREA")]
         public virtual RISK_AREA Risk_AreaNavigation { get; set; }
-        [InverseProperty("Sub_Risk_Area")]
-        public virtual ICollection<FINDING> FINDING { get; set; }
+
     }
 }

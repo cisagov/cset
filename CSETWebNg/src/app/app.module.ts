@@ -494,6 +494,10 @@ import { SearchPageComponent } from './initial/search-page/search-page.component
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
+import { DemographicExtendedService } from './services/demographic-extended.service';
+import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 
 @NgModule({
     imports: [
@@ -942,7 +946,10 @@ import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.co
         PrivacyWarningRejectComponent, 
         SearchPageComponent, 
         LogoTsaComponent, 
-        OptionBlockComponent, CfLayoutMainComponent
+        CfLayoutMainComponent,
+        OptionBlockComponent, 
+        DemographicsExtendedComponent, 
+        SectorHelpComponent, AnalyticsCompareComponent
     ],
     providers: [
         ConfigService,
@@ -969,6 +976,7 @@ import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.co
         AssessGuard,
         AggregationGuard,
         DemographicService,
+        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,
@@ -1032,7 +1040,8 @@ import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.co
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
         DataloginComponent,
-        AwwaStandardComponent
+        AwwaStandardComponent,
+        SectorHelpComponent
     ]
 })
 
