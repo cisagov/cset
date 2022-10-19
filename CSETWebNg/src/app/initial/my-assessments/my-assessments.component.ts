@@ -141,9 +141,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
     
     this.ncuaSvc.assessmentsToMerge = [];
-  }
-
-  
+  }  
 
   getAssessments() {
     this.sortedAssessments = null;
