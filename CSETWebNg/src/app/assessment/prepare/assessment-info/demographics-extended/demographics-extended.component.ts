@@ -21,8 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { throwIfEmpty } from 'rxjs/operators';
+import { SectorHelpComponent } from '../../../../dialogs/sector-help/sector-help.component';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { County, ExtendedDemographics, ListItem, Region, Sector, Subsector, Geographics, GeoRegion } from '../../../../models/demographics-extended.model';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -63,7 +65,8 @@ export class DemographicsExtendedComponent implements OnInit {
   constructor(
     private demoSvc: DemographicExtendedService,
     public assessSvc: AssessmentService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private dialog: MatDialog
   ) { }
 
   /**
@@ -308,5 +311,15 @@ export class DemographicsExtendedComponent implements OnInit {
     });
 
     this.demoSvc.persistGeographicSelections(x);
+  }
+
+  /**
+   * Displays a dialog showing the help for sectors.
+   */
+  launchSectorHelp() {
+    var config: MatDialogConfig = {
+      data: this.sectorList
+    };
+    this.dialog.open(SectorHelpComponent, config);
   }
 }
