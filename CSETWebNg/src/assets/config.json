@@ -29,7 +29,7 @@
         "canDeleteCustomModules": true
     },
     
-    "galleryLayout": "CSET",
+    "galleryLayout": "CF",
     "installationMode": "CF",
     "mobileEnvironment": "",
 
