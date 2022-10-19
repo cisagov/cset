@@ -137,6 +137,19 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetActionItems")]
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId)
+        {
+            int assessId = _token.AssessmentForUser();
+            FindingsManager fm = new FindingsManager(_context, assessId);
+            return fm.GetActionItems(parentId);
+        }
+
+        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
