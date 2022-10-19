@@ -756,9 +756,12 @@ export class QuestionBlockIseComponent implements OnInit {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
         (response: Finding[]) => {
+          console.log("finding: " + JSON.stringify(response, null, 4));
           for (let i = 0; i < response.length; i++) {
             if (response[i].auto_Generated === 1) {
+              console.log("response is auto generated, so we're addinging it to the this.issueFindingId map.");
               this.issueFindingId.set(parentId, response[i].finding_Id);
+              console.log("this.issueFindingId map now: " + JSON.stringify(this.issueFindingId, null, 4));
             }
           }
           this.extras.findings = response;
