@@ -8,13 +8,8 @@
         <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="SOURCE:TSA" />
         <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="SOURCE:TSA" />
 
-        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM)" />
+        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF" />
 
-        <!-- model select (this will be going away when the Gallery Interface is ready, but will still be needed for other skins?) -->
-        <node displaytext="Model Select" id="model-select" path="assessment/{:id}/prepare/model-select" condition="HIDE" />
-
-        <!-- Standards selection screen -->
-        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="HIDE" />
 
         <!-- ACET-specific screens -->
         <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:ACET" />
@@ -35,7 +30,7 @@
 
         <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:CRR" />
 
-        <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA" />
+        <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA ORIGIN-NOT:CF" />
 
         <node displaytext="CIS Tutorial" id="tutorial-cis" path="assessment/{:id}/prepare/tutorial-cis" condition="MATURITY:CIS" />
         <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
