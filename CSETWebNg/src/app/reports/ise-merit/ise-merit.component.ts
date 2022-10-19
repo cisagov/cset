@@ -5,8 +5,6 @@ import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
-import { StylesheetMap } from '@angular/flex-layout';
-// import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-ise-merit',
@@ -48,7 +46,6 @@ export class IseMeritComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
-    // public tooltip: MatTooltipModule,
     private titleService: Title
   ) { }
 
@@ -120,14 +117,6 @@ export class IseMeritComponent implements OnInit {
         }
       },
     )
-
-    // console.log('length is: ' + this.response?.length);
-
-    // for(let i = 0; i < this.response?.length; i++) {
-    //   console.log(this.response + ' this.response thing');
-    //   let finding = this.response[i];
-    //   console.log(finding + ' finding thing');
-    // }
   }
 
   addExaminerFinding(title: any) {
