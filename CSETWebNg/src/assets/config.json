@@ -30,7 +30,7 @@
         "canDeleteCustomModules": true
     },
     
-    "installationMode": "",
+    "installationMode": "CF",
     "galleryLayout": "",
     "mobileEnvironment": "",
 

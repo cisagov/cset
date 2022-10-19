@@ -60,7 +60,7 @@
       </div>
   
       <!-- Footer -->
-      <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters sticky-footer"
+      <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters sticky-footer" activeIds="footerPanel"
         *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
         <ngb-panel id="footerPanel">
           <ng-template ngbPanelTitle>
@@ -83,9 +83,9 @@
                   href="http://www.us-cert.gov/accessibility/">Accessibility</a>
               </div>
               <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a>
-                <span style="padding: 2px">is part of the</span>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://cyberflorida.org/">Cyber Florida</a>
+                <span class="mr-2 ml-2">|</span>
+                <a href="mailto:outreach@cyberflorida.org">Contact Cyber Florida at: outreach@cyberflorida.org</a>
               </div>
             </div>
           </ng-template>
