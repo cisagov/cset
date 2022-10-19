@@ -201,10 +201,15 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
     
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
+    if (this.ncuaSvc.assetsAsNumber > 50000000) {
+      this.updateOverride("No Override");
+    }
+
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   updateOverride(e: any) {
+    this.examOverride = e;
     if (e === "No Override") {
       this.acetDashboard.override = 0;
     } else if (e === 'SCUEP') {

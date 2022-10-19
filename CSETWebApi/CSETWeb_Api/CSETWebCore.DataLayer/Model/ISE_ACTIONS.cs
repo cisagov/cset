@@ -13,6 +13,8 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public partial class ISE_ACTIONS
     {
+        public string Regulatory_Citation { get; set; }
+
         [Key]
         public int Question_Id { get; set; }
         public string Description { get; set; }
