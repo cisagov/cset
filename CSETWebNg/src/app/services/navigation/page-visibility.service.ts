@@ -260,4 +260,4 @@ export class PageVisibilityService {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
   }
-}
+} 
