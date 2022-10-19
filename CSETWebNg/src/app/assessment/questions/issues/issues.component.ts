@@ -82,6 +82,10 @@ export class IssuesComponent implements OnInit {
     this.questionsSvc.getActionItems(this.finding.question_Id).subscribe(
       (data: any) => {
         this.actionItems = data;
+        if (this.finding.description === '') {
+          this.finding.description = this.actionItems[0]?.description;
+          console.log(this.finding.description);
+        }
       }
     )
 
@@ -101,7 +105,7 @@ export class IssuesComponent implements OnInit {
       }
 
       if (this.finding.description === null) {
-        this.finding.description = this.generateIssueDescription();
+        this.finding.description = '';
       }
       
       this.answerID = this.finding.answer_Id;

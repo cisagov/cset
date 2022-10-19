@@ -46,7 +46,7 @@
 </div>
 <div class="row">
   <div class="col-12">
-    <div class="form-group">
+    <div *ngIf="this.actionItems != null" class="form-group">
       <label for="description" class="form-label font-weight-bold">Description</label>
       <textarea id="description" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
     </div>
@@ -86,8 +86,8 @@
             <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
             <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
             <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
-            <td>
-              <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.
+            <td *ngIf="this.actionItems != null">
+              <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ this.actionItems[i]?.action_Items }}
               </textarea>
             </td>
           </tr>
@@ -98,8 +98,10 @@
   <br>
   <div class="row">
     <div class="col-6">
-      <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
-      <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.regCitation }}">
+      <span *ngIf="this.actionItems != null">
+        <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
+        <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
+      </span>
     </div>
     <div class="col-6">
       <div class="form-group">
