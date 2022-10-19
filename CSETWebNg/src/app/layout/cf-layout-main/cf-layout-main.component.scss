@@ -1025,18 +1025,18 @@ table.td-align-top td {
 
 .btn-geo {
   background-color: $gray-150;
-  color: $primary-850;
+  color: $primary-600;
 }
 
 .btn-geo:hover {
   background-color: $gray-400;
-  color: $primary-850;
+  color: $primary-600;
 }
 
 .btn-geo:not(.disabled).active,
 .btn-geo:not(.disabled).activeLevel,
 .show>.btn-geo.dropdown-toggle {
-  background-color: $primary-850;
+  background-color: $primary-600;
   color: $white;
 }
 
