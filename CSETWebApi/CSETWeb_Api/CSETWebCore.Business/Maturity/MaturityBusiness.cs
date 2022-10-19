@@ -1680,6 +1680,18 @@ namespace CSETWebCore.Business.Maturity
             return overall;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetOverallIseIrpNumber(int assessmentId)
+        {
+            var calc = GetIseIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall;
+        }
+
 
         /// <summary>
         /// Get all IRP calculations for display
