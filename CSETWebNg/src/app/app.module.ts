@@ -498,6 +498,7 @@ import { DemographicsExtendedComponent } from './assessment/prepare/assessment-i
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 
 @NgModule({
     imports: [
@@ -949,7 +950,7 @@ import { AnalyticsCompareComponent } from './assessment/results/analytics-compar
         CfLayoutMainComponent,
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent, AnalyticsCompareComponent
+        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent
     ],
     providers: [
         ConfigService,

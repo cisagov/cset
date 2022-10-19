@@ -85,6 +85,9 @@
 
 
     <h5>Counties</h5>
+    <p class="font-italic">
+        Select/deselect counties as appropriate.
+    </p>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
         <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
             <label *ngFor="let c of countyList" class="btn btn-geo btn-rounded m-1" [class.active]="c.selected">
@@ -97,6 +100,7 @@
     <h5>Metropolitan Areas</h5>
     <p class="font-italic">
         Select the metropolitan areas where your business/operations provide services.
+        Select/deselect metropolitan areas as appropriate.
     </p>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
         <div *ngIf="visibleMetroList.length == 0" class="alert alert-warning">
