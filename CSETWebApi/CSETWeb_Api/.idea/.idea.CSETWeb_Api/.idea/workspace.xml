@@ -13,18 +13,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ccffa1d-6055-4a2a-ab82-b408144db376" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CSETWebCore.Model/Mvra/MvraScore.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CSETWeb_Api/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CSETWeb_ApiCore/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/package-lock.json" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/app/layout/tsa-layout-main/tsa-layout-main.component.scss" afterDir="false" />
+=======
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../CSETWebNg/src/assets/config.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DisabledMethodsStorage">
+    <option name="disabledMethods">
+      <set>
+        <option value="System.Linq : System.Linq.SystemCore_EnumerableDebugView&lt;T&gt; : get_Items ()" />
+      </set>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -61,19 +74,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.45500848",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="CSETWebCore.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CSETWeb_ApiCore/CSETWebCore.Api.csproj" />
@@ -140,5 +154,37 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs</url>
+          <line>573</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWebCore.Business/Maturity/MaturityBusiness.cs" initialLine="585" containingFunctionPresentation="method 'GetMvraScoring'">
+            <startOffsets>
+              <option value="20515" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20529" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs</url>
+          <line>702</line>
+          <properties documentPath="$PROJECT_DIR$/CSETWeb_ApiCore/Controllers/MaturityController.cs" initialLine="702" containingFunctionPresentation="method 'GetMvraScoring'">
+            <startOffsets>
+              <option value="24212" />
+            </startOffsets>
+            <endOffsets>
+              <option value="24229" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

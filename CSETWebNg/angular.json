@@ -185,6 +185,7 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
+              "src/favicon_cf.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",
