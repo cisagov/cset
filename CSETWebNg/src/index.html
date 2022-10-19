@@ -168,6 +168,16 @@
                 title.innerText = "CSET-TSA";
             }
             break;
+        case 'CF':
+            {
+                // change favicon and title
+                var link = document.querySelector("link[rel~='icon']");
+                link.href = 'favicon_cf.ico?app=cf1';
+
+                var title = document.querySelector("title");
+                title.innerText = "CSET-CF";
+            }
+            break;
         case 'RRA':
             {
                 // change favicon and title

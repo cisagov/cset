@@ -1,6 +1,6 @@
 {
     "isCsetOnline": false,
-    "appCode": "ACET",
+    "appCode": "CF",
     "app": {
         "protocol": "http",
         "url": "localhost",
@@ -29,10 +29,9 @@
         "canDeleteCustomModules": true
     },
     
-    "installationMode": "",
+    "installationMode": "CF",
     "galleryLayout": "",
     "mobileEnvironment": "",
-
 
     "answersDefault": [
         {
