@@ -109,9 +109,14 @@ export class PageVisibilityService {
       }
 
 
+
       // ORIGIN 
       if (c.startsWith('ORIGIN:') || c.startsWith('ORIGIN-ANY(')) {
         show = show && this.originAny(c);
+      }
+
+      if (c.startsWith('ORIGIN-NOT:') || c.startsWith('ORIGIN-NONE(')) {
+        show = show && !this.originAny(c);
       }
 
 
@@ -255,4 +260,4 @@ export class PageVisibilityService {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
   }
-}
+} 
