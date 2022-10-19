@@ -39,14 +39,13 @@ export class IssuesComponent implements OnInit {
   assessmentId: any;
   finding: Finding;
   questionData: any = null;
+  actionItems: any = null;
   suppGuidance: string = "";
   regCitation: string = "";
   autoGen: number;
 
   issueTitle = "";
   issueDescription: string = "";
-  
-  importances: Importance[];
 
   contactsmodel: any[];
   answerID: number;
@@ -78,7 +77,13 @@ export class IssuesComponent implements OnInit {
     this.questionsSvc.getChildAnswers(this.finding.question_Id, this.assessmentId).subscribe(
       (data: any) => {
         this.questionData = data;
-      });
+    });
+
+    this.questionsSvc.getActionItems(this.finding.question_Id).subscribe(
+      (data: any) => {
+        this.actionItems = data;
+      }
+    )
 
     let questionType = localStorage.getItem('questionSet');
 
