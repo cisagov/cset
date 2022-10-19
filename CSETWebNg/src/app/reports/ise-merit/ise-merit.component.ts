@@ -9,7 +9,7 @@ import { FindingsService } from '../../services/findings.service';
 @Component({
   selector: 'app-ise-merit',
   templateUrl: './ise-merit.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css']
 })
 export class IseMeritComponent implements OnInit {
   response: any = null; 
@@ -117,14 +117,6 @@ export class IseMeritComponent implements OnInit {
         }
       },
     )
-
-    // console.log('length is: ' + this.response?.length);
-
-    // for(let i = 0; i < this.response?.length; i++) {
-    //   console.log(this.response + ' this.response thing');
-    //   let finding = this.response[i];
-    //   console.log(finding + ' finding thing');
-    // }
   }
 
   addExaminerFinding(title: any) {
