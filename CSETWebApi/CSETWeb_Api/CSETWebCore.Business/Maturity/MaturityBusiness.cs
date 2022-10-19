@@ -866,7 +866,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetIseAnswerCompletionRate(int assessmentId)
         {
-            var irp = GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIseIrpNumber(assessmentId);
 
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetIseTopMatLevelForRisk(irp);
@@ -1800,6 +1800,10 @@ namespace CSETWebCore.Business.Maturity
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
+
+            var coreIRPLevel = 2;
+
+            result.Override = int.Parse(result.Assets) > 50000000 ? coreIRPLevel : 0;
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
