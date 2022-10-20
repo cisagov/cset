@@ -321,5 +321,9 @@ export class IseExaminationComponent implements OnInit {
     }
     this.summaryForCopy += '\n\n';
   }
+
+  newFunc() {
+    window.print();
+  }
   
 }
