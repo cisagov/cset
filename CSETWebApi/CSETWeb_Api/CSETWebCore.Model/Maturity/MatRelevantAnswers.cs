@@ -79,6 +79,7 @@ namespace CSETWebCore.Model.Maturity
         public string AnswerText { get; set; }
         public bool MarkForReview { get; set; }
         public string Comment { get; set; }
+        public int MatQuestionId { get; set; }
     }
 
   

@@ -5,6 +5,7 @@ import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-ise-merit',
@@ -15,6 +16,7 @@ export class IseMeritComponent implements OnInit {
   response: any = null; 
   demographics: any = null; 
   answers: any = null;
+  actionItemsForParent: any = null;
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -33,6 +35,11 @@ export class IseMeritComponent implements OnInit {
   resultsOfReviewStatic: string = 'Performed review of the security program using the ISE Toolbox.';
   resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
 
+  actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  // parentToChildren: Map<number, number> = new Map<number, number>();
+  // childrenToActionItems: Map<number, string> = new Map<number, string>();
+
+
   actionItemExample1: string = '1.	The security program must be approved by the Board of Directors.';
   actionItemExample2: string = '2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.';
   actionItemAll: string = this.actionItemExample1 + '\n' + this.actionItemExample2;
@@ -46,6 +53,7 @@ export class IseMeritComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
+    public questionsSvc: QuestionsService,
     private titleService: Title
   ) { }
 
@@ -55,7 +63,6 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;  
-        console.log(this.response);
         this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
 
         for(let i = 0; i < this.response?.length; i++) {
@@ -94,10 +101,8 @@ export class IseMeritComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.answers = r;
-        console.log(this.answers);
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-        if(this.examLevel === 'CORE') {
           // goes through domains
           for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
             let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
@@ -106,17 +111,35 @@ export class IseMeritComponent implements OnInit {
               let subcat = domain?.components[j];
               // goes through questions
               for(let k = 0; k < subcat?.questions?.length; k++) {
+                
                 let question = subcat?.questions[k];
-
+                if( k == 0 ){
+                  this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
+                    (r: any) => {
+                      this.actionItemsForParent = r;
+                      for(let m = 0; m < this.actionItemsForParent?.length; m++){
+                        let parentAction = this.actionItemsForParent[m].action_Items;
+                        if(!this.actionItemsMap.has(question.matQuestionId)){
+                          this.actionItemsMap.set(question.matQuestionId, [parentAction]);
+                        } else {
+                          let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
+                          tempActionArray.push(parentAction);
+                          this.actionItemsMap.set(question.matQuestionId, tempActionArray);
+                        }
+                      }
+                    }
+                  )
+                }
+              
                 if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                   this.examLevel = 'CORE+';
                 }
               }
             }
           }
-        }
       },
     )
+  
   }
 
   addExaminerFinding(title: any) {
@@ -183,6 +206,54 @@ export class IseMeritComponent implements OnInit {
     text = text.replace('ISE Reference', '');
     text = text.replace('/\s/g', ' ');
     return (text);
+  }
+
+  isParentQuestion(q: any) {
+    if ( q.title == 'Stmt 1' 
+    ||   q.title == 'Stmt 2'
+    ||   q.title == 'Stmt 3'
+    ||   q.title == 'Stmt 4'
+    ||   q.title == 'Stmt 5'
+    ||   q.title == 'Stmt 6'
+    ||   q.title == 'Stmt 7'
+    ||   q.title == 'Stmt 8'
+    ||   q.title == 'Stmt 9'
+    ||   q.title == 'Stmt 10'
+    ||   q.title == 'Stmt 11'
+    ||   q.title == 'Stmt 12'
+    ||   q.title == 'Stmt 13'
+    ||   q.title == 'Stmt 14'
+    ||   q.title == 'Stmt 15'
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22') {
+      return true;
+    } 
+    return false;
+  }
+
+  getParentQuestionTitle(title: string) {
+    if(!this.isParentQuestion(title)) {
+      let endOfTitle = 6;
+      // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
+      if(title.charAt(6) != '.'){
+        endOfTitle = endOfTitle + 1;
+      }
+      return title.substring(0, endOfTitle);
+    }
+  }
+
+  appendChildQuestionTitle(parentTitle: string, index: number) {
+    index += 1;
+    return parentTitle + '.' + index.toString();
+  }
+
+  findQuestionByTitle(title: string, list: any[]) {
+    return list?.find(question => question.title == title);
   }
 
 }

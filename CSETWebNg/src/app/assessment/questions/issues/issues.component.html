@@ -69,8 +69,8 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="this.finding.auto_Generated === 1">
-    <div *ngIf="finding.type !== 'Supplemental Fact'">
+  <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
+    <div *ngIf="this.finding.auto_Generated === 1">
       <div class="mt-2 invalid-feedback d-block text-muted">
         <p>Items marked in red indicate a higher level of risk</p>
       </div>
@@ -104,22 +104,22 @@
         </div>
       </div>
       <br>
-      <div class="row">
-        <div class="col-6">
-          <span *ngIf="this.actionItems != null">
-            <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
-            <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
-          </span>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
-            <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
-          </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <span *ngIf="this.actionItems != null">
+          <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
+          <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
+        </span>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
+          <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
         </div>
       </div>
-      <br>
     </div>
+    <br>
   </ng-container>
 
   <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific

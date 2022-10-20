@@ -130,7 +130,6 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras.findings.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
-              console.log("Found auto generated finding - find.parentId: " + find.question_Id + ", issueId: " + find.finding_Id);
               this.issueFindingId.set(find.question_Id, find.finding_Id);
             }
         });
@@ -175,8 +174,6 @@ export class QuestionBlockIseComponent implements OnInit {
       n.childNodes.forEach(n => n.dispatchEvent(evt));
     });
 
-    console.log("this.issueCheckMap: " + JSON.stringify(this.issueCheck, null, 4));
-    console.log("this.issueFindingId: " + JSON.stringify(this.issueFindingId, null, 4));
     this.myGrouping.expanded = !this.myGrouping.expanded;
   }
 
@@ -245,6 +242,8 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
+    let oldAnswerValue = q.answer;
+
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
@@ -274,32 +273,37 @@ export class QuestionBlockIseComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer).subscribe
     (result => {
-      this.checkForIssues(q, newAnswerValue);
+      this.checkForIssues(q, oldAnswerValue);
     });
   }
 
-  checkForIssues(q: Question, newAnswerValue: string) {
+  checkForIssues(q: Question, oldAnswerValue: string) {
     if (q.answer === 'N') {
-      if (this.importantQuestions.has(q.questionId)) {
-        if (!this.issueCheck.has(q.parentQuestionId)) {
-          this.issueCheck.set(q.parentQuestionId, 1);
-        } else {
-          let num = this.issueCheck.get(q.parentQuestionId);
-          num += 1;
-          this.issueCheck.set(q.parentQuestionId, num);
+        let num = this.issueCheck.get(q.parentQuestionId);
+        if(!num){
+          num = 0;
+        }
+        
+        num += 1;
+        this.issueCheck.set(q.parentQuestionId, num);
           
-          if (num >= 2 && !this.issueFindingId.has(q.parentQuestionId)) {
+          
+          if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
             this.autoGenerateIssue(q.parentQuestionId, 0);
           }
-        }
-      }
-    } else if (q.answer === 'Y' || q.answer === 'U') {
-      if (this.issueCheck.has(q.parentQuestionId)) {
-        if (this.importantQuestions.has(q.questionId)) {
-          let num = this.issueCheck.get(q.parentQuestionId);
-          num -= 1;
         
-          if (num < 2) {
+      // }
+    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+      if (this.issueCheck.has(q.parentQuestionId)) {
+          let num = this.issueCheck.get(q.parentQuestionId);
+
+          if(!num){
+            num = 0;
+          }
+          
+          num -= 1;
+
+          if (num < 1) {
             if (this.issueFindingId.has(q.parentQuestionId)) {
               let findId = this.issueFindingId.get(q.parentQuestionId);
               this.deleteIssue(findId, true);
@@ -312,7 +316,7 @@ export class QuestionBlockIseComponent implements OnInit {
           } else {
             this.issueCheck.set(q.parentQuestionId, num);
           }
-        }
+        // }
       }
     }
 
@@ -752,24 +756,25 @@ export class QuestionBlockIseComponent implements OnInit {
     //   disableClose: true,
     //   width: this.layoutSvc.hp ? '90%' : '60vh',
     //   height: this.layoutSvc.hp ? '90%' : '85vh',
+
     // }).afterClosed().subscribe(result => {
+    this.findSvc.saveDiscovery(find).subscribe(() => {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
         (response: Finding[]) => {
-          console.log("finding: " + JSON.stringify(response, null, 4));
           for (let i = 0; i < response.length; i++) {
             if (response[i].auto_Generated === 1) {
-              console.log("response is auto generated, so we're addinging it to the this.issueFindingId map.");
               this.issueFindingId.set(parentId, response[i].finding_Id);
-              console.log("this.issueFindingId map now: " + JSON.stringify(this.issueFindingId, null, 4));
             }
           }
           this.extras.findings = response;
           this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
+
         },
         error => console.log('Error updating findings | ' + (<Error>error).message)
       );
+    });
     // });
   }
   
@@ -813,5 +818,7 @@ export class QuestionBlockIseComponent implements OnInit {
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
       }
   }
+
+  
   
 }

@@ -438,7 +438,8 @@ namespace CSETWebCore.Business.Reports
                                     MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
-                                    MarkForReview = question.MarkForReview
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId
                                 };
 
                                 if (question.Answer == "N")

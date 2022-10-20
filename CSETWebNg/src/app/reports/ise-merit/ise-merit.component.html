@@ -216,22 +216,37 @@
 
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
-                                [cdkCopyToClipboard]="this.actionItemAll">
+                                [cdkCopyToClipboard]="">
                                 <span class="cset-icons-copy" ></span>
                             </label>
                             <strong> Action Item: </strong>
                             <br>
-                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
-                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard">
-                                <!-- [cdkCopyToClipboard]="this.actionItemExample1"> -->
-                                <span class="cset-icons-copy" ></span>
-                            </label> {{ this.actionItemExample1 }} 
+                            
+                            <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+
+                                <div *ngFor="let question of subcat?.questions">
+                                    <div *ngIf="this.actionItemsMap.has(question.matQuestionId)">
+                                        <div *ngFor="let actionItems of this.actionItemsMap.get(question.matQuestionId); let i=index">
+                                            <div *ngIf="question.title == finding?.question?.question_Title">
+                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                    [cdkCopyToClipboard]="actionItems">
+                                                    <span class="cset-icons-copy" ></span>
+                                                </label> {{ i+1 }}: {{ actionItems }} 
+                                            
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <br>
-                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
                                 [cdkCopyToClipboard]="this.actionItemExample2">
                                 <span class="cset-icons-copy"></span>
-                            </label> {{ this.actionItemExample2 }}
+                            </label> {{ this.actionItemExample2 }} -->
                         </div>
                         <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
