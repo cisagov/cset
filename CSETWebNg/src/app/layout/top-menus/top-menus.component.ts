@@ -207,11 +207,11 @@ export class TopMenusComponent implements OnInit {
     }
     
     if (item == 'trend') {
-      return (!this.configSvc.isMobile());
+      return (!this.configSvc.isMobile() &&  !this.configSvc.isCsetOnline);
     }
 
     if (item == 'compare') {
-      return (!this.configSvc.isMobile());
+      return (!this.configSvc.isMobile() &&  !this.configSvc.isCsetOnline);
     }
 
     return true;
