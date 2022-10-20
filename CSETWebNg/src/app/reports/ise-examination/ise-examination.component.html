@@ -56,7 +56,7 @@
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                     <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
-                        printSectionId="ExamReport" printTitle="Examination Report" ngxPrint [useExistingCss]="true">Print to PDF
+                        (click)="newFunc()">Print to PDF
                     </button>
                 </div>
             </div>
@@ -247,7 +247,7 @@
                 ">
 
         <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
-            printSectionId="ExamReport" printTitle="Examination Report" ngxPrint [useExistingCss]="true">Print to PDF
+            (click)="newFunc()">Print to PDF
         </button>
     </div>
 </div>
