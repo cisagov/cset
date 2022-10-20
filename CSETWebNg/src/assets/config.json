@@ -1,5 +1,5 @@
 {
-    "isCsetOnline": false,
+    "isCsetOnline": true,
     "appCode": "CSET",
     "app": {
         "protocol": "http",
