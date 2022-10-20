@@ -21,20 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { findLastKey } from 'lodash';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { ACETService } from '../../../services/acet.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { AuthenticationService } from '../../../services/authentication.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
-import { data } from 'jquery';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
+import { DemographicExtendedService } from '../../../services/demographic-extended.service';
 
 @Component({
     selector: 'app-reports',
@@ -50,6 +47,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      */
     disableAcetReportLinks: boolean = true;
     disableIseReportLinks: boolean = true;
+    disableEntirePage: boolean = false;
+
     securityIdentifier: any = [];
     securitySelected: string = "None";
     isMobile = false;
@@ -57,6 +56,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     lastModifiedTimestamp = '';
 
     dialogRef: MatDialogRef<any>;
+
     /**
      *
      */
@@ -67,6 +67,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
+        public demoSvc: DemographicExtendedService,
         private cdr: ChangeDetectorRef,
         private reportSvc: ReportService,
         public dialog: MatDialog
@@ -77,7 +78,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                     this.assessSvc.assessment = data;
                 });
         }
-        if(this.configSvc.mobileEnvironment){
+        if (this.configSvc.mobileEnvironment) {
             this.isMobile = true;
         } else {
             this.isMobile = false;
@@ -97,12 +98,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.disableAcetReportLinks = false;
         this.disableIseReportLinks = false;
         if (this.configSvc.installationMode === 'ACET') {
-            if(this.assessSvc.isISE()) {
+            if (this.assessSvc.isISE()) {
                 this.checkIseDisabledStatus();
             }
             else {
                 this.checkAcetDisabledStatus();
             }
+        }
+
+        // disable everything if this is a Cyber Florida and demographics aren't complete
+        if (this.configSvc.installationMode === 'CF') {
+            this.demoSvc.getDemoAnswered().subscribe((answered: boolean) => {
+                this.disableEntirePage = !answered;
+            });
         }
 
         this.reportSvc.getSecurityIdentifiers().subscribe(data => {
@@ -131,7 +139,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
 
         if (reportType === 'crrreport') {
-          localStorage.setItem('crrReportConfidentiality', this.securitySelected);
+            localStorage.setItem('crrReportConfidentiality', this.securitySelected);
         }
 
         window.open(url, "_blank");
@@ -178,20 +186,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     showExcelExportDialog() {
-      const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-      const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-      if (this.dialog.openDialogs[0] || doNotShow) {
-        this.exportToExcel();
-        return;
-      }
-      this.dialogRef = this.dialog.open(ExcelExportComponent);
-      this.dialogRef
-        .afterClosed()
-        .subscribe();
+        const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+        const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+        if (this.dialog.openDialogs[0] || doNotShow) {
+            this.exportToExcel();
+            return;
+        }
+        this.dialogRef = this.dialog.open(ExcelExportComponent);
+        this.dialogRef
+            .afterClosed()
+            .subscribe();
     }
 
     exportToExcel() {
-      window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+        window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
     }
-
 }
