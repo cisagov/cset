@@ -25,7 +25,7 @@
   <app-about-rra *ngIf="configSvc.installationMode === 'RRA'"></app-about-rra>
   <app-about-acet *ngIf="configSvc.installationMode === 'ACET'"></app-about-acet>
   <app-about-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-about-tsa>
-  <app-about-cset *ngIf="configSvc.installationMode === 'CF'"></app-about-cset>
+  <app-about-cf *ngIf="configSvc.installationMode === 'CF'"></app-about-cf>
   <mat-dialog-actions class="p-4 mb-0">
     <button class="btn btn-secondary" (click)="close()">OK</button>
   </mat-dialog-actions>
