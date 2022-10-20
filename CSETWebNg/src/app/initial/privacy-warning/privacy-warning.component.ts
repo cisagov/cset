@@ -57,8 +57,6 @@ export class PrivacyWarningComponent implements OnInit {
           break;
         default:
           this.BannerText = this.DOETEXT;
-
-
     }
   }
 
