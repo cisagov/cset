@@ -131,5 +131,17 @@ export class IseExaminerComponent implements OnInit {
     } 
     return false;
   }
+
+  getAnswerDisplayLabel(answer: string){
+    if(answer == "Y"){
+      return "Yes";
+    } 
+    if(answer == "N"){
+      return "No";
+    } 
+    if(answer == "U"){
+      return "Unanswered";
+    } 
+  }
   
 }
