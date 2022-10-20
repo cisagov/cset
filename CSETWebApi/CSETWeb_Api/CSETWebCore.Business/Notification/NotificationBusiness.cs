@@ -65,6 +65,7 @@ namespace CSETWebCore.Business.Notification
             this._appDisplayName.Add("CSET", "CSET");
             this._appDisplayName.Add("ACET", "ACET");
             this._appDisplayName.Add("RRA", "RRA");
+            this._appDisplayName.Add("CF", "Cyber Florida");
         }
 
         /// <summary>
@@ -213,7 +214,7 @@ namespace CSETWebCore.Business.Notification
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
             // apply corresponding footer
-            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
             string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
