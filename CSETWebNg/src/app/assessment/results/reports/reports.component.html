@@ -24,8 +24,19 @@
   <h3>Reports</h3>
 
   <p>
-    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run
-    prior to that update may not reflect the current state of the assessment.
+    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. 
+    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect the current state of the assessment.
+    <button mat-stroked-button (click)="openSnackBar()" >
+      Printing Report Instructions
+    </button>
+  </p>
+
+  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">     
+    We appreciate your  participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources and enact appropriate legislation to create a more secure Sunshine State! 
+    
+  </p>
+  <p>
+   
   </p>
 
   <div class="alert alert-warning" *ngIf="isMobile">
