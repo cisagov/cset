@@ -672,7 +672,7 @@ export class QuestionBlockIseComponent implements OnInit {
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    if (this.myGrouping.questions[0].questionId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
@@ -747,12 +747,12 @@ export class QuestionBlockIseComponent implements OnInit {
       auto_Generated: 1
     };
 
-    this.dialog.open(IssuesComponent, {
-      data: find,
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
-    }).afterClosed().subscribe(result => {
+    // this.dialog.open(IssuesComponent, {
+    //   data: find,
+    //   disableClose: true,
+    //   width: this.layoutSvc.hp ? '90%' : '60vh',
+    //   height: this.layoutSvc.hp ? '90%' : '85vh',
+    // }).afterClosed().subscribe(result => {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
         (response: Finding[]) => {
@@ -770,7 +770,7 @@ export class QuestionBlockIseComponent implements OnInit {
         },
         error => console.log('Error updating findings | ' + (<Error>error).message)
       );
-    });
+    // });
   }
   
   /**

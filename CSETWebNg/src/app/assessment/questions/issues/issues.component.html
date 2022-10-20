@@ -69,55 +69,57 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
-    <div class="mt-2 invalid-feedback d-block text-muted">
-      <p>Items marked in red indicate a higher level of risk</p>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <table role="presentation" aria-label="childAnswers" style="width: 100%; border: 1px solid black; border-collapse: collapse">
-          <colgroup>
-            <col span="1" style="width: 10%;">
-            <col span="1" style="width: 30%;">
-            <col span="1" style="width: 10%;">
-            <col span="1" style="width: 40%;">
-          </colgroup>
-          <tr style="border: 1px solid black; border-collapse: collapse">
-            <th style="text-align: center;">Sub Statement</th>
-            <th style="text-align: center;">Statement Text</th>
-            <th style="text-align: center;">Response</th>
-            <th style="text-align: center;">Action Items</th>
-          </tr>
-          <ng-container *ngFor="let q of this.questionData; let i = index;">
-            <tr *ngIf="q.answer_Text === 'N'">
-              <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
-              <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
-              <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
-              <td *ngIf="this.actionItems != null">
-                <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ this.actionItems[i]?.action_Items }}
-                </textarea>
-              </td>
+  <ng-container *ngIf="this.finding.auto_Generated === 1">
+    <div *ngIf="finding.type !== 'Supplemental Fact'">
+      <div class="mt-2 invalid-feedback d-block text-muted">
+        <p>Items marked in red indicate a higher level of risk</p>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <table role="presentation" aria-label="childAnswers" style="width: 100%; border: 1px solid black; border-collapse: collapse">
+            <colgroup>
+              <col span="1" style="width: 10%;">
+              <col span="1" style="width: 30%;">
+              <col span="1" style="width: 10%;">
+              <col span="1" style="width: 40%;">
+            </colgroup>
+            <tr style="border: 1px solid black; border-collapse: collapse">
+              <th style="text-align: center;">Sub Statement</th>
+              <th style="text-align: center;">Statement Text</th>
+              <th style="text-align: center;">Response</th>
+              <th style="text-align: center;">Action Items</th>
             </tr>
-          </ng-container>
-        </table>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-6">
-        <span *ngIf="this.actionItems != null">
-          <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
-          <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
-        </span>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
-          <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
+            <ng-container *ngFor="let q of this.questionData; let i = index;">
+              <tr *ngIf="q.answer_Text === 'N'">
+                <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
+                <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
+                <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
+                <td *ngIf="this.actionItems != null">
+                  <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ this.actionItems[i]?.action_Items }}
+                  </textarea>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
         </div>
       </div>
+      <br>
+      <div class="row">
+        <div class="col-6">
+          <span *ngIf="this.actionItems != null">
+            <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
+            <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
+          </span>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
+            <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
+          </div>
+        </div>
+      </div>
+      <br>
     </div>
-    <br>
   </ng-container>
 
   <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
