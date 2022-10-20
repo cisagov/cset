@@ -89,7 +89,7 @@
             <th style="text-align: center;">Action Items</th>
           </tr>
           <ng-container *ngFor="let q of this.questionData; let i = index;">
-            <tr *ngIf="q.answer_Text !== 'U'">
+            <tr *ngIf="q.answer_Text === 'N'">
               <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
               <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
               <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
