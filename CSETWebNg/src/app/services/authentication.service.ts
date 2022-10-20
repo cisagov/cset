@@ -190,6 +190,9 @@ export class AuthenticationService {
             case 'RRA':
                 scope = 'RRA';
                 break;
+            case 'CF':
+                scope = 'CF';
+                break;
             default:
                 scope = environment.appCode
         }
