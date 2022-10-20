@@ -1,6 +1,6 @@
 {
     "isCsetOnline": true,
-    "appCode": "CSET",
+    "appCode": "CF",
     "app": {
         "protocol": "http",
         "url": "localhost",
