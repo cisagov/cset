@@ -89,6 +89,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -181,6 +182,7 @@ import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.com
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -196,6 +198,9 @@ switch (installationMode) {
     break;
   case 'RRA':
     homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+    break;
+  case 'CF':
+    homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -356,6 +361,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
@@ -412,6 +418,7 @@ const appRoutes: Routes = [
 
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
+              { path: 'analytics-compare', component: AnalyticsCompareComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },

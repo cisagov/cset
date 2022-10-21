@@ -274,6 +274,8 @@ namespace CSETWebCore.Business.Assessment
                     }
                 }
 
+                assessment.Origin = result.ii.Origin;
+
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
@@ -504,6 +506,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
+            dbInformation.Origin = assessment.Origin;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -650,7 +653,7 @@ namespace CSETWebCore.Business.Assessment
             if (assessment.UseMaturity)
             {
                 // Use shorter names on assessments with multiple types.
-                assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
+                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
                 assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
             }
 

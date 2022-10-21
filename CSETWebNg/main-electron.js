@@ -353,6 +353,10 @@ app.on('ready', () => {
       clientCode = 'TSA';
       appCode = 'CSET-TSA';
       break;
+      case 'CF':
+        clientCode = 'CF';
+        appCode = 'CF';
+        break;
     default:
       clientCode = 'DHS';
       appCode = 'CSET';

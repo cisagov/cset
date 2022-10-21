@@ -12,6 +12,7 @@ import {
 import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
+import { ConfigService } from '../../services/config.service';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -71,15 +72,21 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
-    public assessSvc: AssessmentService) {
+    public assessSvc: AssessmentService,
+    public configSvc: ConfigService) {
   }
 
   ngOnInit(): void {
-    this.gallerySvc.getGalleryItems("CSET").subscribe(
-      (resp: any) => {
+    this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
+      (resp: any) => {        
         this.galleryData = resp;
         this.rows = this.galleryData.rows;
         this.testRow = this.rows[1];
+
+        ///NOTE THIS runs the default item if there is only one item automatically
+        if(this.rows.length==1 && this.rows[0].galleryItems.length==1){
+          this.assessSvc.newAssessmentGallery(this.rows[0].galleryItems[0].gallery_Item_Id);
+        }
 
         // create a plainText property for the elipsis display in case a description has HTML markup
         const dom = document.createElement("div");

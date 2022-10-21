@@ -110,6 +110,17 @@ export class PageVisibilityService {
 
 
 
+      // ORIGIN 
+      if (c.startsWith('ORIGIN:') || c.startsWith('ORIGIN-ANY(')) {
+        show = show && this.originAny(c);
+      }
+
+      if (c.startsWith('ORIGIN-NOT:') || c.startsWith('ORIGIN-NONE(')) {
+        show = show && !this.originAny(c);
+      }
+
+
+
       // look for the specified maturity model
       if (c.startsWith('MATURITY:') || c.startsWith('MATURITY-ANY(')) {
         show = show && this.maturityAny(c);
@@ -197,6 +208,19 @@ export class PageVisibilityService {
   }
 
   /**
+   * Returns true if the assessment's "origin" matches the specified value.
+   */
+  originAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has ||
+      (this.assessSvc.assessment?.origin == t.trim())
+    });
+    return has;
+  }
+
+  /**
    *
    * @param rule
    * @returns
@@ -236,4 +260,4 @@ export class PageVisibilityService {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
   }
-}
+} 

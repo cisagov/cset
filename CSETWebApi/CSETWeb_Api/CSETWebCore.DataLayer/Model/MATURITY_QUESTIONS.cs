@@ -66,6 +66,8 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Parent_Question_Id")]
         [InverseProperty("InverseParent_Question")]
         public virtual MATURITY_QUESTIONS Parent_Question { get; set; }
+        [InverseProperty("Question")]
+        public virtual ISE_ACTIONS ISE_ACTIONS { get; set; }
         [InverseProperty("Parent_Question")]
         public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; }
         [InverseProperty("Mat_Question")]

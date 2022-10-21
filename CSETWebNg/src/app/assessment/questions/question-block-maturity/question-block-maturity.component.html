@@ -48,7 +48,7 @@
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
                     matTooltip="One or more controls in this category requires further review.">
-                    <span class="mr-1 cset-icons-flag-dark fs-small"></span>                    
+                    <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                 </span>
             </div>
         </div>
@@ -82,6 +82,8 @@
                         <app-question-text [questionText]="q.questionText"></app-question-text>
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+
+                        <app-option-block *ngIf="q.options?.length > 0" [question]="q"></app-option-block>
                     </div>
                 </div>
 
@@ -91,10 +93,10 @@
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"
                             [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="configSvc.answerLabels[option]">
+                            [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{configSvc.buttonLabels[option]}}
+                            {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
                         </label>
 
                         <!-- Mark For Review Flag  -->
@@ -117,6 +119,7 @@
             </div>
 
             <div class="w-100" *ngIf="layoutSvc.hp">
+                <!-- handset portrait -->
                 <div>
                     <div [class.display-hidden]="!!q.parentQuestionId"
                         class="d-flex align-items-center mt-3 mb-2 text-nowrap">
@@ -127,7 +130,7 @@
                             {{ q.maturityLevelName }}
                         </span>
                     </div>
-                    
+
                     <div class="w-100 mb-3">
                         <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
@@ -146,10 +149,10 @@
                     <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"
                             [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="configSvc.answerLabels[option]">
+                            [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{configSvc.buttonLabels[option]}}
+                                {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
                         </label>
 
                         <!-- Mark For Review Flag  -->
