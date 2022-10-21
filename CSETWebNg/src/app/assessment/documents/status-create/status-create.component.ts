@@ -24,7 +24,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
 
-import { UntypedFormControl, UntypedFormGroup, Validators, NgForm } from '@angular/forms';
+import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { FileUploadClientService } from '../../../services/file-client.service';
 
 
@@ -33,8 +33,8 @@ import { FileUploadClientService } from '../../../services/file-client.service';
   templateUrl: './status-create.component.html'
 })
 export class StatusCreateComponent implements OnInit, OnDestroy {
-  statusCreateForm: UntypedFormGroup;
-    fileDescription: UntypedFormControl;
+  statusCreateForm: FormGroup;
+    fileDescription: FormControl;
     fileToUpload: File  = null;
     uploadProgress: number = 0;
     uploadComplete: boolean = false;
@@ -54,12 +54,12 @@ export class StatusCreateComponent implements OnInit, OnDestroy {
         /* initilize the form and/or extra form fields
             Do not initialize the file field
         */
-      this.fileDescription  = new UntypedFormControl('', [
+      this.fileDescription  = new FormControl('', [
               Validators.required,
               Validators.minLength(4),
               Validators.maxLength(280)
          ]);
-      this.statusCreateForm = new UntypedFormGroup({
+      this.statusCreateForm = new FormGroup({
           'description': this.fileDescription,
       });
     }
@@ -86,7 +86,7 @@ export class StatusCreateComponent implements OnInit, OnDestroy {
         this.serverResponse = event.body;
       }
     }
-    handleSubmit(event: any, statusNgForm: NgForm, statusFormGroup: UntypedFormGroup) {
+    handleSubmit(event: any, statusNgForm: NgForm, statusFormGroup: FormGroup) {
       event.preventDefault();
       if (statusNgForm.submitted) {
 
