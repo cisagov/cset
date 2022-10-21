@@ -1,6 +1,6 @@
 {
-    "isCsetOnline": true,
-    "appCode": "CF",
+    "isCsetOnline": false,
+    "appCode": "CSET",
     "app": {
         "protocol": "http",
         "url": "localhost",
@@ -29,8 +29,8 @@
         "canDeleteCustomModules": true
     },
     
-    "galleryLayout": "CF",
-    "installationMode": "CF",
+    "galleryLayout": "CSET",
+    "installationMode": "",
     "mobileEnvironment": "",
 
     "answersDefault": [
