@@ -29,7 +29,7 @@ import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NCUAService } from '../../../../services/ncua.service';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
@@ -51,8 +51,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   contactInitials: string = "";
 
-  assessmentControl = new UntypedFormControl('');
-  assessmentCharterControl = new UntypedFormControl('');
+  assessmentControl = new FormControl('');
+  assessmentCharterControl = new FormControl('');
   creditUnionOptions: CreditUnionDetails[] = [];
   filteredOptions: Observable<CreditUnionDetails[]>;
   
