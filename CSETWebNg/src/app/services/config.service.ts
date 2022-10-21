@@ -42,20 +42,15 @@ export class ConfigService {
   assetsUrl: string;
   analyticsUrl: string;
   config: any;
-  
+
   isCsetOnline = false;
 
   // Contains settings from an option config.development.json that will not 
   // be deployed in any delivery or production setting.
   development: any;
 
-  // button labels
-  buttonLabels = {};
-
   buttonClasses = {};
 
-  // labels for graph legends and report answers
-  answerLabels = {};
 
   salLabels = {};
 
@@ -63,6 +58,9 @@ export class ConfigService {
   isAPI_together_With_Web = false;
 
   installationMode = '';
+
+  galleryLayout = 'CSET';
+
 
   /**
    * Specifies the mobile ecosystem that the app is running on.
@@ -93,9 +91,9 @@ export class ConfigService {
       this.http.get(this.assetsUrl + 'config.development.json').toPromise().then((data: any) => {
         this.development = data;
       },
-      (error) => {
-        this.development = {};
-      });
+        (error) => {
+          this.development = {};
+        });
 
       return this.http.get(this.configUrl)
         .toPromise()
@@ -119,8 +117,7 @@ export class ConfigService {
           this.isCsetOnline = this.config.isCsetOnline ?? false;
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
-
-
+          this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
           this.mobileEnvironment = (this.config.mobileEnvironment);
 
           this.populateLabelValues();
@@ -137,29 +134,6 @@ export class ConfigService {
    */
   populateLabelValues() {
     // Apply any overrides to button and graph labels
-    this.buttonLabels['Y'] = this.config.buttonLabelY;
-    this.buttonLabels['N'] = this.config.buttonLabelN;
-    this.buttonLabels['NA'] = this.config.buttonLabelNA;
-    this.buttonLabels['A'] = this.config.buttonLabelA;
-    if (this.installationMode === 'ACET') {
-      this.buttonLabels['A'] = this.config.buttonLabelA_ACET;
-    }
-    this.buttonLabels['Iss'] = this.config.buttonLabelIss;
-    this.buttonLabels['I'] = this.config.buttonLabelI;
-
-    this.answerLabels['Y'] = this.config.answerLabelY;
-    this.answerLabels['N'] = this.config.answerLabelN;
-    this.answerLabels['NA'] = this.config.answerLabelNA;
-    this.answerLabels['A'] = this.config.answerLabelA;
-    if (this.installationMode === 'ACET') {
-      this.answerLabels['A'] = this.config.answerLabelA_ACET;
-    }
-    this.answerLabels['Iss'] = this.config.answerLabelIss;
-    this.answerLabels['U'] = this.config.answerLabelU;
-    this.answerLabels[''] = this.config.answerLabelU;
-    this.answerLabels['I'] = this.config.answerLabelI;
-
-
     this.salLabels['L'] = "Low";
     this.salLabels['M'] = "Moderate";
     this.salLabels['H'] = "High";
@@ -187,6 +161,21 @@ export class ConfigService {
       || this.mobileEnvironment == '') {
       return false;
     }
+    return true;
+  }
+
+  /**
+   * Determines if the Import button should display or not
+   */
+  showImportButton() {
+
+    // hide the import button if any Cyber Florida conditions exist
+    if ((this.config.isCyberFlorida ?? false)
+      || ((this.config.galleryLayout ?? '') == 'Florida')
+      || ((this.config.installationMode ?? '') == 'CF')) {
+      return false;
+    }
+
     return true;
   }
 

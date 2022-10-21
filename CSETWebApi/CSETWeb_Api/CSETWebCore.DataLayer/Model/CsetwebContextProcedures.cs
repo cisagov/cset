@@ -49,6 +49,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetChildrenAnswersResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetCombinedOverallsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetComparisonAreasFileResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetComparisonBestToWorstResult>().HasNoKey().ToView(null);
@@ -62,6 +63,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<GetRelevantAnswersResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<InScopeQuestionsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<InScopeRequirementsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<IseAnswerDistributionResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<RelevantAnswersResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<requirement_final_movesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<SearchAllTablesResult>().HasNoKey().ToView(null);
@@ -856,6 +858,38 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+        public virtual async Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? Parent_Id, int? Assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "Parent_Id",
+                    Value = Parent_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Assess_Id",
+                    Value = Assess_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetChildrenAnswersResult>("EXEC @returnValue = [dbo].[GetChildrenAnswers] @Parent_Id, @Assess_Id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1202,6 +1236,38 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<InScopeRequirementsResult>("EXEC @returnValue = [dbo].[InScopeRequirements] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<IseAnswerDistributionResult>> IseAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "Assessment_Id",
+                    Value = Assessment_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "targetLevel",
+                    Value = targetLevel ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<IseAnswerDistributionResult>("EXEC @returnValue = [dbo].[IseAnswerDistribution] @Assessment_Id, @targetLevel", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

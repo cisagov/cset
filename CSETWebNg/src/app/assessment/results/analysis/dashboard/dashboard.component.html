@@ -54,18 +54,21 @@
 
     <div class="chart d-flex flex-column flex-00a mb-5">
       <h3>Assessment Compliance</h3>
+      <p>This graph shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores. </p>
       <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3>Top Ranked Categories</h3>
+      <p>This graph shows the top areas of concern ranked.  These are calculated from a weighted risk score based on the difficulty of attack.  The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.</p>
       <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
     </div>
 
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3>Standards Summary</h3>
+      <p>This graph shows the overall answer percentages for each individual answer type.</p>
       <div *ngIf="stdsSummChart == null">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>
@@ -79,6 +82,7 @@
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
       <h3>Components Summary</h3>
+      <p>This graph shows the component or network diagram based answer percentages for each individual answer type.</p>
       <div *ngIf="!compSummInitialized">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>

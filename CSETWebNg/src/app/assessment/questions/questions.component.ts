@@ -43,8 +43,10 @@ export class QuestionsComponent implements AfterViewChecked {
   categories: Category[] = null;
 
   setHasRequirements = false;
+  showRequirementsToggle = false;
 
   setHasQuestions = false;
+  showQuestionsToggle = false;
 
   autoLoadSupplementalInfo: boolean;
 
@@ -82,6 +84,7 @@ export class QuestionsComponent implements AfterViewChecked {
           this.assessSvc.assessment = data;
         });
     }
+
     this.getQuestionCounts();
 
     // handle any scroll events originating from the nav servicd
@@ -158,6 +161,9 @@ export class QuestionsComponent implements AfterViewChecked {
     localStorage.setItem("questionSet", mode == 'R' ? "Requirement" : "Question");
   }
 
+  /**
+   * 
+   */
   getQuestionCounts() {
     this.questionsSvc.getQuestionsList().subscribe(
       (data: QuestionResponse) => {
@@ -183,6 +189,14 @@ export class QuestionsComponent implements AfterViewChecked {
         else {
           this.assessSvc.applicationMode = 'Q';
           modified = true;
+        }
+
+        // set toggle visibility
+        this.showQuestionsToggle = this.setHasQuestions;
+        this.showRequirementsToggle = this.setHasRequirements;
+        if (data.onlyMode) {
+          this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
+          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');       
         }
 
         if (modified) {
@@ -217,6 +231,7 @@ export class QuestionsComponent implements AfterViewChecked {
         this.categories = response.categories;
 
         this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.maturityModelId = 0;
 
         this.filterSvc.evaluateFiltersForCategories(this.categories);
 
@@ -245,7 +260,7 @@ export class QuestionsComponent implements AfterViewChecked {
 
   /**
    * Returns a boolean indicating if the browser is IE or Edge.
-   * The 'auto-load supplemental' logic is not performant in IE, so we won't offer it.
+   * The 'Auto-load Guidance' logic is not performant in IE, so we won't offer it.
    */
   browserIsIE() {
     const isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);

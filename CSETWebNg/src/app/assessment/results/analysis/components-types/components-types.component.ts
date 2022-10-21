@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import  Chart  from 'chart.js/auto';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-components-types',
@@ -40,10 +41,12 @@ export class ComponentsTypesComponent implements OnInit {
 
   constructor(
     private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
+    //private assessSvc: AssessmentService,
+    public questionsSvc: QuestionsService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    private router: Router) { }
+    //private router: Router
+    ) { }
 
   ngOnInit() {
     this.analysisSvc.getComponentTypes().subscribe(x => {

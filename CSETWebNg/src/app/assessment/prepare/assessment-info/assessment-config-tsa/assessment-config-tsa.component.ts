@@ -39,7 +39,6 @@ export class AssessmentConfigTsaComponent implements OnInit {
    *
    */
   ngOnInit() {
-    // this.navSvc.setCurrentPage('info1');
     this.navSvc.setCurrentPage('info-tsa');
     this.tsaSvc.TSAGetModelsName().subscribe((data)=>{
      this.features=data;
