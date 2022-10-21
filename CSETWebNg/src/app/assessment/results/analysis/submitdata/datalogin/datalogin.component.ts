@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, NgForm, FormGroupDirective, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormControl, NgForm, FormGroupDirective, Validators, UntypedFormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -35,7 +35,7 @@ import { AlertComponent } from '../../../../../dialogs/alert/alert.component';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -53,10 +53,10 @@ export class DataloginComponent implements OnInit {
   matcherpassword = new MyErrorStateMatcher();
   matchalias = new MyErrorStateMatcher();
   
-  dataloginForm = new FormGroup ({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    alias: new FormControl('', [Validators.required])
+  dataloginForm = new UntypedFormGroup ({
+    username: new UntypedFormControl('', [Validators.required]),
+    password: new UntypedFormControl('', [Validators.required]),
+    alias: new UntypedFormControl('', [Validators.required])
   });
 
   
