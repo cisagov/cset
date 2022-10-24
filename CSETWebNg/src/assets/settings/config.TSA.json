@@ -1,0 +1,8 @@
+"behaviors":{
+    "showModuleBuilder":true,
+    "showAssessmentDocuments":false,
+    "showAggregation":true,
+    "showAnalytics":true,
+    "showAnalyticsAtTheEnd":false,
+    "splashPageHTML":"dist/assets/splashTSA.html"
+   },

@@ -23,6 +23,7 @@ export class AboutCfComponent implements OnInit {
         if (this.configSvc.development.showBuildTime ?? false) {
           this.linkerTime = localStorage.getItem('cset.linkerDate');
         }
+        
       }
     version = environment.version;
     helpContactEmail = this.configSvc.helpContactEmail;
