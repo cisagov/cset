@@ -1,7 +1,6 @@
 {
-    "isCsetOnline": false,
-    "isCyberFlorida": false,
-    "appCode": "ACET",
+    "isCsetOnline": true,
+    "appCode": "CF",
     "app": {
         "protocol": "http",
         "url": "localhost",
@@ -30,10 +29,9 @@
         "canDeleteCustomModules": true
     },
     
-    "installationMode": "",
-    "galleryLayout": "",
+    "galleryLayout": "CF",
+    "installationMode": "CF",
     "mobileEnvironment": "",
-
 
     "answersDefault": [
         {
@@ -109,3 +107,4 @@
     ]
 
 }
+

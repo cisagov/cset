@@ -4,20 +4,13 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.IO;
-using Lucene.Net.Index;
+using CSETWebCore.DataLayer.Model;
 using Lucene.Net.Analysis;
-using Lucene.Net.Store;
+using Lucene.Net.Analysis.En;
 using Lucene.Net.Documents;
-
+using Lucene.Net.Index;
+using Lucene.Net.Store;
 using System.Diagnostics;
-using Lucene.Net.Analysis.Standard;
-using SearchIndex2;
 
 namespace SearchIndex
 {
@@ -64,12 +57,14 @@ namespace SearchIndex
 
 
             FSDirectory fsdir = FSDirectory.Open(dir);
-
-            using (IndexWriter writer = new IndexWriter(fsdir, new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30), true, IndexWriter.MaxFieldLength.UNLIMITED))
+            Lucene.Net.Store.Directory directory = fsdir;
+            using (IndexWriter writer = new IndexWriter(directory,
+                new IndexWriterConfig(Lucene.Net.Util.LuceneVersion.LUCENE_48
+                , new EnglishAnalyzer(Lucene.Net.Util.LuceneVersion.LUCENE_48))))
             {
-              
-               
-                
+
+
+
                 Debug.WriteLine("Documents Count: " + dictionaryGenFiles.Values.Count);
                 foreach (GEN_FILE doc in dictionaryGenFiles.Values)
                 {
@@ -106,12 +101,7 @@ namespace SearchIndex
 
 
                 }
-
                 TopicIndexer.IndexTopics(entity, writer);
-
-
-                writer.Optimize();
-
             }
             
             System.IO.Directory.Delete(luceneIndexDestDir,true);            
