@@ -189,7 +189,9 @@ export class TopMenusComponent implements OnInit {
     }
 
     if (item == 'parameter editor') {
-      return (!this.configSvc.isMobile());
+      var show = this.configSvc.config.behavior?.showMenuParameterEditor ?? true;
+      show = show && !this.configSvc.isMobile();
+      return (show);
     }
 
     // This should not be offered in mobile or CSET Online
@@ -229,7 +231,9 @@ export class TopMenusComponent implements OnInit {
       }
     }
 
-    return true;
+    var show = this.configSvc.config.behavior?.showMenuAssessmentDocuments ?? true;
+
+    return show;
   }
 
   /**

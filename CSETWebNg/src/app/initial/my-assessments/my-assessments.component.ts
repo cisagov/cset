@@ -143,6 +143,19 @@ export class MyAssessmentsComponent implements OnInit {
     this.ncuaSvc.assessmentsToMerge = [];
   }  
 
+  /**
+   * 
+   * @returns 
+   */
+  showAnalytics() {
+    var show = this.configSvc.config.behavior?.showAnalyticsColumnOnLanding ?? false;
+
+    // this will be reworked with the behavior configuration overrides
+    show = show || (this.isTSA || this.isCSET);
+    return show;
+  }
+
+
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
