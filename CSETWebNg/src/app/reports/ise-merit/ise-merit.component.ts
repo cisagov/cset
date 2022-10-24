@@ -36,6 +36,9 @@ export class IseMeritComponent implements OnInit {
   resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
 
   actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  descriptionsMap: Map<number, any[]> = new Map<number, any[]>();
+
   // parentToChildren: Map<number, number> = new Map<number, number>();
   // childrenToActionItems: Map<number, string> = new Map<number, string>();
 
@@ -63,6 +66,7 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;  
+        console.log(this.response)
         this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
 
         for(let i = 0; i < this.response?.length; i++) {
@@ -103,43 +107,55 @@ export class IseMeritComponent implements OnInit {
         this.answers = r;
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-          // goes through domains
-          for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
-            let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
-            // goes through subcategories
-            for(let j = 0; j < domain.components?.length; j++) {
-              let subcat = domain?.components[j];
-              // goes through questions
-              for(let k = 0; k < subcat?.questions?.length; k++) {
-                
-                let question = subcat?.questions[k];
-                if( k == 0 ){
-                  this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
-                    (r: any) => {
-                      this.actionItemsForParent = r;
-                      for(let m = 0; m < this.actionItemsForParent?.length; m++){
-                        let parentAction = this.actionItemsForParent[m].action_Items;
-                        if(!this.actionItemsMap.has(question.matQuestionId)){
-                          this.actionItemsMap.set(question.matQuestionId, [parentAction]);
-                        } else {
-                          let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
-                          tempActionArray.push(parentAction);
-                          this.actionItemsMap.set(question.matQuestionId, tempActionArray);
-                        }
+        // goes through domains
+        for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for(let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            // goes through questions
+            for(let k = 0; k < subcat?.questions?.length; k++) {
+              
+              let question = subcat?.questions[k];
+              if( k == 0 ){
+                this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
+                  (r: any) => {
+                    this.actionItemsForParent = r;
+                    for(let m = 0; m < this.actionItemsForParent?.length; m++){
+                      let parentAction = this.actionItemsForParent[m].action_Items;
+                      let regCitation = this.actionItemsForParent[m].regulatory_Citation;
+                      let description = this.actionItemsForParent[m].description;
+
+                      if(!this.actionItemsMap.has(question.matQuestionId)){
+                        this.actionItemsMap.set(question.matQuestionId, [parentAction]);
+                        this.regCitationsMap.set(question.matQuestionId, [regCitation]);
+                        this.descriptionsMap.set(question.matQuestionId, [description]);
+                      } else {
+                        let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
+                        let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
+                        let tempDescriptionsArray = this.descriptionsMap.get(question.matQuestionId);
+
+                        tempActionArray.push(parentAction);
+                        tempCitationArray.push(regCitation);
+                        tempDescriptionsArray.push(description);
+
+                        this.actionItemsMap.set(question.matQuestionId, tempActionArray);
+                        this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
+                        this.descriptionsMap.set(question.matQuestionId, tempDescriptionsArray);
                       }
                     }
-                  )
-                }
-              
-                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
-                  this.examLevel = 'CORE+';
-                }
+                  }
+                )
+              }
+            
+              if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                this.examLevel = 'CORE+';
               }
             }
           }
+        }
       },
     )
-  
   }
 
   addExaminerFinding(title: any) {
