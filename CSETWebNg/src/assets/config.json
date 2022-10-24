@@ -33,6 +33,12 @@
     "installationMode": "",
     "mobileEnvironment": "",
 
+    "behavior": {
+        "showMenuAssessmentDocuments": false,
+        "showMenuParameterEditor": false,
+        "showAnalyticsColumnOnLanding!!!!!": false
+    },
+
     "answersDefault": [
         {
             "code": "U",
