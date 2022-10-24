@@ -90,7 +90,15 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
       this.filteredOptions = this.assessmentControl.valueChanges.pipe(
         startWith(''), map(value => {
-          const name = typeof value === 'string' ? value : value?.name;
+          let tval = "";
+          if(typeof value === 'string'){
+            tval = value;
+          } 
+          else{
+            //tval= value.name;
+            console.log(value);
+          }
+          const name = tval;
           return name ? this.filter(name as string) : this.creditUnionOptions.slice();
         }),
       );
