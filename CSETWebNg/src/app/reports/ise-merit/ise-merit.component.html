@@ -210,8 +210,16 @@
                                 [cdkCopyToClipboard]="finding?.finding?.description">
                                 <span class="cset-icons-copy"></span>
                             </label>
-                            <strong> Description: </strong><br>
-                            {{ finding?.finding?.description }}
+                            <strong> Description: </strong>
+                            <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+                                <div *ngFor="let question of subcat?.questions">
+                                    <div *ngIf="this.descriptionsMap.has(question.matQuestionId)">
+                                        <div *ngIf="question.title == finding?.question?.question_Title" >
+                                            {{ this.descriptionsMap.get(question.matQuestionId)[0] }} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <br>
 
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
@@ -220,25 +228,19 @@
                                 <span class="cset-icons-copy" ></span>
                             </label>
                             <strong> Action Item: </strong>
-                            <br>
-                            
                             <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
-
                                 <div *ngFor="let question of subcat?.questions">
                                     <div *ngIf="this.actionItemsMap.has(question.matQuestionId)">
-                                        <div *ngFor="let actionItems of this.actionItemsMap.get(question.matQuestionId); let i=index">
+                                        <div *ngFor="let actionItem of this.actionItemsMap.get(question.matQuestionId); let i=index">
                                             <div *ngIf="question.title == finding?.question?.question_Title">
                                                 <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
                                                     flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                    [cdkCopyToClipboard]="actionItems">
+                                                    [cdkCopyToClipboard]="(i+1) + '. ' + actionItem">
                                                     <span class="cset-icons-copy" ></span>
-                                                </label> {{ i+1 }}: {{ actionItems }} 
-                                            
-                                            
+                                                </label> {{ i+1 }}. {{ actionItem }} 
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <br>
@@ -259,8 +261,19 @@
                             <br>
                             <span [innerHtml]="finding?.question?.supplemental_Info"></span>
                         </div>
-                        <div>
-                            <strong>Regulatory Citation: </strong> <a href="https://www.ecfr.gov/current/title-12/chapter-VII/subchapter-A/part-748/section-748.0#p-748.0(b)(2)" target="_blank">12 C.F.R § 748.0 (b)(2)</a>
+                        <strong>Regulatory Citation: </strong>
+                        <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+                            <div *ngFor="let question of subcat?.questions">
+                                <div *ngIf="this.regCitationsMap.has(question.matQuestionId)">
+                                    <div *ngIf="question.title == finding?.question?.question_Title">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                            flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                            [cdkCopyToClipboard]="this.regCitationsMap.get(question.matQuestionId)[0]">
+                                            <span class="cset-icons-copy" ></span>
+                                        </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <hr class="page-line">
