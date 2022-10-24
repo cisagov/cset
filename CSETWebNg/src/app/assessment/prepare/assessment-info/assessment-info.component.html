@@ -25,11 +25,15 @@
   <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">Demographics</h3>
 
-  <app-assessment-detail *ngIf="!this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
-  <app-assessment-detail-ncua *ngIf="this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>
+  <app-assessment-detail *ngIf="configSvc.installationMode != 'CF' && !this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
+  <app-assessment-detail-ncua *ngIf="configSvc.installationMode != 'CF' && this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>
+  <app-assessment-detail-cf *ngIf="configSvc.installationMode == 'CF'"></app-assessment-detail-cf>
 
+
+  <!-- app-assessment-config has been deprecated with implementation of gallery -->
   <app-assessment-config *ngIf="false && this.configSvc.installationMode !== 'RRA' && this.configSvc.installationMode !== 'ACET'" class="mb-5"></app-assessment-config>
   <app-assessment-config-ncua *ngIf="false && this.configSvc.installationMode === 'ACET'" class="mb-5"></app-assessment-config-ncua>
+
 
   <app-nav-back-next [page]="'info1'" [hide]="'back'"></app-nav-back-next>
 

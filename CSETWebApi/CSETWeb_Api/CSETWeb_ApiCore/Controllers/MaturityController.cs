@@ -213,8 +213,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/structure")]
         public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
         {
+            int assessmentId = _tokenManager.AssessmentForUser();
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureForModel(modelId);
+            var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
             return Ok(x.Model);
         }
 
@@ -735,5 +736,32 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("api/maturity/mvra/scoring")]
+        public IActionResult GetMvraScoring([FromQuery] int id)
+        {
+            //int assessemntId = _tokenManager.AssessmentForUser();
+            //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+           
+            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var model = maturity.GetMaturityStructureForModel(9, id);
+            var scoring = maturity.GetMvraScoring(model);
+            return Ok(scoring);
+        }
+        
+        [HttpGet]
+        [Route("api/maturity/mvra/mvraTree")]
+        public IActionResult GetMvraTree([FromQuery] int id)
+        {
+            //int assessemntId = _tokenManager.AssessmentForUser();
+            //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+           
+            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var model = maturity.GetMaturityStructureForModel(9, id);
+            //var scoring = maturity.GetMvraScoring(model);
+            return Ok(model);
+        }
+
     }
 }
