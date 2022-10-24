@@ -108,7 +108,7 @@
     "@types/jquery": "^3.5.5",
     "@types/node": "^14.14.20",
     "electron": "^21.0.1",
-    "electron-packager": "^16.0.0",
+    "electron-packager": "^17.0.0",
     "jasmine-core": "^3.6.0",
     "jasmine-spec-reporter": "^7.0.0",
     "karma": "^6.3.8",
@@ -125,6 +125,7 @@
   },
   "resolutions": {
     "minimist": "1.2.6",
-    "d3-color": "3.1.0"
+    "d3-color": "3.1.0",
+    "minimatch": "3.0.8"
   }
 }
