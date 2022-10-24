@@ -1,0 +1,13 @@
+{
+    "isCsetOnline": true,
+    "appCode": "CF",
+    "helpContactEmail": "secureflorida@cyberflorida.org",
+    "helpContactPhone": "",
+    "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",    
+    "galleryLayout": "CF",
+    "installationMode": "CF",
+    "behaviors":{
+        
+    }
+}
+
