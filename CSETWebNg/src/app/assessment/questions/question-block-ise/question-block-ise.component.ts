@@ -727,6 +727,7 @@ export class QuestionBlockIseComponent implements OnInit {
   // 2 or more important questions.
   autoGenerateIssue(parentId, findId) {
     let name = "";
+    let desc = "";
 
     if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
@@ -734,51 +735,57 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
-      question_Id: parentId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findId,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: name,
-      type: "Examiner Finding",
-      description: null,
-      citations: null,
-      auto_Generated: 1
-    };
+    this.questionsSvc.getActionItems(parentId).subscribe(
+      (data: any) => {
+        // Used to generate a description for ISE reports even if a user doesn't open the issue.
+        desc = data[0]?.description;
 
-    // this.dialog.open(IssuesComponent, {
-    //   data: find,
-    //   disableClose: true,
-    //   width: this.layoutSvc.hp ? '90%' : '60vh',
-    //   height: this.layoutSvc.hp ? '90%' : '85vh',
+        const find: Finding = {
+          question_Id: parentId,
+          answer_Id: this.myGrouping.questions[0].answer_Id,
+          finding_Id: findId,
+          summary: '',
+          finding_Contacts: null,
+          impact: '',
+          importance: null,
+          importance_Id: 1,
+          issue: '',
+          recommendations: '',
+          resolution_Date: null,
+          vulnerabilities: '',
+          title: name,
+          type: "Examiner Finding",
+          description: desc,
+          citations: null,
+          auto_Generated: 1
+        };
+    
+        // this.dialog.open(IssuesComponent, {
+        //   data: find,
+        //   disableClose: true,
+        //   width: this.layoutSvc.hp ? '90%' : '60vh',
+        //   height: this.layoutSvc.hp ? '90%' : '85vh',
+    
+        // }).afterClosed().subscribe(result => {
 
-    // }).afterClosed().subscribe(result => {
-    this.findSvc.saveDiscovery(find).subscribe(() => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          for (let i = 0; i < response.length; i++) {
-            if (response[i].auto_Generated === 1) {
-              this.issueFindingId.set(parentId, response[i].finding_Id);
-            }
-          }
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
-    // });
+        this.findSvc.saveDiscovery(find).subscribe(() => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              for (let i = 0; i < response.length; i++) {
+                if (response[i].auto_Generated === 1) {
+                  this.issueFindingId.set(parentId, response[i].finding_Id);
+                }
+              }
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+    
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+      });
   }
   
   /**
