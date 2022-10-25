@@ -39,7 +39,7 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <div class="form-group" *ngIf="configSvc.installationMode !== 'ACET'">
+    <div class="form-group" *ngIf="showFacilityName()">
         <label class="mb-1" for="facility">Facility Name</label>
         <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.facilityName"
             (change)="update($event)" tabindex="0">
@@ -50,12 +50,12 @@
             (change)="update($event)" tabindex="0">
     </div>
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" *ngIf="showCityName()">
             <label class="mb-1" for="citySite">City Or Site Name</label>
             <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
                 (change)="update($event)" tabindex="0">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" *ngIf="showStateName()">
             <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
             <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                 (change)="update($event)" tabindex="0">
