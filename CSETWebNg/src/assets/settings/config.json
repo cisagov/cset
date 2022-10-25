@@ -24,25 +24,31 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
+
     "galleryLayout": "CSET",
     "installationMode": "",
     "mobileEnvironment": "",
 
-    "behaviors":{
-     "showModuleBuilder":true,
-     "showAssessmentDocuments":true,
-     "showAggregation":true,
-     "showAnalytics":true,
-     "showAnalyticsAtTheEnd":true,
-     "splashPageHTML":"dist/assets/splash.html",
-     "homeComponentForCurrentInstallationMode":"", 
-     "useMaturity":true,
-     "defaultMaturityModel":"",
-     "isAcetOnly":false,
-     "useStandard":false,
-     "useDiagram":false
-
+    "behaviors": {
+        "showModuleBuilder": true,
+        "showAssessmentDocuments": true,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": true,
+        "splashPageHTML": "dist/assets/splash.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "useMaturity": true,
+        "defaultMaturityModel": "",
+        "isAcetOnly": false,
+        "useStandard": false,
+        "useDiagram": false,
+        "showFacilityName": false,
+        "showCityName": false,
+        "showStateName": false,
+        "showContacts": false,
+        "showOrganizationName": false,
+        "showBusinessAgencyName": false,
+        "showCriticalService": false
     },
 
 
