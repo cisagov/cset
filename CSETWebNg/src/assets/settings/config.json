@@ -42,13 +42,13 @@
         "isAcetOnly": false,
         "useStandard": false,
         "useDiagram": false,
-        "showFacilityName": false,
-        "showCityName": false,
-        "showStateName": false,
-        "showContacts": false,
-        "showOrganizationName": false,
-        "showBusinessAgencyName": false,
-        "showCriticalService": false
+        "showFacilityName": true,
+        "showCityName": true,
+        "showStateName": true,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true
     },
 
 

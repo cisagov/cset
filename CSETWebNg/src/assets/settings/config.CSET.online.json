@@ -1,5 +1,5 @@
 {
-    "installationMode": "CSET",
+    "isCsetOnline": true,
     "behaviors": {
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
@@ -13,13 +13,13 @@
         "isAcetOnly": false,
         "useStandard": false,
         "useDiagram": false,
-        "showFacilityName": true,
-        "showCityName": true,
-        "showStateName": true,
-        "showContacts": true,
-        "showOrganizationName": true,
-        "showBusinessAgencyName": true,
-        "showCriticalService": true
+        "showFacilityName": false,
+        "showCityName": false,
+        "showStateName": false,
+        "showContacts": false,
+        "showOrganizationName": false,
+        "showBusinessAgencyName": false,
+        "showCriticalService": false
     }
 }
 
