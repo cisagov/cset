@@ -89,6 +89,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -199,6 +200,9 @@ switch (installationMode) {
     break;
   case 'RRA':
     homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+    break;
+  case 'CF':
+    homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;

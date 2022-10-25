@@ -27,6 +27,8 @@ namespace CSETWebCore.Helpers
 
         private List<ANSWER> allAnswers;
 
+        private int _assessmentId;
+
 
 
         /// <summary>
@@ -42,11 +44,12 @@ namespace CSETWebCore.Helpers
         /// and question structure for a maturity model.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructureForModel(int modelId, CSETContext context, bool includeText = true)
+        public MaturityStructureForModel(int modelId, CSETContext context, bool includeText = true, int assessmentId = 0)
         {
             this._modelId = modelId;
             this._context = context;
             this._includeText = includeText;
+            this._assessmentId = assessmentId;
 
             LoadStructure();
         }
@@ -82,7 +85,7 @@ namespace CSETWebCore.Helpers
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == 3026)
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == _assessmentId)
                 .ToList();
 
 
