@@ -168,8 +168,7 @@ function createWindow() {
 
   Menu.setApplicationMenu(newMenu);
 
-  mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHtml));
-
+  mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHTML));
 
   let rootDir = app.getAppPath();
 

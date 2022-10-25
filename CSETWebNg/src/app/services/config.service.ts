@@ -85,7 +85,7 @@ export class ConfigService {
   loadConfig() {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
-      this.assetsUrl = this.isRunningInElectron ? 'assets/' : '/assets/';
+      this.assetsUrl = 'assets/';
       this.settingsUrl = this.assetsUrl + 'settings/';
       this.configUrl = this.settingsUrl + 'config.json';
 
@@ -107,9 +107,9 @@ export class ConfigService {
           let subConfig;
           if (this.isCsetOnline && (this.installationMode === 'CSET' || this.installationMode === '' ))
           {
-            subConfig = require(`${this.settingsUrl}config.CSET.online.json`);
+            subConfig = require(`./../../${this.settingsUrl}config.CSET.online.json`);
           } else {
-            subConfig = require(`${this.settingsUrl}config.${this.installationMode}.json`);
+            subConfig = require(`./../../${this.settingsUrl}config.${this.installationMode}.json`);
           }
 
           // config is now the union of masterConfig and subConfig file.
