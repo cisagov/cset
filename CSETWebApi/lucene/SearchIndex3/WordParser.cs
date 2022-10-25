@@ -16,7 +16,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Lucene.Net.Documents;
 
 using System.Diagnostics;
-using SearchIndex2;
+using CSETWebCore.DataLayer.Model;
 
 namespace SearchIndex
 {
@@ -228,7 +228,7 @@ namespace SearchIndex
             string author = null;
 
             StringBuilder keyTextBuilder = new StringBuilder();
-            foreach (FILE_KEYWORDS keywordobj in resdoc_Entity.FILE_KEYWORDs.ToList())
+            foreach (FILE_KEYWORDS keywordobj in resdoc_Entity.FILE_KEYWORDS.ToList())
             {
                 keyTextBuilder.Append(keywordobj.Keyword + " ");
 

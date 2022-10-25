@@ -82,7 +82,6 @@ export class QuestionBlockIseComponent implements OnInit {
   issueCheck = new Map();
   issueFindingId = new Map();
   
-
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
   finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
@@ -188,6 +187,14 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
+  displayTooltip(maturityModelId: number, option: string) {
+    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    if (toolTip === 'Yes' || toolTip === 'No') {
+      toolTip = "";
+    }
+    return toolTip;
+  }
+
   /**
   * Repopulates the map variables to correctly track/delete issues
   */
@@ -279,47 +286,43 @@ export class QuestionBlockIseComponent implements OnInit {
 
   checkForIssues(q: Question, oldAnswerValue: string) {
     if (q.answer === 'N') {
-        let num = this.issueCheck.get(q.parentQuestionId);
-        if(!num){
-          num = 0;
-        }
+      let num = this.issueCheck.get(q.parentQuestionId);
+
+      if (!num) {
+        num = 0;
+      }
         
-        num += 1;
-        this.issueCheck.set(q.parentQuestionId, num);
+      num += 1;
+      this.issueCheck.set(q.parentQuestionId, num);    
           
-          
-          if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
-            this.autoGenerateIssue(q.parentQuestionId, 0);
-          }
-        
-      // }
+      if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
+        this.autoGenerateIssue(q.parentQuestionId, 0);
+      }
     } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
       if (this.issueCheck.has(q.parentQuestionId)) {
-          let num = this.issueCheck.get(q.parentQuestionId);
+        let num = this.issueCheck.get(q.parentQuestionId);
 
-          if(!num){
-            num = 0;
-          }
+        if (!num) {
+          num = 0;
+        }
           
-          num -= 1;
+        num -= 1;
 
-          if (num < 1) {
-            if (this.issueFindingId.has(q.parentQuestionId)) {
-              let findId = this.issueFindingId.get(q.parentQuestionId);
-              this.deleteIssue(findId, true);
-              this.issueFindingId.delete(q.parentQuestionId);
-            }
+        if (num < 1) {
+          if (this.issueFindingId.has(q.parentQuestionId)) {
+            let findId = this.issueFindingId.get(q.parentQuestionId);
+            this.deleteIssue(findId, true);
+            this.issueFindingId.delete(q.parentQuestionId);
           }
+        }
 
-          if (num <= 0) {
-            this.issueCheck.delete(q.parentQuestionId);
-          } else {
-            this.issueCheck.set(q.parentQuestionId, num);
-          }
-        // }
+        if (num <= 0) {
+          this.issueCheck.delete(q.parentQuestionId);
+        } else {
+          this.issueCheck.set(q.parentQuestionId, num);
+        }
       }
     }
-
   }
 
   /**
@@ -724,6 +727,7 @@ export class QuestionBlockIseComponent implements OnInit {
   // 2 or more important questions.
   autoGenerateIssue(parentId, findId) {
     let name = "";
+    let desc = "";
 
     if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
@@ -731,51 +735,57 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
-      question_Id: parentId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findId,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: name,
-      type: null,
-      description: null,
-      citations: null,
-      auto_Generated: 1
-    };
+    this.questionsSvc.getActionItems(parentId).subscribe(
+      (data: any) => {
+        // Used to generate a description for ISE reports even if a user doesn't open the issue.
+        desc = data[0]?.description;
 
-    // this.dialog.open(IssuesComponent, {
-    //   data: find,
-    //   disableClose: true,
-    //   width: this.layoutSvc.hp ? '90%' : '60vh',
-    //   height: this.layoutSvc.hp ? '90%' : '85vh',
+        const find: Finding = {
+          question_Id: parentId,
+          answer_Id: this.myGrouping.questions[0].answer_Id,
+          finding_Id: findId,
+          summary: '',
+          finding_Contacts: null,
+          impact: '',
+          importance: null,
+          importance_Id: 1,
+          issue: '',
+          recommendations: '',
+          resolution_Date: null,
+          vulnerabilities: '',
+          title: name,
+          type: "Examiner Finding",
+          description: desc,
+          citations: null,
+          auto_Generated: 1
+        };
+    
+        // this.dialog.open(IssuesComponent, {
+        //   data: find,
+        //   disableClose: true,
+        //   width: this.layoutSvc.hp ? '90%' : '60vh',
+        //   height: this.layoutSvc.hp ? '90%' : '85vh',
+    
+        // }).afterClosed().subscribe(result => {
 
-    // }).afterClosed().subscribe(result => {
-    this.findSvc.saveDiscovery(find).subscribe(() => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          for (let i = 0; i < response.length; i++) {
-            if (response[i].auto_Generated === 1) {
-              this.issueFindingId.set(parentId, response[i].finding_Id);
-            }
-          }
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
-    // });
+        this.findSvc.saveDiscovery(find).subscribe(() => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              for (let i = 0; i < response.length; i++) {
+                if (response[i].auto_Generated === 1) {
+                  this.issueFindingId.set(parentId, response[i].finding_Id);
+                }
+              }
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+    
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+      });
   }
   
   /**

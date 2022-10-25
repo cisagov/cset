@@ -272,4 +272,17 @@ export class IseMeritComponent implements OnInit {
     return list?.find(question => question.title == title);
   }
 
+  copyAllActionItems(input: any) {
+    let combinedItems = input.toString();
+    let array = combinedItems.split(".,");
+
+    for (let i = 0; i < array.length; i++) {
+      let count = i+1;
+	    array[i] = count + ": " + array[i] + "\n";
+    }
+
+    let formattedItems = array.join("");
+    return formattedItems;
+  }
+
 }

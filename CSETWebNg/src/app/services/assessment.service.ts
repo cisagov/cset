@@ -356,7 +356,7 @@ export class AssessmentService {
       );
   }
 
-  newAssessmentGallery(assessType: number) {
+  newAssessmentGallery(gallery_item_id: number) {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -369,7 +369,7 @@ export class AssessmentService {
         workflow = 'BASE';
     }
 
-    this.createNewAssessmentGallery(workflow, assessType)
+    this.createNewAssessmentGallery(workflow, gallery_item_id)
       .toPromise()
       .then(
         (response: any) => {

@@ -191,6 +191,14 @@ export class QuestionExtrasComponent implements OnInit {
     this.saveAnswer();
   }
 
+  /**
+   * 
+   * @returns 
+   */
+  showDocumentsIcon(): boolean {
+    
+    return true;
+  }
 
   /**
    *
@@ -660,6 +668,17 @@ export class QuestionExtrasComponent implements OnInit {
     // ISE
     if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
       if (mode == 'DISC') {
+        return false;
+      }
+    }
+
+    // DOCUMENTS 
+    if (mode == 'DOCS') {
+      if (this.configSvc.installationMode == 'ACET') {
+        return false;
+      }
+      
+      if (this.configSvc.installationMode == 'CF') {
         return false;
       }
     }
