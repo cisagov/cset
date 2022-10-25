@@ -98,30 +98,43 @@ export class ConfigService {
 
       return this.http.get(this.configUrl)
         .toPromise()
-        .then((data: any) => {
-          let apiPort = data.api.port != "" ? ":" + data.api.port : "";
-          let appPort = data.app.port != "" ? ":" + data.app.port : "";
-          let apiProtocol = data.api.protocol + "://";
-          let appProtocol = data.app.protocol + "://";
-          if (localStorage.getItem("apiUrl") != null) {
-            this.apiUrl = localStorage.getItem("apiUrl") + "/" + data.api.apiIdentifier + "/";
+        .then((masterConfig: any) => {
+          // isCsetOnline and installation mode should not change from master config file.
+          this.isCsetOnline = masterConfig.isCsetOnline ?? false;
+          this.installationMode = (masterConfig.installationMode?.toUpperCase() || 'CSET');
+
+          // Here is where we dynamically merge config settings based on installation mode.
+          let subConfig;
+          if (this.isCsetOnline && (this.installationMode === 'CSET' || this.installationMode === '' ))
+          {
+            subConfig = require(`${this.settingsUrl}config.CSET.online.json`);
           } else {
-            this.apiUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.apiIdentifier + "/";
+            subConfig = require(`${this.settingsUrl}config.${this.installationMode}.json`);
           }
-          this.analyticsUrl = data.analyticsUrl;
-          this.appUrl = appProtocol + data.app.appUrl + appPort;
-          this.docUrl = apiProtocol + data.api.url + apiPort + "/" + data.api.documentsIdentifier + "/";
-          this.helpContactEmail = data.helpContactEmail;
-          this.helpContactPhone = data.helpContactPhone;
-          this.config = data;
 
-          this.behaviors = this.config.behaviors;
+          // config is now the union of masterConfig and subConfig file.
+          // Any matching properties that changed in subConfig will overwrite those in masterConfig.
+          let config = {...masterConfig, ...subConfig};
 
-          this.isCsetOnline = this.config.isCsetOnline ?? false;
+          let apiPort = config.api.port != "" ? ":" + config.api.port : "";
+          let appPort = config.app.port != "" ? ":" + config.app.port : "";
+          let apiProtocol = config.api.protocol + "://";
+          let appProtocol = config.app.protocol + "://";
+          if (localStorage.getItem("apiUrl") != null) {
+            this.apiUrl = localStorage.getItem("apiUrl") + "/" + config.api.apiIdentifier + "/";
+          } else {
+            this.apiUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.apiIdentifier + "/";
+          }
+          this.analyticsUrl = config.analyticsUrl;
+          this.appUrl = appProtocol + config.app.appUrl + appPort;
+          this.docUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.documentsIdentifier + "/";
+          this.helpContactEmail = config.helpContactEmail;
+          this.helpContactPhone = config.helpContactPhone;
+          this.config = config;
 
-          this.installationMode = (this.config.installationMode?.toUpperCase() || '');
           this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
           this.mobileEnvironment = (this.config.mobileEnvironment);
+          this.behaviors = this.config.behaviors;
 
           this.populateLabelValues();
 

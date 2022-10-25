@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<app-login-cset *ngIf="(configSvc.installationMode || '') === ''"></app-login-cset>
+<app-login-cset *ngIf="(configSvc.installationMode || 'CSET') === 'CSET'"></app-login-cset>
 
 <app-login-rra *ngIf="configSvc.installationMode === 'RRA'"></app-login-rra>
 

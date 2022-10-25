@@ -10,10 +10,7 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 const masterConfig = require('./dist/assets/settings/config.json');
 
-let installationMode = masterConfig.installationMode;
-if (!installationMode || installationMode.length === 0) {
-  installationMode = 'CSET';
-}
+let installationMode = masterConfig.installationMode || 'CSET';
 
 const subConfig = require(`./dist/assets/settings/config.${installationMode}.json`);
 
