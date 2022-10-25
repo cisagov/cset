@@ -40,12 +40,13 @@ export class ConfigService {
   isRunningInElectron: boolean;
   configUrl: string;
   assetsUrl: string;
+  settingsUrl: string;
   analyticsUrl: string;
   config: any;
 
   isCsetOnline = false;
 
-  // Contains settings from an option config.development.json that will not 
+  // Contains settings from an option config.development.json that will not
   // be deployed in any delivery or production setting.
   development: any;
 
@@ -75,9 +76,7 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) {}
 
   /**
    *
@@ -86,9 +85,10 @@ export class ConfigService {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
       this.assetsUrl = this.isRunningInElectron ? 'assets/' : '/assets/';
-      this.configUrl = this.assetsUrl + 'config.json';
+      this.settingsUrl = this.assetsUrl + 'settings/';
+      this.configUrl = this.settingsUrl + 'config.json';
 
-      this.http.get(this.assetsUrl + 'config.development.json').toPromise().then((data: any) => {
+      this.http.get(this.settingsUrl + 'config.development.json').toPromise().then((data: any) => {
         this.development = data;
       },
         (error) => {

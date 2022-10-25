@@ -1,5 +1,25 @@
 {
-
+  "behaviors": {
+      "showModuleBuilder": true,
+      "showAssessmentDocuments": true,
+      "showAggregation": true,
+      "showAnalytics": true,
+      "showAnalyticsAtTheEnd": true,
+      "splashPageHTML": "dist/assets/splash.html",
+      "homeComponentForCurrentInstallationMode": "",
+      "useMaturity": true,
+      "defaultMaturityModel": "",
+      "isAcetOnly": false,
+      "useStandard": false,
+      "useDiagram": false,
+      "showFacilityName": true,
+      "showCityName": true,
+      "showStateName": true,
+      "showContacts": true,
+      "showOrganizationName": true,
+      "showBusinessAgencyName": true,
+      "showCriticalService": true
+  }
 }
 
 
