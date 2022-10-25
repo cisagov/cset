@@ -82,7 +82,6 @@ export class QuestionBlockIseComponent implements OnInit {
   issueCheck = new Map();
   issueFindingId = new Map();
   
-
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
   finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
@@ -188,6 +187,14 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
+  displayTooltip(maturityModelId: number, option: string) {
+    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    if (toolTip === 'Yes' || toolTip === 'No') {
+      toolTip = "";
+    }
+    return toolTip;
+  }
+
   /**
   * Repopulates the map variables to correctly track/delete issues
   */
@@ -279,47 +286,43 @@ export class QuestionBlockIseComponent implements OnInit {
 
   checkForIssues(q: Question, oldAnswerValue: string) {
     if (q.answer === 'N') {
-        let num = this.issueCheck.get(q.parentQuestionId);
-        if(!num){
-          num = 0;
-        }
+      let num = this.issueCheck.get(q.parentQuestionId);
+
+      if (!num) {
+        num = 0;
+      }
         
-        num += 1;
-        this.issueCheck.set(q.parentQuestionId, num);
+      num += 1;
+      this.issueCheck.set(q.parentQuestionId, num);    
           
-          
-          if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
-            this.autoGenerateIssue(q.parentQuestionId, 0);
-          }
-        
-      // }
+      if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
+        this.autoGenerateIssue(q.parentQuestionId, 0);
+      }
     } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
       if (this.issueCheck.has(q.parentQuestionId)) {
-          let num = this.issueCheck.get(q.parentQuestionId);
+        let num = this.issueCheck.get(q.parentQuestionId);
 
-          if(!num){
-            num = 0;
-          }
+        if (!num) {
+          num = 0;
+        }
           
-          num -= 1;
+        num -= 1;
 
-          if (num < 1) {
-            if (this.issueFindingId.has(q.parentQuestionId)) {
-              let findId = this.issueFindingId.get(q.parentQuestionId);
-              this.deleteIssue(findId, true);
-              this.issueFindingId.delete(q.parentQuestionId);
-            }
+        if (num < 1) {
+          if (this.issueFindingId.has(q.parentQuestionId)) {
+            let findId = this.issueFindingId.get(q.parentQuestionId);
+            this.deleteIssue(findId, true);
+            this.issueFindingId.delete(q.parentQuestionId);
           }
+        }
 
-          if (num <= 0) {
-            this.issueCheck.delete(q.parentQuestionId);
-          } else {
-            this.issueCheck.set(q.parentQuestionId, num);
-          }
-        // }
+        if (num <= 0) {
+          this.issueCheck.delete(q.parentQuestionId);
+        } else {
+          this.issueCheck.set(q.parentQuestionId, num);
+        }
       }
     }
-
   }
 
   /**
@@ -745,7 +748,7 @@ export class QuestionBlockIseComponent implements OnInit {
       resolution_Date: null,
       vulnerabilities: '',
       title: name,
-      type: null,
+      type: "Examiner Finding",
       description: null,
       citations: null,
       auto_Generated: 1
