@@ -213,4 +213,16 @@ export class AssessmentDemographicsComponent implements OnInit {
     updateDemographics() {
         this.demoSvc.updateDemographic(this.demographicData);
     }
+
+    showOrganizationName() {
+      return this.configSvc.behaviors.showOrganizationName;
+    }
+
+    showBusinessAgencyName() {
+      return this.configSvc.behaviors.showBusinessAgencyName;
+    }
+
+    showCriticalService() {
+      return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
+    }
 }
