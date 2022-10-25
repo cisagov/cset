@@ -45,6 +45,7 @@ export class ConfigService {
   config: any;
 
   isCsetOnline = false;
+  behaviors: any;
 
   // Contains settings from an option config.development.json that will not
   // be deployed in any delivery or production setting.
@@ -113,6 +114,8 @@ export class ConfigService {
           this.helpContactEmail = data.helpContactEmail;
           this.helpContactPhone = data.helpContactPhone;
           this.config = data;
+
+          this.behaviors = this.config.behaviors;
 
           this.isCsetOnline = this.config.isCsetOnline ?? false;
 
