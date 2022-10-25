@@ -67,6 +67,13 @@ export class AdvisoryComponent {
         this.orgShortName = 'TSA';
         this.showIntellectualPropertyRightsAssertion = false;
         break;
+        case 'CF':
+          this.appLongName = 'Cyber Security Evaluation Tool';
+          this.appShortName = 'CSET';
+          this.orgLongName = 'Cyber Florida';
+          this.orgShortName = 'CF';
+          this.showIntellectualPropertyRightsAssertion = false;
+          break;
       case 'RRA':
         this.appLongName = 'Ransomware Readiness Assessment';
         this.appShortName = 'RRA';

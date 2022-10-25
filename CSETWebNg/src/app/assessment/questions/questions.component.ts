@@ -260,7 +260,7 @@ export class QuestionsComponent implements AfterViewChecked {
 
   /**
    * Returns a boolean indicating if the browser is IE or Edge.
-   * The 'auto-load supplemental' logic is not performant in IE, so we won't offer it.
+   * The 'Auto-load Guidance' logic is not performant in IE, so we won't offer it.
    */
   browserIsIE() {
     const isIEOrEdge = /msie\s|trident\/|edge\//i.test(window.navigator.userAgent);

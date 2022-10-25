@@ -495,10 +495,14 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
+import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 
 @NgModule({
     imports: [
@@ -949,9 +953,10 @@ import { AnalyticsCompareComponent } from './assessment/results/analytics-compar
         PrivacyWarningRejectComponent, 
         SearchPageComponent, 
         LogoTsaComponent, 
+        CfLayoutMainComponent,
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent, AnalyticsCompareComponent
+        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, AboutCfComponent
     ],
     providers: [
         ConfigService,
