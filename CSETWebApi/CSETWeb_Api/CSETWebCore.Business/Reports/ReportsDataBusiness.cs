@@ -1199,7 +1199,7 @@ namespace CSETWebCore.Business.Reports
             info.Charter = assessment.Charter;
 
             info.Assets = 0;
-            bool a = int.TryParse(assessment.Assets, out int assets);
+            bool a = long.TryParse(assessment.Assets, out long assets);
             if (a)
             {
                 info.Assets = assets;
