@@ -12,7 +12,7 @@ using System.Text;
 
 using Lucene.Net.Index;
 using Lucene.Net.Documents;
-using SearchIndex2;
+using CSETWebCore.DataLayer.Model;
 
 namespace SearchIndex
 {

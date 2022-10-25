@@ -51,6 +51,10 @@ export class DemographicExtendedService {
     return this.http.get(this.apiUrl + '/geographics');
   }
 
+  getDemoAnswered() {
+    return this.http.get(this.apiUrl + '/demoanswered');
+  }
+
   getAllSectors() {
     return this.http.get(this.apiUrl + '/sectors');
   }

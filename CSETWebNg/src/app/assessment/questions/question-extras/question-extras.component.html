@@ -80,7 +80,7 @@
           </svg>
       </button>
 
-        <button *ngIf="configSvc.installationMode !=='ACET'" class="extras-button cursor-pointer"
+        <button *ngIf="displayIcon('DOCS')" class="extras-button cursor-pointer"
             [class.active]="mode == 'DOCS'" (click)="toggleExtras('DOCS')"
             [matTooltip]="has('DOCS')==='inline'? 'Artifacts / Documents with content':'Artifacts / Documents'"
             matTooltipPosition="above">

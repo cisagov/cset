@@ -42,7 +42,7 @@ export class ConfigService {
   assetsUrl: string;
   analyticsUrl: string;
   config: any;
-  
+
   isCsetOnline = false;
 
   // Contains settings from an option config.development.json that will not 
@@ -60,7 +60,7 @@ export class ConfigService {
   installationMode = '';
 
   galleryLayout = 'CSET';
-  isCyberFlorida = false;
+
 
   /**
    * Specifies the mobile ecosystem that the app is running on.
@@ -91,9 +91,9 @@ export class ConfigService {
       this.http.get(this.assetsUrl + 'config.development.json').toPromise().then((data: any) => {
         this.development = data;
       },
-      (error) => {
-        this.development = {};
-      });
+        (error) => {
+          this.development = {};
+        });
 
       return this.http.get(this.configUrl)
         .toPromise()
@@ -118,9 +118,6 @@ export class ConfigService {
 
           this.installationMode = (this.config.installationMode?.toUpperCase() || '');
           this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
-
-          this.isCyberFlorida = this.isCyberFloridaCheck();
-
           this.mobileEnvironment = (this.config.mobileEnvironment);
 
           this.populateLabelValues();
@@ -168,15 +165,18 @@ export class ConfigService {
   }
 
   /**
-   * Checks whether CSET is in Florida gallery mode or not
+   * Determines if the Import button should display or not
    */
-  isCyberFloridaCheck() {
-    if (this.galleryLayout !== null && this.galleryLayout !== undefined &&  this.galleryLayout === 'Florida') {
-      this.config.isCyberFlorida = true;
-      return true;
+  showImportButton() {
+
+    // hide the import button if any Cyber Florida conditions exist
+    if ((this.config.isCyberFlorida ?? false)
+      || ((this.config.galleryLayout ?? '') == 'Florida')
+      || ((this.config.installationMode ?? '') == 'CF')) {
+      return false;
     }
-    this.config.isCyberFlorida = false;
-    return false;
+
+    return true;
   }
 
   /**
