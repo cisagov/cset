@@ -68,6 +68,9 @@ let headers = {
   // CORE+ Only questions (17+)
   showExtraQuestions: boolean = false;
 
+  // Gives ISE statements more time to load to stop Issues from being placed into an odd state
+  statementsFinishedLoading: boolean = false;
+
 
   constructor(
     private http: HttpClient,

@@ -131,7 +131,9 @@ export class QuestionBlockIseComponent implements OnInit {
               find.question_Id = this.myGrouping.questions[0].questionId;
               this.issueFindingId.set(find.question_Id, find.finding_Id);
             }
-        });
+          });
+          
+          this.ncuaSvc.statementsFinishedLoading = true;
       });
 
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
@@ -286,42 +288,51 @@ export class QuestionBlockIseComponent implements OnInit {
 
   checkForIssues(q: Question, oldAnswerValue: string) {
     if (q.answer === 'N') {
-      let num = this.issueCheck.get(q.parentQuestionId);
-
-      if (!num) {
-        num = 0;
-      }
-        
-      num += 1;
-      this.issueCheck.set(q.parentQuestionId, num);    
-          
-      if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
-        this.autoGenerateIssue(q.parentQuestionId, 0);
-      }
-    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
-      if (this.issueCheck.has(q.parentQuestionId)) {
+      if (this.importantQuestions.has(q.questionId)) {
+        console.log("Parent Question ID of question answered: " + JSON.stringify(q.parentQuestionId, null, 4));
         let num = this.issueCheck.get(q.parentQuestionId);
 
         if (!num) {
           num = 0;
         }
+
+        num += 1;
+        this.issueCheck.set(q.parentQuestionId, num);    
           
-        num -= 1;
-
-        if (num < 1) {
-          if (this.issueFindingId.has(q.parentQuestionId)) {
-            let findId = this.issueFindingId.get(q.parentQuestionId);
-            this.deleteIssue(findId, true);
-            this.issueFindingId.delete(q.parentQuestionId);
-          }
-        }
-
-        if (num <= 0) {
-          this.issueCheck.delete(q.parentQuestionId);
-        } else {
-          this.issueCheck.set(q.parentQuestionId, num);
+        if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
+          this.autoGenerateIssue(q.parentQuestionId, 0);
         }
       }
+      console.log("Current (issue Check) Map: " + JSON.stringify(this.issueCheck, null, 4));
+      console.log("Current (finding Id) Map: " + JSON.stringify(this.issueFindingId, null, 4));
+    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+      if (this.importantQuestions.has(q.questionId)) {
+        if (this.issueCheck.has(q.parentQuestionId)) {
+          let num = this.issueCheck.get(q.parentQuestionId);
+
+          if (!num) {
+            num = 0;
+          }
+          
+          num -= 1;
+
+          if (num < 1) {
+            if (this.issueFindingId.has(q.parentQuestionId)) {
+              let findId = this.issueFindingId.get(q.parentQuestionId);
+              this.deleteIssue(findId, true);
+              this.issueFindingId.delete(q.parentQuestionId);
+            }
+          }
+
+          if (num <= 0) {
+            this.issueCheck.delete(q.parentQuestionId);
+          } else {
+            this.issueCheck.set(q.parentQuestionId, num);
+          }
+        }
+      }
+      console.log("Current (issue Check) Map: " + JSON.stringify(this.issueCheck, null, 4));
+      console.log("Current (finding Id) Map: " + JSON.stringify(this.issueFindingId, null, 4));
     }
   }
 
@@ -670,7 +681,8 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue(findid) {
+  addEditIssue(parentId, findid) {
+    console.log("Parent ID === : " + parentId);
     /* 
     * Per the customer's requests, an Issue's title should include the main 
     * grouping header text and the sub grouping header text.
@@ -686,7 +698,7 @@ export class QuestionBlockIseComponent implements OnInit {
     }
 
     const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
+      question_Id: parentId,//this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
       finding_Id: findid,
       summary: '',
@@ -724,7 +736,7 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   // ISE "issues" should be generated if an examiner answers 'No' to
-  // 2 or more important questions.
+  // 2 or more important questions with no popup.
   autoGenerateIssue(parentId, findId) {
     let name = "";
     let desc = "";
