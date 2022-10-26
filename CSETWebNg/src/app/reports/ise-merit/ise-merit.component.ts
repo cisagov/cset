@@ -37,7 +37,6 @@ export class IseMeritComponent implements OnInit {
 
   actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
-  descriptionsMap: Map<number, any[]> = new Map<number, any[]>();
 
   // parentToChildren: Map<number, number> = new Map<number, number>();
   // childrenToActionItems: Map<number, string> = new Map<number, string>();
@@ -124,24 +123,19 @@ export class IseMeritComponent implements OnInit {
                     for(let m = 0; m < this.actionItemsForParent?.length; m++){
                       let parentAction = this.actionItemsForParent[m].action_Items;
                       let regCitation = this.actionItemsForParent[m].regulatory_Citation;
-                      let description = this.actionItemsForParent[m].description;
 
                       if(!this.actionItemsMap.has(question.matQuestionId)){
                         this.actionItemsMap.set(question.matQuestionId, [parentAction]);
                         this.regCitationsMap.set(question.matQuestionId, [regCitation]);
-                        this.descriptionsMap.set(question.matQuestionId, [description]);
                       } else {
                         let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
                         let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
-                        let tempDescriptionsArray = this.descriptionsMap.get(question.matQuestionId);
 
                         tempActionArray.push(parentAction);
                         tempCitationArray.push(regCitation);
-                        tempDescriptionsArray.push(description);
 
                         this.actionItemsMap.set(question.matQuestionId, tempActionArray);
                         this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
-                        this.descriptionsMap.set(question.matQuestionId, tempDescriptionsArray);
                       }
                     }
                   }
@@ -261,15 +255,6 @@ export class IseMeritComponent implements OnInit {
       }
       return title.substring(0, endOfTitle);
     }
-  }
-
-  appendChildQuestionTitle(parentTitle: string, index: number) {
-    index += 1;
-    return parentTitle + '.' + index.toString();
-  }
-
-  findQuestionByTitle(title: string, list: any[]) {
-    return list?.find(question => question.title == title);
   }
 
   copyAllActionItems(input: any) {
