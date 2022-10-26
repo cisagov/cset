@@ -5,6 +5,7 @@
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
+        "showAnalyticsColumnOnLanding": false,
         "showAssessmentDocuments": false,
         "showMenuParameterEditor": false,
         "splashPageHTML": "dist/assets/splash.html",
