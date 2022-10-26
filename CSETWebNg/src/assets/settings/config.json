@@ -35,6 +35,9 @@
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
+        "showMenuAssessmentDocuments": false,
+        "showMenuParameterEditor": false,
+        "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
         "useMaturity": true,
@@ -50,8 +53,6 @@
         "showBusinessAgencyName": true,
         "showCriticalService": true
     },
-
-
 
     "answersDefault": [
         {
