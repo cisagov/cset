@@ -2042,9 +2042,11 @@ namespace CSETWebCore.Business.Maturity
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
 
+            var scuepIRPLevel = 1;
             var coreIRPLevel = 2;
 
-            result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : 0;
+            result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : scuepIRPLevel;
+            
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
