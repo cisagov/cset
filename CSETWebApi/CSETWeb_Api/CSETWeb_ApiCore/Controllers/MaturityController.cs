@@ -213,7 +213,18 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/structure")]
         public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
+            int assessmentId = 0;
+
+            try
+            {
+                assessmentId = _tokenManager.AssessmentForUser();
+            }
+            catch (Exception exc)
+            {
+                // It's okay to call this controller method
+                // without an assessment ID for the module content report
+            }
+
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
             return Ok(x.Model);
