@@ -1,0 +1,27 @@
+{
+    "isCsetOnline": true,
+    "behaviors": {
+        "showModuleBuilder": true,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": true,
+        "showAssessmentDocuments": false,
+        "showMenuParameterEditor": false,
+        "splashPageHTML": "dist/assets/splash.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "useMaturity": true,
+        "defaultMaturityModel": "",
+        "isAcetOnly": false,
+        "useStandard": false,
+        "useDiagram": false,
+        "showFacilityName": false,
+        "showCityName": false,
+        "showStateName": false,
+        "showContacts": false,
+        "showOrganizationName": false,
+        "showBusinessAgencyName": false,
+        "showCriticalService": false
+    }
+}
+
+
