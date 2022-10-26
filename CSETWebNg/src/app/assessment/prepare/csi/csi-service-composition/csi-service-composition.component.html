@@ -38,7 +38,7 @@
         id="connectionsDescription" [(ngModel)]="serviceComposition.connectionsDescription"
         placeholder="Connections Description" (change)="update()"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="showCriticalServiceIdentifyingInfo()">
       <label for="personnelDescription">Individuals (key IT/IT security professionals, including administrators, users,
         and third-party vendors)</label>
       <textarea class="form-control" tabindex="0" type="text" maxlength="400" name="personnelDescription"
