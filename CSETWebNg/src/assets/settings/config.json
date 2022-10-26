@@ -26,7 +26,7 @@
     },
 
     "galleryLayout": "CSET",
-    "installationMode": "",
+    "installationMode": "CSET",
     "mobileEnvironment": "",
 
     "behaviors": {
@@ -35,8 +35,8 @@
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
-        "showMenuAssessmentDocuments": false,
-        "showMenuParameterEditor": false,
+        "showMenuAssessmentDocuments": true,
+        "showMenuParameterEditor": true,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
