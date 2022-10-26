@@ -148,7 +148,7 @@ export class MyAssessmentsComponent implements OnInit {
    * @returns
    */
   showAnalytics() {
-    var show = this.configSvc.config.behaviors?.showAnalyticsColumnOnLanding ?? false;
+    var show = this.configSvc.config.behaviors?.showAnalyticsColumnOnLanding ?? true;
 
     // this will be reworked with the behavior configuration overrides
     show = show || (this.isTSA || this.isCSET);
