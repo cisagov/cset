@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionResponse, Domain, Category } from '../../models/questions.model';
+import { QuestionResponse, Category } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
@@ -47,6 +47,9 @@ export class QuestionsComponent implements AfterViewChecked {
 
   setHasQuestions = false;
   showQuestionsToggle = false;
+
+  numberQuestionsAnswered = 0;
+  numberQuestionsTotal = 0;
 
   autoLoadSupplementalInfo: boolean;
 
@@ -189,7 +192,7 @@ export class QuestionsComponent implements AfterViewChecked {
         else {
           this.assessSvc.applicationMode = 'Q';
           modified = true;
-        }
+        }        
 
         // set toggle visibility
         this.showQuestionsToggle = this.setHasQuestions;
@@ -228,6 +231,8 @@ export class QuestionsComponent implements AfterViewChecked {
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
+        this.populateAnswerTotals(response);
+
         this.categories = response.categories;
 
         this.filterSvc.answerOptions = response.answerOptions;
@@ -247,6 +252,25 @@ export class QuestionsComponent implements AfterViewChecked {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+  }
+
+  populateAnswerTotals(data) {
+    if (this.assessSvc.applicationMode == 'Q') {
+      this.numberQuestionsTotal = data.questionCount;
+    } else {
+      this.numberQuestionsTotal = data.requirementCount;
+    }
+
+    this.numberQuestionsAnswered = 0;
+    data.categories.forEach(element => {
+      element.subCategories.forEach(sub => {
+        sub.questions.forEach(q => { 
+          if (!!q.answer && q.answer != '' && q.answer != 'U') {
+            this.numberQuestionsAnswered++;
+          }
+        })
+      })
+    });
   }
 
   /**

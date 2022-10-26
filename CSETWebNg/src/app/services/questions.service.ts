@@ -275,6 +275,36 @@ export class QuestionsService {
   }
 
 
+  questionIds: any[];
+
+  /**
+   * Converts a question structure into a bag of IDs so that
+   * we can quickly calculate answer counts.
+   */
+  setQuestionBag(data) {
+    this.questionIds = [];
+
+    data.categories.forEach(element => {
+      element.subCategories.forEach(sub => {
+        sub.questions.forEach(q => { 
+          this.questionIds.push(q);
+
+          if (!!q.answer && q.answer != '' && q.answer != 'U') {
+            this.numberQuestionsAnswered++;
+          }
+        })
+      })
+    });
+  }
+
+  /**
+   * 
+   */
+  calculateAnsweredTotals() {
+
+  }
+
+
   private answerLabelModels: any[] = [];
 
   /**
