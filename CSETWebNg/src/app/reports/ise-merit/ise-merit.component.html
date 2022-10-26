@@ -214,21 +214,31 @@
                             {{ finding?.finding?.description }}
                             
                             <br><br>
-                            <strong> Action Items: </strong>
-                            <br>
+                            
                             
                             <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
                                 <div *ngFor="let question of subcat?.questions">
                                     <div *ngIf="this.actionItemsMap.has(question.matQuestionId)">
                                         <div *ngFor="let actionItems of this.actionItemsMap.get(question.matQuestionId); let last = last; let i = index;">
                                             <div *ngIf="question.title == finding?.question?.question_Title">
+                                                
+                                                <ng-container *ngIf="i == 0">
+                                                    
+                                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                                      flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                                      [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId))">
+                                                        <span class="cset-icons-copy"> Copy All</span>
+                                                    </label>
+                                                    <strong> Action Items: </strong>
+                                                    <br>
+                                                </ng-container>
                                                 <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
                                                     flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                                     [cdkCopyToClipboard]="(i+1) + '. ' + actionItem">
                                                     <span class="cset-icons-copy" ></span>
                                                 </label> {{ i+1 }}: {{ actionItems }}
 
-                                                <ng-container *ngIf="last">
+                                                <!-- <ng-container *ngIf="last">
                                                     <br><br>
                                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                                       flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
@@ -236,7 +246,7 @@
                                                         <span class="cset-icons-copy"> Copy All</span>
                                                     </label>
                                                     <br>
-                                                </ng-container>
+                                                </ng-container> -->
                                             </div>
                                         </div>
                                     </div>
