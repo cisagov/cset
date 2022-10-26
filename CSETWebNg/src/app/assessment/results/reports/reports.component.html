@@ -26,7 +26,7 @@
   <p>
     Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. 
     The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect the current state of the assessment.
-    <button mat-stroked-button (click)="openSnackBar()" >
+    <button *ngIf="!assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()" >
       Printing Report Instructions
     </button>
   </p>
