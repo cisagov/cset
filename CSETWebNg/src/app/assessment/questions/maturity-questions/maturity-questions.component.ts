@@ -46,6 +46,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
   pageTitle: string = '';
+  modelId: number;
   modelName: string = '';
   groupingTitle: string = '';
   questionsAlias: string = '';
@@ -140,6 +141,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
+        this.modelId = response.modelId;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
@@ -173,6 +175,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loadGrouping(groupingId: Number) {
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
      
+      this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;

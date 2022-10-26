@@ -74,6 +74,10 @@
     </div>
   </div>
 
+  <p *ngIf="!!categories" class="mb-4">
+    Unanswered questions are calculated as a '{{questionsSvc.getAnswerButtonLabel(0, 'N')}}' response
+  </p>
+
 
   <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">
     <app-category-block [myCategory]="c"></app-category-block>
