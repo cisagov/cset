@@ -6,15 +6,20 @@ const request = require('request');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
-
-const angularConfig = require('./dist/assets/config.json');
 const gotTheLock = app.requestSingleInstanceLock();
+
+const masterConfig = require('./dist/assets/settings/config.json');
+
+let installationMode = masterConfig.installationMode || 'CSET';
+
+const subConfig = require(`./dist/assets/settings/config.${installationMode}.json`);
+
+// config is the union of the masterConfig and subconfig file based on installationMode for now
+// Any properties in subconfig will overwrite those in masterConfig
+const config = {...masterConfig, ...subConfig};
+
 let mainWindow = null;
 
-let installationMode = angularConfig.installationMode;
-if (!installationMode || installationMode.length === 0) {
-  installationMode = 'CSET';
-}
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
@@ -162,13 +167,8 @@ function createWindow() {
   });
 
   Menu.setApplicationMenu(newMenu);
-  if (installationMode == 'TSA') {
-    mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashTSA.html'))
-  } else if (installationMode == 'ACET') {
-    mainWindow.loadFile(path.join(__dirname, 'dist/assets/splashACET.html'))
-  } else {
-    mainWindow.loadFile(path.join(__dirname, 'dist/assets/splash.html'))
-  }
+
+  mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHTML));
 
   let rootDir = app.getAppPath();
 
@@ -181,8 +181,8 @@ function createWindow() {
   if (app.isPackaged) {
 
     // Check angular config file for initial API port and increment port automatically if designated port is already taken
-    let apiPort = parseInt(angularConfig.api.port);
-    let apiUrl = angularConfig.api.url;
+    let apiPort = parseInt(config.api.port);
+    let apiUrl = config.api.url;
     assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
       log.info('API launching on port', assignedApiPort);
       launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort);
@@ -200,7 +200,7 @@ function createWindow() {
               pathname: path.join(__dirname, 'dist/index.html'),
               protocol: 'file:',
               query: {
-                apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + assignedApiPort,
+                apiUrl: config.api.protocol + '://' + config.api.url + ':' + assignedApiPort,
               },
               slashes: true
             })
@@ -214,7 +214,7 @@ function createWindow() {
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
-          apiUrl: angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + angularConfig.api.port
+          apiUrl: config.api.protocol + '://' + config.api.url + ':' + config.api.port
         },
         slashes: true
       })
@@ -353,10 +353,10 @@ app.on('ready', () => {
       clientCode = 'TSA';
       appCode = 'CSET-TSA';
       break;
-      case 'CF':
-        clientCode = 'CF';
-        appCode = 'CF';
-        break;
+    case 'CF':
+      clientCode = 'CF';
+      appCode = 'CF';
+      break;
     default:
       clientCode = 'DHS';
       appCode = 'CSET';
@@ -379,7 +379,7 @@ app.on('window-all-closed', () => {
 function launchAPI(exeDir, fileName, port) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
-  let args = ['--urls', angularConfig.api.protocol + '://' + angularConfig.api.url + ':' + port]
+  let args = ['--urls', config.api.protocol + '://' + config.api.url + ':' + port]
   child(exe, args, options, (error, data) => {
     log.error(error);
     log.info(data.toString());

@@ -177,19 +177,19 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * Considers whether the app is running as CSET Online 
+   * Considers whether the app is running as CSET Online
    * or on a mobile device and decides if the item should show.
    */
   showMenuItem(item: string) {
 
-    // This is not applicable to a large enterprise setup.  
+    // This is not applicable to a large enterprise setup.
     // Also, we are hiding the FAA gallery cards for now.
     if (item == 'enable protected features') {
       return (!this.configSvc.isCsetOnline);
     }
 
     if (item == 'parameter editor') {
-      var show = this.configSvc.config.behavior?.showMenuParameterEditor ?? true;
+      var show = this.configSvc.config.behaviors?.showMenuParameterEditor ?? true;
       show = show && !this.configSvc.isMobile();
       return (show);
     }
@@ -203,11 +203,11 @@ export class TopMenusComponent implements OnInit {
     if (item == 'module builder') {
       return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
     }
-    
+
     if (item == 'module content report') {
       return (!this.configSvc.isMobile());
     }
-    
+
     if (item == 'trend') {
       return (!this.configSvc.isMobile() &&  !this.configSvc.isCsetOnline);
     }
@@ -231,13 +231,13 @@ export class TopMenusComponent implements OnInit {
       }
     }
 
-    var show = this.configSvc.config.behavior?.showMenuAssessmentDocuments ?? true;
+    var show = this.configSvc.config.behaviors?.showMenuAssessmentDocuments ?? true;
 
     return show;
   }
 
   /**
-   * 
+   *
    */
   showUserMenuItem() {
     if (this.auth.isLocal) {
