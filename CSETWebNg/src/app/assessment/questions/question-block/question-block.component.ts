@@ -335,6 +335,8 @@ export class QuestionBlockComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
+    this.questionsSvc.setAnswer(q.questionId, q.answer);
+
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();

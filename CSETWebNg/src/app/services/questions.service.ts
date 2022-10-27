@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question, AnswerCompletion } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
@@ -48,6 +48,15 @@ export class QuestionsService {
    * doesn't have to.
    */
   public questionList: QuestionResponse;
+
+  /**
+   * An object that contains the number of answered questions
+   * and the total number of questions for the current page.
+   */
+  public answerCompletion: AnswerCompletion = {
+    answeredCount: 0,
+    totalCount: 0
+  };
 
   /**
    * If the user selects a question from the TOC, but the Questions screen
@@ -275,26 +284,74 @@ export class QuestionsService {
   }
 
 
-  questionIds: any[];
+  questionflat: any[];
 
+  resetQuestionArray() {
+    this.questionflat = [];
+  }
+  
   /**
    * Converts a question structure into a bag of IDs so that
    * we can quickly calculate answer counts.
    */
-  setQuestionBag(data) {
-    this.questionIds = [];
+  setQuestionArray(data) {
+    this.questionflat = [];
 
-    data.categories.forEach(element => {
-      element.subCategories.forEach(sub => {
-        sub.questions.forEach(q => { 
-          this.questionIds.push(q);
-
-          if (!!q.answer && q.answer != '' && q.answer != 'U') {
-            this.numberQuestionsAnswered++;
-          }
+    // this version counts standard questions
+    if (!!data.categories) {
+      data.categories.forEach(element => {
+        element.subCategories.forEach(sub => {
+          sub.questions.forEach(q => { 
+            this.questionflat.push({
+              id: q.questionId,
+              answer: q.answer
+            });
+          })
         })
-      })
+      });
+    }
+
+    // this version counts maturity questions
+    if (!!data.groupings) {
+      data.groupings.forEach(g => {
+        this.xyz(g);
+      });
+    }
+      
+    this.countAnswers();
+  }
+
+  /**
+   * 
+   */
+  xyz(gg) {
+    gg.subGroupings?.forEach(g => {
+      g.questions.forEach(q => {
+        this.questionflat.push({
+          id: q.questionId,
+          answer: q.answer
+        });
+      });
+      this.xyz(g);
     });
+  }
+
+  /**
+   * 
+   */
+  setAnswer(id: number, value: string) {
+    const ans = this.questionflat.find(x => x.id == id);
+    if (!!ans) {
+      ans.answer = value;
+    }
+
+    this.countAnswers();
+  }
+
+
+  countAnswers() {
+    this.answerCompletion.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
+    this.answerCompletion.totalCount = this.questionflat.length;
   }
 
   /**

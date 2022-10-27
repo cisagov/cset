@@ -224,6 +224,8 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   loadQuestions() {
     this.assessSvc.currentTab = 'questions';
+    this.questionsSvc.resetQuestionArray();
+    
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.applicationMode;
@@ -231,7 +233,7 @@ export class QuestionsComponent implements AfterViewChecked {
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
-        this.populateAnswerTotals(response);
+        this.questionsSvc.setQuestionArray(response);
 
         this.categories = response.categories;
 
@@ -254,24 +256,7 @@ export class QuestionsComponent implements AfterViewChecked {
     );
   }
 
-  populateAnswerTotals(data) {
-    if (this.assessSvc.applicationMode == 'Q') {
-      this.numberQuestionsTotal = data.questionCount;
-    } else {
-      this.numberQuestionsTotal = data.requirementCount;
-    }
-
-    this.numberQuestionsAnswered = 0;
-    data.categories.forEach(element => {
-      element.subCategories.forEach(sub => {
-        sub.questions.forEach(q => { 
-          if (!!q.answer && q.answer != '' && q.answer != 'U') {
-            this.numberQuestionsAnswered++;
-          }
-        })
-      })
-    });
-  }
+  
 
   /**
    * 
