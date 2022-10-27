@@ -139,9 +139,22 @@ export class MyAssessmentsComponent implements OnInit {
       localStorage.removeItem('tree');
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
-    
+
     this.ncuaSvc.assessmentsToMerge = [];
-  }  
+  }
+
+  /**
+   *
+   * @returns
+   */
+  showAnalytics() {
+    var show = this.configSvc.config.behaviors?.showAnalyticsColumnOnLanding ?? false;
+
+    // this will be reworked with the behavior configuration overrides
+    show = show || (this.isTSA || this.isCSET);
+    return show;
+  }
+
 
   getAssessments() {
     this.sortedAssessments = null;
