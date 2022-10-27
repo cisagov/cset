@@ -957,7 +957,7 @@ import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
         SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
-        AboutCfComponent
+        ,AboutCfComponent
     ],
     providers: [
         ConfigService,
