@@ -231,7 +231,7 @@ export class TopMenusComponent implements OnInit {
       }
     }
 
-    var show = this.configSvc.config.behaviors?.showMenuAssessmentDocuments ?? true;
+    var show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
 
     return show;
   }
