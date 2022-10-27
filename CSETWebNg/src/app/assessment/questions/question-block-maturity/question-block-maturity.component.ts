@@ -30,6 +30,7 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -69,6 +70,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
@@ -172,7 +174,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
-    this.questionsSvc.setAnswer(q.questionId, q.answer);
+    this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
 

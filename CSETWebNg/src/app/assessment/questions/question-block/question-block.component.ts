@@ -30,6 +30,7 @@ import { ConfigService } from '../../../services/config.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { LayoutService } from '../../../services/layout.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -72,6 +73,7 @@ export class QuestionBlockComponent implements OnInit {
    */
   constructor(
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public filterSvc: QuestionFilterService,
     private dialog: MatDialog,
     public configSvc: ConfigService,
@@ -335,7 +337,7 @@ export class QuestionBlockComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
-    this.questionsSvc.setAnswer(q.questionId, q.answer);
+    this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
 
