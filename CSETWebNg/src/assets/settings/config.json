@@ -1,5 +1,5 @@
 {
-    "isCsetOnline": false,
+    "isCsetOnline": true,
     "appCode": "CSET",
     "app": {
         "protocol": "http",
@@ -35,7 +35,6 @@
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
-        "showMenuAssessmentDocuments": true,
         "showMenuParameterEditor": true,
         "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splash.html",
