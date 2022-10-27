@@ -10,6 +10,13 @@ import { Injectable } from '@angular/core';
 })
 export class CompletionService {
 
+  /**
+   * We can store a target level here to help
+   * decide if a question is within the target range
+   * or not.  Questions above the target level
+   * should not be counted for the totals.
+   */
+  targetMaturityLevel = 100;
 
   answeredCount = 0;
   totalCount = 0;
@@ -36,31 +43,34 @@ export class CompletionService {
    * we can quickly calculate answer counts.
    */
   setQuestionArray(data) {
-
-    console.log(data);
-
     this.reset();
 
-    // this version gathers standard questions
+    // this version gathers questions from a Standard response structure
     if (!!data.categories) {
       data.categories.forEach(element => {
         element.subCategories.forEach(sub => {
           sub.questions.forEach(q => {
             this.questionflat.push({
               id: q.questionId,
-              answer: q.answer
+              answer: q.answer,
+              maturityLevel: q.maturityLevel
             });
-          })
+          });
         })
       });
     } else if (!!data.groupings) {
-      // this version gathers maturity questions
+      // this version gathers questions from a Maturity response structure
+      this.targetMaturityLevel = data.maturityTargetLevel;
+
       data.groupings.forEach(g => {
         g.questions.forEach(q => {
-          this.questionflat.push({
-            id: q.questionId,
-            answer: q.answer
-          });
+          if (q.maturityLevel <= this.targetMaturityLevel) {
+            this.questionflat.push({
+              id: q.questionId,
+              answer: q.answer,
+              maturityLevel: q.maturityLevel
+            });
+          }
         });
         this.recurseSubgroups(g);
       });
@@ -70,16 +80,20 @@ export class CompletionService {
   }
 
   /**
-   * Loops through a grouping's subgroups, 
+   * Loops through a maturity grouping's subgroups, 
    * adding its questions to the collection.
+   * Only questions within the maturity level are collected.
    */
   recurseSubgroups(gg) {
     gg.subGroupings?.forEach(g => {
       g.questions.forEach(q => {
-        this.questionflat.push({
-          id: q.questionId,
-          answer: q.answer
-        });
+        if (q.maturityLevel <= this.targetMaturityLevel) {
+          this.questionflat.push({
+            id: q.questionId,
+            answer: q.answer,
+            maturityLevel: q.maturityLevel
+          });
+        }
       });
       this.recurseSubgroups(g);
     });

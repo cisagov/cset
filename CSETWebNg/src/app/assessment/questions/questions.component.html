@@ -42,8 +42,8 @@
     </div>
 
     <div class="d-flex flex-row">
-      <div class="mt-2 mr-3" *ngIf="!!categories">
-        Answered: {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
+      <div class="mr-3 answered-count" *ngIf="!!categories" matTooltip="Indicates the number of answered questions out of the total for this page">
+        {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
       </div>
       <div class="d-flex flex-column align-items-start flex-00a">
         <div class="d-flex align-items-start flex-11a">

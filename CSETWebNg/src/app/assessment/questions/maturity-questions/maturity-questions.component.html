@@ -25,10 +25,9 @@
   <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
     <div class="d-flex flex-row flex-wrap sticky-sal justify-content-end align-items-start flex-11a pb-3">
-      <h6 class="mt-2 mr-3" *ngIf="!!groupings">
-        Answered:
+      <div class="mr-3 answered-count" *ngIf="!!groupings" matTooltip="Indicates the number of answered questions out of the total for this page">
         {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
-      </h6>
+      </div>
       <div>
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
           matTooltip="Collapse All" aria-label="Collapse All">
