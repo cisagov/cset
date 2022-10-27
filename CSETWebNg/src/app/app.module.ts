@@ -504,6 +504,7 @@ import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
 import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
+import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 
 @NgModule({
     imports: [
@@ -956,6 +957,7 @@ import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-a
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
         SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
+        AboutCfComponent
     ],
     providers: [
         ConfigService,

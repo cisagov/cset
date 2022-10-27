@@ -1,5 +1,5 @@
 {
-    "isCsetOnline": true,
+    "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
         "protocol": "http",
@@ -16,10 +16,6 @@
     "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
-    "defaultPasswordSubject": "Your CSET password has been reset",
-    "defaultPasswordTemplate": "Your CSET password has been reset.\nIf you are unable to login, please use the \"Forgot Password\" option on the login page.\nIf you did not change this password, please contact.........",
-    "defaultInviteSubject": "You have been invited to participate in a CSET assessment",
-    "defaultInviteTemplate": "You have been invited to participate in a CSET assessment.\nPlease log into your CSET account to participate. If you have not used CSET before, an account has been created for you, and a second email will be sent to this email address with instructions on logging in for the first time.",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
 
@@ -28,10 +24,34 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
-    "galleryLayout": "",
-    "installationMode": "",
+
+    "galleryLayout": "CSET",
+    "installationMode": "CSET",
     "mobileEnvironment": "",
+
+    "behaviors": {
+        "showModuleBuilder": true,
+        "showAssessmentDocuments": true,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": true,
+        "showMenuParameterEditor": true,
+        "showAnalyticsColumnOnLanding": true,
+        "splashPageHTML": "dist/assets/splash.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "useMaturity": true,
+        "defaultMaturityModel": "",
+        "isAcetOnly": false,
+        "useStandard": false,
+        "useDiagram": false,
+        "showFacilityName": true,
+        "showCityName": true,
+        "showStateName": true,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true
+    },
 
     "answersDefault": [
         {
