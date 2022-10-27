@@ -1,12 +1,12 @@
 {
     "isCsetOnline": true,
     "behaviors": {
-        "showModuleBuilder": true,
-        "showAggregation": true,
+        "showModuleBuilder": false,
+        "showAggregation": false,
         "showAnalytics": true,
-        "showAnalyticsAtTheEnd": true,
+        "showAnalyticsAtTheEnd": false,
         "showAssessmentDocuments": false,
-        "showMenuParameterEditor": false,
+        "showMenuParameterEditor": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
         "useMaturity": true,
