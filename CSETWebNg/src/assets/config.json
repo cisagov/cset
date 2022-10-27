@@ -29,8 +29,8 @@
         "canDeleteCustomModules": true
     },
     
-    "galleryLayout": "CF",
-    "installationMode": "CF",
+    "galleryLayout": "",
+    "installationMode": "",
     "mobileEnvironment": "",
 
     "answersDefault": [

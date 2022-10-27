@@ -739,13 +739,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/maturity/mvra/scoring")]
-        public IActionResult GetMvraScoring([FromQuery] int id)
+        public IActionResult GetMvraScoring()
         {
-            //int assessemntId = _tokenManager.AssessmentForUser();
-            //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-           
+            int assessmentId = _tokenManager.AssessmentForUser();
             var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var model = maturity.GetMaturityStructureForModel(9, id);
+            var model = maturity.GetMaturityStructureForModel(9, assessmentId);
             var scoring = maturity.GetMvraScoring(model);
             return Ok(scoring);
         }
