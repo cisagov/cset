@@ -1,0 +1,30 @@
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>Goal Performance</h3>
+    
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-11a" *ngIf="initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>Function Scoring</h5>
+                    <p>This chart shows overall function credit.  High scores on this chart are desirable.</p>
+                    <app-mvra-answer-functions [model]="model"></app-mvra-answer-functions>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>Domain Scoring</h5>
+                    <app-mvra-answer-domains [model]="model"></app-mvra-answer-domains>
+                </div>
+            </div>
+        </div>
+        
+        <app-nav-back-next [page]="'mvra-summary'"></app-nav-back-next>
+
+    </div>
+</div>

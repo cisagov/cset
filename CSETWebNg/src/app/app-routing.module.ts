@@ -183,6 +183,8 @@ import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-char
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -381,6 +383,8 @@ const appRoutes: Routes = [
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
+              { path: 'mvra-gaps', component: MvraGapsComponent },
+              { path: 'mvra-summary', component: MvraSummaryComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
