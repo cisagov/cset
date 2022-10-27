@@ -6,6 +6,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
 import { QuestionsService } from '../../services/questions.service';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'app-ise-merit',
@@ -37,17 +38,14 @@ export class IseMeritComponent implements OnInit {
 
   actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
-
-  // parentToChildren: Map<number, number> = new Map<number, number>();
-  // childrenToActionItems: Map<number, string> = new Map<number, string>();
-
-
-  actionItemExample1: string = '1.	The security program must be approved by the Board of Directors.';
-  actionItemExample2: string = '2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.';
-  actionItemAll: string = this.actionItemExample1 + '\n' + this.actionItemExample2;
+  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
   examLevel: string = '';
 
+  // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
+  //                               "Stmt 8", "Stmt 9", "Stmt 10", "Stmt 11", "Stmt 12", "Stmt 13", "Stmt 14", 
+  //                               "Stmt 15", "Stmt 16", "Stmt 17", "Stmt 18", "Stmt 19", "Stmt 20", "Stmt 21", 
+  //                               "Stmt 22"]);
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -105,6 +103,7 @@ export class IseMeritComponent implements OnInit {
       (r: any) => {
         this.answers = r;
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+        console.log(this.answers)
 
         // goes through domains
         for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -113,6 +112,7 @@ export class IseMeritComponent implements OnInit {
           for(let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             // goes through questions
+            let parentQuestionId = subcat?.questions[0].matQuestionId;
             for(let k = 0; k < subcat?.questions?.length; k++) {
               
               let question = subcat?.questions[k];
@@ -141,10 +141,32 @@ export class IseMeritComponent implements OnInit {
                   }
                 )
               }
+
+              if (question.answerText == 'N') {
+                let parentTitle = this.getParentQuestionTitle(question.title);
+
+                if(!this.showActionItemsMap.has(parentTitle)){
+                  this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
+                } else {
+                  let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
+
+                  tempShowActionArray.push(this.getChildQuestionNumber(question.title));
+
+                  this.showActionItemsMap.set(parentTitle, tempShowActionArray);
+                }
+              }
             
               if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                 this.examLevel = 'CORE+';
               }
+
+              // if(k == subcat?.questions?.length - 1 || (j == 0 && k == 9)) { //checks if the last child question
+              //   if(j == 0 && k == 9) { //checks if in Stmt 1 or Stmt 2 (they're in the same subcat)
+              //     parentQuestionId = subcat?.questions[k].matQuestionId;
+              //   }
+              //   console.log('called')
+              //   this.removeUnusedActionItems(parentQuestionId, question.title)
+              // }
             }
           }
         }
@@ -248,12 +270,15 @@ export class IseMeritComponent implements OnInit {
 
   getParentQuestionTitle(title: string) {
     if(!this.isParentQuestion(title)) {
-      let endOfTitle = 6;
-      // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
-      if(title.charAt(6) != '.'){
-        endOfTitle = endOfTitle + 1;
-      }
+      let endOfTitle = title.indexOf('.');
       return title.substring(0, endOfTitle);
+    }
+  }
+
+  getChildQuestionNumber(title: string) {
+    if(!this.isParentQuestion(title)) {
+      let startOfNumber = title.indexOf('.') + 1;
+      return title.substring(startOfNumber);
     }
   }
 
@@ -269,5 +294,39 @@ export class IseMeritComponent implements OnInit {
     let formattedItems = array.join("");
     return formattedItems;
   }
+
+  checkShowActionItemMap(title: string, actionNum: number) {
+    let array = this.showActionItemsMap.get(title);
+    if(array.includes(actionNum.toString())){
+      return true;
+    }
+    return false;
+  }
+
+  // removeUnusedActionItems(id: number, title: string) {
+  //   console.log('title: ' + title)
+
+  //   console.log('id: ' + id)
+
+  //   if(this.actionItemsMap.has(id)) {
+  //     let prevActionItemsArray = this.actionItemsMap.get(id);
+  //     console.log('inside actionItemsMap')
+  //     let showActionItemsArray = this.showActionItemsMap.get(this.getParentQuestionTitle(title));
+
+  //     if(prevActionItemsArray.length !== showActionItemsArray.length) {
+  //       let newActionItemsArray = [];
+
+  //       for(let i = 0; i < prevActionItemsArray.length; i++) {
+  //         if(showActionItemsArray.includes(i + 1)) {
+  //           newActionItemsArray.push([prevActionItemsArray[i]]);
+  //         }
+  //       }
+  //       console.log('before removal' + prevActionItemsArray)
+  //       console.log('after removal' + newActionItemsArray)
+
+  //       this.actionItemsMap.set(id, newActionItemsArray);
+  //     }
+  //   }
+  // }
 
 }
