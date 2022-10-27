@@ -1,4 +1,5 @@
 {
+    "currentConfigChain":["development","CSETonline"],
     "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
@@ -37,7 +38,7 @@
         "showAnalyticsAtTheEnd": true,
         "showMenuAssessmentDocuments": true,
         "showMenuParameterEditor": true,
-        "showAnalyticsColumnOnLanding": false,
+        "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
         "useMaturity": true,
