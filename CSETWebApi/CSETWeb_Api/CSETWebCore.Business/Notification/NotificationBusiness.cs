@@ -178,6 +178,7 @@ namespace CSETWebCore.Business.Notification
         /// <param name="subject"></param>
         public void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject, string appCode)
         {
+            SetAppCode(appCode);
             string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\passwordResetTemplate_" + appCode + ".html");
             string name = (firstName + " " + lastName).Trim();
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
@@ -207,19 +208,21 @@ namespace CSETWebCore.Business.Notification
         /// </summary>
         /// <param name="mail">MailMessage mail = new MailMessage("you@yourcompany.com", "user@hotmail.com");</param>
         public void SendMail(MailMessage mail)
-        {
+        {   
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // apply stylesheet
             string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\inlineStylesheet.html");
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
             // apply corresponding footer
-            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
-            mail.Body = mail.Body.Replace("{{email-footer}}", footer);
+           
             string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
-
-
+            string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
+            mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
+            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            mail.Body = mail.Body.Replace("{{email-footer}}", footer);
+           
             SmtpClient client = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,

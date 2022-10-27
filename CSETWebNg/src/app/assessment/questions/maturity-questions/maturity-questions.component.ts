@@ -37,6 +37,8 @@ import { CisService } from '../../../services/cis.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { CompletionService } from '../../../services/completion.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -46,6 +48,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
   pageTitle: string = '';
+  modelId: number;
   modelName: string = '';
   groupingTitle: string = '';
   questionsAlias: string = '';
@@ -66,6 +69,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public cisSvc: CisService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
@@ -136,10 +140,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Retrieves the complete list of questions for the model.
    */
   loadQuestions() {
+    this.completionSvc.reset();
+
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
+        this.modelId = response.modelId;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
@@ -153,6 +160,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.glossarySvc.glossaryEntries = response.glossary;
 
         this.loaded = true;
+
+        this.completionSvc.setQuestionArray(response);
 
         this.refreshQuestionVisibility();
       },
@@ -173,6 +182,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loadGrouping(groupingId: Number) {
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
      
+      this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;

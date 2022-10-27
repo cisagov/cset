@@ -4,17 +4,10 @@
 // 
 // 
 //////////////////////////////// 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using org.apache.pdfbox.util;
-using org.apache.pdfbox.cos;
-using org.apache.pdfbox.pdmodel;
+using CSETWebCore.DataLayer.Model;
 using Lucene.Net.Documents;
-using System.IO;
 using System.Diagnostics;
-using SearchIndex2;
+using System.Text;
 
 namespace SearchIndex
 {
@@ -30,14 +23,14 @@ namespace SearchIndex
           
             try
             {
-                PDFTextStripper stripper = new PDFTextStripper();
-                PDDocument document = PDDocument.load(filePath);
-                text = stripper.getText(document);
-                PDDocumentInformation info = document.getDocumentInformation();
-                author = info.getAuthor();         
-                keywords = info.getKeywords();
-                summary = info.getSubject();
-                document.close();
+                //PDFTextStripper stripper = new PDFTextStripper();
+                //PDDocument document = PDDocument.load(filePath);
+                //text = stripper.getText(document);
+                //PDDocumentInformation info = document.getDocumentInformation();
+                //author = info.getAuthor();         
+                //keywords = info.getKeywords();
+                //summary = info.getSubject();
+                //document.close();
             }
             catch(Exception ex)
             {
@@ -52,7 +45,7 @@ namespace SearchIndex
             Debug.WriteLine("DocID: " + doc_id);
 
             StringBuilder keyTextBuilder = new StringBuilder();
-            foreach (FILE_KEYWORDS keywordobj in doc.FILE_KEYWORDs.ToList())
+            foreach (FILE_KEYWORDS keywordobj in doc.FILE_KEYWORDS.ToList())
             {
                 keyTextBuilder.Append(keywordobj.Keyword + " ");
  
