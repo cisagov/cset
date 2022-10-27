@@ -4,6 +4,10 @@
     </div>
     <div *ngIf="grouping.description.length > 0" class="mb-3" [innerHTML]="grouping.description">
     </div>
+
+    <p class="mb-4">
+        Unanswered questions are calculated as a '{{questionsSvc.getAnswerButtonLabel(modelId, 'N')}}' response
+    </p>
 </ng-container>
 
 
@@ -18,7 +22,8 @@
 
 <ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
-    <ng-container *ngIf="grouping.visible || (assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
+    <ng-container
+        *ngIf="grouping.visible || (assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
 
         <div class="capability-group-heading"
             *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
@@ -37,7 +42,8 @@
             <app-question-block-vadr #questionBlock [myGrouping]="grouping">
             </app-question-block-vadr>
         </div>
-        <div *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE')">
+        <div
+            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE')">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>
