@@ -1,10 +1,12 @@
 {
+    "galleryLayout": "TSA",
     "behaviors": {
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": false,
+        "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splashTSA.html",
         "homeComponentForCurrentInstallationMode": "",
         "showFacilityName": true,

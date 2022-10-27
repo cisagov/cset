@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CsiServiceDemographic, CsiBudgetBasis, CsiStaffCount, CsiCustomerCount, CsiUserCount } from '../../../../models/csi.model';
 import { CsiService } from '../../../../services/cis-csi.service';
+import { ConfigService } from './../../../../services/config.service';
 
 
 @Component({
@@ -82,7 +83,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
   // '> 50,000'
   ];
 
-  constructor(private csiSvc: CsiService) { }
+  constructor(private csiSvc: CsiService, private configSvc: ConfigService) { }
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiBudgetBases().subscribe(
@@ -151,5 +152,9 @@ export class CsiServiceDemographicsComponent implements OnInit {
 
   sortCustomerCounts(list: CsiCustomerCount[]) {
     return list.sort((a, b) => (a.sequence > b.sequence) ? 1 : -1)
+  }
+
+  showCriticalServiceIdentifyingInfo() {
+    return this.configSvc.behaviors.showCriticalService;
   }
 }

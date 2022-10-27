@@ -1,4 +1,5 @@
 {
+    "galleryLayout": "NCUA",
     "behaviors": {
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
