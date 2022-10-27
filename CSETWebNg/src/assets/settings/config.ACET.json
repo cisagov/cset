@@ -1,4 +1,6 @@
 {
+    "appCode": "ACET",
+    "installationMode": "ACET",
     "galleryLayout": "NCUA",
     "behaviors": {
         "showModuleBuilder": true,
