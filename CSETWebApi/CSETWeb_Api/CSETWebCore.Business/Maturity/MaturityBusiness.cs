@@ -2219,7 +2219,7 @@ namespace CSETWebCore.Business.Maturity
         {
             var resp = new MaturityResponse();
 
-            resp.MaturityTargetLevel = 1;         
+            resp.MaturityTargetLevel = 100;         
 
             foreach (var g in cisStructure.Groupings)
             {
