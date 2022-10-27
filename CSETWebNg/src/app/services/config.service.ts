@@ -73,27 +73,27 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
 
-  processDataOverrides(source: any, data: any):any{    
+  processDataOverrides(source: any, data: any):any{
     //get the base object
     //get the string of overrides
     //for each over
-    //get all the properties 
-    //for each property if the property has properites 
-    //then recurse 
-    //else set the property value on the base object from the override        
+    //get all the properties
+    //for each property if the property has properites
+    //then recurse
+    //else set the property value on the base object from the override
     for (const property in source) {
       if(property.startsWith("answers")){
         console.log("skipping overload for "+property);
       }
-      else{        
+      else{
         if( typeof source[property] =="object"){
           this.processDataOverrides(source[property],data[property]);
         }
-        else{          
+        else{
           console.log(`copying source ${property} was:${data[property]} now is:${source[property]}`);
           data[property] = source[property];
         }
-      }  
+      }
     }
 
     return data;
@@ -101,93 +101,75 @@ export class ConfigService {
 
   configFiles = [];
   getConfigs(configChain:string[]){
-    var configPromises = [];    
-      for(var config of configChain){        
+    var configPromises = [];
+      for(var config of configChain){
         var tmpURL = `./${this.settingsUrl}config.${config}.json`;
         configPromises.push( this.http.get(tmpURL)
         .toPromise()
-        .then((tmpConfig: any) => {          
+        .then((tmpConfig: any) => {
           this.configFiles.push(tmpConfig);
         }
         ));
-        
-      }       
+
+      }
       return Promise.all(configPromises)
 
   }
 
   getRootDataOverrides(masterConfig: any): any{
-    var configPromises = [];
-      this.getConfigs(masterConfig.currentConfigChain).then((data)=>{                
-        for(var configFile of this.configFiles){          
-          this.processDataOverrides(configFile,masterConfig)
-        }
-      })
-      .catch((err) => console.log(err));
+    return this.getConfigs(masterConfig.currentConfigChain).then((data)=>{
+      for(var configFile of this.configFiles){
+        this.config = this.processDataOverrides(configFile,masterConfig)
+      }
+    })
+    .catch((err) => console.log(err));
   }
 
 
   /**
    *
    */
-  async loadConfig() {
+  loadConfig() {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
       this.assetsUrl = 'assets/';
       this.settingsUrl = this.assetsUrl + 'settings/';
       this.configUrl = this.settingsUrl + 'config.json';
 
-      
-
-      
-
-
-      return await this.http.get(this.configUrl)
+      return this.http.get(this.configUrl)
         .toPromise()
         .then((masterConfig: any) => {
           // isCsetOnline and installation mode should not change from master config file.
-          this.getRootDataOverrides(masterConfig);
-          this.isCsetOnline = masterConfig.isCsetOnline ?? false;
-          this.installationMode = (masterConfig.installationMode?.toUpperCase() || 'CSET');
+          return this.getRootDataOverrides(masterConfig).then(() => {
 
-          // Here is where we dynamically merge config settings based on installation mode.
-          let subConfig;
-          if (this.isCsetOnline && (this.installationMode === 'CSET' || this.installationMode === '' ))
-          {
-            subConfig = require(`./../../${this.settingsUrl}config.CSET.online.json`);
-          } else {
-            subConfig = require(`./../../${this.settingsUrl}config.${this.installationMode}.json`);
-          }
+            this.isCsetOnline = this.config.isCsetOnline ?? false;
+            this.installationMode = (this.config.installationMode?.toUpperCase() || 'CSET');
 
-          // config is now the union of masterConfig and subConfig file.
-          // Any matching properties that changed in subConfig will overwrite those in masterConfig.
-          let config = {...masterConfig, ...subConfig};
+            let apiPort = this.config.api.port != "" ? ":" + this.config.api.port : "";
+            let appPort = this.config.app.port != "" ? ":" + this.config.app.port : "";
+            let apiProtocol = this.config.api.protocol + "://";
+            let appProtocol = this.config.app.protocol + "://";
+            if (localStorage.getItem("apiUrl") != null) {
+              this.apiUrl = localStorage.getItem("apiUrl") + "/" + this.config.api.apiIdentifier + "/";
+            } else {
+              this.apiUrl = apiProtocol + this.config.api.url + apiPort + "/" + this.config.api.apiIdentifier + "/";
+            }
+            this.analyticsUrl = this.config.analyticsUrl;
+            this.appUrl = appProtocol + this.config.app.appUrl + appPort;
+            this.docUrl = apiProtocol + this.config.api.url + apiPort + "/" + this.config.api.documentsIdentifier + "/";
+            this.helpContactEmail = this.config.helpContactEmail;
+            this.helpContactPhone = this.config.helpContactPhone;
 
-          let apiPort = config.api.port != "" ? ":" + config.api.port : "";
-          let appPort = config.app.port != "" ? ":" + config.app.port : "";
-          let apiProtocol = config.api.protocol + "://";
-          let appProtocol = config.app.protocol + "://";
-          if (localStorage.getItem("apiUrl") != null) {
-            this.apiUrl = localStorage.getItem("apiUrl") + "/" + config.api.apiIdentifier + "/";
-          } else {
-            this.apiUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.apiIdentifier + "/";
-          }
-          this.analyticsUrl = config.analyticsUrl;
-          this.appUrl = appProtocol + config.app.appUrl + appPort;
-          this.docUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.documentsIdentifier + "/";
-          this.helpContactEmail = config.helpContactEmail;
-          this.helpContactPhone = config.helpContactPhone;
-          this.config = config;
+            this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
+            this.mobileEnvironment = (this.config.mobileEnvironment);
+            this.behaviors = this.config.behaviors;
 
-          this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
-          this.mobileEnvironment = (this.config.mobileEnvironment);
-          this.behaviors = this.config.behaviors;
+            this.populateLabelValues();
 
-          this.populateLabelValues();
+            this.populateButtonClasses();
 
-          this.populateButtonClasses();
-
-          this.initialized = true;
+            this.initialized = true;
+          });
         }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
     }
   }
