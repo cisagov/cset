@@ -343,4 +343,8 @@ export class MaturityService {
   getGroupingTitles(modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
+
+  getMvraScoring(){
+    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
+  }
 }
