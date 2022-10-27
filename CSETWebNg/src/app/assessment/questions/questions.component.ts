@@ -30,6 +30,7 @@ import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
+import { CompletionService } from '../../services/completion.service';
 
 @Component({
   selector: 'app-questions',
@@ -48,9 +49,6 @@ export class QuestionsComponent implements AfterViewChecked {
   setHasQuestions = false;
   showQuestionsToggle = false;
 
-  numberQuestionsAnswered = 0;
-  numberQuestionsTotal = 0;
-
   autoLoadSupplementalInfo: boolean;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -67,6 +65,7 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   constructor(
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
@@ -224,8 +223,8 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   loadQuestions() {
     this.assessSvc.currentTab = 'questions';
-    this.questionsSvc.resetQuestionArray();
-    
+    this.completionSvc.reset();
+
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.applicationMode;
@@ -233,7 +232,7 @@ export class QuestionsComponent implements AfterViewChecked {
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
-        this.questionsSvc.setQuestionArray(response);
+        this.completionSvc.setQuestionArray(response);
 
         this.categories = response.categories;
 
@@ -255,8 +254,6 @@ export class QuestionsComponent implements AfterViewChecked {
       }
     );
   }
-
-  
 
   /**
    * 

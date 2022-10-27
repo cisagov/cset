@@ -38,6 +38,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { CompletionService } from '../../../services/completion.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -68,6 +69,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public cisSvc: CisService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
@@ -138,8 +140,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Retrieves the complete list of questions for the model.
    */
   loadQuestions() {
-    this.questionsSvc.resetQuestionArray();
-    
+    this.completionSvc.reset();
+
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
@@ -159,7 +161,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
         this.loaded = true;
 
-        this.questionsSvc.setQuestionArray(response);
+        this.completionSvc.setQuestionArray(response);
 
         this.refreshQuestionVisibility();
       },
