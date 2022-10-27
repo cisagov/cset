@@ -25,6 +25,11 @@
   <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
     <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
+
+      <div class="mt-2">
+        Questions Answered: {{questionsSvc.answerCompletion.answeredCount}}/{{questionsSvc.answerCompletion.totalCount}}
+      </div>
+      
       <div class="d-flex align-items-start flex-11a">
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
           matTooltip="Collapse All" aria-label="Collapse All">

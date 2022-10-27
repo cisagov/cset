@@ -55,8 +55,12 @@ export interface MaturityQuestionResponse {
     answerOptions: string[];
 }
 
-export interface MaturityDomainRemarks
-{
+export interface AnswerCompletion {
+    answeredCount: number;
+    totalCount: number;
+}
+
+export interface MaturityDomainRemarks {
     group_Id: number;
     domainRemark: string;
 }
