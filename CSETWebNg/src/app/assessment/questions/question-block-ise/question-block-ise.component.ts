@@ -113,8 +113,8 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   *
-   */
+  *
+  */
   ngOnInit(): void {
     this.setIssueMap();
 
@@ -150,6 +150,7 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
+
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -165,8 +166,8 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   * Toggles the Expanded property of the question block.
-   */
+  * Toggles the Expanded property of the question block.
+  */
   toggleExpansion() {
     // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
@@ -176,12 +177,15 @@ export class QuestionBlockIseComponent implements OnInit {
     });
 
     this.myGrouping.expanded = !this.myGrouping.expanded;
+
+    console.log("Issue Check Map: " + JSON.stringify(this.issueCheck, null, 4));
+    console.log("Finding Check Map: " + JSON.stringify(this.issueFindingId, null, 4));
   }
 
   /**
- * If there are no spaces in the question text assume it's a hex string
- * @param q
- */
+  * If there are no spaces in the question text assume it's a hex string
+  * @param q
+  */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
@@ -202,23 +206,36 @@ export class QuestionBlockIseComponent implements OnInit {
   */
   setIssueMap() {
     let parentId = 0;
+    let tempId = 0;
     let count = 0;
 
     this.myGrouping.questions.forEach(question => {
       if (question.answer === 'N') {
         if (this.importantQuestions.has(question.questionId)) {
           parentId = question.parentQuestionId;
-          count++;
+
+          // Currently questions 1 & 2 share the same domain and it's messing with id's.
+          if (tempId === 0) {
+            tempId = parentId;
+          } else if (tempId !== parentId) {
+            count = 0;
+            tempId = parentId;
+          }
+
+          if (parentId) {
+            count++;
+          }
         }
         this.issueCheck.set(parentId, count);
+        //this.issueFindingId.set(parentId, find.finding_Id);
       }
     });
   }
 
   /**
-   *
-   * @param ans
-   */
+  *
+  * @param ans
+  */
   showThisOption(ans: string) {
     return true;
   }
@@ -277,7 +294,6 @@ export class QuestionBlockIseComponent implements OnInit {
     };
 
     this.refreshReviewIndicator();
-
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer).subscribe
@@ -287,52 +303,31 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   checkForIssues(q: Question, oldAnswerValue: string) {
-    if (q.answer === 'N') {
-      if (this.importantQuestions.has(q.questionId)) {
-        console.log("Parent Question ID of question answered: " + JSON.stringify(q.parentQuestionId, null, 4));
-        let num = this.issueCheck.get(q.parentQuestionId);
+    if (this.importantQuestions.has(q.questionId)) {
+      let num = this.issueCheck.get(q.parentQuestionId);
+      let value = (num != undefined) ? num : 0;
+      console.log("value: " + value);
 
-        if (!num) {
-          num = 0;
-        }
+      if (q.answer === 'N') {
+        value++;
+        this.issueCheck.set(q.parentQuestionId, value);
 
-        num += 1;
-        this.issueCheck.set(q.parentQuestionId, num);    
-          
-        if (num >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
+        if (value >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
           this.autoGenerateIssue(q.parentQuestionId, 0);
         }
-      }
-      console.log("Current (issue Check) Map: " + JSON.stringify(this.issueCheck, null, 4));
-      console.log("Current (finding Id) Map: " + JSON.stringify(this.issueFindingId, null, 4));
-    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
-      if (this.importantQuestions.has(q.questionId)) {
-        if (this.issueCheck.has(q.parentQuestionId)) {
-          let num = this.issueCheck.get(q.parentQuestionId);
-
-          if (!num) {
-            num = 0;
+      } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+        value--;
+        if (value < 1) {
+          this.issueCheck.delete(q.parentQuestionId);
+          if (this.issueFindingId.has(q.parentQuestionId)) {
+            let findId = this.issueFindingId.get(q.parentQuestionId);
+            this.issueFindingId.delete(q.parentQuestionId);
+            this.deleteIssue(findId, true);
           }
-          
-          num -= 1;
-
-          if (num < 1) {
-            if (this.issueFindingId.has(q.parentQuestionId)) {
-              let findId = this.issueFindingId.get(q.parentQuestionId);
-              this.deleteIssue(findId, true);
-              this.issueFindingId.delete(q.parentQuestionId);
-            }
-          }
-
-          if (num <= 0) {
-            this.issueCheck.delete(q.parentQuestionId);
-          } else {
-            this.issueCheck.set(q.parentQuestionId, num);
-          }
+        } else {
+          this.issueCheck.set(q.parentQuestionId, num);
         }
-      }
-      console.log("Current (issue Check) Map: " + JSON.stringify(this.issueCheck, null, 4));
-      console.log("Current (finding Id) Map: " + JSON.stringify(this.issueFindingId, null, 4));
+      } 
     }
   }
 
@@ -682,7 +677,6 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param findid
    */
   addEditIssue(parentId, findid) {
-    console.log("Parent ID === : " + parentId);
     /* 
     * Per the customer's requests, an Issue's title should include the main 
     * grouping header text and the sub grouping header text.
@@ -766,11 +760,13 @@ export class QuestionBlockIseComponent implements OnInit {
           resolution_Date: null,
           vulnerabilities: '',
           title: name,
-          type: "Examiner Finding",
+          type: null, //"Examiner Finding",
           description: desc,
           citations: null,
           auto_Generated: 1
         };
+
+        this.issueFindingId.set(parentId, findId);
     
         // this.dialog.open(IssuesComponent, {
         //   data: find,
@@ -784,6 +780,7 @@ export class QuestionBlockIseComponent implements OnInit {
           const answerID = find.answer_Id;
           this.findSvc.getAllDiscoveries(answerID).subscribe(
             (response: Finding[]) => {
+              console.log("response: " + JSON.stringify(response, null, 4));
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {
                   this.issueFindingId.set(parentId, response[i].finding_Id);
@@ -792,7 +789,6 @@ export class QuestionBlockIseComponent implements OnInit {
               this.extras.findings = response;
               this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
               this.myGrouping.questions[0].answer_Id = find.answer_Id;
-    
             },
             error => console.log('Error updating findings | ' + (<Error>error).message)
           );
@@ -805,11 +801,9 @@ export class QuestionBlockIseComponent implements OnInit {
   * @param findingToDelete
   */
   deleteIssue(findingId, autoGenerated: boolean) {
-    let msg = "";
+    let msg = "Are you sure you want to delete this issue?";
     
     if (autoGenerated === false) {
-      msg = "Are you sure you want to delete this issue?";
-
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage = msg;
   
