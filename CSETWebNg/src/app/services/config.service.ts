@@ -21,13 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/overlay-directives';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, APP_INITIALIZER } from '@angular/core';
-import { TreeMapComponent } from '@swimlane/ngx-charts';
-import { debug } from 'console';
-import { promise } from 'protractor';
-import { environment } from '../../environments/environment';
 
 
 
