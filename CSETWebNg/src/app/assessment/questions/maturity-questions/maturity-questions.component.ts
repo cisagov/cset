@@ -180,6 +180,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Retrieves questions for a single grouping.
    */
   loadGrouping(groupingId: Number) {
+    this.completionSvc.reset();
+
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
      
       this.modelId = response.modelId;
@@ -197,6 +199,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.glossarySvc.glossaryEntries = response.glossary;
 
       this.loaded = true;
+
+      this.completionSvc.setQuestionArray(response);
 
       this.refreshQuestionVisibility();
     },
