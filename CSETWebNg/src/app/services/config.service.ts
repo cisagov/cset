@@ -134,7 +134,7 @@ export class ConfigService {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
       this.assetsUrl = 'assets/';
-      this.settingsUrl = 'assets/settings/';
+      this.settingsUrl = this.assetsUrl + 'settings/';
       this.configUrl = this.settingsUrl + 'config.json';
 
       
