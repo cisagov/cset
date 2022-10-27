@@ -232,11 +232,15 @@
                                                     <strong> Action Items: </strong>
                                                     <br>
                                                 </ng-container>
-                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
-                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                    [cdkCopyToClipboard]="(i+1) + '. ' + actionItem">
-                                                    <span class="cset-icons-copy" ></span>
-                                                </label> {{ i+1 }}: {{ actionItems }}
+                                                <span *ngIf="this.showActionItemsMap.has(question.title)">
+                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1)">
+                                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                            flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                            [cdkCopyToClipboard]="(i+1) + '. ' + actionItem">
+                                                            <span class="cset-icons-copy" ></span>
+                                                        </label> {{ i+1 }}: {{ actionItems }}
+                                                    </span>
+                                                </span>
 
                                                 <!-- <ng-container *ngIf="last">
                                                     <br><br>
