@@ -228,7 +228,7 @@
         
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps" path="assessment/{:id}/results/mvra-gaps" condition="MATURITY:MVRA" />
-        <node displaytext="Performance Sumaary" id="mvra-summary" path="assessment/{:id}/results/mvra-summary" condition="MATURITY:MVRA" />
+        <node displaytext="Performance Summary" id="mvra-summary" path="assessment/{:id}/results/mvra-summary" condition="MATURITY:MVRA" />
 
 
         <!-- Results - Diagram -->
