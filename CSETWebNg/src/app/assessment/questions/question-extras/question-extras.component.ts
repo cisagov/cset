@@ -192,11 +192,11 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   showDocumentsIcon(): boolean {
-    
+
     return true;
   }
 
@@ -353,7 +353,7 @@ export class QuestionExtrasComponent implements OnInit {
       auto_Generated: null,
     };
 
-    this.dialog.open(FindingsComponent, { 
+    this.dialog.open(FindingsComponent, {
         data: find,
         disableClose: true,
         width: this.layoutSvc.hp ? '90%' : '600px',
@@ -672,15 +672,9 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
-    // DOCUMENTS 
+    // DOCUMENTS
     if (mode == 'DOCS') {
-      if (this.configSvc.installationMode == 'ACET') {
-        return false;
-      }
-      
-      if (this.configSvc.installationMode == 'CF') {
-        return false;
-      }
+      return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
     return true;

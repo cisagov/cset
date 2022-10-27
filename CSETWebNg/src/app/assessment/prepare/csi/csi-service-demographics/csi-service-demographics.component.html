@@ -1,36 +1,38 @@
 <h4>Service Demographics</h4>
 
 <form class="mb-3">
+  <ng-container *ngIf="showCriticalServiceIdentifyingInfo()">
     <div class="form-group">
-        <label for="criticalServiceName">Critical Service Name</label>
-        <input class="form-control" tabindex="0" type="text" maxlength="50" name="criticalServiceName"
-            id="criticalServiceName" [(ngModel)]="csiServiceDemographic.criticalServiceName"
-            placeholder="Critical Service Name" (change)="update()">
+      <label for="criticalServiceName">Critical Service Name</label>
+      <input class="form-control" tabindex="0" type="text" maxlength="50" name="criticalServiceName"
+      id="criticalServiceName" [(ngModel)]="csiServiceDemographic.criticalServiceName"
+      placeholder="Critical Service Name" (change)="update()">
     </div>
     <div class="form-group">
-        <label for="criticalServiceDescription">Critical Service Description</label>
+      <label for="criticalServiceDescription">Critical Service Description</label>
         <input class="form-control" tabindex="0" type="text" maxlength="150" name="criticalServiceDescription"
             id="criticalServiceDescription" [(ngModel)]="csiServiceDemographic.criticalServiceDescription"
             placeholder="Critical Service Description" (change)="update()">
-    </div>
-    <div class="form-group">
-        <label for="itIcsName">Name of IT/ICS System (supporting the Critical Service)</label>
-        <input class="form-control" tabindex="0" type="text" maxlength="150" name="itIcsName" id="itIcsName"
+          </div>
+          <div class="form-group">
+            <label for="itIcsName">Name of IT/ICS System (supporting the Critical Service)</label>
+            <input class="form-control" tabindex="0" type="text" maxlength="150" name="itIcsName" id="itIcsName"
             [(ngModel)]="csiServiceDemographic.itIcsName"
             placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()">
-    </div>
-    <div class="form-group">
-      <label class="mb-1" for="role">Multi-site Service?</label>
-      <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup
-          name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
-          <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="csiServiceDemographic.multiSite">
+          </div>
+          <div class="form-group">
+            <label class="mb-1" for="role">Multi-site Service?</label>
+            <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup
+            name="multisiteService" [(ngModel)]="csiServiceDemographic.multiSite" (ngModelChange)="csiServiceDemographic.multiSiteDescription = null; update()">
+            <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="csiServiceDemographic.multiSite">
               <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="true">Yes</label>
-          <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="!csiServiceDemographic.multiSite">
-              <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
-      </div>
-      <input class="form-control" tabindex="0" maxlength="150" name="multiSiteDescription" type="text" placeholder="Multi-site Service Description"
+              <label ngbButtonLabel class="btn btn-secondary mb-1" [class.active]="!csiServiceDemographic.multiSite">
+                <input ngbButton type="radio" autocomplete="off" name="multisiteService" [value]="false">No</label>
+              </div>
+              <input class="form-control" tabindex="0" maxlength="150" name="multiSiteDescription" type="text" placeholder="Multi-site Service Description"
               [(ngModel)]="csiServiceDemographic.multiSiteDescription" (change)="update()" [disabled]="!csiServiceDemographic.multiSite">
-    </div>
+            </div>
+  </ng-container>
     <div class="mb-3">
         <div class="form-group">
             <label class="mb-1" for="role">What is the basis of the cybersecurity budget for this Critical
@@ -59,7 +61,7 @@
               </label>
           </div>
       </div>
-  </div>
+    </div>
     <div class="mb-3">
         <div class="form-group">
             <label class="mb-1" for="role">Total # of IT/ICS cybersecurity management and staff (i.e., technologists)
