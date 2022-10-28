@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="about d-flex flex-column justify-content-center flex-11a">
-  <app-about-cset *ngIf="configSvc.installationMode === ''"></app-about-cset>
+  <app-about-cset *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''"></app-about-cset>
   <app-about-rra *ngIf="configSvc.installationMode === 'RRA'"></app-about-rra>
   <app-about-acet *ngIf="configSvc.installationMode === 'ACET'"></app-about-acet>
   <app-about-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-about-tsa>
