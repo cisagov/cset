@@ -42,7 +42,7 @@
         <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
         <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
-            <div *ngIf="!this.ncuaSvc.statementsFinishedLoading || !groupings" class="w-100">
+            <div *ngIf="!this.ncuaSvc.issuesFinishedLoading || !groupings" class="w-100">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>

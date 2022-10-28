@@ -117,6 +117,7 @@ export class MyAssessmentsComponent implements OnInit {
       case 'ACET':
         this.titleSvc.setTitle('ACET');
         this.appCode = 'ACET';
+        this.ncuaSvc.reset();
         break;
       case 'TSA':
         this.titleSvc.setTitle('CSET-TSA');

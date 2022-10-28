@@ -78,9 +78,6 @@ export class QuestionBlockIseComponent implements OnInit {
     7631, 7632, 7634, 7635, 7636, 7637, 7638, 7640, 7642, 7643, 7644, 7646, 7647, 7648, 7651, 7653, 7654, 
     7658, 7659, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7672, 7673, 7675, 7677, 7681, 7682, 7684, 7685, 
     7688, 7692, 7695, 7696, 7697, 7701]);
-
-  issueCheck = new Map();
-  issueFindingId = new Map();
   
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
@@ -117,7 +114,7 @@ export class QuestionBlockIseComponent implements OnInit {
   */
   ngOnInit(): void {
     this.setIssueMap();
-
+    
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
@@ -129,11 +126,11 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras.findings.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
-              this.issueFindingId.set(find.question_Id, find.finding_Id);
+              this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
             }
           });
           
-          this.ncuaSvc.statementsFinishedLoading = true;
+          this.ncuaSvc.issuesFinishedLoading = true;
       });
 
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
@@ -178,8 +175,9 @@ export class QuestionBlockIseComponent implements OnInit {
 
     this.myGrouping.expanded = !this.myGrouping.expanded;
 
-    console.log("Issue Check Map: " + JSON.stringify(this.issueCheck, null, 4));
-    console.log("Finding Check Map: " + JSON.stringify(this.issueFindingId, null, 4));
+    console.log("Important Question Check Map: " + JSON.stringify(this.ncuaSvc.importantQuestionCheck, null, 4));
+    console.log("Finding Id Map: " + JSON.stringify(this.ncuaSvc.issueFindingId, null, 4));
+    console.log("Delete History: " + JSON.stringify(this.ncuaSvc.deleteHistory, null, 4));
   }
 
   /**
@@ -226,10 +224,25 @@ export class QuestionBlockIseComponent implements OnInit {
             count++;
           }
         }
-        this.issueCheck.set(parentId, count);
-        //this.issueFindingId.set(parentId, find.finding_Id);
+        this.ncuaSvc.importantQuestionCheck.set(parentId, count);
+        this.ncuaSvc.deleteHistory.clear();
       }
     });
+  }
+
+  deleteIssueMap(findingId: number) {
+    let parentKey = 0;
+    const iterator = this.ncuaSvc.issueFindingId.entries();
+
+    for (let value of iterator) {
+      if (value[1] = findingId) {
+        parentKey = value[0];
+      }
+    }
+    
+    this.ncuaSvc.importantQuestionCheck.delete(parentKey);
+    this.ncuaSvc.issueFindingId.delete(parentKey);
+    this.ncuaSvc.deleteHistory.add(parentKey);
   }
 
   /**
@@ -304,28 +317,30 @@ export class QuestionBlockIseComponent implements OnInit {
 
   checkForIssues(q: Question, oldAnswerValue: string) {
     if (this.importantQuestions.has(q.questionId)) {
-      let num = this.issueCheck.get(q.parentQuestionId);
+      let num = this.ncuaSvc.importantQuestionCheck.get(q.parentQuestionId);
       let value = (num != undefined) ? num : 0;
-      console.log("value: " + value);
 
       if (q.answer === 'N') {
         value++;
-        this.issueCheck.set(q.parentQuestionId, value);
+        this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
 
-        if (value >= 1 && !this.issueFindingId.has(q.parentQuestionId)) {
-          this.autoGenerateIssue(q.parentQuestionId, 0);
+        if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+          if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
+            this.autoGenerateIssue(q.parentQuestionId, 0);
+          }
         }
       } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
         value--;
         if (value < 1) {
-          this.issueCheck.delete(q.parentQuestionId);
-          if (this.issueFindingId.has(q.parentQuestionId)) {
-            let findId = this.issueFindingId.get(q.parentQuestionId);
-            this.issueFindingId.delete(q.parentQuestionId);
+          this.ncuaSvc.importantQuestionCheck.delete(q.parentQuestionId);
+
+          if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+            let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
+            this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
             this.deleteIssue(findId, true);
           }
         } else {
-          this.issueCheck.set(q.parentQuestionId, num);
+          this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
         }
       } 
     }
@@ -766,7 +781,7 @@ export class QuestionBlockIseComponent implements OnInit {
           auto_Generated: 1
         };
 
-        this.issueFindingId.set(parentId, findId);
+        this.ncuaSvc.issueFindingId.set(parentId, findId);
     
         // this.dialog.open(IssuesComponent, {
         //   data: find,
@@ -780,10 +795,9 @@ export class QuestionBlockIseComponent implements OnInit {
           const answerID = find.answer_Id;
           this.findSvc.getAllDiscoveries(answerID).subscribe(
             (response: Finding[]) => {
-              console.log("response: " + JSON.stringify(response, null, 4));
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {
-                  this.issueFindingId.set(parentId, response[i].finding_Id);
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
                 }
               }
               this.extras.findings = response;
@@ -809,6 +823,7 @@ export class QuestionBlockIseComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.deleteIssueMap(findingId);
           this.findSvc.deleteFinding(findingId).subscribe();
           let deleteIndex = null;
   
