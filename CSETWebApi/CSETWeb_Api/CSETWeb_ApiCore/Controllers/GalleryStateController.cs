@@ -13,7 +13,6 @@ using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
-
     public class GalleryStateController : ControllerBase
     {
         private readonly CSETContext _context;

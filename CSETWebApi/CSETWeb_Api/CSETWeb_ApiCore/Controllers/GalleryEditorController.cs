@@ -9,13 +9,16 @@ using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
-  
+#if DEBUG
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {
         
         private readonly ITokenManager _token;        
         private CSETContext _context;
+
+        // if you want to use the gallery editor, change this to true
+        private bool inDev = false;
 
         public GalleryEditorController(ITokenManager token, CSETContext context)
         {
@@ -26,6 +29,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/galleryEdit/updatePosition")]
         public IActionResult updatePosition(MoveItem moveItem)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 if(String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
@@ -104,6 +111,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/galleryEdit/updateItem")]
         public IActionResult updateItem([FromBody] UpdateItem item)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 if (item.IsGroup)
@@ -149,4 +160,5 @@ namespace CSETWebCore.Api.Controllers
 
         public string Value { get; set; }
     }
+#endif
 }

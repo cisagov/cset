@@ -21,6 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="question-group mb-3">
+    <ng-container *ngIf="(myGrouping.groupingID < 2564 || (myGrouping.groupingID >= 2564 && ncuaSvc.getExtraQuestionStatus() === true))">
     <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
         (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
         [attr.aria-expanded]="myGrouping.expanded">
@@ -91,10 +92,10 @@
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"
                             [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="configSvc.answerLabels[option]">
+                            [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{configSvc.buttonLabels[option]}}
+                                {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
                         </label>
 
                         <!-- Mark For Review Flag  -->
@@ -146,10 +147,10 @@
                     <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"
                             [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="configSvc.answerLabels[option]">
+                            [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{configSvc.buttonLabels[option]}}
+                                {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
                         </label>
 
                         <!-- Mark For Review Flag  -->
@@ -181,157 +182,147 @@
 
     <!-- Only show this if the NCUA switch is on to provide custom ISE functionality but not break existing models -->
     <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion"
-        [class.display-none]="q.maturityLevelName === 'CORE+' && this.showCorePlus === false">
+        <ng-container *ngFor="let q of myGrouping.questions">
 
-            <div class="w-100 d-flex flex-row">
-                <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">                    
-                   <!--<div [class.display-hidden]="!!q.parentQuestionId">-->
-                     
-                    <div *ngIf="!q.isParentQuestion; else parentQuestion">
-                        <div class="!!q.parentQuestionId"
-                            style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                            {{ q.displayNumber }}
-                            <div>
-                                <span class="question-mat-level-name">
-                                    {{ q.maturityLevelName }}
-                                </span>
+            <div class="d-flex flex-column" [class.question-row]="q.isParentQuestion" [class.pb-3]="q.isParentQuestion" [class.display-none]="!shouldIShow(q)">
+                <div class="w-100 d-flex flex-row">
+                    <div class="number-and-text" [ngStyle]="{'padding-top': (q.isParentQuestion && q.questionId !== 7189) ? '2.5rem' : '0.2rem'}">
+                        <div *ngIf="!q.isParentQuestion; else parentQuestion">
+                            <div class="!!q.parentQuestionId"
+                                style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
+                                {{ q.displayNumber }}
+                                <div>
+                                    <span *ngIf="q.maturityLevelName !== 'CORE+'" class="question-mat-level-name">
+                                        {{ q.maturityLevelName }}
+                                    </span>
+                                    <span *ngIf="q.maturityLevelName === 'CORE+'" class="core-plus-mat-level-name">
+                                        {{ q.maturityLevelName }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <ng-template #parentQuestion>
-                        <div [class.display-hidden]="!!q.parentQuestionId"
-                        style="font-size: 1.25rem; font-weight: bold; margin-right: 2rem; white-space: nowrap;">
-                            {{ q.displayNumber }}
-                        </div>
-                    </ng-template>
-                    <div style="width: 100%;">                        
-                        <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
-                            {{ q.shortName }}
-                        </div>
-
-                        <div *ngIf="!!q.isParentQuestion; else childQuestion" style="font-size: 1.25rem;">
-                            <app-question-text [questionText]="q.questionText"></app-question-text>
-                        </div>
-                        <ng-template #childQuestion>
-                            <app-question-text [questionText]="q.questionText"></app-question-text>
+                        <ng-template #parentQuestion>
+                            <div [class.display-hidden]="!!q.parentQuestionId"
+                            style="font-size: 1.25rem; font-weight: bold; margin-right: 2rem; white-space: nowrap;">
+                                {{ q.displayNumber }}
+                            </div>
                         </ng-template>
-
-                        <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                        <div style="width: 100%;">                        
+                            <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
+                                {{ q.shortName }}
+                            </div>
+    
+                            <div *ngIf="!!q.isParentQuestion; else childQuestion" style="font-size: 1.25rem;">
+                                <app-question-text [questionText]="q.questionText"></app-question-text>
+                            </div>
+                            <ng-template #childQuestion>
+                                <app-question-text [questionText]="q.questionText"></app-question-text>
+                            </ng-template>
+    
+                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                        </div>
                     </div>
-                </div>
-
-
-                <div *ngIf="!q.isParentQuestion">
-                    <!-- build the list of answer options -->
-                    <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                        <label *ngFor="let option of answerOptions">
-                            <label *ngIf="option !== 'NA' && option !== 'A'" class="btn form-check-label"
-                                [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                                [matTooltip]="configSvc.answerLabels[option]">
-                                <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
-                                    (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                {{configSvc.buttonLabels[option]}}
-                            </label>
-                            <!-- <label *ngIf="option === 'A'" class="btn btn-iss form-check-label"
-                                [class.answer-selected]="q.answer === option"
-                                [matTooltip]="configSvc.answerLabels[option]">
-                                <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
-                                    (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                <span class="cset-icons-comment fs-base"></span>
-                            </label> -->
-                        </label>
-
-                        <!-- Comment bubble button -->
-                        <label class="btn form-check-label btn-iss"
-                            [matTooltip]="hasComment(q) ? 'Comments with content':'Comment'" matTooltipPosition="below"
-                            [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
-                            <input name="q_{{q.questionId}}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
-                            <span class="cset-icons-comment fs-base"></span>
-                        </label>
-
-                        <!-- Mark For Review Flag  -->
-                        <label class="mr-0 ml-2 btn form-check-label btn-mfr"
-                            [class.answer-selected]="q.markForReview === true"
-                            matTooltip="This control requires further review.">
-                            <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
-                                checked="{{q.markForReview === true}}">
-                            <span class="cset-icons-flag-dark fs-base"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
         
-            <div *ngIf="q.extrasExpanded">
-                <div class="form-group">
-                    <textarea autosize [(ngModel)]="q.comment" (change)="storeComment(q)" 
-                        style="min-height: 120px; width: 100%" class="form-control" [placeholder]="altTextPlaceholder"></textarea>
+                    <div *ngIf="!q.isParentQuestion">
+                        <!-- build the list of answer options -->
+                        <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+                            <label *ngFor="let option of answerOptions">
+                                <label *ngIf="option !== 'NA' && option !== 'A'" class="btn form-check-label"
+                                    [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
+                                    [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
+                                    <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
+                                        (click)="storeAnswer(q, option)" [checked]="q.answer === option">
+                                        {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
+                                </label>
+                            </label>
+        
+                            <!-- Comment bubble button -->
+                            <label class="btn form-check-label btn-iss"
+                                    [matTooltip]="hasComment(q) ? 'Comments with content':'Comment'" matTooltipPosition="below"
+                                    [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
+                                <input name="q_{{q.questionId}}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
+                                <span class="cset-icons-comment fs-base"></span>
+                            </label>
+        
+                            <!-- Mark For Review Flag  -->
+                            <label class="mr-0 ml-2 btn form-check-label btn-mfr"
+                                   [class.answer-selected]="q.markForReview === true"
+                                    matTooltip="This control requires further review.">
+                                <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                                    checked="{{q.markForReview === true}}">
+                                <span class="cset-icons-flag-dark fs-base"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
+                
+                <div *ngIf="q.extrasExpanded">
+                    <div class="form-group">
+                        <textarea autosize [(ngModel)]="q.comment" (change)="storeComment(q)" 
+                            style="min-height: 120px; width: 100%" class="form-control" [placeholder]="altTextPlaceholder"></textarea>
+                    </div>
+                </div>
+
+                <hr>
+        
+                <!-- 7409 is currently the start of the CORE+ only questions and doesn't need this button -->
+                <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7409"
+                    class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                    (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
+                </button>
+        
+                <button *ngIf="isFinalQuestion(q.questionId)"
+                    class="btn btn-na mt-2 mb-4" style="width: 20%"
+                    (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
+                </button>
+        
+                <div *ngIf="showIssues === true && isFinalQuestion(q.questionId)" style="margin: 0.75em">
+                    <table class="table" *ngIf="extras?.findings.length > 0">
+                        <tr>
+                            <th>Issue</th>
+                            <th>Title</th>
+                            <th>Importance</th>
+                            <th style="width:5%;"></th>
+                            <th style="width:5%;"></th>
+                        </tr>
+                        <tr *ngFor="let find of extras?.findings; let i = index" style="box-sizing: content-box;height:20px;">
+                            <td>
+                                <div>Issue {{ i+1 }}</div>
+                            </td>
+                            <td style="height:20px">
+                                <div>{{find.title}}</div>
+                            </td>
+                            <td>
+                                <div>{{find.importance?.value}}</div>
+                            </td>
+                            <td>
+                                <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                                        (click)="addEditIssue(find.finding_Id)">
+                                    <span class="mr-1 cset-icons-pencil"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                    (click)="deleteIssue(find)">
+                                    <span class="mr-1 cset-icons-trash-can"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(0)">Add an Issue</button>
+                </div>
+    
+                <div *ngIf="isFinalQuestion(q.questionId)">
+                    <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"
+                        (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea>
+                </div>
+    
+                <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
+                    class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                </app-question-extras>
+        
             </div>
-            <!-- <div *ngIf="q.answer === 'A'">
-                <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                    style="width: 100%; min-height: 120px;" [placeholder]="altTextPlaceholder"
-                    [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
-            </div> -->
-            <hr>
-
-            <button *ngIf="showCorePlusButton(q.questionId)"
-                class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
-            </button>
-
-            <!-- Currently models ACET findings, will need to be tailored to ISE -->
-            <button *ngIf="isFinalQuestion(q.questionId)"
-                class="btn btn-na mt-2 mb-4" style="width: 20%"
-                (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
-            </button>
-
-            <div *ngIf="showIssues === true && isFinalQuestion(q.questionId)" style="margin: 0.75em">
-                <table class="table" *ngIf="extras?.findings.length > 0">
-                    <tr>
-                        <th>Issue</th>
-                        <th>Title</th>
-                        <th>Importance</th>
-                        <th style="width:5%;"></th>
-                        <th style="width:5%;"></th>
-                    </tr>
-                    <tr *ngFor="let find of extras?.findings; let i = index" style="box-sizing: content-box;height:20px;">
-                        <td>
-                            <div>Issue {{ i+1 }}</div>
-                        </td>
-                        <td style="height:20px">
-                            <div>{{find.title}}</div>
-                        </td>
-                        <td>
-                            <div>{{find.importance?.value}}</div>
-                        </td>
-                        <td>
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                (click)="addEditIssue(find.finding_Id)">
-                                <span class="mr-1 cset-icons-pencil"></span>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                                (click)="deleteIssue(find)">
-                                <span class="mr-1 cset-icons-trash-can"></span>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-                <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(0)">Add an Issue</button>
-            </div>
-
-            <div *ngIf="isFinalQuestion(q.questionId)">
-                <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"
-                    (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea>
-            </div>
-
-            <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
-                class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
-            </app-question-extras>
-
-        </div>
+        </ng-container>
     </div>
+    </ng-container>
 </div>

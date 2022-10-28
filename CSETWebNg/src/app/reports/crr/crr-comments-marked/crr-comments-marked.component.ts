@@ -26,6 +26,7 @@ import { CrrService } from './../../../services/crr.service';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-crr-comments-marked',
@@ -43,10 +44,11 @@ export class CrrCommentsMarkedComponent implements OnInit {
   markedForReviewList = [];
 
   constructor(
-  public configSvc: ConfigService,
-  private titleService: Title,
-  private crrSvc: CrrService
-  ){}
+    public configSvc: ConfigService,
+    private titleService: Title,
+    private crrSvc: CrrService,
+    public questionsSvc: QuestionsService
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -167,7 +169,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.configSvc.config['answerLabel' + abb];
+    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
   }
 
   printReport() {
