@@ -213,7 +213,7 @@
                             <strong> Description: </strong><br>
                             {{ finding?.finding?.description }}
                             
-                            <br><br>
+                            <br>
                             
                             
                             <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
@@ -226,7 +226,7 @@
                                                     
                                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                                       flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
-                                                      [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId))">
+                                                      [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId), question.title)">
                                                         <span class="cset-icons-copy"> Copy All</span>
                                                     </label>
                                                     <strong> Action Items: </strong>
@@ -236,7 +236,7 @@
                                                     <span *ngIf="this.checkShowActionItemMap(question.title, i+1)">
                                                         <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
                                                             flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                            [cdkCopyToClipboard]="(i+1) + '. ' + actionItem">
+                                                            [cdkCopyToClipboard]="(i+1) + '. ' + actionItems">
                                                             <span class="cset-icons-copy" ></span>
                                                         </label> {{ i+1 }}: {{ actionItems }}
                                                     </span>
@@ -256,7 +256,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
                             <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
                                 [cdkCopyToClipboard]="this.actionItemExample2">
@@ -283,7 +282,7 @@
                                             flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                             [cdkCopyToClipboard]="this.regCitationsMap.get(question.matQuestionId)[0]">
                                             <span class="cset-icons-copy" ></span>
-                                        </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] }}
+                                        </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] !=='' ? this.regCitationsMap.get(question.matQuestionId)[0] : 'No Regulatory Citation given.'}}
                                     </div>
                                 </div>
                             </div>

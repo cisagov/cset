@@ -23,7 +23,7 @@ namespace CSETWebCore.Business.Reports
         public INFORMATION information { get; set; }
         public OverallSALTable salTable { get; set; }
         public GenSALTable genSalTable { get; set; }
-
+        public SourceFiles sourceFiles { get; set; }
         public OverallSALTable nistSalTable { get; set; }
         public List<CNSSSALJustificationsTable> nistTypes { get; set; }
         public List<RequirementControl> ControlList { get; set; }
@@ -122,6 +122,13 @@ namespace CSETWebCore.Business.Reports
         public string Alias { get; set; }
         public string DocumentTitle { get; set; }
         public string FileName { get; set; }
+    }
+
+    public class SourceFiles
+    {
+        public int Mat_Question_Id { get; set; }
+        public int Gen_File_Id { get; set; }
+        public string Title { get; set; }
     }
 
     public class SimpleStandardQuestions

@@ -67,5 +67,14 @@ namespace CSETWebCore.Api.Controllers
             data.Information = _report.GetInformation();
             return Ok(data);
         }
+
+        [HttpGet]
+        [Route("api/reports/acet/getIseSourceFiles")]
+        public IActionResult GetIseSourceFiles()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            return Ok(_report.GetIseSourceFiles());
+        }
     }
 }
