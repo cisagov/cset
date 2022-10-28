@@ -493,10 +493,18 @@ import { IssuesComponent } from './assessment/questions/issues/issues.component'
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
+import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
+import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
+import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
+import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 
 @NgModule({
     imports: [
@@ -945,9 +953,11 @@ import { AnalyticsCompareComponent } from './assessment/results/analytics-compar
         PrivacyWarningRejectComponent, 
         SearchPageComponent, 
         LogoTsaComponent, 
+        CfLayoutMainComponent,
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent, AnalyticsCompareComponent
+        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
+        ,AboutCfComponent
     ],
     providers: [
         ConfigService,

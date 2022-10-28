@@ -54,6 +54,9 @@ export class LoginComponent implements OnInit {
       case 'TSA':
         this.titleSvc.setTitle('CSET-TSA');
         break;
+        case 'CF':
+          this.titleSvc.setTitle('CSET-CF');
+          break;
       case 'RRA':
         this.titleSvc.setTitle('CISA - Ransomware Readiness');
         break;

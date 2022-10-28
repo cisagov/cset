@@ -38,7 +38,7 @@ export class CmmcDeficiencyComponent implements OnInit {
     if (!appCode || appCode === 'CSET') {
       this.logoPath = "assets/images/CISA_Logo_1831px.png";
     }
-    else if (appCode === 'CSET-TSA') {
+    else if (appCode === 'TSA') {
       this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
     }
 

@@ -55,12 +55,12 @@
             <option *ngFor="let s of sizeList" [value]="s.demographicId">{{s.description}}</option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="showOrganizationName()">
         <label for="edmOrganizationName">Name of Organization</label>
         <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName" #edmOrganizationName="ngModel"
             placeholder="Name of Organization" (blur)="changeOrgName($event)">
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="showBusinessAgencyName()">
         <label for="edmAgency">Business Unit/Agency</label>
         <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency" id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
             placeholder="Business Unit/Agency" (blur)="changeAgency($event)">
@@ -87,7 +87,7 @@
             <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}} {{contact.lastName}}</option>
         </select>
     </div>
-    <div class="form-row" *ngIf="configSvc.installationMode !== 'RRA'">
+    <div class="form-row" *ngIf="showCriticalService()">
         <div class="form-group col-md-6">
             <label class="mb-1" for="criticalService">Critical Service</label>
             <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService"

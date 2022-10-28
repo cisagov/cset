@@ -1,0 +1,32 @@
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3>Goal Performance</h3>
+    
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-11a" *ngIf="initialized">
+        <div clas="container">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h5>MVRA Tier Scores</h5>
+                    <table class="cset-table">
+                        <tr>
+                            <th></th>
+                            <th class="text-right">Total Passed</th>
+                            <th class="text-right">Total Tiers</th>
+                            <th class="text-right">Credit</th>
+                        </tr>
+                        <tr *ngFor="let m of flattenedModel" [class.function-background]="m.function">
+                            <td>{{m.title}}</td>
+                            <td class="text-right">{{m.totalPassed}}</td>
+                            <td class="text-right">{{m.totalTiers}}</td>
+                            <td class="text-right">{{m.credit}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
