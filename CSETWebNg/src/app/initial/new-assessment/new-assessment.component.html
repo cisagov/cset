@@ -12,7 +12,7 @@
                 <div class="card-image-parent">
                     <img class="card-image-child" [src]="getImageSrc(c.icon_File_Name_Small)">
                 </div>
-                <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px; z-index:1">
+                <div class="card-body gallery-card-body cursor-pointer" style="min-height:180px; max-height:200px; z-index:1" (click)="assessSvc.newAssessmentGallery(c.gallery_Item_Id)">
                     <h6 class="card-title" ellipsis [ellipsis-content]="c.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                     <p class="card-text" ellipsis [ellipsis-content]="c.plainText" style="max-height:80px; min-height:80px;"></p>
                 </div>

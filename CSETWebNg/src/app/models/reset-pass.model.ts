@@ -28,7 +28,7 @@ export interface SecurityQuestion {
     questionAnswer?: SecurityQuestionAnswer;
 }
 
-export interface SecurityQuestionAnswer {
+export interface SecurityQuestionAnswer {  
     questionText?: string;
     answerText?: string;
     primaryEmail?: string;

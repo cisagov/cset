@@ -1,0 +1,13 @@
+
+<table class="cset-table">
+    <tr>
+        <th></th>
+        <th class="text-right">Rating</th>
+        <th class="text-right">Credit</th>
+    </tr>
+    <tr *ngFor="let m of flattenedModel" [class.function-background]="m.function">
+        <td>{{m.title}}</td>
+        <td class="text-right">{{m.rating}}</td>
+        <td class="text-right">{{m.credit}}</td>
+    </tr>
+</table>
