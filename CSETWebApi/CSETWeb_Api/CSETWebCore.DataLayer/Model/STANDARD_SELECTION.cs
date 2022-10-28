@@ -31,6 +31,7 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [StringLength(50)]
         public string Application_Mode { get; set; }
+        public bool Only_Mode { get; set; }
         /// <summary>
         /// The Selected Sal Level is used to
         /// </summary>

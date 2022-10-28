@@ -46,6 +46,7 @@ export interface AssessmentDetail {
 
     isAcetOnly?: boolean;
     workflow?: string;
+    origin?: string;
 
     maturityModel?: MaturityModel;
 

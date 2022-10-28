@@ -65,6 +65,9 @@ let headers = {
   // CORE+ question trigger/state manager
   showCorePlus: boolean = false;
 
+  // CORE+ Only questions (17+)
+  showExtraQuestions: boolean = false;
+
 
   constructor(
     private http: HttpClient,
@@ -243,6 +246,32 @@ let headers = {
 
   refreshGroupList(level: number) {
     this.acetFilteringSvc.resetDomainFilters(level);
+  }
+
+  getExamLevel() {
+    if (this.usingExamLevelOverride === false) {
+      return (this.proposedExamLevel);
+    } else if (this.usingExamLevelOverride === true) {
+      return (this.chosenOverrideLevel);
+    }
+  }
+
+  showCorePlusOnlySubCats(id: number) {
+    if (id >= 2564 && this.getExamLevel() === 'CORE') {
+      return true;
+    }
+  }
+
+  setExtraQuestionStatus(option: boolean) {
+    this.showExtraQuestions = option;
+  }
+
+  getExtraQuestionStatus() {
+    return this.showExtraQuestions;
+  }
+
+  toggleExtraQuestionStatus() {
+    this.showExtraQuestions = !this.showExtraQuestions;
   }
 
 }

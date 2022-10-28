@@ -60,6 +60,14 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         public string MaturityLevelName { get; set; }
 
+
+        /// <summary>
+        /// Selectable options that belong to the question.  
+        /// This is the first cut at including
+        /// </summary>
+        public List<Cis.Option> Options { get; set; } = new List<Cis.Option>();
+
+
         public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }

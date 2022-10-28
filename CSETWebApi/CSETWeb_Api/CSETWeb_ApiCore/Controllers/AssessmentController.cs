@@ -88,21 +88,41 @@ namespace CSETWebCore.Api.Controllers
             // create new empty assessment
             var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
 
-            // now add the options
+
+            // build a list of Sets to be selected
+            var setNames = new List<string>();
+
             if (config.Sets != null)
             {
-                var counts = _standards.PersistSelectedStandards(assessment.Id, config.Sets);
-                assessment.QuestionRequirementCounts = counts;                
-                assessment.UseStandard = true;                
+                setNames.AddRange(config.Sets);
             }
 
-            var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
+            if (setNames.Count > 0)
+            {
+                var counts = _standards.PersistSelectedStandards(assessment.Id, setNames);
+                assessment.QuestionRequirementCounts = counts;
+                assessment.UseStandard = true;
+            }
 
-            // Application Mode
+
+
+            // Application Mode.  Including "only" will restrict the mode on the questions page.
+            var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
             if (config.QuestionMode != null && ss != null)
             {
-                ss.Application_Mode = $"{config.QuestionMode.Trim()} Based";
+                config.QuestionMode = config.QuestionMode.Trim();
+                var words = config.QuestionMode.Split(" ");
+
+
+                ss.Application_Mode = $"{words[0].Trim()} Based";
+
+                if (words.Length > 1 && words[1].ToLower() == "only")
+                {
+                    ss.Only_Mode = true;
+                }
             }
+
+
 
             // SAL 
             if (config.SALLevel != null && ss != null)
@@ -136,6 +156,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 assessment.UseDiagram = true;
             }
+
+            
+            // Origin
+            if (config.Origin != null)
+            {
+                assessment.Origin = config.Origin;
+            }
+
 
             _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
 

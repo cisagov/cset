@@ -91,7 +91,6 @@ export class EdmComponent implements OnInit, AfterContentInit {
   }
 
   getReportPdf(){
-    console.log(this.el.nativeElement.innerHTML);
     //this.reportSvc.getPdf(this.el.nativeElement.innerHTML);
     this.reportSvc.getPdf(this.el.nativeElement.innerHTML, "None").subscribe(data => {
       saveAs(data, "edm.pdf");
