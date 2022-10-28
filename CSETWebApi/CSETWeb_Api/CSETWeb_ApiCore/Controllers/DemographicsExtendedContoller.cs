@@ -332,5 +332,48 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+
+
+        /// <summary>
+        /// Returns a true if all extended demographics have been answered,
+        /// otherwise a false is returned.
+        /// </summary>
+        [HttpGet]
+        [Route("api/demographics/ext/demoanswered")]
+        public IActionResult AreExtendedDemographicsAnswered()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var demo = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            if (demo == null)
+            {
+                demo = new DEMOGRAPHIC_ANSWERS();
+            }
+
+            if (demo.SectorId == null 
+                || demo.SubSectorId == null
+                || demo.Employees == null
+                || demo.CustomersSupported == null
+                || demo.CIOExists == null 
+                || demo.CISOExists == null
+                || demo.CyberTrainingProgramExists == null
+                || demo.GeographicScope == null)
+            {
+                return Ok(false);
+            }
+
+            var regions = _context.REGION_ANSWERS.Where(x => x.Assessment_Id == assessmentId).Count();
+            var counties = _context.COUNTY_ANSWERS.Where(x => x.Assessment_Id == assessmentId).Count();
+            var metros = _context.METRO_ANSWERS.Where(x => x.Assessment_Id == assessmentId).Count();
+
+            if (regions == 0 && counties == 0 && metros == 0)
+            {
+                return Ok(false);
+            }
+
+
+            return Ok(true);
+        }
     }
 }

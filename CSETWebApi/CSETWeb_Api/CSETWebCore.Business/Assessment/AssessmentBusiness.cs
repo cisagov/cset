@@ -653,7 +653,7 @@ namespace CSETWebCore.Business.Assessment
             if (assessment.UseMaturity)
             {
                 // Use shorter names on assessments with multiple types.
-                assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
+                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
                 assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
             }
 

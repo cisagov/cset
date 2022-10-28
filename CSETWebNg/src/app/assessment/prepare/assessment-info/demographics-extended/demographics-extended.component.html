@@ -20,11 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<h5>
+    Please complete all of the fields on this page. This Assessment Information will provide the infrastructure taxonomy, geographic, and consequence data necessary to compare your organization’s assessment results to others in your field and provide aggregate trends of cybersecurity strengths and weakness across the state’s collective critical infrastructure. 
+    All subsections within this page must be completed in order to access your final reports. 
+<h5>
+    <p></p>
 <h4>Infrastructure Taxonomy</h4>
 
 <div class="mb-5">
     <p>
-        Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
+        Select the critical infrastructure sector and subsector that best reflects your primary business/operations.        
     </p>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -85,6 +90,9 @@
 
 
     <h5>Counties</h5>
+    <p class="font-italic">
+        Select/deselect counties as appropriate.
+    </p>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
         <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
             <label *ngFor="let c of countyList" class="btn btn-geo btn-rounded m-1" [class.active]="c.selected">
@@ -97,6 +105,7 @@
     <h5>Metropolitan Areas</h5>
     <p class="font-italic">
         Select the metropolitan areas where your business/operations provide services.
+        Select/deselect metropolitan areas as appropriate.
     </p>
     <div style="border: 1px solid #ccc; border-radius: .5rem" class="p-3 mb-5">
         <div *ngIf="visibleMetroList.length == 0" class="alert alert-warning">
