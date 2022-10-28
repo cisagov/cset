@@ -183,8 +183,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
-      if (e.target !== undefined) {
+      if (e.target != null) {
         if (e.target.value === this.creditUnionOptions[i].name) {
+          this.assessment.creditUnion = e.target.value;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
@@ -192,6 +193,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
+          this.assessment.charter = this.creditUnionOptions[i].charter;
         }
       }
     }

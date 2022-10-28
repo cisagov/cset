@@ -147,41 +147,6 @@
 
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
-                    <span class="h2 report-text-blue">Statement Summary</span>
-                </div>
-            </div>
-
-            <div *ngFor="let d of response?.matAnsweredQuestions">
-                <div *ngFor="let f of d.assessmentFactors">
-                    <div *ngFor="let c of f.components">
-                        <div *ngFor="let q of c.questions">
-                            <div *ngIf="isParentQuestion(q)">
-                                <div>
-                                    <span class="font-weight-bold">Title: </span>
-                                    <span class="pr-3">{{ q.title }}</span>
-                                </div>
-                                <div>
-                                    <span class="font-weight-bold">Question Text: </span>
-                                    <span class="pr-3">{{ q.questionText }}</span>
-                                </div>
-                                <div>
-                                    <span class="font-weight-bold">Statement Summary: </span>
-                                    <br>
-                                    <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]' }}</span>
-                                </div>
-
-                                <hr class="page-line">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="page-break"></div>
-
-            <div class="d-flex flex-row" style="justify-content: space-between">
-                <div style="align-self: flex-end;">
                     <div class="h2 report-text-blue">Statement Overview</div>
                 </div>
             </div>
@@ -236,6 +201,134 @@
                     </ng-container>
                 </ng-container>
             </table>
+
+            <div class="page-break"></div>
+
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <span class="h2 report-text-blue">Statement Summary</span>
+                </div>
+            </div>
+
+            <div *ngFor="let d of response?.matAnsweredQuestions">
+                <div *ngFor="let f of d.assessmentFactors">
+                    <div *ngFor="let c of f.components">
+                        <div *ngFor="let q of c.questions">
+                            <div *ngIf="isParentQuestion(q)">
+                                <div>
+                                    <span class="font-weight-bold">Title: </span>
+                                    <span class="pr-3">{{ q.title }}</span>
+                                </div>
+                                <div>
+                                    <span class="font-weight-bold">Question Text: </span>
+                                    <span class="pr-3">{{ q.questionText }}</span>
+                                </div>
+                                <div>
+                                    <span class="font-weight-bold">Statement Summary: </span>
+                                    <br>
+                                    <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]' }}</span>
+                                </div>
+
+                                <hr class="page-line">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <div class="ml-3 mr-3">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Issues</div>
+                    </div>
+                </div>
+                <div *ngIf="this.findingsResponse?.length > 0">
+                    <div *ngFor="let finding of this.findingsResponse">
+                        <div>
+                            <strong>Question: </strong> {{ finding?.question?.question_Title }}
+                        </div>
+                        <div>
+                            <strong>Title: </strong> {{ finding?.finding?.title }}
+                        </div>
+                        <div>
+                            <strong>Issue Type: </strong> {{ finding?.finding?.type }}
+                        </div>
+                        <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
+                            
+                            <strong> Description: </strong><br>
+                            {{ finding?.finding?.description }}
+                            
+                            <br>
+                            
+                            
+                            <div *ngFor="let subcat of this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+                                <div *ngFor="let question of subcat?.questions">
+                                    <div *ngIf="this.actionItemsMap.has(question.matQuestionId)">
+                                        <div *ngFor="let actionItems of this.actionItemsMap.get(question.matQuestionId); let last = last; let i = index;">
+                                            <div *ngIf="question.title == finding?.question?.question_Title">
+                                                
+                                                <ng-container *ngIf="i == 0">
+                                                    
+                                                    
+                                                    <strong> Action Items: </strong>
+                                                    <br>
+                                                </ng-container>
+                                                <span *ngIf="this.showActionItemsMap.has(question.title)">
+                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1)">
+                                                        {{ i+1 }}: {{ actionItems }}
+                                                    </span>
+                                                </span>
+
+                                                <!-- <ng-container *ngIf="last">
+                                                    <br><br>
+                                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                                        flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                                        [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId))">
+                                                        <span class="cset-icons-copy"> Copy All</span>
+                                                    </label>
+                                                    <br>
+                                                </ng-container> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                [cdkCopyToClipboard]="this.actionItemExample2">
+                                <span class="cset-icons-copy"></span>
+                            </label> {{ this.actionItemExample2 }} -->
+                        </div>
+                        <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
+                            
+                            <strong> Supplemental Guidance: </strong> 
+                            
+                            <br>
+                            <span [innerHtml]="finding?.question?.supplemental_Info"></span>
+                        </div>
+                        <strong>Regulatory Citation: </strong>
+                        <div *ngFor="let subcat of this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+                            <div *ngFor="let question of subcat?.questions">
+                                <div *ngIf="this.regCitationsMap.has(question.matQuestionId)">
+                                    <div *ngIf="question.title == finding?.question?.question_Title">
+                                        {{ this.regCitationsMap.get(question.matQuestionId)[0] }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="page-line">
+                    </div>
+                </div>
+                <div *ngIf="this.findingsResponse?.length === 0">
+                    No Issues were noted.
+                </div>
+            </div>
+            
+
         </div>
     </div>
     <div style="

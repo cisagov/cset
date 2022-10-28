@@ -18,6 +18,7 @@ export class IseMeritComponent implements OnInit {
   demographics: any = null; 
   answers: any = null;
   actionItemsForParent: any = null;
+  files: any = null;
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -103,7 +104,6 @@ export class IseMeritComponent implements OnInit {
       (r: any) => {
         this.answers = r;
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
-        console.log(this.answers)
 
         // goes through domains
         for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -172,6 +172,14 @@ export class IseMeritComponent implements OnInit {
         }
       },
     )
+
+    // this.acetSvc.getIseSourceFiles().subscribe(
+    //   (r: any) => {
+    //     this.files = r;
+    //     console.log(r)
+    //   },
+    //   error => console.log('Assessment Information Error: ' + (<Error>error).message)
+    // )
   }
 
   addExaminerFinding(title: any) {
@@ -185,7 +193,7 @@ export class IseMeritComponent implements OnInit {
     if (!this.dors.includes(title)) {
       this.dors.push(title);
     }
-    this.dorsTotal = this.dorsTotal + 1;
+    this.dorsTotal ++;
   }
 
   addSupplementalFact(title: any) {
@@ -201,7 +209,7 @@ export class IseMeritComponent implements OnInit {
     } else if (examLevel === 18) {
       this.examLevel = 'CORE';
     } else {
-      this.examLevel = 'Unknown';
+      this.examLevel = 'Loading...';
     }
   }
 
@@ -219,10 +227,12 @@ export class IseMeritComponent implements OnInit {
   }
 
   categoryBuilder(categories: string[]) {
-    for(let i = 0; i < categories.length; i++) {
-      this.resultsOfReviewString += '\n\t ' + categories[i];
+    if(categories.length > 0) {
+      for(let i = 0; i < categories.length; i++) {
+        this.resultsOfReviewString += '\n\t ' + categories[i];
+      }
+      this.resultsOfReviewString += '\n\n';
     }
-    this.resultsOfReviewString += '\n\n';
   }
 
   // gets rid of the html formatting
@@ -282,15 +292,22 @@ export class IseMeritComponent implements OnInit {
     }
   }
 
-  copyAllActionItems(input: any) {
+  copyAllActionItems(input: any, title: string) {
     let combinedItems = input.toString();
     let array = combinedItems.split(".,");
 
     for (let i = 0; i < array.length; i++) {
       let count = i+1;
-	    array[i] = count + ": " + array[i] + "\n";
-    }
+      if(this.checkShowActionItemMap(title, count)) {
+        // console.log('i: ' + i + '\n')
+        // console.log('count: ' + count + '\n')
+        // console.log('array[i]: ' + array[i] + '\n')
 
+	      array[i] = count + ": " + array[i] + "\n";
+      } else {
+        array[i] = "";
+      }
+    }
     let formattedItems = array.join("");
     return formattedItems;
   }

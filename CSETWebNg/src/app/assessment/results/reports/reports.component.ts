@@ -78,6 +78,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.assessSvc.assessment == null) {
             this.assessSvc.getAssessmentDetail().subscribe(
                 (data: any) => {
+                    console.log(data)
                     this.assessSvc.assessment = data;
                 });
         }
