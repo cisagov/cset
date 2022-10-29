@@ -123,7 +123,7 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
         //
-        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string groupName, int columnId)
+        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, int group_id, int columnId)
         {
             // Setup for adding to GALLERY_ITEM table
             GALLERY_ITEM newItem = new GALLERY_ITEM()
@@ -142,18 +142,14 @@ namespace CSETWebCore.Business.GalleryParser
             _context.GALLERY_ITEM.Add(newItem);
             _context.SaveChanges();
 
-            // Setup for adding to GALLERY_GROUP_DETAILS table
-            var groupId = from g in _context.GALLERY_GROUP.AsEnumerable()
-                          where g.Group_Title == groupName
-                          select g.Group_Id;
-
+            // Setup for adding to GALLERY_GROUP_DETAILS table            
             var galleryId = newItem.Gallery_Item_Id;
 
             //var columnMax = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == groupId).Max(x => x.Column_Index);
 
             GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS()
             {
-                Group_Id = groupId.First(),
+                Group_Id = group_id,
                 Column_Index = columnId,
                 Gallery_Item_Id = galleryId,
                 Click_Count = 0
@@ -165,7 +161,7 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
 
-        public void AddGalleryGroup(string group, string layout)
+        public int AddGalleryGroup(string group, string layout)
         {
             // Setup for adding to GALLERY_ITEM table
             GALLERY_GROUP newGroup = new GALLERY_GROUP()
@@ -176,7 +172,7 @@ namespace CSETWebCore.Business.GalleryParser
             _context.GALLERY_GROUP.Add(newGroup);
             _context.SaveChanges();
 
-            var newGroupId = _context.GALLERY_GROUP.Where(x => x.Group_Title == group).Max(x => x.Group_Id);
+            var newGroupId = newGroup.Group_Id;
             var newRowIndex = _context.GALLERY_ROWS.Where(x => x.Layout_Name == layout).Max(x => x.Row_Index) + 1;
 
 
@@ -190,7 +186,7 @@ namespace CSETWebCore.Business.GalleryParser
             _context.GALLERY_ROWS.Add(newRow);
             _context.SaveChanges();
 
-            //AddGalleryItem("", "", "", "This is a placeholder", group, 0);
+            return newGroupId;
 
         }
 

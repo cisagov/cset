@@ -15,6 +15,14 @@ const headers = {
   providedIn: 'root'
 })
 export class GalleryEditorService {
+  
+  allitems:ListTest[]= [];
+  setAllItem(list: ListTest[]) {
+    this.allitems = list;
+  }
+  allItems() {
+    return this.allitems;
+  }
 
   layoutName: string = 'CSET';
 
@@ -90,12 +98,12 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryItem(description: string, title: string, group: string, columnId: number) {
+  addGalleryItem(description: string, title: string, parent_Id:number, columnId: number) {    
     return  this.http.get("http://localhost:5000/api/gallery/addItem",  {
       params: {
         newDescription: description,
         newTitle: title,
-        group: group,
+        group_Id: parent_Id,
         columnId: columnId
       }
     });

@@ -11,9 +11,9 @@ import { isNgTemplate } from '@angular/compiler';
   styleUrls: ['./list-items.component.css']
 })
 export class ListItemsComponent implements OnInit {
-  @Input()
-  listTest!: ListTest;
+  @Input() listTest!: ListTest;
   @Input() isRoot: boolean = false;
+  @Output() treeNeedsRefreshed: EventEmitter<string> = new EventEmitter<string>();
   faArrows = faArrows;
 
   response: any;
@@ -22,6 +22,7 @@ export class ListItemsComponent implements OnInit {
   options: Options = {    
     handle: '.handle'
   };
+  showNewItemFields:boolean = false;
 
   constructor(private svcGalleryEditor: GalleryEditorService ){   
     
@@ -60,12 +61,24 @@ export class ListItemsComponent implements OnInit {
   ngOnInit(): void {    
   }
   
+
+  parentEventHandlerFunction(){
+    this.treeNeedsRefreshed.emit();
+  }
+
+  toggleItem(){
+    this.showNewItemFields = !this.showNewItemFields;
+  }
+
+
   open(item:any, value:string){
     console.log(item);
-    if(item.group_Id!==undefined)
-      this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();
-    if(item.gallery_Item_Id!==undefined)
-      this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();
+    if(item.group_Id!==undefined){
+      this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();      
+    }
+    if(item.gallery_Item_Id!==undefined){
+      this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();      
+    }
   }
 
  
@@ -97,7 +110,7 @@ export class ListItemsComponent implements OnInit {
     let firstColumnId = 0;
     this.svcGalleryEditor.addGalleryGroup(group,description, title, firstColumnId).subscribe(
       (r: any) => {
-        //this.responseAdd = r;
+        this.responseAdd = r;
         //console.log(this.responseAdd);
         this.updateItems();
 
@@ -107,16 +120,17 @@ export class ListItemsComponent implements OnInit {
     );
   }
 
-  addGalleryItem(description: string, title: string, group: string) {
+  addGalleryItem(description: string, title: string, item: any) {
     let columnId = 0;
-    for (let i = 0; i < this.response?.rows?.length; i++) {
-      if (this.response?.rows[i]?.group_Title === group) {
-        columnId = this.response?.rows[i]?.galleryItems?.length; //becomes one more than the last columnId
+    let tmpItemsList = this.svcGalleryEditor.allItems();
+    for (let i = 0; i < tmpItemsList.length; i++) {
+      if (tmpItemsList[i]?.group_Id === item.parent_Id) {
+        columnId = tmpItemsList[i]?.children?.length??0; //becomes one more than the last columnId
         break;
       }
     }
-
-    this.svcGalleryEditor.addGalleryItem(description, title, group, columnId).subscribe(
+    console.log(item);
+    this.svcGalleryEditor.addGalleryItem(description, title, item.parent_Id, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
         this.updateItems();
@@ -145,13 +159,14 @@ export class ListItemsComponent implements OnInit {
   }
 
   updateItems() {
-    this.svcGalleryEditor.getGalleryItems().subscribe(
-      (r: any) => {
-        this.response = r;
-        console.log(this.response);
-      },
-      error => console.log('Gallery Layout error ' + (<Error>error).message)
-    );
+    this.treeNeedsRefreshed.emit();
+    // this.svcGalleryEditor.getGalleryItems().subscribe(
+    //   (r: any) => {
+    //     this.listTest = r;
+    //     console.log(this.response);
+    //   },
+    //   error => console.log('Gallery Layout error ' + (<Error>error).message)
+    // );
   }
 
 

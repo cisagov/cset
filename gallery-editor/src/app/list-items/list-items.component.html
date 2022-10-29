@@ -1,3 +1,7 @@
+<div *ngIf>
+
+</div>
+
 <div [class.item]="!isRoot" #parentItem  id="g{{listTest.group_Id}}">	
 	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
             <fa-icon [icon]="faArrows" class="handle"></fa-icon>
@@ -6,10 +10,30 @@
 			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
 			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
 			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 			
+			<button (click)="toggleItem()">Add New</button>
+			
+			<div *ngIf="showNewItemFields">			
+				<div  [hidden]="listTest.group_Id==undefined">
+					Add (if adding a Group, an item must be added along with the Group so it shows up in this list):
+					<br> 
+					<span style="padding-left: 15px">Group
+						<input style="width: 400px;" type="text" #boxAddGroup>
+					</span>
+				</div>
+				<span style="padding-left: 15px">Item Name
+					<input style="width: 400px;" type="text" #boxAddItem>
+				</span>
+				<br>
+				<span style="padding-left: 15px">Item Description
+					<input style="width: 400px;" type="text" #boxAddDescription>
+				</span>
+				<button *ngIf="listTest.group_Id" (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
+				<button *ngIf="listTest.gallery_Item_Id" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, listTest)">Add Item to Group</button>
+			</div>
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
 		<div *ngFor="let listChild of listTest.children">            
-			<app-list-items [listTest]="listChild"></app-list-items>
+			<app-list-items [listTest]="listChild" (treeNeedsRefreshed)="parentEventHandlerFunction()"></app-list-items>
 		</div>
 	</div>
 </div>
@@ -47,8 +71,7 @@
 			<input style="width: 400px;" type="text" #boxAddDescription>
 		</span>
 		<br>
-		<button (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, boxAddGroup.value)">Add Item to Group</button>
-		<button (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
+	
 		<br><br>
 	</div>
 </div> -->
