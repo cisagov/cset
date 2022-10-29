@@ -28,13 +28,13 @@ export class AppComponent implements OnInit{
 
   layoutChange(event: any) {
     this.gallerySvc.setLayout(event.target.value);
-    console.log("Layout is: " + this.gallerySvc.getLayout()));
-    this.updateItems(this.gallerySvc.getLayout()));
+    console.log("Layout is: " + this.gallerySvc.getLayout());
+    this.updateItems(this.gallerySvc.getLayout());
     
   }
 
   updateItems(layout: string) {
-    this.gallerySvc.getGalleryItems(layout).subscribe(  (x: any) => {
+    this.gallerySvc.getGalleryItems().subscribe(  (x: any) => {
         this.list = this.gallerySvc.transformGallery(x.rows);
       },
       error => console.log('Gallery Layout error ' + (<Error>error).message)
