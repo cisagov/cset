@@ -137,19 +137,19 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="newIcon_File_Name_Large"></param>
         /// <param name="newDescription"></param>
         /// <param name="newTitle"></param>
-        /// <param name="group"></param>
+        /// <param name="group_Id"></param>
         /// <param name="columnId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addItem")]
-        public IActionResult AddItem(string newDescription, string newTitle, string group, int columnId)
+        public IActionResult AddItem(string newDescription, string newTitle, int group_Id, int columnId)
         {
             string newIcon_File_Name_Small = "";
             string newIcon_File_Name_Large = "";
 
             try
             {
-                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
+                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_Id, columnId);
                 //_galleryEditor.AddGalleryDetail(columnId);
                 return Ok();
             }
@@ -173,8 +173,8 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                _galleryEditor.AddGalleryGroup(group, layout);
-                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
+                var group_id = _galleryEditor.AddGalleryGroup(group, layout);
+                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_id, columnId);
                 return Ok();
             }
             catch (Exception e)

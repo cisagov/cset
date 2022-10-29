@@ -23,19 +23,25 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.updateItems("CSET");  
+    this.updateItems();  
+  }
+
+  
+  parentEventHandlerFunction(){
+    this.updateItems();
   }
 
   layoutChange(event: any) {
     this.gallerySvc.setLayout(event.target.value);
     console.log("Layout is: " + this.gallerySvc.getLayout());
-    this.updateItems(this.gallerySvc.getLayout());
+    this.updateItems();
     
   }
 
-  updateItems(layout: string) {
+  updateItems() {
     this.gallerySvc.getGalleryItems().subscribe(  (x: any) => {
         this.list = this.gallerySvc.transformGallery(x.rows);
+        this.gallerySvc.setAllItem(this.list);
       },
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
