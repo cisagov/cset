@@ -64,7 +64,7 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-  textForSummary = "Results of Review (insert comments)";
+  textForSummary = "Statement Summary (insert comments)";
   summaryCommentCopy = "";
   summaryEditedCheck = false; 
 
@@ -239,7 +239,7 @@ export class QuestionBlockIseComponent implements OnInit {
         parentKey = value[0];
       }
     }
-    
+
     this.ncuaSvc.importantQuestionCheck.delete(parentKey);
     this.ncuaSvc.issueFindingId.delete(parentKey);
     this.ncuaSvc.deleteHistory.add(parentKey);
