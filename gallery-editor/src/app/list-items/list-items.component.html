@@ -1,20 +1,25 @@
-<div [class.item]="!isRoot" id="g{{listTest.group_Id}}">
-	<span>Type "Enter" or click the dropdown to select a Layout
-		<Select (change)="layoutChange($event)">
-			<option></option>
-			<option>CSET</option>
-			<option>Florida</option>
-			<option>NCUA</option>
-			<option>TSA</option>
-		</Select>
-	</span>
+<div [class.item]="!isRoot" #parentItem  id="g{{listTest.group_Id}}">	
+	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
+            <fa-icon [icon]="faArrows" class="handle"></fa-icon>
+            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 			
+			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete a Group</button>			
+			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
+			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
+			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 
+        </div>
+	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
+		<div *ngFor="let listChild of listTest.children">            
+			<app-list-items [listTest]="listChild"></app-list-items>
+		</div>
+	</div>
+</div>
 
+<!--
 	<div *ngIf="layoutName">
 		<div *ngFor="let group of this.response?.rows">
 			<fa-icon [icon]="faArrows" class="handle group"></fa-icon>
 			<span>{{ group.group_Title }}
-				<button (click)="deleteGalleryGroup(group.group_Id)">Delete a Group</button>
-				<button (click)="cloneGalleryGroup(group)">Clone Group</button> 
+				
 			</span>
 
 			<div *ngFor="let item of group?.galleryItems">
@@ -46,4 +51,4 @@
 		<button (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
 		<br><br>
 	</div>
-</div>
+</div> -->

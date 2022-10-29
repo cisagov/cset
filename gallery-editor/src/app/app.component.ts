@@ -15,16 +15,30 @@ export class AppComponent implements OnInit{
   title = 'gallery-editor';  
 
   list!: ListTest[]; 
+  layoutName: any;
+    response: any;
 
   constructor(public gallerySvc: GalleryEditorService,library: FaIconLibrary) {
     library.addIcons(faArrows, faArrows);
   }
 
   ngOnInit(): void {
-  //  this.gallerySvc.getGalleryItems("CSET").subscribe(  (x: any) => {
-  //     this.list = this.gallerySvc.transformGallery(x.rows);
-  //   }
-  //  );
-  //  console.log('init thingy');
+    this.updateItems("CSET");  
   }
+
+  layoutChange(event: any) {
+    this.layoutName = event.target.value;
+    console.log("Layout is: " + this.layoutName);
+    this.updateItems(this.layoutName);
+    
+  }
+
+  updateItems(layout: string) {
+    this.gallerySvc.getGalleryItems(layout).subscribe(  (x: any) => {
+        this.list = this.gallerySvc.transformGallery(x.rows);
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
+
 }
