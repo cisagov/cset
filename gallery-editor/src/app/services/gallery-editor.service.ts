@@ -8,11 +8,24 @@ const headers = {
   params: new HttpParams()
 };
 
+
+
 @Injectable()
 @Injectable({
   providedIn: 'root'
 })
 export class GalleryEditorService {
+
+  layoutName: string = 'CSET';
+
+  getLayout() {
+    return this.layoutName;
+  }
+
+  setLayout(newLayoutName: string) {
+    this.layoutName = newLayoutName;
+  }
+
   updatePositionOfItem(moveItem: MoveItem) {
     return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
