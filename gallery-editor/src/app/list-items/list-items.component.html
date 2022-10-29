@@ -5,7 +5,7 @@
 			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete a Group</button>			
 			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
 			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
-			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 
+			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 			
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
 		<div *ngFor="let listChild of listTest.children">            
@@ -15,7 +15,7 @@
 </div>
 
 <!--
-	<div *ngIf="layoutName">
+	
 		<div *ngFor="let group of this.response?.rows">
 			<fa-icon [icon]="faArrows" class="handle group"></fa-icon>
 			<span>{{ group.group_Title }}

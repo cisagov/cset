@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   title = 'gallery-editor';  
 
   list!: ListTest[]; 
-  layoutName: any;
+  
     response: any;
 
   constructor(public gallerySvc: GalleryEditorService,library: FaIconLibrary) {
@@ -27,9 +27,9 @@ export class AppComponent implements OnInit{
   }
 
   layoutChange(event: any) {
-    this.layoutName = event.target.value;
-    console.log("Layout is: " + this.layoutName);
-    this.updateItems(this.layoutName);
+    this.gallerySvc.setLayout(event.target.value);
+    console.log("Layout is: " + this.gallerySvc.getLayout()));
+    this.updateItems(this.gallerySvc.getLayout()));
     
   }
 
