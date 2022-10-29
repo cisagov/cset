@@ -15,7 +15,6 @@ export class ListItemsComponent implements OnInit {
   listTest!: ListTest;
   @Input() isRoot: boolean = false;
   faArrows = faArrows;
-  layoutName: string = '';
 
   response: any;
   responseAdd: any;
@@ -77,7 +76,7 @@ export class ListItemsComponent implements OnInit {
     //   (r: any) => {
     //     // this.response = r;
     //     console.log(this.response);
-    //     this.updateItems(this.layoutName);
+    //     this.updateItems();
     //   },
     //   error => console.log('Gallery Item delete error ' + (<Error>error).message)
     // );
@@ -87,7 +86,7 @@ export class ListItemsComponent implements OnInit {
     console.log(item.group_Id);
     // this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
     //   (r: any) => {
-    //     this.updateItems(this.layoutName);
+    //     this.updateItems();
 
     //   },
     //   error => console.log('Gallery Group delete error ' + (<Error>error).message)
@@ -96,11 +95,11 @@ export class ListItemsComponent implements OnInit {
 
   addGalleryGroup(group: string, description: string, title: string) {
     let firstColumnId = 0;
-    this.svcGalleryEditor.addGalleryGroup(group, this.layoutName, description, title, firstColumnId).subscribe(
+    this.svcGalleryEditor.addGalleryGroup(group,description, title, firstColumnId).subscribe(
       (r: any) => {
         //this.responseAdd = r;
         //console.log(this.responseAdd);
-        this.updateItems(this.layoutName);
+        this.updateItems();
 
         
       },
@@ -120,7 +119,7 @@ export class ListItemsComponent implements OnInit {
     this.svcGalleryEditor.addGalleryItem(description, title, group, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
-        this.updateItems(this.layoutName);
+        this.updateItems();
       },
       error => console.log('Gallery add item error ' + (<Error>error).message)
     );
@@ -130,7 +129,7 @@ export class ListItemsComponent implements OnInit {
     
     this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
       (r: any) => {
-        this.updateItems(this.layoutName);
+        this.updateItems();
       },
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
@@ -139,14 +138,14 @@ export class ListItemsComponent implements OnInit {
   cloneGalleryGroup(group: any) {
     this.svcGalleryEditor.cloneGalleryGroup(group).subscribe(
       (r: any) => {
-        this.updateItems(this.layoutName);
+        this.updateItems();
       },
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
   }
 
-  updateItems(layout: string) {
-    this.svcGalleryEditor.getGalleryItems(layout).subscribe(
+  updateItems() {
+    this.svcGalleryEditor.getGalleryItems().subscribe(
       (r: any) => {
         this.response = r;
         console.log(this.response);
