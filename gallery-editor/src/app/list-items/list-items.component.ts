@@ -69,34 +69,29 @@ export class ListItemsComponent implements OnInit {
       this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();
   }
 
-  layoutChange(event: any) {
-    this.layoutName = event.target.value;
-    console.log("Layout is: " + this.layoutName);
-    this.updateItems(this.layoutName);
-    
+ 
+
+  deleteGalleryItem(id: any) {
+    console.log(id + " would be deleted");
+    // this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
+    //   (r: any) => {
+    //     // this.response = r;
+    //     console.log(this.response);
+    //     this.updateItems(this.layoutName);
+    //   },
+    //   error => console.log('Gallery Item delete error ' + (<Error>error).message)
+    // );
   }
 
-  deleteGalleryItem(id: number) {
-    console.log(id + " would be deleted");
-    this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
-      (r: any) => {
-        // this.response = r;
-        console.log(this.response);
-        this.updateItems(this.layoutName);
-      },
-      error => console.log('Gallery Item delete error ' + (<Error>error).message)
-    );
-  }
+  deleteGalleryGroup(item:any) {
+    console.log(item.group_Id);
+    // this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
+    //   (r: any) => {
+    //     this.updateItems(this.layoutName);
 
-  deleteGalleryGroup(id: number) {
-    console.log(id + " would be deleted");
-    this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
-      (r: any) => {
-        this.updateItems(this.layoutName);
-
-      },
-      error => console.log('Gallery Group delete error ' + (<Error>error).message)
-    );
+    //   },
+    //   error => console.log('Gallery Group delete error ' + (<Error>error).message)
+    // );
   }
 
   addGalleryGroup(group: string, description: string, title: string) {
@@ -131,8 +126,9 @@ export class ListItemsComponent implements OnInit {
     );
   }
 
-  cloneGalleryItem(item: any, groupId: number) {
-    this.svcGalleryEditor.cloneGalleryItem(item, groupId).subscribe(
+  cloneGalleryItem(item: any) {
+    
+    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
       (r: any) => {
         this.updateItems(this.layoutName);
       },

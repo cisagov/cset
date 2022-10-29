@@ -49,134 +49,6 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Clones the specified item
-        /// </summary>
-        /// <param name="Item_To_Clone"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
-        {
-            try
-            {
-                _stateManager.CloneGalleryItem(Item_To_Clone, Group_Id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        /// <summary>
-        /// Adds the item
-        /// </summary>
-        /// <param name="newIcon_File_Name_Small"></param>
-        /// <param name="newIcon_File_Name_Large"></param>
-        /// <param name="newDescription"></param>
-        /// <param name="newTitle"></param>
-        /// <param name="group"></param>
-        /// <param name="columnId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/gallery/addItem")]
-        public IActionResult AddItem(string newDescription, string newTitle, string group, int columnId)
-        {
-            string newIcon_File_Name_Small = "";
-            string newIcon_File_Name_Large = "";
-
-            try
-            {
-                _stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
-                //_stateManager.AddGalleryDetail(columnId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Clones the specified item
-        /// </summary>
-        /// <param name="group"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/gallery/addGroup")]
-        public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
-        {
-            string newIcon_File_Name_Small = "";
-            string newIcon_File_Name_Large = "";
-
-            try
-            {
-                _stateManager.AddGalleryGroup(group, layout);
-                _stateManager.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group, columnId);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the item
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/gallery/deleteGalleryItem")]
-        public IActionResult DeleteItem(int id)
-        {
-            try
-            {
-                _stateManager.DeleteGalleryItem(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the item
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/gallery/deleteGalleryGroup")]
-        public IActionResult DeleteGroup(int id)
-        {
-            try
-            {
-                _stateManager.DeleteGalleryGroup(id);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        [HttpGet]
-        [Route("api/gallery/getLayouts")]
-        public IActionResult getLayouts()
-        {
-            try { 
-                return Ok(_stateManager.GetLayout());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
         [HttpGet]
         [Route("api/gallery/getLayoutItems")]
         public IActionResult getLayoutItems(string Layout_Name)
@@ -195,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
                                 && g.Group_Id == n.Group_Id
                                 && g.Gallery_Item_Id == i.Gallery_Item_Id
                             orderby g.Group_Id, g.Gallery_Item_Id ascending
-                            select new GalleryItem(i) //START HERE - FIX "CSETWebCore.Model.NewFolder" to be Gallery related
+                            select new GalleryItem(i,n.Group_Id) //START HERE - FIX "CSETWebCore.Model.NewFolder" to be Gallery related
                             {
                             };
 

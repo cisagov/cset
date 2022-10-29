@@ -38,12 +38,13 @@ export class GalleryEditorService {
     delete obj[oldKey];
   }
   
-  transformGallery(arr:any[]){
-    
+  transformGallery(arr:any[]){ 
+    console.log(arr);
     arr.forEach( (obj: any) => {
       return this.renameKey(obj, 'group_Title', 'title');
     } );
-    arr.forEach( (obj: any) => {
+    arr.forEach( (obj: any) => {      
+
       return this.renameKey(obj, 'galleryItems', 'children');
     } );
     return arr;
@@ -60,11 +61,11 @@ export class GalleryEditorService {
     });
   }
 
-  cloneGalleryItem(item: any, groupId: number) {
+  cloneGalleryItem(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
         Item_To_Clone: item.gallery_Item_Id,
-        Group_Id: groupId
+        Group_Id: item.parent_Id        
       }
     });
   }
