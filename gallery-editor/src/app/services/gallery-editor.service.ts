@@ -51,13 +51,12 @@ export class GalleryEditorService {
     delete obj[oldKey];
   }
   
-  transformGallery(arr:any[]){ 
-    console.log(arr);
+  transformGallery(arr:any[]){
+    
     arr.forEach( (obj: any) => {
       return this.renameKey(obj, 'group_Title', 'title');
     } );
-    arr.forEach( (obj: any) => {      
-
+    arr.forEach( (obj: any) => {
       return this.renameKey(obj, 'galleryItems', 'children');
     } );
     return arr;
@@ -66,15 +65,15 @@ export class GalleryEditorService {
   /**
    * Retrieves the list of frameworks.
    */
-  getGalleryItems(layout_name: string) {
+  getGalleryItems() {
     return  this.http.get("http://localhost:5000/api/gallery/getboard",  {
       params: {
-        Layout_Name: layout_name
+        Layout_Name: this.layoutName
       }
     });
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, groupId: number) {
     return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
         Item_To_Clone: item.gallery_Item_Id,
@@ -102,11 +101,11 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryGroup(group: string, layout: string, description: string, title: string, columnId: number) {
+  addGalleryGroup(group: string, description: string, title: string, columnId: number) {
     return this.http.get("http://localhost:5000/api/gallery/addGroup",  {
       params: {
         group: group,
-        layout: layout,
+        layout: this.layoutName,
         newDescription: description,
         newTitle: title,
         columnId: columnId
