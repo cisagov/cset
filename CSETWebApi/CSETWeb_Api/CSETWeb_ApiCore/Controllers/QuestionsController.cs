@@ -126,6 +126,30 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetChildAnswers")]
+        public IList<GetChildAnswersResult> GetChildAnswers([FromQuery] int parentId, [FromQuery] int assessId)
+        {
+            return _context.Get_Children_Answers(parentId, assessId);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetActionItems")]
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId)
+        {
+            int assessId = _token.AssessmentForUser();
+            FindingsManager fm = new FindingsManager(_context, assessId);
+            return fm.GetActionItems(parentId);
+        }
+
+        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
@@ -331,7 +355,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok(fm.AllFindings(Answer_Id));
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -365,6 +388,35 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        [Route("api/GetAssessmentFindings")]
+        public IActionResult GetAssessmentFindings()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var result = from finding in _context.FINDING
+                         join answer in _context.ANSWER
+                            on finding.Answer_Id equals answer.Answer_Id
+                         join question in _context.MATURITY_QUESTIONS
+                            on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
+                         join category in _context.MATURITY_GROUPINGS
+                            on question.Grouping_Id equals category.Grouping_Id
+                         join importance in _context.IMPORTANCE
+                            on finding.Importance_Id equals importance.Importance_Id
+                         where answer.Assessment_Id == assessmentId
+                         orderby finding.Type, question.Mat_Question_Id
+                         select new { finding, answer, question, category, importance };
+
+            return Ok(result.ToList());
+        }
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/GetImportance")]
         public IActionResult GetImportance()
@@ -379,18 +431,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok(rlist);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetSubRisks")]
-        public IActionResult GetSubRisks()
-        {
-            var tableData = _context.RISK_SUB_RISK_AREA.ToList();
-
-            return Ok(tableData);
-        } 
 
         /// <summary>
         /// 
