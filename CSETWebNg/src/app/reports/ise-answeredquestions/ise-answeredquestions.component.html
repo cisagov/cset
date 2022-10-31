@@ -33,7 +33,7 @@
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/ACET_shield_logo.png" alt="acet">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
             </p>
         </div>
 
@@ -64,9 +64,7 @@
         <hr class="page-line">
         <div class="paragraph">
             <p><br>
-                This report includes all the statements within your exam level, your answers, and whether there is a
-                comment
-                attached to the statement.
+                This report includes all the statements within your exam level and your answers.
                 <br><br>
                 The statement set is determined by your exam level.<br>
             </p>
@@ -90,21 +88,22 @@
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
-                            </td>
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
-                            <tr>
-                                <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
-                            </tr>
-                            <ng-container *ngFor="let q of c.questions">
-                                <tr *ngIf="requiredQuestion(q)">
-                                    <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td *ngIf="!parentQuestion(q)" class="pr-3">{{ answerText(q) }}</td>
-                                    <td *ngIf="parentQuestion(q)" class="pr-3"> </td>
-                                    <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                            <ng-container *ngIf="this.showSubcats.get(c.title)">
+                                <tr>
+                                    <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
                                 </tr>
+                                <ng-container *ngFor="let q of c.questions">
+                                    <tr *ngIf="requiredQuestion(q)">
+                                        <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td class="pr-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="!parentQuestion(q)" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, q.answerText) }}</td>
+                                        <td *ngIf="parentQuestion(q)" class="pr-3"> </td>
+                                        <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                    </tr>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </ng-container>
