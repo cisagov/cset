@@ -52,6 +52,36 @@
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="finding.type !== 'Supplemental Fact'">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
+          <select name="riskArea" id="riskArea" (change)="updateRiskArea($event.target.value)" class="form-control">
+            <!--<option value="Strategic">Strategic</option>
+            <option value="Compliance">Compliance</option>-->
+            <option value="Transaction">Transaction</option>
+            <!--<option value="Reputation">Reputation</option>-->
+          </select>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
+          <!--<select *ngIf="this.riskType === 'Strategic'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of strategicSubRisks"> {{ subrisk }}</option>
+          </select>
+          <select *ngIf="this.riskType === 'Compliance'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of complianceSubRisks"> {{ subrisk }}</option>
+          </select>-->
+          <select *ngIf="this.riskType === 'Transaction'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of transactionSubRisks"> {{ subrisk }}</option>
+          </select>
+          <!--<select *ngIf="this.riskType === 'Reputation'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of reputationSubRisks"> {{ subrisk }}</option>
+          </select>-->
+        </div> 
+      </div>
+    </div>
     <div class="row">
       <div class="col-12">
         <div *ngIf="this.actionItems != null" class="form-group">
@@ -71,6 +101,14 @@
       </div>
     </ng-container>
     <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
+      <div *ngIf="this.finding.auto_Generated === 0">
+        <div class="row">
+          <div class="col-12">
+            <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
+            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"></textarea> <!-- [(ngModel)]="finding.description" -->
+          </div>
+        </div>
+      </div>
       <div *ngIf="this.finding.auto_Generated === 1">
         <div class="mt-2 invalid-feedback d-block text-muted">
           <p>Items marked in red indicate a higher level of risk</p>
@@ -122,9 +160,8 @@
       </div>
       <br>
     </ng-container>
-
-    <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
-      questions in the assessment.</p>
+    
+    <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific questions in the assessment.</p>
 
   </mat-dialog-content>
 
