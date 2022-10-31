@@ -174,10 +174,6 @@ export class QuestionBlockIseComponent implements OnInit {
     });
 
     this.myGrouping.expanded = !this.myGrouping.expanded;
-
-    console.log("Important Question Check Map: " + JSON.stringify(this.ncuaSvc.importantQuestionCheck, null, 4));
-    console.log("Finding Id Map: " + JSON.stringify(this.ncuaSvc.issueFindingId, null, 4));
-    console.log("Delete History: " + JSON.stringify(this.ncuaSvc.deleteHistory, null, 4));
   }
 
   /**
