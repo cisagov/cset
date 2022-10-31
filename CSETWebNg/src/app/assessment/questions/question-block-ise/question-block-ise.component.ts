@@ -212,7 +212,6 @@ export class QuestionBlockIseComponent implements OnInit {
         if (this.importantQuestions.has(question.questionId)) {
           parentId = question.parentQuestionId;
 
-          // Currently questions 1 & 2 share the same domain and it's messing with id's.
           if (tempId === 0) {
             tempId = parentId;
           } else if (tempId !== parentId) {
@@ -223,26 +222,27 @@ export class QuestionBlockIseComponent implements OnInit {
           if (parentId) {
             count++;
           }
+
+          this.ncuaSvc.importantQuestionCheck.set(parentId, count);
         }
-        this.ncuaSvc.importantQuestionCheck.set(parentId, count);
+
         this.ncuaSvc.deleteHistory.clear();
       }
     });
   }
 
-  deleteIssueMap(findingId: number) {
-    let parentKey = 0;
+  deleteIssueMaps(findingId: number) {
     const iterator = this.ncuaSvc.issueFindingId.entries();
+    let parentKey = 0;
 
     for (let value of iterator) {
-      if (value[1] = findingId) {
+      if (value[1] === findingId) {
         parentKey = value[0];
+        this.ncuaSvc.importantQuestionCheck.delete(parentKey);
+        this.ncuaSvc.issueFindingId.delete(parentKey);
+        this.ncuaSvc.deleteHistory.add(parentKey);
       }
     }
-
-    this.ncuaSvc.importantQuestionCheck.delete(parentKey);
-    this.ncuaSvc.issueFindingId.delete(parentKey);
-    this.ncuaSvc.deleteHistory.add(parentKey);
   }
 
   /**
@@ -823,7 +823,7 @@ export class QuestionBlockIseComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.deleteIssueMap(findingId);
+          this.deleteIssueMaps(findingId);
           this.findSvc.deleteFinding(findingId).subscribe();
           let deleteIndex = null;
   
