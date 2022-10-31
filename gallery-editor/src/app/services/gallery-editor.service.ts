@@ -8,11 +8,32 @@ const headers = {
   params: new HttpParams()
 };
 
+
+
 @Injectable()
 @Injectable({
   providedIn: 'root'
 })
 export class GalleryEditorService {
+  
+  allitems:ListTest[]= [];
+  setAllItem(list: ListTest[]) {
+    this.allitems = list;
+  }
+  allItems() {
+    return this.allitems;
+  }
+
+  layoutName: string = 'CSET';
+
+  getLayout() {
+    return this.layoutName;
+  }
+
+  setLayout(newLayoutName: string) {
+    this.layoutName = newLayoutName;
+  }
+
   updatePositionOfItem(moveItem: MoveItem) {
     return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
@@ -52,10 +73,66 @@ export class GalleryEditorService {
   /**
    * Retrieves the list of frameworks.
    */
-  getGalleryItems(layout_name: string) {
+  getGalleryItems() {
     return  this.http.get("http://localhost:5000/api/gallery/getboard",  {
       params: {
-        Layout_Name: layout_name
+        Layout_Name: this.layoutName
+      }
+    });
+  }
+
+  cloneGalleryItem(item: any) {
+    return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
+      params: {
+        Item_To_Clone: item.gallery_Item_Id,
+        Group_Id: item.parent_Id        
+      }
+    });
+  }
+
+  cloneGalleryGroup(group: any) {
+    return  this.http.get("http://localhost:5000/api/gallery/cloneGroup",  {
+      params: {
+        Group_To_Clone: group
+      }
+    });
+  }
+
+  addGalleryItem(description: string, title: string, parent_Id:number, columnId: number) {    
+    return  this.http.get("http://localhost:5000/api/gallery/addItem",  {
+      params: {
+        newDescription: description,
+        newTitle: title,
+        group_Id: parent_Id,
+        columnId: columnId
+      }
+    });
+  }
+
+  addGalleryGroup(group: string, description: string, title: string, columnId: number) {
+    return this.http.get("http://localhost:5000/api/gallery/addGroup",  {
+      params: {
+        group: group,
+        layout: this.layoutName,
+        newDescription: description,
+        newTitle: title,
+        columnId: columnId
+      }
+    });
+  }
+
+  deleteGalleryItem(id: number) {
+    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
+      params: {
+        id: id
+      }
+    });
+  }
+
+  deleteGalleryGroup(id: number) {
+    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
+      params: {
+        id: id
       }
     });
   }
