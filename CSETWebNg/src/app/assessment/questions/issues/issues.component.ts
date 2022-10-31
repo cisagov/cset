@@ -82,7 +82,6 @@ export class IssuesComponent implements OnInit {
   
   ngOnInit() {
     this.loading = true;
-    console.log("this.finding initially: " + JSON.stringify(this.finding, null, 4));
 
     this.assessmentId = localStorage.getItem('assessmentId');
     let questionType = localStorage.getItem('questionSet');
@@ -167,7 +166,6 @@ export class IssuesComponent implements OnInit {
     }
 
   updateRiskArea(riskArea: string) {
-    console.log("riskArea: " + riskArea);
     this.riskType = riskArea;
   }
 

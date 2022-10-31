@@ -61,7 +61,6 @@ export class IseExaminerComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
