@@ -226,12 +226,8 @@ namespace CSETWebCore.Business.GalleryParser
 
         public void DeleteGalleryGroup(int id)
         {
-            var groups = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == id); //.FirstOrDefault();
-            foreach (GALLERY_GROUP_DETAILS row in groups)
-            {
-                _context.GALLERY_GROUP_DETAILS.Remove(row);
-                _context.SaveChanges();
-            }
+            var groups = _context.GALLERY_ROWS.Remove(_context.GALLERY_ROWS.Where(x => x.Group_Id == id).First());
+            _context.SaveChanges();
         }
 
     }

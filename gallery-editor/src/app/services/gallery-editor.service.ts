@@ -121,18 +121,18 @@ export class GalleryEditorService {
     });
   }
 
-  deleteGalleryItem(id: number) {
+  deleteGalleryItem(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
       params: {
-        id: id
+        id: item.gallery_Item_Id
       }
     });
   }
 
-  deleteGalleryGroup(id: number) {
+  deleteGalleryGroup(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
       params: {
-        id: id
+        id: item.group_Id
       }
     });
   }
