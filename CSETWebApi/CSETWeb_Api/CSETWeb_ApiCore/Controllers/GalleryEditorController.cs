@@ -16,14 +16,17 @@ namespace CSETWebCore.Api.Controllers
         
         private readonly ITokenManager _token;        
         private CSETContext _context;
+        private IGalleryEditor _galleryEditor;
+
 
         // if you want to use the gallery editor, change this to true
         private bool inDev = false;
 
-        public GalleryEditorController(ITokenManager token, CSETContext context)
+        public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
             _token = token;
             _context = context;
+            _galleryEditor = galleryEditor;
         }
         [HttpPost]
         [Route("api/galleryEdit/updatePosition")]
@@ -106,9 +109,139 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="Item_To_Clone"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/cloneItem")]
+        public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
+        {
+            try
+            {
+                _galleryEditor.CloneGalleryItem(Item_To_Clone, Group_Id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Adds the item
+        /// </summary>
+        /// <param name="newIcon_File_Name_Small"></param>
+        /// <param name="newIcon_File_Name_Large"></param>
+        /// <param name="newDescription"></param>
+        /// <param name="newTitle"></param>
+        /// <param name="group_Id"></param>
+        /// <param name="columnId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/addItem")]
+        public IActionResult AddItem(string newDescription, string newTitle, int group_Id, int columnId)
+        {
+            string newIcon_File_Name_Small = "";
+            string newIcon_File_Name_Large = "";
+
+            try
+            {
+                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_Id, columnId);
+                //_galleryEditor.AddGalleryDetail(columnId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/addGroup")]
+        public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
+        {
+            string newIcon_File_Name_Small = "";
+            string newIcon_File_Name_Large = "";
+
+            try
+            {
+                var group_id = _galleryEditor.AddGalleryGroup(group, layout);
+                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_id, columnId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/deleteGalleryItem")]
+        public IActionResult DeleteItem(int id)
+        {
+            try
+            {
+                _galleryEditor.DeleteGalleryItem(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/deleteGalleryGroup")]
+        public IActionResult DeleteGroup(int id)
+        {
+            try
+            {
+                _galleryEditor.DeleteGalleryGroup(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/gallery/getLayouts")]
+        public IActionResult getLayouts()
+        {
+            try
+            {
+                return Ok(_galleryEditor.GetLayout());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
         [HttpPost]
         [Route("api/galleryEdit/updateItem")]
-        public IActionResult updateItem([FromBody]UpdateItem item)
+        public IActionResult updateItem([FromBody] UpdateItem item)
         {
             if (!inDev)
             {
@@ -127,7 +260,7 @@ namespace CSETWebCore.Api.Controllers
                 else
                 {
                     var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item.Group_Id).FirstOrDefault();
-                    if(galleryItem == null) return BadRequest();
+                    if (galleryItem == null) return BadRequest();
 
                     galleryItem.Title = item.Value;
                     _context.SaveChanges();
@@ -140,6 +273,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
     }
 
     public class MoveItem

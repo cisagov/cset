@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NumberCardModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-logo-cset',

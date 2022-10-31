@@ -1,4 +1,5 @@
 {
+    "currentConfigChain":["development","CSETonline"],
     "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
