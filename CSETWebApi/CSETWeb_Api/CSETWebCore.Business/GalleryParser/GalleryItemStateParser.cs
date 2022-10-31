@@ -5,9 +5,11 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Sal;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Nelibur.ObjectMapper;
 
 namespace CSETWebCore.Business.GalleryParser
 {
@@ -64,11 +66,14 @@ namespace CSETWebCore.Business.GalleryParser
 
                 if ((bool)item.i.Is_Visible)
                 {
-                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i));
+                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i,galleryGroup.Group_Id));
                 }
             }
 
             return rvalue;
         }
+
+      
+
     }
 }

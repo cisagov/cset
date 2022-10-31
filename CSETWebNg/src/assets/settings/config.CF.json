@@ -8,11 +8,11 @@
     "installationMode": "CF",
     "behaviors": {
         "showModuleBuilder": false,
-        "showAssessmentDocuments": true,
+        "showAssessmentDocuments": false,
         "showAggregation": false,
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
-        "splashPageHTML": "dist/assets/splash.html",
+        "splashPageHTML": "dist/assets/splash.html",        
         "homeComponentForCurrentInstallationMode": "",
         "useMaturity": true,
         "defaultMaturityModel": "",
