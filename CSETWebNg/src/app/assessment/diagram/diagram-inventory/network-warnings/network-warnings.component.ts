@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
+import { Sort } from "@angular/material/sort";
+import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
   selector: 'networkwarnings',
@@ -32,6 +34,7 @@ import { DiagramService } from '../../../../services/diagram.service';
 export class NetworkWarningsComponent implements OnInit {
   warnings = [];
   displayedColumns = ['Id', 'WarningText'];
+  comparer: Comparer = new Comparer();
 
   /**
    *
@@ -46,6 +49,26 @@ export class NetworkWarningsComponent implements OnInit {
   getWarnings() {
     this.diagramSvc.getDiagramWarnings().subscribe((x: any) => {
       this.warnings = x;
+    });
+  }
+
+  sortData(sort: Sort) {
+
+    if (!sort.active || sort.direction === "") {
+      // this.sortedAssessments = data;
+      return;
+    }
+
+    this.warnings.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "id":
+          return this.comparer.compare(a.id, b.id, isAsc);
+        case "message":
+          return this.comparer.compare(a.warningText, b.warningText, isAsc);
+        default:
+          return 0;
+      }
     });
   }
 }
