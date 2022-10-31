@@ -43,6 +43,7 @@ import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
+import { Comparer } from "../../helpers/comparer";
 
 
 interface UserAssessment {
@@ -70,7 +71,7 @@ interface UserAssessment {
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class MyAssessmentsComponent implements OnInit {
-  // assessments: UserAssessment[] = null;
+  comparer: Comparer = new Comparer();
   sortedAssessments: UserAssessment[] = null;
   unsupportedImportFile: boolean = false;
 
@@ -254,15 +255,15 @@ export class MyAssessmentsComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "assessment":
-          return compare(a.assessmentName, b.assessmentName, isAsc);
+          return this.comparer.compare(a.assessmentName, b.assessmentName, isAsc);
         case "date":
-          return compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
+          return this.comparer.compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
         case "assessor":
-          return compare(a.creatorName, b.creatorName, isAsc);
+          return this.comparer.compare(a.creatorName, b.creatorName, isAsc);
         case "type":
-          return compare(a.type, b.type, isAsc);
+          return this.comparer.compare(a.type, b.type, isAsc);
         case "status":
-          return compareBool(a.markedForReview, b.markedForReview, isAsc);
+          return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
         default:
           return 0;
       }
@@ -331,12 +332,4 @@ export class MyAssessmentsComponent implements OnInit {
     this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })
   }
 
-}
-
-
-function compare(a, b, isAsc) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
-function compareBool(a, b, isAsc) {
-  return (a === b) ? 0 : a ? -1 * (isAsc ? 1 : -1) : 1 * (isAsc ? 1 : -1);
 }
