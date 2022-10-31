@@ -20,7 +20,7 @@ export class AboutCfComponent implements OnInit {
        * 
        */
       ngOnInit() {
-        if (this.configSvc.development.showBuildTime ?? false) {
+        if (this.configSvc.config.debug.showBuildTime ?? false) {
           this.linkerTime = localStorage.getItem('cset.linkerDate');
         }
         
