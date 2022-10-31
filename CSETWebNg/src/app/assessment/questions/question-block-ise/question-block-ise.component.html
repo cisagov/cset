@@ -159,6 +159,7 @@
                             <tr>
                                 <th>Issue</th>
                                 <th>Title</th>
+                                <th style="text-align: center;">Auto Generated</th>
                                 <th style="width:5%;"></th>
                                 <th style="width:5%;"></th>
                             </tr>
@@ -168,6 +169,10 @@
                                 </td>
                                 <td style="height:20px">
                                     <div>{{find.title}}</div>
+                                </td>
+                                <td style="text-align: center">
+                                    <div *ngIf="find.auto_Generated === 1">Yes</div>
+                                    <div *ngIf="find.auto_Generated === 0"> - </div>
                                 </td>
                                 <td>
                                     <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
