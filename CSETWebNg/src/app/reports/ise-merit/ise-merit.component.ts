@@ -6,6 +6,7 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
 import { QuestionsService } from '../../services/questions.service';
+import { forEach } from 'lodash';
 
 @Component({
   selector: 'app-ise-merit',
@@ -17,6 +18,7 @@ export class IseMeritComponent implements OnInit {
   demographics: any = null; 
   answers: any = null;
   actionItemsForParent: any = null;
+  files: any = null;
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -36,16 +38,15 @@ export class IseMeritComponent implements OnInit {
   resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
 
   actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
-  // parentToChildren: Map<number, number> = new Map<number, number>();
-  // childrenToActionItems: Map<number, string> = new Map<number, string>();
-
-
-  actionItemExample1: string = '1.	The security program must be approved by the Board of Directors.';
-  actionItemExample2: string = '2.	Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.';
-  actionItemAll: string = this.actionItemExample1 + '\n' + this.actionItemExample2;
+  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
   examLevel: string = '';
 
+  // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
+  //                               "Stmt 8", "Stmt 9", "Stmt 10", "Stmt 11", "Stmt 12", "Stmt 13", "Stmt 14", 
+  //                               "Stmt 15", "Stmt 16", "Stmt 17", "Stmt 18", "Stmt 19", "Stmt 20", "Stmt 21", 
+  //                               "Stmt 22"]);
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -63,6 +64,7 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;  
+        console.log(this.response)
         this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
 
         for(let i = 0; i < this.response?.length; i++) {
@@ -103,43 +105,81 @@ export class IseMeritComponent implements OnInit {
         this.answers = r;
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-          // goes through domains
-          for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
-            let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
-            // goes through subcategories
-            for(let j = 0; j < domain.components?.length; j++) {
-              let subcat = domain?.components[j];
-              // goes through questions
-              for(let k = 0; k < subcat?.questions?.length; k++) {
-                
-                let question = subcat?.questions[k];
-                if( k == 0 ){
-                  this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
-                    (r: any) => {
-                      this.actionItemsForParent = r;
-                      for(let m = 0; m < this.actionItemsForParent?.length; m++){
-                        let parentAction = this.actionItemsForParent[m].action_Items;
-                        if(!this.actionItemsMap.has(question.matQuestionId)){
-                          this.actionItemsMap.set(question.matQuestionId, [parentAction]);
-                        } else {
-                          let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
-                          tempActionArray.push(parentAction);
-                          this.actionItemsMap.set(question.matQuestionId, tempActionArray);
-                        }
+        // goes through domains
+        for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for(let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            // goes through questions
+            let parentQuestionId = subcat?.questions[0].matQuestionId;
+            for(let k = 0; k < subcat?.questions?.length; k++) {
+              
+              let question = subcat?.questions[k];
+              if( k == 0 ){
+                this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
+                  (r: any) => {
+                    this.actionItemsForParent = r;
+                    for(let m = 0; m < this.actionItemsForParent?.length; m++){
+                      let parentAction = this.actionItemsForParent[m].action_Items;
+                      let regCitation = this.actionItemsForParent[m].regulatory_Citation;
+
+                      if(!this.actionItemsMap.has(question.matQuestionId)){
+                        this.actionItemsMap.set(question.matQuestionId, [parentAction]);
+                        this.regCitationsMap.set(question.matQuestionId, [regCitation]);
+                      } else {
+                        let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
+                        let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
+
+                        tempActionArray.push(parentAction);
+                        tempCitationArray.push(regCitation);
+
+                        this.actionItemsMap.set(question.matQuestionId, tempActionArray);
+                        this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
                       }
                     }
-                  )
-                }
-              
-                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
-                  this.examLevel = 'CORE+';
+                  }
+                )
+              }
+
+              if (question.answerText == 'N') {
+                let parentTitle = this.getParentQuestionTitle(question.title);
+
+                if(!this.showActionItemsMap.has(parentTitle)){
+                  this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
+                } else {
+                  let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
+
+                  tempShowActionArray.push(this.getChildQuestionNumber(question.title));
+
+                  this.showActionItemsMap.set(parentTitle, tempShowActionArray);
                 }
               }
+            
+              if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                this.examLevel = 'CORE+';
+              }
+
+              // if(k == subcat?.questions?.length - 1 || (j == 0 && k == 9)) { //checks if the last child question
+              //   if(j == 0 && k == 9) { //checks if in Stmt 1 or Stmt 2 (they're in the same subcat)
+              //     parentQuestionId = subcat?.questions[k].matQuestionId;
+              //   }
+              //   console.log('called')
+              //   this.removeUnusedActionItems(parentQuestionId, question.title)
+              // }
             }
           }
+        }
       },
     )
-  
+
+    // this.acetSvc.getIseSourceFiles().subscribe(
+    //   (r: any) => {
+    //     this.files = r;
+    //     console.log(r)
+    //   },
+    //   error => console.log('Assessment Information Error: ' + (<Error>error).message)
+    // )
   }
 
   addExaminerFinding(title: any) {
@@ -153,7 +193,7 @@ export class IseMeritComponent implements OnInit {
     if (!this.dors.includes(title)) {
       this.dors.push(title);
     }
-    this.dorsTotal = this.dorsTotal + 1;
+    this.dorsTotal ++;
   }
 
   addSupplementalFact(title: any) {
@@ -169,7 +209,7 @@ export class IseMeritComponent implements OnInit {
     } else if (examLevel === 18) {
       this.examLevel = 'CORE';
     } else {
-      this.examLevel = 'Unknown';
+      this.examLevel = 'Loading...';
     }
   }
 
@@ -187,10 +227,12 @@ export class IseMeritComponent implements OnInit {
   }
 
   categoryBuilder(categories: string[]) {
-    for(let i = 0; i < categories.length; i++) {
-      this.resultsOfReviewString += '\n\t ' + categories[i];
+    if(categories.length > 0) {
+      for(let i = 0; i < categories.length; i++) {
+        this.resultsOfReviewString += '\n\t ' + categories[i];
+      }
+      this.resultsOfReviewString += '\n\n';
     }
-    this.resultsOfReviewString += '\n\n';
   }
 
   // gets rid of the html formatting
@@ -238,35 +280,70 @@ export class IseMeritComponent implements OnInit {
 
   getParentQuestionTitle(title: string) {
     if(!this.isParentQuestion(title)) {
-      let endOfTitle = 6;
-      // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
-      if(title.charAt(6) != '.'){
-        endOfTitle = endOfTitle + 1;
-      }
+      let endOfTitle = title.indexOf('.');
       return title.substring(0, endOfTitle);
     }
   }
 
-  appendChildQuestionTitle(parentTitle: string, index: number) {
-    index += 1;
-    return parentTitle + '.' + index.toString();
+  getChildQuestionNumber(title: string) {
+    if(!this.isParentQuestion(title)) {
+      let startOfNumber = title.indexOf('.') + 1;
+      return title.substring(startOfNumber);
+    }
   }
 
-  findQuestionByTitle(title: string, list: any[]) {
-    return list?.find(question => question.title == title);
-  }
-
-  copyAllActionItems(input: any) {
+  copyAllActionItems(input: any, title: string) {
     let combinedItems = input.toString();
     let array = combinedItems.split(".,");
 
     for (let i = 0; i < array.length; i++) {
       let count = i+1;
-	    array[i] = count + ": " + array[i] + "\n";
-    }
+      if(this.checkShowActionItemMap(title, count)) {
+        // console.log('i: ' + i + '\n')
+        // console.log('count: ' + count + '\n')
+        // console.log('array[i]: ' + array[i] + '\n')
 
+	      array[i] = count + ": " + array[i] + "\n";
+      } else {
+        array[i] = "";
+      }
+    }
     let formattedItems = array.join("");
     return formattedItems;
   }
+
+  checkShowActionItemMap(title: string, actionNum: number) {
+    let array = this.showActionItemsMap.get(title);
+    if(array != null && array.includes(actionNum.toString())){
+      return true;
+    }
+    return false;
+  }
+
+  // removeUnusedActionItems(id: number, title: string) {
+  //   console.log('title: ' + title)
+
+  //   console.log('id: ' + id)
+
+  //   if(this.actionItemsMap.has(id)) {
+  //     let prevActionItemsArray = this.actionItemsMap.get(id);
+  //     console.log('inside actionItemsMap')
+  //     let showActionItemsArray = this.showActionItemsMap.get(this.getParentQuestionTitle(title));
+
+  //     if(prevActionItemsArray.length !== showActionItemsArray.length) {
+  //       let newActionItemsArray = [];
+
+  //       for(let i = 0; i < prevActionItemsArray.length; i++) {
+  //         if(showActionItemsArray.includes(i + 1)) {
+  //           newActionItemsArray.push([prevActionItemsArray[i]]);
+  //         }
+  //       }
+  //       console.log('before removal' + prevActionItemsArray)
+  //       console.log('after removal' + newActionItemsArray)
+
+  //       this.actionItemsMap.set(id, newActionItemsArray);
+  //     }
+  //   }
+  // }
 
 }

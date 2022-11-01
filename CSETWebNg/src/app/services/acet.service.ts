@@ -148,6 +148,10 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
     }
 
+    getIseSourceFiles() {
+        return this.http.get(this.apiUrl + 'reports/acet/getIseSourceFiles', headers);
+    }
+
     /*
     * Save targetBand
     */
