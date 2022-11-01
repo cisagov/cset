@@ -113,25 +113,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
-
+    this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
+    this.appCode = this.configSvc.config.appCode;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
-        this.titleSvc.setTitle('ACET');
-        this.appCode = 'ACET';
         this.ncuaSvc.reset();
         break;
       case 'TSA':
-        this.titleSvc.setTitle('CSET-TSA');
-        this.appCode = 'TSA';
         this.isTSA=true;
-        break;
-      case 'RRA':
-        this.titleSvc.setTitle('CISA - Ransomware Readiness');
-        this.appCode = 'RRA';
-        break;
+        break;      
       default:
-        this.titleSvc.setTitle('CSET');
-        this.appCode = 'CSET';
         this.isCSET=true;
     }
 

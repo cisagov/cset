@@ -21,19 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/overlay-directives';
-import { HttpClient } from '@angular/common/http';
-import { Injectable, APP_INITIALIZER } from '@angular/core';
-import { TreeMapComponent } from '@swimlane/ngx-charts';
-import { debug } from 'console';
-import { promise } from 'protractor';
-import { environment } from '../../environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { Injectable, APP_INITIALIZER } from "@angular/core";
 
-
+declare var csetGlobalConfig: any;
 
 @Injectable()
 export class ConfigService {
-
   apiUrl: string;
   appUrl: string;
   docUrl: string;
@@ -51,16 +45,14 @@ export class ConfigService {
 
   buttonClasses = {};
 
-
   salLabels = {};
 
   private initialized = false;
   isAPI_together_With_Web = false;
 
-  installationMode = '';
+  installationMode = "";
 
-  galleryLayout = 'CSET';
-
+  galleryLayout = "CSET";
 
   /**
    * Specifies the mobile ecosystem that the app is running on.
@@ -68,165 +60,95 @@ export class ConfigService {
    * a mobile app.  If not being built for mobile, this property
    * will contain an empty string or "none".
    */
-  mobileEnvironment = '';
-
+  mobileEnvironment = "";
 
   /**
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient) { }
-
-
-  processDataOverrides(source: any, data: any): any {
-    //get the base object
-    //get the string of overrides
-    //for each over
-    //get all the properties 
-    //for each property if the property has properites 
-    //then recurse 
-    //else set the property value on the base object from the override        
-    for (const property in source) {
-      if (property.startsWith("answers")) {
-        console.log("skipping overload for " + property);
-      }
-      else {
-        if (typeof source[property] == "object") {
-          this.processDataOverrides(source[property], data[property]);
-        }
-        else {
-          console.log(`copying source ${property} was:${data[property]} now is:${source[property]}`);
-          data[property] = source[property];
-        }
-      }
-    }
-
-    return data;
-  }
-
-  configFiles = [];
-
-  getConfigs(configChain: string[]) {
-    var configPromises = [];
-    for (var config of configChain) {
-      var tmpURL = `./${this.settingsUrl}config.${config}.json`;
-      configPromises.push(this.http.get(tmpURL)
-        .toPromise()
-        .then((tmpConfig: any) => {
-          this.configFiles.push(tmpConfig);
-        }
-        ));
-
-    }
-    return Promise.all(configPromises)
-
-  }
-
-  getRootDataOverrides(masterConfig: any): any {
-    var configPromises = [];
-
-    if (!masterConfig.currentConfigChain) {
-      masterConfig.currentConfigChain = [];
-    }
-
-    this.getConfigs(masterConfig.currentConfigChain).then((data) => {
-      for (var configFile of this.configFiles) {
-        this.processDataOverrides(configFile, masterConfig)
-      }
-    })
-      .catch((err) => console.log(err));
-  }
-
+  constructor(private http: HttpClient) {}
 
   /**
    *
    */
   async loadConfig() {
-    if (!this.initialized) {
-      this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
-      this.assetsUrl = 'assets/';
-      this.settingsUrl = 'assets/settings/';
-      this.configUrl = this.settingsUrl + 'config.json';
-
-
-
-
-
-
-      return await this.http.get(this.configUrl)
-        .toPromise()
-        .then((masterConfig: any) => {
-          // isCsetOnline and installation mode should not change from master config file.
-          this.getRootDataOverrides(masterConfig);
-          this.isCsetOnline = masterConfig.isCsetOnline ?? false;
-          this.installationMode = (masterConfig.installationMode?.toUpperCase() || 'CSET');
-
-          // Here is where we dynamically merge config settings based on installation mode.
-          let subConfig;
-          if (this.isCsetOnline && (this.installationMode === 'CSET' || this.installationMode === '')) {
-            subConfig = require(`./../../${this.settingsUrl}config.CSET.online.json`);
-          } else {
-            subConfig = require(`./../../${this.settingsUrl}config.${this.installationMode}.json`);
-          }
-
-          // config is now the union of masterConfig and subConfig file.
-          // Any matching properties that changed in subConfig will overwrite those in masterConfig.
-          let config = { ...masterConfig, ...subConfig };
-
-          let apiPort = config.api.port != "" ? ":" + config.api.port : "";
-          let appPort = config.app.port != "" ? ":" + config.app.port : "";
-          let apiProtocol = config.api.protocol + "://";
-          let appProtocol = config.app.protocol + "://";
-          if (localStorage.getItem("apiUrl") != null) {
-            this.apiUrl = localStorage.getItem("apiUrl") + "/" + config.api.apiIdentifier + "/";
-          } else {
-            this.apiUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.apiIdentifier + "/";
-          }
-          this.analyticsUrl = config.analyticsUrl;
-          this.appUrl = appProtocol + config.app.appUrl + appPort;
-          this.docUrl = apiProtocol + config.api.url + apiPort + "/" + config.api.documentsIdentifier + "/";
-          this.helpContactEmail = config.helpContactEmail;
-          this.helpContactPhone = config.helpContactPhone;
-          this.config = config;
-
-          this.galleryLayout = (this.config.galleryLayout?.toString() || 'CSET');
-          this.mobileEnvironment = (this.config.mobileEnvironment);
-          this.behaviors = this.config.behaviors;
-
-          this.populateLabelValues();
-
-          this.populateButtonClasses();
-
-          this.initialized = true;
-        }).catch(error => console.log('Failed to load config file: ' + (<Error>error).message));
+    if (csetGlobalConfig) {
+      this.config = csetGlobalConfig;
+      if (!this.initialized) {
+        this.isRunningInElectron = localStorage.getItem("isRunningInElectron") == "true";      
+        this.setConfigPropertiesForLocalService(csetGlobalConfig);
+      }      
+      return;
     }
+    else{
+      console.log("FAILED TO FIND LOCAL CONFIGURATION");
+    }
+    
   }
 
+  setConfigPropertiesForLocalService(config: any) {
+    this.installationMode = config.installationMode;
+    let apiPort = config.api.port != "" ? ":" + config.api.port : "";
+    let appPort = config.app.port != "" ? ":" + config.app.port : "";
+    let apiProtocol = config.api.protocol + "://";
+    let appProtocol = config.app.protocol + "://";
+    if (localStorage.getItem("apiUrl") != null) {
+      this.apiUrl =
+        localStorage.getItem("apiUrl") + "/" + config.api.apiIdentifier + "/";
+    } else {
+      this.apiUrl =
+        apiProtocol +
+        config.api.url +
+        apiPort +
+        "/" +
+        config.api.apiIdentifier +
+        "/";
+    }
+    this.analyticsUrl = config.analyticsUrl;
+    this.appUrl = appProtocol + config.app.appUrl + appPort;
+    this.docUrl =
+      apiProtocol +
+      config.api.url +
+      apiPort +
+      "/" +
+      config.api.documentsIdentifier +
+      "/";
+    this.helpContactEmail = config.helpContactEmail;
+    this.helpContactPhone = config.helpContactPhone;
+    this.config = config;
 
+    this.galleryLayout = this.config.galleryLayout?.toString() || "CSET";
+    this.mobileEnvironment = this.config.mobileEnvironment;
+    this.behaviors = this.config.behaviors;
 
+    this.populateLabelValues();
 
+    this.populateButtonClasses();
+
+    this.initialized = true;
+  }
 
   /**
    * Populates label values.
    */
   populateLabelValues() {
     // Apply any overrides to button and graph labels
-    this.salLabels['L'] = "Low";
-    this.salLabels['M'] = "Moderate";
-    this.salLabels['H'] = "High";
-    this.salLabels['VH'] = "Very High";
+    this.salLabels["L"] = "Low";
+    this.salLabels["M"] = "Moderate";
+    this.salLabels["H"] = "High";
+    this.salLabels["VH"] = "Very High";
   }
 
   /**
    * Associates a CSS class with each answer option.
    */
   populateButtonClasses() {
-    this.buttonClasses['Y'] = 'btn-yes';
-    this.buttonClasses['N'] = 'btn-no';
-    this.buttonClasses['NA'] = 'btn-na';
-    this.buttonClasses['A'] = 'btn-alt';
-    this.buttonClasses['Iss'] = 'btn-iss';
-    this.buttonClasses['I'] = 'btn-inc';
+    this.buttonClasses["Y"] = "btn-yes";
+    this.buttonClasses["N"] = "btn-no";
+    this.buttonClasses["NA"] = "btn-na";
+    this.buttonClasses["A"] = "btn-alt";
+    this.buttonClasses["Iss"] = "btn-iss";
+    this.buttonClasses["I"] = "btn-inc";
   }
 
   /**
@@ -234,8 +156,10 @@ export class ConfigService {
    * CSET is currently running as a mobile app or not.
    */
   isMobile(): boolean {
-    if (this.mobileEnvironment.toUpperCase() == 'NONE'
-      || this.mobileEnvironment == '') {
+    if (
+      this.mobileEnvironment.toUpperCase() == "NONE" ||
+      this.mobileEnvironment == ""
+    ) {
       return false;
     }
     return true;
@@ -245,11 +169,12 @@ export class ConfigService {
    * Determines if the Import button should display or not
    */
   showImportButton() {
-
     // hide the import button if any Cyber Florida conditions exist
-    if ((this.config.isCyberFlorida ?? false)
-      || ((this.config.galleryLayout ?? '') == 'Florida')
-      || ((this.config.installationMode ?? '') == 'CF')) {
+    if (
+      (this.config.isCyberFlorida ?? false) ||
+      (this.config.galleryLayout ?? "") == "Florida" ||
+      (this.config.installationMode ?? "") == "CF"
+    ) {
       return false;
     }
 
@@ -283,11 +208,11 @@ export function init() {
     provide: APP_INITIALIZER,
     useFactory: ConfigFactory,
     deps: [ConfigService],
-    multi: true
-  }
+    multi: true,
+  };
 }
 const ConfigModule = {
-  init: init
-}
+  init: init,
+};
 
-export { ConfigModule }
+export { ConfigModule };
