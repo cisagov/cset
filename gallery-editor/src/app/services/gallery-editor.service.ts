@@ -15,8 +15,10 @@ const headers = {
   providedIn: 'root'
 })
 export class GalleryEditorService {
+ 
   
   allitems:ListTest[]= [];
+  unusedItemList: ListTest[];
   setAllItem(list: ListTest[]) {
     this.allitems = list;
   }
@@ -91,9 +93,11 @@ export class GalleryEditorService {
   }
 
   cloneGalleryGroup(group: any) {
+    console.log(group);
     return  this.http.get("http://localhost:5000/api/gallery/cloneGroup",  {
       params: {
-        Group_To_Clone: group
+        Group_Id: group.group_Id, 
+        layout_Name: this.layoutName
       }
     });
   }
@@ -121,18 +125,29 @@ export class GalleryEditorService {
     });
   }
 
-  deleteGalleryItem(id: number) {
+  deleteGalleryItem(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
       params: {
-        id: id
+        id: item.gallery_Item_Id
       }
     });
   }
 
-  deleteGalleryGroup(id: number) {
+  deleteGalleryGroup(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
       params: {
-        id: id
+        id: item.group_Id
+      }
+    });
+  }
+
+  setUnusedItems(unusedList: ListTest[]) {
+    this.unusedItemList = unusedList;
+  }
+  getGalleryUnsedItems() {
+    return  this.http.get("http://localhost:5000/api/gallery/getUnused",  {
+      params: {
+        Layout_Name: this.layoutName
       }
     });
   }
