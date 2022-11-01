@@ -39,6 +39,8 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [StringLength(100)]
         public string State_Province_Or_Region { get; set; }
+        [StringLength(20)]
+        public string Postal_Code { get; set; }
         /// <summary>
         /// The Assessor Name is used to
         /// </summary>
