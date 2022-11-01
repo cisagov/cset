@@ -15,10 +15,13 @@ export class AppComponent implements OnInit{
   title = 'gallery-editor';  
 
   list!: ListTest[]; 
+  unusedList!: ListTest[]; 
   
     response: any;
 
-  constructor(public gallerySvc: GalleryEditorService,library: FaIconLibrary) {
+  constructor(public gallerySvc: GalleryEditorService,
+    library: FaIconLibrary,
+    ) {
     library.addIcons(faArrows, faArrows);
   }
 
@@ -45,6 +48,12 @@ export class AppComponent implements OnInit{
       },
       error => console.log('Gallery Layout error ' + (<Error>error).message)
     );
+    this.gallerySvc.getGalleryUnsedItems().subscribe(  (x: any) => {
+      this.unusedList = x;
+      this.gallerySvc.setUnusedItems(this.unusedList);
+    },
+    error => console.log('Gallery Layout error ' + (<Error>error).message)
+  );
   }
 
 }

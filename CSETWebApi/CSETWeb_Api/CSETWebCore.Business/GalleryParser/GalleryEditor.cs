@@ -97,23 +97,41 @@ namespace CSETWebCore.Business.GalleryParser
         /// </summary>
         /// <param name="group_to_clone"></param>
         /// <returns></returns>
-        public void CloneGalleryGroup(GalleryGroup group_to_clone)
+        public void CloneGalleryGroup(int group_to_clone, string layout)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
             //clone the gallery_item and gallery_group_details need to clone that 
             //plus max column number +1
 
-            TinyMapper.Bind<GalleryGroup, GALLERY_GROUP>(
-            //config => {
-            //config.Ignore(source => source.Gallery_Item_Id);
-            //}
+            TinyMapper.Bind<GALLERY_GROUP, GALLERY_GROUP>(
+                config => {
+                config.Ignore(source => source.Group_Id);
+                }
             );
+            TinyMapper.Bind<GALLERY_GROUP_DETAILS, GALLERY_GROUP_DETAILS>(
+              config => {
+                  config.Ignore(source => source.Group_Id);
+                  config.Ignore(source => source.Group_Detail_Id);
+              }
+          );
 
-            //var oldItem = _context.GALLERY_ITEM.Where(itemto)
-            var newGroup = TinyMapper.Map<GALLERY_GROUP>(group_to_clone);
-
+            //clone the group and the details
+            var oldGroup =  _context.GALLERY_GROUP.Where(x => x.Group_Id == group_to_clone).FirstOrDefault();
+            var newGroup = TinyMapper.Map<GALLERY_GROUP>(oldGroup);
             _context.GALLERY_GROUP.Add(newGroup);
+            _context.SaveChanges();
+            var nextRow =  _context.GALLERY_ROWS.Where(x => x.Layout_Name == layout).Max(x => x.Row_Index);
+            _context.GALLERY_ROWS.Add(new GALLERY_ROWS() {Group_Id = newGroup.Group_Id,Layout_Name=layout,  Group = newGroup, Row_Index = (++nextRow) });
+
+            foreach(var item in _context.GALLERY_GROUP_DETAILS.Where(x=>x.Group_Id == oldGroup.Group_Id))
+            {
+                //make a copy and add it to the new group
+                var newItem = new GALLERY_GROUP_DETAILS() { Group_Id = newGroup.Group_Id, Column_Index = item.Column_Index, Gallery_Item_Id = item.Gallery_Item_Id };                
+                newGroup.GALLERY_GROUP_DETAILS.Add(newItem);
+            }
+            _context.SaveChanges();
+
         }
 
 
@@ -230,5 +248,36 @@ namespace CSETWebCore.Business.GalleryParser
             _context.SaveChanges();
         }
 
+        public GalleryItem[] GetUnused(string layout_Name)
+        {
+            var queryExcept = (from i in _context.GALLERY_ITEM
+                               join d in _context.GALLERY_GROUP_DETAILS on i.Gallery_Item_Id equals d.Gallery_Item_Id
+                               join g in _context.GALLERY_GROUP on d.Group_Id equals g.Group_Id
+                               join r in _context.GALLERY_ROWS on g.Group_Id equals r.Group_Id
+                               where r.Layout_Name == layout_Name
+                               select new GalleryItem() { Gallery_Item_Id = i.Gallery_Item_Id, Title = i.Title, Description = i.Description }).Distinct().ToList();
+
+            var query = (from i in _context.GALLERY_ITEM
+                         select new GalleryItem() { Gallery_Item_Id = i.Gallery_Item_Id, Title = i.Title, Description = i.Description }).ToList();
+                       
+                        
+            return query.Except(queryExcept.ToList(), new GalleryItemComparer()).ToArray();
+        }
+    }
+
+    class GalleryItemComparer : IEqualityComparer<GalleryItem>
+    {
+        public bool Equals(GalleryItem x, GalleryItem y)
+        {
+            if (x.Gallery_Item_Id == y.Gallery_Item_Id)
+                return true;
+
+            return false;
+        }
+
+        public int GetHashCode(GalleryItem obj)
+        {
+            return obj.Gallery_Item_Id.GetHashCode();
+        }
     }
 }
