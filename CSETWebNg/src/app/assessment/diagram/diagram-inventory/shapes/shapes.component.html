@@ -26,7 +26,7 @@
     <th mat-sort-header="visible">Visible</th>
 
     <tr *ngFor="let shape of shapes; let i = index">
-        <td>{{shape.valueFi}}</td>
+        <td>{{shape.value}}</td>
         <td>{{shape.layerName}}</td>
         <td>
             <input type="checkbox" name="{{ shape.visible }}" class="mt-1" [(ngModel)]="shape.visible"
