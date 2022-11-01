@@ -501,6 +501,7 @@ import { AnalyticsCompareComponent } from './assessment/results/analytics-compar
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
 import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
+import { ZipCodeDirective } from './helpers/zip-code.directive';
 
 @NgModule({
     imports: [
@@ -625,6 +626,7 @@ import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        ZipCodeDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
         RunScriptsDirective,
