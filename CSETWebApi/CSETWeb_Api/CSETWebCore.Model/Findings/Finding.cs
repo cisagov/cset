@@ -19,8 +19,8 @@ namespace CSETWebCore.Model.Findings
         public Importance Importance { get; set; }
         public string Title { get; set; }
         public string Type { get; set; }
-        public string RiskArea { get; set; }
-        public string SubRisk { get; set; }
+        public string Risk_Area { get; set; }
+        public string Sub_Risk { get; set; }
         public string Description { get; set; }
         public string Citations { get; set; }
         public int Auto_Generated { get; set; }
