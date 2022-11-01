@@ -56,8 +56,8 @@ namespace CSETWebCore.Business.Findings
                     Resolution_Date = f.Resolution_Date,
                     Title = f.Title,
                     Type = f.Type,
-                    Risk_Area = f.RiskArea,
-                    Sub_Risk = f.SubRisk,
+                    Risk_Area = f.Risk_Area,
+                    Sub_Risk = f.Sub_Risk,
                     Description = f.Description,
                 };
 
