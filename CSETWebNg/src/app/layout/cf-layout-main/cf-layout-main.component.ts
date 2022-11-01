@@ -44,7 +44,7 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
-  isFooterVisible: boolean = false;
+  isFooterVisible: boolean = true;
 
   @ViewChild('acc') accordion: NgbAccordion;
 

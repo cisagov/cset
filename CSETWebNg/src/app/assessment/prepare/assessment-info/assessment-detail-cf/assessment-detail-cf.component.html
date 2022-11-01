@@ -22,7 +22,7 @@
 -------------------------->
 <h4>Organization Details</h4>
 <form #f="ngForm">
-    <div class="form-row">
+    <div class="form-row mb-4">
         <div class="form-group col-md-6">
             <label class="mb-1" for="name">Assessment Name</label>
             <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
@@ -36,6 +36,16 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>   
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <h5>Organization Location</h5>
+            <p class="font-italic">Please enter the Zip Code for the primary address/headquarters of your organization (required)</p>
+            <input type="text" maxlength="10" class="form-control cf" id="postalCode" name="postalCode" [(ngModel)]="assessment.postalCode"
+                (change)="update($event)" tabindex="0" required zipCode>
+        </div>
+        <div class="form-group col-md-6">
+        </div>
+    </div>
 </form>
 
 <div class="mt-4">

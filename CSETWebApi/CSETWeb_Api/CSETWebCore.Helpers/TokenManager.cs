@@ -213,7 +213,7 @@ namespace CSETWebCore.Helpers
         public bool IsTokenValid(string tokenString)
         {
             JwtSecurityToken token = null;
-
+            bool isLocal = _localInstallationHelper.IsLocalInstallation();
             try
             {
                 var handler = new JwtSecurityTokenHandler();
@@ -225,6 +225,7 @@ namespace CSETWebCore.Helpers
                 var parms = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {
                     RequireExpirationTime = true,
+                    ValidateLifetime = !isLocal,
                     ValidAudience = "CSET_AUD",
                     ValidIssuer = "CSET_ISS",
                     IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]))
@@ -253,7 +254,7 @@ namespace CSETWebCore.Helpers
 
 
             // see if the token has expired (we aren't really concerned with expiration on local installations)
-            if (token.ValidTo < DateTime.UtcNow && !_localInstallationHelper.IsLocalInstallation())
+            if (token.ValidTo < DateTime.UtcNow && !isLocal)
             {
                 log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
 

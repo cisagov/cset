@@ -1,4 +1,5 @@
 {
+    "currentConfigChain": [],
     "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
@@ -24,11 +25,10 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-
+    
     "galleryLayout": "CSET",
     "installationMode": "CSET",
     "mobileEnvironment": "",
-
     "behaviors": {
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
@@ -52,7 +52,6 @@
         "showBusinessAgencyName": true,
         "showCriticalService": true
     },
-
     "answersDefault": [
         {
             "code": "U",
@@ -95,7 +94,6 @@
             "answerLabel": "No with Issue(s)"
         }
     ],
-
     "answersMVRA": [
         {
             "code": "Y",
@@ -116,7 +114,6 @@
             "answerLabel": "Partially Implemented"
         }
     ],
-
     "answersACET": [
         {
             "code": "A",
@@ -125,6 +122,4 @@
             "answerLabel": "Yes Compensating Control"
         }
     ]
-
 }
-

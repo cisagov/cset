@@ -22,7 +22,7 @@
 -------------------------->
 <div class="question-group mb-3">
     <!-- Hides the ISE CORE+ only sub cats unless they need to be shown -->
-    <ng-container *ngIf="(myGrouping.groupingID < 2565 || (myGrouping.groupingID >= 2565 && ncuaSvc.getExtraQuestionStatus() === true))">
+    <ng-container *ngIf="(myGrouping.groupingID < 2567 || (myGrouping.groupingID >= 2567 && ncuaSvc.getExtraQuestionStatus() === true))">
         <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
           (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()" [attr.aria-expanded]="myGrouping.expanded">
             <div class="sub-head-1" tabindex="0">
@@ -159,6 +159,7 @@
                             <tr>
                                 <th>Issue</th>
                                 <th>Title</th>
+                                <th style="text-align: center;">Auto Generated</th>
                                 <th style="width:5%;"></th>
                                 <th style="width:5%;"></th>
                             </tr>
@@ -169,14 +170,18 @@
                                 <td style="height:20px">
                                     <div>{{find.title}}</div>
                                 </td>
+                                <td style="text-align: center">
+                                    <div *ngIf="find.auto_Generated === 1">Yes</div>
+                                    <div *ngIf="find.auto_Generated === 0"> - </div>
+                                </td>
                                 <td>
                                     <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                      (click)="addEditIssue(find.finding_Id)">
+                                      (click)="addEditIssue(q.parentQuestionId, find.finding_Id)">
                                         <span class="mr-1 cset-icons-pencil"></span>
                                     </button>
                                 </td>
                                 <td>
-                                    <button *ngIf="(find.auto_Generated !== 1)" class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                    <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                                       (click)="deleteIssue(find.finding_Id, false)">
                                         <span class="mr-1 cset-icons-trash-can"></span>
                                     </button>
@@ -184,7 +189,7 @@
                             </tr>
                         </table>
                         
-                        <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(0)">Add an Issue</button>
+                        <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
     
                     <div *ngIf="isFinalQuestion(q.questionId)">

@@ -502,7 +502,12 @@ import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
+import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
+import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
 import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
+import { ZipCodeDirective } from './helpers/zip-code.directive';
 
 @NgModule({
     imports: [
@@ -627,6 +632,7 @@ import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        ZipCodeDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
         RunScriptsDirective,
@@ -956,7 +962,8 @@ import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
         CfLayoutMainComponent,
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, AboutCfComponent
+        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
+        ,AboutCfComponent
     ],
     providers: [
         ConfigService,

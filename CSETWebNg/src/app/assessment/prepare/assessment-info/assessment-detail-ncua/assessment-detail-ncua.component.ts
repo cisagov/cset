@@ -50,6 +50,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentEffectiveDate: Date = new Date();
 
   contactInitials: string = "";
+  lastModifiedTimestamp: string = "";
 
   assessmentControl = new FormControl('');
   assessmentCharterControl = new FormControl('');
@@ -118,6 +119,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         }),
       );
     }
+
+    this.assessSvc.getLastModified().subscribe((data: string) => {
+      let myArray = data.split(" ");
+      this.lastModifiedTimestamp = myArray[1];
+    });
 
   }
 
@@ -287,6 +293,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
+
+    this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
 
     if (this.isAnExamination()) {
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
