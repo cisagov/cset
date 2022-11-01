@@ -236,6 +236,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.FacilityName = result.ii.Facility_Name;
                 assessment.CityOrSiteName = result.ii.City_Or_Site_Name;
                 assessment.StateProvRegion = result.ii.State_Province_Or_Region;
+                assessment.PostalCode = result.ii.Postal_Code;
                 assessment.ExecutiveSummary = result.ii.Executive_Summary;
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
@@ -501,6 +502,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Facility_Name = assessment.FacilityName;
             dbInformation.City_Or_Site_Name = assessment.CityOrSiteName;
             dbInformation.State_Province_Or_Region = assessment.StateProvRegion;
+            dbInformation.Postal_Code = assessment.PostalCode;
             dbInformation.Executive_Summary = assessment.ExecutiveSummary;
             dbInformation.Assessment_Description = assessment.AssessmentDescription;
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
