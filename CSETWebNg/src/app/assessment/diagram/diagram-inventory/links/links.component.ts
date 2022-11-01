@@ -56,7 +56,6 @@ export class LinksComponent implements OnInit {
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
