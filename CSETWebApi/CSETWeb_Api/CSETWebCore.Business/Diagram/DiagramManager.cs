@@ -434,9 +434,12 @@ namespace CSETWebCore.Business.Diagram
                     {
                         var addLayerVisible = (mxGraphModelRootMxCell)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
-                        addLayerVisible.visible = layerVisibility.visible;
-                        addLayerVisible.layerName = layerVisibility.layerName;
-                        edges.Add(addLayerVisible);
+                        if (layerVisibility != null) 
+                        {
+                            addLayerVisible.visible = layerVisibility.visible;
+                            addLayerVisible.layerName = layerVisibility.layerName;
+                            edges.Add(addLayerVisible);
+                        }
                     }
                 }
             }
