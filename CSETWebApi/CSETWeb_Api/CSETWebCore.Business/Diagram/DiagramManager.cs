@@ -699,7 +699,7 @@ namespace CSETWebCore.Business.Diagram
                     if (item.id == vertice.id)
                     {
                         item.label = vertice.label;
-                        item.zoneType = vertice.zoneType;
+                        item.ZoneType = vertice.ZoneType;
                         item.SAL = vertice.SAL;
                         item.internalLabel = vertice.label;
                         diagramXml.root.Items[i] = (object)item;
