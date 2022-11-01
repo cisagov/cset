@@ -228,7 +228,7 @@ let headers = {
     if (this.usingExamLevelOverride === false) {
       this.getExamLevelFromAssets();
     } else if (this.usingExamLevelOverride === true) {
-      // TODO
+      return this.chosenOverrideLevel;
     }
   }
 
