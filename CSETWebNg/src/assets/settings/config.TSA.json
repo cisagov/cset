@@ -1,0 +1,21 @@
+{
+    "galleryLayout": "TSA",
+    "behaviors": {
+        "showModuleBuilder": true,
+        "showAssessmentDocuments": false,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": false,
+        "showAnalyticsColumnOnLanding": true,
+        "splashPageHTML": "dist/assets/splashTSA.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "showFacilityName": true,
+        "showCityName": true,
+        "showStateName": true,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true
+    }
+
+}
