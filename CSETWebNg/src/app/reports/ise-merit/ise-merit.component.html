@@ -233,7 +233,7 @@
                                                     <br>
                                                 </ng-container>
                                                 <span *ngIf="this.showActionItemsMap.has(question.title)">
-                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1)">
+                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1) && (actionItems != null && actionItems != '' ) ">
                                                         <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
                                                             flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                                             [cdkCopyToClipboard]="(i+1) + '. ' + actionItems">

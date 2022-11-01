@@ -277,7 +277,7 @@
                                                     <br>
                                                 </ng-container>
                                                 <span *ngIf="this.showActionItemsMap.has(question.title)">
-                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1)">
+                                                    <span *ngIf="this.checkShowActionItemMap(question.title, i+1) && (actionItems != null && actionItems != '' ) ">
                                                         {{ i+1 }}: {{ actionItems }}
                                                     </span>
                                                 </span>
