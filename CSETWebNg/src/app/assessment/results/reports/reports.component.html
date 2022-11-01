@@ -24,26 +24,32 @@
   <h3>Reports</h3>
 
   <p>
-    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. 
-    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect the current state of the assessment.
-    <button mat-stroked-button (click)="openSnackBar()" >
+    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help
+    your organization’s cybersecurity planning and growth going forward.
+    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
+    the current state of the assessment.
+    <button mat-stroked-button (click)="openSnackBar()">
       Printing Report Instructions
     </button>
   </p>
 
-  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">     
-    We appreciate your  participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources and enact appropriate legislation to create a more secure Sunshine State! 
-    
+  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">
+    We appreciate your participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
+    cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
+    through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources
+    and enact appropriate legislation to create a more secure Sunshine State!
+
   </p>
   <p>
-   
+
   </p>
 
   <div class="alert alert-warning" *ngIf="isMobile">
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile && !this.assessSvc.isISE()">
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4"
+    *ngIf="!isMobile && !this.assessSvc.isISE()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
@@ -53,8 +59,9 @@
   </div>
 
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
-    class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div
+      *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>Standards and Diagram</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         Executive Summary
@@ -231,11 +238,12 @@
         [disabled]="disableAcetReportLinks">
         ACET Comments and Marked for Review
       </button>
-      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
         ACET Answered Statements
       </button>
-      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left" [disabled]="disableAcetReportLinks">
         ACET Compensating Controls
       </button>
     </div>
@@ -258,7 +266,8 @@
           Some reports are disabled until all statements have been answered.
         </span>
       </div>
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
@@ -290,17 +299,20 @@
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')"
+          class="btn btn-link btn-link-dark text-left">
           Section Scoring Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')"
+          class="btn btn-link btn-link-dark text-left">
           Deficiency Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')"
+          class="btn btn-link btn-link-dark text-left">
           Comments and Marked for Review
         </button>
       </div>
@@ -315,15 +327,27 @@
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')"
+          class="btn btn-link btn-link-dark text-left">
           VADR Deficiency Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')"
+          class="btn btn-link btn-link-dark text-left">
           VADR Open Ended Questions Report
         </button>
       </div>
+    </div>
+
+    <div>
+      <button tabindex="0"
+        class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+        (click)="clickExport()"
+        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+        <span>Export</span>
+      </button>
     </div>
 
   </div>
