@@ -70,10 +70,10 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
 
-  processDataOverrides(source: any, data: any):any{
+  processDataOverrides(source: any, data: any): any {
     //get the base object
     //get the string of overrides
     //for each over
@@ -82,14 +82,14 @@ export class ConfigService {
     //then recurse
     //else set the property value on the base object from the override
     for (const property in source) {
-      if(property.startsWith("answers")){
-        console.log("skipping overload for "+property);
+      if (property.startsWith("answers")) {
+        console.log("skipping overload for " + property);
       }
-      else{
-        if( typeof source[property] =="object"){
-          this.processDataOverrides(source[property],data[property]);
+      else {
+        if (typeof source[property] == "object") {
+          this.processDataOverrides(source[property], data[property]);
         }
-        else{
+        else {
           console.log(`copying source ${property} was:${data[property]} now is:${source[property]}`);
           data[property] = source[property];
         }
@@ -100,29 +100,36 @@ export class ConfigService {
   }
 
   configFiles = [];
-  getConfigs(configChain:string[]){
+
+  getConfigs(configChain: string[]) {
     var configPromises = [];
-      for(var config of configChain){
-        var tmpURL = `./${this.settingsUrl}config.${config}.json`;
-        configPromises.push( this.http.get(tmpURL)
+    for (var config of configChain) {
+      var tmpURL = `./${this.settingsUrl}config.${config}.json`;
+      configPromises.push(this.http.get(tmpURL)
         .toPromise()
         .then((tmpConfig: any) => {
           this.configFiles.push(tmpConfig);
         }
         ));
 
-      }
-      return Promise.all(configPromises)
+    }
+    return Promise.all(configPromises)
 
   }
 
-  getRootDataOverrides(masterConfig: any): any{
-    return this.getConfigs(masterConfig.currentConfigChain).then((data)=>{
-      for(var configFile of this.configFiles){
-        this.config = this.processDataOverrides(configFile,masterConfig)
+  getRootDataOverrides(masterConfig: any): any {
+    var configPromises = [];
+
+    if (!masterConfig.currentConfigChain) {
+      masterConfig.currentConfigChain = [];
+    }
+
+    this.getConfigs(masterConfig.currentConfigChain).then((data) => {
+      for (var configFile of this.configFiles) {
+        this.processDataOverrides(configFile, masterConfig)
       }
     })
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
 
 

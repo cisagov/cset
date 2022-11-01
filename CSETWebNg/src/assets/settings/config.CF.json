@@ -13,6 +13,7 @@
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
         "splashPageHTML": "dist/assets/splash.html",        
+        "homeComponentForCurrentInstallationMode": "",
         "useMaturity": true,
         "defaultMaturityModel": "",
         "isAcetOnly": false,
