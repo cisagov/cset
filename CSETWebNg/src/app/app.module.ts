@@ -507,6 +507,7 @@ import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
 import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
 import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
+import { ZipCodeDirective } from './helpers/zip-code.directive';
 
 @NgModule({
     imports: [
@@ -631,6 +632,7 @@ import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        ZipCodeDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
         RunScriptsDirective,

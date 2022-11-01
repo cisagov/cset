@@ -2697,6 +2697,12 @@ table.assessment-documents th {
   padding: 1em;
 }
 
+input.cf.invalid, input.invalid-zip {
+  border-color: red;
+  background-color: #ffeeee;
+}
+
+
 .answered-count {
   display: inline-block;
   font-weight: 400;
