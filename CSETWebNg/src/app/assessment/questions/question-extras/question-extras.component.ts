@@ -348,6 +348,8 @@ export class QuestionExtrasComponent implements OnInit {
       vulnerabilities: '',
       title: null,
       type: null,
+      riskArea: null,
+      subRisk: null,
       description: null,
       citations: null,
       auto_Generated: null,

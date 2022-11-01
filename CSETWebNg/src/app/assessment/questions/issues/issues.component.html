@@ -57,29 +57,17 @@
       <div class="col-6">
         <div class="form-group">
           <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
-          <select name="riskArea" id="riskArea" (change)="updateRiskArea($event.target.value)" class="form-control">
-            <!--<option value="Strategic">Strategic</option>
-            <option value="Compliance">Compliance</option>-->
+          <select name="riskArea" id="riskArea" (change)="updateRiskArea($event.target.value)" class="form-control" [(ngModel)]="finding.riskArea">
             <option value="Transaction">Transaction</option>
-            <!--<option value="Reputation">Reputation</option>-->
           </select>
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
           <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
-          <!--<select *ngIf="this.riskType === 'Strategic'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of strategicSubRisks"> {{ subrisk }}</option>
-          </select>
-          <select *ngIf="this.riskType === 'Compliance'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of complianceSubRisks"> {{ subrisk }}</option>
-          </select>-->
-          <select *ngIf="this.riskType === 'Transaction'" name="subrisk" id="subrisk" class="form-control">
+          <select name="subrisk" id="subRisk" (change)="updateSubRisk($event.target.value)" id="subrisk" class="form-control" [(ngModel)]="finding.subRisk">
             <option *ngFor="let subrisk of transactionSubRisks"> {{ subrisk }}</option>
           </select>
-          <!--<select *ngIf="this.riskType === 'Reputation'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of reputationSubRisks"> {{ subrisk }}</option>
-          </select>-->
         </div> 
       </div>
     </div>

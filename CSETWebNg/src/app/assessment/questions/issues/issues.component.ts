@@ -53,18 +53,12 @@ export class IssuesComponent implements OnInit {
   loading: boolean;
   showRequiredHelper: boolean = false;
 
-  riskType: string = "Transaction";
-  /*strategicSubRisks = ['Other', 'Organizational Risk Management Program', 'Staffing', 'Field of Membership', 'Product/Service', 
-                       'Outsourcing', 'Program Monitoring, Oversight, & Reporting', 'Business/Strategic/Budgeting', 
-                       'Board of Director Oversight', 'Training', 'Capital Plans'];
-  complianceSubRisks = ['Regulatory Compliance', 'Policies & Procedures', 'Other', 'Consumer Compliance', 'BSA', 
-                        'Reporting, Fair Lending'];*/
+  riskType: string = "";
+  subRisk: string = "";
   transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
                          'Fraud', 'Other', 'Supervisory Committee Activities', 'Full and Fair Disclosure', 'Electronic Payment & Card Services', 
                          'Recordkeeping-Significant', 'Security Program', 'Account Verification', 'Policies & Procedures', 
                          'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];
-  //reputationSubRisks = ['Other', 'Management', 'Insider Activities', 'Legal', 'Reporting'];
-
 
   constructor(
     private dialog: MatDialogRef<IssuesComponent>,
@@ -105,6 +99,7 @@ export class IssuesComponent implements OnInit {
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
+      console.log("this.finding: " + JSON.stringify(this.finding, null, 4));
 
       this.questionsSvc.getActionItems(this.questionID).subscribe(
         (data: any) => {
@@ -170,11 +165,16 @@ export class IssuesComponent implements OnInit {
     this.riskType = riskArea;
   }
 
+  updateSubRisk(subRisk: string) {
+    this.subRisk = subRisk;
+  }
+
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
 
     if (this.finding.type !== null) {
+      console.log("Update: " + JSON.stringify(this.finding, null, 4));
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
         this.dialog.close(true);
       });
