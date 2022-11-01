@@ -55,7 +55,6 @@ export class NetworkWarningsComponent implements OnInit {
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
