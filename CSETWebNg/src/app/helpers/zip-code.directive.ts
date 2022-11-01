@@ -19,7 +19,7 @@ export class ZipCodeDirective {
     protected onkeyup(event): void {
         const keyCode: number = event.keyCode;
         let value: string = this.ngControl.control.value;
-        if (!value || value.length === 0 || keyCode === this.backSpaceKeyCode) {
+        if (!value || value.length === 0) {
             return;
         }
 
