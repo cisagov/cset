@@ -20,7 +20,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         // if you want to use the gallery editor, change this to true
-        private bool inDev = false;
+        private bool inDev = true;
 
         public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
@@ -128,7 +128,25 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="Item_To_Clone"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/cloneGroup")]
+        public IActionResult CloneGroup(int Group_Id, string layout_Name)
+        {
+            try
+            {
+                _galleryEditor.CloneGalleryGroup(Group_Id, layout_Name);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /// <summary>
         /// Adds the item
@@ -273,6 +291,26 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Returns the gallery card structure
+        /// </summary>
+        /// <param name="Layout_Name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/getUnused")]
+        public IActionResult GetUnusedItems(string Layout_Name)
+        {
+            try
+            {
+                return Ok(_galleryEditor.GetUnused(Layout_Name));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
     }
 
