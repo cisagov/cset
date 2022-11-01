@@ -78,9 +78,8 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '') {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.isParentQuestion(question)) {
                 this.hasComments.push(question);
-                console.log(this.hasComments);
               }
             }
           }

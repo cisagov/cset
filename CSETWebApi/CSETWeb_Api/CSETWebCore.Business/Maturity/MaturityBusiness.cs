@@ -1643,7 +1643,7 @@ namespace CSETWebCore.Business.Maturity
             Model.Acet.ACETDashboard irpCalculation = GetIseIrpCalculation(assessmentId);
             int assetLevel = long.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
             bool targetBandOnly = GetTargetBandOnly(assessmentId);
-            int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : assetLevel;
+            int irpRating = irpCalculation.Override > 1 ? irpCalculation.Override : assetLevel;
             if (!targetBandOnly)
                 irpRating = 3; //Do the default configuration
             return IrpSwitchIse(irpRating);
@@ -2044,9 +2044,11 @@ namespace CSETWebCore.Business.Maturity
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
 
+            var scuepIRPLevel = 1;
             var coreIRPLevel = 2;
 
-            result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : 0;
+            result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : scuepIRPLevel;
+            
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
