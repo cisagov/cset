@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
+import { Sort } from "@angular/material/sort";
+import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
   selector: 'links',
@@ -33,6 +35,7 @@ export class LinksComponent implements OnInit {
   links = [];
   displayedColumns = ['label', 'subnetName', 'security', 'layer', 'headLineDecorator',
     'tailLineDecorator', 'lineType', 'thickness', 'color', 'color', 'linkType', 'visible'];
+    comparer: Comparer = new Comparer();
 
   /**
    *
@@ -47,6 +50,32 @@ export class LinksComponent implements OnInit {
   getLinks() {
     this.diagramSvc.getDiagramLinks().subscribe((x: any) => {
       this.links = x;
+    });
+  }
+
+  sortData(sort: Sort) {
+
+    if (!sort.active || sort.direction === "") {
+      // this.sortedAssessments = data;
+      return;
+    }
+
+    this.links.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "label":
+          return this.comparer.compare(a.value, b.value, isAsc);
+        case "subnetName":
+          return this.comparer.compare(a.subnetName, b.subnetName, isAsc);
+        case "security":
+          return this.comparer.compare(a.security, b.security, isAsc);
+        case "layer":
+          return this.comparer.compare(a.layerName, b.layerName, isAsc);
+        case "visible":
+          return this.comparer.compareBool(a.visible, b.visible, isAsc);
+        default:
+          return 0;
+      }
     });
   }
 }
