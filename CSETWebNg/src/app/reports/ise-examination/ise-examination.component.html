@@ -307,7 +307,9 @@
                             <strong> Supplemental Guidance: </strong> 
                             
                             <br>
-                            <span [innerHtml]="finding?.question?.supplemental_Info"></span>
+                            <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
+                            <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
+
                         </div>
                         <strong>Regulatory Citation: </strong>
                         <div *ngFor="let subcat of this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
