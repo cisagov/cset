@@ -74,8 +74,10 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int GetMaturityTargetLevel(int assessmentId)
         {
+            // Start with a high value to include all questions by default
+            int targetLevel = 100;
+
             // The maturity target level is stored similar to a SAL level
-            int targetLevel = 1;
             var myLevel = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
                 .FirstOrDefault();
@@ -628,8 +630,8 @@ namespace CSETWebCore.Business.Maturity
           levelScore.Level = level;
           var capabilities = domains.SelectMany(x => x.CapabilityScores);
           var tiers = capabilities.SelectMany(z => z.LevelScores.Where(x => x.TotalTiers > 0 && x.Level == level));
-          levelScore.TotalTiers = tiers.Sum(x => x.TotalTiers);
-          levelScore.TotalPassed = tiers.Sum(x => x.TotalPassed);
+          levelScore.TotalTiers = tiers.Count();
+          levelScore.TotalPassed = tiers.Count(x => x.Credit == 100);
           if (levelScore.TotalTiers != 0)
           {
               var total = (double)levelScore.TotalPassed / levelScore.TotalTiers;
@@ -2230,7 +2232,7 @@ namespace CSETWebCore.Business.Maturity
         {
             var resp = new MaturityResponse();
 
-            resp.MaturityTargetLevel = 1;         
+            resp.MaturityTargetLevel = 100;         
 
             foreach (var g in cisStructure.Groupings)
             {

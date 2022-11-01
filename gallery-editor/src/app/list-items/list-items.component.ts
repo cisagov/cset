@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Options } from 'sortablejs';
-import { ListTest, MoveItem } from './listtest.model'
+import { GalleryItem, ListTest, MoveItem } from './listtest.model'
 import { faArrows } from '@fortawesome/free-solid-svg-icons';
 import { GalleryEditorService } from '../services/gallery-editor.service';
 import { isNgTemplate } from '@angular/compiler';
@@ -11,14 +11,21 @@ import { isNgTemplate } from '@angular/compiler';
   styleUrls: ['./list-items.component.css']
 })
 export class ListItemsComponent implements OnInit {
-  @Input() listTest: ListTest;
+  @Input() listTest!: ListTest;
   @Input() isRoot: boolean = false;
+  @Output() treeNeedsRefreshed: EventEmitter<string> = new EventEmitter<string>();
   faArrows = faArrows;
+
+  response: any;
+  responseAdd: any;
 
   options: Options = {    
     handle: '.handle'
   };
-  constructor(private svcGalleryEditor: GalleryEditorService ){    
+  showNewItemFields:boolean = false;
+
+  constructor(private svcGalleryEditor: GalleryEditorService ){   
+    
     this.options = {
       group: 'test',
       onUpdate: (event: any) => {
@@ -36,7 +43,7 @@ export class ListItemsComponent implements OnInit {
         item.toId = event.to.id;
         item.newIndex = event.newIndex;
         item.oldIndex = event.oldIndex;
-        item.Layout_Name = "CSET";
+        item.Layout_Name = event.Layout_Name;
 
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
@@ -54,11 +61,113 @@ export class ListItemsComponent implements OnInit {
   ngOnInit(): void {    
   }
   
+
+  parentEventHandlerFunction(){
+    this.treeNeedsRefreshed.emit();
+  }
+
+  toggleItem(){
+    this.showNewItemFields = !this.showNewItemFields;
+  }
+
+
   open(item:any, value:string){
     console.log(item);
-    if(item.group_Id!==undefined)
-      this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();
-    if(item.gallery_Item_Id!==undefined)
-      this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();
+    if(item.group_Id!==undefined){
+      this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();      
+    }
+    if(item.gallery_Item_Id!==undefined){
+      this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();      
+    }
   }
+
+ 
+
+  deleteGalleryItem(id: any) {
+    console.log(id + " would be deleted");
+    // this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
+    //   (r: any) => {
+    //     // this.response = r;
+    //     console.log(this.response);
+    //     this.updateItems();
+    //   },
+    //   error => console.log('Gallery Item delete error ' + (<Error>error).message)
+    // );
+  }
+
+  deleteGalleryGroup(item:any) {
+    console.log(item.group_Id);
+    // this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
+    //   (r: any) => {
+    //     this.updateItems();
+
+    //   },
+    //   error => console.log('Gallery Group delete error ' + (<Error>error).message)
+    // );
+  }
+
+  addGalleryGroup(group: string, description: string, title: string) {
+    let firstColumnId = 0;
+    this.svcGalleryEditor.addGalleryGroup(group,description, title, firstColumnId).subscribe(
+      (r: any) => {
+        this.responseAdd = r;
+        //console.log(this.responseAdd);
+        this.updateItems();
+
+        
+      },
+      error => console.log('Gallery add item error ' + (<Error>error).message)
+    );
+  }
+
+  addGalleryItem(description: string, title: string, item: any) {
+    let columnId = 0;
+    let tmpItemsList = this.svcGalleryEditor.allItems();
+    for (let i = 0; i < tmpItemsList.length; i++) {
+      if (tmpItemsList[i]?.group_Id === item.parent_Id) {
+        columnId = tmpItemsList[i]?.children?.length??0; //becomes one more than the last columnId
+        break;
+      }
+    }
+    console.log(item);
+    this.svcGalleryEditor.addGalleryItem(description, title, item.parent_Id, columnId).subscribe(
+      (r: any) => {
+        this.responseAdd = r;
+        this.updateItems();
+      },
+      error => console.log('Gallery add item error ' + (<Error>error).message)
+    );
+  }
+
+  cloneGalleryItem(item: any) {
+    
+    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
+      (r: any) => {
+        this.updateItems();
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
+
+  cloneGalleryGroup(group: any) {
+    this.svcGalleryEditor.cloneGalleryGroup(group).subscribe(
+      (r: any) => {
+        this.updateItems();
+      },
+      error => console.log('Gallery Layout error ' + (<Error>error).message)
+    );
+  }
+
+  updateItems() {
+    this.treeNeedsRefreshed.emit();
+    // this.svcGalleryEditor.getGalleryItems().subscribe(
+    //   (r: any) => {
+    //     this.listTest = r;
+    //     console.log(this.response);
+    //   },
+    //   error => console.log('Gallery Layout error ' + (<Error>error).message)
+    // );
+  }
+
+
 }
