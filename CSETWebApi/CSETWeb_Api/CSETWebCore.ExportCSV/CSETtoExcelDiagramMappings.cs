@@ -117,7 +117,7 @@ namespace CSETWebCore.ExportCSV
             {
                 var row = datatable.NewRow();
 
-                row["Type"] = z.zoneType;
+                row["Type"] = z.ZoneType;
                 row["Label"] = z.label;
                 row["Sal"] = z.SAL;
                 row["Layer"] = z.layerName;
