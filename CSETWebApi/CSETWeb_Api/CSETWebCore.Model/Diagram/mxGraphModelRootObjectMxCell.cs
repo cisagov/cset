@@ -11,6 +11,8 @@
 
         private string styleField { get; set; }
 
+        private string edgeField { get; set; }
+
         private string parentField { get; set; }
 
         private string vertexField { get; set; }
@@ -67,6 +69,20 @@
             set
             {
                 this.vertexField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string edge
+        {
+            get
+            {
+                return this.edgeField;
+            }
+            set
+            {
+                this.edgeField = value;
             }
         }
     }

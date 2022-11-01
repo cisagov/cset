@@ -417,22 +417,21 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> ProcessDiagramEdges(StringReader stream, int assessment_id)
+        public List<mxGraphModelRootObject> ProcessDiagramEdges(StringReader stream, int assessment_id)
         {
-            List<mxGraphModelRootMxCell> edges = new List<mxGraphModelRootMxCell>();
+            List<mxGraphModelRootObject> edges = new List<mxGraphModelRootObject>();
             if (stream != null)
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(mxGraphModel));
                 var diagramXml = (mxGraphModel)deserializer.Deserialize((stream));
 
-                mxGraphModelRootObject o = new mxGraphModelRootObject();
-                Type objectType = typeof(mxGraphModelRootMxCell);
+                Type objectType = typeof(mxGraphModelRootObject);
 
                 foreach (var item in diagramXml.root.Items)
                 {
                     if (item.GetType() == objectType)
                     {
-                        var addLayerVisible = (mxGraphModelRootMxCell)item;
+                        var addLayerVisible = (mxGraphModelRootObject)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
                         if (layerVisibility != null) 
                         {
@@ -529,9 +528,9 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="edges"></param>
         /// <returns></returns>
-        public List<mxGraphModelRootMxCell> GetDiagramLinks(List<mxGraphModelRootMxCell> edges)
+        public List<mxGraphModelRootObject> GetDiagramLinks(List<mxGraphModelRootObject> edges)
         {
-            var diagramLines = edges.Where(l => l.edge == "1").ToList();
+            var diagramLines = edges.Where(l => l.mxCell.edge == "1").ToList();
             return diagramLines;
         }
 
