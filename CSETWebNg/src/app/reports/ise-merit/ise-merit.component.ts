@@ -63,8 +63,7 @@ export class IseMeritComponent implements OnInit {
 
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
-        this.response = r;  
-        console.log(this.response)
+        this.response = r;
         this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
 
         for(let i = 0; i < this.response?.length; i++) {

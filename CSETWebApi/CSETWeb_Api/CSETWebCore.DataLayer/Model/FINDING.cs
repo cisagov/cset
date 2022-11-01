@@ -30,8 +30,12 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(50)]
         public string Type { get; set; }
         public string Description { get; set; }
-        public string Citations { get; set; }
         public int? Auto_Generated { get; set; }
+        public string Citations { get; set; }
+        [StringLength(50)]
+        public string Risk_Area { get; set; }
+        [StringLength(50)]
+        public string Sub_Risk { get; set; }
 
         [ForeignKey("Answer_Id")]
         [InverseProperty("FINDING")]
