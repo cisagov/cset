@@ -1,6 +1,7 @@
 {
     "isCsetOnline": true,
     "behaviors": {
+        "defaultTitle":"CSET-Online",
         "showModuleBuilder": false,
         "showAggregation": false,
         "showAnalytics": true,
@@ -21,7 +22,8 @@
         "showContacts": false,
         "showOrganizationName": false,
         "showBusinessAgencyName": false,
-        "showCriticalService": false
+        "showCriticalService": false,
+        "showPrivacyWarning":true
     }
 }
 
