@@ -703,7 +703,7 @@ export class QuestionBlockIseComponent implements OnInit {
     }
 
     const find: Finding = {
-      question_Id: parentId,//this.myGrouping.questions[0].questionId,
+      question_Id: parentId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
       finding_Id: findid,
       summary: '',
@@ -717,6 +717,8 @@ export class QuestionBlockIseComponent implements OnInit {
       vulnerabilities: '',
       title: name,
       type: null,
+      riskArea: 'Transaction',
+      subRisk: '',
       description: null,
       citations: null,
       auto_Generated: 0
@@ -771,7 +773,9 @@ export class QuestionBlockIseComponent implements OnInit {
           resolution_Date: null,
           vulnerabilities: '',
           title: name,
-          type: null, //"Examiner Finding",
+          type: null,
+          riskArea: 'Transaction',
+          subRisk: '',
           description: desc,
           citations: null,
           auto_Generated: 1
