@@ -3,6 +3,7 @@
     "installationMode": "ACET",
     "galleryLayout": "NCUA",
     "behaviors": {
+        "defaultTitle":"ACET",
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,

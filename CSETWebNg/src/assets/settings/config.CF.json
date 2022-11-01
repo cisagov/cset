@@ -7,6 +7,7 @@
     "galleryLayout": "CF",
     "installationMode": "CF",
     "behaviors": {
+        "defaultTitle":"CSET-CF",
         "showModuleBuilder": false,
         "showAssessmentDocuments": false,
         "showAggregation": false,
@@ -25,7 +26,9 @@
         "showContacts": true,
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
-        "showCriticalService": true
+        "showCriticalService": true,
+        "allowDiagram":false,
+        "showPrivacyWarning":true
     }
 }
 
