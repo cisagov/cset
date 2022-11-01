@@ -20,18 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<table matSort class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="tag" style="width:200px">Label</th>
+<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
+    <th mat-sort-header="label" style="width:200px">Label</th>
     <th mat-sort-header="hasUniqueQuestions">Has Unique Questions</th>
     <th mat-sort-header="sal">Sal</th>
     <th mat-sort-header="criticality" >Criticality</th>
-    <th mat-sort-header="layerC">Layer</th>
+    <th mat-sort-header="layer">Layer</th>
     <th mat-sort-header="ipAddress">IP Address</th>
     <th mat-sort-header="assetType">Asset Type</th>
     <th mat-sort-header="zone">Zone</th>
-    <th mat-sort-header="descriptions">Description</th>
+    <th mat-sort-header="description">Description</th>
     <th mat-sort-header="hostName">Host Name</th>
-    <th mat-sort-header="visibleC">Visible</th>
+    <th mat-sort-header="visible">Visible</th>
     <tr *ngFor="let component of diagramComponentList; let i = index">
         <td>{{component.label}}</td>
         <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestions" [disabled]="true"
