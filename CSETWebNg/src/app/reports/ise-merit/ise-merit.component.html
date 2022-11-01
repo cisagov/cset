@@ -241,26 +241,26 @@
                                                         </label> {{ i+1 }}: {{ actionItems }}
                                                     </span>
                                                 </span>
-
-                                                <!-- <ng-container *ngIf="last">
-                                                    <br><br>
-                                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
-                                                      flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
-                                                      [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId))">
-                                                        <span class="cset-icons-copy"> Copy All</span>
-                                                    </label>
-                                                    <br>
-                                                </ng-container> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
-                                [cdkCopyToClipboard]="this.actionItemExample2">
+                                [cdkCopyToClipboard]="finding?.finding?.riskArea">
                                 <span class="cset-icons-copy"></span>
-                            </label> {{ this.actionItemExample2 }} -->
+                            </label> <strong> Risk Area: </strong> {{ finding?.finding?.riskArea }}
+                            
+                            <br>
+                            
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                [cdkCopyToClipboard]="finding?.finding?.subRisk">
+                                <span class="cset-icons-copy"></span>
+                            </label> <strong> Sub-Risk Area: </strong> {{ finding?.finding?.subRisk }}
+                            
+                            <br>
                         </div>
                         <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                             <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
