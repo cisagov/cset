@@ -28,7 +28,7 @@
     your organization’s cybersecurity planning and growth going forward.
     The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
     the current state of the assessment.
-    <button *ngIf="!this.assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()">
+    <button *ngIf="!assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()">
       Printing Report Instructions
     </button>
   </p>
@@ -340,8 +340,8 @@
       </div>
     </div>
 
-    <div *ngIf="!this.assessSvc.isISE()">
-      <button tabindex="0"
+    <div>
+      <button *ngIf="!assessSvc.isISE()" tabindex="0"
         class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
         (click)="clickExport()"
         matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
