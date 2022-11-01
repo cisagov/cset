@@ -314,7 +314,7 @@ export class IseMeritComponent implements OnInit {
 
   checkShowActionItemMap(title: string, actionNum: number) {
     let array = this.showActionItemsMap.get(title);
-    if(array.includes(actionNum.toString())){
+    if(array != null && array.includes(actionNum.toString())){
       return true;
     }
     return false;
