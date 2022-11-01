@@ -225,6 +225,10 @@
         <!-- Results - CIS -->
         <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:CIS" />
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
+        
+        <!-- Results - MVRA -->
+        <node displaytext="Goal Performance" id="mvra-gaps" path="assessment/{:id}/results/mvra-gaps" condition="MATURITY:MVRA" />
+        <node displaytext="Performance Summary" id="mvra-summary" path="assessment/{:id}/results/mvra-summary" condition="MATURITY:MVRA" />
 
 
         <!-- Results - Diagram -->

@@ -208,8 +208,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-        public virtual DbSet<RISK_AREA> RISK_AREA { get; set; }
-        public virtual DbSet<RISK_SUB_RISK_AREA> RISK_SUB_RISK_AREA { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -2921,17 +2919,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.REQUIREMENT_SOURCE_FILES)
                     .HasForeignKey(d => d.Requirement_Id)
                     .HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<RISK_SUB_RISK_AREA>(entity =>
-            {
-                entity.HasKey(e => e.Sub_Risk_Area_Id)
-                    .HasName("PK_SUB_RISK_AREA_1");
-
-                entity.HasOne(d => d.Risk_AreaNavigation)
-                    .WithMany(p => p.RISK_SUB_RISK_AREA)
-                    .HasForeignKey(d => d.Risk_Area)
-                    .HasConstraintName("FK_RISK_SUB_RISK_AREA_RISK_AREA");
             });
 
             modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>

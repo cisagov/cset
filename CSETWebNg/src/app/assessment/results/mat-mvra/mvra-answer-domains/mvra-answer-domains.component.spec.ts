@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IseExecutiveComponent } from './ise-executive.component';
+import { MvraAnswerDomainsComponent } from './mvra-answer-domains.component';
 
-describe('IseExecutiveComponent', () => {
-  let component: IseExecutiveComponent;
-  let fixture: ComponentFixture<IseExecutiveComponent>;
+describe('MvraAnswerDomainsComponent', () => {
+  let component: MvraAnswerDomainsComponent;
+  let fixture: ComponentFixture<MvraAnswerDomainsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IseExecutiveComponent ]
+      declarations: [ MvraAnswerDomainsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IseExecutiveComponent);
+    fixture = TestBed.createComponent(MvraAnswerDomainsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
