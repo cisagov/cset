@@ -124,7 +124,8 @@ export class IseExaminerComponent implements OnInit {
     ||   q.title == 'Stmt 19'
     ||   q.title == 'Stmt 20'
     ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
+    ||   q.title == 'Stmt 22'
+    ||   q.title == 'Stmt 23') {
       return true;
     } 
     return false;
