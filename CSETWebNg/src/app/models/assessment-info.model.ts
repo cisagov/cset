@@ -33,6 +33,7 @@ export interface AssessmentDetail {
     facilityName?: string;
     cityOrSiteName?: string;
     stateProvRegion?: string;
+    postalCode?: string;
     executiveSummary?: string;
     assessmentDescription?: string;
     additionalNotesAndComments?: string;
