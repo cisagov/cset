@@ -51,8 +51,9 @@ export class IssuesComponent implements OnInit {
   questionID: number;
 
   loading: boolean;
+  showRequiredHelper: boolean = false;
 
-  riskType: string = "Strategic";
+  riskType: string = "Transaction";
   /*strategicSubRisks = ['Other', 'Organizational Risk Management Program', 'Staffing', 'Field of Membership', 'Product/Service', 
                        'Outsourcing', 'Program Monitoring, Oversight, & Reporting', 'Business/Strategic/Budgeting', 
                        'Board of Director Oversight', 'Training', 'Capital Plans'];
@@ -172,9 +173,14 @@ export class IssuesComponent implements OnInit {
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-    this.findSvc.saveDiscovery(this.finding).subscribe(() => {
-      this.dialog.close(true);
-    });
+
+    if (this.finding.type !== null) {
+      this.findSvc.saveDiscovery(this.finding).subscribe(() => {
+        this.dialog.close(true);
+      });
+    } else {
+      this.showRequiredHelper = true;
+    }
   }
 
   cancel() {
