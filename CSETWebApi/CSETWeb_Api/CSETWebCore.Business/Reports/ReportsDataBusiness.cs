@@ -438,7 +438,8 @@ namespace CSETWebCore.Business.Reports
                                     MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
-                                    MarkForReview = question.MarkForReview
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId
                                 };
 
                                 if (question.Answer == "N")
@@ -1198,7 +1199,7 @@ namespace CSETWebCore.Business.Reports
             info.Charter = assessment.Charter;
 
             info.Assets = 0;
-            bool a = int.TryParse(assessment.Assets, out int assets);
+            bool a = long.TryParse(assessment.Assets, out long assets);
             if (a)
             {
                 info.Assets = assets;

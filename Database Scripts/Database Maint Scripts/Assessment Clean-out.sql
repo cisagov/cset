@@ -17,6 +17,8 @@ GO
 
 -- Clean out the JWT secret
 delete from [JWT]
+
+delete from [DIAGRAM_CONTAINER]
 GO
 
 

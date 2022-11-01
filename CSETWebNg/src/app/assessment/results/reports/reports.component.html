@@ -43,21 +43,18 @@
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile && !this.assessSvc.isISE()">
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      Observations Tear-Out Sheets
+    </button>
+  </div>
   <div class="alert alert-warning" *ngIf="disableEntirePage">
     All demographics information on the Assessment Information page must be provided in order to view reports.
   </div>
+
   <div [class.div-shield]="disableEntirePage">
-
-    <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile">
-      <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Observations Tear-Out Sheets
-      </button>
-    </div>
-
-    <div *ngIf="
-      !!assessSvc.assessment &&
-      (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile
-    " class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
+    class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>Standards and Diagram</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         Executive Summary
@@ -234,12 +231,11 @@
         [disabled]="disableAcetReportLinks">
         ACET Comments and Marked for Review
       </button>
-      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
+      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Answered Statements
       </button>
-      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left" [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableAcetReportLinks">
         ACET Compensating Controls
       </button>
     </div>
@@ -262,27 +258,25 @@
           Some reports are disabled until all statements have been answered.
         </span>
       </div>
-      <p *ngIf="disableIseReportLinks"></p>
-      <button (click)="clickReportLink('isegaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Gap Report
-      </button>
-      <button (click)="clickReportLink('isecommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Comments and Marked for Review
-      </button>
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
-      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
         [disabled]="disableIseReportLinks">
         ISE Scope Report
       </button>
-      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+      <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
         [disabled]="disableIseReportLinks">
         ISE Examination Report
       </button>
+      <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        ISE Examiner Report
+      </button>
+      <!-- Below is commented out to hide background data for now -->
+      <!-- <button (click)="clickReportLink('isedata')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableIseReportLinks">
+        ISE Data Report
+      </button> -->
     </div>
 
 
@@ -296,20 +290,17 @@
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')"
-          class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')" class="btn btn-link btn-link-dark text-left">
           Section Scoring Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
           Deficiency Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')"
-          class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')" class="btn btn-link btn-link-dark text-left">
           Comments and Marked for Review
         </button>
       </div>
@@ -324,14 +315,12 @@
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')" class="btn btn-link btn-link-dark text-left">
           VADR Deficiency Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')"
-          class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')" class="btn btn-link btn-link-dark text-left">
           VADR Open Ended Questions Report
         </button>
       </div>

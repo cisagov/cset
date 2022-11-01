@@ -438,6 +438,7 @@ BEGIN
 	and l.Maturity_Level_Id = @targetLevel
 	and a.Assessment_Id = @assessment_id
 	and q.Parent_Question_Id IS NOT NULL
+	and q.Maturity_Level_Id != 19
 	group by Answer_Text
 
 
