@@ -99,7 +99,6 @@ export class IssuesComponent implements OnInit {
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
-      console.log("this.finding: " + JSON.stringify(this.finding, null, 4));
 
       this.questionsSvc.getActionItems(this.questionID).subscribe(
         (data: any) => {
