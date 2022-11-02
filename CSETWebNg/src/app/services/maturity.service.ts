@@ -205,7 +205,6 @@ export class MaturityService {
     if (this.assessSvc.assessment) {
       this.assessSvc.assessment.maturityModel.maturityTargetLevel = level;
     }
-    console.log(level);
     return this.http.post(
       this.configSvc.apiUrl + "MaturityLevel",
       level,
