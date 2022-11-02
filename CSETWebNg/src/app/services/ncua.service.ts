@@ -223,7 +223,6 @@ let headers = {
   updateAssetSize(amount: string) {
     this.assetsAsString = amount;
     this.assetsAsNumber = parseInt(amount);
-    console.log('UPDATED ASSET SIZE');
     this.getExamLevelFromAssets();
   }
 
@@ -238,10 +237,14 @@ let headers = {
   getExamLevelFromAssets() {
     if (this.assetsAsNumber > 50000000) {
       this.proposedExamLevel = 'CORE';
-      this.maturitySvc.saveLevel(2);
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(2).subscribe();
+      }
     } else {
       this.proposedExamLevel = 'SCUEP';
-      this.maturitySvc.saveLevel(1);
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(1).subscribe();
+      }
     }
   }
 
@@ -249,14 +252,15 @@ let headers = {
     if (level === 0) {
       this.usingExamLevelOverride = false;
       this.chosenOverrideLevel = "No Override";
+      this.getExamLevelFromAssets();
     } else if (level === 1) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "SCUEP";
-      this.maturitySvc.saveLevel(1);
+      this.maturitySvc.saveLevel(1).subscribe();
     } else if (level === 2) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "CORE";
-      this.maturitySvc.saveLevel(2);
+      this.maturitySvc.saveLevel(2).subscribe();
     }
     this.refreshGroupList(level);
   }
