@@ -173,12 +173,13 @@ export class IssuesComponent implements OnInit {
     this.finding.question_Id = this.questionID;
 
     if (this.finding.type !== null) {
-      console.log("Update: " + JSON.stringify(this.finding, null, 4));
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
         this.dialog.close(true);
       });
     } else {
       this.showRequiredHelper = true;
+      let el = document.getElementById("titleLabel");
+      el.scrollIntoView();
     }
   }
 
