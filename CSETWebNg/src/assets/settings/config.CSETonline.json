@@ -3,6 +3,7 @@
     "behaviors": {
         "defaultTitle":"CSET-Online",
         "showModuleBuilder": false,
+        "showModuleImport": false,
         "showAggregation": false,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
@@ -11,11 +12,8 @@
         "showMenuParameterEditor": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
-        "useMaturity": true,
         "defaultMaturityModel": "",
         "isAcetOnly": false,
-        "useStandard": false,
-        "useDiagram": false,
         "showFacilityName": false,
         "showCityName": false,
         "showStateName": false,
@@ -23,7 +21,10 @@
         "showOrganizationName": false,
         "showBusinessAgencyName": false,
         "showCriticalService": false,
-        "showPrivacyWarning":true
+        "showPrivacyWarning": true,
+        "showTrend:": false,
+        "showCompare": false,
+        "showEnableProtectedFeatures": false
     }
 }
 

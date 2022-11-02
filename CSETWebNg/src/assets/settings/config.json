@@ -25,13 +25,15 @@
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true
     },
-    
+
     "galleryLayout": "CSET",
     "installationMode": "CSET",
     "mobileEnvironment": "",
     "behaviors": {
         "defaultTitle":"CSET",
         "showModuleBuilder": true,
+        "showModuleImport": true,
+        "showModuleContentReport": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,
         "showAnalytics": true,
@@ -49,8 +51,11 @@
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "allowDiagram":true,
-        "showPrivacyWarning":false
+        "allowDiagram": true,
+        "showPrivacyWarning": false,
+        "showTrend:": true,
+        "showCompare": true,
+        "showEnableProtectedFeatures": true
     },
     "answersDefault": [
         {
