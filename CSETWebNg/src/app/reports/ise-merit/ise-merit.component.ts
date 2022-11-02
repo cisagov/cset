@@ -47,6 +47,7 @@ export class IseMeritComponent implements OnInit {
 
   examLevel: string = '';
 
+  relaventIssues: boolean = false;
   loadingCounter: number = 0;
 
   // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
@@ -141,49 +142,57 @@ export class IseMeritComponent implements OnInit {
             }
           }
         }
+
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (r: any) => {
+            this.response = r;
+            console.log(r)
+    
+            
+              for(let i = 0; i < this.response?.length; i++) {
+                if(this.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                  let finding = this.response[i];
+                  if(finding.finding.type === 'Examiner Finding') {
+                    this.addExaminerFinding(finding.category.title);
+                  }
+                  if(finding.finding.type === 'DOR') {
+                    this.addDOR(finding.category.title);
+                  }
+                  if(finding.finding.type === 'Supplemental Fact') {
+                    this.addSupplementalFact(finding.category.title);
+                  }
+                  if(finding.finding.type === 'Non-reportable') {
+                    this.addNonReportable(finding.category.title);
+                  }
+                  this.relaventIssues = true;
+                }
+              }
+    
+              if(this.relaventIssues){
+                this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+                this.categoryBuilder(this.examinerFindings);
+    
+                this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+                this.categoryBuilder(this.dors);
+    
+                this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+                this.categoryBuilder(this.supplementalFacts);
+    
+                this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+                this.categoryBuilder(this.nonReportables);
+              } else {
+                this.resultsOfReviewString += 'No Issues were noted.';
+              }
+    
+              this.loadingCounter ++;
+          },
+          error => console.log('MERIT Report Error: ' + (<Error>error).message)
+        );
+
       },
     )
 
-    this.findSvc.GetAssessmentFindings().subscribe(
-      (r: any) => {
-        this.response = r;
-        console.log(r)
-
-        if(this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-        
-          for(let i = 0; i < this.response?.length; i++) {
-            let finding = this.response[i];
-            if(finding.finding.type === 'Examiner Finding') {
-              this.addExaminerFinding(finding.category.title);
-            }
-            if(finding.finding.type === 'DOR') {
-              this.addDOR(finding.category.title);
-            }
-            if(finding.finding.type === 'Supplemental Fact') {
-              this.addSupplementalFact(finding.category.title);
-            }
-            if(finding.finding.type === 'Non-reportable') {
-              this.addNonReportable(finding.category.title);
-            }
-          }
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-          this.categoryBuilder(this.examinerFindings);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-          this.categoryBuilder(this.dors);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-          this.categoryBuilder(this.supplementalFacts);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-          this.categoryBuilder(this.nonReportables);
-
-          this.loadingCounter ++;
-        }
-      },
-      error => console.log('MERIT Report Error: ' + (<Error>error).message)
-    );
+    
 
     this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {

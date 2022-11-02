@@ -73,6 +73,9 @@ export class IseExaminationComponent implements OnInit {
 
   examLevel: string = '';
 
+  relaventIssues: boolean = false;
+  loadingCounter: number = 0;
+
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
@@ -169,47 +172,61 @@ export class IseExaminationComponent implements OnInit {
 
                 this.resultsOfReviewForCopy += issueText;
               }
+              this.loadingCounter ++;
             }
           }
         }
+
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (f: any) => {
+            this.findingsResponse = f;  
+    
+            for(let i = 0; i < this.findingsResponse?.length; i++) {
+              if(this.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                let finding = this.findingsResponse[i];
+                if(finding.finding.type === 'Examiner Finding') {
+                  this.addExaminerFinding(finding.category.title);
+                }
+                if(finding.finding.type === 'DOR') {
+                  this.addDOR(finding.category.title);
+                }
+                if(finding.finding.type === 'Supplemental Fact') {
+                  this.addSupplementalFact(finding.category.title);
+                }
+                if(finding.finding.type === 'Non-reportable') {
+                  this.addNonReportable(finding.category.title);
+                }
+                this.relaventIssues = true;
+              }
+            }
+            if(this.relaventIssues){
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+              this.categoryBuilder(this.examinerFindings);
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+              this.categoryBuilder(this.dors);
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+              this.categoryBuilder(this.supplementalFacts);
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+              this.categoryBuilder(this.nonReportables);
+            } else {
+              this.summaryForCopy += 'No Issues were noted.';
+            }
+            
+            this.loadingCounter++;
+          },
+          error => console.log('Findings Error: ' + (<Error>error).message)
+        );
+
+
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
 
-    this.findSvc.GetAssessmentFindings().subscribe(
-      (f: any) => {
-        this.findingsResponse = f;  
-
-        for(let i = 0; i < this.findingsResponse?.length; i++) {
-          let finding = this.findingsResponse[i];
-          if(finding.finding.type === 'Examiner Finding') {
-            this.addExaminerFinding(finding.category.title);
-          }
-          if(finding.finding.type === 'DOR') {
-            this.addDOR(finding.category.title);
-          }
-          if(finding.finding.type === 'Supplemental Fact') {
-            this.addSupplementalFact(finding.category.title);
-          }
-          if(finding.finding.type === 'Non-reportable') {
-            this.addNonReportable(finding.category.title);
-          }
-        }
-
-        this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-        this.categoryBuilder(this.examinerFindings);
-
-        this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-        this.categoryBuilder(this.dors);
-
-        this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-        this.categoryBuilder(this.supplementalFacts);
-
-        this.summaryForCopy += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-        this.categoryBuilder(this.nonReportables);
-      },
-      error => console.log('Findings Error: ' + (<Error>error).message)
-    );
+    
 
     // initializing all assessment factors / categories / parent questions to true (expanded)
     // used in checking if the section / question should be expanded or collapsed 
@@ -405,6 +422,16 @@ export class IseExaminationComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  translateExamLevel(examLevel: number) {
+    if(examLevel === 17) {
+      return 'SCUEP';
+    } else if (examLevel === 18) {
+      return 'CORE';
+    } else if (examLevel === 19) {
+      return 'CORE+';
+    }
   }
   
 }
