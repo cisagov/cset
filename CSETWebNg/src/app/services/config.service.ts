@@ -40,7 +40,6 @@ export class ConfigService {
   analyticsUrl: string;
   config: any;
 
-  isCsetOnline = false;
   behaviors: any;
 
   buttonClasses = {};

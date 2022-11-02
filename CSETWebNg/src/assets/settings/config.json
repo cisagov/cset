@@ -1,6 +1,5 @@
 {
     "currentConfigChain": ["development","TSA"],
-    "isCsetOnline": false,
     "appCode": "CSET",
     "app": {
         "protocol": "http",
