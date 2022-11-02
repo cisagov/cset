@@ -75,18 +75,19 @@ export class ConfigService {
     if (csetGlobalConfig) {
       this.config = csetGlobalConfig;
       if (!this.initialized) {
-        this.isRunningInElectron = localStorage.getItem("isRunningInElectron") == "true";      
+        this.isRunningInElectron = localStorage.getItem("isRunningInElectron") == "true";
         this.setConfigPropertiesForLocalService(csetGlobalConfig);
-      }      
+      }
       return;
     }
     else{
       console.log("FAILED TO FIND LOCAL CONFIGURATION");
     }
-    
+
   }
 
   setConfigPropertiesForLocalService(config: any) {
+    this.assetsUrl ='assets/';
     this.installationMode = config.installationMode;
     let apiPort = config.api.port != "" ? ":" + config.api.port : "";
     let appPort = config.app.port != "" ? ":" + config.app.port : "";

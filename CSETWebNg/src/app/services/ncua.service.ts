@@ -28,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
+import { MaturityService } from './maturity.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -80,8 +81,9 @@ let headers = {
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public acetFilteringSvc: AcetFilteringService
-  ) { 
+    public acetFilteringSvc: AcetFilteringService,
+    private maturitySvc: MaturityService
+  ) {
     this.init();
   }
 
@@ -221,6 +223,7 @@ let headers = {
   updateAssetSize(amount: string) {
     this.assetsAsString = amount;
     this.assetsAsNumber = parseInt(amount);
+    console.log('UPDATED ASSET SIZE');
     this.getExamLevelFromAssets();
   }
 
@@ -235,8 +238,10 @@ let headers = {
   getExamLevelFromAssets() {
     if (this.assetsAsNumber > 50000000) {
       this.proposedExamLevel = 'CORE';
+      this.maturitySvc.saveLevel(2);
     } else {
       this.proposedExamLevel = 'SCUEP';
+      this.maturitySvc.saveLevel(1);
     }
   }
 
@@ -247,9 +252,11 @@ let headers = {
     } else if (level === 1) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "SCUEP";
+      this.maturitySvc.saveLevel(1);
     } else if (level === 2) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "CORE";
+      this.maturitySvc.saveLevel(2);
     }
     this.refreshGroupList(level);
   }
