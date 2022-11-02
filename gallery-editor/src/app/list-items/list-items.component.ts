@@ -85,25 +85,25 @@ export class ListItemsComponent implements OnInit {
 
   deleteGalleryItem(id: any) {
     console.log(id + " would be deleted");
-    // this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
-    //   (r: any) => {
-    //     // this.response = r;
-    //     console.log(this.response);
-    //     this.updateItems();
-    //   },
-    //   error => console.log('Gallery Item delete error ' + (<Error>error).message)
-    // );
+    this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
+      (r: any) => {
+        // this.response = r;
+        console.log(this.response);
+        this.updateItems();
+      },
+      error => console.log('Gallery Item delete error ' + (<Error>error).message)
+    );
   }
 
   deleteGalleryGroup(item:any) {
     console.log(item.group_Id);
-    // this.svcGalleryEditor.deleteGalleryGroup(id).subscribe(
-    //   (r: any) => {
-    //     this.updateItems();
+    this.svcGalleryEditor.deleteGalleryGroup(item).subscribe(
+      (r: any) => {
+        this.updateItems();
 
-    //   },
-    //   error => console.log('Gallery Group delete error ' + (<Error>error).message)
-    // );
+      },
+      error => console.log('Gallery Group delete error ' + (<Error>error).message)
+    );
   }
 
   addGalleryGroup(group: string, description: string, title: string) {
@@ -159,6 +159,7 @@ export class ListItemsComponent implements OnInit {
   }
 
   updateItems() {
+    console.log("updating the items tree");
     this.treeNeedsRefreshed.emit();
     // this.svcGalleryEditor.getGalleryItems().subscribe(
     //   (r: any) => {

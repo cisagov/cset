@@ -51,7 +51,6 @@ export class ZonesComponent implements OnInit {
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
