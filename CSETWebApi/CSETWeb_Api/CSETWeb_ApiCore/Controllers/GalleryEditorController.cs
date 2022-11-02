@@ -118,6 +118,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/cloneItem")]
         public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.CloneGalleryItem(Item_To_Clone, Group_Id);
@@ -137,6 +141,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/cloneGroup")]
         public IActionResult CloneGroup(int Group_Id, string layout_Name)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.CloneGalleryGroup(Group_Id, layout_Name);
@@ -162,6 +170,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/addItem")]
         public IActionResult AddItem(string newDescription, string newTitle, int group_Id, int columnId)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             string newIcon_File_Name_Small = "";
             string newIcon_File_Name_Large = "";
 
@@ -186,6 +198,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/addGroup")]
         public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             string newIcon_File_Name_Small = "";
             string newIcon_File_Name_Large = "";
 
@@ -210,6 +226,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/deleteGalleryItem")]
         public IActionResult DeleteItem(int id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.DeleteGalleryItem(id);
@@ -230,6 +250,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/deleteGalleryGroup")]
         public IActionResult DeleteGroup(int id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.DeleteGalleryGroup(id);
@@ -246,6 +270,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/getLayouts")]
         public IActionResult getLayouts()
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 return Ok(_galleryEditor.GetLayout());
@@ -301,6 +329,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/getUnused")]
         public IActionResult GetUnusedItems(string Layout_Name)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 return Ok(_galleryEditor.GetUnused(Layout_Name));
