@@ -121,7 +121,7 @@ export class MyAssessmentsComponent implements OnInit {
         break;
       case 'TSA':
         this.isTSA=true;
-        break;      
+        break;
       default:
         this.isCSET=true;
     }
@@ -141,10 +141,8 @@ export class MyAssessmentsComponent implements OnInit {
    * @returns
    */
   showAnalytics() {
-    var show = this.configSvc.config.behaviors?.showAnalyticsColumnOnLanding ?? false;
+    var show = this.configSvc.behaviors?.showAnalyticsColumnOnLanding ?? false;
 
-    // this will be reworked with the behavior configuration overrides
-    show = show || (this.isTSA || this.isCSET);
     return show;
   }
 

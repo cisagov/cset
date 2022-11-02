@@ -44,13 +44,13 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // Only implementing sticky tabs on main CSET installation mode for now.
-      const tabsEl = this.tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
+    const tabsEl = this.tabsElementRef.nativeElement;
+    tabsEl.classList.add('sticky-tabs');
+    if (this.authSvc.isLocal) {
+      tabsEl.style.top = '81px';
+    } else {
+      tabsEl.style.top = '62px';
+    }
   }
 
   setTab(tab) {
