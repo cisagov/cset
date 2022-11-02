@@ -201,7 +201,7 @@ export class TopMenusComponent implements OnInit {
 
     // This should not be offered in mobile or CSET Online
     if (item == 'module builder') {
-      return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
+      return (this.configSvc.config.behaviors?.showModuleBuilder ?? false);
     }
 
     if (item == 'module content report') {
