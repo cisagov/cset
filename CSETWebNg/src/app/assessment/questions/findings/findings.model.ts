@@ -36,8 +36,8 @@ export interface Finding {
   // ISE fields
   title: string;
   type: string;
-  riskArea: string;
-  subRisk: string;
+  risk_Area: string;
+  sub_Risk: string;
   description: string;
   citations: string;
   auto_Generated: number;

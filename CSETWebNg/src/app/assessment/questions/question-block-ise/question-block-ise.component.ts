@@ -717,8 +717,8 @@ export class QuestionBlockIseComponent implements OnInit {
       vulnerabilities: '',
       title: name,
       type: null,
-      riskArea: 'Transaction',
-      subRisk: '',
+      risk_Area: 'Transaction',
+      sub_Risk: '',
       description: null,
       citations: null,
       auto_Generated: 0
@@ -774,8 +774,8 @@ export class QuestionBlockIseComponent implements OnInit {
           vulnerabilities: '',
           title: name,
           type: null,
-          riskArea: 'Transaction',
-          subRisk: '',
+          risk_Area: 'Transaction',
+          sub_Risk: 'Information Systems & Technology Controls',
           description: desc,
           citations: null,
           auto_Generated: 1
