@@ -219,7 +219,7 @@ export class QuestionBlockIseComponent implements OnInit {
             count++;
           }
 
-          this.ncuaSvc.importantQuestionCheck.set(parentId, count);
+          this.ncuaSvc.questionCheck.set(parentId, count);
         }
 
         this.ncuaSvc.deleteHistory.clear();
@@ -234,7 +234,7 @@ export class QuestionBlockIseComponent implements OnInit {
     for (let value of iterator) {
       if (value[1] === findingId) {
         parentKey = value[0];
-        this.ncuaSvc.importantQuestionCheck.delete(parentKey);
+        this.ncuaSvc.questionCheck.delete(parentKey);
         this.ncuaSvc.issueFindingId.delete(parentKey);
         this.ncuaSvc.deleteHistory.add(parentKey);
       }
@@ -312,13 +312,12 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   checkForIssues(q: Question, oldAnswerValue: string) {
-    if (this.importantQuestions.has(q.questionId)) {
-      let num = this.ncuaSvc.importantQuestionCheck.get(q.parentQuestionId);
-      let value = (num != undefined) ? num : 0;
+      let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
+      let value = (count != undefined) ? count : 0;
 
       if (q.answer === 'N') {
         value++;
-        this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
+        this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
 
         if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
           if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
@@ -328,7 +327,7 @@ export class QuestionBlockIseComponent implements OnInit {
       } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
         value--;
         if (value < 1) {
-          this.ncuaSvc.importantQuestionCheck.delete(q.parentQuestionId);
+          this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
 
           if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
             let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
@@ -336,9 +335,8 @@ export class QuestionBlockIseComponent implements OnInit {
             this.deleteIssue(findId, true);
           }
         } else {
-          this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
+          this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
         }
-      } 
     }
   }
 

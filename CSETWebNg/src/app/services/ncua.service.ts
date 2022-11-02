@@ -72,7 +72,7 @@ let headers = {
 
   // Variables to manage ISE issues state
   issuesFinishedLoading: boolean = false;
-  importantQuestionCheck = new Map();
+  questionCheck = new Map();
   issueFindingId = new Map();
   deleteHistory = new Set();
 
@@ -208,7 +208,7 @@ let headers = {
 
   // Clears necessary variables on assessment drop
   reset() {
-    this.importantQuestionCheck.clear();
+    this.questionCheck.clear();
     this.issueFindingId.clear();
     this.deleteHistory.clear();
   }
