@@ -32,6 +32,10 @@ export class IseMeritComponent implements OnInit {
   supplementalFactsTotal: number = 0;
   supplementalFactsInCat: string = '';
 
+  nonReportables: string[] = [];
+  nonReportablesTotal: number = 0;
+  nonReportablesInCat: string = '';
+
   subCategories: string[] = [];
 
   resultsOfReviewStatic: string = 'Performed review of the security program using the ISE Toolbox.';
@@ -77,6 +81,9 @@ export class IseMeritComponent implements OnInit {
           if(finding.finding.type === 'Supplemental Fact') {
             this.addSupplementalFact(finding.category.title);
           }
+          if(finding.finding.type === 'Non-reportable') {
+            this.addNonReportable(finding.category.title);
+          }
         }
 
         this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
@@ -88,6 +95,8 @@ export class IseMeritComponent implements OnInit {
         this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
         this.categoryBuilder(this.supplementalFacts);
 
+        this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+        this.categoryBuilder(this.nonReportables);
       },
       error => console.log('MERIT Report Error: ' + (<Error>error).message)
     );
@@ -200,6 +209,13 @@ export class IseMeritComponent implements OnInit {
       this.supplementalFacts.push(title);
     }
     this.supplementalFactsTotal ++;
+  }
+
+  addNonReportable(title: any) {
+    if (!this.nonReportables.includes(title)) {
+      this.nonReportables.push(title);
+    }
+    this.nonReportablesTotal ++;
   }
 
   translateExamLevel(examLevel: number) {
