@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-6">
         <div class="form-group">
-          <label for="title" class="form-label font-weight-bold">Title</label>
+          <label id="titleLabel" for="title" class="form-label font-weight-bold">Title</label>
           <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.title">
         </div>
       </div>
@@ -155,6 +155,6 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0" align="end">
-    <button mat-button class="btn btn-primary" (click)="update()">Done</button>
+    <button mat-button class="btn btn-primary" (click)="update(target)">Done</button>
   </mat-dialog-actions>
 </ng-template>
