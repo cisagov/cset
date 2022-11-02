@@ -312,31 +312,31 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   checkForIssues(q: Question, oldAnswerValue: string) {
-      let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
-      let value = (count != undefined) ? count : 0;
+    let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
+    let value = (count != undefined) ? count : 0;
 
-      if (q.answer === 'N') {
-        value++;
+    if (q.answer === 'N') {
+      value++;
+      this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
+
+      if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+        if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
+          this.autoGenerateIssue(q.parentQuestionId, 0);
+        }
+      }
+    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+      value--;
+      if (value < 1) {
+        this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
+
+        if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+          let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
+          this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
+          this.deleteIssue(findId, true);
+        }
+      } else {
         this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
-
-        if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
-          if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
-            this.autoGenerateIssue(q.parentQuestionId, 0);
-          }
-        }
-      } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
-        value--;
-        if (value < 1) {
-          this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
-
-          if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
-            let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
-            this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
-            this.deleteIssue(findId, true);
-          }
-        } else {
-          this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
-        }
+      }
     }
   }
 
