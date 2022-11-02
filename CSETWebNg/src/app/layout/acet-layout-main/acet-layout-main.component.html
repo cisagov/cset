@@ -61,9 +61,9 @@
   </div>
 
   <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header"
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header sticky-footer"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
-    <ngb-panel id="ngb-panel-0">
+    <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
         <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
           [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
