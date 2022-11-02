@@ -321,7 +321,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/getLinks")]
         [HttpGet]
-        public List<mxGraphModelRootMxCell> GetLinks()
+        public List<mxGraphModelRootObject> GetLinks()
         {
             try
             {

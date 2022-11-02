@@ -8,3 +8,11 @@
 <div class="section-bdy">  
   <app-list-items [listTest]="{ children: list }" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="true"></app-list-items>
 </div>
+
+
+<div>
+  THESE ARE CURRENTLY UNUSED ITEMS
+</div>
+<div>  
+  <app-list-items [listTest]="{ children: unusedList }" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="false"></app-list-items>
+</div>

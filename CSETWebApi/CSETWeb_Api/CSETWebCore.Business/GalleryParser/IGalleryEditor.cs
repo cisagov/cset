@@ -10,5 +10,7 @@ namespace CSETWebCore.Business.GalleryParser
         void DeleteGalleryItem(int id);
         void DeleteGalleryGroup(int id);
         int AddGalleryGroup(string group_title, string layout);
+        GalleryItem[] GetUnused(string layout_Name);
+        void CloneGalleryGroup(int group_Id, string layout_Name);
     }
 }

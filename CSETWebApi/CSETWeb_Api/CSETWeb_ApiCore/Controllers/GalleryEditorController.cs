@@ -20,7 +20,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         // if you want to use the gallery editor, change this to true
-        private bool inDev = false;
+        private bool inDev = true;
 
         public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
@@ -118,6 +118,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/cloneItem")]
         public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.CloneGalleryItem(Item_To_Clone, Group_Id);
@@ -128,7 +132,29 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        /// <summary>
+        /// Clones the specified item
+        /// </summary>
+        /// <param name="Item_To_Clone"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/cloneGroup")]
+        public IActionResult CloneGroup(int Group_Id, string layout_Name)
+        {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
+            try
+            {
+                _galleryEditor.CloneGalleryGroup(Group_Id, layout_Name);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /// <summary>
         /// Adds the item
@@ -144,6 +170,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/addItem")]
         public IActionResult AddItem(string newDescription, string newTitle, int group_Id, int columnId)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             string newIcon_File_Name_Small = "";
             string newIcon_File_Name_Large = "";
 
@@ -168,6 +198,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/addGroup")]
         public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             string newIcon_File_Name_Small = "";
             string newIcon_File_Name_Large = "";
 
@@ -192,6 +226,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/deleteGalleryItem")]
         public IActionResult DeleteItem(int id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.DeleteGalleryItem(id);
@@ -212,6 +250,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/deleteGalleryGroup")]
         public IActionResult DeleteGroup(int id)
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 _galleryEditor.DeleteGalleryGroup(id);
@@ -228,6 +270,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/gallery/getLayouts")]
         public IActionResult getLayouts()
         {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
             try
             {
                 return Ok(_galleryEditor.GetLayout());
@@ -273,6 +319,30 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        /// <summary>
+        /// Returns the gallery card structure
+        /// </summary>
+        /// <param name="Layout_Name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/gallery/getUnused")]
+        public IActionResult GetUnusedItems(string Layout_Name)
+        {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
+            try
+            {
+                return Ok(_galleryEditor.GetUnused(Layout_Name));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
     }
 

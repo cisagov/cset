@@ -56,7 +56,6 @@ export class LinksComponent implements OnInit {
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
@@ -64,9 +63,11 @@ export class LinksComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "label":
-          return this.comparer.compare(a.value, b.value, isAsc);
+          return this.comparer.compare(a.label, b.label, isAsc);
         case "subnetName":
           return this.comparer.compare(a.subnetName, b.subnetName, isAsc);
+        case "linkType":
+          return this.comparer.compare(a.linkType, b.linkType, isAsc);
         case "security":
           return this.comparer.compare(a.security, b.security, isAsc);
         case "layer":

@@ -51,7 +51,6 @@ export class ShapesComponent implements OnInit {
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
@@ -59,7 +58,7 @@ export class ShapesComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "label":
-          return this.comparer.compare(a.valueFi, b.valueFi, isAsc);
+          return this.comparer.compare(a.value, b.value, isAsc);
         case "layer":
           return this.comparer.compare(a.layerName, b.layerName, isAsc);
         case "visible":
