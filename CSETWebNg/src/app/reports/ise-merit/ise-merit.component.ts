@@ -47,6 +47,8 @@ export class IseMeritComponent implements OnInit {
 
   examLevel: string = '';
 
+  loadingCounter: number = 0;
+
   // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
   //                               "Stmt 8", "Stmt 9", "Stmt 10", "Stmt 11", "Stmt 12", "Stmt 13", "Stmt 14", 
   //                               "Stmt 15", "Stmt 16", "Stmt 17", "Stmt 18", "Stmt 19", "Stmt 20", "Stmt 21", 
@@ -65,52 +67,10 @@ export class IseMeritComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
-    this.findSvc.GetAssessmentFindings().subscribe(
-      (r: any) => {
-        this.response = r;
-        this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id);
-
-        for(let i = 0; i < this.response?.length; i++) {
-          let finding = this.response[i];
-          if(finding.finding.type === 'Examiner Finding') {
-            this.addExaminerFinding(finding.category.title);
-          }
-          if(finding.finding.type === 'DOR') {
-            this.addDOR(finding.category.title);
-          }
-          if(finding.finding.type === 'Supplemental Fact') {
-            this.addSupplementalFact(finding.category.title);
-          }
-          if(finding.finding.type === 'Non-reportable') {
-            this.addNonReportable(finding.category.title);
-          }
-        }
-
-        this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-        this.categoryBuilder(this.examinerFindings);
-
-        this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-        this.categoryBuilder(this.dors);
-
-        this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-        this.categoryBuilder(this.supplementalFacts);
-
-        this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-        this.categoryBuilder(this.nonReportables);
-      },
-      error => console.log('MERIT Report Error: ' + (<Error>error).message)
-    );
-
-    this.acetSvc.getAssessmentInformation().subscribe(
-      (r: any) => {
-        this.demographics = r;
-      },
-      error => console.log('Assessment Information Error: ' + (<Error>error).message)
-    )
-
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.answers = r;
+        console.log(r)
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
@@ -175,11 +135,66 @@ export class IseMeritComponent implements OnInit {
               //   console.log('called')
               //   this.removeUnusedActionItems(parentQuestionId, question.title)
               // }
+
+              this.loadingCounter ++;
+
             }
           }
         }
       },
     )
+
+    this.findSvc.GetAssessmentFindings().subscribe(
+      (r: any) => {
+        this.response = r;
+        console.log(r)
+
+        if(this.translateExamLevel(this.response[0]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+        
+          for(let i = 0; i < this.response?.length; i++) {
+            let finding = this.response[i];
+            if(finding.finding.type === 'Examiner Finding') {
+              this.addExaminerFinding(finding.category.title);
+            }
+            if(finding.finding.type === 'DOR') {
+              this.addDOR(finding.category.title);
+            }
+            if(finding.finding.type === 'Supplemental Fact') {
+              this.addSupplementalFact(finding.category.title);
+            }
+            if(finding.finding.type === 'Non-reportable') {
+              this.addNonReportable(finding.category.title);
+            }
+          }
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+          this.categoryBuilder(this.examinerFindings);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+          this.categoryBuilder(this.dors);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+          this.categoryBuilder(this.supplementalFacts);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+          this.categoryBuilder(this.nonReportables);
+
+          this.loadingCounter ++;
+        }
+      },
+      error => console.log('MERIT Report Error: ' + (<Error>error).message)
+    );
+
+    this.acetSvc.getAssessmentInformation().subscribe(
+      (r: any) => {
+        this.demographics = r;
+
+        this.loadingCounter ++;
+      },
+      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+    )
+
+    
 
     // this.acetSvc.getIseSourceFiles().subscribe(
     //   (r: any) => {
@@ -220,11 +235,11 @@ export class IseMeritComponent implements OnInit {
 
   translateExamLevel(examLevel: number) {
     if(examLevel === 17) {
-      this.examLevel = 'SCUEP';
+      return 'SCUEP';
     } else if (examLevel === 18) {
-      this.examLevel = 'CORE';
-    } else {
-      this.examLevel = 'Loading...';
+      return 'CORE';
+    } else if (examLevel === 19) {
+      return 'CORE+';
     }
   }
 
