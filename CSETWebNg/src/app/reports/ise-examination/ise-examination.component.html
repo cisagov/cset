@@ -136,6 +136,13 @@
                     </div>
                     <br>
                 </div>
+                <div *ngIf="this.nonReportablesTotal > 0">
+                    {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length, 'Non-reportable') }}
+                    <div *ngFor="let issue of this.nonReportables" style="padding-left: 30px">
+                        {{ issue }}
+                    </div>
+                    <br>
+                </div>
             </div>
             <div *ngIf="this.findingsResponse?.length === 0">
                 <p>

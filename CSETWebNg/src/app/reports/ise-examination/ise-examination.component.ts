@@ -62,6 +62,10 @@ export class IseExaminationComponent implements OnInit {
   supplementalFactsTotal: number = 0;
   supplementalFactsInCat: string = '';
 
+  nonReportables: string[] = [];
+  nonReportablesTotal: number = 0;
+  nonReportablesInCat: string = '';
+
   summaryStatic: string = 'Performed review of the security program using the ISE Toolbox.';
   summaryForCopy: string = this.summaryStatic + '\n\n';
 
@@ -187,6 +191,9 @@ export class IseExaminationComponent implements OnInit {
           if(finding.finding.type === 'Supplemental Fact') {
             this.addSupplementalFact(finding.category.title);
           }
+          if(finding.finding.type === 'Non-reportable') {
+            this.addNonReportable(finding.category.title);
+          }
         }
 
         this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
@@ -197,6 +204,9 @@ export class IseExaminationComponent implements OnInit {
 
         this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
         this.categoryBuilder(this.supplementalFacts);
+
+        this.summaryForCopy += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+        this.categoryBuilder(this.nonReportables);
       },
       error => console.log('Findings Error: ' + (<Error>error).message)
     );
@@ -349,6 +359,13 @@ export class IseExaminationComponent implements OnInit {
       this.supplementalFacts.push(title);
     }
     this.supplementalFactsTotal ++;
+  }
+
+  addNonReportable(title: any) {
+    if (!this.nonReportables.includes(title)) {
+      this.nonReportables.push(title);
+    }
+    this.nonReportablesTotal ++;
   }
 
   inCatStringBuilder(total: number, length: number, findingName: string) {
