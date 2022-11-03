@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
+import { Sort } from "@angular/material/sort";
+import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
   selector: 'text',
@@ -32,6 +34,7 @@ import { DiagramService } from '../../../../services/diagram.service';
 export class TextComponent implements OnInit {
   texts = [];
   displayedColumns = ['label', 'layer']
+  comparer: Comparer = new Comparer();
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
@@ -41,6 +44,27 @@ export class TextComponent implements OnInit {
   getTexts() {
     this.diagramSvc.getDiagramText().subscribe((x: any) => {
       this.texts = x;
+    });
+  }
+
+  sortData(sort: Sort) {
+
+    if (!sort.active || sort.direction === "") {
+      return;
+    }
+
+    this.texts.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "label":
+          return this.comparer.compare(a.value, b.value, isAsc);
+        case "layer":
+          return this.comparer.compare(a.layerName, b.layerName, isAsc);
+        case "visible":
+          return this.comparer.compareBool(a.visible, b.visible, isAsc);
+        default:
+          return 0;
+      }
     });
   }
 }

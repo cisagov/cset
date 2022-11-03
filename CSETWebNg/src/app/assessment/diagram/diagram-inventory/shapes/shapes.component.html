@@ -20,14 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<!-- TODO: Properly implement mat-table and mat-row -->
-<table matSort class="assessment-summary" style='overflow:auto'>
+<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
     <th mat-sort-header="label">Label</th>
     <th mat-sort-header="layer">Layer</th>
     <th mat-sort-header="visible">Visible</th>
 
     <tr *ngFor="let shape of shapes; let i = index">
-        <td>{{shape.valueFi}}</td>
+        <td>{{shape.value}}</td>
         <td>{{shape.layerName}}</td>
         <td>
             <input type="checkbox" name="{{ shape.visible }}" class="mt-1" [(ngModel)]="shape.visible"
