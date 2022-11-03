@@ -72,6 +72,13 @@ export class FindingsService {
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
 
+
+  //change this to pass me the question_id and question_text
+  saveIssueText() {
+    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', //finding,
+    headers);
+  }
+
   /**
    * saves the given discovery
    */
