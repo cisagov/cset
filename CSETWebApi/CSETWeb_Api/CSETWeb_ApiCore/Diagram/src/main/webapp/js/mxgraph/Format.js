@@ -2443,6 +2443,36 @@ diagramElementProperties = function () {
                 fieldLabel: 'Description',
                 attributeName: 'Description',
                 type: 'textarea'
+            }, {
+                fieldLabel: 'Vendor Name',
+                attributeName: 'VendorName',
+                type: 'select',
+                values: [
+                    'Test Vendor 1',
+                    'Test Vendor 2',
+                    'Test Vendor 3'
+                ]
+            }, {
+                fieldLabel: 'Product Name',
+                attributeName: 'ProductName',
+                type: 'select',
+                values: [
+                    'Product Name 1',
+                    'Product Name 2',
+                    'Product Name 3'
+                ]
+            }, {
+                fieldLabel: 'Version Name',
+                attributeName: 'VersionName',
+                type: 'input'
+            }, {
+                fieldLabel: 'Serial Number',
+                attributeName: 'SerialNumber',
+                type: 'input'
+            }, {
+                fieldLabel: 'Physical Location',
+                attributeName: 'PhysicalLocation',
+                type: 'input'
             }
         ],
         zoneProperties: [

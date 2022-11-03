@@ -32,6 +32,12 @@
     <th mat-sort-header="description">Description</th>
     <th mat-sort-header="hostName">Host Name</th>
     <th mat-sort-header="visible">Visible</th>
+    <th mat-sort-header="visible">Vendor Name</th>
+    <th mat-sort-header="visible">Product Name</th>
+    <th mat-sort-header="visible">Version Name</th>
+    <th mat-sort-header="visible">Serial Number</th>
+    <th mat-sort-header="visible">Physical Location</th>
+
     <tr *ngFor="let component of diagramComponentList; let i = index">
         <td>{{component.label}}</td>
         <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestions" [disabled]="true"
@@ -47,6 +53,11 @@
         <td style="padding-left: 20px;">
             <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
               [checked]="component.visible" [disabled]="true" >
-         </td>
+        </td>
+        <td><select class="form-control" [(ngModel)]="component.VendorName"></select></td>
+        <td><select class="form-control" [(ngModel)]="component.productName"></select></td>
+        <td><select class="form-control" [(ngModel)]="component.versionName"></select></td>
+        <td><select class="form-control" [(ngModel)]="component.serialNumber"></select></td>
+        <td><select class="form-control" [(ngModel)]="component.physicalLocation"></select></td>
     </tr>
 </table>
