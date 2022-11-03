@@ -24,14 +24,18 @@ namespace CSETWebCore.DataLayer.Model
         public string Recommendations { get; set; }
         public string Vulnerabilities { get; set; }
         public DateTime? Resolution_Date { get; set; }
-        public int? Importance_Id { get; set; }
         [StringLength(250)]
         public string Title { get; set; }
         [StringLength(50)]
         public string Type { get; set; }
         public string Description { get; set; }
-        public string Citations { get; set; }
         public int? Auto_Generated { get; set; }
+        public int? Importance_Id { get; set; }
+        public string Citations { get; set; }
+        [StringLength(50)]
+        public string Risk_Area { get; set; }
+        [StringLength(50)]
+        public string Sub_Risk { get; set; }
 
         [ForeignKey("Answer_Id")]
         [InverseProperty("FINDING")]
