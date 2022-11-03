@@ -14,7 +14,7 @@ namespace CSETWebCore.DataLayer.Model
     public partial class ISE_ACTIONS
     {
         [Key]
-        public int Question_Id { get; set; }
+        public int Mat_Question_Id { get; set; }
         public string Description { get; set; }
         [StringLength(1000)]
         public string Action_Items { get; set; }
@@ -22,8 +22,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Regulatory_Citation { get; set; }
         public int? Parent_Id { get; set; }
 
-        [ForeignKey("Question_Id")]
+        [ForeignKey("Mat_Question_Id")]
         [InverseProperty("ISE_ACTIONS")]
-        public virtual MATURITY_QUESTIONS Question { get; set; }
+        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }

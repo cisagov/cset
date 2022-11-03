@@ -15,7 +15,6 @@ namespace CSETWebCore.DataLayer.Model
         public int? Gallery_Item_Id { get; set; }
         public int Click_Count { get; set; }
         [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Group_Detail_Id { get; set; }
 
         [ForeignKey("Gallery_Item_Id")]
