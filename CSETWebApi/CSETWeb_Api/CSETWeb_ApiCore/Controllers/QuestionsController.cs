@@ -476,6 +476,22 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="finding"></param>
+        [HttpPost]
+        [Route("api/SaveIssueOverrideText")]
+        public IActionResult SaveOverrideIssueText([FromBody] List<ActionItemText> actionItems)
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var fm = new FindingsManager(_context, assessmentId);
+
+            fm.UpdateIssues(actionItems,assessmentId);
+            return Ok();
+        }
+
 
         /// <summary>
         /// 
