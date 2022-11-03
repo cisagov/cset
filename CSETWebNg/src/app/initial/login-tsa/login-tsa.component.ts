@@ -21,9 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
@@ -50,6 +51,8 @@ export class LoginTsaComponent implements OnInit {
   incorrect = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
+
+  @ViewChild('acc') accordion: NgbAccordion;
 
   /**
    * Constructor
@@ -151,5 +154,12 @@ export class LoginTsaComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  isFooterOpen(): boolean {
+    if (!!this.accordion) {
+      return this.accordion.isExpanded('footerPanel');
+    }
+    return false;
   }
 }
