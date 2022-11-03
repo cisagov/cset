@@ -766,8 +766,8 @@ namespace CSETWebCore.Business.Maturity
                       QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                       ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                       Sequence = myQ.Sequence,
-                      MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                      MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                      MaturityLevel = myQ.Maturity_Level.Level,
+                      MaturityLevelName = myQ.Maturity_Level.Level_Name,
                       DisplayNumber = myQ.Question_Title,
                       ParentQuestionId = myQ.Parent_Question_Id,
                       QuestionType = myQ.Mat_Question_Type,
@@ -858,7 +858,7 @@ namespace CSETWebCore.Business.Maturity
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             var questionQuery = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Where(q =>
                 myModel.model_id == q.Maturity_Model_Id);
 
@@ -966,8 +966,8 @@ namespace CSETWebCore.Business.Maturity
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
