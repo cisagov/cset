@@ -187,6 +187,9 @@ import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
+import { MvraReportComponent } from './reports/mvra/mvra-report.component';
+import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
+import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 
 
 const installationMode = localStorage.getItem('installationMode');
@@ -386,8 +389,8 @@ const appRoutes: Routes = [
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
-              { path: 'mvra-gaps', component: MvraGapsComponent },
-              { path: 'mvra-summary', component: MvraSummaryComponent },
+              { path: 'mvra-gaps-page', component: MvraGapsPageComponent },
+              { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
@@ -485,6 +488,7 @@ const appRoutes: Routes = [
       { path: 'cisSectionScoringReport', component: CisSectionScoringComponent },
       { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
       { path: 'vadrReport', component: VadrReportComponent },
+      { path: 'mvraReport', component: MvraReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
     ]

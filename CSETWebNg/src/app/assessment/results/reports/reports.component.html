@@ -361,6 +361,21 @@
     </div>
 
     <div>
+      
+    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>
+        Minimum Viable Resilience Assessment (MVRA) - DRAFT
+      </h4>
+
+      <div>
+        <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
+          MVRA Report
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-5">
       <button *ngIf="!assessSvc.isISE()" tabindex="0"
         class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
         (click)="clickExport()"
@@ -371,5 +386,7 @@
     </div>
 
   </div>
+
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
 </div>

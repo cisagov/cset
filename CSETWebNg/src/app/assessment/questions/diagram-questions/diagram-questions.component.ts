@@ -1,3 +1,4 @@
+import { CompletionService } from './../../../services/completion.service';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -50,6 +51,7 @@ export class DiagramQuestionsComponent implements OnInit {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     private dialog: MatDialog
@@ -86,6 +88,8 @@ export class DiagramQuestionsComponent implements OnInit {
         this.categories = response.categories;
         this.loaded = true;
 
+        this.completionSvc.setQuestionArray(response);
+
         this.refreshQuestionVisibility();
       },
       error => {
@@ -113,7 +117,7 @@ export class DiagramQuestionsComponent implements OnInit {
   }
 
   /**
- * 
+ *
  */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
