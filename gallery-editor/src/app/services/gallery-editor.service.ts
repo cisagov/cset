@@ -18,7 +18,7 @@ export class GalleryEditorService {
  
   
   allitems:ListTest[]= [];
-  unusedItemList: ListTest[];
+  unusedItemList: ListTest[]= [];
   setAllItem(list: ListTest[]) {
     this.allitems = list;
   }
