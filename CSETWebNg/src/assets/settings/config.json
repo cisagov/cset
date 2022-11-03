@@ -1,5 +1,5 @@
 {
-    "currentConfigChain": ["development","TSA"],
+    "currentConfigChain": ["development"],
     "appCode": "CSET",
     "app": {
         "protocol": "http",
