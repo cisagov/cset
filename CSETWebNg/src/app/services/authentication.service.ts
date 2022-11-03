@@ -76,12 +76,12 @@ export class AuthenticationService {
     /**
      * Indicates if the user has agreed to the privacy warning.
      * Returns true if not running as "CSET Online".
-     * 
-     * Only CSET Online requires the user agreement.  
+     *
+     * Only CSET Online requires the user agreement.
      * If not currently running as CSET Online, always returns true.
      */
-    hasUserAgreedToPrivacyWarning() {        
-        if (!this.configSvc.isCsetOnline) {
+    hasUserAgreedToPrivacyWarning() {
+        if (!this.configSvc.config.behaviors.showPrivacyWarning) {
             return true;
         }
 
@@ -89,7 +89,7 @@ export class AuthenticationService {
     }
 
     /**
-     * 
+     *
      */
     checkLocal() {
         return this.http.post(this.configSvc.apiUrl + 'auth/login/standalone',

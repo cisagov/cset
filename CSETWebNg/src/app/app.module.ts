@@ -509,6 +509,8 @@ import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-a
 import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 import { ZipCodeDirective } from './helpers/zip-code.directive';
 
+
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -971,7 +973,7 @@ import { ZipCodeDirective } from './helpers/zip-code.directive';
         {
           provide: APP_INITIALIZER,
           useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
-            return () => {
+            return () => {              
               return configSvc.loadConfig().then(() => {
                 return authSvc.checkLocal();
               });
