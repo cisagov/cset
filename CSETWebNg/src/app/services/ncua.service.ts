@@ -76,6 +76,11 @@ let headers = {
   issueFindingId = new Map();
   deleteHistory = new Set();
 
+  // Keeps track of Issues with unassigned Types for report notification
+  unassignedIssueTitles: any = [];
+  unassignedIssues: boolean = false;
+
+
 
   constructor(
     private http: HttpClient,

@@ -35,6 +35,8 @@ import { DemographicExtendedService } from '../../../services/demographic-extend
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { FindingsService } from '../../../services/findings.service';
 
 @Component({
     selector: 'app-reports',
@@ -48,6 +50,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * Indicates if all ACET questions have been answered.  This is only
      * used when the ACET model is in use and this is an ACET installation.
      */
+    unassignedIssueTitles: any = [];
+
     disableAcetReportLinks: boolean = true;
     disableIseReportLinks: boolean = true;
     disableEntirePage: boolean = false;
@@ -71,6 +75,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private acetSvc: ACETService,
+        private ncuaSvc: NCUAService,
+        public findSvc: FindingsService,
         public fileSvc: FileUploadClientService,
         public authSvc: AuthenticationService,
         private router: Router,
@@ -120,6 +126,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.configSvc.installationMode === 'ACET') {
             if (this.assessSvc.isISE()) {
                 this.checkIseDisabledStatus();
+
+                this.getAssessmentFindings();
             }
             else {
                 this.checkAcetDisabledStatus();
@@ -205,6 +213,29 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
+    getAssessmentFindings() {
+        this.ncuaSvc.unassignedIssueTitles = [];
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (r: any) => {
+            let findings = r;
+            console.log(findings)
+            for (let i = 0; i < findings?.length; i++) {
+                if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
+                    this.ncuaSvc.unassignedIssueTitles.push(findings[i]?.question?.question_Title);
+                }
+            }
+            if (this.ncuaSvc.unassignedIssueTitles?.length == 0){
+                this.ncuaSvc.unassignedIssues = false;
+            } else {
+                this.ncuaSvc.unassignedIssues = true;
+            }
+
+    
+          },
+          error => console.log('Findings Error: ' + (<Error>error).message)
+        );
+      }
 
     onSelectSecurity(val) {
         this.securitySelected = val;

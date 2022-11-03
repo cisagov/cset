@@ -266,16 +266,36 @@
           Some reports are disabled until all statements have been answered.
         </span>
       </div>
+      <div *ngIf="ncuaSvc.unassignedIssueTitles?.length > 0" class="
+        alert-warning
+        mt-2
+        mb-2
+        d-flex
+        flex-row
+        justify-content-center
+        align-items-center
+        flex-11a
+        ng-star-inserted
+      ">
+        <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
+        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+          Some reports are disabled until all Issues have Issue Types assigned.<br><br>
+          The following statements have Issues with unassigned Issue Types: <br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
+        </span>
+      </div>
       <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
         class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">

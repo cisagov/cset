@@ -57,7 +57,8 @@
       <div class="col-6">
         <div class="form-group">
           <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
-          <select name="riskArea" id="riskArea" class="form-control" [(ngModel)]="finding.risk_Area">
+          <!-- locking risk for now, will need to remove '[disabled]="true"' from below later -->
+          <select name="riskArea" id="riskArea" class="form-control" [disabled]="true" [(ngModel)]="finding.risk_Area">
             <option value="Transaction">Transaction</option>
           </select>
         </div>
@@ -65,8 +66,10 @@
       <div class="col-6">
         <div class="form-group">
           <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
-          <select name="subrisk" id="subRisk" id="subrisk" class="form-control" [(ngModel)]="finding.sub_Risk">
-            <option *ngFor="let subrisk of transactionSubRisks" value="{{subrisk}}"> {{ subrisk }}</option>
+          <select name="subrisk" id="subRisk" id="subrisk" class="form-control" [disabled]="true" [(ngModel)]="finding.sub_Risk">
+            <option value="Information Systems & Technology Controls">Information Systems & Technology Controls</option>
+            <!-- locking subrisk for now, will need to uncomment below and remove '[disabled]="true"' from above later -->
+            <!-- <option *ngFor="let subrisk of transactionSubRisks" value="{{subrisk}}"> {{ subrisk }}</option> -->
           </select>
         </div> 
       </div>
