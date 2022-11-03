@@ -32,11 +32,11 @@
     <th mat-sort-header="description">Description</th>
     <th mat-sort-header="hostName">Host Name</th>
     <th mat-sort-header="visible">Visible</th>
-    <th mat-sort-header="visible">Vendor Name</th>
-    <th mat-sort-header="visible">Product Name</th>
-    <th mat-sort-header="visible">Version Name</th>
-    <th mat-sort-header="visible">Serial Number</th>
-    <th mat-sort-header="visible">Physical Location</th>
+    <th mat-sort-header="vendorName">Vendor Name</th>
+    <th mat-sort-header="productName">Product Name</th>
+    <th mat-sort-header="version">Version Name</th>
+    <th mat-sort-header="serialNumber">Serial Number</th>
+    <th mat-sort-header="physicalLocation">Physical Location</th>
 
     <tr *ngFor="let component of diagramComponentList; let i = index">
         <td>{{component.label}}</td>
@@ -54,10 +54,10 @@
             <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
               [checked]="component.visible" [disabled]="true" >
         </td>
-        <td><select class="form-control" [(ngModel)]="component.VendorName"></select></td>
+        <td><select class="form-control" [(ngModel)]="component.vendorName"></select></td>
         <td><select class="form-control" [(ngModel)]="component.productName"></select></td>
-        <td><select class="form-control" [(ngModel)]="component.versionName"></select></td>
-        <td><select class="form-control" [(ngModel)]="component.serialNumber"></select></td>
-        <td><select class="form-control" [(ngModel)]="component.physicalLocation"></select></td>
+        <td><input class="form-control" [(ngModel)]="component.versionName"/></td>
+        <td><input class="form-control" [(ngModel)]="component.serialNumber"/></td>
+        <td><input class="form-control" [(ngModel)]="component.physicalLocation"/></td>
     </tr>
 </table>

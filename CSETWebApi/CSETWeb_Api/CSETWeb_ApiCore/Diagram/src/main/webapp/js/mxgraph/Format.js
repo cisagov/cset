@@ -2440,10 +2440,6 @@ diagramElementProperties = function () {
                 attributeName: 'HasUniqueQuestions',
                 type: 'checkbox'
             }, {
-                fieldLabel: 'Description',
-                attributeName: 'Description',
-                type: 'textarea'
-            }, {
                 fieldLabel: 'Vendor Name',
                 attributeName: 'VendorName',
                 type: 'select',
@@ -2473,7 +2469,11 @@ diagramElementProperties = function () {
                 fieldLabel: 'Physical Location',
                 attributeName: 'PhysicalLocation',
                 type: 'input'
-            }
+            }, {
+                fieldLabel: 'Description',
+                attributeName: 'Description',
+                type: 'textarea'
+            },
         ],
         zoneProperties: [
             {
