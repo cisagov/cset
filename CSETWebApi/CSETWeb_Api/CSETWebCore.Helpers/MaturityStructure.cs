@@ -79,7 +79,7 @@ namespace CSETWebCore.Helpers
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             var questions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 model.model_id == q.Maturity_Model_Id).ToList();
@@ -91,7 +91,7 @@ namespace CSETWebCore.Helpers
                 .FirstOrDefault();
             if (targetLevel != null)
             {
-                questions.RemoveAll(x => x.Maturity_LevelNavigation.Level > int.Parse(targetLevel.Standard_Specific_Sal_Level));
+                questions.RemoveAll(x => x.Maturity_Level.Level > int.Parse(targetLevel.Standard_Specific_Sal_Level));
             }
 
 

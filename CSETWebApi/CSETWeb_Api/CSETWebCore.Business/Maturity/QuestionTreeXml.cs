@@ -64,7 +64,7 @@ namespace CSETWebCore.Business.Maturity
             _xDoc = new XDocument(new XElement("Model"));
 
             allQuestions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 _maturityModelId == q.Maturity_Model_Id).ToList();
