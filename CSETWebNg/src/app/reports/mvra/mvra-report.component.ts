@@ -22,55 +22,33 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MaturityService } from '../../../../services/maturity.service';
+import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../services/config.service';
+import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-mvra-summary',
-  templateUrl: './mvra-summary.component.html'
+  selector: 'app-mvra-report',
+  templateUrl: './mvra-report.component.html',
+  styleUrls: ['../reports.scss']
 })
-export class MvraSummaryComponent implements OnInit {
+export class MvraReportComponent implements OnInit {
 
-  model:any = [];
-  flattenedModel:any = [];
-  initialized:boolean = false;
-  errors: boolean = false;
+  response: any;
 
-  /**
-   *
-   */
-  constructor(public maturitySvc: MaturityService) { }
+  constructor(
+    public reportSvc: ReportService,
+    private titleService: Title,
+    public configSvc: ConfigService
+  ) { }
 
-  /**
-   *
-   */
   ngOnInit(): void {
-    this.maturitySvc.getMvraScoring().subscribe(
-      (r: any) => {
-        this.model = r;
-        this.flattenData();
-        this.initialized = true;
-      },
-      error => {
-        this.errors = true;
-        console.log('Mvra Gaps load Error: ' + (<Error>error).message);
-      }
-      ),
-      (finish) => {
-    };
-  }
+    this.titleService.setTitle("MVRA Report - CSET");
 
-  flattenData(){
-    let m = [];
-    this.model.forEach(element => {
-      var goal = { title: element.title, credit:'', totalPassed:'', totalTiers:'', function: true };
-      this.flattenedModel.push(goal);
-      m.push(goal);
-      element.levelScores.forEach(level=>{
-        let credit = level.totalTiers > 0 ? level.credit + '%' : 'N/A';
-        var dGoal = {title: level.level, credit: credit, totalPassed: level.totalPassed, totalTiers: level.totalTiers, function: false }
-        m.push(dGoal)
-      })
-    });
-    this.flattenedModel = Object.assign([], m)
+    this.reportSvc.getReport('executive').subscribe(
+      (r: any) => {
+        this.response = r;
+      },
+      error => console.log('Executive report load Error: ' + (<Error>error).message)
+    );
   }
 }

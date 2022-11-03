@@ -269,6 +269,24 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        
+        /// <summary>
+        /// Executes stored procedure usp_Assesments_Completion_For_User.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
+        public virtual IList<usp_countsForLevelsByGroupMaturityModelResults> usp_countsForLevelsByGroupMaturityModel(Nullable<int> assessment_id, Nullable<int> mat_model_id)
+        {
+            IList<usp_countsForLevelsByGroupMaturityModelResults> myrval = null;
+            this.LoadStoredProc("usp_countsForLevelsByGroupMaturityModel")
+                     .WithSqlParam("assessment_id", assessment_id)
+                     .WithSqlParam("mat_model_id", mat_model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_countsForLevelsByGroupMaturityModelResults>();
+                     });
+            return myrval;
+        }
 
         /// <summary>
         /// 
