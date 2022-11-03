@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 /**
- * This service tracks questions for the current page and 
+ * This service tracks questions for the current page and
  * tallies answer completion.  This feeds the "0/100" display
  * on question page headers.
  */
@@ -24,13 +24,13 @@ export class CompletionService {
   questionflat: any[];
 
   /**
-   * 
+   *
    */
   constructor() { }
 
 
   /**
-   * 
+   *
    */
   reset() {
     this.questionflat = [];
@@ -64,7 +64,7 @@ export class CompletionService {
 
       data.groupings.forEach(g => {
         g.questions.forEach(q => {
-          if (q.maturityLevel <= this.targetMaturityLevel) {
+          if (q.maturityLevel <= this.targetMaturityLevel && !q.isParentQuestion) {
             this.questionflat.push({
               id: q.questionId,
               answer: q.answer,
@@ -80,14 +80,14 @@ export class CompletionService {
   }
 
   /**
-   * Loops through a maturity grouping's subgroups, 
+   * Loops through a maturity grouping's subgroups,
    * adding its questions to the collection.
-   * Only questions within the maturity level are collected.
+   * Only questions within the maturity level that are not parent questions are collected.
    */
   recurseSubgroups(gg) {
     gg.subGroupings?.forEach(g => {
       g.questions.forEach(q => {
-        if (q.maturityLevel <= this.targetMaturityLevel) {
+        if (q.maturityLevel <= this.targetMaturityLevel && !q.isParentQuestion) {
           this.questionflat.push({
             id: q.questionId,
             answer: q.answer,
@@ -100,7 +100,7 @@ export class CompletionService {
   }
 
   /**
-   * 
+   *
    */
   setAnswer(id: number, value: string) {
     const ans = this.questionflat.find(x => x.id == id);

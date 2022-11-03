@@ -47,7 +47,7 @@ export class Assessment2InfoComponent implements OnInit {
   }
 
   showContacts() {
-    return this.configSvc.behaviors.showContacts;
+    return this.configSvc.behaviors?.showContacts ?? true;
   }
 
   usingIse() {
