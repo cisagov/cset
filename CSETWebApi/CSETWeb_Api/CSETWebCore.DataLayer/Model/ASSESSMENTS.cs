@@ -33,6 +33,7 @@ namespace CSETWebCore.DataLayer.Model
             FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
             FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
             GENERAL_SAL = new HashSet<GENERAL_SAL>();
+            ISE_ACTIONS_FINDINGS = new HashSet<ISE_ACTIONS_FINDINGS>();
             MATURITY_DOMAIN_REMARKS = new HashSet<MATURITY_DOMAIN_REMARKS>();
             METRO_ANSWERS = new HashSet<METRO_ANSWERS>();
             NETWORK_WARNINGS = new HashSet<NETWORK_WARNINGS>();
@@ -126,6 +127,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
         [InverseProperty("Assessment")]

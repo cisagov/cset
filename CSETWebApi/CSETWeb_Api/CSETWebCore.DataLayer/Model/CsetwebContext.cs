@@ -142,6 +142,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
+        public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
@@ -208,7 +209,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-        public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -1895,6 +1895,21 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
             });
 
+            modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.Mat_Question_Id });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ASSESSMENTS");
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ISE_ACTIONS");
+            });
+
             modelBuilder.Entity<JWT>(entity =>
             {
                 entity.HasComment("A collection of JWT records");
@@ -2302,6 +2317,12 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.NEW_REQUIREMENT)
                     .HasForeignKey(d => d.NCSF_Cat_Id)
                     .HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
+
+                entity.HasOne(d => d.Original_Set_NameNavigation)
+                    .WithMany(p => p.NEW_REQUIREMENT)
+                    .HasForeignKey(d => d.Original_Set_Name)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_NEW_REQUIREMENT_SETS");
 
                 entity.HasOne(d => d.Question_Group_Heading)
                     .WithMany(p => p.NEW_REQUIREMENT)
