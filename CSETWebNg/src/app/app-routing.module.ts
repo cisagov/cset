@@ -188,6 +188,7 @@ import { AnalyticsCompareComponent } from './assessment/results/analytics-compar
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 
+
 const installationMode = localStorage.getItem('installationMode');
 
 // Select the appropriate home commponent for the configured installation mode for this app instance
