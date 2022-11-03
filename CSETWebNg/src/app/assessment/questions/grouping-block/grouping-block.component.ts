@@ -7,6 +7,8 @@ import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 
 @Component({
@@ -16,6 +18,8 @@ import { MaturityService } from '../../../services/maturity.service';
 export class GroupingBlockComponent implements OnInit {
   @Input('grouping') grouping: QuestionGrouping;
 
+  modelId: number;
+
   /**
    *
    */
@@ -24,13 +28,16 @@ export class GroupingBlockComponent implements OnInit {
     public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
+    public ncuaSvc: NCUAService
   ) { }
 
   /**
    *
    */
   ngOnInit(): void {
+    this.modelId = this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelId;
   }
 
   /**

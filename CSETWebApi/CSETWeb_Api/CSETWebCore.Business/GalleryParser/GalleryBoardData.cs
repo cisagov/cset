@@ -29,16 +29,20 @@ namespace CSETWebCore.Business.GalleryParser
     /// that is reserved for when the item returns from the client.
     /// </summary>
     public class GalleryItem
-    {   
-        public GalleryItem(GALLERY_ITEM i)
+    {
+        public GalleryItem()
         {
+        }
 
+        public GalleryItem(GALLERY_ITEM i, int group_id)
+        {
             this.Gallery_Item_Id = i.Gallery_Item_Id;
             this.Icon_File_Name_Small = i.Icon_File_Name_Small;
             this.Icon_File_Name_Large = i.Icon_File_Name_Large;
             this.Configuration_Setup_Client = i.Configuration_Setup_Client;
             this.Description = i.Description;
             this.Title = i.Title;
+            this.Parent_Id = group_id;
         }
 
         public int Gallery_Item_Id { get; set; }
@@ -47,6 +51,8 @@ namespace CSETWebCore.Business.GalleryParser
         public string Configuration_Setup { get; set; }
         public string Configuration_Setup_Client { get; set; }
         public string Description { get; set; }
-        public object Title { get; private set; }
+        public object Title { get; set; }
+        public int Parent_Id { get; private set; }
     }
+
 }

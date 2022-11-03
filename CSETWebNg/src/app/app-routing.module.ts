@@ -89,6 +89,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -123,7 +124,7 @@ import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-
 import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
 import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
-import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
+import { IseMeritComponent } from './reports/ise-merit/ise-merit.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
@@ -177,10 +178,15 @@ import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
-import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
+import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
+import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
+import { IseDataComponent } from './reports/ise-data/ise-data.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -196,6 +202,9 @@ switch (installationMode) {
     break;
   case 'RRA':
     homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+    break;
+  case 'CF':
+    homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -356,6 +365,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
@@ -375,6 +385,8 @@ const appRoutes: Routes = [
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
+              { path: 'mvra-gaps', component: MvraGapsComponent },
+              { path: 'mvra-summary', component: MvraSummaryComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
@@ -412,6 +424,7 @@ const appRoutes: Routes = [
 
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
+              { path: 'analytics-compare', component: AnalyticsCompareComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
@@ -454,12 +467,12 @@ const appRoutes: Routes = [
       { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
       { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
       { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
-      { path: 'iseexecutive', component: IseExecutiveComponent },
-      // { path: 'isegaps', component: AcetDeficencyComponent },
-      // { path: 'isecommentsmarked', component: AcetCommentsmarkedComponent },
+      { path: 'iseexamination', component: IseExaminationComponent },
+      { path: 'iseexaminer', component: IseExaminerComponent },
       { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
       { path: 'isedonutchart', component: IseDonutChartComponent },
-      { path: 'iseissues', component: IseIssuesComponent },
+      { path: 'isemerit', component: IseMeritComponent },
+      { path: 'isedata', component: IseDataComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

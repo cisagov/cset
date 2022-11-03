@@ -1,5 +1,10 @@
 @import '_variables.scss';
 
+$white: #ffffff;
+$na-color: #367190;
+$na-hover-color: #0A4B6E;
+$active-text-color: $white;
+
    .page-title {
     color: #1274d2;
     font-size: 22px;
@@ -474,4 +479,31 @@ textarea.form-control {
   margin-top: 0;
   margin-right: 0.3125rem;
   margin-left: 0;
+}
+.hide {
+  visibility: hidden;
+}
+.btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  line-height:1.2 !important;
+  border-radius:0 !important;
+  outline-style: none !important;
+  box-shadow: none;
+  border-color: transparent;
+}
+.btn-copy {
+  background-color: $na-color;
+  color: $white;
+}
+.btn-copy:hover {
+  background-color: $na-color;
+  border-color: $na-color;
+  color: $white;
+}
+.fs-base {
+  font-size: 1rem !important;
+  line-height: 1.1rem;
 }

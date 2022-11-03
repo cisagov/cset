@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
+import { ExtendedDemographics } from '../models/demographics-extended.model';
 
 
 const headers = {

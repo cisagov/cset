@@ -69,15 +69,12 @@ export class AssessmentConfigComponent implements OnInit {
     public dialog: MatDialog,
     public maturitySvc: MaturityService
   ) {
-
   }
 
   /**
    *
    */
   ngOnInit() {
-    this.navSvc.setCurrentPage('info1');
-
     this.features.find(x => x.code === 'standard').selected = this.assessSvc.assessment.useStandard;
     this.features.find(x => x.code === 'maturity').selected = this.assessSvc.assessment.useMaturity;
     this.features.find(x => x.code === 'diagram').selected = this.assessSvc.assessment.useDiagram;

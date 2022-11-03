@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class AcetCommentsmarkedComponent implements OnInit {
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
-    private sanitizer: DomSanitizer
+    public questionsSvc: QuestionsService
   ) { }
 
   ngOnInit(): void {

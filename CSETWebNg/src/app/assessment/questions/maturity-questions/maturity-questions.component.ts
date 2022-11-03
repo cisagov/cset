@@ -33,6 +33,12 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { GlossaryService } from '../../../services/glossary.service';
+import { CisService } from '../../../services/cis.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { CompletionService } from '../../../services/completion.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -42,25 +48,48 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = null;
   pageTitle: string = '';
+  modelId: number;
   modelName: string = '';
+  groupingTitle: string = '';
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
   loaded = false;
 
+  grouping: QuestionGrouping;
+  groupingId: Number;
+  title: string;
+
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+
+  private _routerSub = Subscription.EMPTY;
 
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
+    public cisSvc: CisService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
     public glossarySvc: GlossaryService,
     public navSvc: NavigationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+
+    // listen for NavigationEnd to know when the page changed
+    this._routerSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      if (e.urlAfterRedirects.includes('/maturity-questions/')) {
+        this.groupingId = +this.route.snapshot.params['grp'];
+        this.loadGrouping(this.groupingId);
+      }
+    });
+
 
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
@@ -74,13 +103,29 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.assessSvc.currentTab = 'questions';
-    this.loadQuestions();
+
+    // determine whether displaying a grouping or all questions for the model
+    this.grouping = null;
+    this.groupingId = +this.route.snapshot.params['grp'];
+
+    if (!this.groupingId) {
+      this.loadQuestions();
+    } else {
+      this.loadGrouping(this.groupingId);
+    }
   }
-  
+
   /**
    *
    */
   ngAfterViewInit() {
+  }
+
+  isNcuaModel() {
+    if (this.modelName == 'ACET' || this.modelName == 'ISE') {
+      return true;
+    }
+    return false;
   }
 
 
@@ -92,13 +137,16 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Retrieves the complete list of questions
+   * Retrieves the complete list of questions for the model.
    */
   loadQuestions() {
+    this.completionSvc.reset();
+
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
+        this.modelId = response.modelId;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
@@ -106,10 +154,14 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.maturityModelId = response.modelId;
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
+
         this.loaded = true;
+
+        this.completionSvc.setQuestionArray(response);
 
         this.refreshQuestionVisibility();
       },
@@ -122,6 +174,44 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+  }
+
+  /**
+   * Retrieves questions for a single grouping.
+   */
+  loadGrouping(groupingId: Number) {
+    this.completionSvc.reset();
+
+    this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
+     
+      this.modelId = response.modelId;
+      this.modelName = response.modelName;
+      this.questionsAlias = response.questionsAlias;
+      this.groupings = response.groupings;
+      this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+
+      this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+      this.filterSvc.answerOptions = response.answerOptions;
+      this.filterSvc.maturityModelId = response.modelId;
+
+      this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+      this.groupingTitle = response.title;
+      this.glossarySvc.glossaryEntries = response.glossary;
+
+      this.loaded = true;
+
+      this.completionSvc.setQuestionArray(response);
+
+      this.refreshQuestionVisibility();
+    },
+      error => {
+        console.log(
+          'Error getting questions: ' +
+          (<Error>error).name +
+          (<Error>error).message
+        );
+        console.log('Error getting questions: ' + (<Error>error).stack);
+      });
   }
 
   /**

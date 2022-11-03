@@ -125,7 +125,7 @@ export class ResetPassComponent {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: environment.appCode
+            appCode: this.configSvc.installationMode??environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)

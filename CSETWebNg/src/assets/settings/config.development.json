@@ -1,0 +1,7 @@
+{    
+    "debug": {
+        "showBuildTime": true,
+        "showQuestionAndRequirementIDs": true,
+        "canDeleteCustomModules": false
+    }    
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { QuestionsService } from '../../../services/questions.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { RraDataService } from '../../../services/rra-data.service';
@@ -29,6 +30,7 @@ export class RraDeficiencyComponent implements OnInit {
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
+    public questionsSvc: QuestionsService,
     public rraDataSvc: RraDataService
   ) { }
 

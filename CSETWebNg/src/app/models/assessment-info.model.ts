@@ -33,6 +33,7 @@ export interface AssessmentDetail {
     facilityName?: string;
     cityOrSiteName?: string;
     stateProvRegion?: string;
+    postalCode?: string;
     executiveSummary?: string;
     assessmentDescription?: string;
     additionalNotesAndComments?: string;
@@ -46,6 +47,7 @@ export interface AssessmentDetail {
 
     isAcetOnly?: boolean;
     workflow?: string;
+    origin?: string;
 
     maturityModel?: MaturityModel;
 

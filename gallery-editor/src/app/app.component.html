@@ -1,3 +1,18 @@
-<div class="section-bdy">
-  <app-list-items [listTest]="{ children: list }" [isRoot]="true"></app-list-items>
+<div>Type Enter to Update a value <Select (change)="layoutChange($event)">
+  <option></option>
+  <option>CSET</option>
+  <option>CF</option>
+  <option>NCUA</option>
+  <option>TSA</option>
+</Select> </div>
+<div class="section-bdy">  
+  <app-list-items [listTest]="{ children: list }" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="true"></app-list-items>
+</div>
+
+
+<div>
+  THESE ARE CURRENTLY UNUSED ITEMS
+</div>
+<div>  
+  <app-list-items [listTest]="{ children: unusedList }" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="false"></app-list-items>
 </div>

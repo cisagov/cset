@@ -20,183 +20,153 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-  <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
-  <h2 style="color: white;">Examiner Finding</h2>
-</div>
+<ng-container *ngIf="this.loading === true; else mainContent" class="w-100">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 200px; max-height: 200px;"></div>
+  </div>
+</ng-container>
 
-<mat-dialog-content>
-<div class="row">
-  <div class="col-6">
-    <div class="form-group">
-      <label for="title" class="form-label">Title</label>
-      <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.title">
+<ng-template #mainContent>
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+    <h2 style="color: white;">Issues</h2>
+  </div>
+
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="title" class="form-label font-weight-bold">Title</label>
+          <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.title">
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
+          <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper"> (required)</span>
+          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type" required>
+            <option value="Examiner Finding">Examiner Finding</option>
+            <option value="DOR">DOR</option>
+            <option value="Supplemental Fact">Supplemental Fact</option>
+            <option value="Non-reportable">Non-reportable</option>
+          </select>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-6">
-    <div class="form-group">
-      <label for="issueType" class="form-label">Issue Type</label>
-      <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type">
-        <option value="finding">Examiner Finding</option>
-        <option value="dor">DOR</option>
-        <option value="fact">Supplemental Fact</option>
-      </select>
+    <div class="row" *ngIf="finding.type !== 'Supplemental Fact'">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
+          <select name="riskArea" id="riskArea" (change)="updateRiskArea($event.target.value)" class="form-control">
+            <!--<option value="Strategic">Strategic</option>
+            <option value="Compliance">Compliance</option>-->
+            <option value="Transaction">Transaction</option>
+            <!--<option value="Reputation">Reputation</option>-->
+          </select>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
+          <!--<select *ngIf="this.riskType === 'Strategic'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of strategicSubRisks"> {{ subrisk }}</option>
+          </select>
+          <select *ngIf="this.riskType === 'Compliance'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of complianceSubRisks"> {{ subrisk }}</option>
+          </select>-->
+          <select *ngIf="this.riskType === 'Transaction'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of transactionSubRisks"> {{ subrisk }}</option>
+          </select>
+          <!--<select *ngIf="this.riskType === 'Reputation'" name="subrisk" id="subrisk" class="form-control">
+            <option *ngFor="let subrisk of reputationSubRisks"> {{ subrisk }}</option>
+          </select>-->
+        </div> 
+      </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12">
-    <div class="form-group">
-      <label for="description" class="form-label">Description</label>
-      <textarea id="description" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
+    <div class="row">
+      <div class="col-12">
+        <div *ngIf="this.actionItems != null" class="form-group">
+          <label for="description" class="form-label font-weight-bold">Description</label>
+          <textarea id="description" type="text" rows="5" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-3">
-    <label for="subStatementNumber" class="form-label">Sub Statement #</label>
-    <div>1.1 - Are approved by the board of directors</div>
-  </div>
-  <div class="col-3">
-    <label for="response" class="form-label">Response</label>
-    <div>No</div>
-  </div>
-  <div class="col-6">
-    <label for="actionItems" class="form-label">Action Items</label>
-    <div>1. The security program must be approved by the board of directors.</div>
-    <div>2. Strengthen the security program policies to include critical controls, activities, requirements, and expectations the credit union intends to perform, monitor, manage, and report.</div>
-  </div>
-</div>
-<br><br>
-<div class="row">
-  <div class="col-6">
-    <div class="form-group">
-      <label for="risk-area" class="form-label">Risk Area</label>
-      <select name="riskarea" id="riskarea" class="form-control" [(ngModel)]="this.selectedRiskArea"
-        (change)="updateRiskArea($event.target.value)">
-        <option *ngFor="let riskArea of this.riskAreaOptions" [value]="riskArea">{{ riskArea }}</option>
-      </select>
-    </div>
-  </div>  
-  <div class="col-6">
-    <ng-container *ngIf="this.selectedRiskArea === 'Strategic' || this.selectedRiskArea === '' || this.selectedRiskArea === null">
-      <div class="form-group">
-        <label for="strategic-sub-risk" class="form-label">Strategic Sub Risk Area</label>
-        <select name="strategicSubRisk" id="strategicSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event.target.value)">
-          <option *ngFor="let subRisk of strategicSubRisks" [value]="subRisk.id">
-            {{ subRisk.name }}
-          </option>
-        </select>
+    <ng-container *ngIf="finding.type === 'Supplemental Fact'">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="suppGuide" class="form-label font-weight-bold">Supplemental Guidance</label>
+            <textarea id="suppGuide" type="text" rows="10" autocomplete="off" class="form-control">{{ this.suppGuidance }}</textarea>
+          </div>
+        </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="this.selectedRiskArea === 'Compliance'">
-      <div class="form-group">
-        <label for="compliance-sub-risk" class="form-label">Compliance Sub Risk Area</label>
-        <select name="complianceSubRisk" id="complianceSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event.target.value)">
-          <option *ngFor="let subRisk of complianceSubRisks" [value]="subRisk.id">
-            {{ subRisk.name }}
-          </option>
-        </select>
+    <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
+      <div *ngIf="this.finding.auto_Generated === 0">
+        <div class="row">
+          <div class="col-12">
+            <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
+            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"></textarea> <!-- [(ngModel)]="finding.description" -->
+          </div>
+        </div>
       </div>
-    </ng-container>
-    <ng-container *ngIf="this.selectedRiskArea === 'Transaction'">
-      <div class="form-group">
-        <label for="transaction-sub-risk" class="form-label">Transaction Sub Risk Area</label>
-        <select name="transactionSubRisk" id="transactionSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event.target.value)">
-          <option *ngFor="let subRisk of transactionSubRisks" [value]="subRisk.id">
-            {{ subRisk.name }}
-          </option>
-        </select>
+      <div *ngIf="this.finding.auto_Generated === 1">
+        <div class="mt-2 invalid-feedback d-block text-muted">
+          <p>Items marked in red indicate a higher level of risk</p>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <table role="presentation" aria-label="childAnswers" style="width: 100%; border: 1px solid black; border-collapse: collapse">
+              <colgroup>
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 50%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 30%;">
+              </colgroup>
+              <tr style="border: 1px solid black; border-collapse: collapse">
+                <th style="text-align: center;">Sub Statement</th>
+                <th style="text-align: center;">Statement Text</th>
+                <th style="text-align: center;">Response</th>
+                <th style="text-align: center;">Action Items</th>
+              </tr>
+              <ng-container *ngFor="let q of this.questionData; let i = index;">
+                <tr *ngIf="q.answer_Text === 'N'">
+                  <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
+                  <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
+                  <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
+                  <td *ngIf="this.actionItems != null">
+                    <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ this.actionItems[i]?.action_Items }}
+                    </textarea>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+        <br>
       </div>
-    </ng-container>
-    <ng-container *ngIf="this.selectedRiskArea === 'Reputation'">
-      <div class="form-group">
-        <label for="reputation-sub-risk" class="form-label">Reputation Sub Risk Area</label>
-        <select name="reputationSubRisk" id="reputationSubRisk" class="form-control" [(ngModel)]="finding.sub_Risk_Area_Id"
-          (change)="updateSubRisk($event.target.value)">
-          <option *ngFor="let subRisk of reputationSubRisks" [value]="subRisk.id">
-            {{ subRisk.name }}
-          </option>
-        </select>
+      <div class="row">
+        <div class="col-6">
+          <span *ngIf="this.actionItems != null">
+            <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
+            <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
+          </span>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
+            <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
+          </div>
+        </div>
       </div>
+      <br>
     </ng-container>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12">
-    <div class="form-group">
-      <label for="disposition" class="form-label">Disposition</label>
-      <select name="disposition" id="disposition" class="form-control" [(ngModel)]="finding.disposition"
-        (change)="updateDisposition($event.target.value)">
-        <option value="reportable">Reportable</option>
-        <option value="nonreportable">Non-Reportable</option>
-      </select>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-6">
-    <div class="form-group">
-      <label for="dateFound" class="form-label">Identified On</label>
-      <input matInput MatDatepickerInput class="form-control" id="dateFound" name="dateFound"
-        [matDatepicker]="identifiedPicker" (focus)="identifiedPicker.open()" (click)="identifiedPicker.open()"
-        (change)="update()" [(ngModel)]="finding.identified_Date">
-      <mat-datepicker #identifiedPicker></mat-datepicker>
-    </div>
-  </div>
-  <div class="col-6">
-    <div class="form-group">
-      <label for="dueDate" class="form-label">Due Date</label>
-      <input matInput MatDatepickerInput class="form-control" id="dueDate" name="dueDate"
-        [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
-        (change)="update()" [(ngModel)]="finding.due_Date">
-      <mat-datepicker #picker></mat-datepicker>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12">
-    <label for="importance" class="form-label">Importance</label>
-    <select name="importance" id="importance" class="form-control" [(ngModel)]="finding.importance_Id">
-      <option *ngFor="let importance of importances" [value]="importance?.importance_Id"> {{importance?.value}} </option>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col-4">
-    <label for="regulatoryCitation" class="form-label">Regulatory Citation</label>
-      <div>12 C.F.R. § 748.0 (b)(2)</div>
-  </div>
-</div>
-<br>
+    
+    <p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific questions in the assessment.</p>
 
-<div class="form-group">
-  <div class="mt-3 d-flex justify-content-between align-items-center flex-11a">
-    <label for="contacts" class="form-label">Individuals Responsible</label>
-    <button class="btn-link fs-smaller">Clear Selections</button>
-  </div>
-</div>
- 
-  <div class="pl-3">
-    <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible">
-      <input class="checkbox-custom" type="checkbox" id="{{contact.assessment_Contact_Id}}"
-        [(ngModel)]="contact.selected">
-      <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
-    </div>
-  </div>
+  </mat-dialog-content>
 
-  <br/><br/>
-  <app-assessment-contacts class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
-
-<p style="margin-top: 1em; font-size: 12px; color: gray">The examiner finding section is for extra information that needs to be gathered and tracked for specific
-  questions in the assessment. Findings can be added manually, or created automatically if the program 
-  identifies a need.</p>
-</mat-dialog-content>
-
-<mat-dialog-actions class="p-3 mb-0" align="end">
-  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button mat-button class="btn btn-primary" (click)="update()">Done</button>
-</mat-dialog-actions>
+  <mat-dialog-actions class="p-3 mb-0" align="end">
+    <button mat-button class="btn btn-primary" (click)="update()">Done</button>
+  </mat-dialog-actions>
+</ng-template>
