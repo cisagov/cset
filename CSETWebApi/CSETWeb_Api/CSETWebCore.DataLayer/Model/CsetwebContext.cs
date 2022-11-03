@@ -208,6 +208,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
+        public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -1880,16 +1881,16 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS>(entity =>
             {
-                entity.HasKey(e => e.Question_Id)
+                entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Question_Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Mat_Question_Id).ValueGeneratedNever();
 
-                entity.HasOne(d => d.Question)
+                entity.HasOne(d => d.Mat_Question)
                     .WithOne(p => p.ISE_ACTIONS)
-                    .HasForeignKey<ISE_ACTIONS>(d => d.Question_Id)
+                    .HasForeignKey<ISE_ACTIONS>(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
             });
@@ -2043,7 +2044,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_LevelNavigation)
+                entity.HasOne(d => d.Maturity_Level)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2301,12 +2302,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.NEW_REQUIREMENT)
                     .HasForeignKey(d => d.NCSF_Cat_Id)
                     .HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
-
-                entity.HasOne(d => d.Original_Set_NameNavigation)
-                    .WithMany(p => p.NEW_REQUIREMENT)
-                    .HasForeignKey(d => d.Original_Set_Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_REQUIREMENT_SETS");
 
                 entity.HasOne(d => d.Question_Group_Heading)
                     .WithMany(p => p.NEW_REQUIREMENT)

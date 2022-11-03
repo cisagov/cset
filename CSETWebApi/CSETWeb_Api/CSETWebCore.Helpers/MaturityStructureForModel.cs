@@ -27,6 +27,8 @@ namespace CSETWebCore.Helpers
 
         private List<ANSWER> allAnswers;
 
+        private int _assessmentId;
+
 
 
         /// <summary>
@@ -42,11 +44,12 @@ namespace CSETWebCore.Helpers
         /// and question structure for a maturity model.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructureForModel(int modelId, CSETContext context, bool includeText = true)
+        public MaturityStructureForModel(int modelId, CSETContext context, bool includeText = true, int assessmentId = 0)
         {
             this._modelId = modelId;
             this._context = context;
             this._includeText = includeText;
+            this._assessmentId = assessmentId;
 
             LoadStructure();
         }
@@ -75,14 +78,14 @@ namespace CSETWebCore.Helpers
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             allQuestions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 _modelId == q.Maturity_Model_Id).ToList();
 
 
             allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == 3026)
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == _assessmentId)
                 .ToList();
 
 
@@ -154,8 +157,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -208,8 +211,8 @@ namespace CSETWebCore.Helpers
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
-                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                    MaturityLevel = myQ.Maturity_Level.Level,
+                    MaturityLevelName = myQ.Maturity_Level.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -269,8 +272,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,

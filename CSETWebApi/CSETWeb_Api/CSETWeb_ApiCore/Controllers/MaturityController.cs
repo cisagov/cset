@@ -213,8 +213,20 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/structure")]
         public IActionResult GetGroupingAndQuestions([FromQuery] int modelId)
         {
+            int assessmentId = 0;
+
+            try
+            {
+                assessmentId = _tokenManager.AssessmentForUser();
+            }
+            catch (Exception exc)
+            {
+                // It's okay to call this controller method
+                // without an assessment ID for the module content report
+            }
+
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureForModel(modelId);
+            var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
             return Ok(x.Model);
         }
 
@@ -562,13 +574,13 @@ namespace CSETWebCore.Api.Controllers
                 {
                     d.ANSWER.Assessment = null;
                     d.Mat.Maturity_Model = null;
-                    d.Mat.Maturity_LevelNavigation = null;
+                    d.Mat.Maturity_Level = null;
                     d.Mat.InverseParent_Question = null;
 
                     if (d.Mat.Parent_Question != null)
                     {
                         d.Mat.Parent_Question.Maturity_Model = null;
-                        d.Mat.Parent_Question.Maturity_LevelNavigation = null;
+                        d.Mat.Parent_Question.Maturity_Level = null;
                         d.Mat.Parent_Question.InverseParent_Question = null;
                     }
                 });
@@ -626,7 +638,7 @@ namespace CSETWebCore.Api.Controllers
                 d.ANSWER.Assessment = null;
                 d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.Maturity_Level = null;
                 d.Mat.InverseParent_Question = null;
                 d.Mat.Parent_Question = null;
             });
@@ -636,7 +648,7 @@ namespace CSETWebCore.Api.Controllers
                 d.ANSWER.Assessment = null;
                 d.Mat.Grouping = null;
                 d.Mat.Maturity_Model = null;
-                d.Mat.Maturity_LevelNavigation = null;
+                d.Mat.Maturity_Level = null;
                 d.Mat.InverseParent_Question = null;
                 d.Mat.Parent_Question = null;
             });
@@ -735,5 +747,30 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("api/maturity/mvra/scoring")]
+        public IActionResult GetMvraScoring()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var model = maturity.GetMaturityStructureForModel(9, assessmentId);
+            var scoring = maturity.GetMvraScoring(model);
+            return Ok(scoring);
+        }
+        
+        [HttpGet]
+        [Route("api/maturity/mvra/mvraTree")]
+        public IActionResult GetMvraTree([FromQuery] int id)
+        {
+            //int assessemntId = _tokenManager.AssessmentForUser();
+            //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+           
+            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var model = maturity.GetMaturityStructureForModel(9, id);
+            //var scoring = maturity.GetMvraScoring(model);
+            return Ok(model);
+        }
+
     }
 }

@@ -483,24 +483,25 @@ textarea.form-control {
 .hide {
   visibility: hidden;
 }
-.cset-icons-copy:before {
-  src: "assets/images/icons/save-arrow.svg";
-}
 .btn {
-  line-height:1.6 !important;
-  border-radius:0 !important;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  line-height:1.2 !important;
+  border-radius: 5px !important;
   outline-style: none !important;
   box-shadow: none;
   border-color: transparent;
 }
 .btn-copy {
-  background-color: $white;
-  border-color: $na-color;
-  color: $na-color;
+  background-color: $na-color;
+  color: $white;
 }
 .btn-copy:hover {
   background-color: $na-color;
-  color: $active-text-color;
+  border-color: $na-color;
+  color: $white;
 }
 .fs-base {
   font-size: 1rem !important;

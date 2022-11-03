@@ -1,0 +1,12 @@
+
+<div style="height: 15rem">
+    <ngx-charts-bar-horizontal [results]="graphModel" [yAxis]="'true'" [xAxis]="'true'"
+        [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1" #chart>
+        <ng-template #tooltipTemplate let-model="m">
+            <div class="p-1">
+                {{m.value}}%
+            </div>
+        </ng-template>
+    </ngx-charts-bar-horizontal>
+</div>

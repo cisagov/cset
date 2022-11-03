@@ -31,7 +31,6 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [StringLength(50)]
         public string Application_Mode { get; set; }
-        public bool Only_Mode { get; set; }
         /// <summary>
         /// The Selected Sal Level is used to
         /// </summary>
@@ -43,6 +42,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(50)]
         public string Sort_Set_Name { get; set; }
         public bool Is_Advanced { get; set; }
+        public bool Only_Mode { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("STANDARD_SELECTION")]

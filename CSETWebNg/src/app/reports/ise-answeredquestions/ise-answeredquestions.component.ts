@@ -54,7 +54,6 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
 
         // goes through domains
         for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -89,7 +88,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     .set('Change & Configuration Management', true)  .set('Monitoring', false)
     .set('Logging', false)                            .set('Data Governance', false)
     .set('Conversion', false)                         .set('Software Development Process', false)
-    .set('Internal Audit Program', false)             .set('Asset Inventory', true);
+    .set('Internal Audit Program', false)             .set('Asset Inventory', true)
+    .set('Policies & Procedures', true);
   }
 
   requiredQuestion(q: any) {
@@ -121,7 +121,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     ||   q.title == 'Stmt 19'
     ||   q.title == 'Stmt 20'
     ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
+    ||   q.title == 'Stmt 22'
+    ||   q.title == 'Stmt 23') {
       return true;
     } 
     return false;

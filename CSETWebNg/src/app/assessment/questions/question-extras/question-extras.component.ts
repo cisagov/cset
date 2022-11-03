@@ -191,6 +191,14 @@ export class QuestionExtrasComponent implements OnInit {
     this.saveAnswer();
   }
 
+  /**
+   *
+   * @returns
+   */
+  showDocumentsIcon(): boolean {
+
+    return true;
+  }
 
   /**
    *
@@ -340,12 +348,14 @@ export class QuestionExtrasComponent implements OnInit {
       vulnerabilities: '',
       title: null,
       type: null,
+      risk_Area: null,
+      sub_Risk: null,
       description: null,
       citations: null,
       auto_Generated: null,
     };
 
-    this.dialog.open(FindingsComponent, { 
+    this.dialog.open(FindingsComponent, {
         data: find,
         disableClose: true,
         width: this.layoutSvc.hp ? '90%' : '600px',
@@ -662,6 +672,11 @@ export class QuestionExtrasComponent implements OnInit {
       if (mode == 'DISC') {
         return false;
       }
+    }
+
+    // DOCUMENTS
+    if (mode == 'DOCS') {
+      return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
     return true;

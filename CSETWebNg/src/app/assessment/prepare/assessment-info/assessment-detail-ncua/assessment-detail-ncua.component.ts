@@ -50,6 +50,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentEffectiveDate: Date = new Date();
 
   contactInitials: string = "";
+  lastModifiedTimestamp: string = "";
 
   assessmentControl = new FormControl('');
   assessmentCharterControl = new FormControl('');
@@ -82,7 +83,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.acetDashboard = data;
         this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
         this.examOverride = this.ncuaSvc.chosenOverrideLevel;
-        if (this.examOverride !== "" || this.assessSvc.assessment.maturityModel.modelName !== 'ISE') {
+        if (this.examOverride !== "" || !this.assessSvc.isISE()) {
           this.loading = false;
         }
       });
@@ -105,11 +106,24 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
       this.filteredOptions = this.assessmentControl.valueChanges.pipe(
         startWith(''), map(value => {
-          const name = typeof value === 'string' ? value : value?.name;
+          let tval = "";
+          if(typeof value === 'string'){
+            tval = value;
+          } 
+          else{
+            //tval= value.name;
+            console.log(value);
+          }
+          const name = tval;
           return name ? this.filter(name as string) : this.creditUnionOptions.slice();
         }),
       );
     }
+
+    this.assessSvc.getLastModified().subscribe((data: string) => {
+      let myArray = data.split(" ");
+      this.lastModifiedTimestamp = myArray[1];
+    });
 
   }
 
@@ -121,7 +135,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
-      this.assessSvc.setNcuaDefaults();
+      //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
@@ -183,8 +197,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
-      if (e.target !== undefined) {
+      if (e.target != null) {
         if (e.target.value === this.creditUnionOptions[i].name) {
+          this.assessment.creditUnion = e.target.value;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
@@ -192,6 +207,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
+          this.assessment.charter = this.creditUnionOptions[i].charter;
         }
       }
     }
@@ -201,10 +217,15 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
     
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
+    if (this.ncuaSvc.assetsAsNumber > 50000000) {
+      this.updateOverride("No Override");
+    }
+
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   updateOverride(e: any) {
+    this.examOverride = e;
     if (e === "No Override") {
       this.acetDashboard.override = 0;
     } else if (e === 'SCUEP') {
@@ -272,6 +293,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
+
+    this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
 
     if (this.isAnExamination()) {
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;

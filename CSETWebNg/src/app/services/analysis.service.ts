@@ -22,11 +22,9 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient } from '../../../node_modules/@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import Chart from 'chart.js/auto';
-import { Utilities } from './utilities.service';
-import { LabelType } from '@angular-slider/ngx-slider';
 import { ChartService } from './chart.service';
 
 @Injectable({

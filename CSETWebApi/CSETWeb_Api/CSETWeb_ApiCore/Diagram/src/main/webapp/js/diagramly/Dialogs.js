@@ -2771,10 +2771,22 @@ var NewDialog = function (app, opts) {
     };
 
     const addButton = tmplt => {
-        const elt = document.createElement('div');
-        elt.className = 'geTemplate';
-        elt.style.height = '140px';
-        elt.style.width = '140px';
+		const elt = document.createElement('div');
+		elt.style.display = 'inline-block';
+		elt.style.width = '143px';
+		elt.style.verticalAlign = 'top';
+        
+		const eltImg = document.createElement('div');
+		elt.appendChild(eltImg);
+		eltImg.className = 'geTemplate';
+		eltImg.style.height = '120px';
+		eltImg.style.width = '140px';
+
+		const eltCap = document.createElement('div');
+		elt.appendChild(eltCap);
+		eltCap.setAttribute('class', 'template-caption');
+		eltCap.innerText = tmplt.tooltip;
+
 
         if (tmplt.tooltip) {
             elt.setAttribute('title', tmplt.tooltip);
@@ -2794,10 +2806,10 @@ var NewDialog = function (app, opts) {
         });
 
         if (tmplt.imgUrl) {
-            elt.style.backgroundImage = `url(${tmplt.imgUrl})`;
-            elt.style.backgroundSize = 'contain';
-            elt.style.backgroundPosition = 'center center';
-            elt.style.backgroundRepeat = 'no-repeat';
+            eltImg.style.backgroundImage = `url(${tmplt.imgUrl})`;
+            //eltImg.style.backgroundSize = 'contain';
+            eltImg.style.backgroundPosition = 'top center';
+            eltImg.style.backgroundRepeat = 'no-repeat';
         } else if (!tmplt.noImg && tmplt.url) {
             const png = tmplt.preview || `${TEMPLATE_PATH}/${tmplt.url.substring(0, tmplt.url.length - 4)}.png`;
             elt.style.backgroundImage = `url(${png})`;
@@ -2842,9 +2854,8 @@ var NewDialog = function (app, opts) {
                 // Asynchronous double click handling after loading template
                 createIt = true;
             };
-        } else {
-            elt.innerHTML = '<table width="100%" height="100%" style="line-height:1em;word-break: break-all;"><tr>' +
-                `<td align="center" valign="middle">${mxResources.get(tmplt.title, null, tmplt.title)}</td></tr></table>`;
+		} else {
+			elt.innerHTML = `<div class="no-img-template">${mxResources.get(tmplt.title, null, tmplt.title)}</div>`;
         }
 
         if (tmplt.select) {

@@ -874,6 +874,23 @@ table.td-align-top td {
   color: $white;
 }
 
+
+.btn-geo {
+  background-color: $gray-150;
+  color: $primary-850;
+}
+
+.btn-geo:hover {
+  background-color: $gray-400;
+  color: $primary-850;
+}
+
+.btn-geo:not(.disabled).active,
+.btn-geo:not(.disabled).activeLevel,
+.show>.btn-geo.dropdown-toggle {
+  background-color: $primary-850;
+  color: $white;
+}
 .gauge {
   background-color: $white;
   fill: $primary-color;
@@ -2478,6 +2495,23 @@ table.assessment-documents th {
   border: 1px solid $secondary-color;
   border-radius: 0.4em;
   padding: 1em;
+}
+
+.answered-count {
+  display: inline-block;
+  font-weight: 400;
+  color: $gray-50;
+  background-color: $primary-900;
+  border: 1px solid #ccc;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  padding: 0.27rem 0.75rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  height: fit-content;
+  border-radius: 0.25rem;
 }
 
 .alert-danger {
