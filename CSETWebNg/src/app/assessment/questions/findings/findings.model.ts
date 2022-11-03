@@ -63,3 +63,8 @@ export interface FindingContact {
   name: string;
   selected: boolean;
 }
+
+export interface ActionItemText {
+  Mat_Question_Id: number;
+  ActionItemOverrideText: string;
+}
