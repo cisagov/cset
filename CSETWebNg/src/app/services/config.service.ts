@@ -40,7 +40,6 @@ export class ConfigService {
   analyticsUrl: string;
   config: any;
 
-  isCsetOnline = false;
   behaviors: any;
 
   buttonClasses = {};
@@ -87,7 +86,7 @@ export class ConfigService {
   }
 
   setConfigPropertiesForLocalService(config: any) {
-    this.assetsUrl ='assets/';
+    this.assetsUrl = "assets/";
     this.installationMode = config.installationMode;
     let apiPort = config.api.port != "" ? ":" + config.api.port : "";
     let appPort = config.app.port != "" ? ":" + config.app.port : "";

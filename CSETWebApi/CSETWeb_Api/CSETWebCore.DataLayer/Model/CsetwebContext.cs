@@ -1881,16 +1881,16 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS>(entity =>
             {
-                entity.HasKey(e => e.Question_Id)
+                entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Question_Id).ValueGeneratedNever();
+                entity.Property(e => e.Mat_Question_Id).ValueGeneratedNever();
 
-                entity.HasOne(d => d.Question)
+                entity.HasOne(d => d.Mat_Question)
                     .WithOne(p => p.ISE_ACTIONS)
-                    .HasForeignKey<ISE_ACTIONS>(d => d.Question_Id)
+                    .HasForeignKey<ISE_ACTIONS>(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
             });
@@ -2044,7 +2044,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_LevelNavigation)
+                entity.HasOne(d => d.Maturity_Level)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
