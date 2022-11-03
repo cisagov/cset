@@ -78,7 +78,7 @@ namespace CSETWebCore.Helpers
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             allQuestions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 _modelId == q.Maturity_Model_Id).ToList();
@@ -157,8 +157,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -211,8 +211,8 @@ namespace CSETWebCore.Helpers
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     Sequence = myQ.Sequence,
-                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                    MaturityLevel = myQ.Maturity_Level.Level,
+                    MaturityLevelName = myQ.Maturity_Level.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -272,8 +272,8 @@ namespace CSETWebCore.Helpers
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
