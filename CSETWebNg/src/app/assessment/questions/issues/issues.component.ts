@@ -25,7 +25,7 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
+import { Finding, ActionItemText, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
 import { QuestionsService } from '../../../services/questions.service';
 
@@ -59,6 +59,9 @@ export class IssuesComponent implements OnInit {
                          'Fraud', 'Other', 'Supervisory Committee Activities', 'Full and Fair Disclosure', 'Electronic Payment & Card Services', 
                          'Recordkeeping-Significant', 'Security Program', 'Account Verification', 'Policies & Procedures', 
                          'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];
+  
+  updatedActionText: string[] = [];
+  ActionItemList = new Map();
 
   constructor(
     private dialog: MatDialogRef<IssuesComponent>,
@@ -168,15 +171,27 @@ export class IssuesComponent implements OnInit {
     this.subRisk = subRisk;
   }
 
+  updateActionText(e: any, q: any) {
+    console.log(q);
+    if (e.originalTarget.defaultValue !== e.target.value) {
+      //this.updatedActionText[i] = e.target.value;
+      const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
+      this.ActionItemList.set(q.mat_Question_Id, item);
+    }
+  }
+
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
 
-    //for all the action items texts call the save service function
-    //You will Need to add the parameters to this function call
-    //I need a list of  this.questionID (where it is not the parent id), 'This is the text from the box'
-    this.findSvc.saveIssueText().subscribe();
-
+    // for (let i = 0; i < this.actionItems.length; i++) {
+    //   const item: ActionItemText = {Mat_Question_Id: this.actionItems[i].question_Id, ActionItemOverrideText: this.updatedActionText[i]};
+    //   //this.ActionItemList.push(item);
+    // }
+    
+    let mapToArray = Array.from(this.ActionItemList.values());
+    this.findSvc.saveIssueText(mapToArray).subscribe();
+    
 
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
