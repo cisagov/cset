@@ -38,6 +38,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(150)]
         public string LastName { get; set; }
         public Guid? Id { get; set; }
+        public int EmailSentCount { get; set; }
 
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }

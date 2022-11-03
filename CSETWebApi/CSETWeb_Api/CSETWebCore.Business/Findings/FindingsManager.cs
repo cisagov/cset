@@ -72,7 +72,7 @@ namespace CSETWebCore.Business.Findings
                 );
             var table = from questions in _context.MATURITY_QUESTIONS
                         join actions in _context.ISE_ACTIONS
-                            on questions.Mat_Question_Id equals actions.Question_Id
+                            on questions.Mat_Question_Id equals actions.Mat_Question_Id
                         where questions.Parent_Question_Id == parentId
                         select new { actions };
             foreach(var action in table.ToList())
@@ -80,7 +80,7 @@ namespace CSETWebCore.Business.Findings
                 actionItems.Add(
                     new ActionItems()
                     {
-                        Question_Id = action.actions.Question_Id,
+                        Question_Id = action.actions.Mat_Question_Id,
                         Description = action.actions.Description,
                         Action_Items = action.actions.Action_Items,
                         Regulatory_Citation = action.actions.Regulatory_Citation
