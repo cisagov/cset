@@ -22,6 +22,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   // Stored proc data
   mergeConflicts: any[] = [];
+  primaryAssessDetails: any;
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
@@ -124,7 +125,20 @@ export class MergeExaminationsComponent implements OnInit {
     // run stored proc to grab any differing answers between assessments
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
-        this.mergeConflicts = response;
+        if (response.length === 0) {
+          console.log("response.length === 0");
+          let id = this.ncuaSvc.assessmentsToMerge[0];
+          console.log("assessmentsToMerge[0] id: " + id);
+          this.assessSvc.getAssessmentToken(id).then(() => {
+            this.assessSvc.getAssessmentDetail().subscribe(data => {
+              this.primaryAssessDetails = data;
+              console.log("this.primaryAssessDetails: " + JSON.stringify(this.primaryAssessDetails, null, 4));
+            })
+          });
+        } else {
+          this.mergeConflicts = response;
+        }
+      
         this.getAssessmentNames();
       }
     );
@@ -183,7 +197,6 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-
   navToHome() {
     this.router.navigate(['/landing-page']);
   }
@@ -200,6 +213,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   // convert "Y" or "N" or "NA" into an ANSWER Object
   convertToAnswerType(length: number, answers: string[]) {
+    console.log("entering 'convertToAnswerType' function");
     for (let i = 0; i < length; i++) {
       let comments = this.combineComments(i);
       let altText = this.combineAltText(i);
@@ -301,32 +315,58 @@ export class MergeExaminationsComponent implements OnInit {
 
   createMergedAssessment() {
     // null out the button to prevent multiple clicks
+    console.log("starting the merge");
     this.attemptingToMerge = true;
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
 
     // Create a brand new assessment
+    console.log("creating a new assessment.");
     this.assessSvc.createAssessment("ACET")
     .toPromise()
     .then(
       (response: any) => {
         // Authorize the user to modify the new assessment with a new token
+        console.log("getting the new assessment token");
         this.assessSvc.getAssessmentToken(response.id).then(() => {
           
           // Pull the new assessment details (mostly empty/defaults)
+          console.log("grabbing the new assessment details.")
           this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
-            // Update the assessment with the merge data and send it back
-            details.assessmentName = "Merged ISE " + this.mergeConflicts[0].charter_Number + " " + 
-                                      this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
-            details.charter = this.mergeConflicts[0].charter_Number;
-            details.assets = this.mergeConflicts[0].asset_Amount;
-            details.isAcetOnly = false;
-            details.useMaturity = true;
-            details.maturityModel = this.maturitySvc.getModel("ISE");
-            this.assessSvc.updateAssessmentDetails(details);
+            // Update the assessment with the new data and send it back. Normally this comes from the merge conflict proc
+            // that pulls in some extra info for assessment config. If there are no conflicts, we use similar data pulled earlier.
+            console.log("Merge conflicts > 0, using mergeConflicts[0].");
+            if (this.mergeConflicts.length > 0) {
+              details.assessmentName = "Merged ISE " + this.mergeConflicts[0].charter_Number + " " + 
+                                        this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
+              details.cityOrSiteName = this.mergeConflicts[0].cityOrSiteName;
+              details.stateProvRegion = this.mergeConflicts[0].stateProvRegion;
+              details.creditUnion = this.mergeConflicts[0].creditUnion;
+              details.charter = this.mergeConflicts[0].charter_Number;
+              details.assets = this.mergeConflicts[0].asset_Amount;
+              details.isAcetOnly = false;
+              details.useMaturity = true;
+              details.maturityModel = this.maturitySvc.getModel("ISE");
+              this.assessSvc.updateAssessmentDetails(details);
+            } else {
+              console.log("Merge conflicts is empty. using this.primaryAssessDetails");
+              details.assessmentName = "Merged ISE " + this.primaryAssessDetails.charter + " " + 
+                                        this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
+              details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
+              details.stateProvRegion = this.primaryAssessDetails.stateProvRegion;
+              details.creditUnion = this.primaryAssessDetails.creditUnion;
+              details.charter = this.primaryAssessDetails.charter;
+              details.assets = this.primaryAssessDetails.assets;
+              details.isAcetOnly = true;
+              details.useMaturity = true;
+              details.maturityModel = this.maturitySvc.getModel("ISE");
+              this.assessSvc.updateAssessmentDetails(details);
+            }
 
+            console.log("this.mergeAnswers.length: " + this.mergeAnswers.length);
+            console.log("this.mergingAssessmentAnswers.length: " + this.mergingAssessmentAnswers.length);
             for (let i = 0; i < this.mergeAnswers.length; i++) {
               for (let j = 0; j < this.mergingAssessmentAnswers.length; j++) {
                 if (this.mergeAnswers[i].questionId === this.mergingAssessmentAnswers[j].questionId) {
@@ -337,10 +377,12 @@ export class MergeExaminationsComponent implements OnInit {
               }
             }
 
+            console.log("attempting to store answers.");
             for (let i = 0; i < this.mergingAssessmentAnswers.length; i++) {
               this.questionSvc.storeAnswer(this.mergingAssessmentAnswers[i]).subscribe((response: any) => {
+                if (i = this.mergingAssessmentAnswers.length) {
                 this.navToHome();
-
+                }
               });
             }
           })
