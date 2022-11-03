@@ -157,6 +157,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddTransient<IGalleryState, GalleryState>();
+            services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
 
 

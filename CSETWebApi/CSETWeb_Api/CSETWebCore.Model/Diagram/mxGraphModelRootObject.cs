@@ -118,7 +118,7 @@
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string zoneType
+        public string ZoneType
         {
             get
             {

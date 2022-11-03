@@ -32,7 +32,9 @@ import { ReportService } from '../../../services/report.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
 import { DemographicExtendedService } from '../../../services/demographic-extended.service';
-import {MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { FileUploadClientService } from '../../../services/file-client.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
     selector: 'app-reports',
@@ -56,6 +58,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     lastModifiedTimestamp = '';
 
+    exportExtension: string;
+
     dialogRef: MatDialogRef<any>;
     isCyberFlorida: boolean = false;
 
@@ -67,6 +71,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private acetSvc: ACETService,
+        public fileSvc: FileUploadClientService,
+        public authSvc: AuthenticationService,
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
@@ -88,19 +94,21 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
     }
 
-    
+
 
     openSnackBar() {
-      this._snackBar.openFromComponent(PrintSnackComponent, {
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
+        this._snackBar.openFromComponent(PrintSnackComponent, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+        });
     }
 
     /**
      *
      */
     ngOnInit() {
+        this.exportExtension = localStorage.getItem('exportExtension');
+
         this.assessSvc.currentTab = 'results';
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
@@ -125,7 +133,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.disableEntirePage = !answered;
             });
         }
-        else{
+        else {
             this.isCyberFlorida = false;
         }
 
@@ -138,7 +146,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
-    
+
     /**
      *
      */
@@ -218,23 +226,38 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     exportToExcel() {
         window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
     }
+
+    /**
+     * 
+     */
+    clickExport() {
+        // get short-term JWT from API
+        this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id)
+            .subscribe((response: any) => {
+                const url =
+                    this.fileSvc.exportUrl + "?token=" + response.token;
+
+                //if electron
+                window.location.href = url;
+            });
+    }
 }
 
 @Component({
     selector: 'snack-bar-component-example-snack',
-    template:' <span class="">To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button> ',
+    template: ' <span class="">To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button> ',
     styles: [
-      '',
+        '',
     ],
-  })
+})
 
-  export class PrintSnackComponent {
-    constructor( 
+export class PrintSnackComponent {
+    constructor(
         public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: any) { 
+        @Inject(MAT_SNACK_BAR_DATA) public data: any) {
     }
-        
-    closeMe(){
+
+    closeMe() {
 
     }
-  }
+}
