@@ -2,6 +2,7 @@
 using CSETWebCore.Model.Findings;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -194,6 +195,28 @@ namespace CSETWebCore.Business.Findings
             }
 
             return webF;
+        }
+
+        public void UpdateIssues(List<ActionItemText> actionItems,int assessment_id)
+        {
+            foreach(var item in actionItems)
+            {
+                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Assessment_Id == assessment_id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
+                if (save == null)
+                {
+                    _context.ISE_ACTIONS_FINDINGS.Add(new ISE_ACTIONS_FINDINGS()
+                    {
+                        Mat_Question_Id = item.Mat_Question_Id,
+                        Assessment_Id = assessment_id,
+                        Action_Items_Override = item.ActionItemOverrideText
+                    });
+                }
+                else
+                {
+                    save.Action_Items_Override = item.ActionItemOverrideText;
+                }
+            }
+            _context.SaveChanges();
         }
     }
 }
