@@ -29,7 +29,7 @@
     <script type="text/javascript" src="assets/settings/configScript.js"></script>
     <script>
         // Function to check if CSET is being run from within Electron Wrapper
-      
+
 
         localStorage.setItem('isRunningInElectron', isElectron().toString());
 
@@ -37,7 +37,6 @@
 
         var csetGlobalConfig = null;
         var installationMode = '';
-        var isCsetOnline = false;
         // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
         // since the root is assumed to be the local drive
         var configPath = localStorage.getItem('isRunningInElectron') == 'true' ? 'assets/settings/config.json' : '/assets/settings/config.json';
@@ -52,7 +51,6 @@
                     getConfigs(csetGlobalConfig,csetGlobalConfig.currentConfigChain).then(()=>{
                     installationMode = csetGlobalConfig.installationMode || 'CSET';
                     localStorage.setItem('installationMode', installationMode.toUpperCase());
-                    isCsetOnline = csetGlobalConfig.isCsetOnline;                    
                     switchConfigsForMode(installationMode);
                     });
                 }
