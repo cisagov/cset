@@ -25,6 +25,9 @@ namespace CSETWebCore.DataLayer.Model
         /// The Selected is used to
         /// </summary>
         public bool Selected { get; set; }
+        [StringLength(5)]
+        [Unicode(false)]
+        public string Suppress_Mode { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("AVAILABLE_STANDARDS")]
