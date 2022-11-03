@@ -284,8 +284,9 @@ export class IseMeritComponent implements OnInit {
     text = text.replace (/&#8221;/g, '');
     text = text.replace(/&#34;/g, '\'');
     text = text.replace(/&#167;/g, '');
+    text = text.replace(/&#8211;/g, '');
     text = text.replace('ISE Reference', '');
-    text = text.replace('/\s/g', ' ');
+    text = text.replace('/\s/g', ' ');  
     return (text);
   }
 

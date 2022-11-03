@@ -275,6 +275,20 @@
                                     </label> <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
                                     
                                     <br>
+                                    <strong>Regulatory Citation: </strong>
+                                    <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
+                                        <div *ngFor="let question of subcat?.questions">
+                                            <div *ngIf="this.regCitationsMap.has(question.matQuestionId)">
+                                                <div *ngIf="question.title == finding?.question?.question_Title">
+                                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                        [cdkCopyToClipboard]="this.regCitationsMap.get(question.matQuestionId)[0]">
+                                                        <span class="cset-icons-copy" ></span>
+                                                    </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] !='' ? this.regCitationsMap.get(question.matQuestionId)[0] : '(no regulatory citation given)'}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
@@ -289,20 +303,7 @@
                                     <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
 
                                 </div>
-                                <strong>Regulatory Citation: </strong>
-                                <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
-                                    <div *ngFor="let question of subcat?.questions">
-                                        <div *ngIf="this.regCitationsMap.has(question.matQuestionId)">
-                                            <div *ngIf="question.title == finding?.question?.question_Title">
-                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
-                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                    [cdkCopyToClipboard]="this.regCitationsMap.get(question.matQuestionId)[0]">
-                                                    <span class="cset-icons-copy" ></span>
-                                                </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] !='' ? this.regCitationsMap.get(question.matQuestionId)[0] : '(no regulatory citation given)'}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <hr class="page-line">
                             </div>
                             
