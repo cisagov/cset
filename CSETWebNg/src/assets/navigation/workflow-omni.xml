@@ -227,8 +227,8 @@
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
         
         <!-- Results - MVRA -->
-        <node displaytext="Goal Performance" id="mvra-gaps" path="assessment/{:id}/results/mvra-gaps" condition="MATURITY:MVRA" />
-        <node displaytext="Performance Summary" id="mvra-summary" path="assessment/{:id}/results/mvra-summary" condition="MATURITY:MVRA" />
+        <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />
+        <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" condition="MATURITY:MVRA" />
 
 
         <!-- Results - Diagram -->
