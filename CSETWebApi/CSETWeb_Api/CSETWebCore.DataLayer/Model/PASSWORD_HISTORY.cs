@@ -15,13 +15,13 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         [Column(TypeName = "datetime")]
         public DateTime Created { get; set; }
-        public bool Is_Temp { get; set; }
         [Required]
         [StringLength(250)]
         public string Password { get; set; }
         [Required]
         [StringLength(250)]
         public string Salt { get; set; }
+        public bool Is_Temp { get; set; }
 
         [ForeignKey("UserId")]
         [InverseProperty("PASSWORD_HISTORY")]

@@ -86,7 +86,7 @@ namespace CSETWebCore.Helpers
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering.
             var questions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 CrrModelId == q.Maturity_Model_Id).ToList();
