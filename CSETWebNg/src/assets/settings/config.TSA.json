@@ -1,0 +1,22 @@
+{
+    "galleryLayout": "TSA",
+    "installationMode":"TSA",
+    "behaviors": {
+        "defaultTitle":"CSET-TSA",
+        "showModuleBuilder": true,
+        "showAssessmentDocuments": true,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": true,
+        "showAnalyticsColumnOnLanding": true,
+        "splashPageHTML": "dist/assets/splashTSA.html",
+        "showFacilityName": true,
+        "showCityName": true,
+        "showStateName": true,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true
+    }
+
+}

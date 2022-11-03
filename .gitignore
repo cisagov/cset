@@ -54,3 +54,6 @@ CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/Properties/PublishProfiles/Fol
 CSETWebApi/CSETWeb_Api/CSETWebCore.Reports/CSETWebCore.Reports.csproj.user
 CSETWebApi/NCUA-EXAMINER-TOOL
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/WebApp
+/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Properties/PublishProfiles/FolderProfile.pubxml.user
+/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Properties/PublishProfiles/FolderProfile.pubxml
+/CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/.config/dotnet-tools.json

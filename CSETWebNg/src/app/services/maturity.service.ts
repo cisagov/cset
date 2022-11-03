@@ -214,7 +214,7 @@ export class MaturityService {
 
 
   /**
-   *
+   * Asks the API for all maturity questions/answers for the current assessment.
    */
   getQuestionsList(installationMode: string, fillEmpty: boolean) {
     return this.http.get(
@@ -222,6 +222,14 @@ export class MaturityService {
       + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty,
       headers
     );
+  }
+
+  /**
+   * Asks the API for one grouping's worth of questions/answers.
+   */
+  getGroupingQuestions(groupingId: Number) {
+    return this.http.get(this.configSvc.apiUrl 
+      + 'maturity/questions/grouping?groupingId=' + groupingId);
   }
 
   /**
@@ -334,5 +342,9 @@ export class MaturityService {
    */
   getGroupingTitles(modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
+  }
+
+  getMvraScoring(){
+    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
   }
 }

@@ -26,6 +26,7 @@ import { CsiService } from '../../../../services/cis-csi.service';
 import { CsiDefiningSystem } from './../../../../models/csi.model';
 import { AssessmentService } from './../../../../services/assessment.service';
 import { CsiServiceComposition } from './../../../../models/csi.model';
+import { ConfigService } from './../../../../services/config.service';
 
 @Component({
   selector: 'app-csi-service-composition',
@@ -36,9 +37,10 @@ export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
   definingSystemsList: CsiDefiningSystem[] = [];
 
-  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService) {
-
-  }
+  constructor(
+    private csiSvc: CsiService,
+    private assessSvc: AssessmentService,
+    private configSvc: ConfigService) {}
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiDefiningSystems().subscribe(
@@ -124,6 +126,10 @@ export class CsiServiceCompositionComponent implements OnInit {
         },
         error => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
     );
+  }
+
+  showCriticalServiceIdentifyingInfo() {
+    return this.configSvc.behaviors.showCriticalService;
   }
 
 }

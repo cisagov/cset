@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-cmmc-alt-justifications',
@@ -18,10 +19,11 @@ export class CmmcAltJustificationsComponent implements OnInit {
   altJustList = [];
 
   constructor(
-  public configSvc: ConfigService,
-  private titleService: Title,
-  private maturitySvc: MaturityService
-  ){}
+    public configSvc: ConfigService,
+    private titleService: Title,
+    private maturitySvc: MaturityService,
+    public questionsSvc: QuestionsService
+  ) { }
 
   ngOnInit() {
     this.loading = true;
@@ -32,7 +34,7 @@ export class CmmcAltJustificationsComponent implements OnInit {
     if (!appCode || appCode === 'CSET') {
       this.logoPath = "assets/images/CISA_Logo_1831px.png";
     }
-    else if (appCode === 'CSET-TSA') {
+    else if (appCode === 'TSA') {
       this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
     }
 
@@ -69,7 +71,7 @@ export class CmmcAltJustificationsComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.configSvc.config['answerLabel' + abb];
+    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
   }
 
   printReport() {

@@ -80,7 +80,7 @@
           </svg>
       </button>
 
-        <button *ngIf="configSvc.installationMode !=='ACET'" class="extras-button cursor-pointer"
+        <button *ngIf="displayIcon('DOCS')" class="extras-button cursor-pointer"
             [class.active]="mode == 'DOCS'" (click)="toggleExtras('DOCS')"
             [matTooltip]="has('DOCS')==='inline'? 'Artifacts / Documents with content':'Artifacts / Documents'"
             matTooltipPosition="above">
@@ -159,13 +159,13 @@
 
     <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="layoutSvc.hp">
 
-        <div *ngIf="extras == null">
+        <div *ngIf="extras == null || tab == null">
             <div class="spinner-container" style="margin: .5em auto">
                 <div style="max-width: 30px; max-height: 30px;"></div>
             </div>
         </div>
         <div *ngIf="myQuestion.is_Component; else detailTab">
-            <div *ngIf="extras !== null && mode == 'COMPONENT'" class="detail">
+            <div *ngIf="extras !== null && tab && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
                         <th>Component Type</th>
@@ -186,14 +186,14 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
+            <div *ngIf="extras !== null && tab && mode == 'SUPP'" class="supplemental">
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
                 </div>
             </div>
         </div>
         <ng-template #detailTab>
-            <div *ngIf="extras !== null && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
+            <div *ngIf="extras !== null && tab && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category:
@@ -220,7 +220,7 @@
 
 
             </div>
-            <div *ngIf="extras !== null && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
+            <div *ngIf="extras !== null && tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
             </div>
             <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
@@ -299,7 +299,7 @@
                 class="display-none">
         </div>
 
-        <div *ngIf="extras !== null && mode === 'REFS'">
+        <div *ngIf="extras !== null && tab && mode === 'REFS'">
             <table class="reference-table" *ngIf="tab != null">
                 <tr *ngFor="let reftext of tab?.referenceTextList">
                     <td colspan="2" [innerHTML]="reftext">

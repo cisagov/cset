@@ -484,14 +484,32 @@ import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-m
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
-import { IseIssuesComponent } from './reports/ise-issues/ise-issues.component';
-import { IseExecutiveComponent } from './reports/ise-executive/ise-executive.component';
+import { IseMeritComponent } from './reports/ise-merit/ise-merit.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
+import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
+import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
+import { IseDataComponent } from './reports/ise-data/ise-data.component';
+import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
+import { DemographicExtendedService } from './services/demographic-extended.service';
+import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
+import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
+import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
+import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
+import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
+import { ZipCodeDirective } from './helpers/zip-code.directive';
+
+
 
 @NgModule({
     imports: [
@@ -616,6 +634,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         ConfirmEqualValidatorDirective,
         EmailValidatorDirective,
         FocusDirective,
+        ZipCodeDirective,
         AutoSizeDirective,
         DigitsOnlyDirective,
         RunScriptsDirective,
@@ -761,9 +780,11 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         AcetAnsweredQuestionsComponent,
         AcetCompensatingcontrolsComponent,
         IseAnsweredQuestionsComponent,
-        IseIssuesComponent,
-        IseExecutiveComponent,
+        IseMeritComponent,
+        IseExaminationComponent,
+        IseExaminerComponent,
         IseDonutChartComponent,
+        IseDataComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,
@@ -938,7 +959,13 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent, 
-        SearchPageComponent, LogoTsaComponent
+        SearchPageComponent, 
+        LogoTsaComponent, 
+        CfLayoutMainComponent,
+        OptionBlockComponent, 
+        DemographicsExtendedComponent, 
+        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
+        ,AboutCfComponent
     ],
     providers: [
         ConfigService,
@@ -946,7 +973,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         {
           provide: APP_INITIALIZER,
           useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
-            return () => {
+            return () => {              
               return configSvc.loadConfig().then(() => {
                 return authSvc.checkLocal();
               });
@@ -965,6 +992,7 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         AssessGuard,
         AggregationGuard,
         DemographicService,
+        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,
@@ -1028,7 +1056,8 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
         DataloginComponent,
-        AwwaStandardComponent
+        AwwaStandardComponent,
+        SectorHelpComponent
     ]
 })
 

@@ -39,6 +39,8 @@ namespace CSETWebCore.DataLayer.Model
         /// </summary>
         [StringLength(100)]
         public string State_Province_Or_Region { get; set; }
+        [StringLength(20)]
+        public string Postal_Code { get; set; }
         /// <summary>
         /// The Assessor Name is used to
         /// </summary>
@@ -86,6 +88,9 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(30)]
         public string Workflow { get; set; }
         public int? Baseline_Assessment_Id { get; set; }
+        [StringLength(20)]
+        [Unicode(false)]
+        public string Origin { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("INFORMATION")]

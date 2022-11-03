@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-cmmc2-deficiency',
@@ -43,7 +44,8 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   constructor(
   public configSvc: ConfigService,
   private titleService: Title,
-  private maturitySvc: MaturityService
+  private maturitySvc: MaturityService,
+  public questionsSvc: QuestionsService
   ){}
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class Cmmc2DeficiencyComponent implements OnInit {
     if (!appCode || appCode === 'CSET') {
       this.logoPath = "assets/images/CISA_Logo_1831px.png";
     }
-    else if (appCode === 'CSET-TSA') {
+    else if (appCode === 'TSA') {
       this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
     }
 
@@ -91,7 +93,7 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.configSvc.config['answerLabel' + abb];
+    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
   }
 
   printReport() {

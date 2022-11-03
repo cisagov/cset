@@ -22,23 +22,30 @@
 -------------------------->
 <div class="white-panel">
   <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="d-flex flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-    <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
-      <div class="d-flex align-items-start flex-11a">
+    <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
+      <div class="mr-3 answered-count" *ngIf="!!groupings" matTooltip="Indicates the number of answered questions out of the total for this page">
+        {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
+      </div>
+      <div>
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
           matTooltip="Collapse All" aria-label="Collapse All">
           <i class="fas fa-compress-alt"></i></button>
         <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
           aria-label="Expand All"><i class="fas fa-expand-alt"></i></button>
-        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()" matTooltip="Filter">
+        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()"
+          matTooltip="Filter">
           <i class="cset-icons-filter" aria-label="Filter"></i>
         </button>
       </div>
+
     </div>
 
     <div class="d-block mb-2">
       <h2 *ngIf="groupings?.length != 1">{{ pageTitle }}</h2>
+
+      <h3>{{ groupingTitle }}</h3>
 
       <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to
@@ -76,6 +83,8 @@
 
   </div>
 
-  <app-nav-back-next [page]="'maturity-questions'"></app-nav-back-next>
+  <app-nav-back-next *ngIf="isNcuaModel()" [page]="'maturity-questions-ncua'"></app-nav-back-next>
+  <app-nav-back-next *ngIf="!isNcuaModel() && !groupingId" [page]="'maturity-questions'"></app-nav-back-next>
+  <app-nav-back-next *ngIf="!!groupingId" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
 
 </div>

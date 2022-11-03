@@ -47,19 +47,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        this.titleSvc.setTitle('ACET');
-        break;
-      case 'TSA':
-        this.titleSvc.setTitle('CSET-TSA');
-        break;
-      case 'RRA':
-        this.titleSvc.setTitle('CISA - Ransomware Readiness');
-        break;
-      default:
-        this.titleSvc.setTitle('CSET');
-    }
+    this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);    
   }
 
   continueStandAlone() {

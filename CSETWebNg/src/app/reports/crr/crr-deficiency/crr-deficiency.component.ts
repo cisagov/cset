@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CrrReportModel } from '../../../models/reports.model';
 import { ConfigService } from '../../../services/config.service';
+import { QuestionsService } from '../../../services/questions.service';
 import { CrrService } from './../../../services/crr.service';
 
 @Component({
@@ -44,7 +45,8 @@ export class CrrDeficiencyComponent implements OnInit {
   constructor(
   public configSvc: ConfigService,
   private titleService: Title,
-  private crrSvc: CrrService
+  private crrSvc: CrrService,
+  public questionsSvc: QuestionsService
   ){}
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class CrrDeficiencyComponent implements OnInit {
     if (!appCode || appCode === 'CSET') {
       this.logoPath = "assets/images/CISA_Logo_1831px.png";
     }
-    else if (appCode === 'CSET-TSA') {
+    else if (appCode === 'TSA') {
       this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
     }
 
@@ -117,7 +119,7 @@ export class CrrDeficiencyComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.configSvc.config['answerLabel' + abb];
+    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
   }
 
   printReport() {

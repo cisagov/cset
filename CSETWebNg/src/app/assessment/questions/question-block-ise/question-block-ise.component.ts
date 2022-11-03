@@ -52,12 +52,11 @@ import { IssuesComponent } from '../issues/issues.component';
 export class QuestionBlockIseComponent implements OnInit {
 
   @Input() myGrouping: QuestionGrouping;
-
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   private _timeoutId: NodeJS.Timeout;
-
   extras: QuestionDetailsContentViewModel;
+  dialogRef: MatDialogRef <any>;
 
   percentAnswered = 0;
   answerOptions = [];
@@ -65,30 +64,33 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-
-  textForSummary = "Work Summary - insert comments";
+  textForSummary = "Statement Summary (insert comments)";
   summaryCommentCopy = "";
-  summaryEditedCheck = false;
+  summaryEditedCheck = false; 
 
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Comment - -\n';
-  // altAnswerConversation = [];
 
-  // To do: Add this to a db table and pull in dynamically.
-  issueAutoPopulate = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
-    7206, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7216, 7217, 7219, 7220, 7222, 7223, 7224, 
-    7225, 7227, 7233, 7235, 7236, 7237, 7238, 7240, 7241, 7242, 7243, 7244, 7246, 7247, 7248, 
-    7249, 7251, 7252, 7253, 7256, 7258, 7259, 7263, 7264, 7267, 7268, 7269, 7270, 7271, 7272, 
-    7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]);
+  // To do: eventually, these should be pulled in dynamically.
+  importantQuestions = new Set([7569, 7574, 7575, 7578, 7579, 7580, 7581, 7583, 7585, 7586, 7587, 7595, 7596, 
+    7597, 7598, 7599, 7600, 7601, 7605, 7606, 7608, 7610, 7613, 7614, 7615, 7616, 7620, 7625, 7629, 7630, 
+    7631, 7632, 7634, 7635, 7636, 7637, 7638, 7640, 7642, 7643, 7644, 7646, 7647, 7648, 7651, 7653, 7654, 
+    7658, 7659, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7672, 7673, 7675, 7677, 7681, 7682, 7684, 7685, 
+    7688, 7692, 7695, 7696, 7697, 7701]);
+  
+  // Used to place buttons/text boxes at the bottom of each subcategory
+  finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
+  finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
+  finalCorePlusQuestion = new Set ([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7756, 7773, 7784, 7795, 7807, 7826, 7834, 7842, 7852]);
+  finalExtraQuestion = new Set ([7868, 7874, 7890, 7901, 7911, 7918, 7946]);
 
   showQuestionIds = false;
 
+  iseExamLevel: string = "";
   showCorePlus: boolean = false;
-  showIssues: boolean = false;
+  showIssues: boolean = true;
   coreChecked: boolean = false;
-
-  dialogRef: MatDialogRef <any>;
 
   /**
    * Constructor.
@@ -108,30 +110,33 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   *
-   */
+  *
+  */
   ngOnInit(): void {
+    this.setIssueMap();
+    
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
+      this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
       this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
         (details) => {
           this.extras = details;
           this.extras.questionId = this.myGrouping.questions[0].questionId;
-        });
 
+          this.extras.findings.forEach(find => {
+            if (find.auto_Generated === 1) {
+              find.question_Id = this.myGrouping.questions[0].questionId;
+              this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+            }
+          });
           
+          this.ncuaSvc.issuesFinishedLoading = true;
+      });
+
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
-
-      // set sub questions' titles so that they align with their parent when hidden
-      // commented out now to maintain unique numbers for child statements
-      // this.myGrouping.questions.forEach(q => {
-      //   if (!!q.parentQuestionId) {
-      //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
-      //   }
-      // });
 
       if (this.configSvc.installationMode === "ACET") {
         if (this.assessSvc.isISE()) {
@@ -142,12 +147,13 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
+
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
@@ -157,8 +163,8 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   * Toggles the Expanded property of the question block.
-   */
+  * Toggles the Expanded property of the question block.
+  */
   toggleExpansion() {
     // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
@@ -171,9 +177,9 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
- * If there are no spaces in the question text assume it's a hex string
- * @param q
- */
+  * If there are no spaces in the question text assume it's a hex string
+  * @param q
+  */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
@@ -181,12 +187,87 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
+  displayTooltip(maturityModelId: number, option: string) {
+    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    if (toolTip === 'Yes' || toolTip === 'No') {
+      toolTip = "";
+    }
+    return toolTip;
+  }
+
   /**
-   *
-   * @param ans
-   */
+  * Repopulates the map variables to correctly track/delete issues
+  */
+  setIssueMap() {
+    let parentId = 0;
+    let tempId = 0;
+    let count = 0;
+
+    this.myGrouping.questions.forEach(question => {
+      if (question.answer === 'N') {
+        if (this.importantQuestions.has(question.questionId)) {
+          parentId = question.parentQuestionId;
+
+          if (tempId === 0) {
+            tempId = parentId;
+          } else if (tempId !== parentId) {
+            count = 0;
+            tempId = parentId;
+          }
+
+          if (parentId) {
+            count++;
+          }
+
+          this.ncuaSvc.importantQuestionCheck.set(parentId, count);
+        }
+
+        this.ncuaSvc.deleteHistory.clear();
+      }
+    });
+  }
+
+  deleteIssueMaps(findingId: number) {
+    const iterator = this.ncuaSvc.issueFindingId.entries();
+    let parentKey = 0;
+
+    for (let value of iterator) {
+      if (value[1] === findingId) {
+        parentKey = value[0];
+        this.ncuaSvc.importantQuestionCheck.delete(parentKey);
+        this.ncuaSvc.issueFindingId.delete(parentKey);
+        this.ncuaSvc.deleteHistory.add(parentKey);
+      }
+    }
+  }
+
+  /**
+  *
+  * @param ans
+  */
   showThisOption(ans: string) {
     return true;
+  }
+
+  shouldIShow(q: Question) {
+    // If running a SCUEP exam, always show level 1 (SCUEP) questions
+    if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
+      return true;
+      //If running a CORE exam, always show level 2 (CORE) questions
+    } else if (this.iseExamLevel === 'CORE') {
+      if (q.maturityLevel === 2) {
+        return true;
+        // For all level 3 (CORE+) questions, check to see if we want to see them
+      } else if (q.maturityLevel === 3) {
+        if (q.questionId < 7853 && this.showCorePlus === true) { 
+          return true;
+        } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -196,6 +277,8 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
+    let oldAnswerValue = q.answer;
+
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
@@ -219,17 +302,44 @@ export class QuestionBlockIseComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
-    if (q.answer === 'N' && this.issueAutoPopulate.has(q.questionId)) {
-      console.log("You've anwered no on an important question. Generating a new Issue.");
-      this.autoGenerateIssue(0);
-    }
-
     this.refreshReviewIndicator();
-
     this.refreshPercentAnswered();
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+    this.questionsSvc.storeAnswer(answer).subscribe
+    (result => {
+      this.checkForIssues(q, oldAnswerValue);
+    });
+  }
+
+  checkForIssues(q: Question, oldAnswerValue: string) {
+    if (this.importantQuestions.has(q.questionId)) {
+      let num = this.ncuaSvc.importantQuestionCheck.get(q.parentQuestionId);
+      let value = (num != undefined) ? num : 0;
+
+      if (q.answer === 'N') {
+        value++;
+        this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
+
+        if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+          if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
+            this.autoGenerateIssue(q.parentQuestionId, 0);
+          }
+        }
+      } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+        value--;
+        if (value < 1) {
+          this.ncuaSvc.importantQuestionCheck.delete(q.parentQuestionId);
+
+          if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+            let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
+            this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
+            this.deleteIssue(findId, true);
+          }
+        } else {
+          this.ncuaSvc.importantQuestionCheck.set(q.parentQuestionId, value);
+        }
+      } 
+    }
   }
 
   /**
@@ -271,7 +381,7 @@ export class QuestionBlockIseComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.isParentQuestion) {
+      if (q.parentQuestionId === null) {
         return;
       }
       if (q.visible) {
@@ -498,45 +608,31 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   isFinalQuestion(id: number) {
-    // If SCUEP examination
-    if (this.isScuep()) {
-      switch (id) {
-        case (7196): case(7201): case(7206): case(7214):
-        case (7217): case(7220): case(7225):
+    if (this.iseExamLevel === 'SCUEP' && this.finalScuepQuestion.has(id)) {
+      return true;
+    }
+
+    if (this.iseExamLevel === 'CORE') {
+      if (!this.showCorePlus && this.finalCoreQuestion.has(id)) {
           return true;
+      } else if (this.showCorePlus && this.finalCorePlusQuestion.has(id)) {
+        return true;
       }
-      return false;
-    } else { // If CORE examination
-      if (!this.showCorePlus) {
-        switch (id) {
-          case (7233): case (7238): case (7244): case (7249): 
-          case (7256): case (7265): case (7273): case (7276): 
-          case (7281): case (7285): case (7289): case (7293): 
-          case (7296): case (7301): case (7304):
-            return true;
-        }
-        return false;
-      } else if (this.showCorePlus) {
-        switch (id) {
-          // Final question under each CORE+ non-parent
-          case (7312): case (7316): case (7322): case (7332): 
-          case (7338): case (7344): case (7351): case (7359): 
-          case (7366): case (7373): case (7381): case (7390): 
-          case (7395): case (7400): case (7408): 
-          
-          // ID's of CORE+ only questions
-          case (7421): case (7429): case (7444): case (7450): 
-          case (7458): case (7465):
-            return true;
-        }
-        return false;
+
+      if (this.ncuaSvc.getExtraQuestionStatus() === true && this.finalExtraQuestion.has(id)) {
+        return true;
       }
     }
+
   }
 
+
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && !this.isScuep()) {
-      return true;
+    // SCUEP only shows SCUEP.
+    if (this.iseExamLevel !== 'SCUEP') {
+      if (this.isFinalQuestion(id)) {
+        return true;
+      }
     }
     return false;
   }
@@ -587,11 +683,11 @@ export class QuestionBlockIseComponent implements OnInit {
     }
   }
 
-    /**
+  /**
    *
    * @param findid
    */
-  addEditIssue(findid) {
+  addEditIssue(parentId, findid) {
     /* 
     * Per the customer's requests, an Issue's title should include the main 
     * grouping header text and the sub grouping header text.
@@ -600,14 +696,14 @@ export class QuestionBlockIseComponent implements OnInit {
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    if (this.myGrouping.questions[0].questionId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
     const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
+      question_Id: parentId,//this.myGrouping.questions[0].questionId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
       finding_Id: findid,
       summary: '',
@@ -622,11 +718,8 @@ export class QuestionBlockIseComponent implements OnInit {
       title: name,
       type: null,
       description: null,
-      sub_Risk_Area_Id: null,
-      subRiskArea: null,
-      disposition: null,
-      identified_Date: null,
-      due_Date: null
+      citations: null,
+      auto_Generated: 0
     };
     
     this.dialog.open(IssuesComponent, {
@@ -647,94 +740,112 @@ export class QuestionBlockIseComponent implements OnInit {
     });
   }
 
-  // Making a separate function ahead of the demo in case client wants custom functionality for
-  // auto generated issues vs manually created ones.
-  autoGenerateIssue(findid) {
+  // ISE "issues" should be generated if an examiner answers 'No' to
+  // 2 or more important questions with no popup.
+  autoGenerateIssue(parentId, findId) {
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    let desc = "";
+
+    if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: name,
-      type: null,
-      description: null,
-      sub_Risk_Area_Id: null,
-      subRiskArea: null,
-      disposition: null,
-      identified_Date: null,
-      due_Date: null
-    };
+    this.questionsSvc.getActionItems(parentId).subscribe(
+      (data: any) => {
+        // Used to generate a description for ISE reports even if a user doesn't open the issue.
+        desc = data[0]?.description;
 
-    this.dialog.open(IssuesComponent, {
-      data: find,
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
-    }).afterClosed().subscribe(result => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
+        const find: Finding = {
+          question_Id: parentId,
+          answer_Id: this.myGrouping.questions[0].answer_Id,
+          finding_Id: findId,
+          summary: '',
+          finding_Contacts: null,
+          impact: '',
+          importance: null,
+          importance_Id: 1,
+          issue: '',
+          recommendations: '',
+          resolution_Date: null,
+          vulnerabilities: '',
+          title: name,
+          type: null, //"Examiner Finding",
+          description: desc,
+          citations: null,
+          auto_Generated: 1
+        };
+
+        this.ncuaSvc.issueFindingId.set(parentId, findId);
+    
+        // this.dialog.open(IssuesComponent, {
+        //   data: find,
+        //   disableClose: true,
+        //   width: this.layoutSvc.hp ? '90%' : '60vh',
+        //   height: this.layoutSvc.hp ? '90%' : '85vh',
+    
+        // }).afterClosed().subscribe(result => {
+
+        this.findSvc.saveDiscovery(find).subscribe(() => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              for (let i = 0; i < response.length; i++) {
+                if (response[i].auto_Generated === 1) {
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
+                }
+              }
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+      });
   }
   
   /**
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteIssue(findingToDelete) {
-    // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
+  deleteIssue(findingId, autoGenerated: boolean) {
+    let msg = "Are you sure you want to delete this issue?";
+    
+    if (autoGenerated === false) {
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage = msg;
   
-    if (findingToDelete.summary === null) {
-      msg = "Are you sure you want to delete this issue?";
-    }
-
-    const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.componentInstance.confirmMessage = msg;
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteIssueMaps(findingId);
+          this.findSvc.deleteFinding(findingId).subscribe();
+          let deleteIndex = null;
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
+          }
+          this.extras.findings.splice(deleteIndex, 1);
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+        }
+      });
+    } else if (autoGenerated === true) {
+        this.findSvc.deleteFinding(findingId).subscribe();
         let deleteIndex = null;
   
-        for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
-            deleteIndex = i;
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
           }
-        }
         this.extras.findings.splice(deleteIndex, 1);
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-  
       }
-    });
   }
 
-  isScuep() {
-    if (this.ncuaSvc.chosenOverrideLevel === "CORE" || this.ncuaSvc.proposedExamLevel === "CORE") {
-      return false;
-    }
-    return true;
-  }
+  
   
 }

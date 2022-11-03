@@ -56,7 +56,7 @@ export class SetListComponent implements OnInit {
     this.getStandards();
     this.getStandardsInUse();
 
-    this.canDeleteCustomModules = this.configSvc.development.canDeleteCustomModules ?? false;
+    this.canDeleteCustomModules = this.configSvc.config.debug.canDeleteCustomModules ?? false;
   }
 
   getStandards() {

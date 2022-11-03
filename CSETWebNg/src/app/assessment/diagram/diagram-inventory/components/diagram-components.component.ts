@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
+import { Sort } from "@angular/material/sort";
+import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
   selector: 'app-diagram-components',
@@ -32,22 +34,23 @@ import { DiagramService } from '../../../../services/diagram.service';
 export class DiagramComponentsComponent implements OnInit {
 
   diagramComponentList: any;
-  
+
   @Output()
   change = new EventEmitter<any>();
 
+  comparer: Comparer = new Comparer();
   displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
 
   /**
-   * 
+   *
    */
   constructor(public diagramSvc: DiagramService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.diagramSvc.getAllSymbols().subscribe((x: any) => {
@@ -57,12 +60,50 @@ export class DiagramComponentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
       this.change.emit(this.diagramComponentList);
+    });
+  }
+
+  sortData(sort: Sort) {
+
+    if (!sort.active || sort.direction === "") {
+      // this.sortedAssessments = data;
+      return;
+    }
+
+    this.diagramComponentList.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "label":
+          return this.comparer.compare(a.label, b.label, isAsc);
+        case "hasUniqueQuestions":
+          return this.comparer.compareBool(a.hasUniqueQuestions, b.hasUniqueQuestions, isAsc);
+        case "sal":
+          return this.comparer.compare(a.sal, b.sal, isAsc);
+        case "criticality":
+          return this.comparer.compare(a.criticality, b.criticality, isAsc);
+        case "layer":
+          return this.comparer.compare(a.layerName, b.layerName, isAsc);
+        case "ipAddress":
+          return this.comparer.compare(a.ipAddress, b.ipAddress, isAsc);
+        case "assetType":
+          return this.comparer.compare(a.assetType, b.assetType, isAsc);
+        case "zone":
+          return this.comparer.compare(a.zoneLabel, b.zoneLabel, isAsc);
+        case "description":
+          return this.comparer.compare(a.description, b.description, isAsc);
+        case "hostName":
+          return this.comparer.compare(a.hostName, b.hostName, isAsc);
+        case "visible":
+          return this.comparer.compareBool(a.visible, b.visible, isAsc);
+        default:
+          return 0;
+      }
     });
   }
 }

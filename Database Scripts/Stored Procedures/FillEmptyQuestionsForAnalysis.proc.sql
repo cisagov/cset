@@ -27,7 +27,7 @@ BEGIN
 		BEGIN
 			BEGIN TRANSACTION;  
 		
-			EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';  
+			EXEC @result = sp_getapplock @Resource = '[Answer]', @LockMode = 'Exclusive';  
 				INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id], [Answer_Text], [Question_Type], [Assessment_Id])     
 			select s.Question_id, Answer_Text = 'U', Question_Type='Question', Assessment_Id = @Assessment_Id
 				from (select distinct s.Question_Id from NEW_QUESTION_SETS s 
@@ -42,7 +42,7 @@ BEGIN
 			END  
 			ELSE  
 			BEGIN  
-				EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
+				EXEC sp_releaseapplock @Resource = '[Answer]'; 	
 				COMMIT TRANSACTION;  
 			END;  
 
@@ -51,7 +51,7 @@ BEGIN
 	else
 	BEGIN
 		BEGIN TRANSACTION;  		
-		EXEC @result = sp_getapplock @DbPrincipal = 'dbo', @Resource = '[Answer]', @LockMode = 'Exclusive';  
+		EXEC @result = sp_getapplock @Resource = '[Answer]', @LockMode = 'Exclusive';  
 		INSERT INTO [dbo].[ANSWER]  ([Question_Or_Requirement_Id], 
            [Answer_Text], [Question_Type], [Assessment_Id])     
 		select distinct s.Requirement_Id, Answer_Text = 'U', Question_Type='Requirement', av.Assessment_Id 
@@ -66,7 +66,7 @@ BEGIN
 		END  
 		ELSE  
 		BEGIN  
-			EXEC sp_releaseapplock @DbPrincipal = 'dbo', @Resource = '[Answer]'; 	
+			EXEC sp_releaseapplock @Resource = '[Answer]'; 	
 			COMMIT TRANSACTION;  
 		END;  
 		

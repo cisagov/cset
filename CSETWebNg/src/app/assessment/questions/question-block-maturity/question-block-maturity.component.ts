@@ -30,6 +30,7 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -59,6 +60,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   showQuestionIds = false;
 
+  maturityModelId: number;
+
 
   /**
    * Constructor.
@@ -67,12 +70,13 @@ export class QuestionBlockMaturityComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public ncuaSvc: NCUAService
-  ) { 
-    
+  ) {
+
   }
 
   /**
@@ -81,25 +85,23 @@ export class QuestionBlockMaturityComponent implements OnInit {
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+      this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
+    }
 
-        this.configSvc.buttonLabels['A'] = "Yes(C)";
-        this.configSvc.answerLabels['A'] = "Yes Compensating Control"
-      }
+    this.refreshReviewIndicator();
+    this.refreshPercentAnswered();
 
-      this.refreshReviewIndicator();
-      this.refreshPercentAnswered();
+    // set sub questions' titles so that they align with their parent when hidden
+    // commented out now to maintain unique numbers for child statements
+    // this.myGrouping.questions.forEach(q => {
+    //   if (!!q.parentQuestionId) {
+    //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
+    //   }
+    // });
 
-      // set sub questions' titles so that they align with their parent when hidden
-      // commented out now to maintain unique numbers for child statements
-      // this.myGrouping.questions.forEach(q => {
-      //   if (!!q.parentQuestionId) {
-      //     q.displayNumber = this.myGrouping.questions.find(x => x.questionId == q.parentQuestionId).displayNumber;
-      //   }
-      // });
-
-      if (this.configSvc.installationMode === "ACET") {
-          this.altTextPlaceholder = this.altTextPlaceholder_ACET;      
-      }
+    if (this.configSvc.installationMode === "ACET") {
+      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+    }
 
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
@@ -172,6 +174,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
+    this.completionSvc.setAnswer(q.questionId, q.answer);
+
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();
@@ -224,10 +228,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
       if (q.visible) {
 
-          totalCount++;
-          if (q.answer && q.answer !== "U") {
-            answeredCount++;
-          }
+        totalCount++;
+        if (q.answer && q.answer !== "U") {
+          answeredCount++;
+        }
 
       }
     });

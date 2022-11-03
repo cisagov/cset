@@ -63,6 +63,33 @@ namespace CSETWebCore.Business.Findings
             fm.Save();
         }
 
+        public List<ActionItems> GetActionItems(int parentId)
+        {
+            //var actionsOnIssue = _context.MATURITY_QUESTIONS
+            //    .Join(x => x.Mat_Question_Id)
+            var actionItems = new List<ActionItems>(
+                    
+                );
+            var table = from questions in _context.MATURITY_QUESTIONS
+                        join actions in _context.ISE_ACTIONS
+                            on questions.Mat_Question_Id equals actions.Question_Id
+                        where questions.Parent_Question_Id == parentId
+                        select new { actions };
+            foreach(var action in table.ToList())
+            {
+                actionItems.Add(
+                    new ActionItems()
+                    {
+                        Question_Id = action.actions.Question_Id,
+                        Description = action.actions.Description,
+                        Action_Items = action.actions.Action_Items,
+                        Regulatory_Citation = action.actions.Regulatory_Citation
+                    }
+                );
+            }
+            return actionItems;
+        }
+
 
         /// <summary>
         /// 

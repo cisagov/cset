@@ -15,6 +15,7 @@ namespace CSETWebCore.Model.Assessment
         public string FacilityName { get; set; }
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
+        public string PostalCode { get; set; }
 
         public string Charter { get; set; }
         public string CreditUnion { get; set; }
@@ -33,6 +34,11 @@ namespace CSETWebCore.Model.Assessment
         public string BaselineAssessmentName { get; set; }
 
         public string Workflow { get; set; }
+
+        /// <summary>
+        /// Created to be flexible to able to 'flag' an assessment for a special behavior
+        /// </summary>
+        public string Origin { get; set; }
 
         // Selected maturity model and the target level
         public MaturityModel MaturityModel { get; set; }

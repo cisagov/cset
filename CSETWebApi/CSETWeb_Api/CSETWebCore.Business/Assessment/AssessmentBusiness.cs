@@ -236,6 +236,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.FacilityName = result.ii.Facility_Name;
                 assessment.CityOrSiteName = result.ii.City_Or_Site_Name;
                 assessment.StateProvRegion = result.ii.State_Province_Or_Region;
+                assessment.PostalCode = result.ii.Postal_Code;
                 assessment.ExecutiveSummary = result.ii.Executive_Summary;
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
@@ -273,6 +274,8 @@ namespace CSETWebCore.Business.Assessment
                         assessment.Workflow = "BASE";
                     }
                 }
+
+                assessment.Origin = result.ii.Origin;
 
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
@@ -499,11 +502,13 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Facility_Name = assessment.FacilityName;
             dbInformation.City_Or_Site_Name = assessment.CityOrSiteName;
             dbInformation.State_Province_Or_Region = assessment.StateProvRegion;
+            dbInformation.Postal_Code = assessment.PostalCode;
             dbInformation.Executive_Summary = assessment.ExecutiveSummary;
             dbInformation.Assessment_Description = assessment.AssessmentDescription;
             dbInformation.Additional_Notes_And_Comments = assessment.AdditionalNotesAndComments;
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
+            dbInformation.Origin = assessment.Origin;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -650,7 +655,7 @@ namespace CSETWebCore.Business.Assessment
             if (assessment.UseMaturity)
             {
                 // Use shorter names on assessments with multiple types.
-                assessment.TypeTitle += ", " + (multipleTypes ? assessment.MaturityModel.ModelName : assessment.MaturityModel.ModelTitle);
+                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
                 assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
             }
 
@@ -671,6 +676,7 @@ namespace CSETWebCore.Business.Assessment
                     "or import an assessment into CSET and creates a question set specifically tailored to your network configuration.";
             }
 
+            if(assessment.TypeTitle!=null)
             if (assessment.TypeTitle.IndexOf(",") == 0)
             {
                 assessment.TypeTitle = assessment.TypeTitle.Substring(2);

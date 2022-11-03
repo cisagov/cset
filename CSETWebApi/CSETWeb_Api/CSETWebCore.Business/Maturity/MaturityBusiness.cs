@@ -14,7 +14,11 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using CSETWebCore.Model.Mvra;
+using J2N;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -70,8 +74,10 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int GetMaturityTargetLevel(int assessmentId)
         {
+            // Start with a high value to include all questions by default
+            int targetLevel = 100;
+
             // The maturity target level is stored similar to a SAL level
-            int targetLevel = 1;
             var myLevel = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
                 .FirstOrDefault();
@@ -226,7 +232,7 @@ namespace CSETWebCore.Business.Maturity
                     }
 
                     calculatedScore -= q.Score;
-                   
+
                     d.Questions.Add(q);
                 }
             }
@@ -259,7 +265,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 targetLevel = 1;
             }
-            else 
+            else
             {
                 targetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
             }
@@ -276,7 +282,7 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var l in levels)
             {
-                var levelAnswers = answers.Where(x => 
+                var levelAnswers = answers.Where(x =>
                     l.MATURITY_QUESTIONS.Select(q => q.Mat_Question_Id).Contains(x.Question_Or_Requirement_Id));
 
                 var distrib = StatUtils.CalculateDistribution(levelAnswers.Select(a => a.Answer_Text).ToList());
@@ -327,21 +333,21 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
-        public Dictionary<int,string> GetSourceFiles()
+        public Dictionary<int, string> GetSourceFiles()
         {
             List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
-                                                   join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
-                                                   join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
-                                                   where q.Maturity_Model_Id == 7
-                                                   select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
+                                                    join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
+                                                    join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
+                                                    where q.Maturity_Model_Id == 7
+                                                    select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
                                                    .ToList();
-            
-            Dictionary<int,string> result = new Dictionary<int, string>();
-            foreach(var sourceFile in sourceFiles)
+
+            Dictionary<int, string> result = new Dictionary<int, string>();
+            foreach (var sourceFile in sourceFiles)
             {
-                if(result.TryGetValue(sourceFile.Item1, out var value))
+                if (result.TryGetValue(sourceFile.Item1, out var value))
                 {
-                    result[sourceFile.Item1] +=  "\r\n" +sourceFile.Item2;
+                    result[sourceFile.Item1] += "\r\n" + sourceFile.Item2;
                 }
                 else
                 {
@@ -559,13 +565,250 @@ namespace CSETWebCore.Business.Maturity
             };
         }
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="model"></param>
+      /// <returns></returns>
+        public  List<FunctionScore> GetMvraScoring( MaturityStructureForModel model)
+      {
+          List<FunctionScore> functionScores = new List<FunctionScore>();
+          var functions = model.Model.Groupings;
+          for (int f = 0; f < functions.Count(); f++)
+          {
+              FunctionScore functionScore = new FunctionScore()
+              {
+                  Title = functions[f].Title,
+                  LevelScores = new List<LevelScore>()
+              };
+              if (functions[f]?.GroupType == "Function" && functions[f].Groupings.Any())
+              {
+                 
+                  var domains = functions[f].Groupings;
+                  functionScore.DomainScores = new List<DomainScore>();
+                  for (int d = 0; d < domains.Count(); d++)
+                  {
+                      var domain = domains[d];
+                      DomainScore domainScore = new DomainScore();
+                      domainScore.Title = domain.Title;
+                      domainScore.CapabilityScores = new List<CapabilityScore>();
+                      var capabilities = domain.Groupings;
+                      for (int c = 0; c < capabilities.Count(); c++)
+                      {
+                          var capability = new CapabilityScore();
+                          capability.Title = capabilities[c].Title;
+                          capability.LevelScores = new List<LevelScore>();
+                          capability.LevelScores.Add(GetLevelScoreQuestions(capabilities[c], "Basic"));
+                          capability.LevelScores.Add(GetLevelScoreQuestions(capabilities[c], "Intermediate"));
+                          capability.LevelScores.Add(GetLevelScoreQuestions(capabilities[c], "Advanced"));
+                          domainScore.CapabilityScores.Add(capability);
+                      }
+
+                      domainScore.LevelScores = new List<LevelScore>();
+                      domainScore.LevelScores.Add(GetLevelScore(domainScore.CapabilityScores, "Basic"));
+                      domainScore.LevelScores.Add(GetLevelScore(domainScore.CapabilityScores, "Intermediate"));
+                      domainScore.LevelScores.Add(GetLevelScore(domainScore.CapabilityScores, "Advanced"));
+                      domainScore.Rating = GetDomainRating(domainScore.LevelScores);
+                      domainScore.Credit = domainScore.Rating == "Pass" ? "Yes" : "No";
+                      
+                      functionScore.DomainScores.Add(domainScore);
+                  }
+                  functionScore.Credit = GetFunctionCredit(functionScore.DomainScores);
+                  functionScore.LevelScores.Add(GetFunctionLevelScores(functionScore.DomainScores, "Basic"));
+                  functionScore.LevelScores.Add(GetFunctionLevelScores(functionScore.DomainScores, "Intermediate"));
+                  functionScore.LevelScores.Add(GetFunctionLevelScores(functionScore.DomainScores, "Advanced"));
+                  functionScores.Add(functionScore);
+              }
+          }
+
+          return functionScores;
+        }
+
+      private LevelScore GetFunctionLevelScores(List<DomainScore> domains, string level)
+      {
+          LevelScore levelScore = new LevelScore();
+          levelScore.Level = level;
+          var capabilities = domains.SelectMany(x => x.CapabilityScores);
+          var tiers = capabilities.SelectMany(z => z.LevelScores.Where(x => x.TotalTiers > 0 && x.Level == level));
+          levelScore.TotalTiers = tiers.Count();
+          levelScore.TotalPassed = tiers.Count(x => x.Credit == 100);
+          if (levelScore.TotalTiers != 0)
+          {
+              var total = (double)levelScore.TotalPassed / levelScore.TotalTiers;
+              levelScore.Credit = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero);
+          }
+          else
+          {
+              levelScore.Credit = 0;
+          }
+          return levelScore;
+      }
+
+      private int GetFunctionCredit(List<DomainScore> domains)
+      {
+          var total = domains.Count();
+          var totalPassed = domains.Count(x=>x.Credit == "Yes");
+          if (total != 0)
+          {
+              var div = (double)totalPassed / total;
+              var percent = (int)Math.Round(div * 100, MidpointRounding.AwayFromZero);
+              return percent;
+          }
+
+          return 0;
+      }
+
+      private string GetDomainRating(List<LevelScore> levels)
+      {
+          var total = levels.Sum(x => x.TotalTiers);
+          var totalPassed = levels.Sum(x => x.TotalPassed);
+          
+          if (total != 0)
+          {
+              var div = (double)totalPassed / total;
+              var percent = (int)Math.Round(div * 100, MidpointRounding.AwayFromZero);
+              return percent >= 50 ? "Pass" : "Fail";
+          }
+          return "Fail";
+      }
+
+      private LevelScore GetLevelScore(List<CapabilityScore> scores, string level)
+      {
+          LevelScore levelScore = new LevelScore();
+          levelScore.Level = level;
+          var tiers = scores.SelectMany(x => x.LevelScores.Where(y=>y.Level == level));
+          levelScore.TotalTiers = tiers.Sum(x => x.TotalTiers);
+          levelScore.TotalPassed = tiers.Sum(x => x.TotalPassed);
+          if (levelScore.TotalTiers != 0)
+          {
+              var total = (double)levelScore.TotalPassed / levelScore.TotalTiers;
+              levelScore.Credit = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero);
+          }
+          else
+          {
+              levelScore.Credit = 0;
+          }
+          return levelScore;
+      }
+
+      private LevelScore GetLevelScoreQuestions(Model.Cis.Grouping group, string level)
+      {
+          LevelScore levelScore = new LevelScore();
+          levelScore.Level = level;
+          levelScore.TotalTiers = group.Questions.Count(x => x.MaturityLevelName == level);
+          levelScore.TotalPassed = group.Questions.Count(x => x.AnswerText == "Y" && x.MaturityLevelName == level);
+          if (levelScore.TotalTiers != 0)
+          {
+              var total = (double) levelScore.TotalPassed / levelScore.TotalTiers;
+              levelScore.Credit = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero);
+          }
+          else
+          {
+              levelScore.Credit = 0;
+          }
+
+          return levelScore;
+      }
+      /*
+       private void GetSubgroups(object oParent, int? parentId, int? filterId = null)
+      {
+          var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentId).OrderBy(x => x.Sequence).ToList();
+
+          if (filterId != null)
+          {
+              mySubgroups = allGroupings.Where(x => x.Grouping_Id == filterId).ToList();
+          }
+
+          if (mySubgroups.Count == 0)
+          {
+              return;
+          }
+
+          foreach (var sg in mySubgroups)
+          {
+              var nodeName = System.Text.RegularExpressions
+                  .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
+
+              var grouping = new Grouping()
+              {
+                  GroupType = nodeName,
+                  Abbreviation = sg.Abbreviation,
+                  GroupingId = sg.Grouping_Id,
+                  Prefix = sg.Title_Prefix,
+                  Title = sg.Title,
+                  Description = sg.Description
+              };
+
+
+              if (oParent is CisQuestions)
+              {
+                  ((CisQuestions)oParent).Groupings.Add(grouping);
+              }
+
+              if (oParent is Grouping)
+              {
+                  ((Grouping)oParent).Groupings.Add(grouping);
+              }
+
+
+              // are there any questions that belong to this grouping?
+              var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id
+                  && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
+
+              foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
+              {
+                  List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
+                  ConsolidateAnswers(answers, out ANSWER answer);
+
+                  var question = new Model.Cis.Question()
+                  {
+                      QuestionId = myQ.Mat_Question_Id,
+                      QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                      ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
+                      Sequence = myQ.Sequence,
+                      MaturityLevel = myQ.Maturity_LevelNavigation.Level,
+                      MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                      DisplayNumber = myQ.Question_Title,
+                      ParentQuestionId = myQ.Parent_Question_Id,
+                      QuestionType = myQ.Mat_Question_Type,
+                      AnswerText = answer?.Answer_Text,
+                      AnswerMemo = answer?.Free_Response_Answer,
+                      //Options = GetOptions(myQ.Mat_Question_Id),
+                      //Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
+                      Comment = answer?.Comment,
+                      Feedback = answer?.FeedBack,
+                      MarkForReview = answer?.Mark_For_Review ?? false,
+                      //DocumentIds = GetDocumentIds(answer?.Answer_Id)
+                  };
+
+
+                  // Include the corresponding baseline selection if it exists
+                  var baselineAnswer = baselineAllAnswers
+                      .Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id)
+                      .FirstOrDefault();
+                  if (baselineAnswer != null)
+                  {
+                      question.BaselineAnswerText = baselineAnswer.Answer_Text;
+                      question.BaselineAnswerMemo = baselineAnswer.Free_Response_Answer;
+                  }
+
+
+                  grouping.Questions.Add(question);
+              }
+
+              // Recurse down to build subgroupings
+              GetSubgroups(grouping, sg.Grouping_Id);
+          }
+      }*/
+
+        
 
         /// <summary>
         /// Assembles a response consisting of maturity settings for the assessment
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId)
         {
             var response = new MaturityResponse();
 
@@ -585,6 +828,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
+            response.ModelId = myModelDefinition.Maturity_Model_Id;
             response.ModelName = myModelDefinition.Model_Name;
 
             response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
@@ -613,12 +857,19 @@ namespace CSETWebCore.Business.Maturity
 
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
-            var questions = _context.MATURITY_QUESTIONS
+            var questionQuery = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_LevelNavigation)
                 .Where(q =>
-                myModel.model_id == q.Maturity_Model_Id).ToList();
+                myModel.model_id == q.Maturity_Model_Id);
 
-            
+            if (groupingId != 0)
+            {
+                questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
+            }
+
+            var questions = questionQuery.ToList();
+
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -709,7 +960,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer=answer?.a.Free_Response_Answer,
+                        freeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -858,12 +1109,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetIseAnswerCompletionRate(int assessmentId)
         {
-            var irp = GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIseIrpNumber(assessmentId);
 
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetIseTopMatLevelForRisk(irp);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -933,14 +1184,9 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-
-
-
-
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
@@ -1341,7 +1587,7 @@ namespace CSETWebCore.Business.Maturity
                                                                                 maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CoreMaturity) ? Constants.Constants.CoreMaturity :
                                                                                     maturityAssessment.Components.Any(x => x.AssessedMaturityLevel == Constants.Constants.CorePlusMaturity) ? Constants.Constants.CorePlusMaturity :
                                                                                         Constants.Constants.IncompleteMaturity;
-                        
+
                         maturityAssessment.Components = maturityAssessment.Components.OrderBy(x => x.Sequence).ToList();
                         maturityDomain.Assessments.Add(maturityAssessment);
 
@@ -1395,7 +1641,7 @@ namespace CSETWebCore.Business.Maturity
         public List<string> GetIseMaturityRange(int assessmentId)
         {
             Model.Acet.ACETDashboard irpCalculation = GetIseIrpCalculation(assessmentId);
-            int assetLevel = Int32.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
+            int assetLevel = long.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
             bool targetBandOnly = GetTargetBandOnly(assessmentId);
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : assetLevel;
             if (!targetBandOnly)
@@ -1677,6 +1923,18 @@ namespace CSETWebCore.Business.Maturity
             return overall;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetOverallIseIrpNumber(int assessmentId)
+        {
+            var calc = GetIseIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall;
+        }
+
 
         /// <summary>
         /// Get all IRP calculations for display
@@ -1781,10 +2039,14 @@ namespace CSETWebCore.Business.Maturity
             result.Assets = assessment.Assets;
 
             result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
-            
+
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
+
+            var coreIRPLevel = 2;
+
+            result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : 0;
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
@@ -1928,9 +2190,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="modelId"></param>
         /// <returns></returns>
-        public MaturityStructureForModel GetMaturityStructureForModel(int modelId)
+        public MaturityStructureForModel GetMaturityStructureForModel(int modelId, int assessmentId)
         {
-            var msfm = new MaturityStructureForModel(modelId, _context);
+            var msfm = new MaturityStructureForModel(modelId, _context, true, assessmentId);
             return msfm;
         }
 
@@ -1945,10 +2207,10 @@ namespace CSETWebCore.Business.Maturity
             var dbList = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).ToList();
 
             var response = new List<GroupingTitle>();
-            dbList.ForEach(x => 
+            dbList.ForEach(x =>
             {
-                response.Add(new GroupingTitle() 
-                { 
+                response.Add(new GroupingTitle()
+                {
                     Id = x.Grouping_Id,
                     Title = x.Title,
                     TitlePrefix = x.Title_Prefix
@@ -1956,6 +2218,88 @@ namespace CSETWebCore.Business.Maturity
             });
 
             return response;
+        }
+
+
+        /// <summary>
+        /// Converts a CisQuestions structure to a MaturityResponse structure.
+        /// </summary>
+        /// <param name="cisStructure"></param>
+        /// <returns></returns>
+        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
+        {
+            var resp = new MaturityResponse();
+
+            resp.MaturityTargetLevel = 100;         
+
+            foreach (var g in cisStructure.Groupings)
+            {
+                resp.Groupings = MapGroupings(g);
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<MaturityGrouping> MapGroupings(Model.Cis.Grouping g)
+        {
+            var list = new List<MaturityGrouping>();
+
+            foreach (var cisG in g.Groupings)
+            {
+                var newG = new MaturityGrouping()
+                {
+                    Description = cisG.Description,
+                    Abbreviation = cisG.Abbreviation,
+                    GroupingType = cisG.GroupType,
+                    GroupingID = cisG.GroupingId,
+                    Title = cisG.Title
+                };
+
+                list.Add(newG);
+
+                newG.Questions = MapQuestions(cisG);
+
+                newG.SubGroupings = MapGroupings(cisG);
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private List<QuestionAnswer> MapQuestions(Model.Cis.Grouping g)
+        {
+            var questionAnswer = new List<QuestionAnswer>();
+
+            foreach (var q in g.Questions)
+            {
+                var newQ = new QuestionAnswer()
+                {
+                    Answer = q.AnswerText,
+                    AltAnswerText = q.AltAnswerText,
+                    QuestionId = q.QuestionId,
+                    DisplayNumber = q.DisplayNumber,
+                    Sequence = q.Sequence,
+                    QuestionText = q.QuestionText,
+                    QuestionType = "Maturity",
+                    Comment = q.Comment,
+                    MaturityLevelName = q.MaturityLevelName
+                };
+
+                q.Options.ForEach(o => {
+                    newQ.Options.Add(o);
+                });
+
+                questionAnswer.Add(newQ);
+            }
+
+            return questionAnswer;
         }
     }
 }
