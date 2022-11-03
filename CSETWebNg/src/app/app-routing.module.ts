@@ -185,12 +185,9 @@ import { IseExaminationComponent } from './reports/ise-examination/ise-examinati
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
-<<<<<<< HEAD
-
-=======
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
->>>>>>> 4c441df16f57e8f6d48bd960aab98810c18cd9ef
+
 
 const installationMode = localStorage.getItem('installationMode');
 
