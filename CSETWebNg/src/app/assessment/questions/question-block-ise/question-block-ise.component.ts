@@ -64,7 +64,7 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-  textForSummary = "Results of Review (insert comments)";
+  textForSummary = "Statement Summary (insert comments)";
   summaryCommentCopy = "";
   summaryEditedCheck = false; 
 
@@ -78,11 +78,7 @@ export class QuestionBlockIseComponent implements OnInit {
     7631, 7632, 7634, 7635, 7636, 7637, 7638, 7640, 7642, 7643, 7644, 7646, 7647, 7648, 7651, 7653, 7654, 
     7658, 7659, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7672, 7673, 7675, 7677, 7681, 7682, 7684, 7685, 
     7688, 7692, 7695, 7696, 7697, 7701]);
-
-  issueCheck = new Map();
-  issueFindingId = new Map();
   
-
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
   finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
@@ -114,11 +110,11 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   *
-   */
+  *
+  */
   ngOnInit(): void {
     this.setIssueMap();
-
+    
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
@@ -130,10 +126,11 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras.findings.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
-              console.log("Found auto generated finding - find.parentId: " + find.question_Id + ", issueId: " + find.finding_Id);
-              this.issueFindingId.set(find.question_Id, find.finding_Id);
+              this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
             }
-        });
+          });
+          
+          this.ncuaSvc.issuesFinishedLoading = true;
       });
 
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
@@ -150,12 +147,13 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
+
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
@@ -165,8 +163,8 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   * Toggles the Expanded property of the question block.
-   */
+  * Toggles the Expanded property of the question block.
+  */
   toggleExpansion() {
     // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
@@ -175,15 +173,13 @@ export class QuestionBlockIseComponent implements OnInit {
       n.childNodes.forEach(n => n.dispatchEvent(evt));
     });
 
-    console.log("this.issueCheckMap: " + JSON.stringify(this.issueCheck, null, 4));
-    console.log("this.issueFindingId: " + JSON.stringify(this.issueFindingId, null, 4));
     this.myGrouping.expanded = !this.myGrouping.expanded;
   }
 
   /**
- * If there are no spaces in the question text assume it's a hex string
- * @param q
- */
+  * If there are no spaces in the question text assume it's a hex string
+  * @param q
+  */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
@@ -191,28 +187,64 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
+  displayTooltip(maturityModelId: number, option: string) {
+    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    if (toolTip === 'Yes' || toolTip === 'No') {
+      toolTip = "";
+    }
+    return toolTip;
+  }
+
   /**
   * Repopulates the map variables to correctly track/delete issues
   */
   setIssueMap() {
     let parentId = 0;
+    let tempId = 0;
     let count = 0;
 
     this.myGrouping.questions.forEach(question => {
       if (question.answer === 'N') {
         if (this.importantQuestions.has(question.questionId)) {
           parentId = question.parentQuestionId;
-          count++;
+
+          if (tempId === 0) {
+            tempId = parentId;
+          } else if (tempId !== parentId) {
+            count = 0;
+            tempId = parentId;
+          }
+
+          if (parentId) {
+            count++;
+          }
+
+          this.ncuaSvc.questionCheck.set(parentId, count);
         }
-        this.issueCheck.set(parentId, count);
+
+        this.ncuaSvc.deleteHistory.clear();
       }
     });
   }
 
+  deleteIssueMaps(findingId: number) {
+    const iterator = this.ncuaSvc.issueFindingId.entries();
+    let parentKey = 0;
+
+    for (let value of iterator) {
+      if (value[1] === findingId) {
+        parentKey = value[0];
+        this.ncuaSvc.questionCheck.delete(parentKey);
+        this.ncuaSvc.issueFindingId.delete(parentKey);
+        this.ncuaSvc.deleteHistory.add(parentKey);
+      }
+    }
+  }
+
   /**
-   *
-   * @param ans
-   */
+  *
+  * @param ans
+  */
   showThisOption(ans: string) {
     return true;
   }
@@ -245,6 +277,8 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
+    let oldAnswerValue = q.answer;
+
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
@@ -269,53 +303,41 @@ export class QuestionBlockIseComponent implements OnInit {
     };
 
     this.refreshReviewIndicator();
-
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer).subscribe
     (result => {
-      this.checkForIssues(q, newAnswerValue);
+      this.checkForIssues(q, oldAnswerValue);
     });
   }
 
-  checkForIssues(q: Question, newAnswerValue: string) {
+  checkForIssues(q: Question, oldAnswerValue: string) {
+    let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
+    let value = (count != undefined) ? count : 0;
+
     if (q.answer === 'N') {
-      if (this.importantQuestions.has(q.questionId)) {
-        if (!this.issueCheck.has(q.parentQuestionId)) {
-          this.issueCheck.set(q.parentQuestionId, 1);
-        } else {
-          let num = this.issueCheck.get(q.parentQuestionId);
-          num += 1;
-          this.issueCheck.set(q.parentQuestionId, num);
-          
-          if (num >= 2 && !this.issueFindingId.has(q.parentQuestionId)) {
-            this.autoGenerateIssue(q.parentQuestionId, 0);
-          }
+      value++;
+      this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
+
+      if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+        if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
+          this.autoGenerateIssue(q.parentQuestionId, 0);
         }
       }
-    } else if (q.answer === 'Y' || q.answer === 'U') {
-      if (this.issueCheck.has(q.parentQuestionId)) {
-        if (this.importantQuestions.has(q.questionId)) {
-          let num = this.issueCheck.get(q.parentQuestionId);
-          num -= 1;
-        
-          if (num < 2) {
-            if (this.issueFindingId.has(q.parentQuestionId)) {
-              let findId = this.issueFindingId.get(q.parentQuestionId);
-              this.deleteIssue(findId, true);
-              this.issueFindingId.delete(q.parentQuestionId);
-            }
-          }
+    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+      value--;
+      if (value < 1) {
+        this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
 
-          if (num <= 0) {
-            this.issueCheck.delete(q.parentQuestionId);
-          } else {
-            this.issueCheck.set(q.parentQuestionId, num);
-          }
+        if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+          let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
+          this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
+          this.deleteIssue(findId, true);
         }
+      } else {
+        this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
       }
     }
-
   }
 
   /**
@@ -663,7 +685,7 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue(findid) {
+  addEditIssue(parentId, findid) {
     /* 
     * Per the customer's requests, an Issue's title should include the main 
     * grouping header text and the sub grouping header text.
@@ -672,14 +694,14 @@ export class QuestionBlockIseComponent implements OnInit {
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    if (this.myGrouping.questions[0].questionId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
     const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
+      question_Id: parentId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
       finding_Id: findid,
       summary: '',
@@ -693,6 +715,8 @@ export class QuestionBlockIseComponent implements OnInit {
       vulnerabilities: '',
       title: name,
       type: null,
+      risk_Area: 'Transaction',
+      sub_Risk: '',
       description: null,
       citations: null,
       auto_Generated: 0
@@ -717,56 +741,71 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   // ISE "issues" should be generated if an examiner answers 'No' to
-  // 2 or more important questions.
+  // 2 or more important questions with no popup.
   autoGenerateIssue(parentId, findId) {
     let name = "";
-    if (parentId <= 7281) {
+    let desc = "";
+
+    if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
-      question_Id: parentId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findId,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: name,
-      type: null,
-      description: null,
-      citations: null,
-      auto_Generated: 1
-    };
+    this.questionsSvc.getActionItems(parentId).subscribe(
+      (data: any) => {
+        // Used to generate a description for ISE reports even if a user doesn't open the issue.
+        desc = data[0]?.description;
 
-    this.dialog.open(IssuesComponent, {
-      data: find,
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
-    }).afterClosed().subscribe(result => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          for (let i = 0; i < response.length; i++) {
-            if (response[i].auto_Generated === 1) {
-              this.issueFindingId.set(parentId, response[i].finding_Id);
-            }
-          }
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
+        const find: Finding = {
+          question_Id: parentId,
+          answer_Id: this.myGrouping.questions[0].answer_Id,
+          finding_Id: findId,
+          summary: '',
+          finding_Contacts: null,
+          impact: '',
+          importance: null,
+          importance_Id: 1,
+          issue: '',
+          recommendations: '',
+          resolution_Date: null,
+          vulnerabilities: '',
+          title: name,
+          type: null,
+          risk_Area: 'Transaction',
+          sub_Risk: 'Information Systems & Technology Controls',
+          description: desc,
+          citations: null,
+          auto_Generated: 1
+        };
+
+        this.ncuaSvc.issueFindingId.set(parentId, findId);
+    
+        // this.dialog.open(IssuesComponent, {
+        //   data: find,
+        //   disableClose: true,
+        //   width: this.layoutSvc.hp ? '90%' : '60vh',
+        //   height: this.layoutSvc.hp ? '90%' : '85vh',
+    
+        // }).afterClosed().subscribe(result => {
+
+        this.findSvc.saveDiscovery(find).subscribe(() => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              for (let i = 0; i < response.length; i++) {
+                if (response[i].auto_Generated === 1) {
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
+                }
+              }
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+      });
   }
   
   /**
@@ -774,16 +813,15 @@ export class QuestionBlockIseComponent implements OnInit {
   * @param findingToDelete
   */
   deleteIssue(findingId, autoGenerated: boolean) {
-    let msg = "";
+    let msg = "Are you sure you want to delete this issue?";
     
     if (autoGenerated === false) {
-      msg = "Are you sure you want to delete this issue?";
-
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage = msg;
   
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.deleteIssueMaps(findingId);
           this.findSvc.deleteFinding(findingId).subscribe();
           let deleteIndex = null;
   
@@ -809,5 +847,7 @@ export class QuestionBlockIseComponent implements OnInit {
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
       }
   }
+
+  
   
 }

@@ -89,6 +89,8 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(20)]
         [Unicode(false)]
         public string Origin { get; set; }
+        [StringLength(20)]
+        public string Postal_Code { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("INFORMATION")]

@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Reports
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
             var query = from a in _context.ANSWER
-                        join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_LevelNavigation)
+                        join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == myModel.model_id
@@ -122,7 +122,7 @@ namespace CSETWebCore.Business.Reports
 
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_LevelNavigation.Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.Mat.Maturity_Level.Level <= selectedLevel).ToList();
             }
 
 
@@ -438,7 +438,8 @@ namespace CSETWebCore.Business.Reports
                                     MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
-                                    MarkForReview = question.MarkForReview
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId
                                 };
 
                                 if (question.Answer == "N")
@@ -1198,7 +1199,7 @@ namespace CSETWebCore.Business.Reports
             info.Charter = assessment.Charter;
 
             info.Assets = 0;
-            bool a = int.TryParse(assessment.Assets, out int assets);
+            bool a = long.TryParse(assessment.Assets, out long assets);
             if (a)
             {
                 info.Assets = assets;
@@ -1519,13 +1520,49 @@ namespace CSETWebCore.Business.Reports
                     a.Mat.Grouping.Type = null;
                 }
 
-                if (a.Mat.Maturity_LevelNavigation != null) 
+                if (a.Mat.Maturity_Level != null) 
                 {
-                    a.Mat.Maturity_LevelNavigation.MATURITY_QUESTIONS = null;
-                    a.Mat.Maturity_LevelNavigation.Maturity_Model = null;
+                    a.Mat.Maturity_Level.MATURITY_QUESTIONS = null;
+                    a.Mat.Maturity_Level.Maturity_Model = null;
                 }
             }
         }
+
+        public List<SourceFiles> GetIseSourceFiles()
+        {
+
+            var data = (from g in _context.GEN_FILE
+                       join a in _context.MATURITY_SOURCE_FILES
+                           on g.Gen_File_Id equals a.Gen_File_Id
+                       join q in _context.MATURITY_QUESTIONS 
+                            on a.Mat_Question_Id equals q.Mat_Question_Id
+                      
+                       where q.Maturity_Model_Id == 10
+                       select new { a, q, g }).ToList();
+
+            List<SourceFiles> result = new List<SourceFiles>();
+            SourceFiles file = new SourceFiles();
+            foreach (var item in data)
+            {
+                try
+                {
+                    file.Mat_Question_Id = item.q.Mat_Question_Id;
+                    file.Gen_File_Id = item.g.Gen_File_Id;
+                    file.Title = item.g.Title;
+                } 
+                catch 
+                { 
+                
+                }
+                result.Add(file);
+               
+            }
+
+            return result;
+
+        }
+
+
     }
 }
 

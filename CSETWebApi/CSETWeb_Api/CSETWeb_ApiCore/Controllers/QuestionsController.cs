@@ -137,6 +137,19 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/GetActionItems")]
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId)
+        {
+            int assessId = _token.AssessmentForUser();
+            FindingsManager fm = new FindingsManager(_context, assessId);
+            return fm.GetActionItems(parentId);
+        }
+
+        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
@@ -388,11 +401,17 @@ namespace CSETWebCore.Api.Controllers
                             on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
                          join category in _context.MATURITY_GROUPINGS
                             on question.Grouping_Id equals category.Grouping_Id
-                         join importance in _context.IMPORTANCE
-                            on finding.Importance_Id equals importance.Importance_Id
+
+                         //join filesBridge in _context.MATURITY_SOURCE_FILES
+                         //   on question.Mat_Question_Id equals filesBridge.Mat_Question_Id
+                         //join files in _context.GEN_FILE
+                         //   on filesBridge.Gen_File_Id equals files.Gen_File_Id
+
+
                          where answer.Assessment_Id == assessmentId
                          orderby finding.Type, question.Mat_Question_Id
-                         select new { finding, answer, question, category, importance };
+                         select new { finding, answer, question, category };
+             
 
             return Ok(result.ToList());
         }

@@ -61,7 +61,6 @@ export class IseExaminerComponent implements OnInit {
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response);
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -79,9 +78,8 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '') {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.isParentQuestion(question)) {
                 this.hasComments.push(question);
-                console.log(this.hasComments);
               }
             }
           }
@@ -126,10 +124,23 @@ export class IseExaminerComponent implements OnInit {
     ||   q.title == 'Stmt 19'
     ||   q.title == 'Stmt 20'
     ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
+    ||   q.title == 'Stmt 22'
+    ||   q.title == 'Stmt 23') {
       return true;
     } 
     return false;
+  }
+
+  getAnswerDisplayLabel(answer: string){
+    if(answer == "Y"){
+      return "Yes";
+    } 
+    if(answer == "N"){
+      return "No";
+    } 
+    if(answer == "U"){
+      return "Unanswered";
+    } 
   }
   
 }

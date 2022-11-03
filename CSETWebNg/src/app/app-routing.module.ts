@@ -89,6 +89,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
 import { DetailComponent } from './reports/detail/detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveComponent } from './reports/executive/executive.component';
@@ -184,7 +185,12 @@ import { IseExaminationComponent } from './reports/ise-examination/ise-examinati
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
+<<<<<<< HEAD
 
+=======
+import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
+import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
+>>>>>>> 4c441df16f57e8f6d48bd960aab98810c18cd9ef
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -200,6 +206,9 @@ switch (installationMode) {
     break;
   case 'RRA':
     homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+    break;
+  case 'CF':
+    homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -380,6 +389,8 @@ const appRoutes: Routes = [
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
               { path: 'rra-level-results', component: RraLevelResultsComponent },
               { path: 'rra-gaps', component: RraGapsComponent },
+              { path: 'mvra-gaps', component: MvraGapsComponent },
+              { path: 'mvra-summary', component: MvraSummaryComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
