@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.Findings
             fm.Save();
         }
 
-        public List<ActionItems> GetActionItems(int parentId)
+        public List<ActionItems> GetActionItems(int parentId, int assessment_id)
         {
             //var actionsOnIssue = _context.MATURITY_QUESTIONS
             //    .Join(x => x.Mat_Question_Id)
@@ -71,19 +71,22 @@ namespace CSETWebCore.Business.Findings
                     
                 );
             var table = from questions in _context.MATURITY_QUESTIONS
-                        join actions in _context.ISE_ACTIONS
-                            on questions.Mat_Question_Id equals actions.Mat_Question_Id
+                        join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
+                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Assessment_Id = assessment_id } 
+                            equals new { Mat_Question_Id = o.Mat_Question_Id, Assessment_Id = o.Assessment_Id}                 
+                           into overrides from o in overrides.DefaultIfEmpty() 
                         where questions.Parent_Question_Id == parentId
-                        select new { actions };
-            foreach(var action in table.ToList())
+                        select new { actions = actions, overrides = o };
+            foreach(var row in table.ToList())
             {
                 actionItems.Add(
                     new ActionItems()
                     {
-                        Question_Id = action.actions.Mat_Question_Id,
-                        Description = action.actions.Description,
-                        Action_Items = action.actions.Action_Items,
-                        Regulatory_Citation = action.actions.Regulatory_Citation
+                        Question_Id = row.actions.Mat_Question_Id,
+                        Description = row.actions.Description,
+                        Action_Items = row.overrides==null
+                        ?row.actions.Action_Items:row.overrides.Action_Items_Override,
+                        Regulatory_Citation = row.actions.Regulatory_Citation
                     }
                 );
             }
