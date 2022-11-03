@@ -172,6 +172,12 @@ export class IssuesComponent implements OnInit {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
 
+    //for all the action items texts call the save service function
+    //You will Need to add the parameters to this function call
+    //I need a list of  this.questionID (where it is not the parent id), 'This is the text from the box'
+    this.findSvc.saveIssueText().subscribe();
+
+
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
         this.dialog.close(true);

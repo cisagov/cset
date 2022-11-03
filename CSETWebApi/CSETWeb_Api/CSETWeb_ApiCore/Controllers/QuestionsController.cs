@@ -146,7 +146,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessId = _token.AssessmentForUser();
             FindingsManager fm = new FindingsManager(_context, assessId);
-            return fm.GetActionItems(parentId);
+            return fm.GetActionItems(parentId,assessId);
         }
 
         /// <summary>
