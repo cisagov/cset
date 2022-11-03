@@ -459,6 +459,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ISE_ACTIONS_FINDINGS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[JWT]",
          "ObjectType": 0
       },
@@ -636,10 +640,6 @@
       },
       {
          "Name": "[dbo].[QUESTION_GROUP_TYPE]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[RapidAssessmentControls]",
          "ObjectType": 0
       },
       {
