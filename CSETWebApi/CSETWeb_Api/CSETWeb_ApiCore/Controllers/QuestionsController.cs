@@ -142,11 +142,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId)
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery]int finding_id)
         {
             int assessId = _token.AssessmentForUser();
             FindingsManager fm = new FindingsManager(_context, assessId);
-            return fm.GetActionItems(parentId,assessId);
+            return fm.GetActionItems(parentId,finding_id);
         }
 
         /// <summary>
@@ -482,16 +482,11 @@ namespace CSETWebCore.Api.Controllers
         ///
         [HttpPost]
         [Route("api/SaveIssueOverrideText")]
-        public IActionResult SaveOverrideIssueText([FromBody] List<ActionItemText> actionItems)
+        public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
         {
-            //List<ActionItemText> actionItems = new List<ActionItemText>();
-            //actionItems.Add(new ActionItemText { Mat_Question_Id = id, ActionItemOverrideText = value});
-
-            int assessmentId = _token.AssessmentForUser();
-            
+            int assessmentId = _token.AssessmentForUser();            
             var fm = new FindingsManager(_context, assessmentId);
-
-            fm.UpdateIssues(actionItems,assessmentId);
+            fm.UpdateIssues(item);
             return Ok();
         }
 
