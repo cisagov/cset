@@ -205,26 +205,16 @@ export class QuestionBlockIseComponent implements OnInit {
 
     this.myGrouping.questions.forEach(question => {
       if (question.answer === 'N') {
-        if (this.importantQuestions.has(question.questionId)) {
-          parentId = question.parentQuestionId;
+        parentId = question.parentQuestionId;
 
-          if (tempId === 0) {
-            tempId = parentId;
-          } else if (tempId !== parentId) {
-            count = 0;
-            tempId = parentId;
-          }
-
-          if (parentId) {
-            count++;
-          }
-
-          this.ncuaSvc.questionCheck.set(parentId, count);
+        if (parentId) {
+          count++;
         }
-
-        this.ncuaSvc.deleteHistory.clear();
+        this.ncuaSvc.questionCheck.set(parentId, count);
       }
+      this.ncuaSvc.deleteHistory.clear();
     });
+    console.log("this.ncuaSvc.questionCheck: " + JSON.stringify(this.ncuaSvc.questionCheck, null, 4));
   }
 
   deleteIssueMaps(findingId: number) {
