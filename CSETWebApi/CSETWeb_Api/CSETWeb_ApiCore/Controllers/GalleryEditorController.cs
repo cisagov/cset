@@ -81,6 +81,7 @@ namespace CSETWebCore.Api.Controllers
                     detailsList.Remove(itemToMove);
                     detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
                     RenumberGroup(detailsList);
+                    _context.SaveChanges();
                 }
                 else
                 {
@@ -88,12 +89,14 @@ namespace CSETWebCore.Api.Controllers
                     //find the new group and insert it
                     //renumber both groups
                     var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
-                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];
+                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];                    
                     detailsOldList.Remove(itemToMove);
-                    RenumberGroup(detailsOldList);
-                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
+                    RenumberGroup(detailsOldList);                    
+                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();                    
                     detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
                     RenumberGroup(detailsNewList);
+                    itemToMove.Group_Id = int.Parse(moveItem.toId);                    
+                    _context.SaveChanges();
                 }
 
                 return Ok();
