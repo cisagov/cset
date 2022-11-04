@@ -64,7 +64,7 @@ namespace CSETWebCore.Business.Findings
             fm.Save();
         }
 
-        public List<ActionItems> GetActionItems(int parentId, int assessment_id)
+        public List<ActionItems> GetActionItems(int parentId, int finding_id)
         {
             //var actionsOnIssue = _context.MATURITY_QUESTIONS
             //    .Join(x => x.Mat_Question_Id)
@@ -73,8 +73,8 @@ namespace CSETWebCore.Business.Findings
                 );
             var table = from questions in _context.MATURITY_QUESTIONS
                         join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
-                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Assessment_Id = assessment_id } 
-                            equals new { Mat_Question_Id = o.Mat_Question_Id, Assessment_Id = o.Assessment_Id}                 
+                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = finding_id } 
+                            equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id}                 
                            into overrides from o in overrides.DefaultIfEmpty() 
                         where questions.Parent_Question_Id == parentId
                         select new { actions = actions, overrides = o };
@@ -197,17 +197,17 @@ namespace CSETWebCore.Business.Findings
             return webF;
         }
 
-        public void UpdateIssues(List<ActionItemText> actionItems,int assessment_id)
+        public void UpdateIssues(ActionItemTextUpdate items)
         {
-            foreach(var item in actionItems)
+            foreach(var item in items.actionTextItems)
             {
-                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Assessment_Id == assessment_id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
+                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.finding_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
                 if (save == null)
                 {
                     _context.ISE_ACTIONS_FINDINGS.Add(new ISE_ACTIONS_FINDINGS()
                     {
                         Mat_Question_Id = item.Mat_Question_Id,
-                        Assessment_Id = assessment_id,
+                        Finding_Id = items.finding_Id,
                         Action_Items_Override = item.ActionItemOverrideText
                     });
                 }

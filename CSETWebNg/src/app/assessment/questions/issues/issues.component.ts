@@ -103,7 +103,7 @@ export class IssuesComponent implements OnInit {
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
 
-      this.questionsSvc.getActionItems(this.questionID).subscribe(
+      this.questionsSvc.getActionItems(this.questionID,this.finding.finding_Id).subscribe(
         (data: any) => {
           this.actionItems = data;
 
@@ -171,26 +171,22 @@ export class IssuesComponent implements OnInit {
     this.subRisk = subRisk;
   }
 
-  updateActionText(e: any, q: any) {
-    console.log(q);
-    if (e.originalTarget.defaultValue !== e.target.value) {
-      //this.updatedActionText[i] = e.target.value;
+  updateActionText(e: any, q: any) {    
+    
+    var originalElement = e.srcElement || e.originalTarget;
+    console.log(e);
+    // if (e.originalTarget.defaultValue !== e.target.value) {      
       const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
       this.ActionItemList.set(q.mat_Question_Id, item);
-    }
+    //}
   }
 
-  update() {
+  update() {    
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-
-    // for (let i = 0; i < this.actionItems.length; i++) {
-    //   const item: ActionItemText = {Mat_Question_Id: this.actionItems[i].question_Id, ActionItemOverrideText: this.updatedActionText[i]};
-    //   //this.ActionItemList.push(item);
-    // }
     
     let mapToArray = Array.from(this.ActionItemList.values());
-    this.findSvc.saveIssueText(mapToArray).subscribe();
+    this.findSvc.saveIssueText(mapToArray,this.finding.finding_Id).subscribe();
     
 
     if (this.finding.type !== null) {

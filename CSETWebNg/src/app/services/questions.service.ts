@@ -124,9 +124,9 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
   */
-  getActionItems(parentId: number) {
+  getActionItems(parentId: number, finding_id: number) {
     headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems', headers);
+    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id='+finding_id, headers);
   }
 
   /**

@@ -752,7 +752,7 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    this.questionsSvc.getActionItems(parentId).subscribe(
+    this.questionsSvc.getActionItems(parentId,findId).subscribe(
       (data: any) => {
         // Used to generate a description for ISE reports even if a user doesn't open the issue.
         desc = data[0]?.description;

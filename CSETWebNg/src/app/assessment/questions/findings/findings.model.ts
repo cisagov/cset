@@ -20,6 +20,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
+
+import * as internal from "stream";
+
 ////////////////////////////////
 export interface Finding {
   // ACET fields
@@ -62,6 +65,11 @@ export interface FindingContact {
   assessment_Contact_Id: number;
   name: string;
   selected: boolean;
+}
+
+export interface ActionItemTextUpdate {
+  actionTextItems: ActionItemText[];
+  finding_Id: number;
 }
 
 export interface ActionItemText {

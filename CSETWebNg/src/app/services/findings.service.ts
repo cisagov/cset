@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ActionItemText, Finding } from './../assessment/questions/findings/findings.model';
+import { ActionItemText, ActionItemTextUpdate, Finding } from './../assessment/questions/findings/findings.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
@@ -74,8 +74,10 @@ export class FindingsService {
 
 
   //change this to pass me the question_id and question_text
-  saveIssueText(actionItem: ActionItemText[]) {
-    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', actionItem, headers );
+  saveIssueText(actionItem: ActionItemText[], finding_Id:number) {
+    
+    const tmp: ActionItemTextUpdate = {actionTextItems:actionItem, finding_Id:finding_Id};
+    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers );
   }
 
   /**
