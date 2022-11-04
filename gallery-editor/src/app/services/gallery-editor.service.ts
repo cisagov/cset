@@ -37,6 +37,7 @@ export class GalleryEditorService {
   }
 
   updatePositionOfItem(moveItem: MoveItem) {
+    moveItem.Layout_Name = this.layoutName;
     return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
   UpdateGalleryGroupName(Group_Id: any, value: string) {
