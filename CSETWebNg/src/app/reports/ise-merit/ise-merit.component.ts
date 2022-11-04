@@ -42,7 +42,11 @@ export class IseMeritComponent implements OnInit {
   resultsOfReviewStatic: string = 'Performed review of the security program using the ISE Toolbox.';
   resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
 
-  actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  masterActionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
+  // actionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
+  //                 finding_Id, <question_Id, [action_Items]>
+  // manualOrAutoMap: Map<number, string> = new Map<number, string>();
+
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -51,10 +55,8 @@ export class IseMeritComponent implements OnInit {
   relaventIssues: boolean = false;
   loadingCounter: number = 0;
 
-  // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
-  //                               "Stmt 8", "Stmt 9", "Stmt 10", "Stmt 11", "Stmt 12", "Stmt 13", "Stmt 14", 
-  //                               "Stmt 15", "Stmt 16", "Stmt 17", "Stmt 18", "Stmt 19", "Stmt 20", "Stmt 21", 
-  //                               "Stmt 22"]);
+  alreadyTouched: boolean = false; // keeps track of the first run of the getAssessmentFindings api call to avoid counting issues as new ones
+
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -88,29 +90,124 @@ export class IseMeritComponent implements OnInit {
               
               let question = subcat?.questions[k];
               if( k == 0 ){
-                this.questionsSvc.getActionItems(question.matQuestionId,null).subscribe(
+               let keepInStepCheck = 0;
+                this.findSvc.GetAssessmentFindings().subscribe(
                   (r: any) => {
-                    this.actionItemsForParent = r;
-                    for(let m = 0; m < this.actionItemsForParent?.length; m++){
-                      let parentAction = this.actionItemsForParent[m].action_Items;
-                      let regCitation = this.actionItemsForParent[m].regulatory_Citation;
+                    this.response = r;
+                    
+            
+                    for(let m = 0; m < this.response?.length; m++) { //goes through all findings (3 in this example case)
+                      
+                      if( this.ncuaSvc.translateExamLevel(this.response[m]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                       
+                        let finding = this.response[m];
+                        let actionItemsMap  = new Map<number, any[]>();
 
-                      if(!this.actionItemsMap.has(question.matQuestionId)){
-                        this.actionItemsMap.set(question.matQuestionId, [parentAction]);
-                        this.regCitationsMap.set(question.matQuestionId, [regCitation]);
+                        if(this.masterActionItemsMap.has(finding.finding.finding_id)) {
+                          actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
+                        }
+
+                        console.log(finding)
+                        // console.log(keepInStepCheck)
+                        // if(finding.question.mat_Question_Id == question.mat_Question_Id) { 
+                          this.questionsSvc.getActionItems(question.matQuestionId, finding.finding.finding_Id).subscribe(
+                            (r: any) => {
+                              this.actionItemsForParent = r;
+                              console.log(this.actionItemsForParent)
+                              // let actionItemsMap  = new Map<number, any[]>();
+
+                              // if() {
+                              //   actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
+                              // }
+
+                              
+                              for(let n = 0; n < this.actionItemsForParent?.length; n++){
+                                let parentAction = this.actionItemsForParent[n]?.action_Items;
+                                let regCitation = this.actionItemsForParent[n]?.regulatory_Citation;
+          
+                                if(!actionItemsMap.has(question.matQuestionId)){
+                                  actionItemsMap.set(question.matQuestionId, [parentAction]);
+                                  this.regCitationsMap.set(question.matQuestionId, [regCitation]);
+                                  
+                                  this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
+                                } else {
+                                  let tempActionArray = actionItemsMap.get(question.matQuestionId);
+                                  let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
+
+                                  tempActionArray.push(parentAction);
+                                  tempCitationArray.push(regCitation);
+
+                                  actionItemsMap.set(question.matQuestionId, tempActionArray);                                  
+                                  this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
+
+                                  this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
+                                }
+                              }
+                            }
+                          )
+                        // }
+
+                        if (!this.alreadyTouched) {
+                          if(finding.finding.type === 'Examiner Finding') {
+                            this.addExaminerFinding(finding.category.title);
+                          }
+                          if(finding.finding.type === 'DOR') {
+                            this.addDOR(finding.category.title);
+                          }
+                          if(finding.finding.type === 'Supplemental Fact') {
+                            this.addSupplementalFact(finding.category.title);
+                          }
+                          if(finding.finding.type === 'Non-reportable') {
+                            this.addNonReportable(finding.category.title);
+                          }
+                          this.relaventIssues = true;
+                        }
+
+                        // if (!this.alreadyTouched) {
+                        //   if(finding.finding.actionItems == null) {
+                        //     let parentIndex = 0;
+
+                        //     if(!this.showActionItemsMap.has(question.title)){
+                        //       this.showActionItemsMap.set(question.title, [parentIndex]);
+                        //     } else {
+                        //       let tempShowActionArray = this.showActionItemsMap.get(question.title);
+            
+                        //       tempShowActionArray.push(parentIndex);
+            
+                        //       this.showActionItemsMap.set(question.title, tempShowActionArray);
+                        //     }
+                        //   }
+                        // }
+
+                      }
+
+                    }
+          
+                    if(!this.alreadyTouched) {
+                      if(this.relaventIssues) {
+                        this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+                        this.categoryBuilder(this.examinerFindings);
+            
+                        this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+                        this.categoryBuilder(this.dors);
+            
+                        this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+                        this.categoryBuilder(this.supplementalFacts);
+            
+                        this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+                        this.categoryBuilder(this.nonReportables);
                       } else {
-                        let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
-                        let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
-
-                        tempActionArray.push(parentAction);
-                        tempCitationArray.push(regCitation);
-
-                        this.actionItemsMap.set(question.matQuestionId, tempActionArray);
-                        this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
+                        this.resultsOfReviewString += 'No Issues were noted.';
                       }
                     }
-                  }
-                )
+            
+                    this.loadingCounter ++;
+
+                    this.alreadyTouched = true;
+                  },
+                  error => console.log('MERIT Report Error: ' + (<Error>error).message)
+                );
+                
               }
 
               if (question.answerText == 'N') {
@@ -145,51 +242,7 @@ export class IseMeritComponent implements OnInit {
           }
         }
 
-        this.findSvc.GetAssessmentFindings().subscribe(
-          (r: any) => {
-            this.response = r;
-            console.log(r)
-    
-            
-              for(let i = 0; i < this.response?.length; i++) {
-                if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-                  let finding = this.response[i];
-                  if(finding.finding.type === 'Examiner Finding') {
-                    this.addExaminerFinding(finding.category.title);
-                  }
-                  if(finding.finding.type === 'DOR') {
-                    this.addDOR(finding.category.title);
-                  }
-                  if(finding.finding.type === 'Supplemental Fact') {
-                    this.addSupplementalFact(finding.category.title);
-                  }
-                  if(finding.finding.type === 'Non-reportable') {
-                    this.addNonReportable(finding.category.title);
-                  }
-                  this.relaventIssues = true;
-                }
-              }
-    
-              if(this.relaventIssues){
-                this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-                this.categoryBuilder(this.examinerFindings);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-                this.categoryBuilder(this.dors);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-                this.categoryBuilder(this.supplementalFacts);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-                this.categoryBuilder(this.nonReportables);
-              } else {
-                this.resultsOfReviewString += 'No Issues were noted.';
-              }
-    
-              this.loadingCounter ++;
-          },
-          error => console.log('MERIT Report Error: ' + (<Error>error).message)
-        );
+        
 
       },
     )
