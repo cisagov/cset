@@ -214,7 +214,6 @@ export class QuestionBlockIseComponent implements OnInit {
       }
       this.ncuaSvc.deleteHistory.clear();
     });
-    console.log("this.ncuaSvc.questionCheck: " + JSON.stringify(this.ncuaSvc.questionCheck, null, 4));
   }
 
   deleteIssueMaps(findingId: number) {
