@@ -53,12 +53,13 @@ export class IssuesComponent implements OnInit {
   loading: boolean;
   showRequiredHelper: boolean = false;
 
-  riskType: string = "";
-  subRisk: string = "";
-  transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
+  // Per client request: "Just make them static for now"
+  risk: string = "Transaction";
+  subRisk: string = "Information Systems & Technology Controls";
+  /*transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
                          'Fraud', 'Other', 'Supervisory Committee Activities', 'Full and Fair Disclosure', 'Electronic Payment & Card Services', 
                          'Recordkeeping-Significant', 'Security Program', 'Account Verification', 'Policies & Procedures', 
-                         'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];
+                         'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];*/
   
   updatedActionText: string[] = [];
   ActionItemList = new Map();
@@ -106,6 +107,9 @@ export class IssuesComponent implements OnInit {
       this.questionsSvc.getActionItems(this.questionID,this.finding.finding_Id).subscribe(
         (data: any) => {
           this.actionItems = data;
+
+          this.finding.risk_Area = this.risk;
+          this.finding.sub_Risk = this.subRisk;
 
           if (this.autoGen === 1) {
             this.finding.auto_Generated = 1;
@@ -164,7 +168,7 @@ export class IssuesComponent implements OnInit {
     }
 
   updateRiskArea(riskArea: string) {
-    this.riskType = riskArea;
+    this.risk = riskArea;
   }
 
   updateSubRisk(subRisk: string) {
@@ -172,13 +176,8 @@ export class IssuesComponent implements OnInit {
   }
 
   updateActionText(e: any, q: any) {    
-    
-    var originalElement = e.srcElement || e.originalTarget;
-    console.log(e);
-    // if (e.originalTarget.defaultValue !== e.target.value) {      
-      const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
-      this.ActionItemList.set(q.mat_Question_Id, item);
-    //}
+    const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
+    this.ActionItemList.set(q.mat_Question_Id, item);
   }
 
   update() {    
@@ -191,6 +190,7 @@ export class IssuesComponent implements OnInit {
 
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
+        console.log("this.finding (being saved): " + JSON.stringify(this.finding, null, 4));
         this.dialog.close(true);
       });
     } else {

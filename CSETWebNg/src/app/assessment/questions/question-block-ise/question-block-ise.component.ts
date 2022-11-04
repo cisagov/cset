@@ -706,8 +706,9 @@ export class QuestionBlockIseComponent implements OnInit {
       title: name,
       type: null,
       risk_Area: 'Transaction',
-      sub_Risk: '',
+      sub_Risk: 'Information Systems & Technology Controls',
       description: null,
+      actionItems: null,
       citations: null,
       auto_Generated: 0
     };
@@ -765,6 +766,7 @@ export class QuestionBlockIseComponent implements OnInit {
           risk_Area: 'Transaction',
           sub_Risk: 'Information Systems & Technology Controls',
           description: desc,
+          actionItems: null,
           citations: null,
           auto_Generated: 1
         };

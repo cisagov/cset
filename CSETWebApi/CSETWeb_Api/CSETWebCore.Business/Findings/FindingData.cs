@@ -59,6 +59,8 @@ namespace CSETWebCore.Business.Findings
                     Risk_Area = f.Risk_Area,
                     Sub_Risk = f.Sub_Risk,
                     Description = f.Description,
+                    Citations = f.Citations,
+                    ActionItems = f.ActionItems
                 };
 
                 this._dbFinding = finding;

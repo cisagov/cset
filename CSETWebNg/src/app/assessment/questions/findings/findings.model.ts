@@ -43,6 +43,7 @@ export interface Finding {
   sub_Risk: string;
   description: string;
   citations: string;
+  actionItems: string;
   auto_Generated: number;
   // Shared fields
   importance: Importance;
