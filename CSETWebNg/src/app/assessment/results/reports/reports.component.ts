@@ -201,6 +201,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * If all ACET ISE statements are not answered, set the 'disable' flag
+     * to true.
+     */
     checkIseDisabledStatus() {
         this.disableIseReportLinks = true;
         if (!this.assessSvc.isISE()) {
@@ -214,15 +218,23 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * Gets all ISE Findings/Issues, 
+     * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
+     */
     getAssessmentFindings() {
         this.ncuaSvc.unassignedIssueTitles = [];
         this.findSvc.GetAssessmentFindings().subscribe(
           (r: any) => {
             let findings = r;
-            console.log(findings)
+            let title = '';
             for (let i = 0; i < findings?.length; i++) {
-                if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
-                    this.ncuaSvc.unassignedIssueTitles.push(findings[i]?.question?.question_Title);
+                // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
+                if (this.ncuaSvc.translateExamLevel(findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+                    if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
+                        title = findings[i]?.category?.title + ', ' + findings[i]?.question?.question_Title;
+                        this.ncuaSvc.unassignedIssueTitles.push(title);
+                    }
                 }
             }
             if (this.ncuaSvc.unassignedIssueTitles?.length == 0){
