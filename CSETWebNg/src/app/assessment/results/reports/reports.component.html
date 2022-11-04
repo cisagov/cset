@@ -250,7 +250,7 @@
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
-      <div *ngIf="disableIseReportLinks" class="
+      <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues" class="
         alert-warning
         mt-2
         mb-2
@@ -262,25 +262,19 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           Some reports are disabled until all statements have been answered.
         </span>
-      </div>
-      <div *ngIf="ncuaSvc.unassignedIssueTitles?.length > 0" class="
-        alert-warning
-        mt-2
-        mb-2
-        d-flex
-        flex-row
-        justify-content-center
-        align-items-center
-        flex-11a
-        ng-star-inserted
-      ">
-        <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          Some reports are disabled until all Issues have Issue Types assigned.<br><br>
-          The following statements have Issues with unassigned Issue Types: <br>
+        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          The following statements have an Issue with an unassigned Issue Type: <br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
+        </span>
+        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+          Some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          The following statements have an Issue with an unassigned Issue Type: <br>
           <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
             {{ title }}
           </span><br>
