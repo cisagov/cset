@@ -129,6 +129,11 @@ export class QuestionsService {
     return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id='+finding_id, headers);
   }
 
+  getActionItemsReport(parentId: number, finding_id: number, action_id: number) {
+    headers.params = headers.params.set('parentId', parentId);
+    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id='+finding_id, headers);
+  }
+
   /**
    * Posts an Answer to the API.
    * @param answer
