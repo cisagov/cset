@@ -26,8 +26,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-mvra-summary',
-  templateUrl: './mvra-summary.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+  templateUrl: './mvra-summary.component.html'
 })
 export class MvraSummaryComponent implements OnInit {
 
@@ -37,12 +36,12 @@ export class MvraSummaryComponent implements OnInit {
   errors: boolean = false;
 
   /**
-   * 
+   *
    */
   constructor(public maturitySvc: MaturityService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.maturitySvc.getMvraScoring().subscribe(
@@ -55,7 +54,7 @@ export class MvraSummaryComponent implements OnInit {
         this.errors = true;
         console.log('Mvra Gaps load Error: ' + (<Error>error).message);
       }
-      ), 
+      ),
       (finish) => {
     };
   }

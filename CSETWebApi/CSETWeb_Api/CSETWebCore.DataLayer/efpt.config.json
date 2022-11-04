@@ -1103,6 +1103,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_countsForLevelsByGroupMaturityModel]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_financial_attributes]",
          "ObjectType": 1
       },
