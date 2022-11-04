@@ -30,11 +30,17 @@ namespace CSETWebCore.Model.Question
         public string StdRefId { get; set; }
         public string Answer { get; set; }
         public string AltAnswerText { get; set; }
-        public string freeResponseAnswer { get; set; }
+        public string FreeResponseAnswer { get; set; }
         public string Comment { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
         public string SetName { get; set; }
+
+        /// <summary>
+        /// Indicates if the question should be included in the
+        /// answer completion calculation on the UI widget.
+        /// </summary>
+        public bool Countable { get; set; }
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  
@@ -44,9 +50,9 @@ namespace CSETWebCore.Model.Question
         public bool HasComment { get; set; }
         public bool HasDocument { get; set; }
         public bool HasFeedback { get; set; }
-        public int docnum { get; set; }
+        public int DocNum { get; set; }
         public bool HasDiscovery { get; set; }
-        public int findingnum { get; set; }
+        public int FindingNum { get; set; }
         public int? Answer_Id { get; set; }
 
         /// <summary>

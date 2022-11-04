@@ -14,7 +14,7 @@ namespace CSETWebCore.Business.Question
     {
         List<NEW_REQUIREMENT> Requirements;
         List<FullAnswer> Answers;
-        
+
 
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IQuestionRequirementManager _questionRequirement;
@@ -25,7 +25,7 @@ namespace CSETWebCore.Business.Question
         /// <summary>
         /// Constructor.
         /// </summary>
-        public RequirementBusiness(IAssessmentUtil assessmentUtil, 
+        public RequirementBusiness(IAssessmentUtil assessmentUtil,
             IQuestionRequirementManager questionRequirement, CSETContext context, ITokenManager tokenManager)
         {
             _assessmentUtil = assessmentUtil;
@@ -59,13 +59,13 @@ namespace CSETWebCore.Business.Question
         public RequirementsPass GetControls()
         {
             SetRequirementAssessmentId(_tokenManager.AssessmentForUser());
-            
+
             var q = from rs in _context.REQUIREMENT_SETS
-                from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
-                from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
-                from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
-                where _questionRequirement.SetNames.Contains(rs.Set_Name)
-                      && rl.Standard_Level == _questionRequirement.StandardLevel
+                    from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+                    where _questionRequirement.SetNames.Contains(rs.Set_Name)
+                          && rl.Standard_Level == _questionRequirement.StandardLevel
                     select new { r, rs, s };
             var results = q.Distinct()
                 .OrderBy(x => x.s.Short_Name)
@@ -166,12 +166,12 @@ namespace CSETWebCore.Business.Question
 
                 var qa = new QuestionAnswer()
                 {
-                    DisplayNumber = dbR.Requirement_Title,                    
+                    DisplayNumber = dbR.Requirement_Title,
                     QuestionId = dbR.Requirement_Id,
                     QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
-                    freeResponseAnswer=answer?.a.Free_Response_Answer,
+                    FreeResponseAnswer = answer?.a.Free_Response_Answer,
                     Comment = answer?.a.Comment,
                     Feedback = answer?.a.FeedBack,
                     MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -306,7 +306,7 @@ namespace CSETWebCore.Business.Question
                         QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer = answer?.a.Free_Response_Answer,
+                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -423,7 +423,7 @@ namespace CSETWebCore.Business.Question
 
             int tQuestion_ID = 0;
             if (int.TryParse(answer.QuestionNumber, out tQuestion_ID))
-            {             
+            {
                 dbAnswer.Question_Number = tQuestion_ID;
             }
             dbAnswer.Answer_Text = answer.AnswerText;
@@ -491,7 +491,7 @@ namespace CSETWebCore.Business.Question
             {
                 LoadParametersList();
             }
-            
+
             List<PARAMETERS> qBaseLevel;
             if (parametersDictionary.TryGetValue(reqId, out qBaseLevel))
             {

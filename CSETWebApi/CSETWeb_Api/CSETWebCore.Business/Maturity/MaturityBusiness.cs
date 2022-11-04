@@ -960,7 +960,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer = answer?.a.Free_Response_Answer,
+                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -969,8 +969,10 @@ namespace CSETWebCore.Business.Maturity
                         MaturityLevel = myQ.Maturity_Level.Level,
                         MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
+                        SetName = string.Empty                        
                     };
+
+                    qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
                     {
@@ -1014,6 +1016,40 @@ namespace CSETWebCore.Business.Maturity
             });
 
             return dict;
+        }
+
+
+        /// <summary>
+        /// This method attempts to identify which questions are countable
+        /// in the UI's answer completion widget on the questions page.  
+        /// Maybe the real solution is a new property on the question 
+        /// record itself, but for now we will try to identify which
+        /// questions should not be counted.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
+        {
+            // EDM and CRR - parent questions are unanswerable and not countable
+            if (modelId == 3 || modelId == 4)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            // VADR - child questions are freeform and not countable
+            if (modelId == 7)
+            {
+                return qa.ParentQuestionId == null;
+            }
+
+            // ISE - parent questions are not answerable and not countable
+            if (modelId == 10)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            return true;
         }
 
 
