@@ -191,7 +191,6 @@ import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 
-
 const installationMode = localStorage.getItem('installationMode');
 
 // Select the appropriate home commponent for the configured installation mode for this app instance

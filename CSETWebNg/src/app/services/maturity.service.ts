@@ -228,7 +228,7 @@ export class MaturityService {
    * Asks the API for one grouping's worth of questions/answers.
    */
   getGroupingQuestions(groupingId: Number) {
-    return this.http.get(this.configSvc.apiUrl
+    return this.http.get(this.configSvc.apiUrl 
       + 'maturity/questions/grouping?groupingId=' + groupingId);
   }
 
@@ -258,7 +258,7 @@ export class MaturityService {
 
   /**
    * Indicates whether to show the scoring bar chart
-   * on MaturityQuestionsNested.
+   * on MaturityQuestionsNested.  
    * Someday this could be set in the MATURITY_MODELS table as a profile item
    * for each model that uses the nested questions structure.
    */
@@ -338,13 +338,13 @@ export class MaturityService {
   }
 
   /**
-   *
+   * 
    */
   getGroupingTitles(modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
 
   getMvraScoring(){
-    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring');
+    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
   }
 }
