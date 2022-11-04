@@ -64,7 +64,7 @@ export class CompletionService {
 
       data.groupings.forEach(g => {
         g.questions.forEach(q => {
-          if (q.maturityLevel <= this.targetMaturityLevel && !q.isParentQuestion) {
+          if (q.maturityLevel <= this.targetMaturityLevel && q.countable) {
             this.questionflat.push({
               id: q.questionId,
               answer: q.answer,
@@ -87,7 +87,9 @@ export class CompletionService {
   recurseSubgroups(gg) {
     gg.subGroupings?.forEach(g => {
       g.questions.forEach(q => {
-        if (q.maturityLevel <= this.targetMaturityLevel && !q.isParentQuestion) {
+        // how do we only consider 'countable' questions?  For VADR the parents are countable, but for others, parents are not.
+        // so we can't blindly treat parents one way for all models.
+        if (q.maturityLevel <= this.targetMaturityLevel && q.countable) {
           this.questionflat.push({
             id: q.questionId,
             answer: q.answer,
