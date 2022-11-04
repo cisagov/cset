@@ -7,6 +7,7 @@ import { ACETService } from '../../services/acet.service';
 import { FindingsService } from '../../services/findings.service';
 import { QuestionsService } from '../../services/questions.service';
 import { forEach } from 'lodash';
+import { NCUAService } from '../../services/ncua.service';
 
 @Component({
   selector: 'app-ise-merit',
@@ -61,6 +62,7 @@ export class IseMeritComponent implements OnInit {
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
+    public ncuaSvc: NCUAService,
     public questionsSvc: QuestionsService,
     private titleService: Title
   ) { }
@@ -150,7 +152,7 @@ export class IseMeritComponent implements OnInit {
     
             
               for(let i = 0; i < this.response?.length; i++) {
-                if(this.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                   let finding = this.response[i];
                   if(finding.finding.type === 'Examiner Finding') {
                     this.addExaminerFinding(finding.category.title);
@@ -242,16 +244,6 @@ export class IseMeritComponent implements OnInit {
     this.nonReportablesTotal ++;
   }
 
-  translateExamLevel(examLevel: number) {
-    if(examLevel === 17) {
-      return 'SCUEP';
-    } else if (examLevel === 18) {
-      return 'CORE';
-    } else if (examLevel === 19) {
-      return 'CORE+';
-    }
-  }
-
   inCatStringBuilder(total: number, length: number, findingName: string) {
     let inCategory = '';
     if (total === 1) {
@@ -290,44 +282,17 @@ export class IseMeritComponent implements OnInit {
     return (text);
   }
 
-  isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22'
-    ||   q.title == 'Stmt 23') {
-      return true;
-    } 
-    return false;
-  }
+  
 
   getParentQuestionTitle(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
       let endOfTitle = title.indexOf('.');
       return title.substring(0, endOfTitle);
     }
   }
 
   getChildQuestionNumber(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
       let startOfNumber = title.indexOf('.') + 1;
       return title.substring(startOfNumber);
     }

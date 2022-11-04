@@ -208,7 +208,7 @@
                     </div>
                     <div *ngIf="this.relaventIssues">
                         <div *ngFor="let finding of this.response">
-                            <div *ngIf="this.translateExamLevel(finding?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
+                            <div *ngIf="this.ncuaSvc.translateExamLevel(finding?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
                                 <div>
                                     <strong>Question: </strong> {{ finding?.question?.question_Title }}
                                 </div>

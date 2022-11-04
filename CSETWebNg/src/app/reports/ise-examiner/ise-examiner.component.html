@@ -124,7 +124,7 @@
                             <tr *ngIf="q.comments === 'Yes' && this.requiredQuestion(q)">
                                 <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                 <td class="pr-3">{{ q.questionText }}</td>
-                                <td class="pr-3">{{ !this.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</td>
+                                <td class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</td>
                                 <td class="pr-3">{{ q.comment }}</td>
                             </tr>
                         </ng-container>
@@ -152,7 +152,7 @@
                 </div>
                 <div>
                     <span class="font-weight-bold">Response: </span>
-                    <span class="pr-3">{{ !this.isParentQuestion(q) ? this.getAnswerDisplayLabel(q.answerText) : ' ' }}</span>
+                    <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q) ? this.getAnswerDisplayLabel(q.answerText) : ' ' }}</span>
                 </div>
                 <div>
                     <div class="font-weight-bold">Comments: </div>
