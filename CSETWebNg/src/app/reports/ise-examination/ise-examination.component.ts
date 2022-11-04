@@ -155,7 +155,7 @@ export class IseExaminationComponent implements OnInit {
               if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
                 this.showSubcats.set(subcat?.title, true);
               }
-              if (this.requiredQuestion(question) && this.isParentQuestion(question)) {
+              if (this.requiredQuestion(question) && this.ncuaSvc.isParentQuestion(question)) {
                 let issueText = '';
                 issueText += 'Title: ' + question.title + '\n';
                 issueText += 'Question Text: ' + question.questionText + '\n';
@@ -182,7 +182,7 @@ export class IseExaminationComponent implements OnInit {
             this.findingsResponse = f;  
     
             for(let i = 0; i < this.findingsResponse?.length; i++) {
-              if(this.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+              if(this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let finding = this.findingsResponse[i];
                 if(finding.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(finding.category.title);
@@ -303,42 +303,12 @@ export class IseExaminationComponent implements OnInit {
     }
     return false;
   }
-  /**
-   * checks if q is a parent question
-   */ 
-  isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22'
-    ||   q.title == 'Stmt 23') {
-      return true;
-    } 
-    return false;
-  }
+  
   /**
    * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
    */ 
   getParentQuestionTitle(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
       let endOfTitle = 6;
       // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
       if(title.charAt(6) != '.'){
@@ -410,7 +380,7 @@ export class IseExaminationComponent implements OnInit {
   }
 
   getChildQuestionNumber(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
       let startOfNumber = title.indexOf('.') + 1;
       return title.substring(startOfNumber);
     }
@@ -422,16 +392,6 @@ export class IseExaminationComponent implements OnInit {
       return true;
     }
     return false;
-  }
-
-  translateExamLevel(examLevel: number) {
-    if(examLevel === 17) {
-      return 'SCUEP';
-    } else if (examLevel === 18) {
-      return 'CORE';
-    } else if (examLevel === 19) {
-      return 'CORE+';
-    }
   }
   
 }
