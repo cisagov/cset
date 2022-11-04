@@ -190,7 +190,6 @@ export class IssuesComponent implements OnInit {
 
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
-        console.log("this.finding (being saved): " + JSON.stringify(this.finding, null, 4));
         this.dialog.close(true);
       });
     } else {
