@@ -1897,12 +1897,12 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
             {
-                entity.HasKey(e => new { e.Assessment_Id, e.Mat_Question_Id });
+                entity.HasKey(e => new { e.Finding_Id, e.Mat_Question_Id });
 
-                entity.HasOne(d => d.Assessment)
+                entity.HasOne(d => d.Finding)
                     .WithMany(p => p.ISE_ACTIONS_FINDINGS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ASSESSMENTS");
+                    .HasForeignKey(d => d.Finding_Id)
+                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
 
                 entity.HasOne(d => d.Mat_Question)
                     .WithMany(p => p.ISE_ACTIONS_FINDINGS)

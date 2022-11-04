@@ -48,13 +48,19 @@ namespace CSETWebCore.Api.Controllers.Tests
             QuestionsController questionsController = new QuestionsController(tokenmanager,null,null,null,null,null,null,null,null
                 ,context);
 
+            
             List<ActionItemText> list = new List<ActionItemText>();
             list.Add(new ActionItemText()
             {
                 Mat_Question_Id = 7569,
                 ActionItemOverrideText = 7569 + "This is override Text"
             });
-            questionsController.SaveOverrideIssueText(list);
+            var tmp = new ActionItemTextUpdate()
+            {
+                actionTextItems = list,
+                finding_Id = 132
+            };
+            questionsController.SaveOverrideIssueText(tmp);
 
         }
     }

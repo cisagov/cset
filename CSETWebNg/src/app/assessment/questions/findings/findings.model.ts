@@ -20,6 +20,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
+
+import * as internal from "stream";
+
 ////////////////////////////////
 export interface Finding {
   // ACET fields
@@ -40,6 +43,7 @@ export interface Finding {
   sub_Risk: string;
   description: string;
   citations: string;
+  actionItems: string;
   auto_Generated: number;
   // Shared fields
   importance: Importance;
@@ -62,4 +66,14 @@ export interface FindingContact {
   assessment_Contact_Id: number;
   name: string;
   selected: boolean;
+}
+
+export interface ActionItemTextUpdate {
+  actionTextItems: ActionItemText[];
+  finding_Id: number;
+}
+
+export interface ActionItemText {
+  Mat_Question_Id: number;
+  ActionItemOverrideText: string;
 }

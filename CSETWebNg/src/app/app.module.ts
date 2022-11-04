@@ -508,6 +508,9 @@ import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra
 import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
 import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 import { ZipCodeDirective } from './helpers/zip-code.directive';
+import { MvraReportComponent } from './reports/mvra/mvra-report.component';
+import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
+import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 
 
 
@@ -964,8 +967,18 @@ import { ZipCodeDirective } from './helpers/zip-code.directive';
         CfLayoutMainComponent,
         OptionBlockComponent, 
         DemographicsExtendedComponent, 
-        SectorHelpComponent, AnalyticsCompareComponent, AssessmentDetailCfComponent, LoginCfComponent, MvraGapsComponent, MvraSummaryComponent, MvraAnswerFunctionsComponent, MvraAnswerDomainsComponent
-        ,AboutCfComponent
+        SectorHelpComponent, 
+        AnalyticsCompareComponent, 
+        AssessmentDetailCfComponent, 
+        LoginCfComponent, 
+        MvraGapsComponent, 
+        MvraSummaryComponent, 
+        MvraAnswerFunctionsComponent, 
+        MvraAnswerDomainsComponent,
+        MvraReportComponent,
+        AboutCfComponent,
+        MvraSummaryPageComponent,
+        MvraGapsPageComponent, 
     ],
     providers: [
         ConfigService,

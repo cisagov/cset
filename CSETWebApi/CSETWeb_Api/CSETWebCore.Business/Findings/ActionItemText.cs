@@ -5,6 +5,8 @@
 // 
 //////////////////////////////// 
 
+using System.Collections.Generic;
+
 namespace CSETWebCore.Business.Findings
 {
     public class ActionItemText
@@ -12,4 +14,9 @@ namespace CSETWebCore.Business.Findings
         public int Mat_Question_Id { get; set; }
         public string ActionItemOverrideText { get; set; }
     }
+    public class ActionItemTextUpdate
+    {
+        public List<ActionItemText> actionTextItems { get; set; }
+        public int finding_Id { get; set; }
+}
 }
