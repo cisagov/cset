@@ -162,6 +162,75 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
+        public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
+        {
+
+            var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+
+            //while the answer text is not null 
+            // increment the achieved level
+            // must achieve level 1 before we can achieve level 2 ....
+            //
+
+            bool isLevelAchieved = false;
+            int nextLevel = 0;
+
+            foreach(var item in list)
+            {
+
+                switch (item.Answer_Text)
+                {
+                    case "N":
+                        isLevelAchieved = item.Answer_Text2 == null;                        
+                        break;
+                    case "U":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 == null;
+                        break;
+                    case "Y":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 != null;
+                        if (!isLevelAchieved)
+                        {
+                            nextLevel++;
+                            pushLevel(nextLevel, item);
+                        }
+                        break;
+                }
+                
+            }
+            List<GroupScores> groupScores = new List<GroupScores>();
+
+            foreach(var keyPair in levels)
+            {
+                groupScores.Add(new GroupScores()
+                {
+                    Group_Id = keyPair.Key.GROUPING_ID,
+                    Maturity_Level_Id = keyPair.Key.Maturity_Level_Id,
+                    Maturity_Level_Name = "We'll get there"
+                });
+            }
+            return groupScores;
+        }
+
+        private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
+        private void pushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        {
+            //if the previous level was achieved then we can go for the next level
+            //other wise we cannot
+            int level = 0;
+            if (nextLevel == 0)
+            {
+                levels.Add(item, nextLevel);
+            }
+            if(levels.TryGetValue(item, out level))
+            {
+                if(nextLevel== level+1)
+                {
+                    levels.Add(item, nextLevel);
+                }
+                //else we did not and keep the previous level (ie. cannot skip 1 and goto 2 or 3
+            }
+        }
+
 
         /// <summary>
         /// Returns an int indicating the selected target level of the assessment.

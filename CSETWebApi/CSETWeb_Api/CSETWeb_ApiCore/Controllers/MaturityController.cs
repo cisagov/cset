@@ -146,6 +146,14 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
         }
 
+        [HttpGet]
+        [Route("api/MaturityModel/GetLevelScoresByGroup")]
+        public IActionResult GetLevelScoresByGroup(int mat_model_id)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness)
+                .Get_LevelScoresByGroup(assessmentId, mat_model_id));
+        }
 
         /// <summary>        
         /// </summary>

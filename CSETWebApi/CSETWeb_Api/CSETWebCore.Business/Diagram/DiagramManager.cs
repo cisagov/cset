@@ -502,11 +502,6 @@ namespace CSETWebCore.Business.Diagram
                         diagramComponents[i].SAL = parent?.SAL;
                     }
 
-                    if (string.IsNullOrEmpty(diagramComponents[i].Criticality))
-                    {
-                        diagramComponents[i].Criticality = parent?.Criticality;
-                    }
-
                     diagramComponents[i].zoneLabel = parent?.label;
                 }
 
