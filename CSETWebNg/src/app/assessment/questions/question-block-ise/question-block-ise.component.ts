@@ -205,25 +205,14 @@ export class QuestionBlockIseComponent implements OnInit {
 
     this.myGrouping.questions.forEach(question => {
       if (question.answer === 'N') {
-        if (this.importantQuestions.has(question.questionId)) {
-          parentId = question.parentQuestionId;
+        parentId = question.parentQuestionId;
 
-          if (tempId === 0) {
-            tempId = parentId;
-          } else if (tempId !== parentId) {
-            count = 0;
-            tempId = parentId;
-          }
-
-          if (parentId) {
-            count++;
-          }
-
-          this.ncuaSvc.questionCheck.set(parentId, count);
+        if (parentId) {
+          count++;
         }
-
-        this.ncuaSvc.deleteHistory.clear();
+        this.ncuaSvc.questionCheck.set(parentId, count);
       }
+      this.ncuaSvc.deleteHistory.clear();
     });
   }
 
@@ -716,8 +705,9 @@ export class QuestionBlockIseComponent implements OnInit {
       title: name,
       type: null,
       risk_Area: 'Transaction',
-      sub_Risk: '',
+      sub_Risk: 'Information Systems & Technology Controls',
       description: null,
+      actionItems: null,
       citations: null,
       auto_Generated: 0
     };
@@ -752,7 +742,7 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    this.questionsSvc.getActionItems(parentId).subscribe(
+    this.questionsSvc.getActionItems(parentId,findId).subscribe(
       (data: any) => {
         // Used to generate a description for ISE reports even if a user doesn't open the issue.
         desc = data[0]?.description;
@@ -775,6 +765,7 @@ export class QuestionBlockIseComponent implements OnInit {
           risk_Area: 'Transaction',
           sub_Risk: 'Information Systems & Technology Controls',
           description: desc,
+          actionItems: null,
           citations: null,
           auto_Generated: 1
         };

@@ -72,6 +72,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_Answer_Components_DefaultResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_Completion_For_UserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_For_UserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_countsForLevelsByGroupMaturityModelResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_financial_attributesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GenerateSPRSScoreResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getAnswerComponentOverridesResult>().HasNoKey().ToView(null);
@@ -1632,6 +1633,38 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[usp_CopyIntoSet_Delete] @DestinationSetName", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_countsForLevelsByGroupMaturityModelResult>> usp_countsForLevelsByGroupMaturityModelAsync(int? assessment_id, int? mat_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "mat_model_id",
+                    Value = mat_model_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_countsForLevelsByGroupMaturityModelResult>("EXEC @returnValue = [dbo].[usp_countsForLevelsByGroupMaturityModel] @assessment_id, @mat_model_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

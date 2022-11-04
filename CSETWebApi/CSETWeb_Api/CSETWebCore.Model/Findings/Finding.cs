@@ -23,6 +23,7 @@ namespace CSETWebCore.Model.Findings
         public string Sub_Risk { get; set; }
         public string Description { get; set; }
         public string Citations { get; set; }
+        public string ActionItems { get; set; }
         public int Auto_Generated { get; set; }
 
         public List<FindingContact> Finding_Contacts { get; set; }

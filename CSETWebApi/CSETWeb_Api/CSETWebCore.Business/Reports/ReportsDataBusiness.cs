@@ -393,6 +393,8 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            //Get All the Findings and issues with the findings. 
+
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();

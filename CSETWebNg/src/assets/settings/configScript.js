@@ -27,12 +27,12 @@ function processDataOverrides(source, data) {
   //else set the property value on the base object from the override
   for (const property in source) {
     if (property.startsWith("answers")) {
-      console.log("skipping overload for " + property);
+      //console.log("skipping overload for " + property);
     } else {
       if (typeof source[property] == "object") {
         processDataOverrides(source[property], data[property]);
       } else {
-        console.log(`copying source ${property} was:${data[property]} now is:${source[property]}`);
+        //console.log(`copying source ${property} was:${data[property]} now is:${source[property]}`);
         data[property] = source[property];
       }
     }
@@ -48,24 +48,24 @@ async function getConfig(configURL) {
 }
 
 async function getConfigs(masterConfig, configChain) {
-  console.log("processing the chain");
-  console.log(configChain);
-  console.log("for master config");
-  console.log(masterConfig);
+  // console.log("processing the chain");
+  // console.log(configChain);
+  // console.log("for master config");
+  // console.log(masterConfig);
   for (var config of configChain) {
     var isElectronVar = isElectron();
     var leading = isElectronVar?"":"/";
     var tmpURL = leading + `assets/settings/config.${config}.json`;
     
-    console.log("getting" + tmpURL);
+    //console.log("getting" + tmpURL);
     var tmpConfig = await getConfig(tmpURL).then((data) => {
-      console.log("applying:" + config);
-      console.log(data);
+      //console.log("applying:" + config);
+      //console.log(data);
       masterConfig = processDataOverrides(data, masterConfig);
     });
   }
-  console.log("final config");
-  console.log(masterConfig);
+  //console.log("final config");
+  //console.log(masterConfig);
 }
 function switchConfigsForMode(installationMode) {  
   switch (installationMode) {

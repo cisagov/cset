@@ -88,7 +88,7 @@ export class IseMeritComponent implements OnInit {
               
               let question = subcat?.questions[k];
               if( k == 0 ){
-                this.questionsSvc.getActionItems(question.matQuestionId).subscribe(
+                this.questionsSvc.getActionItems(question.matQuestionId,null).subscribe(
                   (r: any) => {
                     this.actionItemsForParent = r;
                     for(let m = 0; m < this.actionItemsForParent?.length; m++){

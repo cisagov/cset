@@ -20,15 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<table class="cset-table w-100">
-    <tr>
-        <th></th>
-        <th class="text-right">Rating</th>
-        <th class="text-right">Credit</th>
-    </tr>
-    <tr *ngFor="let m of flattenedModel" [class.function-background]="m.function">
-        <td>{{m.title}}</td>
-        <td class="text-right">{{m.rating}}</td>
-        <td class="text-right">{{m.credit}}</td>
-    </tr>
-</table>
+<div class="white-panel oy-auto d-flex flex-column flex-11a">
+    <h3 class="mb-3">Goal Performance</h3>   
+
+    <app-mvra-gaps></app-mvra-gaps>
+
+    <app-nav-back-next [page]="'mvra-gaps-page'"></app-nav-back-next>
+
+</div>
