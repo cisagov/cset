@@ -21,11 +21,14 @@
   SOFTWARE.
 -------------------------->
 
-<app-login-cset *ngIf="(configSvc.installationMode || 'CSET') === 'CSET'"></app-login-cset>
+<app-login-cset *ngIf="false && (configSvc.installationMode || 'CSET') === 'CSET'"></app-login-cset>
 
 <app-login-rra *ngIf="configSvc.installationMode === 'RRA'"></app-login-rra>
 
 <app-login-acet *ngIf="configSvc.installationMode === 'ACET'"></app-login-acet>
 
 <app-login-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-login-tsa>
+
 <app-login-cf *ngIf="configSvc.installationMode === 'CF'"></app-login-cf>
+
+<app-login-access-key *ngIf="true"></app-login-access-key>

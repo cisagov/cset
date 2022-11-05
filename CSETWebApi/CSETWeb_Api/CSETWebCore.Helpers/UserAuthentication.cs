@@ -232,5 +232,35 @@ namespace CSETWebCore.Helpers
 
             return key;
         }
+
+
+        /// <summary>
+        /// Emulates credential authentication solely by providing
+        /// a valid Access Key.
+        /// </summary>
+        /// <returns></returns>
+        public LoginResponse AuthenticateAccessKey(AnonymousLogin login)
+        {
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == login.AccessKey);
+
+            if (ak == null)
+            {
+                // supplied access key does not exist
+                return null;
+            }
+
+            var resp = new LoginResponse()
+            {
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+            };
+
+            // Generate a token for this user and add to the response
+            //string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            //resp.Token = token;
+
+            return resp;
+        }
     }
 }

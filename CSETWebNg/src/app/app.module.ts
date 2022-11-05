@@ -511,7 +511,7 @@ import { ZipCodeDirective } from './helpers/zip-code.directive';
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
-import { AnonymousLoginComponent } from './initial/anonymous-login/anonymous-login.component';
+import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 
 
 
@@ -980,7 +980,7 @@ import { AnonymousLoginComponent } from './initial/anonymous-login/anonymous-log
         AboutCfComponent,
         MvraSummaryPageComponent,
         MvraGapsPageComponent,
-        AnonymousLoginComponent, 
+        LoginAccessKeyComponent, 
     ],
     providers: [
         ConfigService,

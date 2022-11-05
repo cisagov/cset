@@ -337,4 +337,25 @@ export class AuthenticationService {
         localStorage.setItem('email', info.primaryEmail);
     }
 
+    /**
+     * 
+     */
+    loginWithAccessKey(loginKey) {
+        const req = JSON.stringify(
+            {
+                accessKey: loginKey,
+                tzOffset: new Date().getTimezoneOffset().toString(),
+                Scope: 'CSET'
+            }
+        )
+
+        return this.http.post(this.configSvc.apiUrl + 'auth/login/accesskey', req, headers);
+    }
+
+    /**
+     * 
+     */
+    generateAccessKey() {
+        return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
+    }
 }
