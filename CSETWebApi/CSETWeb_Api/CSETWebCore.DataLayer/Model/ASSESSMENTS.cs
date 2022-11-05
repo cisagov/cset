@@ -15,6 +15,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public ASSESSMENTS()
         {
+            ACCESS_KEY_ASSESSMENT = new HashSet<ACCESS_KEY_ASSESSMENT>();
             AGGREGATION_ASSESSMENT = new HashSet<AGGREGATION_ASSESSMENT>();
             ANSWER = new HashSet<ANSWER>();
             ANSWER_PROFILE = new HashSet<ANSWER_PROFILE>();
@@ -90,6 +91,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual INFORMATION INFORMATION { get; set; }
         [InverseProperty("Assessment")]
         public virtual STANDARD_SELECTION STANDARD_SELECTION { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         [InverseProperty("Assessment")]

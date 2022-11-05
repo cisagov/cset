@@ -6,5 +6,6 @@ namespace CSETWebCore.Interfaces.Helpers
     {
         LoginResponse Authenticate(Login login);
         LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager);
+        string GenerateAccessKey();
     }
 }

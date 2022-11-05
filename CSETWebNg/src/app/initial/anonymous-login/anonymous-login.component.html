@@ -1,0 +1,93 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<app-logo-cset [logoHeight]="layoutSvc.hp ? 50 : 100" style="opacity: .2; margin: 3rem 0 2rem 3rem"></app-logo-cset>
+<div id="anonymous-login-page" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a">
+
+
+    <div class="row">
+        <div class="col-1">
+        </div>
+
+        <div class="col-6">
+            <div class=" mt-5 mb-4">
+                <div>CSET Online</div>
+
+                <div class="mb-3">
+                    CSET Online is anonymous. We will not capture your
+                    identifying information. To use CSET Online, you will need
+                    to generate an Access Key that you will use in the future to access
+                    your assessments.
+                </div>
+                <div class="mb-3">
+                    <div class="form-group inline">
+                        <label>
+                            If you have an Access Key, enter it here and click Login
+                        </label>
+                        <input class="form-control"> <button class="btn btn-primary">Login</button>
+                    </div>
+                    <div *ngIf="true" class="alert alert-danger">
+                        Login failed.  Check your key and try again.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="mr-3">
+                        To generate an Access Key, click here
+                    </label>
+                    <button class="btn btn-primary" (click)="generateKey()">Create Access Key</button>
+                </div>
+
+                <div *ngIf="keyGenerated" class="alert alert-success mb-3">
+                    <p style="font-size: 1.3rem">
+                        Your Access Key is <strong>{{generatedKey}}</strong>
+                    </p>
+                    <p>
+                        You must retain this Access Key in order to access any assessments you create.
+                        Treat this key like a password.  Anyone you share it with will have access to the assessments
+                        created with this Access Key.
+                    </p>
+                    <p>
+                        <button class="btn btn-primary">Enter CSET</button>
+                    </p>
+                </div>
+
+                <div class="pii-disclaimer">
+                    <p>
+                        Please do not enter any personal or sensitive information into CSET Online.
+                    </p>
+                    <p>
+                        This includes information about a natural person or entity that is readily identifiable to that
+                        specific
+                        individual/entity. Personal information includes such things as your name, address, and phone
+                        number.
+                    </p>
+                    <p>
+                        If you choose
+                        to provide personal or sensitive information in any field within CSET Online, we may store this
+                        information.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

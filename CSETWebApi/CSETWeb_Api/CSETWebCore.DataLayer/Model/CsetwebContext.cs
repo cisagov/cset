@@ -18,6 +18,8 @@ namespace CSETWebCore.DataLayer.Model
         {
         }
 
+        public virtual DbSet<ACCESS_KEY> ACCESS_KEY { get; set; }
+        public virtual DbSet<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
         public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
@@ -244,6 +246,23 @@ namespace CSETWebCore.DataLayer.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
+            {
+                entity.HasKey(e => new { e.AccessKey, e.Assessment_Id });
+
+                entity.HasOne(d => d.AccessKeyNavigation)
+                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                    .HasForeignKey(d => d.AccessKey)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+            }); 
+            
             modelBuilder.Entity<ADDRESS>(entity =>
             {
                 entity.HasKey(e => new { e.AddressType, e.Id })
