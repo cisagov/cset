@@ -74,7 +74,9 @@ export class IseMeritComponent implements OnInit {
 
     this.acetSvc.getActionItemsReport().subscribe((findingData)=>{      
       console.log(findingData);
-      //this.masterActionItemsMap    
+      for(var actionItem in findingData){
+          this.masterActionItemsMap.set(actionItem.mat_question_id, actionItem);
+      }
       this.acetSvc.getIseAnsweredQuestions().subscribe(
         (r: any) => {
           this.answers = r;

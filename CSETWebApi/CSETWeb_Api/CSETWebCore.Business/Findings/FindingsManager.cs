@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Findings
         public List<ActionItemsForReport> GetActionItemsReport(int assessment_id)
         {
             var actionItems = new List<ActionItemsForReport>();
-           
+            var items =  _context.Procedures.Acet_GetActionItemsForReportAsync();
             return actionItems;
         }
 
