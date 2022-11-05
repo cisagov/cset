@@ -53,6 +53,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(resp);
         }
 
+
         /// <summary>
         /// Attempts to perform a login for a stand-alone single-user implementation.
         /// </summary>
@@ -163,10 +164,25 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Generates an access key for an anonymous user
         /// </summary>
-        public string GetAccessKey()
+        public IActionResult GetAccessKey()
         {
             var x = _userAuthentication.GenerateAccessKey();
-            return x;
+            return Ok(x);
+        }
+
+
+        [HttpPost]
+        [Route("api/auth/login/accesskey")]
+        public IActionResult LoginWithAccessKey([FromBody] AnonymousLogin login)
+        {
+            LoginResponse resp = _userAuthentication.AuthenticateAccessKey(login);
+
+            if (resp == null)
+            {
+                return BadRequest(new LoginResponse());
+            }
+
+            return Ok(resp);
         }
 
 
