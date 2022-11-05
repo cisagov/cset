@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessId = _token.AssessmentForUser();
             FindingsManager fm = new FindingsManager(_context, assessId);
-            return Ok(fm.GetActionItemsReport(assessId));
+            return Ok(fm.GetActionItemsReport(assessId).Result);
         }
 
 
