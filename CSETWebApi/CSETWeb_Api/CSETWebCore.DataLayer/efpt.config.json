@@ -911,6 +911,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[Acet_GetActionItemsForReport]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[AcetAnswerDistribution]",
          "ObjectType": 1
       },
