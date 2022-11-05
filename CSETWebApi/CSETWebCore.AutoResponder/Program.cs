@@ -5,28 +5,36 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using System.Reflection;
 
 namespace CSETWebCore.AutoResponder
 {
     internal class Program
     {
+
+        static Program(){
+            var log4netRepository = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
+            log4net.Config.XmlConfigurator.Configure(log4netRepository, new FileInfo("log4net.config"));
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            //TODO change this to have a startup and dependency injection for my context
-
             // Setup Host
             var host = CreateDefaultBuilder().Build();
-
             // Invoke Worker
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
-            var workerInstance = provider.GetRequiredService<Worker>();
-            workerInstance.ProcessEmails();
+            if(DayOfWeek.Sunday == DateTime.Now.DayOfWeek)
+            {
+                var workerInstance = provider.GetRequiredService<WeeklyStatusWorker>();
+                workerInstance.ProcessEmails();
+            }
+            var dailyInstance = provider.GetRequiredService<DailyEmailProcessWorker>();
+            dailyInstance.ProcessEmails();
             
         }
 
@@ -39,7 +47,8 @@ namespace CSETWebCore.AutoResponder
                 })
                 .ConfigureServices(services =>
                 {
-                    services.AddSingleton<Worker>();
+                    services.AddSingleton<WeeklyStatusWorker>();
+                    services.AddSingleton<DailyEmailProcessWorker>();
                     services.AddDbContext<CSETContext>(
                         options => options.UseSqlServer("name=ConnectionStrings:CSETWeb"));
                     services.AddTransient<IResourceHelper, ResourceHelper>();                    
@@ -50,13 +59,13 @@ namespace CSETWebCore.AutoResponder
     }
 
     // Worker.cs
-    internal class Worker
+    public class WeeklyStatusWorker
     {
         private readonly IConfiguration configuration;
         private readonly CSETContext _context;
         private readonly IEmailHelper _emailHelper;
 
-        public Worker(IConfiguration configuration, CSETContext context, IEmailHelper emailHelper)
+        public WeeklyStatusWorker(IConfiguration configuration, CSETContext context, IEmailHelper emailHelper)
         {
             this.configuration = configuration;
             this._context = context;
