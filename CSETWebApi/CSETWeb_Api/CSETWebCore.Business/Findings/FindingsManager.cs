@@ -5,7 +5,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Findings
 {
@@ -94,11 +94,11 @@ namespace CSETWebCore.Business.Findings
             return actionItems;
         }
 
-        public List<ActionItemsForReport> GetActionItemsReport(int assessment_id)
+        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id)
         {
-            var actionItems = new List<ActionItemsForReport>();
-            var items =  _context.Procedures.Acet_GetActionItemsForReportAsync();
-            return actionItems;
+            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id);
+            return data;
+
         }
 
 
