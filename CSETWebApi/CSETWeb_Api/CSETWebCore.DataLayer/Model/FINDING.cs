@@ -36,6 +36,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Risk_Area { get; set; }
         [StringLength(50)]
         public string Sub_Risk { get; set; }
+        [StringLength(4000)]
+        public string ActionItems { get; set; }
 
         [ForeignKey("Answer_Id")]
         [InverseProperty("FINDING")]
