@@ -72,180 +72,184 @@ export class IseMeritComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
-    this.acetSvc.getIseAnsweredQuestions().subscribe(
-      (r: any) => {
-        this.answers = r;
-        console.log(r)
-        this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+    this.acetSvc.getActionItemsReport().subscribe((findingData)=>{      
+      console.log(findingData);
+      //this.masterActionItemsMap    
+      this.acetSvc.getIseAnsweredQuestions().subscribe(
+        (r: any) => {
+          this.answers = r;
+          console.log(r)
+          this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-        // goes through domains
-        for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
-          let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
-          // goes through subcategories
-          for(let j = 0; j < domain.components?.length; j++) {
-            let subcat = domain?.components[j];
-            // goes through questions
-            let parentQuestionId = subcat?.questions[0].matQuestionId;
-            for(let k = 0; k < subcat?.questions?.length; k++) {
-              
-              let question = subcat?.questions[k];
-              if( k == 0 ){
-               let keepInStepCheck = 0;
-                this.findSvc.GetAssessmentFindings().subscribe(
-                  (r: any) => {
-                    this.response = r;
-                    
-            
-                    for(let m = 0; m < this.response?.length; m++) { //goes through all findings (3 in this example case)
+          // goes through domains
+          for(let i = 0; i < this.answers?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+            let domain = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[i];
+            // goes through subcategories
+            for(let j = 0; j < domain.components?.length; j++) {
+              let subcat = domain?.components[j];
+              // goes through questions
+              let parentQuestionId = subcat?.questions[0].matQuestionId;
+              for(let k = 0; k < subcat?.questions?.length; k++) {
+                
+                let question = subcat?.questions[k];
+                if( k == 0 ){
+                let keepInStepCheck = 0;
+                  this.findSvc.GetAssessmentFindings().subscribe(
+                    (r: any) => {
+                      this.response = r;
                       
-                      if( this.ncuaSvc.translateExamLevel(this.response[m]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-                       
-                        let finding = this.response[m];
-                        let actionItemsMap  = new Map<number, any[]>();
+              
+                      for(let m = 0; m < this.response?.length; m++) { //goes through all findings (3 in this example case)
+                        
+                        if( this.ncuaSvc.translateExamLevel(this.response[m]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                        
+                          let finding = this.response[m];
+                          let actionItemsMap  = new Map<number, any[]>();
 
-                        if(this.masterActionItemsMap.has(finding.finding.finding_id)) {
-                          actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
-                        }
+                          if(this.masterActionItemsMap.has(finding.finding.finding_id)) {
+                            actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
+                          }
 
-                        console.log(finding)
-                        // console.log(keepInStepCheck)
-                        // if(finding.question.mat_Question_Id == question.mat_Question_Id) { 
-                          this.questionsSvc.getActionItems(question.matQuestionId, finding.finding.finding_Id).subscribe(
-                            (r: any) => {
-                              this.actionItemsForParent = r;
-                              console.log(this.actionItemsForParent)
-                              // let actionItemsMap  = new Map<number, any[]>();
+                          console.log(finding)
+                          // console.log(keepInStepCheck)
+                          // if(finding.question.mat_Question_Id == question.mat_Question_Id) { 
+                            this.questionsSvc.getActionItems(question.matQuestionId, finding.finding.finding_Id).subscribe(
+                              (r: any) => {
+                                this.actionItemsForParent = r;
+                                console.log(this.actionItemsForParent)
+                                // let actionItemsMap  = new Map<number, any[]>();
 
-                              // if() {
-                              //   actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
-                              // }
+                                // if() {
+                                //   actionItemsMap = this.masterActionItemsMap.get(finding.finding.finding_Id);
+                                // }
 
-                              
-                              for(let n = 0; n < this.actionItemsForParent?.length; n++){
-                                let parentAction = this.actionItemsForParent[n]?.action_Items;
-                                let regCitation = this.actionItemsForParent[n]?.regulatory_Citation;
-          
-                                if(!actionItemsMap.has(question.matQuestionId)){
-                                  actionItemsMap.set(question.matQuestionId, [parentAction]);
-                                  this.regCitationsMap.set(question.matQuestionId, [regCitation]);
-                                  
-                                  this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
-                                } else {
-                                  let tempActionArray = actionItemsMap.get(question.matQuestionId);
-                                  let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
+                                
+                                for(let n = 0; n < this.actionItemsForParent?.length; n++){
+                                  let parentAction = this.actionItemsForParent[n]?.action_Items;
+                                  let regCitation = this.actionItemsForParent[n]?.regulatory_Citation;
+            
+                                  if(!actionItemsMap.has(question.matQuestionId)){
+                                    actionItemsMap.set(question.matQuestionId, [parentAction]);
+                                    this.regCitationsMap.set(question.matQuestionId, [regCitation]);
+                                    
+                                    this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
+                                  } else {
+                                    let tempActionArray = actionItemsMap.get(question.matQuestionId);
+                                    let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
 
-                                  tempActionArray.push(parentAction);
-                                  tempCitationArray.push(regCitation);
+                                    tempActionArray.push(parentAction);
+                                    tempCitationArray.push(regCitation);
 
-                                  actionItemsMap.set(question.matQuestionId, tempActionArray);                                  
-                                  this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
+                                    actionItemsMap.set(question.matQuestionId, tempActionArray);                                  
+                                    this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
 
-                                  this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
+                                    this.masterActionItemsMap.set(finding.finding.finding_Id, actionItemsMap);
+                                  }
                                 }
                               }
-                            }
-                          )
-                        // }
+                            )
+                          // }
 
-                        if (!this.alreadyTouched) {
-                          if(finding.finding.type === 'Examiner Finding') {
-                            this.addExaminerFinding(finding.category.title);
+                          if (!this.alreadyTouched) {
+                            if(finding.finding.type === 'Examiner Finding') {
+                              this.addExaminerFinding(finding.category.title);
+                            }
+                            if(finding.finding.type === 'DOR') {
+                              this.addDOR(finding.category.title);
+                            }
+                            if(finding.finding.type === 'Supplemental Fact') {
+                              this.addSupplementalFact(finding.category.title);
+                            }
+                            if(finding.finding.type === 'Non-reportable') {
+                              this.addNonReportable(finding.category.title);
+                            }
+                            this.relaventIssues = true;
                           }
-                          if(finding.finding.type === 'DOR') {
-                            this.addDOR(finding.category.title);
-                          }
-                          if(finding.finding.type === 'Supplemental Fact') {
-                            this.addSupplementalFact(finding.category.title);
-                          }
-                          if(finding.finding.type === 'Non-reportable') {
-                            this.addNonReportable(finding.category.title);
-                          }
-                          this.relaventIssues = true;
+
+                          // if (!this.alreadyTouched) {
+                          //   if(finding.finding.actionItems == null) {
+                          //     let parentIndex = 0;
+
+                          //     if(!this.showActionItemsMap.has(question.title)){
+                          //       this.showActionItemsMap.set(question.title, [parentIndex]);
+                          //     } else {
+                          //       let tempShowActionArray = this.showActionItemsMap.get(question.title);
+              
+                          //       tempShowActionArray.push(parentIndex);
+              
+                          //       this.showActionItemsMap.set(question.title, tempShowActionArray);
+                          //     }
+                          //   }
+                          // }
+
                         }
 
-                        // if (!this.alreadyTouched) {
-                        //   if(finding.finding.actionItems == null) {
-                        //     let parentIndex = 0;
-
-                        //     if(!this.showActionItemsMap.has(question.title)){
-                        //       this.showActionItemsMap.set(question.title, [parentIndex]);
-                        //     } else {
-                        //       let tempShowActionArray = this.showActionItemsMap.get(question.title);
-            
-                        //       tempShowActionArray.push(parentIndex);
-            
-                        //       this.showActionItemsMap.set(question.title, tempShowActionArray);
-                        //     }
-                        //   }
-                        // }
-
                       }
-
-                    }
-          
-                    if(!this.alreadyTouched) {
-                      if(this.relaventIssues) {
-                        this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-                        this.categoryBuilder(this.examinerFindings);
             
-                        this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-                        this.categoryBuilder(this.dors);
-            
-                        this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-                        this.categoryBuilder(this.supplementalFacts);
-            
-                        this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-                        this.categoryBuilder(this.nonReportables);
-                      } else {
-                        this.resultsOfReviewString += 'No Issues were noted.';
+                      if(!this.alreadyTouched) {
+                        if(this.relaventIssues) {
+                          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+                          this.categoryBuilder(this.examinerFindings);
+              
+                          this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+                          this.categoryBuilder(this.dors);
+              
+                          this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+                          this.categoryBuilder(this.supplementalFacts);
+              
+                          this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+                          this.categoryBuilder(this.nonReportables);
+                        } else {
+                          this.resultsOfReviewString += 'No Issues were noted.';
+                        }
                       }
-                    }
-            
-                    this.loadingCounter ++;
+              
+                      this.loadingCounter ++;
 
-                    this.alreadyTouched = true;
-                  },
-                  error => console.log('MERIT Report Error: ' + (<Error>error).message)
-                );
-                
-              }
-
-              if (question.answerText == 'N') {
-                let parentTitle = this.getParentQuestionTitle(question.title);
-
-                if(!this.showActionItemsMap.has(parentTitle)){
-                  this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
-                } else {
-                  let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
-
-                  tempShowActionArray.push(this.getChildQuestionNumber(question.title));
-
-                  this.showActionItemsMap.set(parentTitle, tempShowActionArray);
+                      this.alreadyTouched = true;
+                    },
+                    error => console.log('MERIT Report Error: ' + (<Error>error).message)
+                  );
+                  
                 }
+
+                if (question.answerText == 'N') {
+                  let parentTitle = this.getParentQuestionTitle(question.title);
+
+                  if(!this.showActionItemsMap.has(parentTitle)){
+                    this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
+                  } else {
+                    let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
+
+                    tempShowActionArray.push(this.getChildQuestionNumber(question.title));
+
+                    this.showActionItemsMap.set(parentTitle, tempShowActionArray);
+                  }
+                }
+              
+                if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                  this.examLevel = 'CORE+';
+                }
+
+                // if(k == subcat?.questions?.length - 1 || (j == 0 && k == 9)) { //checks if the last child question
+                //   if(j == 0 && k == 9) { //checks if in Stmt 1 or Stmt 2 (they're in the same subcat)
+                //     parentQuestionId = subcat?.questions[k].matQuestionId;
+                //   }
+                //   console.log('called')
+                //   this.removeUnusedActionItems(parentQuestionId, question.title)
+                // }
+
+                this.loadingCounter ++;
+
               }
-            
-              if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
-                this.examLevel = 'CORE+';
-              }
-
-              // if(k == subcat?.questions?.length - 1 || (j == 0 && k == 9)) { //checks if the last child question
-              //   if(j == 0 && k == 9) { //checks if in Stmt 1 or Stmt 2 (they're in the same subcat)
-              //     parentQuestionId = subcat?.questions[k].matQuestionId;
-              //   }
-              //   console.log('called')
-              //   this.removeUnusedActionItems(parentQuestionId, question.title)
-              // }
-
-              this.loadingCounter ++;
-
             }
           }
-        }
 
-        
+          
 
-      },
-    )
+        },
+      )
+    });//corresponds to the first subscription on line 75
 
     
 
