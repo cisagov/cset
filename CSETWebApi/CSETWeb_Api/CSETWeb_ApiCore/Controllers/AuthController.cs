@@ -17,12 +17,17 @@ namespace CSETWebCore.Api.Controllers
         private static readonly object _locker = new object();
         static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(AuthController));
 
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public AuthController(IUserAuthentication userAuthentication, ITokenManager tokenManager, ILocalInstallationHelper localInstallationHelper)
         {
             _userAuthentication = userAuthentication;
             _localInstallationHelper = localInstallationHelper;
             _tokenManager = tokenManager;
         }
+
 
         /// <summary>
         /// Authorizes the supplied credentials.
@@ -83,6 +88,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         /// <summary>
         /// Tells the client if this is a local installation.
         /// </summary>
@@ -93,6 +99,7 @@ namespace CSETWebCore.Api.Controllers
         {
             return Ok(_localInstallationHelper.IsLocalInstallation());
         }
+
 
         /// <summary>
         /// Returns a token cloned from the requesting token.  The new refresh clone
@@ -150,6 +157,18 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
+
+        [HttpGet]
+        [Route("api/auth/accesskey")]
+        /// <summary>
+        /// Generates an access key for an anonymous user
+        /// </summary>
+        public string GetAccessKey()
+        {
+            var x = _userAuthentication.GenerateAccessKey();
+            return x;
+        }
+
 
         [HttpGet]
         [Route("api/IsRunning")]

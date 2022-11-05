@@ -200,5 +200,37 @@ namespace CSETWebCore.Helpers
 
                 return resp;
         }
+
+
+        /// <summary>
+        /// Generates a 10-character key for anonymous access.
+        /// The alpha characters are all caps.
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateAccessKey()
+        {
+            var key = "";
+            var keyIsUnique = false;
+
+            while (!keyIsUnique)
+            {
+                key = UniqueIdGenerator.Instance.GetBase32UniqueId(10).ToUpper();
+                if (_context.ACCESS_KEY.Count(x => x.AccessKey == key) == 0)
+                {
+                    keyIsUnique = true;
+                }
+            }
+
+            var dbAK = new ACCESS_KEY() 
+            {
+                AccessKey = key,
+                GeneratedDate = DateTime.UtcNow
+            };
+
+            _context.ACCESS_KEY.Add(dbAK);
+            _context.SaveChanges();
+
+            return key;
+        }
     }
 }
