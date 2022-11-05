@@ -41,12 +41,13 @@ export class IseExaminationComponent implements OnInit {
   response: any = {};
   findingsResponse: any = {};
   actionItemsForParent: any = {};
+  actionData: any = {};
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
   storeIndividualIssues: Map<String, String> = new Map<String, String>();
   showSubcats: Map<String, boolean> = new Map<String, boolean>();
 
-  actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -92,6 +93,25 @@ export class IseExaminationComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Examination Report - ISE");
 
+    this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
+      this.actionData = findingData;
+      for(let i = 0; i<this.actionData?.length; i++){
+        let actionItemRow = this.actionData[i];
+
+        if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+          
+          this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+        } else {
+          let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+
+          tempActionArray.push(actionItemRow);
+
+          this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+        }
+      }
+      console.log(this.masterActionItemsMap)
+    });
+
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         console.log(r)
@@ -107,46 +127,6 @@ export class IseExaminationComponent implements OnInit {
             // goes through questions
             for(let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
-
-              if( k == 0 ){
-                this.questionsSvc.getActionItems(question.matQuestionId,null).subscribe(
-                  (r: any) => {
-                    this.actionItemsForParent = r;
-                    for(let m = 0; m < this.actionItemsForParent?.length; m++){
-                      let parentAction = this.actionItemsForParent[m].action_Items;
-                      let regCitation = this.actionItemsForParent[m].regulatory_Citation;
-
-                      if(!this.actionItemsMap.has(question.matQuestionId)){
-                        this.actionItemsMap.set(question.matQuestionId, [parentAction]);
-                        this.regCitationsMap.set(question.matQuestionId, [regCitation]);
-                      } else {
-                        let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
-                        let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
-
-                        tempActionArray.push(parentAction);
-                        tempCitationArray.push(regCitation);
-
-                        this.actionItemsMap.set(question.matQuestionId, tempActionArray);
-                        this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
-                      }
-                    }
-                  }
-                )
-              }
-
-              if (question.answerText == 'N') {
-                let parentTitle = this.getParentQuestionTitle(question.title);
-
-                if(!this.showActionItemsMap.has(parentTitle)){
-                  this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
-                } else {
-                  let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
-
-                  tempShowActionArray.push(this.getChildQuestionNumber(question.title));
-
-                  this.showActionItemsMap.set(parentTitle, tempShowActionArray);
-                }
-              }
 
               if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                 this.examLevel = 'CORE+';
