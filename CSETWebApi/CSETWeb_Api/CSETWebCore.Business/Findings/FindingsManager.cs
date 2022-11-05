@@ -94,6 +94,13 @@ namespace CSETWebCore.Business.Findings
             return actionItems;
         }
 
+        public List<ActionItemsForReport> GetActionItemsReport(int assessment_id)
+        {
+            var actionItems = new List<ActionItemsForReport>();
+           
+            return actionItems;
+        }
+
 
         /// <summary>
         /// 
