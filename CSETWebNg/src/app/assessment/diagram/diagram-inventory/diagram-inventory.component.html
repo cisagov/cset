@@ -33,7 +33,7 @@
       <div class="col-12">
         <mat-tab-group style="overflow: auto">
           <mat-tab label="Components">
-            <app-diagram-components (change)="onChange($event)"></app-diagram-components>
+            <app-diagram-components (componentsChange)="onChange($event)"></app-diagram-components>
           </mat-tab>
           <mat-tab label="Zones">
             <zones></zones>

@@ -636,6 +636,11 @@ namespace CSETWebCore.Business.Diagram
                         item.Criticality = vertice.Criticality;
                         item.Description = vertice.Description;
                         item.HostName = vertice.HostName;
+                        item.PhysicalLocation = vertice.PhysicalLocation;
+                        item.VendorName = vertice.VendorName;
+                        item.ProductName = vertice.ProductName;
+                        item.VersionName = vertice.VersionName;
+                        item.SerialNumber = vertice.SerialNumber;
                         diagramXml.root.Items[i] = (object)item;
                     }
                 }

@@ -54,10 +54,22 @@
             <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
               [checked]="component.visible" [disabled]="true" >
         </td>
-        <td><select class="form-control" [(ngModel)]="component.vendorName"></select></td>
-        <td><select class="form-control" [(ngModel)]="component.productName"></select></td>
-        <td><input class="form-control" [(ngModel)]="component.versionName"/></td>
-        <td><input class="form-control" [(ngModel)]="component.serialNumber"/></td>
-        <td><input class="form-control" [(ngModel)]="component.physicalLocation"/></td>
+        <td>
+          <select class="form-control" [(ngModel)]="component.vendorName" (blur)="saveComponent(component)">
+            <option>Test Vendor 1</option>
+            <option>Test Vendor 2</option>
+            <option>Test Vendor 3</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" [(ngModel)]="component.productName" (blur)="saveComponent(component)">
+            <option>Product Name 1</option>
+            <option>Product Name 2</option>
+            <option>Product Name 3</option>
+          </select>
+        </td>
+        <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>
+        <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)"/></td>
+        <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)"/></td>
     </tr>
 </table>

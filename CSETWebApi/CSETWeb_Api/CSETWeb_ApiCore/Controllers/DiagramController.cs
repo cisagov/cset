@@ -82,7 +82,15 @@ namespace CSETWebCore.Api.Controllers
                 }
 
             }
+        }
 
+        [CsetAuthorize]
+        [Route("api/diagram/saveComponent")]
+        [HttpPost]
+        public void SaveDiagram([FromBody] mxGraphModelRootObject component)
+        {
+            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            _diagram.SaveComponent(component, (int)assessmentId);
         }
 
         [CsetAuthorize]
@@ -94,7 +102,6 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             DecodeDiagram(req);
             return PerformAnalysis(req, assessmentId ?? 0);
-
         }
 
         private void DecodeDiagram(DiagramRequest req)
