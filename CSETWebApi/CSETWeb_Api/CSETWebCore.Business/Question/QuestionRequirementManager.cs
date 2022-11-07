@@ -51,12 +51,12 @@ namespace CSETWebCore.Business.Question
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAssessmentModeData _assessmentMode;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="assessmentId"></param>
-        public QuestionRequirementManager(CSETContext context, IAssessmentUtil assessmentUtil, 
+        public QuestionRequirementManager(CSETContext context, IAssessmentUtil assessmentUtil,
             IAssessmentModeData assessmentMode)
         {
             _context = context;
@@ -77,16 +77,16 @@ namespace CSETWebCore.Business.Question
         {
             // Get any subcategory answers for the assessment
             SubCatAnswers = (from sca in _context.SUB_CATEGORY_ANSWERS
-                                  join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
-                                  where sca.Assessement_Id == AssessmentId
-                                  select new SubCategoryAnswersPlus()
-                                  {
-                                      AssessmentId = sca.Assessement_Id,
-                                      HeadingId = sca.Heading_Pair_Id,
-                                      AnswerText = sca.Answer_Text,
-                                      GroupHeadingId = usch.Question_Group_Heading_Id,
-                                      SubCategoryId = usch.Universal_Sub_Category_Id
-                                  }).ToList();
+                             join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
+                             where sca.Assessement_Id == AssessmentId
+                             select new SubCategoryAnswersPlus()
+                             {
+                                 AssessmentId = sca.Assessement_Id,
+                                 HeadingId = sca.Heading_Pair_Id,
+                                 AnswerText = sca.Answer_Text,
+                                 GroupHeadingId = usch.Question_Group_Heading_Id,
+                                 SubCategoryId = usch.Universal_Sub_Category_Id
+                             }).ToList();
         }
 
 
@@ -174,7 +174,7 @@ namespace CSETWebCore.Business.Question
         /// <returns></returns>
         public string GetApplicationMode(int assessmentId)
         {
-           
+
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Application_Mode).FirstOrDefault();
 
             if (mode == null)
@@ -315,7 +315,7 @@ namespace CSETWebCore.Business.Question
 
             AddResponse(resp, list, "Component Defaults");
             BuildOverridesOnly(resp);
-        
+
         }
 
         public void BuildOverridesOnly(QuestionResponse resp)
@@ -401,7 +401,7 @@ namespace CSETWebCore.Business.Question
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
                     AltAnswerText = dbQ.Alternate_Justification,
-                    freeResponseAnswer=dbQ.Free_Response_Answer,
+                    FreeResponseAnswer = dbQ.Free_Response_Answer,
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
@@ -479,7 +479,7 @@ namespace CSETWebCore.Business.Question
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
                     AltAnswerText = dbQ.Alternate_Justification,
-                    freeResponseAnswer = dbQ.Free_Response_Answer,
+                    FreeResponseAnswer = dbQ.Free_Response_Answer,
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
@@ -559,7 +559,7 @@ namespace CSETWebCore.Business.Question
 
             return q.Distinct().Count();
         }
-        
+
 
         /// <summary>
         /// Returns the number of questions that are relevant for the selected standards 
