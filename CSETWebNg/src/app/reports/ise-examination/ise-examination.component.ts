@@ -98,15 +98,17 @@ export class IseExaminationComponent implements OnInit {
       for(let i = 0; i<this.actionData?.length; i++){
         let actionItemRow = this.actionData[i];
 
-        if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
-          
-          this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
-        } else {
-          let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+        if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
+          if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+            
+            this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+          } else {
+            let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
 
-          tempActionArray.push(actionItemRow);
+            tempActionArray.push(actionItemRow);
 
-          this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+            this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+          }
         }
       }
       console.log(this.masterActionItemsMap)
@@ -180,12 +182,13 @@ export class IseExaminationComponent implements OnInit {
               }
             }
             if(this.relaventIssues){
+
+              this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+              this.categoryBuilder(this.dors);
     
               this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
               this.categoryBuilder(this.examinerFindings);
     
-              this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-              this.categoryBuilder(this.dors);
     
               this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
               this.categoryBuilder(this.supplementalFacts);
