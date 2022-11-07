@@ -25,6 +25,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
 
 @Component({
   selector: 'app-diagram-components',
@@ -38,6 +40,8 @@ export class DiagramComponentsComponent implements OnInit {
   @Output()
   componentsChange = new EventEmitter<any>();
 
+  dialogRef: MatDialogRef<any>;
+
   comparer: Comparer = new Comparer();
   displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
@@ -47,7 +51,7 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    *
    */
-  constructor(public diagramSvc: DiagramService) { }
+  constructor(public diagramSvc: DiagramService, public dialog: MatDialog,) { }
 
   /**
    *
@@ -73,10 +77,16 @@ export class DiagramComponentsComponent implements OnInit {
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
+  showAlertsAndAdvisories() {
+    this.dialogRef = this.dialog.open(AlertsAndAdvisoriesComponent);
+    this.dialogRef
+      .afterClosed()
+      .subscribe();
+  }
+
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
