@@ -19,6 +19,8 @@ GO
 delete from [JWT]
 
 delete from [DIAGRAM_CONTAINER]
+
+delete from [NIST_SAL_INFO_TYPES]
 GO
 
 
