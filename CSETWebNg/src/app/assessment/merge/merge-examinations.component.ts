@@ -81,7 +81,6 @@ export class MergeExaminationsComponent implements OnInit {
       this.irpSvc.getIRPList().subscribe(
         (data: IRPResponse) => {
           this.primaryAssessIrp = data.headerList[5].irpList;
-          console.log(this.primaryAssessIrp);
         });
 
     });
@@ -106,10 +105,29 @@ export class MergeExaminationsComponent implements OnInit {
       for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
         for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
           
-          if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === false) {
-            if (this.assessmentsProcessed === 0) {
-              // If it's our first pass through, set all the questions.
-              this.existingAssessmentAnswers.push({
+          if (this.assessmentsProcessed === 0) {
+            // If it's our first pass through, set all the questions.
+            this.existingAssessmentAnswers.push({
+              answerId: null,
+              questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+              questionType: null,
+              questionNumber: '0',
+              answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
+              altAnswerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].altAnswerText,
+              freeResponseAnswer: null,
+              comment: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment,
+              feedback: null,
+              markForReview: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].markForReview,
+              reviewed: false,
+              is_Component: false,
+              is_Requirement: false,
+              is_Maturity: true,
+              componentGuid: '00000000-0000-0000-0000-000000000000'
+            });
+          } else if (this.assessmentsProcessed > 0) {
+            // If it's not our first pass through, ONLY add questions if it was unanswered previously
+            if (this.existingAssessmentAnswers[l].answerText === "U") {
+              this.existingAssessmentAnswers[l] = {
                 answerId: null,
                 questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
                 questionType: null,
@@ -125,30 +143,9 @@ export class MergeExaminationsComponent implements OnInit {
                 is_Requirement: false,
                 is_Maturity: true,
                 componentGuid: '00000000-0000-0000-0000-000000000000'
-              });
-            } else if (this.assessmentsProcessed > 0) {
-              // If it's not our first pass through, ONLY add questions if it was unanswered previously
-              if (this.existingAssessmentAnswers[l].answerText === "U") {
-                this.existingAssessmentAnswers[l] = {
-                  answerId: null,
-                  questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
-                  questionType: null,
-                  questionNumber: '0',
-                  answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
-                  altAnswerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].altAnswerText,
-                  freeResponseAnswer: null,
-                  comment: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment,
-                  feedback: null,
-                  markForReview: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].markForReview,
-                  reviewed: false,
-                  is_Component: false,
-                  is_Requirement: false,
-                  is_Maturity: true,
-                  componentGuid: '00000000-0000-0000-0000-000000000000'
-                }
               }
-              l++;
             }
+            l++;
           }
         }
       }
@@ -160,6 +157,7 @@ export class MergeExaminationsComponent implements OnInit {
     } else {
       this.finishPageLoad();
     }
+    
   }
 
   getConflicts() {
