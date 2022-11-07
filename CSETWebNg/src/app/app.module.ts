@@ -511,6 +511,7 @@ import { ZipCodeDirective } from './helpers/zip-code.directive';
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
+import { AlertsAndAdvisoriesComponent } from './assessment/diagram/diagram-inventory/components/alerts-and-advisories/alerts-and-advisories.component';
 
 
 
@@ -978,7 +979,8 @@ import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-p
         MvraReportComponent,
         AboutCfComponent,
         MvraSummaryPageComponent,
-        MvraGapsPageComponent, 
+        MvraGapsPageComponent,
+        AlertsAndAdvisoriesComponent, 
     ],
     providers: [
         ConfigService,
