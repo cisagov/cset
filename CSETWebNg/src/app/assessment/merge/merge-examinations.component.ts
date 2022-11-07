@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer } from '../../models/questions.model';
+import { Answer, MaturityQuestionResponse } from '../../models/questions.model';
 import { AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { IRPService } from '../../services/irp.service';
 import { IRPResponse } from '../../models/irp.model';
+import { FindingsService } from '../../services/findings.service';
+import { Finding } from '../questions/findings/findings.model';
 
 @Component({
   selector: 'merge-examinations',
@@ -22,9 +24,16 @@ export class MergeExaminationsComponent implements OnInit {
 
   // Stored proc data
   mergeConflicts: any[] = [];
+
+  // "Base" data to carry over
   primaryAssessDetails: any;
   primaryAssessIrp: any;
   assessmentComments = new Map();
+  assessmentIssues = new Map();
+  newAnswerIds = new Map();
+  parentQuestionIds = new Set([7568,7577,7582,7588,7594,7602,7607,7612,7619,7628,7633,
+                              7639,7645,7652,7655,7661,7669,7674,7679,7683,7687,7691,
+                              7694,7699,7853,7869,7875,7891,7902, 7912, 7919]);
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
@@ -57,6 +66,7 @@ export class MergeExaminationsComponent implements OnInit {
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     public irpSvc: IRPService,
+    public findSvc: FindingsService,
     private router: Router,
     public datePipe: DatePipe,
   ) { }
@@ -65,12 +75,12 @@ export class MergeExaminationsComponent implements OnInit {
     this.pageLoading = true;
     this.getPrimaryAssessDetails();
     this.getExistingAssessmentAnswers();
+    this.getIssues();
     this.getConflicts();
   }
 
   getPrimaryAssessDetails() {
     let id = this.ncuaSvc.assessmentsToMerge[0];
-
     this.assessSvc.getAssessmentToken(id).then(() => {
       
       // Grab the Assess Config details
@@ -83,9 +93,7 @@ export class MergeExaminationsComponent implements OnInit {
         (data: IRPResponse) => {
           this.primaryAssessIrp = data.headerList[5].irpList;
         });
-
     });
-
   }
 
   getExistingAssessmentAnswers() {
@@ -184,6 +192,24 @@ export class MergeExaminationsComponent implements OnInit {
         this.getAssessmentNames();
       }
     );
+  }
+
+  getIssues() {
+    let myIssues = [];
+    this.ncuaSvc.assessmentsToMerge.forEach(assessId => {
+      this.assessSvc.getAssessmentToken(assessId).then(() => {
+        this.parentQuestionIds.forEach(parentId => {
+          this.questionSvc.getDetails(parentId, 'Maturity').subscribe(
+            (details) => {
+              details.findings.forEach(find => {
+                myIssues.push(find);
+                this.assessmentIssues.set(parentId, myIssues);
+              });
+              myIssues = [];
+            });
+        });
+      });
+    });
   }
 
   getAssessmentNames() {
@@ -291,6 +317,10 @@ export class MergeExaminationsComponent implements OnInit {
   combineAltText(i: number) {
   }
 
+  copyIssues(questionListResponse: MaturityQuestionResponse) {
+    
+  }
+
 
   createMergedAssessment() {
     // null out the button to prevent multiple clicks
@@ -347,7 +377,41 @@ export class MergeExaminationsComponent implements OnInit {
             
             // Send off a list of the assessment's new answers to the API to save. Then go to the main assessment screen
             this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
-              this.navToHome();
+              this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+                (questionListResponse: MaturityQuestionResponse) => {
+
+                  // Grab all the new answer_id's
+                  for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
+                    for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
+                      for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+                        if (questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === true) {
+                          this.newAnswerIds.set(
+                            questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+                            questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer_Id);
+                        }
+                      }
+                    }
+                  }
+                  /*
+                  console.log("this.newAnswerIds");
+                  console.log(this.newAnswerIds);
+                  console.log("this.assessmentIssues");
+                  console.log(this.assessmentIssues);
+                  */
+
+                  const iterator = this.assessmentIssues.entries();
+                  let parentKey = 0;
+
+                  for (let value of iterator) {
+                    parentKey = value[0];
+                    let find = this.assessmentIssues.get(parentKey);
+                    console.log(find[0]);
+                    find[0].finding_Id = 0;
+                    find[0].answer_Id = this.newAnswerIds.get(parentKey);
+                    this.findSvc.saveDiscovery(find[0]).subscribe();
+                  }
+                  this.navToHome();
+              });
             });
         })
       })
