@@ -74,6 +74,12 @@ namespace CSETWebCore.ExportCSV
             datatable.Columns.Add("Description", typeof(System.String));
             datatable.Columns.Add("Host Name", typeof(System.String));
             datatable.Columns.Add("Visible", typeof(System.String));
+            datatable.Columns.Add("Vendor Name", typeof(System.String));
+            datatable.Columns.Add("Product Name", typeof(System.String));
+            datatable.Columns.Add("Version Name", typeof(System.String));
+            datatable.Columns.Add("Serial Number", typeof(System.String));
+            datatable.Columns.Add("Physical Location", typeof(System.String));
+
 
             foreach (var c in components)
             {
@@ -91,6 +97,11 @@ namespace CSETWebCore.ExportCSV
                 row["Description"] = c.Description;
                 row["Host Name"] = c.HostName;
                 row["Visible"] = c.visible;
+                row["Vendor Name"] = c.VendorName;
+                row["Product Name"] = c.ProductName;
+                row["Version Name"] = c.VersionName;
+                row["Serial Number"] = c.SerialNumber;
+                row["Physical Location"] = c.PhysicalLocation;
 
                 datatable.Rows.Add(row);
             }
