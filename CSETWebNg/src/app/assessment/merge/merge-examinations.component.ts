@@ -24,6 +24,7 @@ export class MergeExaminationsComponent implements OnInit {
   mergeConflicts: any[] = [];
   primaryAssessDetails: any;
   primaryAssessIrp: any;
+  assessmentComments = new Map();
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
@@ -147,6 +148,19 @@ export class MergeExaminationsComponent implements OnInit {
             }
             l++;
           }
+          // Combine all the existing comments into a map (this is mainly for merge conflicts comment combining)
+          if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment !== "" &&
+              response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment !== null) {
+            if (!this.assessmentComments.has(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId)) {
+              this.assessmentComments.set(
+                response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+                response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment);
+            } else {
+              let myString = this.assessmentComments.get(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId);
+              myString += ("\n" + response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment);
+              this.assessmentComments.set(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId, myString);
+            }
+          }
         }
       }
     }    
@@ -245,19 +259,24 @@ export class MergeExaminationsComponent implements OnInit {
 
   // convert "Y" or "N" or "NA" into an ANSWER Object
   convertToAnswerType(length: number, answers: string[]) {
+    let comment = "";
     for (let i = 0; i < length; i++) {
-      let comments = this.combineComments(i);
+      if (this.assessmentComments.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
+        comment = this.assessmentComments.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+      } else {
+        comment = "";
+      }
       let altText = this.combineAltText(i);
-
+      
       this.selectedMergeAnswers[i] = {
         answerId: null,
         questionId: this.mergeConflicts[i].question_Or_Requirement_Id1,
         questionType: null,
         questionNumber: '0',
         answerText: answers[i],
-        altAnswerText: altText,
+        altAnswerText: null,
         freeResponseAnswer: null,
-        comment: comments,
+        comment: comment,
         feedback: null,
         markForReview: false,
         reviewed: false,
@@ -269,78 +288,7 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-  combineComments(length: number) {
-    let myString = "";
-    /*
-    for (let i = 0; i < length; i++) {
-      if (this.mergeConflicts[i].comment1 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment2 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment3 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment4 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment5 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment6 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment7 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment8 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment9 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment10 !== null) {
-        myString += this.mergeConflicts[i].comment4 + "\n";
-      }
-    }
-    */
-    return myString;
-  }
-
   combineAltText(i: number) {
-    let myString = "";
-    if (this.mergeConflicts[i].alt_Text1 !== null && this.mergeConflicts[i].alt_Text1 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text1 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text2 !== null && this.mergeConflicts[i].alt_Text2 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text2 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text3 !== null && this.mergeConflicts[i].alt_Text3 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text3 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text4 !== null && this.mergeConflicts[i].alt_Text4 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text4 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text5 !== null && this.mergeConflicts[i].alt_Text5 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text5 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text6 !== null && this.mergeConflicts[i].alt_Text6 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text6 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text7 !== null && this.mergeConflicts[i].alt_Text7 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text7 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text8 !== null && this.mergeConflicts[i].alt_Text8 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text8 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text9 !== null && this.mergeConflicts[i].alt_Text9 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text9 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text10 !== null && this.mergeConflicts[i].alt_Text10 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text10 + "\n";
-    }
-  return myString;
   }
 
 
@@ -378,18 +326,21 @@ export class MergeExaminationsComponent implements OnInit {
             // Add the IRP values back in
             this.irpSvc.getIRPList().subscribe(
               (data: IRPResponse) => {
+                // There are 9 ISE IRP questions
                 for (let i = 0; i < 9; i++) {
                   this.irpSvc.postSelection(this.primaryAssessIrp[i]).subscribe();
                 }
               });
 
             // Set all of the questions "details" (answerText, comments, etc)
+            // This traverses our question list and overrides anything in there if we've
+            // picked a new answer with the merge conflict.
             for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
               for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
                 if (this.selectedMergeAnswers[i].questionId === this.existingAssessmentAnswers[j].questionId) {
                   this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
                   this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
-                  this.existingAssessmentAnswers[j].altAnswerText = this.selectedMergeAnswers[i].altAnswerText;
+                  this.existingAssessmentAnswers[j].altAnswerText += "\n" + this.selectedMergeAnswers[i].altAnswerText;
                 }
               }
             }
