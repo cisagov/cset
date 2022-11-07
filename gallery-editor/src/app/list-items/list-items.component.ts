@@ -48,8 +48,17 @@ export class ListItemsComponent implements OnInit {
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onAdd: (event: any) => {
-        console.log('added');         
+        console.log('added');    
+        console.log(event);
+        console.log("ids "+ event.from.id +":"+ event.to.id)
         console.log(event.oldIndex +":"+ event.newIndex)
+        let item = new MoveItem();
+        item.fromId = event.from.id;
+        item.toId = event.to.id;
+        item.newIndex = event.newIndex;
+        item.oldIndex = event.oldIndex;
+        item.Layout_Name = event.Layout_Name;
+        this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onRemove: (event: any) => {        
         console.log('removed');                

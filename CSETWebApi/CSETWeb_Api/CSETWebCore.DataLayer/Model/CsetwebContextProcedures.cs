@@ -34,6 +34,7 @@ namespace CSETWebCore.DataLayer.Model
 
         protected void OnModelCreatingGeneratedProcedures(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Acet_GetActionItemsForReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<AcetAnswerDistributionResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_Compute_MaturityAllResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_compute_single_averages_maturityResult>().HasNoKey().ToView(null);
@@ -130,6 +131,32 @@ namespace CSETWebCore.DataLayer.Model
         public CsetwebContextProcedures(CsetwebContext context)
         {
             _context = context;
+        }
+
+        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "Assessment_Id",
+                    Value = Assessment_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Acet_GetActionItemsForReportResult>("EXEC @returnValue = [dbo].[Acet_GetActionItemsForReport] @Assessment_Id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
         }
 
         public virtual async Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)

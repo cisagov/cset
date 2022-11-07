@@ -36,6 +36,7 @@ import { QuestionDetailsContentViewModel } from '../../../models/question-extras
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 import { FindingsService } from '../../../services/findings.service';
 import { IssuesComponent } from '../issues/issues.component';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -102,6 +103,7 @@ export class QuestionBlockIseComponent implements OnInit {
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
+    public completionSvc: CompletionService,
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
     private findSvc: FindingsService
@@ -290,6 +292,8 @@ export class QuestionBlockIseComponent implements OnInit {
       is_Maturity: q.is_Maturity,
       componentGuid: q.componentGuid
     };
+
+    this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
