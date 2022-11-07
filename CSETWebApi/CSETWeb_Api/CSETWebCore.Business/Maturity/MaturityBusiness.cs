@@ -162,6 +162,75 @@ namespace CSETWebCore.Business.Maturity
             return levels;
         }
 
+        public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
+        {
+
+            var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+
+            //while the answer text is not null 
+            // increment the achieved level
+            // must achieve level 1 before we can achieve level 2 ....
+            //
+
+            bool isLevelAchieved = false;
+            int nextLevel = 0;
+
+            foreach(var item in list)
+            {
+
+                switch (item.Answer_Text)
+                {
+                    case "N":
+                        isLevelAchieved = item.Answer_Text2 == null;                        
+                        break;
+                    case "U":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 == null;
+                        break;
+                    case "Y":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 != null;
+                        if (!isLevelAchieved)
+                        {
+                            nextLevel++;
+                            pushLevel(nextLevel, item);
+                        }
+                        break;
+                }
+                
+            }
+            List<GroupScores> groupScores = new List<GroupScores>();
+
+            foreach(var keyPair in levels)
+            {
+                groupScores.Add(new GroupScores()
+                {
+                    Group_Id = keyPair.Key.GROUPING_ID,
+                    Maturity_Level_Id = keyPair.Key.Maturity_Level_Id,
+                    Maturity_Level_Name = "We'll get there"
+                });
+            }
+            return groupScores;
+        }
+
+        private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
+        private void pushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        {
+            //if the previous level was achieved then we can go for the next level
+            //other wise we cannot
+            int level = 0;
+            if (nextLevel == 0)
+            {
+                levels.Add(item, nextLevel);
+            }
+            if(levels.TryGetValue(item, out level))
+            {
+                if(nextLevel== level+1)
+                {
+                    levels.Add(item, nextLevel);
+                }
+                //else we did not and keep the previous level (ie. cannot skip 1 and goto 2 or 3
+            }
+        }
+
 
         /// <summary>
         /// Returns an int indicating the selected target level of the assessment.
@@ -960,7 +1029,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer = answer?.a.Free_Response_Answer,
+                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
@@ -969,8 +1038,10 @@ namespace CSETWebCore.Business.Maturity
                         MaturityLevel = myQ.Maturity_Level.Level,
                         MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
+                        SetName = string.Empty                        
                     };
+
+                    qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
                     {
@@ -1014,6 +1085,40 @@ namespace CSETWebCore.Business.Maturity
             });
 
             return dict;
+        }
+
+
+        /// <summary>
+        /// This method attempts to identify which questions are countable
+        /// in the UI's answer completion widget on the questions page.  
+        /// Maybe the real solution is a new property on the question 
+        /// record itself, but for now we will try to identify which
+        /// questions should not be counted.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
+        {
+            // EDM and CRR - parent questions are unanswerable and not countable
+            if (modelId == 3 || modelId == 4)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            // VADR - child questions are freeform and not countable
+            if (modelId == 7)
+            {
+                return qa.ParentQuestionId == null;
+            }
+
+            // ISE - parent questions are not answerable and not countable
+            if (modelId == 10)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            return true;
         }
 
 
