@@ -144,6 +144,10 @@ export class LoginAcetComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  refreshWindow() {
+    window.location.reload();
+  }
+
   exit() {
     window.close();
   }
