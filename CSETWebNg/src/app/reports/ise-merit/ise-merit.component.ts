@@ -8,6 +8,7 @@ import { FindingsService } from '../../services/findings.service';
 import { QuestionsService } from '../../services/questions.service';
 import { forEach } from 'lodash';
 import { NCUAService } from '../../services/ncua.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-ise-merit',
@@ -20,6 +21,7 @@ export class IseMeritComponent implements OnInit {
   answers: any = null;
   actionItemsForParent: any = null;
   files: any = null;
+  actionData: any = null;
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -42,7 +44,12 @@ export class IseMeritComponent implements OnInit {
   resultsOfReviewStatic: string = 'Performed review of the security program using the ISE Toolbox.';
   resultsOfReviewString: string = this.resultsOfReviewStatic + '\n\n';
 
-  actionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+
+  // actionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
+  //                 finding_Id, <question_Id, [action_Items]>
+  // manualOrAutoMap: Map<number, string> = new Map<number, string>();
+
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -51,10 +58,6 @@ export class IseMeritComponent implements OnInit {
   relaventIssues: boolean = false;
   loadingCounter: number = 0;
 
-  // parentQuestions = new Set(["Stmt 1", "Stmt 2", "Stmt 3", "Stmt 4", "Stmt 5", "Stmt 6", "Stmt 7", 
-  //                               "Stmt 8", "Stmt 9", "Stmt 10", "Stmt 11", "Stmt 12", "Stmt 13", "Stmt 14", 
-  //                               "Stmt 15", "Stmt 16", "Stmt 17", "Stmt 18", "Stmt 19", "Stmt 20", "Stmt 21", 
-  //                               "Stmt 22"]);
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -70,10 +73,27 @@ export class IseMeritComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
+    this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
+      this.actionData = findingData;
+      for(let i = 0; i<this.actionData?.length; i++){
+        let actionItemRow = this.actionData[i];
+
+        if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+          
+          this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+        } else {
+          let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+
+            tempActionArray.push(actionItemRow);
+
+          this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+        }
+      }
+    });
+
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.answers = r;
-        console.log(r)
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
@@ -83,118 +103,17 @@ export class IseMeritComponent implements OnInit {
           for(let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             // goes through questions
-            let parentQuestionId = subcat?.questions[0].matQuestionId;
             for(let k = 0; k < subcat?.questions?.length; k++) {
               
               let question = subcat?.questions[k];
-              if( k == 0 ){
-                this.questionsSvc.getActionItems(question.matQuestionId,null).subscribe(
-                  (r: any) => {
-                    this.actionItemsForParent = r;
-                    for(let m = 0; m < this.actionItemsForParent?.length; m++){
-                      let parentAction = this.actionItemsForParent[m].action_Items;
-                      let regCitation = this.actionItemsForParent[m].regulatory_Citation;
-
-                      if(!this.actionItemsMap.has(question.matQuestionId)){
-                        this.actionItemsMap.set(question.matQuestionId, [parentAction]);
-                        this.regCitationsMap.set(question.matQuestionId, [regCitation]);
-                      } else {
-                        let tempActionArray = this.actionItemsMap.get(question.matQuestionId);
-                        let tempCitationArray = this.regCitationsMap.get(question.matQuestionId);
-
-                        tempActionArray.push(parentAction);
-                        tempCitationArray.push(regCitation);
-
-                        this.actionItemsMap.set(question.matQuestionId, tempActionArray);
-                        this.regCitationsMap.set(question.matQuestionId, tempCitationArray);
-                      }
-                    }
-                  }
-                )
-              }
-
-              if (question.answerText == 'N') {
-                let parentTitle = this.getParentQuestionTitle(question.title);
-
-                if(!this.showActionItemsMap.has(parentTitle)){
-                  this.showActionItemsMap.set(parentTitle, [this.getChildQuestionNumber(question.title)]);
-                } else {
-                  let tempShowActionArray = this.showActionItemsMap.get(parentTitle);
-
-                  tempShowActionArray.push(this.getChildQuestionNumber(question.title));
-
-                  this.showActionItemsMap.set(parentTitle, tempShowActionArray);
-                }
-              }
-            
               if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                 this.examLevel = 'CORE+';
               }
 
-              // if(k == subcat?.questions?.length - 1 || (j == 0 && k == 9)) { //checks if the last child question
-              //   if(j == 0 && k == 9) { //checks if in Stmt 1 or Stmt 2 (they're in the same subcat)
-              //     parentQuestionId = subcat?.questions[k].matQuestionId;
-              //   }
-              //   console.log('called')
-              //   this.removeUnusedActionItems(parentQuestionId, question.title)
-              // }
-
-              this.loadingCounter ++;
-
             }
           }
         }
-
-        this.findSvc.GetAssessmentFindings().subscribe(
-          (r: any) => {
-            this.response = r;
-            console.log(r)
-    
-            
-              for(let i = 0; i < this.response?.length; i++) {
-                if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-                  let finding = this.response[i];
-                  if(finding.finding.type === 'Examiner Finding') {
-                    this.addExaminerFinding(finding.category.title);
-                  }
-                  if(finding.finding.type === 'DOR') {
-                    this.addDOR(finding.category.title);
-                  }
-                  if(finding.finding.type === 'Supplemental Fact') {
-                    this.addSupplementalFact(finding.category.title);
-                  }
-                  if(finding.finding.type === 'Non-reportable') {
-                    this.addNonReportable(finding.category.title);
-                  }
-                  this.relaventIssues = true;
-                }
-              }
-    
-              if(this.relaventIssues){
-                this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-                this.categoryBuilder(this.examinerFindings);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-                this.categoryBuilder(this.dors);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-                this.categoryBuilder(this.supplementalFacts);
-    
-                this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-                this.categoryBuilder(this.nonReportables);
-              } else {
-                this.resultsOfReviewString += 'No Issues were noted.';
-              }
-    
-              this.loadingCounter ++;
-          },
-          error => console.log('MERIT Report Error: ' + (<Error>error).message)
-        );
-
-      },
-    )
-
-    
+      });
 
     this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
@@ -205,7 +124,49 @@ export class IseMeritComponent implements OnInit {
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     )
 
-    
+    this.findSvc.GetAssessmentFindings().subscribe(
+      (r: any) => {
+        this.response = r;
+        
+        for(let i = 0; i < this.response?.length; i++) {
+          if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+            let finding = this.response[i];
+            if(finding.finding.type === 'Examiner Finding') {
+              this.addExaminerFinding(finding.category.title);
+            }
+            if(finding.finding.type === 'DOR') {
+              this.addDOR(finding.category.title);
+            }
+            if(finding.finding.type === 'Supplemental Fact') {
+              this.addSupplementalFact(finding.category.title);
+            }
+            if(finding.finding.type === 'Non-reportable') {
+              this.addNonReportable(finding.category.title);
+            }
+            this.relaventIssues = true;
+          }
+        }
+        if(this.relaventIssues) {
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+          this.categoryBuilder(this.dors);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+          this.categoryBuilder(this.examinerFindings);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+          this.categoryBuilder(this.supplementalFacts);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+          this.categoryBuilder(this.nonReportables);
+        } else {
+          this.resultsOfReviewString += 'No Issues were noted.';
+        }
+        
+        this.loadingCounter ++;
+      },
+      error => console.log('MERIT Report Error: ' + (<Error>error).message)
+    );
 
     // this.acetSvc.getIseSourceFiles().subscribe(
     //   (r: any) => {
@@ -298,58 +259,27 @@ export class IseMeritComponent implements OnInit {
     }
   }
 
-  copyAllActionItems(input: any, title: string) {
-    let combinedItems = input.toString();
-    let array = combinedItems.split(".,");
-
-    for (let i = 0; i < array.length; i++) {
-      let count = i+1;
-      if(this.checkShowActionItemMap(title, count)) {
-        // console.log('i: ' + i + '\n')
-        // console.log('count: ' + count + '\n')
-        // console.log('array[i]: ' + array[i] + '\n')
-
-	      array[i] = count + ": " + array[i] + "\n";
-      } else {
-        array[i] = "";
+  copyAllActionItems(allActionsInFinding: any) {
+    let actionItems = [];
+    let questionTitle = [];
+    for(let i = 0; i < allActionsInFinding.length; i++) {
+      if(allActionsInFinding[i].action_Items.substring(allActionsInFinding[i].action_Items.length - 1) != '.') {
+        allActionsInFinding[i].action_Items = allActionsInFinding[i].action_Items + '.';
       }
+      actionItems.push(allActionsInFinding[i].action_Items);
+      questionTitle.push(allActionsInFinding[i].question_Title);
     }
+    
+    let combinedItems = actionItems.toString();
+    let array = combinedItems.split('.,');
+
+    for (let i = 0; i < allActionsInFinding.length; i++) {
+      let childNumber = this.getChildQuestionNumber(questionTitle[i]);
+    
+	    array[i] = childNumber + ": " + array[i] + "\n";
+    }
+
     let formattedItems = array.join("");
     return formattedItems;
   }
-
-  checkShowActionItemMap(title: string, actionNum: number) {
-    let array = this.showActionItemsMap.get(title);
-    if(array != null && array.includes(actionNum.toString())){
-      return true;
-    }
-    return false;
-  }
-
-  // removeUnusedActionItems(id: number, title: string) {
-  //   console.log('title: ' + title)
-
-  //   console.log('id: ' + id)
-
-  //   if(this.actionItemsMap.has(id)) {
-  //     let prevActionItemsArray = this.actionItemsMap.get(id);
-  //     console.log('inside actionItemsMap')
-  //     let showActionItemsArray = this.showActionItemsMap.get(this.getParentQuestionTitle(title));
-
-  //     if(prevActionItemsArray.length !== showActionItemsArray.length) {
-  //       let newActionItemsArray = [];
-
-  //       for(let i = 0; i < prevActionItemsArray.length; i++) {
-  //         if(showActionItemsArray.includes(i + 1)) {
-  //           newActionItemsArray.push([prevActionItemsArray[i]]);
-  //         }
-  //       }
-  //       console.log('before removal' + prevActionItemsArray)
-  //       console.log('after removal' + newActionItemsArray)
-
-  //       this.actionItemsMap.set(id, newActionItemsArray);
-  //     }
-  //   }
-  // }
-
 }

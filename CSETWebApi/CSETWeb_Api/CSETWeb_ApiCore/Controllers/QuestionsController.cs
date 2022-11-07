@@ -407,11 +407,11 @@ namespace CSETWebCore.Api.Controllers
                          //join files in _context.GEN_FILE
                          //   on filesBridge.Gen_File_Id equals files.Gen_File_Id
 
-
+                         // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
                          where answer.Assessment_Id == assessmentId
-                         orderby finding.Type, question.Mat_Question_Id
+                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"), 
+                            finding.Type.StartsWith("Examiner"), finding.Type.StartsWith("DOR"), question.Mat_Question_Id
                          select new { finding, answer, question, category };
-             
 
             return Ok(result.ToList());
         }

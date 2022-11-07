@@ -59,11 +59,11 @@
             </div>
         </div>
 
-        <div *ngIf="this.loadingCounter < 3; else mainContent" class="spinner-container" style="margin: 2em auto">
+        <!-- <div *ngIf="this.loadingCounter < 3; else mainContent" class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
+        </div> -->
 
-        <ng-template #mainContent>
+        <!-- <ng-template #mainContent> -->
             <div class="page-break">
                 <div class="ml-3 mr-3 form">
                     <div class="d-flex flex-row" style="justify-content: space-between">
@@ -162,16 +162,16 @@
                         {{ this.resultsOfReviewStatic }}
                     </p>
                     <div *ngIf="this.relaventIssues">
-                        <div *ngIf="this.examinerFindingsTotal > 0">
-                            {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
-                            <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                        <div *ngIf="this.dorsTotal > 0">
+                            {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                            <div *ngFor="let issue of this.dors" style="padding-left: 30px">
                                 {{ issue }}
                             </div>
                             <br>
                         </div>
-                        <div *ngIf="this.dorsTotal > 0">
-                            {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
-                            <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                        <div *ngIf="this.examinerFindingsTotal > 0">
+                            {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                            <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                                 {{ issue }}
                             </div>
                             <br>
@@ -228,38 +228,30 @@
                                     {{ finding?.finding?.description }}
                                     
                                     <br>
-                                    
-                                    
-                                    <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
-                                        <div *ngFor="let question of subcat?.questions">
-                                            <div *ngIf="this.actionItemsMap.has(question.matQuestionId)">
-                                                <div *ngFor="let actionItems of this.actionItemsMap.get(question.matQuestionId); let last = last; let i = index;">
-                                                    <div *ngIf="question.title == finding?.question?.question_Title">
-                                                        
-                                                        <ng-container *ngIf="i == 0">
-                                                            
-                                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
-                                                            flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
-                                                            [cdkCopyToClipboard]="copyAllActionItems(this.actionItemsMap.get(question.matQuestionId), question.title)">
-                                                                <span class="cset-icons-copy"> Copy All</span>
-                                                            </label>
-                                                            <strong> Action Items: </strong>
-                                                            <br>
-                                                        </ng-container>
-                                                        <span *ngIf="this.showActionItemsMap.has(question.title)">
-                                                            <span *ngIf="this.checkShowActionItemMap(question.title, i+1) && (actionItems != null && actionItems != '' ) ">
-                                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
-                                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                                    [cdkCopyToClipboard]="(i+1) + '. ' + actionItems">
-                                                                    <span class="cset-icons-copy" ></span>
-                                                                </label> {{ i+1 }}: {{ actionItems }}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                </div>
+   
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                    flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                    [cdkCopyToClipboard]="finding.finding.actionItems != null ? finding.finding.actionItems : 
+                                    copyAllActionItems(this.masterActionItemsMap.get(finding.finding.finding_Id))">
+                                        <span class="cset-icons-copy"> Copy All</span>
+                                    </label>
+                                    <strong> Action Items: </strong>
+                                    <br>
+                                    <div *ngIf="finding.finding.actionItems != null; else autoGenerated">
+                                        {{ finding.finding.actionItems }}
+                                    </div>
+                                    <ng-container #autoGenerated *ngIf="this.masterActionItemsMap.has(finding.finding.finding_Id) && finding.finding.actionItems == null">
+                                        <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(finding.finding.finding_Id); let i = index">
+                                            <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">    
+                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                        [cdkCopyToClipboard]="this.getChildQuestionNumber(allActionsInFinding.question_Title) + ': ' + allActionsInFinding.action_Items">
+                                                        <span class="cset-icons-copy" ></span>
+                                                </label> {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
                                             </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
+
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
                                         [cdkCopyToClipboard]="finding?.finding?.risk_Area">
@@ -276,19 +268,25 @@
                                     
                                     <br>
                                     <strong>Regulatory Citation: </strong>
-                                    <div *ngFor="let subcat of this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components">
-                                        <div *ngFor="let question of subcat?.questions">
-                                            <div *ngIf="this.regCitationsMap.has(question.matQuestionId)">
-                                                <div *ngIf="question.title == finding?.question?.question_Title">
-                                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
-                                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                        [cdkCopyToClipboard]="this.regCitationsMap.get(question.matQuestionId)[0]">
-                                                        <span class="cset-icons-copy" ></span>
-                                                    </label> {{ this.regCitationsMap.get(question.matQuestionId)[0] !='' ? this.regCitationsMap.get(question.matQuestionId)[0] : '(no regulatory citation given)'}}
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <br>
+                                    <div *ngIf="this.masterActionItemsMap.has(finding.finding.finding_Id)">
+                                        <label *ngIf="finding.finding.citations != null && finding.finding.citations != ''"
+                                                class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                [cdkCopyToClipboard]="this.masterActionItemsMap.get(finding.finding.finding_Id)[0].regulatory_Citation + ', ' + finding.finding.citations">
+                                                <span class="cset-icons-copy" ></span>
+                                        </label>
+                                        <label *ngIf="finding.finding.citations == null || finding.finding.citations == ''"
+                                                class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                [cdkCopyToClipboard]="this.masterActionItemsMap.get(finding.finding.finding_Id)[0].regulatory_Citation">
+                                                <span class="cset-icons-copy" ></span>
+                                        </label> {{ this.masterActionItemsMap.get(finding.finding.finding_Id)[0].regulatory_Citation }}
+                                        <span *ngIf="finding.finding.citations != null && finding.finding.citations != ''">
+                                            , {{ finding.finding.citations }}
+                                        </span>
                                     </div>
+
                                 </div>
                                 <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
@@ -314,6 +312,6 @@
                     </div>
                 </div>
             </div>
-        </ng-template>
+        <!-- </ng-template> -->
     </div>
 </div>

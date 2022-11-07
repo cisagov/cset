@@ -40,6 +40,7 @@ const headers = {
 export class ACETService {
 
 
+
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -129,6 +130,9 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', {responseType: 'text'});
     }
 
+    getActionItemsReport() {        
+        return this.http.get(this.configSvc.apiUrl + 'reports/acet/GetActionItemsReport', headers);
+    }
     /*
     * Get target band
     */
