@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Answer } from '../../models/questions.model';
-import { , AssessmentDetail } from '../../models/assessment-info.model';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { MaturityService } from '../../services/maturity.service';
@@ -8,6 +8,8 @@ import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { IRPService } from '../../services/irp.service';
+import { IRPResponse } from '../../models/irp.model';
 
 @Component({
   selector: 'merge-examinations',
@@ -21,6 +23,7 @@ export class MergeExaminationsComponent implements OnInit {
   // Stored proc data
   mergeConflicts: any[] = [];
   primaryAssessDetails: any;
+  primaryAssessIrp: any;
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
@@ -52,9 +55,9 @@ export class MergeExaminationsComponent implements OnInit {
     public maturitySvc: MaturityService,
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
+    public irpSvc: IRPService,
     private router: Router,
     public datePipe: DatePipe,
-
   ) { }
 
   ngOnInit() {
@@ -66,11 +69,23 @@ export class MergeExaminationsComponent implements OnInit {
 
   getPrimaryAssessDetails() {
     let id = this.ncuaSvc.assessmentsToMerge[0];
+
     this.assessSvc.getAssessmentToken(id).then(() => {
+      
+      // Grab the Assess Config details
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.primaryAssessDetails = data;
-      })
+      });
+
+      // Grab the IRP values
+      this.irpSvc.getIRPList().subscribe(
+        (data: IRPResponse) => {
+          this.primaryAssessIrp = data.headerList[5].irpList;
+          console.log(this.primaryAssessIrp);
+        });
+
     });
+
   }
 
   getExistingAssessmentAnswers() {
@@ -361,6 +376,14 @@ export class MergeExaminationsComponent implements OnInit {
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");
             this.assessSvc.updateAssessmentDetails(details);
+
+            // Add the IRP values back in
+            this.irpSvc.getIRPList().subscribe(
+              (data: IRPResponse) => {
+                for (let i = 0; i < 9; i++) {
+                  this.irpSvc.postSelection(this.primaryAssessIrp[i]).subscribe();
+                }
+              });
 
             // Set all of the questions "details" (answerText, comments, etc)
             for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
