@@ -139,6 +139,15 @@ export class QuestionsService {
   }
 
   /**
+   * Posts multiple (all) Answers to the API.
+   * @param answers
+   */
+  storeAllAnswers(answers: Answer[]) {
+    return this.http.post(this.configSvc.apiUrl + 'storeAllAnswers', answers, headers);
+  }
+
+
+  /**
    * Posts a block of answers to the API.
    */
   storeSubCategoryAnswers(answers: SubCategoryAnswers) {

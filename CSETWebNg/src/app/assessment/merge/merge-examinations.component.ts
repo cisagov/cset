@@ -1,15 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer, MaturityQuestionResponse, QuestionGrouping } from '../../models/questions.model';
-import { AssessmentContactsResponse, AssessmentDetail } from '../../models/assessment-info.model';
+import { Answer, MaturityQuestionResponse } from '../../models/questions.model';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { MaturityService } from '../../services/maturity.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { IRPService } from '../../services/irp.service';
+import { IRPResponse } from '../../models/irp.model';
+import { FindingsService } from '../../services/findings.service';
+import { Finding } from '../questions/findings/findings.model';
 
 @Component({
   selector: 'merge-examinations',
@@ -22,7 +24,16 @@ export class MergeExaminationsComponent implements OnInit {
 
   // Stored proc data
   mergeConflicts: any[] = [];
+
+  // "Base" data to carry over
   primaryAssessDetails: any;
+  primaryAssessIrp: any;
+  assessmentComments = new Map();
+  assessmentIssues = new Map();
+  newAnswerIds = new Map();
+  parentQuestionIds = new Set([7568,7577,7582,7588,7594,7602,7607,7612,7619,7628,7633,
+                              7639,7645,7652,7655,7661,7669,7674,7679,7683,7687,7691,
+                              7694,7699,7853,7869,7875,7891,7902, 7912, 7919]);
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];
@@ -30,66 +41,82 @@ export class MergeExaminationsComponent implements OnInit {
   mergedContactInitials: string = "";
 
   // Answers pulled from the assessments being merged (that aren't in conflict)
-  mergingAssessmentAnswers: Answer[] = [];
+  apiData = new Map();
+  existingAssessmentAnswers: Answer[] = [];
 
   // Values the user picks
   mergeRadioSelections: string[] = [];
 
   // Radio values converted to an Answer Object
-  mergeAnswers: Answer[] = [];
+  selectedMergeAnswers: Answer[] = [];
 
   // The returned merged assessment
   mergedAssessment: AssessmentDetail = {};
   attemptingToMerge: boolean = false;
 
   // "Temp" variables to help the merge track when it needs to do certain things.
-  count: number = 0;
-  count2: number = 0;
+  dataReceivedCount: number = 0;
+  assessmentsProcessed: number = 0;
+  questionsProcessed: number = 0;
 
   constructor(
     public ncuaSvc: NCUAService,
     public assessSvc: AssessmentService,
-    private authSvc: AuthenticationService,
     public maturitySvc: MaturityService,
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
+    public irpSvc: IRPService,
+    public findSvc: FindingsService,
     private router: Router,
     public datePipe: DatePipe,
-    private dialog: MatDialog
-
   ) { }
 
   ngOnInit() {
     this.pageLoading = true;
-    this.getMergingAssessmentAnswers();
+    this.getPrimaryAssessDetails();
+    this.getExistingAssessmentAnswers();
+    this.getIssues();
     this.getConflicts();
   }
 
-  getMergingAssessmentAnswers() {
-    for(let i = 0; i < this.ncuaSvc.assessmentsToMerge.length; i++) {
-      this.assessSvc.getAssessmentToken(this.ncuaSvc.assessmentsToMerge[i]).then(() => {
-        this.maturitySvc.getQuestionsList("ACET", false).subscribe(
-          (response: any) => {
-            this.aggregateExistingAnswers(response);
-          })
-      })
-    }
+  getPrimaryAssessDetails() {
+    let id = this.ncuaSvc.assessmentsToMerge[0];
+    this.assessSvc.getAssessmentToken(id).then(() => {
+      
+      // Grab the Assess Config details
+      this.assessSvc.getAssessmentDetail().subscribe(data => {
+        this.primaryAssessDetails = data;
+      });
+
+      // Grab the IRP values
+      this.irpSvc.getIRPList().subscribe(
+        (data: IRPResponse) => {
+          this.primaryAssessIrp = data.headerList[5].irpList;
+        });
+    });
+  }
+
+  getExistingAssessmentAnswers() {
+    this.assessSvc.getAssessmentToken(this.ncuaSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
+      this.maturitySvc.getQuestionsList("ACET", false).subscribe(
+        (response: any) => {
+          this.dataReceivedCount++;
+          this.aggregateExistingAnswers(response);
+        }
+      )
+    })
   }
 
   aggregateExistingAnswers(response) {
-    this.count++;
-
-    /** A 3 tiered loop to check under ever grouping level.
-    /* TODO: Currently breaks if SCUEP statements 1 - 7 are answered and 
-    /* CORE statements 1 - 7 are also answered.
-    **/
+    let l = 0;
+    // A 3 tiered loop to check under ever grouping level to grab ALL questions
     for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
       for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
         for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
-        if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === false && 
-            (this.mergingAssessmentAnswers[k] === undefined || this.mergingAssessmentAnswers[k].answerText === 'U')) 
-          {
-            this.mergingAssessmentAnswers[k] = {
+          
+          if (this.assessmentsProcessed === 0) {
+            // If it's our first pass through, set all the questions.
+            this.existingAssessmentAnswers.push({
               answerId: null,
               questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
               questionType: null,
@@ -99,49 +126,90 @@ export class MergeExaminationsComponent implements OnInit {
               freeResponseAnswer: null,
               comment: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment,
               feedback: null,
-              markForReview: false,
+              markForReview: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].markForReview,
               reviewed: false,
               is_Component: false,
               is_Requirement: false,
               is_Maturity: true,
               componentGuid: '00000000-0000-0000-0000-000000000000'
+            });
+          } else if (this.assessmentsProcessed > 0) {
+            // If it's not our first pass through, ONLY add questions if it was unanswered previously
+            if (this.existingAssessmentAnswers[l].answerText === "U") {
+              this.existingAssessmentAnswers[l] = {
+                answerId: null,
+                questionId: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+                questionType: null,
+                questionNumber: '0',
+                answerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer,
+                altAnswerText: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].altAnswerText,
+                freeResponseAnswer: null,
+                comment: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment,
+                feedback: null,
+                markForReview: response.groupings[0].subGroupings[i].subGroupings[j].questions[k].markForReview,
+                reviewed: false,
+                is_Component: false,
+                is_Requirement: false,
+                is_Maturity: true,
+                componentGuid: '00000000-0000-0000-0000-000000000000'
+              }
+            }
+            l++;
+          }
+          // Combine all the existing comments into a map (this is mainly for merge conflicts comment combining)
+          if (response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment !== "" &&
+              response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment !== null) {
+            if (!this.assessmentComments.has(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId)) {
+              this.assessmentComments.set(
+                response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+                response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment);
+            } else {
+              let myString = this.assessmentComments.get(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId);
+              myString += ("\n" + response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment);
+              this.assessmentComments.set(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId, myString);
             }
           }
         }
       }
-    }
+    }    
+    this.assessmentsProcessed++;
 
-    if (this.count === this.ncuaSvc.assessmentsToMerge.length) {
+    if (this.dataReceivedCount !== this.ncuaSvc.assessmentsToMerge.length) {
+      this.getExistingAssessmentAnswers();
+    } else {
       this.finishPageLoad();
     }
-  }
-
-  finishPageLoad() {
-    this.mergingAssessmentAnswers = this.mergingAssessmentAnswers.filter(n => n);
-    this.pageLoading = false;
+    
   }
 
   getConflicts() {
     // run stored proc to grab any differing answers between assessments
     this.ncuaSvc.getAnswers().subscribe(
       (response: any) => {
-        if (response.length === 0) {
-          console.log("response.length === 0");
-          let id = this.ncuaSvc.assessmentsToMerge[0];
-          console.log("assessmentsToMerge[0] id: " + id);
-          this.assessSvc.getAssessmentToken(id).then(() => {
-            this.assessSvc.getAssessmentDetail().subscribe(data => {
-              this.primaryAssessDetails = data;
-              console.log("this.primaryAssessDetails: " + JSON.stringify(this.primaryAssessDetails, null, 4));
-            })
-          });
-        } else {
+        if (response.length > 0) {
           this.mergeConflicts = response;
         }
-      
         this.getAssessmentNames();
       }
     );
+  }
+
+  getIssues() {
+    let myIssues = [];
+    this.ncuaSvc.assessmentsToMerge.forEach(assessId => {
+      this.assessSvc.getAssessmentToken(assessId).then(() => {
+        this.parentQuestionIds.forEach(parentId => {
+          this.questionSvc.getDetails(parentId, 'Maturity').subscribe(
+            (details) => {
+              details.findings.forEach(find => {
+                myIssues.push(find);
+                this.assessmentIssues.set(parentId, myIssues);
+              });
+              myIssues = [];
+            });
+        });
+      });
+    });
   }
 
   getAssessmentNames() {
@@ -197,6 +265,10 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
+  finishPageLoad() {
+    this.pageLoading = false;
+  }
+
   navToHome() {
     this.router.navigate(['/landing-page']);
   }
@@ -213,20 +285,24 @@ export class MergeExaminationsComponent implements OnInit {
 
   // convert "Y" or "N" or "NA" into an ANSWER Object
   convertToAnswerType(length: number, answers: string[]) {
-    console.log("entering 'convertToAnswerType' function");
+    let comment = "";
     for (let i = 0; i < length; i++) {
-      let comments = this.combineComments(i);
+      if (this.assessmentComments.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
+        comment = this.assessmentComments.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+      } else {
+        comment = "";
+      }
       let altText = this.combineAltText(i);
-
-      this.mergeAnswers[i] = {
+      
+      this.selectedMergeAnswers[i] = {
         answerId: null,
         questionId: this.mergeConflicts[i].question_Or_Requirement_Id1,
         questionType: null,
         questionNumber: '0',
         answerText: answers[i],
-        altAnswerText: altText,
+        altAnswerText: null,
         freeResponseAnswer: null,
-        comment: comments,
+        comment: comment,
         feedback: null,
         markForReview: false,
         reviewed: false,
@@ -238,155 +314,107 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-  combineComments(length: number) {
-    let myString = "";
-    /*
-    for (let i = 0; i < length; i++) {
-      if (this.mergeConflicts[i].comment1 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment2 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment3 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment4 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment5 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment6 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment7 !== null) {
-        myString += this.mergeConflicts[i].comment1 + "\n";
-      }
-      if (this.mergeConflicts[i].comment8 !== null) {
-        myString += this.mergeConflicts[i].comment2 + "\n";
-      }
-      if (this.mergeConflicts[i].comment9 !== null) {
-        myString += this.mergeConflicts[i].comment3 + "\n";
-      }
-      if (this.mergeConflicts[i].comment10 !== null) {
-        myString += this.mergeConflicts[i].comment4 + "\n";
-      }
-    }
-    */
-    return myString;
+  combineAltText(i: number) {
   }
 
-  combineAltText(i: number) {
-    let myString = "";
-    if (this.mergeConflicts[i].alt_Text1 !== null && this.mergeConflicts[i].alt_Text1 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text1 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text2 !== null && this.mergeConflicts[i].alt_Text2 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text2 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text3 !== null && this.mergeConflicts[i].alt_Text3 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text3 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text4 !== null && this.mergeConflicts[i].alt_Text4 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text4 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text5 !== null && this.mergeConflicts[i].alt_Text5 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text5 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text6 !== null && this.mergeConflicts[i].alt_Text6 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text6 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text7 !== null && this.mergeConflicts[i].alt_Text7 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text7 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text8 !== null && this.mergeConflicts[i].alt_Text8 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text8 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text9 !== null && this.mergeConflicts[i].alt_Text9 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text9 + "\n";
-    }
-    if (this.mergeConflicts[i].alt_Text10 !== null && this.mergeConflicts[i].alt_Text10 !== undefined) {
-      myString += this.mergeConflicts[i].alt_Text10 + "\n";
-    }
-  return myString;
+  copyIssues(questionListResponse: MaturityQuestionResponse) {
+    
   }
 
 
   createMergedAssessment() {
     // null out the button to prevent multiple clicks
-    console.log("starting the merge");
     this.attemptingToMerge = true;
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
 
     // Create a brand new assessment
-    console.log("creating a new assessment.");
     this.assessSvc.createAssessment("ACET")
     .toPromise()
     .then(
       (response: any) => {
         // Authorize the user to modify the new assessment with a new token
-        console.log("getting the new assessment token");
         this.assessSvc.getAssessmentToken(response.id).then(() => {
           
           // Pull the new assessment details (mostly empty/defaults)
-          console.log("grabbing the new assessment details.")
           this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
-            // Update the assessment with the new data and send it back. Normally this comes from the merge conflict proc
-            // that pulls in some extra info for assessment config. If there are no conflicts, we use similar data pulled earlier.
-            console.log("Merge conflicts > 0, using mergeConflicts[0].");
-            if (this.mergeConflicts.length > 0) {
-              details.assessmentName = "Merged ISE " + this.mergeConflicts[0].charter_Number + " " + 
+            // Update the assessment with the new data and send it back.
+            details.assessmentName = "Merged ISE " + this.primaryAssessDetails.charter + " " + 
                                         this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
-              details.cityOrSiteName = this.mergeConflicts[0].cityOrSiteName;
-              details.stateProvRegion = this.mergeConflicts[0].stateProvRegion;
-              details.creditUnion = this.mergeConflicts[0].creditUnion;
-              details.charter = this.mergeConflicts[0].charter_Number;
-              details.assets = this.mergeConflicts[0].asset_Amount;
-              details.isAcetOnly = false;
-              details.useMaturity = true;
-              details.maturityModel = this.maturitySvc.getModel("ISE");
-              this.assessSvc.updateAssessmentDetails(details);
-            } else {
-              console.log("Merge conflicts is empty. using this.primaryAssessDetails");
-              details.assessmentName = "Merged ISE " + this.primaryAssessDetails.charter + " " + 
-                                        this.datePipe.transform(details.assessmentDate, 'MMddyy') + this.mergedContactInitials;
-              details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
-              details.stateProvRegion = this.primaryAssessDetails.stateProvRegion;
-              details.creditUnion = this.primaryAssessDetails.creditUnion;
-              details.charter = this.primaryAssessDetails.charter;
-              details.assets = this.primaryAssessDetails.assets;
-              details.isAcetOnly = true;
-              details.useMaturity = true;
-              details.maturityModel = this.maturitySvc.getModel("ISE");
-              this.assessSvc.updateAssessmentDetails(details);
-            }
+            details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
+            details.stateProvRegion = this.primaryAssessDetails.stateProvRegion;
+            details.creditUnion = this.primaryAssessDetails.creditUnion;
+            details.charter = this.primaryAssessDetails.charter;
+            details.assets = this.primaryAssessDetails.assets;
+            details.isAcetOnly = true;
+            details.useMaturity = true;
+            details.maturityModel = this.maturitySvc.getModel("ISE");
+            this.assessSvc.updateAssessmentDetails(details);
 
-            console.log("this.mergeAnswers.length: " + this.mergeAnswers.length);
-            console.log("this.mergingAssessmentAnswers.length: " + this.mergingAssessmentAnswers.length);
-            for (let i = 0; i < this.mergeAnswers.length; i++) {
-              for (let j = 0; j < this.mergingAssessmentAnswers.length; j++) {
-                if (this.mergeAnswers[i].questionId === this.mergingAssessmentAnswers[j].questionId) {
-                  this.mergingAssessmentAnswers[j].answerText = this.mergeAnswers[i].answerText;
-                  this.mergingAssessmentAnswers[j].comment = this.mergeAnswers[i].comment;
-                  this.mergingAssessmentAnswers[j].altAnswerText = this.mergeAnswers[i].altAnswerText;
+            // Add the IRP values back in
+            this.irpSvc.getIRPList().subscribe(
+              (data: IRPResponse) => {
+                // There are 9 ISE IRP questions
+                for (let i = 0; i < 9; i++) {
+                  this.irpSvc.postSelection(this.primaryAssessIrp[i]).subscribe();
+                }
+              });
+
+            // Set all of the questions "details" (answerText, comments, etc)
+            // This traverses our question list and overrides anything in there if we've
+            // picked a new answer with the merge conflict.
+            for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
+              for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
+                if (this.selectedMergeAnswers[i].questionId === this.existingAssessmentAnswers[j].questionId) {
+                  this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
+                  this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
+                  this.existingAssessmentAnswers[j].altAnswerText += "\n" + this.selectedMergeAnswers[i].altAnswerText;
                 }
               }
             }
+            
+            // Send off a list of the assessment's new answers to the API to save. Then go to the main assessment screen
+            this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
+              this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+                (questionListResponse: MaturityQuestionResponse) => {
 
-            console.log("attempting to store answers.");
-            for (let i = 0; i < this.mergingAssessmentAnswers.length; i++) {
-              this.questionSvc.storeAnswer(this.mergingAssessmentAnswers[i]).subscribe((response: any) => {
-                if (i = this.mergingAssessmentAnswers.length) {
-                this.navToHome();
-                }
+                  // Grab all the new answer_id's
+                  for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
+                    for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
+                      for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+                        if (questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].isParentQuestion === true) {
+                          this.newAnswerIds.set(
+                            questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId,
+                            questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k].answer_Id);
+                        }
+                      }
+                    }
+                  }
+                  /*
+                  console.log("this.newAnswerIds");
+                  console.log(this.newAnswerIds);
+                  console.log("this.assessmentIssues");
+                  console.log(this.assessmentIssues);
+                  */
+
+                  const iterator = this.assessmentIssues.entries();
+                  let parentKey = 0;
+
+                  for (let value of iterator) {
+                    parentKey = value[0];
+                    let find = this.assessmentIssues.get(parentKey);
+                    console.log(find[0]);
+                    find[0].finding_Id = 0;
+                    find[0].answer_Id = this.newAnswerIds.get(parentKey);
+                    this.findSvc.saveDiscovery(find[0]).subscribe();
+                  }
+                  this.navToHome();
               });
-            }
-          })
+            });
         })
       })
+    })
   }
 }
