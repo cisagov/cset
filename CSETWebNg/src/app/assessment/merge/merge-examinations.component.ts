@@ -1,15 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Answer, MaturityQuestionResponse, QuestionGrouping } from '../../models/questions.model';
-import { AssessmentContactsResponse, AssessmentDetail } from '../../models/assessment-info.model';
+import { Answer } from '../../models/questions.model';
+import { , AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
 import { MaturityService } from '../../services/maturity.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'merge-examinations',
@@ -51,13 +49,11 @@ export class MergeExaminationsComponent implements OnInit {
   constructor(
     public ncuaSvc: NCUAService,
     public assessSvc: AssessmentService,
-    private authSvc: AuthenticationService,
     public maturitySvc: MaturityService,
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     private router: Router,
     public datePipe: DatePipe,
-    private dialog: MatDialog
 
   ) { }
 
@@ -73,7 +69,6 @@ export class MergeExaminationsComponent implements OnInit {
     this.assessSvc.getAssessmentToken(id).then(() => {
       this.assessSvc.getAssessmentDetail().subscribe(data => {
         this.primaryAssessDetails = data;
-        console.log("Primary Assess Details: " + JSON.stringify(this.primaryAssessDetails, null, 4));
       })
     });
   }
@@ -367,6 +362,7 @@ export class MergeExaminationsComponent implements OnInit {
             details.maturityModel = this.maturitySvc.getModel("ISE");
             this.assessSvc.updateAssessmentDetails(details);
 
+            // Set all of the questions "details" (answerText, comments, etc)
             for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
               for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
                 if (this.selectedMergeAnswers[i].questionId === this.existingAssessmentAnswers[j].questionId) {
@@ -376,17 +372,11 @@ export class MergeExaminationsComponent implements OnInit {
                 }
               }
             }
-
-            for (let i = 0; i < this.existingAssessmentAnswers.length; i++) {
-              if (this.existingAssessmentAnswers[i].answerText !== "U") {
-                console.log("this.existingAssessmentAnswers[" + i + "]: " + this.existingAssessmentAnswers[i].answerText);
-                this.questionSvc.storeAnswer(this.existingAssessmentAnswers[i]).subscribe((response: any) => {
-                if (i = this.existingAssessmentAnswers.length) {
-                  this.navToHome();
-                }
-              });
-            }
-          }
+            
+            // Send off a list of the assessment's new answers to the API to save. Then go to the main assessment screen
+            this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
+              this.navToHome();
+            });
         })
       })
     })
