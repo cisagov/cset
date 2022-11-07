@@ -121,16 +121,16 @@
                     {{ this.summaryStatic }}
                 </p>
                 <div *ngIf="this.relaventIssues">
-                    <div *ngIf="this.examinerFindingsTotal > 0">
-                        {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
-                        <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                    <div *ngIf="this.dorsTotal > 0">
+                        {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                        <div *ngFor="let issue of this.dors" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
                     </div>
-                    <div *ngIf="this.dorsTotal > 0">
-                        {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
-                        <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                    <div *ngIf="this.examinerFindingsTotal > 0">
+                        {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                        <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                             {{ issue }}
                         </div>
                         <br>
@@ -142,6 +142,7 @@
                         </div>
                         <br>
                     </div>
+                    
                     <div *ngIf="this.nonReportablesTotal > 0">
                         {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length, 'Non-reportable') }}
                         <div *ngFor="let issue of this.nonReportables" style="padding-left: 30px">
