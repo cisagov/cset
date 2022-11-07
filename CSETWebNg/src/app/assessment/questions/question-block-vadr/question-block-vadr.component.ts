@@ -30,6 +30,7 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { groupBy } from 'rxjs/operators';
 import { LayoutService } from '../../../services/layout.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
@@ -61,7 +62,8 @@ export class QuestionBlockVadrComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public completionSvc: CompletionService
   ) {
   }
 
@@ -161,6 +163,8 @@ export class QuestionBlockVadrComponent implements OnInit {
       is_Maturity: q.is_Maturity,
       componentGuid: q.componentGuid
     };
+
+    this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
 

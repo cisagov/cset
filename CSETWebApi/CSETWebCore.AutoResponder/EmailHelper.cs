@@ -104,6 +104,8 @@ namespace CSETWebCore.AutoResponder
             }
             catch (Exception exc)
             {
+                log4net.LogManager.GetLogger(this.GetType()).Error("Most Likely Bad email was "+mail.To);
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
                 Console.Write(exc);
             }
 
