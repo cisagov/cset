@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.NCUAWeb12005TestUpgrade    -  This database will be modified
+(localdb)\MSSQLLocalDB.NCUAWeb12005    -  This database will be modified
 
 to synchronize it with:
 
