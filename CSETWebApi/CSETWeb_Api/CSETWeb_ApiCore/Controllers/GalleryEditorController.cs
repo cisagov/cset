@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -20,7 +21,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         // if you want to use the gallery editor, change this to true
-        private bool inDev = true;
+        private bool inDev = false;
 
         public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
@@ -38,6 +39,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
+                _context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
                 if(String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
                 {
                     //we are changing position of the rows. 
@@ -48,12 +50,23 @@ namespace CSETWebCore.Api.Controllers
                                orderby r.Row_Index
                                select r).ToList();
                     _context.GALLERY_ROWS.RemoveRange(rows);
+                    _context.SaveChanges();
                     //question can I violate the primary key before I save? 
                     //if so then remove the old one and insert it at the new position.
                     //iterate through all the items and just reassign the row_index. 
                     var itemToMove = rows[int.Parse(moveItem.oldIndex)];
                     rows.Remove(itemToMove);
-                    rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                    if (int.Parse(moveItem.oldIndex) < int.Parse(moveItem.newIndex))
+                    {
+                        //we are moving it down. so the new index needs to be -1
+                        rows.Insert(int.Parse(moveItem.newIndex)-1, itemToMove);
+                    }
+                    else if(int.Parse(moveItem.oldIndex) > int.Parse(moveItem.newIndex))
+                    {
+                        //we are moving it up. so the new index is unchanged
+                        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                    }
+                    
                     RenumberGroup(rows);
                     _context.GALLERY_ROWS.AddRange(rows);
                     _context.SaveChanges();
@@ -68,6 +81,7 @@ namespace CSETWebCore.Api.Controllers
                     detailsList.Remove(itemToMove);
                     detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
                     RenumberGroup(detailsList);
+                    _context.SaveChanges();
                 }
                 else
                 {
@@ -75,12 +89,14 @@ namespace CSETWebCore.Api.Controllers
                     //find the new group and insert it
                     //renumber both groups
                     var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
-                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];
+                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];                    
                     detailsOldList.Remove(itemToMove);
-                    RenumberGroup(detailsOldList);
-                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
+                    RenumberGroup(detailsOldList);                    
+                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();                    
                     detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
                     RenumberGroup(detailsNewList);
+                    itemToMove.Group_Id = int.Parse(moveItem.toId);                    
+                    _context.SaveChanges();
                 }
 
                 return Ok();

@@ -62,7 +62,7 @@ namespace CSETWebCore.AutoResponder
             Excel.Worksheet worksheet = null;
             try
             {
-                excel = new Excel.Application { Visible = true, DisplayAlerts = false };
+                excel = new Excel.Application { Visible = false, DisplayAlerts = false };
 
                 workbook = excel.Workbooks.Open(excelFile);
                 worksheet = (Excel.Worksheet)workbook.Worksheets[1];
