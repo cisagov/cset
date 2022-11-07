@@ -84,18 +84,16 @@ export class IseMeritComponent implements OnInit {
         } else {
           let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
 
-          tempActionArray.push(actionItemRow);
+            tempActionArray.push(actionItemRow);
 
           this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
         }
       }
-      console.log(this.masterActionItemsMap)
     });
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.answers = r;
-        console.log(r)
         this.examLevel = this.answers?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
@@ -115,9 +113,6 @@ export class IseMeritComponent implements OnInit {
             }
           }
         }
-
-        console.log(this.examLevel)
-
       });
 
     this.acetSvc.getAssessmentInformation().subscribe(
@@ -132,10 +127,8 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
         
         for(let i = 0; i < this.response?.length; i++) {
-          console.log(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id))
           if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
             let finding = this.response[i];
             if(finding.finding.type === 'Examiner Finding') {
@@ -154,11 +147,12 @@ export class IseMeritComponent implements OnInit {
           }
         }
         if(this.relaventIssues) {
-          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-          this.categoryBuilder(this.examinerFindings);
 
           this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
           this.categoryBuilder(this.dors);
+
+          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+          this.categoryBuilder(this.examinerFindings);
 
           this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
           this.categoryBuilder(this.supplementalFacts);
@@ -169,7 +163,6 @@ export class IseMeritComponent implements OnInit {
           this.resultsOfReviewString += 'No Issues were noted.';
         }
         
-        console.log(this.relaventIssues)
         this.loadingCounter ++;
       },
       error => console.log('MERIT Report Error: ' + (<Error>error).message)
