@@ -24,6 +24,7 @@ namespace CSETWebCore.Interfaces.Assessment
         ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);
         IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId);
+        IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForAccessKey(string accessKey);
       
     }
 }
