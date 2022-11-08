@@ -87,7 +87,8 @@ let headers = {
     private configSvc: ConfigService,
     public dialog: MatDialog,
     public acetFilteringSvc: AcetFilteringService,
-    private maturitySvc: MaturityService
+    private maturitySvc: MaturityService,
+    private assessmentSvc: AssessmentService
   ) {
     this.init();
   }
@@ -240,6 +241,10 @@ let headers = {
   }
 
   getExamLevelFromAssets() {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (this.assetsAsNumber > 50000000) {
       this.proposedExamLevel = 'CORE';
       if (this.usingExamLevelOverride === false) {
@@ -254,6 +259,10 @@ let headers = {
   }
 
   updateExamLevelOverride(level: number) {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (level === 0) {
       this.usingExamLevelOverride = false;
       this.chosenOverrideLevel = "No Override";
@@ -317,7 +326,7 @@ let headers = {
   }
 
   isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
+    if ( q.title == 'Stmt 1'
     ||   q.title == 'Stmt 2'
     ||   q.title == 'Stmt 3'
     ||   q.title == 'Stmt 4'
@@ -341,8 +350,12 @@ let headers = {
     ||   q.title == 'Stmt 22'
     ||   q.title == 'Stmt 23') {
       return true;
-    } 
+    }
     return false;
+  }
+
+  isIse() {
+    return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
 }
