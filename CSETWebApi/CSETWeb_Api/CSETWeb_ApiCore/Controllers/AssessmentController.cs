@@ -53,8 +53,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/createassessment")]
         public IActionResult CreateAssessment([FromQuery] string workflow)
         {
-            int currentuserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentuserId, workflow));
+            var currentUserId = _tokenManager.GetUserId();
+            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow));
         }
 
 
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/createassessment/gallery")]
         public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId)
         {
-            int currentUserId = _tokenManager.GetUserId();
+            var currentUserId = _tokenManager.GetUserId();
 
 
             // read the 'recipe' for the assessment
@@ -180,8 +180,21 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMyAssessments()
         {
             // get all Assessments that the current user is associated with
-            return Ok(_assessmentBusiness.GetAssessmentsForUser(_tokenManager.GetCurrentUserId()));
+            var userId = _tokenManager.GetCurrentUserId();
+            if (userId != null)
+            {
+                return Ok(_assessmentBusiness.GetAssessmentsForUser((int)userId));
+            }
+
+            var accessKey = _tokenManager.GetAccessKey();
+            if (accessKey != null)
+            {
+                return Ok(_assessmentBusiness.GetAssessmentsForAccessKey(accessKey));
+            }
+
+            return Ok();
         }
+
 
         /// <summary>
         /// Returns an array of Assessments connected to the current user 
@@ -193,7 +206,13 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAssessmentsCompletion()
         {
             // get completion stats for all assessments associated to the current user
-            return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser(_tokenManager.GetCurrentUserId()));
+            var userId = _tokenManager.GetCurrentUserId();
+            if (userId != null)
+            {
+                return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser((int)userId));
+            }
+
+            return Ok(); // TODO RKW
         }
 
 

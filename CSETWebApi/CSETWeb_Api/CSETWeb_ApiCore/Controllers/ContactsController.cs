@@ -49,12 +49,12 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetContactsForAssessment()
         {
             int assessmentId = _token.AssessmentForUser();
-            int userId = _token.GetCurrentUserId();
+            var userId = _token.GetCurrentUserId();
 
             ContactsListResponse resp = new ContactsListResponse
             {
                 ContactList = _contact.GetContacts(assessmentId),
-                CurrentUserRole = _contact.GetUserRoleOnAssessment(userId, assessmentId) ?? 0
+                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)userId, assessmentId) ?? 0
             };
             return Ok(resp);
         }
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCurrentUserContact()
         {
             int assessmentId = _token.AssessmentForUser();
-            int currentUserId = _token.GetUserId();
+            var currentUserId = _token.GetUserId();
 
             var resp = _contact.GetContacts(assessmentId).Find(c => c.UserId == currentUserId);
             return Ok(resp);
@@ -100,7 +100,7 @@ namespace CSETWebCore.Api.Controllers
             ContactsListResponse resp = new ContactsListResponse
             {
                 ContactList = details,
-                CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), assessmentId) ?? 0
+                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), assessmentId) ?? 0
             };
             return Ok(resp);
         }
@@ -123,7 +123,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(err);
             }
 
-            int currentUserId = _token.GetUserId();
+            var currentUserId = _token.GetUserId();
 
             ASSESSMENT_CONTACTS ac = null;
 
@@ -150,7 +150,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(err);
             }
 
-            int currentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0;
+            int currentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0;
 
             // If they are a USER and are trying to remove anyone but themself, forbid it
             if (currentUserRole == (int)ContactRole.RoleUser && ac.UserId != currentUserId)
@@ -195,7 +195,7 @@ namespace CSETWebCore.Api.Controllers
             ContactsListResponse resp = new ContactsListResponse
             {
                 ContactList = _contact.GetContacts(ac.Assessment_Id),
-                CurrentUserRole = _contact.GetUserRoleOnAssessment(_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0
+                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0
             };
 
             return Ok(resp);
@@ -273,7 +273,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetUpdateUser()
         {
             _token.IsAuthenticated();
-            int userId = _token.GetUserId();
+            var userId = _token.GetUserId();
 
             var resp = _user.GetUserInfo(userId);
             return Ok(resp);
@@ -290,7 +290,7 @@ namespace CSETWebCore.Api.Controllers
             int userid = 0;
             if (_token.IsAuthenticated())
             {
-                userid = _token.GetUserId();
+                userid = (int)_token.GetUserId();
             }
 
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
