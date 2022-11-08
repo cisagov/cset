@@ -54,7 +54,7 @@ namespace CSETWebCore.Api.Controllers
             ContactsListResponse resp = new ContactsListResponse
             {
                 ContactList = _contact.GetContacts(assessmentId),
-                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)userId, assessmentId) ?? 0
+                CurrentUserRole = _contact.GetUserRoleOnAssessment(userId, assessmentId) ?? 0
             };
             return Ok(resp);
         }

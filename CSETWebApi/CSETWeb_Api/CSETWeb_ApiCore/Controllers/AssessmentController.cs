@@ -212,7 +212,13 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(_assessmentBusiness.GetAssessmentsCompletionForUser((int)userId));
             }
 
-            return Ok(); // TODO RKW
+            var accessKey = _tokenManager.GetAccessKey();
+            if (accessKey != null)
+            {
+                return Ok(_assessmentBusiness.GetAssessmentsCompletionForAccessKey(accessKey));
+            }
+
+            return BadRequest();
         }
 
 

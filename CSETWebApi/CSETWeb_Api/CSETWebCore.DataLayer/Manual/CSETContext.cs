@@ -269,7 +269,29 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        
+
+        /// <summary>
+        /// Executes stored procedure usp_Assesments_Completion_For_AccessKey.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
+        public virtual IList<usp_Assessments_Completion_For_UserResult> usp_AssessmentsCompletionForAccessKey(string accessKey)
+        {
+            if (accessKey == null)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_Assessments_Completion_For_UserResult> myrval = null;
+            this.LoadStoredProc("usp_Assessments_Completion_For_Access_Key")
+                     .WithSqlParam("accessKey", accessKey)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_Assessments_Completion_For_UserResult>();
+                     });
+            return myrval;
+        }
+
+
         /// <summary>
         /// Executes stored procedure usp_Assesments_Completion_For_User.
         /// </summary>
