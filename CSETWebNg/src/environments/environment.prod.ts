@@ -28,7 +28,7 @@ export const environment = {
   analyticsUrl: '',
   docUrl: '',
   appCode: 'ACET',
-  version: '12.0.0.6',
+  version: '12.0.0.7',
   helpContactEmail: '',
   helpContactPhone: ''
 };
