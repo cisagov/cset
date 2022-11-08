@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LayoutService } from '../../services/layout.service';
 import { Utilities } from '../../services/utilities.service';
@@ -19,16 +20,21 @@ export class LoginAccessKeyComponent implements OnInit {
 
   loginFailed = false;
 
+  /**
+   * 
+   */
   constructor(
     public layoutSvc: LayoutService,
     private utilitiesSvc: Utilities,
-    private authSvc: AuthenticationService
+    private authSvc: AuthenticationService,
+    private router: Router
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
+    this.loginFailed = false;
   }
 
   /**
@@ -36,8 +42,8 @@ export class LoginAccessKeyComponent implements OnInit {
    */
   login() {
     this.authSvc.loginWithAccessKey(this.loginKey).subscribe((resp) => {
-      this.loginFailed = false;
-      console.log(resp);
+      console.log('login succeeded');
+      this.router.navigate(['/home', 'landing-page-tabs']);
     },
     error => {
       this.loginFailed = true;
@@ -56,6 +62,7 @@ export class LoginAccessKeyComponent implements OnInit {
     this.isGenerating = true;
     this.authSvc.generateAccessKey().subscribe((key: string) => {
       this.generatedKey = key;
+      this.loginKey = key;
       this.isGenerating = false;
       this.isKeyGenerated = true;
     });

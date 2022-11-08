@@ -43,8 +43,9 @@ export interface LoginResponse {
     isSuperUser: boolean;
     userLastName: string;
     userFirstName: string;
-    userId: number;
+    userId?: number;
     email: string;
+    accessKey?: string;
     exportExtension: string;
     importExtensions: string;
     linkerTime: string;
@@ -158,6 +159,7 @@ export class AuthenticationService {
         localStorage.setItem('lastName', user.userLastName);
         localStorage.setItem('superUser', '' + user.isSuperUser);
         localStorage.setItem('userId', '' + user.userId);
+        localStorage.setItem('accessKey', user.accessKey);
         localStorage.setItem('email', user.email);
         localStorage.setItem('exportExtension', user.exportExtension);
         localStorage.setItem('importExtensions', user.importExtensions)
@@ -287,7 +289,7 @@ export class AuthenticationService {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
-    checkPassword(data: ChangePassword):Observable<any> {
+    checkPassword(data: ChangePassword): Observable<any> {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/CheckPassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
@@ -349,7 +351,14 @@ export class AuthenticationService {
             }
         )
 
-        return this.http.post(this.configSvc.apiUrl + 'auth/login/accesskey', req, headers);
+        return this.http.post(this.configSvc.apiUrl + 'auth/login/accesskey', req, headers)
+            .pipe(
+                map((user: LoginResponse) => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    this.storeUserData(user);
+
+                    return user;
+                }));;
     }
 
     /**

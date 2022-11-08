@@ -86,7 +86,7 @@ namespace CSETWebCore.Helpers
 
 
             // Generate a token for this user and add to the response
-            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(loginUser.UserId, null, login.TzOffset, -1, null, null, login.Scope);
             resp.Token = token;
 
 
@@ -180,7 +180,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
+                string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
 
                 // Build response object
                 LoginResponse resp = new LoginResponse
@@ -257,8 +257,8 @@ namespace CSETWebCore.Helpers
             };
 
             // Generate a token for this user and add to the response
-            //string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
-            //resp.Token = token;
+            string token = _transactionSecurity.GenerateToken(null, login.AccessKey, login.TzOffset, -1, null, null, login.Scope);
+            resp.Token = token;
 
             return resp;
         }

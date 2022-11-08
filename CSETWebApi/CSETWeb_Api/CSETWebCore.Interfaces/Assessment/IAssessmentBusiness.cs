@@ -8,9 +8,10 @@ namespace CSETWebCore.Interfaces.Assessment
 {
     public interface IAssessmentBusiness
     {
-        AssessmentDetail CreateNewAssessment(int currentUserId, string workflow);
+        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow);
         AssessmentDetail CreateNewAssessmentForImport(int currentUserId);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId);
+        IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey);
         AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId);
         AssessmentDetail GetAssessmentDetail(int assessmentId, string token = "");
         void GetMaturityModelDetails(ref AssessmentDetail assessment);

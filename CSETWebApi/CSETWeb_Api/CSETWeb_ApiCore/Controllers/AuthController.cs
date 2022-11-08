@@ -113,10 +113,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/token")]
         public IActionResult IssueToken([FromQuery] int assessmentId = -1, [FromQuery] int aggregationId = -1, [FromQuery] string refresh = "*default*", [FromQuery] int expSeconds = -1)
         {
-            int currentUserId = (int)_tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            int? currentUserId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+            string accessKey = _tokenManager.Payload(Constants.Constants.Token_AccessKey);
             int? currentAssessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
             int? currentAggregationId = _tokenManager.PayloadInt(Constants.Constants.Token_AggregationId);
             string scope = _tokenManager.Payload(Constants.Constants.Token_Scope);
+
 
             // If the 'refresh' parm was sent, this is a pure refresh
             if (refresh != "*default*")
@@ -124,7 +126,7 @@ namespace CSETWebCore.Api.Controllers
                 // If the token has an assess ID, validate the user/assessment
                 if (currentAssessmentId != null)
                 {
-                    _tokenManager.AssessmentForUser(currentUserId, (int)currentAssessmentId);
+                    _tokenManager.AssessmentForUser(currentUserId, accessKey, (int)currentAssessmentId);
                 }
             }
             else
@@ -132,7 +134,7 @@ namespace CSETWebCore.Api.Controllers
                 // If an assessmentId was sent, use that in the new token after validating user/assessment
                 if (assessmentId > 0)
                 {
-                    _tokenManager.AssessmentForUser(currentUserId, assessmentId);
+                    _tokenManager.AssessmentForUser(currentUserId, accessKey, assessmentId);
                     currentAssessmentId = assessmentId;
                 }
 
@@ -145,6 +147,7 @@ namespace CSETWebCore.Api.Controllers
             // If we make it this far, we can issue the new token with what we know to be current and valid
             string token = _tokenManager.GenerateToken(
                 currentUserId,
+                accessKey,
                 _tokenManager.Payload(Constants.Constants.Token_TimezoneOffsetKey),
                 expSeconds,
                 currentAssessmentId,

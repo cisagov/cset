@@ -67,15 +67,23 @@ namespace CSETWebCore.Api.Controllers
                 {
                     return BadRequest("Invalid Model State");
                 }
-                int userid = _tokenManager.GetUserId();
-                var rval = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+
+                var userId = _tokenManager.GetUserId();
+                var rval = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
                 if (rval != null)
                 {
                     var resetRequired = rval.PasswordResetRequired;
                     return Ok(resetRequired);
                 }
-                else
-                    return BadRequest("Unknown error");
+
+
+                // if an access key is used, there is no password to expire
+                if (_tokenManager.GetAccessKey() != null)
+                {
+                    return Ok(false);
+                }
+
+                return BadRequest("Unknown error");
 
             }
             catch (Exception ce)
@@ -124,9 +132,10 @@ namespace CSETWebCore.Api.Controllers
 
                 LoginResponse resp = _userAuthentication.Authenticate(login);
                 if (resp == null)
-                {                    
+                {
                     return Ok(
-                        new PasswordResponse() { 
+                        new PasswordResponse()
+                        {
                             IsValid = false,
                             Message = "Current password is invalid.<br>Correct it or request a new temporary password."
                         });
@@ -149,7 +158,8 @@ namespace CSETWebCore.Api.Controllers
                 {
                     resp.ResetRequired = false;
                     _context.SaveChanges();
-                    return Ok(new PasswordResponse() { 
+                    return Ok(new PasswordResponse()
+                    {
                         IsValid = true,
                         Message = "Created Successfully"
                     });

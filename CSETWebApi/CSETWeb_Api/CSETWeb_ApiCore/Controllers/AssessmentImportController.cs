@@ -103,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
-                await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _context);
+                await manager.ProcessCSETAssessmentImport(target.ToArray(), (int)_tokenManager.GetUserId(), _context);
             }
             catch (Exception)
             {

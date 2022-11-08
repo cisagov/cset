@@ -133,6 +133,7 @@ export class AssessmentService {
    *
    */
   getAssessments() {
+    console.log('assessment.service getAssessments');
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
 
