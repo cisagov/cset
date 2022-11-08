@@ -59,11 +59,11 @@
             </div>
         </div>
 
-        <!-- <div *ngIf="this.loadingCounter < 3; else mainContent" class="spinner-container" style="margin: 2em auto">
+        <div *ngIf="this.loadingCounter < 4; else mainContent" class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
-        </div> -->
+        </div>
 
-        <!-- <ng-template #mainContent> -->
+        <ng-template #mainContent>
             <div class="page-break">
                 <div class="ml-3 mr-3 form">
                     <div class="d-flex flex-row" style="justify-content: space-between">
@@ -251,6 +251,9 @@
                                             </div>
                                         </div>
                                     </ng-container>
+                                    <div *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id) == null || this.masterActionItemsMap.get(finding?.finding?.finding_Id) == '') && finding?.finding?.actionItems == null">
+                                        (no Action Items available)
+                                    </div>
 
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
@@ -283,7 +286,16 @@
                                                 <span class="cset-icons-copy" ></span>
                                         </label> {{ this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation }}
                                         <span *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
-                                            , {{ finding?.finding?.citations }}
+                                            {{ this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                            || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '' ? 
+                                            ',' : ' ' }} {{ finding?.finding?.citations }}
+                                        </span>
+                                        <span *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id) == null
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id) == ''
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '')
+                                                   && (finding?.finding?.citations == null || finding?.finding?.citations == '')">
+                                            (no Regulatory Citations available)
                                         </span>
                                     </div>
 
@@ -298,7 +310,7 @@
                                     
                                     <br>
                                     <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
-                                    <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
+                                    <span *ngIf="finding?.question?.supplemental_Info == ''">(no Supplemental Guidance available)</span>
 
                                 </div>
                                 
@@ -312,6 +324,6 @@
                     </div>
                 </div>
             </div>
-        <!-- </ng-template> -->
+        </ng-template>
     </div>
 </div>
