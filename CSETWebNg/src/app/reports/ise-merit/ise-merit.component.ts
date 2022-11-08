@@ -75,7 +75,6 @@ export class IseMeritComponent implements OnInit {
 
     this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
       this.actionData = findingData;
-      console.log(this.actionData)
       for(let i = 0; i<this.actionData?.length; i++){
         let actionItemRow = this.actionData[i];
 
@@ -92,6 +91,8 @@ export class IseMeritComponent implements OnInit {
           }
         }
       }
+      this.loadingCounter ++;
+
     });
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
@@ -116,61 +117,65 @@ export class IseMeritComponent implements OnInit {
             }
           }
         }
+
+        this.loadingCounter ++;
+
+        this.acetSvc.getAssessmentInformation().subscribe(
+          (r: any) => {
+            this.demographics = r;
+    
+            this.loadingCounter ++;
+          },
+          error => console.log('Assessment Information Error: ' + (<Error>error).message)
+        )
+    
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (r: any) => {
+            this.response = r;  
+            for(let i = 0; i < this.response?.length; i++) {
+    
+              if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+    
+                let finding = this.response[i];
+                if(finding.finding.type === 'Examiner Finding') {
+                  this.addExaminerFinding(finding.category.title);
+                }
+                if(finding.finding.type === 'DOR') {
+                  this.addDOR(finding.category.title);
+                }
+                if(finding.finding.type === 'Supplemental Fact') {
+                  this.addSupplementalFact(finding.category.title);
+                }
+                if(finding.finding.type === 'Non-reportable') {
+                  this.addNonReportable(finding.category.title);
+                }
+                this.relaventIssues = true;
+              }
+            }
+            if(this.relaventIssues) {
+    
+              this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+              this.categoryBuilder(this.dors);
+    
+              this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+              this.categoryBuilder(this.examinerFindings);
+    
+              this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+              this.categoryBuilder(this.supplementalFacts);
+    
+              this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+              this.categoryBuilder(this.nonReportables);
+            } else {
+              this.resultsOfReviewString += 'No Issues were noted.';
+            }
+            
+            this.loadingCounter ++;
+          },
+          error => console.log('MERIT Report Error: ' + (<Error>error).message)
+        );
       });
 
-    this.acetSvc.getAssessmentInformation().subscribe(
-      (r: any) => {
-        this.demographics = r;
-
-        this.loadingCounter ++;
-      },
-      error => console.log('Assessment Information Error: ' + (<Error>error).message)
-    )
-
-    this.findSvc.GetAssessmentFindings().subscribe(
-      (r: any) => {
-        this.response = r;
-        console.log(this.response)
-        
-        for(let i = 0; i < this.response?.length; i++) {
-          if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
-            let finding = this.response[i];
-            if(finding.finding.type === 'Examiner Finding') {
-              this.addExaminerFinding(finding.category.title);
-            }
-            if(finding.finding.type === 'DOR') {
-              this.addDOR(finding.category.title);
-            }
-            if(finding.finding.type === 'Supplemental Fact') {
-              this.addSupplementalFact(finding.category.title);
-            }
-            if(finding.finding.type === 'Non-reportable') {
-              this.addNonReportable(finding.category.title);
-            }
-            this.relaventIssues = true;
-          }
-        }
-        if(this.relaventIssues) {
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-          this.categoryBuilder(this.dors);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-          this.categoryBuilder(this.examinerFindings);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-          this.categoryBuilder(this.supplementalFacts);
-
-          this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
-          this.categoryBuilder(this.nonReportables);
-        } else {
-          this.resultsOfReviewString += 'No Issues were noted.';
-        }
-        
-        this.loadingCounter ++;
-      },
-      error => console.log('MERIT Report Error: ' + (<Error>error).message)
-    );
+    
 
     // this.acetSvc.getIseSourceFiles().subscribe(
     //   (r: any) => {
@@ -266,24 +271,26 @@ export class IseMeritComponent implements OnInit {
   copyAllActionItems(allActionsInFinding: any) {
     let actionItems = [];
     let questionTitle = [];
-    for(let i = 0; i < allActionsInFinding.length; i++) {
-      if(allActionsInFinding[i].action_Items.substring(allActionsInFinding[i].action_Items.length - 1) != '.') {
-        allActionsInFinding[i].action_Items = allActionsInFinding[i].action_Items + '.';
+    if(allActionsInFinding != null) {
+      for(let i = 0; i < allActionsInFinding?.length; i++) {
+        if(allActionsInFinding[i].action_Items.substring(allActionsInFinding[i].action_Items.length - 1) != '.') {
+          allActionsInFinding[i].action_Items = allActionsInFinding[i].action_Items + '.';
+        }
+        actionItems.push(allActionsInFinding[i].action_Items);
+        questionTitle.push(allActionsInFinding[i].question_Title);
       }
-      actionItems.push(allActionsInFinding[i].action_Items);
-      questionTitle.push(allActionsInFinding[i].question_Title);
-    }
-    
-    let combinedItems = actionItems.toString();
-    let array = combinedItems.split('.,');
+      
+      let combinedItems = actionItems.toString();
+      let array = combinedItems.split('.,');
 
-    for (let i = 0; i < allActionsInFinding.length; i++) {
-      let childNumber = this.getChildQuestionNumber(questionTitle[i]);
-    
-	    array[i] = childNumber + ": " + array[i] + "\n";
-    }
+      for (let i = 0; i < allActionsInFinding.length; i++) {
+        let childNumber = this.getChildQuestionNumber(questionTitle[i]);
+      
+        array[i] = childNumber + ": " + array[i] + "\n";
+      }
 
-    let formattedItems = array.join("");
-    return formattedItems;
+      let formattedItems = array.join("");
+      return formattedItems;
+    }
   }
 }

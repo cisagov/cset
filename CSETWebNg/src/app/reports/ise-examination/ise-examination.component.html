@@ -292,6 +292,9 @@
                                             </div>
                                         </div>
                                     </ng-container>
+                                    <div *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id) == null || this.masterActionItemsMap.get(finding?.finding?.finding_Id) == '') && finding?.finding?.actionItems == null">
+                                        (no Action Items available)
+                                    </div>
                                     <strong> Risk Area: </strong> {{ finding?.finding?.risk_Area }}
                                     <br>
                                     <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
@@ -300,8 +303,17 @@
                                     <br>
                                     <div *ngIf="this.masterActionItemsMap.has(finding.finding.finding_Id)"> 
                                         {{ this.masterActionItemsMap.get(finding.finding.finding_Id)[0].regulatory_Citation }}
-                                        <span *ngIf="finding.finding.citations != null && finding.finding.citations != ''">
-                                            , {{ finding.finding.citations }}
+                                        <span *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
+                                            {{ this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                            || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '' ? 
+                                            ',' : ' ' }} {{ finding?.finding?.citations }}
+                                        </span>
+                                        <span *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id) == null
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id) == ''
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                                   || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '')
+                                                   && (finding?.finding?.citations == null || finding?.finding?.citations == '')">
+                                            (no Regulatory Citations available)
                                         </span>
                                     </div>
                                 </div>
