@@ -75,18 +75,21 @@ export class IseMeritComponent implements OnInit {
 
     this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
       this.actionData = findingData;
+      console.log(this.actionData)
       for(let i = 0; i<this.actionData?.length; i++){
         let actionItemRow = this.actionData[i];
 
-        if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
-          
-          this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
-        } else {
-          let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+        if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
+          if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+            
+            this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+          } else {
+            let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
 
             tempActionArray.push(actionItemRow);
 
-          this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+            this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+          }
         }
       }
     });
@@ -127,6 +130,7 @@ export class IseMeritComponent implements OnInit {
     this.findSvc.GetAssessmentFindings().subscribe(
       (r: any) => {
         this.response = r;
+        console.log(this.response)
         
         for(let i = 0; i < this.response?.length; i++) {
           if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
