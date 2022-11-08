@@ -236,6 +236,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
+        public virtual DbSet<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
         public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
         public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
         public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
@@ -3317,6 +3318,16 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            });
+
+            modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.EmailSentDate });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.USER_EMAIL_HISTORY)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_USER_EMAIL_HISTORY_USERS");
             });
 
             modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>

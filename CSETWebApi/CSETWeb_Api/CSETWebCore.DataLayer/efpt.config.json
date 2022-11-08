@@ -831,6 +831,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[USER_EMAIL_HISTORY]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[USER_SECURITY_QUESTIONS]",
          "ObjectType": 0
       },
@@ -913,6 +917,10 @@
       {
          "Name": "[dbo].[vQUESTION_HEADINGS]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Acet_GetActionItemsForReport]",
+         "ObjectType": 1
       },
       {
          "Name": "[dbo].[AcetAnswerDistribution]",
