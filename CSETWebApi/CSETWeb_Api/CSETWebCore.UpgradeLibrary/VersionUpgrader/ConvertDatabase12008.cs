@@ -18,6 +18,7 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12007_to_12008.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12007_to_12008_data.sql"), conn);
 
                 this.UpgradeToVersionLocalDB(conn, myVersion);
