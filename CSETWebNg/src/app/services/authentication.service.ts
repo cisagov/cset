@@ -133,25 +133,6 @@ export class AuthenticationService {
      * @param user
      */
     storeUserData(user: LoginResponse) {
-        // if (localStorage.getItem('userToken') != null) {
-
-        //     console.log("userToken is not being reset");
-        //     console.log(localStorage.getItem('userToken'));
-        //     console.log("user token is:")
-        //     console.log(user.token);
-        //     let uid = parseInt(localStorage.getItem("userId"));
-        //     let uuid = parseInt(this.parser.decodeToken(localStorage.getItem('userToken')).userid);
-        //     console.log("localStorage:"+uid+" TokenID:"+uuid);
-        //     console.log(uuid);
-
-        //     // if(isNaN(uid)||isNaN(uuid))
-        //     // {
-        //     //     console.log("really skipping the swapping of tokens");
-        //     // }else if(uid!=uuid){
-        //     //     localStorage.setItem('userToken', user.token);
-        //     // }
-        // }
-        // else
         if (user.token != null) {
             localStorage.setItem('userToken', user.token);
         }
@@ -159,7 +140,6 @@ export class AuthenticationService {
         localStorage.setItem('lastName', user.userLastName);
         localStorage.setItem('superUser', '' + user.isSuperUser);
         localStorage.setItem('userId', '' + user.userId);
-        localStorage.setItem('accessKey', user.accessKey);
         localStorage.setItem('email', user.email);
         localStorage.setItem('exportExtension', user.exportExtension);
         localStorage.setItem('importExtensions', user.importExtensions)
@@ -319,6 +299,10 @@ export class AuthenticationService {
 
     userId(): number {
         return parseInt(localStorage.getItem('userId'), 10);
+    }
+
+    accessKey(): string {
+        return localStorage.getItem('accessKey');
     }
 
     email() {

@@ -167,20 +167,20 @@ namespace CSETWebCore.Helpers
         {
             // Either a userId or accessKey will be supplied.  Use that identifier
             // in constructing the securityKey.
-            string iii = "";
+            string id = "";
             if (userId != null)
             {
-                iii = userId.ToString();
+                id = userId.ToString();
             }
 
             if (accessKey != null)
             {
-                iii = accessKey;
+                id = accessKey;
             }
 
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
-                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + iii));
+                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + id));
 
             // Build credentials
             var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
@@ -213,7 +213,7 @@ namespace CSETWebCore.Helpers
                 { Constants.Constants.Token_UserId, userId },
                 { Constants.Constants.Token_AccessKey, accessKey },
                 { Constants.Constants.Token_TimezoneOffsetKey, tzOffset },
-                { "scope", scope}
+                { "scope", scope }
             };
 
 
