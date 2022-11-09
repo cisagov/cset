@@ -228,6 +228,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           (r: any) => {
             let findings = r;
             let title = '';
+            
             for (let i = 0; i < findings?.length; i++) {
                 // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
                 if (this.ncuaSvc.translateExamLevel(findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {

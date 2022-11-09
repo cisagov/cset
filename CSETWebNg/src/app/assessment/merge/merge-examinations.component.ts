@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Answer, MaturityQuestionResponse } from '../../models/questions.model';
 import { AssessmentDetail } from '../../models/assessment-info.model';
 import { AssessmentService } from '../../services/assessment.service';
@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 import { IRPService } from '../../services/irp.service';
 import { IRPResponse } from '../../models/irp.model';
 import { FindingsService } from '../../services/findings.service';
-import { Finding } from '../questions/findings/findings.model';
+import { ActionItemText } from '../questions/findings/findings.model';
 
 @Component({
   selector: 'merge-examinations',
@@ -199,6 +199,8 @@ export class MergeExaminationsComponent implements OnInit {
     this.ncuaSvc.assessmentsToMerge.forEach(assessId => {
       this.assessSvc.getAssessmentToken(assessId).then(() => {
         this.parentQuestionIds.forEach(parentId => {
+
+          // Get issues and all their data
           this.questionSvc.getDetails(parentId, 'Maturity').subscribe(
             (details) => {
               details.findings.forEach(find => {
@@ -292,7 +294,6 @@ export class MergeExaminationsComponent implements OnInit {
       } else {
         comment = "";
       }
-      let altText = this.combineAltText(i);
       
       this.selectedMergeAnswers[i] = {
         answerId: null,
@@ -314,16 +315,42 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-  combineAltText(i: number) {
-  }
-
-  copyIssues(questionListResponse: MaturityQuestionResponse) {
+  saveNewIssues(parentKey: number, issueArray: any[]) {
+    let actionItemsOverride = new Map();
     
+    // For every issue we have from the original assessments
+    issueArray.forEach((issue, index)  => {
+    this.questionSvc.getActionItems(parentKey, issue.finding_Id).subscribe(
+      (data: any) => {
+        data.forEach(item => {
+          // Grab each of the action items
+          let importantBits: ActionItemText = {Mat_Question_Id: item.question_Id, ActionItemOverrideText: item.action_Items};
+          actionItemsOverride.set(item.question_Id, importantBits);
+        })
+
+        // Set the finding_Id to 0 to ask the API to generate a new issue for us
+        issue.finding_Id = 0;
+        issue.answer_Id = this.newAnswerIds.get(parentKey);      
+        this.findSvc.saveDiscovery(issue).subscribe((response: any) => {
+          // Grab the newly created issue's finding_Id
+          let mapToArray = Array.from(actionItemsOverride.values());
+          actionItemsOverride.clear();
+          this.findSvc.saveIssueText(mapToArray, response).subscribe();
+          
+          if (index === issueArray.length - 1) {
+            // We're finally finished. Go back to the main assessment page.
+            this.navToHome();
+          } else {
+
+          }
+        });
+      });
+    });
   }
 
 
   createMergedAssessment() {
-    // null out the button to prevent multiple clicks
+    // Null out the button to prevent multiple clicks
     this.attemptingToMerge = true;
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
@@ -362,7 +389,7 @@ export class MergeExaminationsComponent implements OnInit {
                 }
               });
 
-            // Set all of the questions "details" (answerText, comments, etc)
+            // Set all of the questions "details" (answerText, comments, etc).
             // This traverses our question list and overrides anything in there if we've
             // picked a new answer with the merge conflict.
             for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
@@ -380,7 +407,7 @@ export class MergeExaminationsComponent implements OnInit {
               this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
                 (questionListResponse: MaturityQuestionResponse) => {
 
-                  // Grab all the new answer_id's
+                  // Grab all the new answer_id's to save Issues to the new questions
                   for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
                     for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
                       for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
@@ -392,29 +419,21 @@ export class MergeExaminationsComponent implements OnInit {
                       }
                     }
                   }
-                  /*
-                  console.log("this.newAnswerIds");
-                  console.log(this.newAnswerIds);
-                  console.log("this.assessmentIssues");
-                  console.log(this.assessmentIssues);
-                  */
 
+                  // This block uses the previous answer_Id's to persist issues on the new assessment
                   const iterator = this.assessmentIssues.entries();
                   let parentKey = 0;
 
-                  for (let value of iterator) {
-                    parentKey = value[0];
-                    let find = this.assessmentIssues.get(parentKey);
-                    console.log(find[0]);
-                    find[0].finding_Id = 0;
-                    find[0].answer_Id = this.newAnswerIds.get(parentKey);
-                    this.findSvc.saveDiscovery(find[0]).subscribe();
+                  for (let iter of iterator) {
+                    parentKey = iter[0];
+                    let issueArray = this.assessmentIssues.get(parentKey);
+                    this.saveNewIssues(parentKey, issueArray);
                   }
-                  this.navToHome();
               });
             });
-        })
-      })
-    })
+          });
+      });
+    });
   }
+
 }

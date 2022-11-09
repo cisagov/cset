@@ -104,7 +104,7 @@ export class IssuesComponent implements OnInit {
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
 
-      this.questionsSvc.getActionItems(this.questionID,this.finding.finding_Id).subscribe(
+      this.questionsSvc.getActionItems(this.questionID, this.finding.finding_Id).subscribe(
         (data: any) => {
           this.actionItems = data;
 
@@ -180,12 +180,12 @@ export class IssuesComponent implements OnInit {
     this.ActionItemList.set(q.mat_Question_Id, item);
   }
 
-  update() {    
+  update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
     
     let mapToArray = Array.from(this.ActionItemList.values());
-    this.findSvc.saveIssueText(mapToArray,this.finding.finding_Id).subscribe();
+    this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
     
 
     if (this.finding.type !== null) {
