@@ -130,8 +130,9 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', {responseType: 'text'});
     }
 
-    getActionItemsReport() {        
-        return this.http.get(this.configSvc.apiUrl + 'reports/acet/GetActionItemsReport', headers);
+    getActionItemsReport(examLevel: number) {        
+        const qstring = 'reports/acet/GetActionItemsReport?Exam_Level=' + examLevel;
+        return this.http.get(this.configSvc.apiUrl + qstring,  headers);
     }
     /*
     * Get target band

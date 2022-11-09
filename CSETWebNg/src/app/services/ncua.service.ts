@@ -325,6 +325,17 @@ let headers = {
     }
   }
 
+  // translates the maturity_Level_Id into the maturity_Level
+  translateExamLevelToInt(matLevelString: string) {
+    if(matLevelString === 'SCUEP') {
+      return 17;
+    } else if (matLevelString === 'CORE') {
+      return 18;
+    } else if (matLevelString === 'CORE+') {
+      return 19;
+    }
+  }
+
   isParentQuestion(q: any) {
     if ( q.title == 'Stmt 1'
     ||   q.title == 'Stmt 2'

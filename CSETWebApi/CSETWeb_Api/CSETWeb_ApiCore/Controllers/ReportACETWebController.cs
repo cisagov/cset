@@ -36,11 +36,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/GetActionItemsReport")]
-        public IActionResult GetActionItemsReport()
+        public IActionResult GetActionItemsReport([FromQuery] int Exam_Level)
         {
             int assessId = _token.AssessmentForUser();
             FindingsManager fm = new FindingsManager(_context, assessId);
-            return Ok(fm.GetActionItemsReport(assessId).Result);
+
+            return Ok(fm.GetActionItemsReport(assessId, Exam_Level).Result);
         }
 
 
