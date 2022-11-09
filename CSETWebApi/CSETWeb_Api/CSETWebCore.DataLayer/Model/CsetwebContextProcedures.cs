@@ -133,7 +133,7 @@ namespace CSETWebCore.DataLayer.Model
             _context = context;
         }
 
-        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, int? Exam_Level, int? Additional_Exam_Level, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -150,9 +150,21 @@ namespace CSETWebCore.DataLayer.Model
                     Value = Assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
+                new SqlParameter
+                {
+                    ParameterName = "Exam_Level",
+                    Value = Exam_Level ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Additional_Exam_Level",
+                    Value = Additional_Exam_Level ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<Acet_GetActionItemsForReportResult>("EXEC @returnValue = [dbo].[Acet_GetActionItemsForReport] @Assessment_Id", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<Acet_GetActionItemsForReportResult>("EXEC @returnValue = [dbo].[Acet_GetActionItemsForReport] @Assessment_Id, @Exam_Level, @Additional_Exam_Level", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

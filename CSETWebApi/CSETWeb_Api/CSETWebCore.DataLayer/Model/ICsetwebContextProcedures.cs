@@ -12,7 +12,7 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial interface ICsetwebContextProcedures
     {
-        Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, int? Exam_Level, int? Additional_Exam_Level, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<analytics_Compute_MaturityAllResult>> analytics_Compute_MaturityAllAsync(int? maturity_model_id, int? sector_id, int? industry_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<analytics_compute_single_averages_maturityResult>> analytics_compute_single_averages_maturityAsync(int? assessment_id, int? maturity_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

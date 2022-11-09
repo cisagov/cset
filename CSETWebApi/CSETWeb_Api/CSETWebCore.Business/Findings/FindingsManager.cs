@@ -94,9 +94,15 @@ namespace CSETWebCore.Business.Findings
             return actionItems;
         }
 
-        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id)
+        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id, int examLevel)
         {
-            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id);
+            int additionalExamLevel = 17; //initialized as SCUEP
+            if(examLevel == 18) //if CORE, include CORE+ in the stored proc
+            {
+                additionalExamLevel = 19; //CORE+
+            }
+
+            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id, examLevel, additionalExamLevel);
             return data;
 
         }

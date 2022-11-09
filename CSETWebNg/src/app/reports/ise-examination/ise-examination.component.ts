@@ -93,27 +93,7 @@ export class IseExaminationComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Examination Report - ISE");
 
-    this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
-      this.actionData = findingData;
-      for(let i = 0; i<this.actionData?.length; i++){
-        let actionItemRow = this.actionData[i];
-
-        if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
-          if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
-            
-            this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
-          } else {
-            let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
-
-            tempActionArray.push(actionItemRow);
-
-            this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
-          }
-        }
-      }
-      console.log(this.masterActionItemsMap)
-    });
-
+    
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         console.log(r)
@@ -158,6 +138,30 @@ export class IseExaminationComponent implements OnInit {
             }
           }
         }
+
+        let examLevelString = this.examLevel.substring(0, 4);
+
+        this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any)=>{       
+          this.actionData = findingData;
+          for(let i = 0; i<this.actionData?.length; i++){
+            let actionItemRow = this.actionData[i];
+
+            if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
+              if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+                
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+              } else {
+                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+
+                tempActionArray.push(actionItemRow);
+
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+              }
+            }
+          }
+          console.log(this.masterActionItemsMap)
+        });
+
 
         this.findSvc.GetAssessmentFindings().subscribe(
           (f: any) => {

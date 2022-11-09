@@ -73,27 +73,7 @@ export class IseMeritComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
-    this.acetSvc.getActionItemsReport().subscribe((findingData: any)=>{      
-      this.actionData = findingData;
-      for(let i = 0; i<this.actionData?.length; i++){
-        let actionItemRow = this.actionData[i];
-
-        if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
-          if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
-            
-            this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
-          } else {
-            let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
-
-            tempActionArray.push(actionItemRow);
-
-            this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
-          }
-        }
-      }
-      this.loadingCounter ++;
-
-    });
+    
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
@@ -118,6 +98,31 @@ export class IseMeritComponent implements OnInit {
           }
         }
 
+        let examLevelString = this.examLevel.substring(0, 4);
+
+        this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any)=>{      
+          this.actionData = findingData;
+          console.log(this.actionData)
+          for(let i = 0; i<this.actionData?.length; i++){
+            let actionItemRow = this.actionData[i];
+
+            if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
+              if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+                
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+              } else {
+                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+
+                tempActionArray.push(actionItemRow);
+
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+              }
+            }
+          }
+          this.loadingCounter ++;
+
+        });
+
         this.loadingCounter ++;
 
         this.acetSvc.getAssessmentInformation().subscribe(
@@ -131,9 +136,11 @@ export class IseMeritComponent implements OnInit {
     
         this.findSvc.GetAssessmentFindings().subscribe(
           (r: any) => {
-            this.response = r;  
+            this.response = r; 
+            console.log(this.response)
+ 
             for(let i = 0; i < this.response?.length; i++) {
-    
+              console.log(this.examLevel.substring(0, 4))
               if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
     
                 let finding = this.response[i];
@@ -285,12 +292,31 @@ export class IseMeritComponent implements OnInit {
 
       for (let i = 0; i < allActionsInFinding.length; i++) {
         let childNumber = this.getChildQuestionNumber(questionTitle[i]);
-      
-        array[i] = childNumber + ": " + array[i] + "\n";
+        if(array[i] != null && array[i] != ''){
+          array[i] = childNumber + ": " + array[i] + "\n";
+        }
+      }
+      if(array?.length == 0) {
+        return "(no Action Items available)";
       }
 
       let formattedItems = array.join("");
       return formattedItems;
+    }
+  }
+
+  areAllActionItemsBlank(allActionsInFinding: any) {
+    if(allActionsInFinding != null) {
+      console.log(allActionsInFinding)
+      for(let i = 0; i < allActionsInFinding?.length; i++) {
+
+        if(allActionsInFinding[i].action_Items != null && allActionsInFinding[i].action_Items != '') {
+          console.log(allActionsInFinding[i].question_Title + ' is false')
+          return false;
+        }
+      }
+      return true;
+
     }
   }
 }
