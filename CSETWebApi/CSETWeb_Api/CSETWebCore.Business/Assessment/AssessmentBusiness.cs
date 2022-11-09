@@ -124,7 +124,7 @@ namespace CSETWebCore.Business.Assessment
 
 
 
-        public AssessmentDetail CreateNewAssessmentForImport(int currentUserId)
+        public AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey)
         {
             DateTime nowUTC = DateTime.Now;
             AssessmentDetail newAssessment = new AssessmentDetail
@@ -141,8 +141,25 @@ namespace CSETWebCore.Business.Assessment
             newAssessment.Id = assessment_id;
 
 
+
             // Add the current user to the new assessment as an admin that has already been 'invited'
-            _contactBusiness.AddContactToAssessment(assessment_id, currentUserId, Constants.Constants.AssessmentAdminId, true);
+            if (currentUserId != null)
+            {
+                _contactBusiness.AddContactToAssessment(assessment_id, (int)currentUserId, Constants.Constants.AssessmentAdminId, true);
+            }
+
+            if (accessKey != null)
+            {
+                var aka = new ACCESS_KEY_ASSESSMENT()
+                {
+                    AccessKey = accessKey,
+                    Assessment_Id = assessment_id
+                };
+
+                _context.Add(aka);
+                _context.SaveChanges();
+            }
+
             return newAssessment;
         }
 

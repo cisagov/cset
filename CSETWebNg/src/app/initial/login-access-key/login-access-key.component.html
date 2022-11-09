@@ -42,7 +42,7 @@
                     If you have an Access Key, enter it here and click Login
                 </label>
                 <div class="input-group">
-                    <input class="form-control" [(ngModel)]="loginKey" placeholder="Enter Access Key">
+                    <input class="form-control mr-2" [(ngModel)]="loginKey" (keyup.enter)="login()" placeholder="Enter Access Key">
                     <button (click)="login()" class="input-group-append btn btn-primary mt-0">Login</button>
                 </div>
                 <div *ngIf="loginFailed" class="alert alert-danger">

@@ -36,7 +36,7 @@ export class ConfigService {
   helpContactPhone: string;
   
   isRunningInElectron: boolean;
-  isRunningAnonymous = true;
+  isRunningAnonymous = false;
 
   configUrl: string;
   assetsUrl: string;
