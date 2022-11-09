@@ -1,6 +1,7 @@
 {
     "currentConfigChain": ["development"],
     "appCode": "CSET",
+    "isRunningAnonymous": false,
     "app": {
         "protocol": "http",
         "url": "localhost",

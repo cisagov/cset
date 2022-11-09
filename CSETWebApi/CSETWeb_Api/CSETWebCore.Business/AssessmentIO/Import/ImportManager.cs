@@ -54,7 +54,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int currentUserId, CSETContext context)
+        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -178,12 +178,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         }
                     }
 
-                    string email = context.USERS.Where(x => x.UserId == currentUserId).First().PrimaryEmail;
+                    string email = context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault()?.PrimaryEmail ?? "";
 
 
 
                     Importer import = new Importer();
-                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, context, _token, _assessmentUtil);
+                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, accessKey, context, _token, _assessmentUtil);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
 
