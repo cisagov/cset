@@ -241,7 +241,8 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 18', true)                            .set('Stmt 19', true)
       .set('Stmt 20', true)                            .set('Stmt 21', true)
       .set('Stmt 22', true)                            .set('Asset Inventory', true)
-      .set('Stmt 23', true)                            .set('Policies & Procedures', true);
+      .set('Stmt 23', true)                            .set('Policies & Procedures', true)
+      .set('Due Diligence', true);
 
     this.storeIndividualIssues
       .set('Stmt 1', '')
@@ -270,7 +271,7 @@ export class IseExaminationComponent implements OnInit {
     .set('Logging', false)                            .set('Data Governance', false)
     .set('Conversion', false)                         .set('Software Development Process', false)
     .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    .set('Policies & Procedures', true);
+    .set('Policies & Procedures', true)               .set('Due Diligence', false);
   }
 
   /**
