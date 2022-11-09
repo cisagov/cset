@@ -219,7 +219,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.findSvc.GetAssessmentFindings().subscribe(
           (r: any) => {
             let findings = r;
-            console.log(findings)
             for (let i = 0; i < findings?.length; i++) {
                 if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
                     this.ncuaSvc.unassignedIssueTitles.push(findings[i]?.question?.question_Title);
