@@ -42,11 +42,12 @@ export class LoginAccessKeyComponent implements OnInit {
    */
   login() {
     this.authSvc.loginWithAccessKey(this.loginKey).subscribe((resp) => {
-      console.log('login succeeded');
+      localStorage.setItem('accessKey', this.loginKey);
       this.router.navigate(['/home', 'landing-page-tabs']);
     },
     error => {
       this.loginFailed = true;
+      localStorage.removeItem('accessKey');
       console.log(error);
     });
   }

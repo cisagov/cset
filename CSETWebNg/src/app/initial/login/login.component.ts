@@ -50,6 +50,20 @@ export class LoginComponent implements OnInit {
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);    
   }
 
+  /**
+   * Returns a boolean indicating if the specified skin/installationMode
+   * is active.  The case of "ACCESS-KEY" is special; it is based
+   * on whether CSET is currently configured to run anonymously.
+   */
+  show(skin: string) {
+    if (skin === 'ACCESS-KEY') {
+      return this.configSvc.config.isRunningAnonymous;
+    }
+
+    return !this.configSvc.config.isRunningAnonymous 
+      && (this.configSvc.installationMode ?? 'CSET') === skin;
+  }
+
   continueStandAlone() {
     // this.router.navigate(['/home']);
   }

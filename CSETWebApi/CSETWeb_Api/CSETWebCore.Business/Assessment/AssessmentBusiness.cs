@@ -168,18 +168,20 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey)
         {
-            var dbList = _context.ACCESS_KEY_ASSESSMENT.Where(x => x.AccessKey == accessKey)
+            var dbAssessmentList = _context.ACCESS_KEY_ASSESSMENT.Where(x => x.AccessKey == accessKey)
                 .Include(x => x.Assessment)
                 .ThenInclude(x => x.INFORMATION)
                 .ToList();
 
             TinyMapper.Bind<ASSESSMENTS, usp_Assessments_For_UserResult>();
             var list = new List<usp_Assessments_For_UserResult>();
-            foreach (var l in dbList)
+            foreach (var l in dbAssessmentList)
             {
                 var aaa = TinyMapper.Map<ASSESSMENTS, usp_Assessments_For_UserResult>(l.Assessment);
                 aaa.AssessmentId = l.Assessment_Id;
                 aaa.AssessmentName = l.Assessment.INFORMATION.Assessment_Name;
+                aaa.SelectedMaturityModel = "";
+                aaa.SelectedStandards = "";
                 list.Add(aaa);
             }
 
@@ -214,6 +216,12 @@ namespace CSETWebCore.Business.Assessment
             return list;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         public AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId)
         {
             AnalyticsAssessment assessment = new AnalyticsAssessment();
@@ -244,7 +252,6 @@ namespace CSETWebCore.Business.Assessment
                     }
                 }
             }
-
 
 
             var result = query.ToList().FirstOrDefault();
