@@ -72,10 +72,7 @@ export class FindingsService {
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
 
-
-  //change this to pass me the question_id and question_text
-  saveIssueText(actionItem: ActionItemText[], finding_Id:number) {
-    
+  saveIssueText(actionItem: ActionItemText[], finding_Id: number) {
     const tmp: ActionItemTextUpdate = {actionTextItems:actionItem, finding_Id:finding_Id};
     return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers );
   }
