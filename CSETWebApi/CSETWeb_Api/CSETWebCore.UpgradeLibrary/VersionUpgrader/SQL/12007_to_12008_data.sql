@@ -1,11 +1,11 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.NCUAWeb12006    -  This database will be modified
+(localdb)\MSSQLLocalDB.NCUAWeb12007    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.NCUAWeb12007
+(localdb)\MSSQLLocalDB.NCUAWeb12008
 
 You are recommended to back up your database before running this script
 
