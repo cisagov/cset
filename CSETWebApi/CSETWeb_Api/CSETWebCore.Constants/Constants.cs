@@ -11,7 +11,7 @@ namespace CSETWebCore.Constants
 
         public static string Token_TimezoneOffsetKey = "tzoffset";
         public static string Token_UserId = "userid";
-        // public static string Token_UserEmail = "useremail";  This is mutable - let's not send it
+        public static string Token_AccessKey = "acckey";
         public static string Token_AssessmentId = "assess";
         public static string Token_AggregationId = "aggreg";
         public static string Token_Scope = "scope";

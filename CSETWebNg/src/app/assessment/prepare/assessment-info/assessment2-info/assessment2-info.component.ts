@@ -46,7 +46,15 @@ export class Assessment2InfoComponent implements OnInit {
     this.demographics?.refreshContacts();
   }
 
+  /**
+   * Anonymous access mode does not show contacts.  Otherwise
+   * defer to the skin's behavior.
+   */
   showContacts() {
+    if (this.configSvc.config.isRunningAnonymous ?? false) {
+      return false;
+    }
+
     return this.configSvc.behaviors?.showContacts ?? true;
   }
 
