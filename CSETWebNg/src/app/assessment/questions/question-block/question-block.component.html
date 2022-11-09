@@ -156,7 +156,7 @@
 
         <div>
           <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
-            <label *ngFor="let option of answerOptions" class="btn form-check-label"
+            <label *ngFor="let option of answerOptions" class="btn form-check-label align-items-center"
               [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
               [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
               <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
@@ -165,7 +165,7 @@
             </label>
 
             <!-- Mark For Review Flag  -->
-            <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
+            <label class="mr-0 ml-2 btn form-check-label btn-mfr align-items-center" [class.answer-selected]="q.markForReview === true"
               matTooltip="This control requires further review.">
               <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
                 checked="{{q.markForReview === true}}">
