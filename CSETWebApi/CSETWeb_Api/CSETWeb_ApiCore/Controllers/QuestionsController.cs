@@ -498,8 +498,8 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var fm = new FindingsManager(_context, assessmentId);
-            fm.UpdateFinding(finding);
-            return Ok();
+            var id = fm.UpdateFinding(finding);
+            return Ok(id);
         }
 
         /// <summary>

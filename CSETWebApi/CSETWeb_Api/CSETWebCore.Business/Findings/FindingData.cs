@@ -132,19 +132,20 @@ namespace CSETWebCore.Business.Findings
         /// <summary>
         /// 
         /// </summary>
-        public void Save()
+        public int Save()
         {
             // safety valve in case this was built without an answerid
             if (this._webFinding.Answer_Id == 0)
             {
-                return;
+                return 0;
             }
 
             if (this._webFinding.IsFindingEmpty())
-                return;
+                return 0;
 
             _context.SaveChanges();
             _webFinding.Finding_Id = _dbFinding.Finding_Id;
+            return _dbFinding.Finding_Id;
         }
     }
 }

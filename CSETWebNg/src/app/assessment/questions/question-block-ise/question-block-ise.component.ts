@@ -293,6 +293,7 @@ export class QuestionBlockIseComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
+    // Errors out on ISE answers. Commenting out for now.
     //this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
@@ -715,7 +716,7 @@ export class QuestionBlockIseComponent implements OnInit {
       citations: null,
       auto_Generated: 0
     };
-    
+
     this.dialog.open(IssuesComponent, {
       data: find,
       disableClose: true,
@@ -775,15 +776,6 @@ export class QuestionBlockIseComponent implements OnInit {
         };
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);
-    
-        // this.dialog.open(IssuesComponent, {
-        //   data: find,
-        //   disableClose: true,
-        //   width: this.layoutSvc.hp ? '90%' : '60vh',
-        //   height: this.layoutSvc.hp ? '90%' : '85vh',
-    
-        // }).afterClosed().subscribe(result => {
-
         this.findSvc.saveDiscovery(find).subscribe(() => {
           const answerID = find.answer_Id;
           this.findSvc.getAllDiscoveries(answerID).subscribe(

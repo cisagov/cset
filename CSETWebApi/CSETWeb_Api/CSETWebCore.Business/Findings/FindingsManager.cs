@@ -58,10 +58,11 @@ namespace CSETWebCore.Business.Findings
         /// 
         /// </summary>
         /// <param name="finding"></param>
-        public void UpdateFinding(Finding finding)
+        public int UpdateFinding(Finding finding)
         {
             FindingData fm = new FindingData(finding, _context);
-            fm.Save();
+            int id = fm.Save();
+            return id;
         }
 
         public List<ActionItems> GetActionItems(int parentId, int finding_id)
