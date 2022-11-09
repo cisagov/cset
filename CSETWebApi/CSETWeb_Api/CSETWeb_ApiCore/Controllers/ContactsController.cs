@@ -125,6 +125,32 @@ namespace CSETWebCore.Api.Controllers
 
             var currentUserId = _token.GetUserId();
 
+            var accessKey = _token.GetAccessKey();
+
+
+            // remove the connection between the assessment and the accesskey
+            if (currentUserId == null && accessKey != null)
+            {
+                var bridge = _context.ACCESS_KEY_ASSESSMENT
+                    .Where(x => x.Assessment_Id == contactRemove.AssessmentId && x.AccessKey == accessKey)
+                    .FirstOrDefault();
+
+                if (bridge != null)
+                {
+                    _context.ACCESS_KEY_ASSESSMENT.Remove(bridge);
+                    _context.SaveChanges();
+                }
+
+                ContactsListResponse resp1 = new ContactsListResponse
+                {
+                    ContactList = _contact.GetContacts(contactRemove.AssessmentId),
+                    CurrentUserRole = 0
+                };
+
+                return Ok(resp1);
+            }
+
+
             ASSESSMENT_CONTACTS ac = null;
 
             // explicit removal using the ID of the connection 
@@ -149,6 +175,7 @@ namespace CSETWebCore.Api.Controllers
                 };
                 return BadRequest(err);
             }
+
 
             int currentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), ac.Assessment_Id) ?? 0;
 
