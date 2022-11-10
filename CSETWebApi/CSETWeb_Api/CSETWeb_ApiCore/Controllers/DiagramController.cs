@@ -19,7 +19,8 @@ using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Text;
-using Lucene.Net.Store;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,6 +34,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHttpContextAccessor _http;
         private readonly IDataHandling _dataHandling;
         private readonly IACETDashboardBusiness _acet;
+        private readonly IWebHostEnvironment _webHost;
 
         private CSETContext _context;
 
@@ -40,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
 
         public DiagramController(IDiagramManager diagram, ITokenManager token, 
             IAssessmentBusiness assessment, IDataHandling dataHandling, IMaturityBusiness maturity, 
-            IHttpContextAccessor http, IACETDashboardBusiness acet, CSETContext context)
+            IHttpContextAccessor http, IACETDashboardBusiness acet, IWebHostEnvironment webHost, CSETContext context)
         {
             _diagram = diagram;
             _token = token;
@@ -49,6 +51,7 @@ namespace CSETWebCore.Api.Controllers
             _maturity = maturity;
             _http = http;
             _acet = acet;
+            _webHost = webHost;
             _context = context;
             _object = new object();
         }
@@ -440,14 +443,22 @@ namespace CSETWebCore.Api.Controllers
         /// get cset diagram templates
         /// </summary>
         /// <returns></returns>
-        //[CsetAuthorize]
-        //[Route("api/diagram/alertsandadvisories")]
-        //[HttpGet]
-        //public IActionResult GetAlertsAndAdvisories()
-        //{
-        //    string[] filePaths = GetFiles(Path.Combine(this.Environment.WebRootPath, "Files/"));
-        //    return templates;
-        //}
+        [CsetAuthorize]
+        [Route("api/diagram/alertsandadvisories")]
+        [HttpGet]
+        public IEnumerable<object> GetAlertsAndAdvisories()
+        {
+            string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/"));
+            List<object> csafFiles = new List<object>();
+
+            foreach (var filePath in filePaths) 
+            {
+                var jsonString = System.IO.File.ReadAllText(filePath);
+                csafFiles.Add(JsonConvert.DeserializeObject(jsonString));
+            }
+
+            return csafFiles;
+        }
 
         /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons
