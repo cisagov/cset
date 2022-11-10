@@ -28,7 +28,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
-        private readonly List<string> _modelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
+        public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
@@ -493,7 +493,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // default the target level if the model supports a target level
-                if (_modelsWithTargetLevel.Contains(mm.Model_Name))
+                if (ModelsWithTargetLevel.Contains(mm.Model_Name))
                 {
                     var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS
                         .Where(l => l.Assessment_Id == assessmentId && l.Level_Name == Constants.Constants.MaturityLevel)

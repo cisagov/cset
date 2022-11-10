@@ -213,7 +213,7 @@ export class TopMenusComponent implements OnInit {
     }
 
     if (item == 'compare') {
-      return (!this.configSvc.isMobile() &&  (this.configSvc.behaviors?.showCompare ?? true));
+      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true));
     }
 
     return true;
@@ -222,8 +222,7 @@ export class TopMenusComponent implements OnInit {
   /**
    * Allows us to hide items for certain skins
    */
-   showItemForCurrentSkin(item: string) {
-
+  showItemForCurrentSkin(item: string) {
     // custom behavior for ACET
     if (this.skin === 'ACET') {
       if (item === 'assessment documents') {
@@ -232,7 +231,6 @@ export class TopMenusComponent implements OnInit {
     }
 
     var show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
-
     return show;
   }
 
@@ -280,12 +278,30 @@ export class TopMenusComponent implements OnInit {
       && !this.isModuleBuilder(this.router.url);
   }
 
+  /**
+   * Determines if the user menu should display.
+   */
   showUserMenu() {
+    if (this.configSvc.config.isRunningAnonymous) {
+      return false;
+    }
+
     return this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
       && !this.isModuleBuilder(this.router.url);
   }
 
+  /**
+   * Determines if the 'anonymous' version of the user menu
+   * should display.
+   */
+  showAnonymousMenu() {
+    return this.configSvc.config.isRunningAnonymous;
+  }
+
+  /**
+   * 
+   */
   editParameters() {
     if (this.dialog.openDialogs[0]) {
 

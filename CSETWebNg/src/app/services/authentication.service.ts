@@ -43,8 +43,9 @@ export interface LoginResponse {
     isSuperUser: boolean;
     userLastName: string;
     userFirstName: string;
-    userId: number;
+    userId?: number;
     email: string;
+    accessKey?: string;
     exportExtension: string;
     importExtensions: string;
     linkerTime: string;
@@ -132,25 +133,6 @@ export class AuthenticationService {
      * @param user
      */
     storeUserData(user: LoginResponse) {
-        // if (localStorage.getItem('userToken') != null) {
-
-        //     console.log("userToken is not being reset");
-        //     console.log(localStorage.getItem('userToken'));
-        //     console.log("user token is:")
-        //     console.log(user.token);
-        //     let uid = parseInt(localStorage.getItem("userId"));
-        //     let uuid = parseInt(this.parser.decodeToken(localStorage.getItem('userToken')).userid);
-        //     console.log("localStorage:"+uid+" TokenID:"+uuid);
-        //     console.log(uuid);
-
-        //     // if(isNaN(uid)||isNaN(uuid))
-        //     // {
-        //     //     console.log("really skipping the swapping of tokens");
-        //     // }else if(uid!=uuid){
-        //     //     localStorage.setItem('userToken', user.token);
-        //     // }
-        // }
-        // else
         if (user.token != null) {
             localStorage.setItem('userToken', user.token);
         }
@@ -287,7 +269,7 @@ export class AuthenticationService {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
-    checkPassword(data: ChangePassword):Observable<any> {
+    checkPassword(data: ChangePassword): Observable<any> {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/CheckPassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
 
@@ -319,6 +301,10 @@ export class AuthenticationService {
         return parseInt(localStorage.getItem('userId'), 10);
     }
 
+    accessKey(): string {
+        return localStorage.getItem('accessKey');
+    }
+
     email() {
         return localStorage.getItem('email');
     }
@@ -337,4 +323,32 @@ export class AuthenticationService {
         localStorage.setItem('email', info.primaryEmail);
     }
 
+    /**
+     * 
+     */
+    loginWithAccessKey(loginKey) {
+        const req = JSON.stringify(
+            {
+                accessKey: loginKey,
+                tzOffset: new Date().getTimezoneOffset().toString(),
+                Scope: 'CSET'
+            }
+        )
+
+        return this.http.post(this.configSvc.apiUrl + 'auth/login/accesskey', req, headers)
+            .pipe(
+                map((user: LoginResponse) => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    this.storeUserData(user);
+
+                    return user;
+                }));;
+    }
+
+    /**
+     * 
+     */
+    generateAccessKey() {
+        return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
+    }
 }

@@ -216,7 +216,7 @@ namespace CSETWebCore.Business.User
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public CreateUser GetUserInfo(int userId)
+        public CreateUser GetUserInfo(int? userId)
         {
             var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
