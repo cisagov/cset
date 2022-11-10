@@ -424,10 +424,14 @@ export class MergeExaminationsComponent implements OnInit {
                   const iterator = this.assessmentIssues.entries();
                   let parentKey = 0;
 
-                  for (let iter of iterator) {
-                    parentKey = iter[0];
-                    let issueArray = this.assessmentIssues.get(parentKey);
-                    this.saveNewIssues(parentKey, issueArray);
+                  if (this.assessmentIssues.size !== 0) {
+                    for (let iter of iterator) {
+                      parentKey = iter[0];
+                      let issueArray = this.assessmentIssues.get(parentKey);
+                      this.saveNewIssues(parentKey, issueArray);
+                    }
+                  } else {
+                    this.navToHome();
                   }
               });
             });
