@@ -1156,7 +1156,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             var q = from rs in _context.REQUIREMENT_SETS
                     from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
-                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)                    
                     where rs.Set_Name == setName
                     select new { r, rs, s };
             var results = q.Distinct()
@@ -1189,6 +1189,22 @@ namespace CSETWebCore.Business.ModuleBuilder
                 foreach (REQUIREMENT_LEVELS l in sals)
                 {
                     r.SalLevels.Add(l.Standard_Level);
+                }
+
+
+                // Get the questions for this requirement
+                var relatedQuestions = _context.REQUIREMENT_QUESTIONS_SETS
+                    .Include(x => x.Question)
+                    .Where(x => x.Requirement_Id == r.RequirementID && x.Set_Name == setName).ToList();
+
+                foreach (var q1 in relatedQuestions)
+                {
+                    r.Questions.Add(new QuestionDetail()
+                    {
+                        QuestionID = q1.Question_Id,
+                        QuestionText = q1.Question.Simple_Question,
+                        IsCustom = _context.SETS.Where(x => x.Set_Name == q1.Question.Original_Set_Name).FirstOrDefault().Is_Custom
+                    });
                 }
 
 
