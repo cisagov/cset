@@ -28,6 +28,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Finding, Importance, FindingContact } from './findings.model';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-findings',
@@ -46,6 +47,7 @@ export class FindingsComponent implements OnInit {
 
   constructor(
     private findSvc: FindingsService,
+    private configSvc: ConfigService,
     private dialog: MatDialogRef<FindingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
     private router: Router,
@@ -81,23 +83,45 @@ export class FindingsComponent implements OnInit {
     });
   }
 
-  refreshContacts():void{
-    let questionType = localStorage.getItem('questionSet');
-    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
-        .subscribe((response: Finding) => {
-          this.finding = response;
-          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-        });
+  /**
+   * 
+   */
+  showContacts(): boolean {
+    if (this.configSvc.config.isRunningAnonymous) {
+      return false;
+    }
+
+    return true;
   }
 
+  /**
+   * 
+   */
+  refreshContacts(): void {
+    let questionType = localStorage.getItem('questionSet');
+    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+      .subscribe((response: Finding) => {
+        this.finding = response;
+        this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
+          { 'selected': true }),
+          'Assessment_Contact_Id');
+      });
+  }
+
+  /**
+   * 
+   */
   clearMulti() {
     this.finding.finding_Contacts.forEach(c => {
       c.selected = false;
     });
   }
 
+  /**
+   * 
+   * @param finding 
+   * @returns 
+   */
   checkFinding(finding: Finding) {
     // and a bunch of fields together
     // if they are all null then false
@@ -115,7 +139,9 @@ export class FindingsComponent implements OnInit {
     return !finding;
   }
 
-
+  /**
+   * 
+   */
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;

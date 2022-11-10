@@ -137,6 +137,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
+   * Determines if the level indicator should show or be
+   * hidden.  Someday this behavior might be stored
+   * in the database as some model-specific behavior.
+   */
+  showLevelIndicator(q): boolean {
+    // CPG does not have levels - don't show it
+    if (q.maturityModelId == 11) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    *
    * @param ans
    */

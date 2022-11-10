@@ -43,10 +43,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAggregations([FromQuery] string mode)
         {
             // Get the current userid to set as the Assessment creator and first attached user
-            int currentUserId = _token.GetCurrentUserId();
+            var currentUserId = _token.GetCurrentUserId();
 
             var manager = new AggregationBusiness(_context);
-            return Ok(manager.GetAggregations(mode, currentUserId));
+            return Ok(manager.GetAggregations(mode, (int)currentUserId));
         }
 
 

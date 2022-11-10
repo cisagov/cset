@@ -31,9 +31,13 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
+  
   helpContactEmail: string;
   helpContactPhone: string;
+  
   isRunningInElectron: boolean;
+  isRunningAnonymous = false;
+
   configUrl: string;
   assetsUrl: string;
   settingsUrl: string;
@@ -85,7 +89,11 @@ export class ConfigService {
 
   }
 
+  /**
+   * 
+   */
   setConfigPropertiesForLocalService(config: any) {
+    this.isRunningAnonymous = config.isRunningAnonymous;
     this.assetsUrl = "assets/";
     this.installationMode = config.installationMode;
     let apiPort = config.api.port != "" ? ":" + config.api.port : "";

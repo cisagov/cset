@@ -74,7 +74,7 @@
 
 
     <!-- interested parties -->
-    <div class="form-group">
+    <div class="form-group" *ngIf="showContacts()">
       <div class="d-flex justify-content-between align-items-center flex-11a">
         <label for="contacts" class="form-label">Individuals Responsible</label>
         <button class="btn-link fs-smaller" (click)="clearMulti()">Clear Selections</button>
