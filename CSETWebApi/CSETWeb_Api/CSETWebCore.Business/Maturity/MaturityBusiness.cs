@@ -1035,6 +1035,7 @@ namespace CSETWebCore.Business.Maturity
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
+                        MaturityModelId = sg.Maturity_Model_Id,
                         MaturityLevel = myQ.Maturity_Level.Level,
                         MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
