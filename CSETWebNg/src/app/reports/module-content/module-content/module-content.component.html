@@ -18,6 +18,13 @@
                     Show References
                 </label>
             </div>
+            <div *ngIf="!!set">
+                <input id="cbQuestions" type="checkbox" class="checkbox-custom" [checked]="reportSvc.showQuestions"
+                    (change)="toggleShowQuestions($event)">
+                <label for="cbQuestions" class="checkbox-custom-label">
+                    Show Related Questions
+                </label>
+            </div>
         </div>
     </div>
 
