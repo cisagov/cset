@@ -186,4 +186,5 @@ export class ReportService {
      */
     public showGuidance = true;
     public showReferences = true;
+    public showQuestions = true;
 }

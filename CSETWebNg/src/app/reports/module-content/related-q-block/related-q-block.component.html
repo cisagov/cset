@@ -1,0 +1,15 @@
+<div class="mb-3 p-3" style="border-radius: .3rem; border: 1px solid #ddd">
+    <div class="color1 mb-2">
+        <strong><em>Related Questions</em></strong>
+    </div>
+    <div>
+        <div *ngIf="questions.length === 0" style="font-style: italic">
+            (No related questions)
+        </div>
+        <ul class="ml-2">
+            <li *ngFor="let q of questions" class="mb-1">
+                {{q.questionText}}
+            </li>
+        </ul>
+    </div>
+</div>
