@@ -42,6 +42,7 @@ export class IseExaminerComponent implements OnInit {
   hasComments: any[] = [];
 
   examLevel: string = '';
+  loadingCounter: number = 0;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -84,6 +85,7 @@ export class IseExaminerComponent implements OnInit {
             }
           }
         }
+        this.loadingCounter++;
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
