@@ -311,6 +311,11 @@ export class QuestionsService {
       answers: this.configSvc.config.answersMVRA
     });
 
+    this.answerLabelModels.push({ 
+      modelId: 11,
+      answers: this.configSvc.config.answersCPG
+    });
+
     // ACET labels are only used in the ACET skin
     this.answerLabelModels.push({ 
       skin: 'ACET',
