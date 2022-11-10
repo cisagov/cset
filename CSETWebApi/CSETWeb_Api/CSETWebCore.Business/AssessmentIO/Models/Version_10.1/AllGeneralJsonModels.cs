@@ -383,6 +383,22 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         public Int32 Importance_Id { get; set; }
 
+        public String Title { get; set; }
+
+        public String Type { get; set; }
+
+        public String Risk_Area { get; set; }
+
+        public String Sub_Risk { get; set; }
+
+        public String Description { get; set; }
+
+        public String Citations { get; set; }
+
+        public String ActionItems { get; set; }
+
+        public String Auto_Generated { get; set; }
+
     }
 
     public class jANSWER
