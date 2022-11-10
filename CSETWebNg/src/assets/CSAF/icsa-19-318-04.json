@@ -1,0 +1,168 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Michael DePlante of Trend Micro\u2019s Zero Day Initiative reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of this vulnerability could result in information disclosure, total compromise of the system, and system unavailability.. CRITICAL INFRASTRUCTURE SECTORS: Energy. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-318-04 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-318-04"
+      }
+    ],
+    "title": "Omron CX-Supervisor (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:55.160519+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-318-04",
+      "initial_release_date": "2019-12-19T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:55.160519+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=3.5 (12)",
+                "product": {
+                  "name": "Omron - <=3.5 (12)",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CX-Supervisor"
+          }
+        ],
+        "category": "vendor",
+        "name": "Omron"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-18251",
+      "cwe": {
+        "id": "CWE-477",
+        "name": "Use of Obsolete Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Omron CX-Supervisor ships with TeamViewer Version 5.0.8703 QS. This version of TeamViewer is vulnerable to an obsolete function vulnerability that requires user interaction to exploit. Version 5.0.8703 QS of TeamViewer is vulnerable to the items listed at the following location: Version 5.0.8703 QS TeamViewer vulnerabilities.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Omron recommends users update to CX-Supervisor Version 3.51 (9). The following link contains Omron\u2019s explanation for the changes and instructions to obtain the update: CX-Supervisor Version 3.51 (9) update.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.myomron.com/index.php?action=kb&article=1713"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2019-18251"
+    }
+  ]
+}

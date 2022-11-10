@@ -1,0 +1,1011 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Peter Morgan of Clever Security; Dave Singel\u00e9e and Bart Preneel of KU Leuven; Eduard Marin formerly of KU Leuven, currently with University of Birmingham; Flavio D. Garcia; Tom Chothia of the University of Birmingham; and Rik Willems of University Hospital Gasthuisberg Leuven reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable with adjacent access/low attack complexity. Successful exploitation of these vulnerabilities may allow an attacker with adjacent short-range access to one of the affected products to interfere with, generate, modify, or intercept the radio frequency (RF) communication of the Medtronic proprietary Conexus telemetry system, potentially impacting product functionality and/or allowing access to transmitted sensitive data. Successful exploitation requires: (1) an RF device capable of transmitting or receiving Conexus telemetry communication, such as a monitor, programmer, or software-defined radio (SDR); (2) to have adjacent short-range access to the affected products; and (3) for the products to be in states where the RF functionality is active. Before the device implant procedure and during follow-up clinic visits, the Conexus telemetry sessions require initiation by an inductive protocol. Outside of these use environments, the RF radio in the affected implanted device is enabled for brief periods of time to support scheduled follow-up transmissions and other operational and safety notifications. The result of successful exploitation of these vulnerabilities may include the ability to read and write any valid memory location on the affected implanted device and therefore impact the intended function of the device.. CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-19-080-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-19-080-01"
+      }
+    ],
+    "title": "Medtronic Conexus Radio Frequency Telemetry Protocol (Update C)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:20.468557+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSMA-19-080-01",
+      "initial_release_date": "2021-04-08T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:20.468557+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2090",
+                "product": {
+                  "name": "Medtronic - 2090",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2490C",
+                "product": {
+                  "name": "Medtronic - 2490C",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "10"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "11"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "12"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "13"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "14"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "15"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "16"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "17"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "18"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "19"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "20"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "21"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "24950",
+                "product": {
+                  "name": "Medtronic - 24950",
+                  "product_id": "22"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MyCareLink Monitor, CareLink Monitor, CareLink 2090 Programmer, specific Medtronic implanted cardiac devices listed below"
+          }
+        ],
+        "category": "vendor",
+        "name": "Medtronic"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6538",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The Conexus telemetry protocol utilized within this ecosystem does not implement authentication or authorization. An attacker with adjacent short-range access to an affected product, in situations where the product\u2019s radio is turned on, can inject, replay, modify, and/or intercept data within the telemetry communication. This communication protocol provides the ability to read and write memory values to affected implanted cardiac devices; therefore, an attacker could exploit this communication protocol to change memory in the implanted cardiac device.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has applied additional controls for monitoring and responding to improper use of the Conexus telemetry protocol by the affected implanted cardiac devices. Additional mitigations are being developed and will be deployed through future updates, assuming regulatory approval.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has developed mitigating patches for a subset of the affected implanted cardiac device models. These patches are installed during regular office visits. Medtronic has stated that patches for additional impacted models are being developed by Medtronic and will be deployed through future updates. Patches are currently available for the following affected models:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends that users take additional defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has released additional patient focused information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.medtronic.com/security"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.fda.gov/medical-devices/digital-health/cybersecurity"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "These vulnerabilities are not exploitable remotely.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.3,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6538"
+    },
+    {
+      "cve": "CVE-2019-6540",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The Conexus telemetry protocol utilized within this ecosystem does not implement encryption. An attacker with adjacent short-range access to a target product can listen to communications, including the transmission of sensitive data.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has applied additional controls for monitoring and responding to improper use of the Conexus telemetry protocol by the affected implanted cardiac devices. Additional mitigations are being developed and will be deployed through future updates, assuming regulatory approval.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has developed mitigating patches for a subset of the affected implanted cardiac device models. These patches are installed during regular office visits. Medtronic has stated that patches for additional impacted models are being developed by Medtronic and will be deployed through future updates. Patches are currently available for the following affected models:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends that users take additional defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has released additional patient focused information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.medtronic.com/security"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.fda.gov/medical-devices/digital-health/cybersecurity"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "These vulnerabilities are not exploitable remotely.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6540"
+    }
+  ]
+}

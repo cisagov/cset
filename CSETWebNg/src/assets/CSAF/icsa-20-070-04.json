@@ -1,0 +1,143 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Joachim Kerschbaumer reported this vulnerability to Johnson Controls."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of this vulnerability could allow malicious code execution with system-level privileges.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-070-04 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-070-04"
+      }
+    ],
+    "title": "Johnson Controls Kantech EntraPass",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:16.002543+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-070-04",
+      "initial_release_date": "2020-03-10T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:16.002543+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v8.10",
+                "product": {
+                  "name": "Kantech, a subsidiary of Johnson Controls - <v8.10",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EntraPass"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v8.10",
+                "product": {
+                  "name": "Kantech, a subsidiary of Johnson Controls - <v8.10",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EntraPass"
+          }
+        ],
+        "category": "vendor",
+        "name": "Kantech, a subsidiary of Johnson Controls"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-7589",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An issue with an API may allow an attacker to upload and execute malicious code with system-level privileges.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2019-7589"
+    }
+  ]
+}

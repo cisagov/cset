@@ -1,0 +1,349 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Tenable reported these vulnerabilities to AVEVA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow an unauthenticated user to remotely execute code.. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy, Transportation Systems, and Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-305-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-305-01"
+      }
+    ],
+    "title": "AVEVA InduSoft Web Studio and InTouch Edge HMI (formerly InTouch Machine Edition)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:33.874915+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-18-305-01",
+      "initial_release_date": "2018-11-01T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:33.874915+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<8.1 SP2",
+                "product": {
+                  "name": "AVEVA Software, LLC. (AVEVA) - <8.1 SP2",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "InduSoft Web Studio and InTouch Edge HMI (formerly InTouch Machine Edition)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<2017 SP2",
+                "product": {
+                  "name": "AVEVA Software, LLC. (AVEVA) - <2017 SP2",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "InduSoft Web Studio and InTouch Edge HMI (formerly InTouch Machine Edition)"
+          }
+        ],
+        "category": "vendor",
+        "name": "AVEVA Software, LLC. (AVEVA)"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-17916",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A remote attacker could send a carefully crafted packet to exploit a stack-based buffer overflow vulnerability during tag, alarm, or event related actions such as read and write, with potential for code to be executed. If InduSoft Web Studio remote communication security was not enabled, or a password was left blank, a remote user could send a carefully crafted packet to invoke an arbitrary process, with potential for code to be executed. The code would be executed under the privileges of the InduSoft Web Studio or InTouch Edge HMI runtime and could lead to a compromise of the InduSoft Web Studio or InTouch Edge HMI server machine.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends that users upgrade to InduSoft Web Studio v8.1 SP2 and InTouch Edge HMI (formerly InTouch Machine Edition) 2017 SP2 as soon as possible. Software updates can be downloaded from the Global Customer Support \u201cSoftware Download\u201d area or from the links below:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://download.indusoft.com/81.2.0/IWS81.2.0.zip",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "http://download.indusoft.com/81.2.0/IWS81.2.0.zip"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=5223",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=5223"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends that users update existing projects to enable the security features of InduSoft Web Studio and InTouch Edge HMI:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA has published Security Bulletin LFSEC00000130 on their website at the following location:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityBulletin_LFSec130.pdf",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityBulletin_LFSec130.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2018-17916"
+    },
+    {
+      "cve": "CVE-2018-17914",
+      "cwe": {
+        "id": "CWE-258",
+        "name": "Empty Password in Configuration File"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "This vulnerability could allow an unauthenticated user to remotely execute code with the same privileges as that of the InduSoft Web Studio or InTouch Edge HMI (formerly InTouch Machine Edition) runtime.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends that users upgrade to InduSoft Web Studio v8.1 SP2 and InTouch Edge HMI (formerly InTouch Machine Edition) 2017 SP2 as soon as possible. Software updates can be downloaded from the Global Customer Support \u201cSoftware Download\u201d area or from the links below:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://download.indusoft.com/81.2.0/IWS81.2.0.zip",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "http://download.indusoft.com/81.2.0/IWS81.2.0.zip"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=5223",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=5223"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends that users update existing projects to enable the security features of InduSoft Web Studio and InTouch Edge HMI:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA has published Security Bulletin LFSEC00000130 on their website at the following location:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityBulletin_LFSec130.pdf",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityBulletin_LFSec130.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2018-17914"
+    }
+  ]
+}

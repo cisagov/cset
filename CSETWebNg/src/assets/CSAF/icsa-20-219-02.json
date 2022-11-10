@@ -1,0 +1,525 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "kimiya and Natnael Samson (@NattiSamson) working with Trend Micro\u2019s Zero Day Initiative reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow an attacker to read/modify information, execute arbitrary code, and/or crash the application.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: East Asia, Europe, United States",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-219-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-219-02"
+      }
+    ],
+    "title": "Advantech WebAccess HMI Designer",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:17.474563+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-219-02",
+      "initial_release_date": "2020-08-06T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:17.474563+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=2.1.9.31",
+                "product": {
+                  "name": "Advantech - <=2.1.9.31",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "WebAccess HMI Designer"
+          }
+        ],
+        "category": "vendor",
+        "name": "Advantech"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-16207",
+      "cwe": {
+        "id": "CWE-122",
+        "name": "Heap-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple heap-based buffer overflow vulnerabilities may be exploited by opening specially crafted project files that may overflow the heap, which may allow remote code execution, disclosure/modification of information, or cause the application to crash.\u00a0",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16207"
+    },
+    {
+      "cve": "CVE-2020-16211",
+      "cwe": {
+        "id": "CWE-125",
+        "name": "Out-of-bounds Read"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An out-of-bounds read vulnerability may be exploited by processing specially crafted project files, which may allow an attacker to read information.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 3.3,
+            "baseSeverity": "LOW",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16211"
+    },
+    {
+      "cve": "CVE-2020-16213",
+      "cwe": {
+        "id": "CWE-787",
+        "name": "Out-of-bounds Write"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Processing specially crafted project files lacking proper validation of user supplied data may cause the system to write outside the intended buffer area, which may allow remote code execution, disclosure/modification of information, or cause the application to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16213"
+    },
+    {
+      "cve": "CVE-2020-16229",
+      "cwe": {
+        "id": "CWE-843",
+        "name": "Access of Resource Using Incompatible Type ('Type Confusion')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Processing specially crafted project files lacking proper validation of user supplied data may cause a type confusion condition, which may allow remote code execution, disclosure/modification of information, or cause the application to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16229"
+    },
+    {
+      "cve": "CVE-2020-16215",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Processing specially crafted project files lacking proper validation of user supplied data may cause a stack-based buffer overflow, which may allow remote code execution, disclosure/modification of information, or cause the application to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16215"
+    },
+    {
+      "cve": "CVE-2020-16217",
+      "cwe": {
+        "id": "CWE-415",
+        "name": "Double Free"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A double free vulnerability caused by processing specially crafted project files may allow remote code execution, disclosure/modification of information, or cause the application to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has released Version 2.1.9.81 of WebAccess HMI Designer to address the reported vulnerabilities. Users can download the latest version of WebAccess HMI Designer.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://support.advantech.com/support/DownloadSRDetail_New.aspx?SR_ID=1-F6UG0T&Doc_Source=Download"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-16217"
+    }
+  ]
+}

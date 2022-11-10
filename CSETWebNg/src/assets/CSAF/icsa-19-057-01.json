@@ -1,0 +1,1479 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "--------- Begin Update A Part 2 of 3 ---------"
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow the reading of sensitive information, remote code execution, arbitrary configuration changes, authentication bypass, sensitive data capture, reboot of the device, device crash, or full compromise of the device.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, and Transportation Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-057-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-057-01"
+      }
+    ],
+    "title": "Moxa IKS, EDS (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:56.920211+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-057-01",
+      "initial_release_date": "2019-10-24T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:56.920211+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=3.8",
+                "product": {
+                  "name": "Moxa - <=3.8",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IKS, EDS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=5.6",
+                "product": {
+                  "name": "Moxa - <=5.6",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IKS, EDS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=3.8",
+                "product": {
+                  "name": "Moxa - <=3.8",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IKS, EDS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=3.8",
+                "product": {
+                  "name": "Moxa - <=3.8",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IKS, EDS"
+          }
+        ],
+        "category": "vendor",
+        "name": "Moxa"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6557",
+      "cwe": {
+        "id": "CWE-120",
+        "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Several buffer overflow vulnerabilities have been identified, which may allow remote code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6557"
+    },
+    {
+      "cve": "CVE-2019-6561",
+      "cwe": {
+        "id": "CWE-352",
+        "name": "Cross-Site Request Forgery (CSRF)"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A cross-site request forgery has been identified, which may allow for the execution of unauthorized actions on the device.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6561"
+    },
+    {
+      "cve": "CVE-2019-6565",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The device fails to properly validate user input, giving unauthenticated and authenticated attackers the ability to perform XSS attacks, which may be used to send a malicious script.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6565"
+    },
+    {
+      "cve": "CVE-2019-6520",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The device does not properly check authority on server side, which results in a read-only user being able to perform arbitrary configuration changes.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.1,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6520"
+    },
+    {
+      "cve": "CVE-2019-6524",
+      "cwe": {
+        "id": "CWE-307",
+        "name": "Improper Restriction of Excessive Authentication Attempts"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The devices do not implement sufficient measures to prevent multiple failed authentication attempts, which may allow an attacker to discover passwords via brute force attack.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6524"
+    },
+    {
+      "cve": "CVE-2019-6526",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The devices use plaintext transmission of sensitive data, which may allow an attacker to capture sensitive data such as an administrative password.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6526"
+    },
+    {
+      "cve": "CVE-2019-6522",
+      "cwe": {
+        "id": "CWE-125",
+        "name": "Out-of-bounds Read"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Failure to properly check array bounds may allow an attacker to read device memory on arbitrary addresses, which may allow an attacker to retrieve sensitive data or cause device reboot.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.1,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6522"
+    },
+    {
+      "cve": "CVE-2019-6518",
+      "cwe": {
+        "id": "CWE-256",
+        "name": "Unprotected Storage of Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The devices store plaintext passwords, which may allow sensitive information to be read by someone with access to the device.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6518"
+    },
+    {
+      "cve": "CVE-2019-6563",
+      "cwe": {
+        "id": "CWE-341",
+        "name": "Predictable from Observable State"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software generates a predictable cookie calculated with an MD5 hash, allowing an attacker to capture the administrator's password, which could lead to a full compromise of the device.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6563"
+    },
+    {
+      "cve": "CVE-2019-6559",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The devices allow remote authenticated users to cause a denial of service via a specially crafted packet, which may cause the switch to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Moxa recommends users implement the following measures to mitigate these vulnerabilities.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/support/technical-support"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Moxa\u2019s security advisory for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/eds-405a-series-eds-408a-series-eds-510a-series-and-iks-g6824a-series-ethernet-switches-vulnerabilities"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6559"
+    }
+  ]
+}

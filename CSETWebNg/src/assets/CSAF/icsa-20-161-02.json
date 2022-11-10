@@ -1,0 +1,286 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Yossi Reuven of SCADAfence reported this vulnerability to Mitsubishi Electric."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/Low attack complexity. Successful exploitation of this vulnerability could cause the Ethernet port to enter a denial-of-service condition.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-161-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-161-02"
+      }
+    ],
+    "title": "Mitsubishi Electric MELSEC iQ-R Series (Update C)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:01.113381+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-161-02",
+      "initial_release_date": "2021-04-20T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:01.113381+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=05",
+                "product": {
+                  "name": "Mitsubishi Electric - <=05",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=39",
+                "product": {
+                  "name": "Mitsubishi Electric - <=39",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=7",
+                "product": {
+                  "name": "Mitsubishi Electric - <=7",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=49",
+                "product": {
+                  "name": "Mitsubishi Electric - <=49",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=24",
+                "product": {
+                  "name": "Mitsubishi Electric - <=24",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=20",
+                "product": {
+                  "name": "Mitsubishi Electric - <=20",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC iQ-R Series"
+          }
+        ],
+        "category": "vendor",
+        "name": "Mitsubishi Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-13238",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker can cause a denial-of-service condition at the Ethernet port by sending a specially crafted packet.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric has fixed the following versions to discard packets when specially crafted packets are received:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric recommends users of the affected devices take the following measures for cyber-attacks such as DoS attack or unauthorized access from untrusted networks or hosts.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the publication from Mitsubishi Electric for more information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2020-001_en.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert..cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "title": "CVE-2020-13238"
+    }
+  ]
+}

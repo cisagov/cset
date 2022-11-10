@@ -1,0 +1,207 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "VAPT Team, C3i Center, and IIT Kanpur reported this vulnerability to AVEVA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low skill level to exploit. Successful exploitation of this vulnerability could allow a locally authenticated user to obtain Citect user credentials.. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-150-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-150-01"
+      }
+    ],
+    "title": "AVEVA Vijeo Citect and CitectSCADA",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:30.602979+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-150-01",
+      "initial_release_date": "2019-05-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:30.602979+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "7.30",
+                "product": {
+                  "name": "AVEVA - 7.30",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vijeo Citect and CitectSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "7.30",
+                "product": {
+                  "name": "AVEVA - 7.30",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vijeo Citect and CitectSCADA"
+          }
+        ],
+        "category": "vendor",
+        "name": "AVEVA"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-10981",
+      "cwe": {
+        "id": "CWE-522",
+        "name": "Insufficiently Protected Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability has been identified that may allow an authenticated local user access to Citect user credentials.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends all affected users download and upgrade to CitectSCADA 2018 as soon as possible. Available at (login required):",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=51141",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://softwaresupportsp.schneider-electric.com/#/producthub/details?id=51141"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA\u2019s Security Advisory can be viewed at:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityAdvisory_LFSec136.pdf",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://sw.aveva.com/hubfs/assets-2018/pdf/security-bulletin/SecurityAdvisory_LFSec136.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2019-10981"
+    }
+  ]
+}

@@ -1,0 +1,629 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "kimiya, working with Trend Micro\u2019s Zero Day Initiative, and Michael Heinzl reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low attack complexity. Successful exploitation of these vulnerabilities could allow an attacker to cause data corruption, read sensitive information, obtain code execution, or crash the application.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-299-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-299-01"
+      }
+    ],
+    "title": "Fuji Electric Tellus Lite V-Simulator and V-Server Lite",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:50.829127+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-21-299-01",
+      "initial_release_date": "2021-10-26T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:50.829127+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v4.0.12.0",
+                "product": {
+                  "name": "Fuji Electric - <v4.0.12.0",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Tellus Lite V-Simulator, and V-Server Lite"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v4.0.12.0",
+                "product": {
+                  "name": "Fuji Electric - <v4.0.12.0",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Tellus Lite V-Simulator, and V-Server Lite"
+          }
+        ],
+        "category": "vendor",
+        "name": "Fuji Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-38413",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a stack-based buffer overflow, which may allow an attacker to achieve code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38413"
+    },
+    {
+      "cve": "CVE-2021-38419",
+      "cwe": {
+        "id": "CWE-787",
+        "name": "Out-of-bounds Write"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to an out-of-bounds write, which can result in data corruption, a system crash, or code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38419"
+    },
+    {
+      "cve": "CVE-2021-38401",
+      "cwe": {
+        "id": "CWE-822",
+        "name": "Untrusted Pointer Dereference"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to an untrusted pointer dereference, which may allow an attacker to execute arbitrary code and cause the application to crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38401"
+    },
+    {
+      "cve": "CVE-2021-38421",
+      "cwe": {
+        "id": "CWE-125",
+        "name": "Out-of-bounds Read"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to an out-of-bounds read, which may allow an attacker to read sensitive information from other memory locations or cause a crash.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38421"
+    },
+    {
+      "cve": "CVE-2021-38409",
+      "cwe": {
+        "id": "CWE-824",
+        "name": "Access of Uninitialized Pointer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to an access of uninitialized pointer, which may allow an attacker read from or write to unexpected memory locations, leading to a denial-of-service.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38409"
+    },
+    {
+      "cve": "CVE-2021-38415",
+      "cwe": {
+        "id": "CWE-122",
+        "name": "Heap-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Parsing a specially crafted project file may cause a heap-based buffer overflow, which may allow an attacker to execute arbitrary code.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric recommends updating software to the latest version:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://felib.fujielectric.co.jp/download/details.htm?dataid=53788608&site=global&lang=en"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-38415"
+    }
+  ]
+}

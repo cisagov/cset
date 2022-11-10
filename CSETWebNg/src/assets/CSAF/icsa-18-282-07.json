@@ -1,0 +1,168 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Researcher Karn Ganeshen reported this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "n/a. Successful exploitation of this vulnerability may allow an attacker to load a malicious DLL and execute code on the affected system with the same privileges as the application that loaded the malicious DLL.. n/a. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-282-07 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-282-07"
+      }
+    ],
+    "title": "Fuji Electric Energy Savings Estimator",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:23.438179+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-18-282-07",
+      "initial_release_date": "2018-10-09T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:23.438179+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=V.1.0.2.0",
+                "product": {
+                  "name": "Fuji Electric - <=V.1.0.2.0",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Fuji Electric Energy Savings Estimator"
+          }
+        ],
+        "category": "vendor",
+        "name": "Fuji Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-14812",
+      "cwe": {
+        "id": "CWE-427",
+        "name": "Uncontrolled Search Path Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An uncontrolled search path element (DLL Hijacking) vulnerability has been identified. Exploitation of this vulnerability could give an attacker access to the system with the same level of privilege as the application that utilizes the malicious DLL.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Fuji Electric has released Version V.1.0.2.1 of the software that can be downloaded from:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://americas.fujielectric.com/engineers-room/online-tools/",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://americas.fujielectric.com/engineers-room/online-tools/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2018-14812"
+    }
+  ]
+}

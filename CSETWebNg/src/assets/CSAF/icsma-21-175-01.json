@@ -1,0 +1,198 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Philips reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely. Successful exploitation of this vulnerability could allow an attacker to read the LDAP system credentials by gaining access to the network channel used for communication. This risk applies to configurations using LDAP via TLS and where the domain controller returns LDAP referrals.. CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-21-175-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsma-21-175-01"
+      }
+    ],
+    "title": "Philips Interoperability Solution XDS",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:19.622539+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSMA-21-175-01",
+      "initial_release_date": "2021-06-24T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:19.622539+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2018-1",
+                "product": {
+                  "name": "Philips - 2018-1",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Interoperability Solution XDS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2.5",
+                "product": {
+                  "name": "Philips - 2.5",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Interoperability Solution XDS"
+          }
+        ],
+        "category": "vendor",
+        "name": "Philips"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-32966",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to clear text transmission of sensitive information when configured to use LDAP via TLS and where the domain controller returns LDAP referrals, which may allow an attacker to remotely read LDAP system credentials.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has identified the following guidance and mitigations:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific installations of the Interoperability Solutions XDS components should contact Philips regional service support online or by phone at 1-800-722-9377.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "See the Philips advisory for additional details regarding this vulnerability. In addition, users can visit the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 3.7,
+            "baseSeverity": "LOW",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2021-32966"
+    }
+  ]
+}

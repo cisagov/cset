@@ -1,0 +1,360 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Younes Dragoni of Nozomi Networks reported the vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit.. ATTENTION: Exploitable remotely/low skill level to exploit.. Critical Infrastructure Sectors: Commercial Facilities, Critical Manufacturing, Energy, and Transportation Systems. Countries/Areas Deployed: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-088-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-088-01"
+      }
+    ],
+    "title": "WAGO 750 Series",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:01.330579+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-18-088-01",
+      "initial_release_date": "2018-03-29T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:01.330579+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=10",
+                "product": {
+                  "name": "WAGO - <=10",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "750 Series"
+          }
+        ],
+        "category": "vendor",
+        "name": "WAGO"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-31465",
+      "cwe": {
+        "id": "CWE-404",
+        "name": "Improper Resource Shutdown or Release"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A remote attack may take advantage of an improper implementation of the 3 way handshake during a TCP connection affecting the communications with commission and service tools. Specially crafted packets may also be sent to Port 2455/TCP/IP, used in Codesys management software, which may result in a denial-of-service condition of communications with commissioning and service tools.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "WAGO has released new firmware addressing this vulnerability that can be obtained by contacting WAGO support via email at support@wago.com.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "If updating the firmware is not feasible WAGO recommends that users disable the WAGO Service Communication via WBM or limit the access to Ports 6626 and 2455/TCP/IP to trusted devices.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see WAGO\u2019s security advisory:Vulnerability-in-the-WAGO-Ethernet-TCP-IP-driver.pdf",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.wago.com/medias/Vulnerability-in-the-WAGO-Ethernet-TCP-IP-driver.pdf?context=bWFzdGVyfHJvb3R8MjgxNDk0fGFwcGxpY2F0aW9uL3BkZnxoOTcvaDhkLzkxNTAyMjMyMjA3NjYucGRmfGRlNWQ4ODc0NTE5M2UyNTUwNTIyNDRlOWFkNWI2YjNkMzg0YTVhYzlmYTBjNzM4MDdmNmYzOTM5M2ZlMGEzNzE"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the NCCIC Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "title": "CVE-2018-8836 "
+    }
+  ]
+}

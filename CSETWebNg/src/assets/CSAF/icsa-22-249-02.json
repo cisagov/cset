@@ -1,0 +1,813 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Chris Anastasio from Incite Team; Piotr Bazyd\u0142o, Pedro Ribeiro, and Radek Domanski from Flashback Team; Daan Keuper and Thijs Alkemade from Computest; and Aaron Ferber reported these vulnerabilities to Trend Micro Zero Day Initiative."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low attack complexity. Successful exploitation of these vulnerabilities could result in arbitrary code execution, information disclosure, or denial of service.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-22-249-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-249-02"
+      }
+    ],
+    "title": "AVEVA Edge 2020 R2 SP1 and all prior versions",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:24.446116+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-22-249-02",
+      "initial_release_date": "2022-09-06T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:24.446116+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=2020 R2 SP1",
+                "product": {
+                  "name": "AVEVA - <=2020 R2 SP1",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AVEVA Edge 2020 R2 SP1 and all prior versions"
+          }
+        ],
+        "category": "vendor",
+        "name": "AVEVA"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-36970",
+      "cwe": {
+        "id": "CWE-357",
+        "name": "Insufficient UI Warning of Dangerous Operations"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The scripting capability provided by AVEVA Edge is unrestricted; a user could abuse this to achieve arbitrary code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-36970"
+    },
+    {
+      "cve": "CVE-2022-28686",
+      "cwe": {
+        "id": "CWE-427",
+        "name": "Uncontrolled Search Path Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in AVEVA Edge that could allow a malicious actor with access to the file system to achieve arbitrary code execution and cause escalation by tricking AVEVA Edge into loading an unsafe DLL.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-28686"
+    },
+    {
+      "cve": "CVE-2022-28687",
+      "cwe": {
+        "id": "CWE-427",
+        "name": "Uncontrolled Search Path Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in AVEVA Edge that could allow a malicious actor with access to the file system to achieve arbitrary code execution and cause escalation by tricking AVEVA Edge into loading an unsafe DLL.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-28687"
+    },
+    {
+      "cve": "CVE-2022-28688",
+      "cwe": {
+        "id": "CWE-427",
+        "name": "Uncontrolled Search Path Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in AVEVA Edge that could allow a malicious actor with access to the file system to achieve arbitrary code execution and cause escalation by tricking AVEVA Edge into loading an unsafe DLL.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-28688"
+    },
+    {
+      "cve": "CVE-2022-28685",
+      "cwe": {
+        "id": "CWE-502",
+        "name": "Deserialization of Untrusted Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in AVEVA Edge that, if exploited, could allow a user to tamper with project files to achieve arbitrary code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-28685"
+    },
+    {
+      "cve": "CVE-2022-36969",
+      "cwe": {
+        "id": "CWE-611",
+        "name": "Improper Restriction of XML External Entity Reference"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "This vulnerability, if exploited, could allow a malicious actor to cause a denial-of-service condition in AVEVA Edge or to extract arbitrary files from the host running AVEVA Edge.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends applying security fixes for the affected products:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=f03eb16e-2ca0-41a0-8998-08d99cd36dd5"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA advises the following precautions should be taken throughout the lifetime of AVEVA Edge projects:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional details, users can refer to the supplied help file in HF 2020.2.00.40 (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/producthub/details?id=e1598a96-31e2-4370-c17c-08da7168e83a"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability, including security updates, users should see security bulletin AVEVA-2022-005",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2022-005.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability these vulnerabilities.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2022-36969"
+    }
+  ]
+}

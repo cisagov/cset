@@ -1,0 +1,441 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Hitachi Energy reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low attack complexity. Successful exploitation of these vulnerabilities could cause a denial-of-service condition in the affected version of the RTU500 series product.. CRITICAL INFRASTRUCTURE SECTORS: Energy. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-341-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-341-01"
+      }
+    ],
+    "title": "Hitachi Energy RTU500 OpenLDAP",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:56.753995+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-21-341-01",
+      "initial_release_date": "2021-12-07T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:56.753995+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "13.2.1",
+                "product": {
+                  "name": "Hitachi Energy - 13.2.1",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.7.X",
+                "product": {
+                  "name": "Hitachi Energy - 12.7.X",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.6.X",
+                "product": {
+                  "name": "Hitachi Energy - 12.6.X",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "13.1.X",
+                "product": {
+                  "name": "Hitachi Energy - 13.1.X",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "13.0.X",
+                "product": {
+                  "name": "Hitachi Energy - 13.0.X",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.4.X",
+                "product": {
+                  "name": "Hitachi Energy - 12.4.X",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 Series"
+          }
+        ],
+        "category": "vendor",
+        "name": "Hitachi Energy"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-36229",
+      "cwe": {
+        "id": "CWE-843",
+        "name": "Access of Resource Using Incompatible Type ('Type Confusion')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in the affected OpenLDAP versions leading to an LDAP service crash in the parsing of a keystring, resulting in a denial-of-service condition.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy recommends users update to the following versions:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As the vulnerabilities affect only the RTU500 series in which CAM function is configured and enabled, a possible mitigation is to disable the CAM function if it is not used.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The CAM function is disabled by default.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy recommends the following security practices and firewall configurations to help protect process control networks from attacks that originate outside the network:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Portable computers and removable storage media should be carefully scanned for viruses before they are connected to a control system. Please see Hitachi Energy advisory 8DBD000066 for further mitigation and update information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000066&LanguageCode=en&DocumentPartId=&Action=Launch"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "title": "CVE-2020-36229"
+    },
+    {
+      "cve": "CVE-2020-36230",
+      "cwe": {
+        "id": "CWE-617",
+        "name": "Reachable Assertion"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in the affected OpenLDAP versions leading in an assertion failure in an LDAP service in the parsing of a file, resulting in a denial-of-service condition.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy recommends users update to the following versions:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As the vulnerabilities affect only the RTU500 series in which CAM function is configured and enabled, a possible mitigation is to disable the CAM function if it is not used.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The CAM function is disabled by default.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy recommends the following security practices and firewall configurations to help protect process control networks from attacks that originate outside the network:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Portable computers and removable storage media should be carefully scanned for viruses before they are connected to a control system. Please see Hitachi Energy advisory 8DBD000066 for further mitigation and update information.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000066&LanguageCode=en&DocumentPartId=&Action=Launch"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "title": "CVE-2020-36230"
+    }
+  ]
+}

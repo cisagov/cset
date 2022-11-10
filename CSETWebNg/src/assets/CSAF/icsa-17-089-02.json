@@ -1,0 +1,758 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "David Formby and Raheem Beyah of Georgia Tech and Fortiphyd Logic, Inc. reported the identified vulnerabilities."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Remotely exploitable/low skill level to exploit.. ATTENTION: Remotely exploitable/low skill level to exploit.. n/a. Countries/Areas Deployed: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-089-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-089-02"
+      }
+    ],
+    "title": "Schneider Electric Modicon PLCs",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:23.709025+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-17-089-02",
+      "initial_release_date": "2017-03-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:23.709025+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Schneider Electric - *",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon PLCs"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<4.0.5.11",
+                "product": {
+                  "name": "Schneider Electric - <4.0.5.11",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon PLCs"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Schneider Electric - *",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon PLCs"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<4.0.5.11.",
+                "product": {
+                  "name": "Schneider Electric - <4.0.5.11.",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon PLCs"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<1.5.0.0",
+                "product": {
+                  "name": "Schneider Electric - <1.5.0.0",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon PLCs"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-6030",
+      "cwe": {
+        "id": "CWE-343",
+        "name": "Predictable Value Range from Previous Values"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected products generate insufficiently random TCP initial sequence numbers that may allow an attacker to predict the numbers from previous values. This may allow an attacker to spoof or disrupt TCP connections.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released new firmware versions to address the predictable value range from previous values vulnerability and the use of insufficiently random values vulnerability, which are available through Schneider Electric\u2019s software update tool, SoMachine, Version 4.2, and SoMachineBasic, Version 1.5. Schneider Electric has not released a product to address the insufficiently protected credentials vulnerability; however, Schneider Electric has provided compensating controls to reduce the risk of exploitation.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "SoMachineBasic, Version 1.5, is available at the following location:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has provided the following compensating controls to reduce the risk of exploitation of the insufficiently protected credentials vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released Security Notifications SEVD-2017-075-01, SEVD-2017-075-02, and SEVD-2017-075-03, which provide additional information about the identified vulnerabilities, mitigations, and compensating controls:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC/ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        }
+      ],
+      "title": "CVE-2017-6030"
+    },
+    {
+      "cve": "CVE-2017-6026",
+      "cwe": {
+        "id": "CWE-330",
+        "name": "Use of Insufficiently Random Values"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The session numbers generated by the web application are lacking randomization and are shared between several users. This may allow a current session to be compromised.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released new firmware versions to address the predictable value range from previous values vulnerability and the use of insufficiently random values vulnerability, which are available through Schneider Electric\u2019s software update tool, SoMachine, Version 4.2, and SoMachineBasic, Version 1.5. Schneider Electric has not released a product to address the insufficiently protected credentials vulnerability; however, Schneider Electric has provided compensating controls to reduce the risk of exploitation.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "SoMachineBasic, Version 1.5, is available at the following location:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has provided the following compensating controls to reduce the risk of exploitation of the insufficiently protected credentials vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released Security Notifications SEVD-2017-075-01, SEVD-2017-075-02, and SEVD-2017-075-03, which provide additional information about the identified vulnerabilities, mitigations, and compensating controls:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC/ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        }
+      ],
+      "title": "CVE-2017-6026"
+    },
+    {
+      "cve": "CVE-2017-6028",
+      "cwe": {
+        "id": "CWE-522",
+        "name": "Insufficiently Protected Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Log-in credentials are sent over the network with Base64 encoding leaving them susceptible to sniffing. Sniffed credentials could then be used to log into the web application.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released new firmware versions to address the predictable value range from previous values vulnerability and the use of insufficiently random values vulnerability, which are available through Schneider Electric\u2019s software update tool, SoMachine, Version 4.2, and SoMachineBasic, Version 1.5. Schneider Electric has not released a product to address the insufficiently protected credentials vulnerability; however, Schneider Electric has provided compensating controls to reduce the risk of exploitation.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "SoMachineBasic, Version 1.5, is available at the following location:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.fr/fr/download/document/SOMBASAP15SOFT/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has provided the following compensating controls to reduce the risk of exploitation of the insufficiently protected credentials vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released Security Notifications SEVD-2017-075-01, SEVD-2017-075-02, and SEVD-2017-075-03, which provide additional information about the identified vulnerabilities, mitigations, and compensating controls:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-02/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-075-03/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC/ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        }
+      ],
+      "title": "CVE-2017-6028"
+    }
+  ]
+}

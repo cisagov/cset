@@ -1,0 +1,168 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "The researcher with the handle n0b0dy sent information to CISA, leading to the discovery of this vulnerability."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low skill level to exploit. Successful exploitation of this vulnerability could allow an attacker to achieve arbitrary code execution under the privileges of the application.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-134-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-134-01"
+      }
+    ],
+    "title": "Omron Network Configurator for DeviceNet (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:02.936529+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-134-01",
+      "initial_release_date": "2019-11-05T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:02.936529+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=3.41",
+                "product": {
+                  "name": "Omron - <=3.41",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Network Configurator for DeviceNet\u00a0"
+          }
+        ],
+        "category": "vendor",
+        "name": "Omron"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-10971",
+      "cwe": {
+        "id": "CWE-426",
+        "name": "Untrusted Search Path"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The application searches for resources by means of an untrusted search path that could execute a malicious .dll file not under the application's direct control and outside the intended directories.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Omron has released Version 3.42 of Network Configurator for DeviceNet Safety to address the reported vulnerability. Users can download the latest version of Network Configurator for DeviceNet Safety.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.fa.omron.co.jp/product/tool/32/safetycf/cfsc1_download_en.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Omron has recommended applying the following for further mitigation:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA also recommends that users take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2019-10971"
+    }
+  ]
+}

@@ -1,0 +1,435 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Melih Berk Ek\u015fio\u011flu reported some of these vulnerabilities to Siemens."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low attack complexity. These vulnerabilities could allow a remote attacker to conduct denial-of-service or cross-site scripting attacks. User interaction is required for a successful exploitation of the cross-site-scripting attack.. CRITICAL INFRASTRUCTURE SECTORS: Information Technology. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-042-10 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-042-10"
+      }
+    ],
+    "title": "Siemens SCALANCE S-600 (Update B)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:23.967026+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-042-10",
+      "initial_release_date": "2021-04-13T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:23.967026+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v3.0",
+                "product": {
+                  "name": "Siemens - <=v3.0",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE S-600 Firewall"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v3.0",
+                "product": {
+                  "name": "Siemens - <=v3.0",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE S-600 Firewall"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v3.0",
+                "product": {
+                  "name": "Siemens - <=v3.0",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE S-600 Firewall"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v3.0",
+                "product": {
+                  "name": "Siemens - <=v3.0",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE S-600 Firewall"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6585",
+      "cwe": {
+        "id": "CWE-80",
+        "name": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The integrated configuration web server of the affected devices could allow cross-site scripting (XSS) attacks if unsuspecting users are tricked into accessing a malicious link.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can apply to reduce the risk:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109756957"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on these vulnerabilities and associated software updates, please see Siemens security advisory SSA-591405",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.siemens.com/cert/advisories"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.7,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6585"
+    },
+    {
+      "cve": "CVE-2019-13925",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Specially crafted packets sent to Port 443/TCP of affected devices could cause a denial-of-service condition of the web server.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can apply to reduce the risk:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109756957"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on these vulnerabilities and associated software updates, please see Siemens security advisory SSA-591405",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.siemens.com/cert/advisories"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-13925"
+    },
+    {
+      "cve": "CVE-2019-13926",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Specially crafted packets sent to Port 443/TCP of affected devices could cause a denial-of-service condition of the web server. A cold reboot is required to restore the functionality of the device.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can apply to reduce the risk:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109756957"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on these vulnerabilities and associated software updates, please see Siemens security advisory SSA-591405",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.siemens.com/cert/advisories"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should take the following measures to protect themselves from social engineering attacks:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2019-13926"
+    }
+  ]
+}

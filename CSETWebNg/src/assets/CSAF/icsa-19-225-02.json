@@ -1,0 +1,329 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "OSIsoft reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely. Successful exploitation of these vulnerabilities may allow direct attacks against the product and disclose sensitive information.. CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, Government Facilities, Healthcare and Public Health, Information Technology, Metals and Mining, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-225-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-225-02"
+      }
+    ],
+    "title": "OSIsoft PI Web API",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:04.072753+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-225-02",
+      "initial_release_date": "2019-08-13T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:04.072753+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=2018",
+                "product": {
+                  "name": "OSIsoft LLC - <=2018",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "OSIsoft PI Web API"
+          }
+        ],
+        "category": "vendor",
+        "name": "OSIsoft LLC"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-13515",
+      "cwe": {
+        "id": "CWE-532",
+        "name": "Insertion of Sensitive Information into Log File"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Successful exploitation of this vulnerability may allow disclosure of sensitive information.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "OSIsoft recommends users upgrade to PI Web API 2018 SP1 or later to resolve these issues. To download PI Web API 2018 SP1, please access the OSIsoft customer portal (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To avoid exposing sensitive information in the PI Web API Application Debug log, ensure that the Debug log is disabled on the Windows machine running PI Web API. Follow these steps to disable the Debug log:\n1.\u00a0\u00a0 \u00a0Open Command Prompt and run the command eventvwr.msc.\n2.\u00a0\u00a0 \u00a0Navigate to View > Show Analytic and Debug Logs.\n3.\u00a0\u00a0 \u00a0Under Applications and Services Logs, find the PIWebAPI folder.\n4.\u00a0\u00a0 \u00a0Right click on the log entitled Debug, and click Disable Log.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Also be sure to clear existing entries in the Debug log.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Assuming the log is Disabled but contains Events (e.g., after a troubleshooting session), enable the log and then disable it immediately.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "If the log is already enabled, disable it, enable it, and finally disable it again to wipe out the contents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The CSRF defense is enabled by default in new installations of PI Web API. OSIsoft recommends leaving the EnableCSRFDefense configuration setting unchanged so that the CSRF defense is always in effect. If it is necessary to toggle this setting, OSIsoft recommends restarting the PI Web API service after changing the state.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on these vulnerabilities, please refer to OSIsoft\u2019s Security Bulletin:PI Web API Multiple security vulnerabilities resolved",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://customers.osisoft.com/s/knowledgearticle?knowledgeArticleUrl=PI-Web-API-Multiple-security-vulnerabilities-resolved"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2019-13515"
+    },
+    {
+      "cve": "CVE-2019-13516",
+      "cwe": {
+        "id": "CWE-693",
+        "name": "Protection Mechanism Failure"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a direct attack due to a cross-site request forgery protection setting that has not taken effect.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "OSIsoft recommends users upgrade to PI Web API 2018 SP1 or later to resolve these issues. To download PI Web API 2018 SP1, please access the OSIsoft customer portal (login required).",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To avoid exposing sensitive information in the PI Web API Application Debug log, ensure that the Debug log is disabled on the Windows machine running PI Web API. Follow these steps to disable the Debug log:\n1.\u00a0\u00a0 \u00a0Open Command Prompt and run the command eventvwr.msc.\n2.\u00a0\u00a0 \u00a0Navigate to View > Show Analytic and Debug Logs.\n3.\u00a0\u00a0 \u00a0Under Applications and Services Logs, find the PIWebAPI folder.\n4.\u00a0\u00a0 \u00a0Right click on the log entitled Debug, and click Disable Log.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Also be sure to clear existing entries in the Debug log.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Assuming the log is Disabled but contains Events (e.g., after a troubleshooting session), enable the log and then disable it immediately.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "If the log is already enabled, disable it, enable it, and finally disable it again to wipe out the contents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The CSRF defense is enabled by default in new installations of PI Web API. OSIsoft recommends leaving the EnableCSRFDefense configuration setting unchanged so that the CSRF defense is always in effect. If it is necessary to toggle this setting, OSIsoft recommends restarting the PI Web API service after changing the state.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on these vulnerabilities, please refer to OSIsoft\u2019s Security Bulletin:PI Web API Multiple security vulnerabilities resolved",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://customers.osisoft.com/s/knowledgearticle?knowledgeArticleUrl=PI-Web-API-Multiple-security-vulnerabilities-resolved"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2019-13516"
+    }
+  ]
+}

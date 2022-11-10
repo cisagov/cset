@@ -1,0 +1,468 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Based on earlier work performed by external researchers including Nathanael Paul, Jay Radcliffe, and Barnaby Jack, and from recent work performed by external researchers Billy Rios, Jonathan Butts, and Jesse Young, Medtronic performed additional variant analysis and reported this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "n/a. Successful exploitation of this vulnerability may allow an attacker with adjacent access to one of the affected products to intercept, modify, or interfere with the wireless RF (radio frequency) communications to or from the product. This may allow attackers to read sensitive data, change pump settings, or control insulin delivery.. CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-19-178-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsma-19-178-01"
+      }
+    ],
+    "title": "Medtronic MiniMed 508 and Paradigm Series Insulin Pumps",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:21.370878+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSMA-19-178-01",
+      "initial_release_date": "2019-06-27T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:21.370878+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2.4A",
+                "product": {
+                  "name": "Medtronic - 2.4A",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2.7A",
+                "product": {
+                  "name": "Medtronic - 2.7A",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2.4A",
+                "product": {
+                  "name": "Medtronic - 2.4A",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2.6A",
+                "product": {
+                  "name": "Medtronic - 2.6A",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "10"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Medtronic - *",
+                  "product_id": "11"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiniMed 508 and Paradigm Series Insulin Pumps"
+          }
+        ],
+        "category": "vendor",
+        "name": "Medtronic"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-10964",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected insulin pumps are designed to communicate using a wireless RF with other devices, such as blood glucose meters, glucose sensor transmitters, and CareLink USB devices. This wireless RF communication protocol does not properly implement authentication or authorization. An attacker with adjacent access to one of the affected insulin pump models can inject, replay, modify, and/or intercept data. This vulnerability could also allow attackers to change pump settings and control insulin delivery.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends U.S. patients who are currently using the affected products talk to their healthcare provider about changing to a newer model insulin pump with increased cybersecurity protection. Patients outside the U.S. will receive a notification letter with instructions based on the country where they live.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends all patients take the cybersecurity precautions indicated below.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CYBERSECURITY PRECAUTIONS RECOMMENDED FOR ALL PATIENTS:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has released additional patient-focused information, at the following location:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.medtronic.com/security",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.medtronic.com/security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additionally, Medtronic will be sending a letter to all patients who are current known users of these pumps further detailing the risks and defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nNCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ],
+          "url": "https://ics-cert.us-cert.gov/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11"
+          ]
+        }
+      ],
+      "title": "CVE-2019-10964"
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Yokogawa reported this vulnerability to JPCERT and CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low skill level to exploit. Successful exploitation of this vulnerability could allow a local attacker to execute malicious files.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Food and Agriculture. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-274-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-274-02"
+      }
+    ],
+    "title": "Yokogawa Products",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:08.162653+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-274-02",
+      "initial_release_date": "2019-10-01T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:08.162653+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.10.00",
+                "product": {
+                  "name": "Yokogawa - (R1.10.00",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Yokogawa - *",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Yokogawa - *",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.10.00",
+                "product": {
+                  "name": "Yokogawa - (R1.10.00",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.01.00",
+                "product": {
+                  "name": "Yokogawa - (R1.01.00",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.01.00",
+                "product": {
+                  "name": "Yokogawa - (R1.01.00",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.01.01",
+                "product": {
+                  "name": "Yokogawa - (R1.01.01",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.01.00",
+                "product": {
+                  "name": "Yokogawa - (R1.01.00",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc, Exaplog, Exaquantum, Exasmoc, Exarqe, GA10, and InsightSuiteAE"
+          }
+        ],
+        "category": "vendor",
+        "name": "Yokogawa"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6008",
+      "cwe": {
+        "id": "CWE-428",
+        "name": "Unquoted Search Path or Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Service paths in some Yokogawa applications are unquoted and contain spaces. This may allow a local attacker to execute malicious files by the service privilege.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa has provided the following countermeasures for this vulnerability in each of the affected products:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa states patching is the best protection against this vulnerability. If it is not possible to patch, please consult with specialists at Yokogawa on the next best course of action.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa recommends all users have a security program consisting of patch updates, anti-virus, backup and recovery, zoning, hardening, whitelisting, firewall, etc. Yokogawa can assist in setting up the security program and can perform security risk",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "assessments.\nFor more information about this vulnerability and the associated mitigations, please see Yokogawa\u2019s security advisory report YSAR-19-0003.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.yokogawa.com/library/resources/white-papers/yokogawa-security-advisory-report-list/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.4,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        }
+      ],
+      "title": "CVE-2019-6008"
+    }
+  ]
+}
