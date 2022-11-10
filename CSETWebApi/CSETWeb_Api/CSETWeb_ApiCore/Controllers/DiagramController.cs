@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Xml;
 using CSETWebCore.Business.Authorization;
@@ -19,9 +18,8 @@ using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System.Net.Http.Headers;
 using System.Text;
+using Lucene.Net.Store;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -437,6 +435,19 @@ namespace CSETWebCore.Api.Controllers
             var templates = _diagram.GetDiagramTemplates();
             return templates;
         }
+
+        /// <summary>
+        /// get cset diagram templates
+        /// </summary>
+        /// <returns></returns>
+        //[CsetAuthorize]
+        //[Route("api/diagram/alertsandadvisories")]
+        //[HttpGet]
+        //public IActionResult GetAlertsAndAdvisories()
+        //{
+        //    string[] filePaths = GetFiles(Path.Combine(this.Environment.WebRootPath, "Files/"));
+        //    return templates;
+        //}
 
         /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons
