@@ -61,4 +61,8 @@ export class ModuleContentComponent implements OnInit {
   toggleShowReferences(evt: any) {
     this.reportSvc.showReferences = evt.target.checked;
   }
+
+  toggleShowQuestions(evt: any) {
+    this.reportSvc.showQuestions = evt.target.checked;
+  }
 }

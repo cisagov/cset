@@ -512,6 +512,7 @@ import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
+import { RelatedQBlockComponent } from './reports/module-content/related-q-block/related-q-block.component';
 
 
 
@@ -980,7 +981,8 @@ import { LoginAccessKeyComponent } from './initial/login-access-key/login-access
         AboutCfComponent,
         MvraSummaryPageComponent,
         MvraGapsPageComponent,
-        LoginAccessKeyComponent, 
+        LoginAccessKeyComponent,
+        RelatedQBlockComponent, 
     ],
     providers: [
         ConfigService,
