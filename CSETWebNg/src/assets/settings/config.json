@@ -126,5 +126,25 @@
             "buttonColor": "",
             "answerLabel": "Yes Compensating Control"
         }
+    ],
+    "answersCPG": [
+        {
+            "code": "Y",
+            "buttonLabel": "Implemented",
+            "buttonColor": "",
+            "answerLabel": "Implemented"
+        },
+        {
+            "code": "I",
+            "buttonLabel": "In Progress",
+            "buttonColor": "",
+            "answerLabel": "In Progress"
+        },
+        {
+            "code": "N",
+            "buttonLabel": "Not Started",
+            "buttonColor": "",
+            "answerLabel": "Not Started"
+        }
     ]
 }
