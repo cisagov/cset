@@ -73,8 +73,6 @@ export class IseMeritComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
-    
-
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.answers = r;
@@ -102,7 +100,6 @@ export class IseMeritComponent implements OnInit {
 
         this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any)=>{      
           this.actionData = findingData;
-          console.log(this.actionData)
           for(let i = 0; i<this.actionData?.length; i++){
             let actionItemRow = this.actionData[i];
 
@@ -137,7 +134,6 @@ export class IseMeritComponent implements OnInit {
         this.findSvc.GetAssessmentFindings().subscribe(
           (r: any) => {
             this.response = r; 
-            console.log(this.response)
  
             for(let i = 0; i < this.response?.length; i++) {
               console.log(this.examLevel.substring(0, 4))
