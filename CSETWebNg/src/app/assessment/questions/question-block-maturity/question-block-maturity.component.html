@@ -68,7 +68,7 @@
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                         {{ q.displayNumber }}
                         <div>
-                            <span class="question-mat-level-name">
+                            <span class="question-mat-level-name" *ngIf="showLevelIndicator(q)">
                                 {{ q.maturityLevelName }}
                             </span>
                         </div>
@@ -126,7 +126,7 @@
                         <span class="font-weight-bold">
                             {{ q.displayNumber }}
                         </span>
-                        <span class="question-mat-level-name ml-4">
+                        <span class="question-mat-level-name ml-4" *ngIf="showLevelIndicator(q)">
                             {{ q.maturityLevelName }}
                         </span>
                     </div>
