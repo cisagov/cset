@@ -76,7 +76,7 @@
 
 
     <!-- top level -->
-    <p class="mb-4">
+    <p class="mb-4" *ngIf="!!groupings">
       Unanswered questions are calculated as a '{{questionsSvc.getAnswerButtonLabel(modelId, 'N')}}' response
     </p>
     
