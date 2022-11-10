@@ -56,7 +56,7 @@
         <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
             <label class="mb-1" for="creditUnion">Credit Union</label>
             <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-                (blur)="update($event)" tabindex="0">
+                (change)="update($event)" tabindex="0">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -79,7 +79,7 @@
             <div class="form-group col-md-6">
                 <label class="mb-1" for="assets">Assets</label>
                 <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                    [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+                    [(ngModel)]="assessment.assets" (change)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
             <div class="col-md-6"></div>
         </div>
