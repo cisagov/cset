@@ -272,13 +272,13 @@
                                 <div>
                                     <strong>Issue Type: </strong> {{ finding?.finding?.type }}
                                 </div>
+                                    
+                                <strong>Description: </strong><br>
+                                {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
+                                
+                                <br>
                                 <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
-                                    
-                                    <strong> Description: </strong><br>
-                                    {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
-                                    
-                                    <br>
-                                    
+
                                     <strong> Action Items: </strong>
                                     <br>
                                     <div *ngIf="finding?.finding?.auto_Generated != 1">
