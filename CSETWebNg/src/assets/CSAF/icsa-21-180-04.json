@@ -1,0 +1,696 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Chris Yang of TXOne Networks, working with\u00a0Trend Micro\u2019s Zero Day Initiative, reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable from an adjacent network/low attack complexity. Successful exploitation of this vulnerability could crash the device being accessed.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-180-04 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-180-04"
+      }
+    ],
+    "title": "JTEKT TOYOPUC PLC",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:12.345693+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-21-180-04",
+      "initial_release_date": "2021-06-29T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:12.345693+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "10"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "11"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "12"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "13"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "14"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "15"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "16"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "17"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "18"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "19"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "20"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "21"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "JTEKT Corporation - *",
+                  "product_id": "22"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TOYOPUC PLC"
+          }
+        ],
+        "category": "vendor",
+        "name": "JTEKT Corporation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-27477",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "When the affected products receive an invalid frame, the outside area of a receive buffer for FL-net are overwritten. As a result, the PLC CPU detects a system error, and the affected products stop.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "JTEKT has updated to the following PLC firmware versions to address the vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "PLUS SERIES",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "There is no need to update Plus series expansion boards. If you use a Plus series expansion board, update Plus CPU or Plus BUS-EX to which the expansion board is connected.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For firmware updates, visit the JTEKT website.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://form.k3r.jp/jtektmt/inquiry7e"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, JTEKT Corporation recommends users only build networks with trusted FL-net products.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Requests for additional information can be sent to JTEKT Corporation via website form.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://form.k3r.jp/jtektmt/inquiry7e"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22"
+          ]
+        }
+      ],
+      "title": "CVE-2021-27477"
+    }
+  ]
+}

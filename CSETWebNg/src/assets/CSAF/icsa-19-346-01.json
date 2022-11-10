@@ -1,0 +1,160 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Z0mb1E working with Trend Micro\u2019s Zero Day Initiative, reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of this vulnerability may allow remote code execution.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: East Asia, United States, and Europe",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-346-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-346-01"
+      }
+    ],
+    "title": "Advantech DiagAnywhere Server",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:17.924096+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-19-346-01",
+      "initial_release_date": "2019-12-12T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:17.924096+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "DiagAnywhere Server Versions 3.07.11 and prior",
+                "product": {
+                  "name": "Advantech - DiagAnywhere Server Versions 3.07.11 and prior",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DiagAnywhere Server"
+          }
+        ],
+        "category": "vendor",
+        "name": "Advantech"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-18257",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple stack-based buffer overflow vulnerabilities exist in the file transfer service listening on the TCP port. Successful exploitation could allow an unauthenticated attacker to execute arbitrary code with the privileges of the user running DiagAnywhere Server.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Advantech has phased out DiagAnywhere Server Version 3.07.11 and removed it from its website.\nAdvantech has released Version 3.07.14 of DiagAnywhere Server to address the reported vulnerability. Users can download the latest version of DiagAnywhere Server by accessing the Advantech Support Portal at DiagAnywhere Server update.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://gcc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.advantech.tw%2Fcontact%2Finquiryrequestform%3Fsubject%3Dtechnical%252bsupport&data=02%7C01%7Ckent.norris%40inl.gov%7C449fb83721f346b6eacb08d77e1527e4%7C4cf464b7869a42368da2a98566485554%7C0%7C1%7C637116501670835959&sdata=1Bu4oPEhrYMhfmHoWEBDuGvehe2PSWX%2Fc9DtL%2FVyS3E%3D&reserved=0"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2019-18257"
+    }
+  ]
+}

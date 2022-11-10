@@ -1,0 +1,220 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Andrea Palanca of Nozomi Networks reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "n/a. Successful exploitation of this vulnerability could allow an attacker to access the system with elevated privileges.. CRITICAL INFRASTRUCTURE SECTORS: Energy. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-348-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-348-02"
+      }
+    ],
+    "title": "Schneider Electric Rack PDU (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:21.978605+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-21-348-02",
+      "initial_release_date": "2021-12-21T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:21.978605+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v1.1.0.3",
+                "product": {
+                  "name": "Schneider Electric - <=v1.1.0.3",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Rack Power Distribution Unit (PDU)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v1.0.0.28",
+                "product": {
+                  "name": "Schneider Electric - <=v1.0.0.28",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Rack Power Distribution Unit (PDU)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v6.9.6",
+                "product": {
+                  "name": "Schneider Electric - <=v6.9.6",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Rack Power Distribution Unit (PDU)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-22825",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker could access the system with elevated privileges when a privileged account clicks on a malicious URL that compromises the security token. ",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends the following:",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://www.apc.com/us/en/faqs/FAQ000225298/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "If users choose not to apply the remediations provided above, immediately apply the following mitigations to reduce the risk of exploit:",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, please see Schneider Electric\u2019s security notification: SEVD-2021-348-04",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://download.schneider-electric.com/files?p_Doc_Ref=SEVD-2021-348-04"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "title": "CVE-2021-22825"
+    }
+  ]
+}

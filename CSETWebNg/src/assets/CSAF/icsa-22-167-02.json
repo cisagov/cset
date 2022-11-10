@@ -1,0 +1,368 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Sam Hanson of Dragos reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low attack complexity. Successful exploitation of this vulnerability could cause a loss of sensitive information and unauthorized changes.. CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-22-167-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-167-02"
+      }
+    ],
+    "title": "AutomationDirect DirectLOGIC with Serial Communication",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:52.271929+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-22-167-02",
+      "initial_release_date": "2022-06-16T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:52.271929+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.72",
+                "product": {
+                  "name": "AutomationDirect - <v2.72",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "DirectLOGIC with Serial Communication"
+          }
+        ],
+        "category": "vendor",
+        "name": "AutomationDirect"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-2003",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product is vulnerable to a specifically crafted serial message to the CPU serial port that will cause the PLC to respond with the PLC password in cleartext. This could allow an attacker to access and make unauthorized changes.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AutomationDirect recommends users upgrade to firmware Version 2.72 or later, which will no longer respond with the password when requested with the specially crafted message.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://cdn.automationdirect.com/static/firmware/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation for brute force password access has also been added. Three incorrect password entries will result in a 3-hour lock out of password entry. Power cycle will allow subsequent password attempts.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "While automation networks and systems have built-in password protection schemes, this is only one step in securing the affected systems. Automation control system networks must incorporate data protection and security measures at least as robust as a typical business computer system. AutomationDirect recommends users of PLCs, HMI products, and other SCADA system products perform independent network security analysis to determine the proper level of security required for the application.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutomationDirect has identified the specific mitigation actions listed below:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please refer to the following link for supporting information related to security considerations.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://support.automationdirect.com/docs/securityconsiderations.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.7,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        }
+      ],
+      "title": "CVE-2022-2003"
+    }
+  ]
+}

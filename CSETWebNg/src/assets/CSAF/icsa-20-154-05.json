@@ -1,0 +1,176 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Ehab Hussein of IOActive reported this vulnerability to GE."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Low skill level to exploit/exploitable remotely. Successful exploitation of this vulnerability could allow access to sensitive information, execution of arbitrary code, and cause the device to become unresponsive.. CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-154-05 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-154-05"
+      }
+    ],
+    "title": "GE Grid Solutions Reason RT Clocks",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:16.302350+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-154-05",
+      "initial_release_date": "2020-06-02T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:16.302350+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<08A05",
+                "product": {
+                  "name": "GE - <08A05",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Grid Solutions Reason RT Clocks"
+          }
+        ],
+        "category": "vendor",
+        "name": "GE"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-12017",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The device\u2019s vulnerability in the web application could allow multiple unauthenticated attacks that could cause serious impact. The vulnerability may allow an unauthenticated attacker to execute arbitrary commands and send a request to a specific URL that could cause the device to become unresponsive. The unauthenticated attacker may change the password of the 'configuration' user account, allowing the attacker to modify the configuration of the device via the web interface using the new password. This vulnerability may also allow an unauthenticated attacker to bypass the authentication required to configure the device and reboot the system.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "GE strongly recommends users of time synchronization products update their units to firmware Version 08A05 or greater to resolve these issues.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "GE recommends users evaluate their current risk and implement appropriate network security mitigation measures as follows:",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "GE suggests mitigation action does not ensure complete security, but it can be considered until the affected time synchronization product is upgraded.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability and firmware updates, please see Reason RT430/RT434 \u2013 GPS/GNSS Precision Clocks.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.gegridsolutions.com/app/ViewFiles.aspx?prod=RT430&type=7"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1"
+          ]
+        }
+      ],
+      "title": "CVE-2020-12017"
+    }
+  ]
+}

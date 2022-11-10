@@ -1,0 +1,658 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Sharon Brizinov and Amir Preminger (VP Research) of Claroty reported these vulnerabilities to Rockwell Automation and CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow an attacker to cause a denial-of-service condition, obtain remote code execution, and read sensitive information.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-163-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-163-02"
+      }
+    ],
+    "title": "Rockwell Automation FactoryTalk Linx Software (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:51.287557+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-163-02",
+      "initial_release_date": "2020-07-09T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:51.287557+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">=1",
+                "product": {
+                  "name": "Rockwell Automation - >=1",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=v4.11.00",
+                "product": {
+                  "name": "Rockwell Automation - <=v4.11.00",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">=31",
+                "product": {
+                  "name": "Rockwell Automation - >=31",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">=1",
+                "product": {
+                  "name": "Rockwell Automation - >=1",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">=14",
+                "product": {
+                  "name": "Rockwell Automation - >=14",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "6.00 6.10",
+                "product": {
+                  "name": "Rockwell Automation - 6.00 6.10",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=12",
+                "product": {
+                  "name": "Rockwell Automation - <=12",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=32",
+                "product": {
+                  "name": "Rockwell Automation - <=32",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">=9",
+                "product": {
+                  "name": "Rockwell Automation - >=9",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk Linx Software"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-11999",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An exposed API call allows users to provide files to be processed without sanitation. This may allow an attacker to specify a filename to execute unauthorized code and modify files or data.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends users apply these patches by following instructions in knowledgebase articles below:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "General mitigations:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, please refer to Rockwell Automation\u2019s security advisory: 54102-Industrial Security Advisory Index.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/54102"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        }
+      ],
+      "title": "CVE-2020-11999"
+    },
+    {
+      "cve": "CVE-2020-12003",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The parsing mechanism that processes certain file types does not provide input sanitation. This may allow an attacker to use specially crafted files to traverse the file system and modify or expose sensitive data or execute arbitrary code.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends users apply these patches by following instructions in knowledgebase articles below:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "General mitigations:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, please refer to Rockwell Automation\u2019s security advisory: 54102-Industrial Security Advisory Index.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/54102"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        }
+      ],
+      "title": "CVE-2020-12003"
+    },
+    {
+      "cve": "CVE-2020-12005",
+      "cwe": {
+        "id": "CWE-22",
+        "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An exposed API call allows users to provide files to be processed without sanitation. This may allow an attacker to use specially crafted requests to traverse the file system and expose sensitive data on the local hard drive.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends users apply these patches by following instructions in knowledgebase articles below:\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/898270"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "General mitigations:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, please refer to Rockwell Automation\u2019s security advisory: 54102-Industrial Security Advisory Index.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/54102"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        }
+      ],
+      "title": "CVE-2020-12005"
+    }
+  ]
+}

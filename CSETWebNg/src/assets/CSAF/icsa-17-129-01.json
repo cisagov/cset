@@ -1,0 +1,1320 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Duan JinTong, Ma ShaoShuai, and Cheng Lei from NSFOCUS Security Team reported this vulnerability directly to Siemens."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable from an adjacent network/low skill level to exploit. An attacker may be able to cause a denial-of-service condition requiring a manual restart by exploiting this vulnerability.. CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-129-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-129-01"
+      }
+    ],
+    "title": "Siemens devices using the PROFINET Discovery and Configuration Protocol (Update K)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:22.823797+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-17-129-01",
+      "initial_release_date": "2019-02-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:22.823797+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v14 SP1",
+                "product": {
+                  "name": "Siemens - <v14 SP1",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v7.3 Update 15",
+                "product": {
+                  "name": "Siemens - <v7.3 Update 15",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v5.0",
+                "product": {
+                  "name": "Siemens - <v5.0",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<2008 SP5.",
+                "product": {
+                  "name": "Siemens - <2008 SP5.",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v8.2 SP1",
+                "product": {
+                  "name": "Siemens - <v8.2 SP1",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v13 SP2",
+                "product": {
+                  "name": "Siemens - <v13 SP2",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v7.3 Update 15",
+                "product": {
+                  "name": "Siemens - <v7.3 Update 15",
+                  "product_id": "7"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v14",
+                "product": {
+                  "name": "Siemens - <v14",
+                  "product_id": "8"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v4.7 SP4 HF2",
+                "product": {
+                  "name": "Siemens - <v4.7 SP4 HF2",
+                  "product_id": "9"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v14 SP1",
+                "product": {
+                  "name": "Siemens - <v14 SP1",
+                  "product_id": "10"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v4.2 HF1",
+                "product": {
+                  "name": "Siemens - <v4.2 HF1",
+                  "product_id": "11"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v7.2",
+                "product": {
+                  "name": "Siemens - <v7.2",
+                  "product_id": "12"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v5.6",
+                "product": {
+                  "name": "Siemens - <v5.6",
+                  "product_id": "13"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v3.0",
+                "product": {
+                  "name": "Siemens - <v3.0",
+                  "product_id": "14"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v14 SP1",
+                "product": {
+                  "name": "Siemens - <v14 SP1",
+                  "product_id": "15"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v7.4 SP1 Upd1",
+                "product": {
+                  "name": "Siemens - <v7.4 SP1 Upd1",
+                  "product_id": "16"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Siemens - *",
+                  "product_id": "17"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Siemens - *",
+                  "product_id": "18"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v2.3",
+                "product": {
+                  "name": "Siemens - <v2.3",
+                  "product_id": "19"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<v13 SP2",
+                "product": {
+                  "name": "Siemens - <v13 SP2",
+                  "product_id": "20"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Siemens - *",
+                  "product_id": "21"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "v2.3",
+                "product": {
+                  "name": "Siemens - v2.3",
+                  "product_id": "22"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Siemens - *",
+                  "product_id": "23"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Devices using the PROFINET Discovery and Configuration Protocol (DCP)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-6865",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Specially crafted PROFINET DCP broadcast packets sent to the affected products on a local Ethernet segment (Layer 2) could cause a denial-of-service condition in some services. The services may require manual restart to recover.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens provides updates that fix the vulnerability for the following affected products and recommends that users update to the new fixed version:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109750182"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109746073",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109746073"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109745460",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109745460"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109745155",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109745155"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109745984",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109745984"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109747706",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109747706"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://w3.siemens.com/aspa_app/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://w3.siemens.com/aspa_app/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/98161300",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/98161300"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109750182",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109750182"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109748024",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109748024"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.de/automation/partner",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.siemens.de/automation/partner"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109747482",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109747482"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/19440762",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/19440762"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/de/en/view/109747539",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/de/en/view/109747539"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109748854",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109748854"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://w3.siemens.com/aspa_app/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://w3.siemens.com/aspa_app/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/109749111",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109749111"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The affected component is shared among all of the affected products on the host. Installing one fixed version will mitigate the vulnerability for all Siemens applications installed on that host.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens is preparing updates for the remaining affected products and recommends the following mitigations in the meantime:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/ww/en/view/60119725",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/60119725"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting industrial control systems networks with appropriate mechanisms. Siemens advises configuring the environment according to Siemens operational guidelines in order to run the devices in a protected IT environment.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.com/cert/operational-guidelines-industrial-security",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability and more detailed mitigation instructions, please see Siemens Security Advisory SSA-275839 at the following location:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "mitigation",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23"
+          ]
+        }
+      ],
+      "title": "CVE-2017-6865"
+    }
+  ]
+}

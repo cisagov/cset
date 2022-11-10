@@ -1,0 +1,198 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Hitachi ABB Power Grids reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of this vulnerability could allow an attacker to remotely take control of the product.. CRITICAL INFRASTRUCTURE SECTORS: Energy Sector. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-294-02 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-294-02"
+      }
+    ],
+    "title": "Hitachi ABB Power Grids XMC20 Multiservice-Multiplexer",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:09.456644+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-20-294-02",
+      "initial_release_date": "2020-10-20T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:09.456644+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "co5ne_r1h07_12.esw",
+                "product": {
+                  "name": "Hitachi ABB Power Grids - co5ne_r1h07_12.esw",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "XMC20 Multiservice-Multiplexer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "co5ne_r2d14_03.esw",
+                "product": {
+                  "name": "Hitachi ABB Power Grids - co5ne_r2d14_03.esw",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "XMC20 Multiservice-Multiplexer"
+          }
+        ],
+        "category": "vendor",
+        "name": "Hitachi ABB Power Grids"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-10933",
+      "cwe": {
+        "id": "CWE-287",
+        "name": "Improper Authentication"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in a specific library included in these products. An attacker could exploit the vulnerability by sending a specially crafted message to the XMC20 node to open a communication channel without first performing authentication, resulting in unauthorized access.\u00a0",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi ABB Power Grids has corrected the problem in the following product versions and recommends users apply the firmware update at the earliest availability:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information and support please contact a product provider or a Hitachi ABB Power Grids service organization.\u00a0",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.hitachiabb-powergrids.com/contact-us/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi ABB Power Grids published cybersecurity advisory PGVU-PGGA-XMC20-2020034 to give users more information about this issue.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=9AKK107991A2862&LanguageCode=en&DocumentPartId=&Action=Launch"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi ABB Power Grids recommends the following cybersecurity practices:",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2"
+          ],
+          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.1,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "title": "CVE-2018-10933"
+    }
+  ]
+}

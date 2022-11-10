@@ -1,0 +1,299 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Hitachi Energy reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Exploitable remotely/low attack complexity. Successful exploitation of this vulnerability could cause an internal buffer overflow, which can reboot the product.. CRITICAL INFRASTRUCTURE SECTORS: Energy. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-22-242-04 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-242-04"
+      }
+    ],
+    "title": "Hitachi Energy RTU500 series",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:37.331752+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-22-242-04",
+      "initial_release_date": "2022-08-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:37.331752+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.7.",
+                "product": {
+                  "name": "Hitachi Energy - 12.7.",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.2.",
+                "product": {
+                  "name": "Hitachi Energy - 12.2.",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.4.",
+                "product": {
+                  "name": "Hitachi Energy - 12.4.",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "13.2.",
+                "product": {
+                  "name": "Hitachi Energy - 13.2.",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.6.",
+                "product": {
+                  "name": "Hitachi Energy - 12.6.",
+                  "product_id": "5"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "12.0.",
+                "product": {
+                  "name": "Hitachi Energy - 12.0.",
+                  "product_id": "6"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RTU500 series"
+          }
+        ],
+        "category": "vendor",
+        "name": "Hitachi Energy"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-28613",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in the HCI Modbus TCP function included in the affected product versions. If the HCI Modbus TCP is enabled and configured, then an attacker could exploit the vulnerability by sending a specially crafted message to the RTU500, causing the receiving RTU500 CMU to reboot. The vulnerability is caused by a validation error in the length information carried in MBAP header in the HCI Modbus TCP function.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy made the following updates available to remediate the vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Because the vulnerability affects only the RTU500 series with HCI Modbus TCP configured and enabled, a possible mitigation is to disable the HCI Modbus TCP function if not used. The HCI Modbus TCP is disabled by default.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Hitachi Energy recommends the following security practices and firewall configurations to help protect process control networks from outside attacks:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, see Hitachi Energy advisory 8DBD000103\u00a0",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000103"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "title": "CVE-2022-28613"
+    }
+  ]
+}

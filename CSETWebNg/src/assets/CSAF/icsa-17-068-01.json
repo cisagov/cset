@@ -1,0 +1,297 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Sergey Temnikov and Vladimir Dashchenko of Kapersky Lab\u2019s Critical Infrastructure Defense Team identified and reported the vulnerability to Schneider Electric."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Remotely exploitable/low skill level to exploit.. ATTENTION: Remotely exploitable/low skill level to exploit.. n/a. Countries/Areas Deployed: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-068-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-068-01"
+      }
+    ],
+    "title": "Schneider Electric ClearSCADA",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:24.957790+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-17-068-01",
+      "initial_release_date": "2017-03-09T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:24.957790+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=77.5882)",
+                "product": {
+                  "name": "Schneider Electric - <=77.5882)",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ClearSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=76.5648)",
+                "product": {
+                  "name": "Schneider Electric - <=76.5648)",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ClearSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=75.5210)",
+                "product": {
+                  "name": "Schneider Electric - <=75.5210)",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ClearSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=75.5387)",
+                "product": {
+                  "name": "Schneider Electric - <=75.5387)",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ClearSCADA"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-6021",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with network access to the ClearSCADA server can send specially crafted sequences of commands and data packets to the ClearSCADA server that can cause the ClearSCADA server process and ClearSCADA communications driver processes to terminate.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released the following updates to mitigate the vulnerability:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users of ClearSCADA 2013 R2 and prior versions should upgrade to the latest ClearSCADA 2015 R2 hotfix to mitigate the vulnerability.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Each of the Service Pack and hotfixes above are available for direct download from Schneider Electric\u2019s web site at:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://resourcecenter.controlmicrosystems.com/display/CS/SCADA+Expert+ClearSCADA+Downloads",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "http://resourcecenter.controlmicrosystems.com/display/CS/SCADA+Expert+ClearSCADA+Downloads"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "More information can be found by visiting Schneider Electric\u2019s Security Notification at:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.schneider-electric.com/en/download/document/SEVD-2017-060-01/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "http://www.schneider-electric.com/en/download/document/SEVD-2017-060-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users include the following measures in their SCADA strategies:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2017-6021"
+    }
+  ]
+}

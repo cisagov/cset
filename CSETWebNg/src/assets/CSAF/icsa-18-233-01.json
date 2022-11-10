@@ -1,0 +1,253 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Yokogawa worked with JPCERT to report this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://www.first.org/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "summary",
+        "text": "Remotely exploitable/Low skill level to exploit. Successful exploitation of this vulnerability may allow arbitrary code execution, or the stopping of the license management function.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, and Food and Agriculture. COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Summary"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-233-01 - Web Version - CSAF Version 2.0",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-233-01"
+      }
+    ],
+    "title": "Yokogawa iDefine, STARDOM, ASTPLANNER, and TriFellows",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:09.154178+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA USCert CSAF Generator",
+          "version": "1"
+        }
+      },
+      "id": "ICSA-18-233-01",
+      "initial_release_date": "2018-08-21T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:09.154178+00:00",
+          "legacy_version": "Update A",
+          "number": "1.0.0",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1.0.0"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=R7.50",
+                "product": {
+                  "name": "Yokogawa - <=R7.50",
+                  "product_id": "1"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "iDefine, STARDOM, ASTPLANNER, and TriFellows"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=R1.16.3",
+                "product": {
+                  "name": "Yokogawa - <=R1.16.3",
+                  "product_id": "2"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "iDefine, STARDOM, ASTPLANNER, and TriFellows"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=5.04",
+                "product": {
+                  "name": "Yokogawa - <=5.04",
+                  "product_id": "3"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "iDefine, STARDOM, ASTPLANNER, and TriFellows"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<=R15.01",
+                "product": {
+                  "name": "Yokogawa - <=R15.01",
+                  "product_id": "4"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "iDefine, STARDOM, ASTPLANNER, and TriFellows"
+          }
+        ],
+        "category": "vendor",
+        "name": "Yokogawa"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-0651",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "This vulnerability that affects the license management function when it receives specially crafted data. An attacker could overflow the buffer by exploiting this, which may result in the license management function stopping or result in arbitrary code execution.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "references": [
+        {
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa recommends users to update to the latest versions or apply the patch:ASTPLANNER: Update to R15.02.01 or contact support for the patch,",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://contact.yokogawa.com/cs/gw?c-id=000497"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "When Yokogawa service personnel perform system upgrade or install patches, those charges are borne by the user. Please contact support in the following section for the countermeasures regarding the affected products. Yokogawa strongly suggests all users to introduce appropriate security measures not only for the vulnerability identified, but also to the overall systems.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Yokogawa\u2019s security notification YSAR-18-0006 for more information, which can be located here:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.yokogawa.com/library/resources/white-papers/yokogawa-security-advisory-report-list/",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.yokogawa.com/library/resources/white-papers/yokogawa-security-advisory-report-list/"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+        },
+        {
+          "category": "mitigation",
+          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "mitigation",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+          "product_ids": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.6,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "title": "CVE-2018-0651"
+    }
+  ]
+}
