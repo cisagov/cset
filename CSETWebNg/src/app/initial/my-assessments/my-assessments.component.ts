@@ -44,6 +44,7 @@ import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
+import * as moment from "moment";
 
 
 interface UserAssessment {
@@ -320,6 +321,13 @@ export class MyAssessmentsComponent implements OnInit {
 
   clickNewAssessmentButton() {
     this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })
+  }
+
+  //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
+  systemTimeTranslator(lastModifiedDate: any) {
+    let localTime = moment.utc(lastModifiedDate).local();
+
+    return localTime;
   }
 
 }
