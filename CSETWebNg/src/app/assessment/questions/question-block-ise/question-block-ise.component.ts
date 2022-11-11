@@ -122,6 +122,8 @@ export class QuestionBlockIseComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
+      this.summaryCommentCopy = this.myGrouping.questions[0].comment;
+
       this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
         (details) => {
           this.extras = details;
@@ -554,8 +556,6 @@ export class QuestionBlockIseComponent implements OnInit {
     this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;    
 
-    console.log('before ' + this.summaryCommentCopy)
-
     let summarySegment = '';
     // this.summaryCommentCopy = q.comment;
     if (this.assessSvc.isISE()) {
@@ -581,7 +581,6 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
-    console.log('after: ' + this.summaryCommentCopy)
 
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
