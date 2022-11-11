@@ -40,7 +40,7 @@ namespace CSETWebCore.Model.Question
         /// Indicates if the question should be included in the
         /// answer completion calculation on the UI widget.
         /// </summary>
-        public bool Countable { get; set; }
+        public bool Countable { get; set; } = true;
 
         /// <summary>
         /// Indicates an answer that has been reviewed.  
