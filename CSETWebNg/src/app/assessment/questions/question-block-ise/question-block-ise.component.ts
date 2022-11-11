@@ -219,7 +219,6 @@ export class QuestionBlockIseComponent implements OnInit {
         count++;
         this.ncuaSvc.questionCheck.set(parentId, count);
       }
-      console.log("This.ncuaSvc.questionCheck: " + JSON.stringify(this.ncuaSvc.questionCheck, null, 4));
       this.ncuaSvc.deleteHistory.clear();
     });
   }
