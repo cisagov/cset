@@ -99,7 +99,8 @@ namespace CSETWebCore.Business.Maturity
         {
             _myModel = new CisQuestions
             {
-                AssessmentId = this._assessmentId
+                AssessmentId = this._assessmentId,
+                ModelId = this._maturityModelId
             };
 
             allQuestions = _context.MATURITY_QUESTIONS
