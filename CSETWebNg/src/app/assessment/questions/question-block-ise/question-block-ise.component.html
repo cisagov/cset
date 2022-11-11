@@ -193,8 +193,8 @@
                     </div>
     
                     <div *ngIf="isFinalQuestion(q.questionId)">
-                        <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [placeholder]="textForSummary"
-                          (change)="storeSummaryComment(q, $event)">{{ getSummaryComment(q) }}</textarea>
+                        <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                          (change)="storeSummaryComment(q, $event)"></textarea>
                     </div>
     
                     <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
