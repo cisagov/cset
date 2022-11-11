@@ -271,7 +271,7 @@ namespace CSETWebCore.Helpers
                     parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]));
                 }
 
-                if (token.Payload[Constants.Constants.Token_AccessKey] != null)
+                if (token.Payload.ContainsKey(Constants.Constants.Token_AccessKey) && token.Payload[Constants.Constants.Token_AccessKey] != null)
                 {
                     parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_AccessKey]));
                 }
