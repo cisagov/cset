@@ -68,7 +68,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="context"></param>
         /// <returns></returns>
         public int RunImportManualPortion(UploadAssessmentModel model,
-            int currentUserId, string primaryEmail, CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil)
+            int? currentUserId, string primaryEmail, string accessKey,
+            CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil)
         {
             //create the new assessment
             //copy each of the items to the table 
@@ -82,7 +83,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
             AssessmentBusiness man = new AssessmentBusiness(null, token, null, cb, null, mb, assessmentUtil, null, null, context);
-            AssessmentDetail detail = man.CreateNewAssessmentForImport(currentUserId);
+            AssessmentDetail detail = man.CreateNewAssessmentForImport(currentUserId, accessKey);
             int _assessmentId = detail.Id;
 
             Dictionary<int, int> oldAnswerId = new Dictionary<int, int>();

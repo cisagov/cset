@@ -11,4 +11,19 @@
         /// </summary>
         public string Scope { get; set; }
     }
+
+
+    /// <summary>
+    /// Contains the credentials for an 'anonymous' login
+    /// </summary>
+    public class AnonymousLogin
+    {
+        public string AccessKey { get; set; }
+        public string TzOffset { get; set; }
+
+        /// <summary>
+        /// The application that is talking to the API.
+        /// </summary>
+        public string Scope { get; set; }
+    }
 }
