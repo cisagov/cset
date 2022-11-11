@@ -72,6 +72,8 @@ export class QuestionBlockIseComponent implements OnInit {
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Comment - -\n';
+  summaryConvoBuffer = '\n- - End of Summary Comment - -\n';
+
 
   // To do: eventually, these should be pulled in dynamically.
   importantQuestions = new Set([7569, 7574, 7575, 7578, 7579, 7580, 7581, 7583, 7585, 7586, 7587, 7595, 7596, 
@@ -549,11 +551,38 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
   */
   storeSummaryComment(q: Question, e: any) {
-    // q.comment = e.target.value;
-    // this.summaryCommentCopy = q.comment;
     this.summaryCommentCopy = e.target.value;
-    this.summaryEditedCheck = true;
- 
+    this.summaryEditedCheck = true;    
+
+    console.log('before ' + this.summaryCommentCopy)
+
+    let summarySegment = '';
+    // this.summaryCommentCopy = q.comment;
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (this.summaryCommentCopy.indexOf(bracketContact) !== 0) {
+        if (this.summaryCommentCopy !== '') {
+          if (this.summaryCommentCopy.indexOf('[') !== 0) {
+            summarySegment = bracketContact + ' ' + this.summaryCommentCopy;
+            this.summaryCommentCopy = summarySegment + this.summaryConvoBuffer;
+          }
+
+          else {
+            let previousContactInitials = this.summaryCommentCopy.substring(this.summaryCommentCopy.lastIndexOf('[') + 1, this.summaryCommentCopy.lastIndexOf(']'));
+            let endOfLastBuffer = this.summaryCommentCopy.lastIndexOf(this.summaryConvoBuffer) + this.summaryConvoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+                let oldComments = this.summaryCommentCopy.substring(0, endOfLastBuffer);
+                let newComment = this.summaryCommentCopy.substring(oldComments.length);
+
+                this.summaryCommentCopy = oldComments + bracketContact + ' ' + newComment + this.summaryConvoBuffer;
+            }
+          }
+        }
+      }
+    }
+    console.log('after: ' + this.summaryCommentCopy)
+
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -563,7 +592,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: e.target.value,
+        comment: this.summaryCommentCopy,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -589,7 +618,9 @@ export class QuestionBlockIseComponent implements OnInit {
       if (question.questionId === parentId) {
         // uses a local copy of the comment to avoid using API call
         if (this.summaryCommentCopy !== "") {
+          console.log('in get summary: ' + this.summaryCommentCopy)
           comment = this.summaryCommentCopy;
+          console.log('comment: ' + comment)
           return comment;
         }
         if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true){
