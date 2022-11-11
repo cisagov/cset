@@ -318,7 +318,7 @@ let headers = {
   translateExamLevel(matLevelId: number) {
     if(matLevelId === 17) {
       return 'SCUE';
-    } else if (matLevelId === 18) {
+    } else if (matLevelId === 18 || matLevelId === 19) {
       return 'CORE';
     }
   }
