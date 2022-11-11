@@ -128,7 +128,15 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras.findings.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
-              this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+              
+              // This is a check for post-merging ISE assessments.
+              // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
+              if (this.ncuaSvc.questionCheck.get(find.question_Id) !== undefined) {
+                this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+              } else {
+                this.deleteIssue(find.finding_Id, true);
+              }
+              
             }
           });
           
@@ -202,18 +210,16 @@ export class QuestionBlockIseComponent implements OnInit {
   */
   setIssueMap() {
     let parentId = 0;
-    let tempId = 0;
     let count = 0;
 
     this.myGrouping.questions.forEach(question => {
-      if (question.answer === 'N') {
-        parentId = question.parentQuestionId;
+      parentId = question.parentQuestionId;
 
-        if (parentId) {
-          count++;
-        }
+      if (question.answer === 'N') {
+        count++;
         this.ncuaSvc.questionCheck.set(parentId, count);
       }
+      console.log("This.ncuaSvc.questionCheck: " + JSON.stringify(this.ncuaSvc.questionCheck, null, 4));
       this.ncuaSvc.deleteHistory.clear();
     });
   }

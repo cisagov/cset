@@ -402,7 +402,7 @@ export class MergeExaminationsComponent implements OnInit {
               }
             }
             
-            // Send off a list of the assessment's new answers to the API to save. Then go to the main assessment screen
+            // Send off a list of the assessment's new answers to the API to save.
             this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
               this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
                 (questionListResponse: MaturityQuestionResponse) => {
