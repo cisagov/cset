@@ -317,11 +317,9 @@ let headers = {
   // translates the maturity_Level_Id into the maturity_Level
   translateExamLevel(matLevelId: number) {
     if(matLevelId === 17) {
-      return 'SCUEP';
+      return 'SCUE';
     } else if (matLevelId === 18) {
       return 'CORE';
-    } else if (matLevelId === 19) {
-      return 'CORE+';
     }
   }
 
