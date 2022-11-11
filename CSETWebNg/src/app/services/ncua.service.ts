@@ -327,12 +327,10 @@ let headers = {
 
   // translates the maturity_Level_Id into the maturity_Level
   translateExamLevelToInt(matLevelString: string) {
-    if(matLevelString === 'SCUEP') {
+    if(matLevelString === 'SCUE') { //SCUEP, but cut off because the substring(0, 4)
       return 17;
     } else if (matLevelString === 'CORE') {
       return 18;
-    } else if (matLevelString === 'CORE+') {
-      return 19;
     }
   }
 
