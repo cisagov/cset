@@ -167,6 +167,7 @@ export class MergeExaminationsComponent implements OnInit {
               let myString = this.assessmentComments.get(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId);
               myString += ("\n" + response.groupings[0].subGroupings[i].subGroupings[j].questions[k].comment);
               this.assessmentComments.set(response.groupings[0].subGroupings[i].subGroupings[j].questions[k].questionId, myString);
+              console.log(this.assessmentComments);
             }
           }
         }
@@ -290,7 +291,8 @@ export class MergeExaminationsComponent implements OnInit {
     let comment = "";
     for (let i = 0; i < length; i++) {
       if (this.assessmentComments.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
-        comment = this.assessmentComments.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        comment += this.assessmentComments.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        console.log(comment);
       } else {
         comment = "";
       }
