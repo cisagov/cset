@@ -49,6 +49,8 @@ export class DiagramComponentsComponent implements OnInit {
   sal: any;
   criticality: any;
   alertsAndAdvisories: any[] = []
+  vendors: string[] = [];
+  products: string[] = []
 
   /**
    *
@@ -69,6 +71,9 @@ export class DiagramComponentsComponent implements OnInit {
 
     this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((csafs: any[]) => {
       this.alertsAndAdvisories = csafs;
+
+      this.processVendorNames(csafs);
+      this.processProductNames(csafs);
     })
 
     this.getComponents();
@@ -138,6 +143,26 @@ export class DiagramComponentsComponent implements OnInit {
           return this.comparer.compareBool(a.physicalLocation, b.physicalLocation, isAsc);
         default:
           return 0;
+      }
+    });
+  }
+
+  // Parse vendor names from CSAF files.
+  processVendorNames(csafs) {
+    csafs.forEach(advisory => {
+      const vendor: string = advisory.product_Tree.branches[0].name
+      if (!this.vendors.includes(vendor)) {
+        this.vendors.push(vendor);
+      }
+    });
+  }
+
+  // Parse product names from CSAF files.
+  processProductNames(csafs) {
+    csafs.forEach(advisory => {
+      const product: string = advisory.product_Tree.branches[0].branches[0].name
+      if (!this.products.includes(product)) {
+        this.products.push(product);
       }
     });
   }

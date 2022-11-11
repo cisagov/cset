@@ -56,13 +56,13 @@
               [checked]="component.visible" [disabled]="true" >
         </td>
         <td>
-          <select class="form-control" [(ngModel)]="component.vendorName" (blur)="saveComponent(component)">
-            <option *ngFor="let advisory of alertsAndAdvisories">{{ advisory.product_Tree.branches[0].name }}</option>
+          <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
+            <option *ngFor="let vendor of vendors" [value]="vendor">{{ vendor }}</option>
           </select>
         </td>
         <td>
-          <select class="form-control" [(ngModel)]="component.productName" (blur)="saveComponent(component)">
-            <option *ngFor="let advisory of alertsAndAdvisories">{{ advisory.product_Tree.branches[0].branches[0].name }}</option>
+          <select class="form-control" [(ngModel)]="component.productName" (change)="saveComponent(component)">
+            <option *ngFor="let product of products" [value]="product">{{ product }}</option>
           </select>
         </td>
         <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>
