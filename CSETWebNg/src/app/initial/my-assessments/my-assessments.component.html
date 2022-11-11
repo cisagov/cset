@@ -171,7 +171,7 @@
                     <td *ngIf="isTSA">{{isTSA && (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ? 'CSET' : 'TSA' }}</td>
                     <td>{{assessment.type}}</td>
                     <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
-                    <td *ngIf="this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | date:'medium'}}</td>
+                    <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) | date:'medium'}}</td>
                     <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.creatorName}}</td>
                     <td>
                       <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
