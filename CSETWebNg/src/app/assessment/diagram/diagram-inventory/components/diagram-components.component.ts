@@ -29,6 +29,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
 import { AlertsAndAdvisoriesService } from '../../../../services/alerts-and-advisories.service';
 
+interface Vendor {
+  name: string;
+  products: string[];
+}
+
 @Component({
   selector: 'app-diagram-components',
   templateUrl: './diagram-components.component.html',
@@ -48,9 +53,8 @@ export class DiagramComponentsComponent implements OnInit {
   assetTypes: any;
   sal: any;
   criticality: any;
-  alertsAndAdvisories: any[] = []
-  vendors: string[] = [];
-  products: string[] = []
+  alertsAndAdvisories: any[] = [];
+  vendors: Vendor[] = [];
 
   /**
    *
@@ -90,6 +94,7 @@ export class DiagramComponentsComponent implements OnInit {
   }
 
   saveComponent(component) {
+    this.updateComponentVendor(component);
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
@@ -150,20 +155,30 @@ export class DiagramComponentsComponent implements OnInit {
   // Parse vendor names from CSAF files.
   processVendorNames(csafs) {
     csafs.forEach(advisory => {
-      const vendor: string = advisory.product_Tree.branches[0].name
-      if (!this.vendors.includes(vendor)) {
+      const vendor: Vendor = { name: advisory.product_Tree.branches[0].name, products: [] }
+      if (!this.vendors.find(e => e.name === vendor.name)) {
         this.vendors.push(vendor);
       }
     });
   }
 
-  // Parse product names from CSAF files.
+  // Parse product names from CSAF files. Products are tied to vendors.
   processProductNames(csafs) {
     csafs.forEach(advisory => {
-      const product: string = advisory.product_Tree.branches[0].branches[0].name
-      if (!this.products.includes(product)) {
-        this.products.push(product);
+      const product: string = advisory.product_Tree.branches[0].branches[0].name;
+      const vendor: Vendor = this.vendors.find(v => v.name === advisory.product_Tree.branches[0].name);
+
+      if (vendor && !vendor.products.includes(product)) {
+        vendor.products.push(product);
       }
     });
+  }
+
+  updateComponentVendor(component) {
+    if (!component.vendorName) {
+      return;
+    }
+
+    component.vendor = this.vendors.find(v => v.name === component.vendorName);
   }
 }

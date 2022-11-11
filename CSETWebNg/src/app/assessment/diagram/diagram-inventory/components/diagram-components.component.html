@@ -57,12 +57,12 @@
         </td>
         <td>
           <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
-            <option *ngFor="let vendor of vendors" [value]="vendor">{{ vendor }}</option>
+            <option *ngFor="let vendor of vendors" [value]="vendor.name">{{ vendor.name }}</option>
           </select>
         </td>
         <td>
-          <select class="form-control" [(ngModel)]="component.productName" (change)="saveComponent(component)">
-            <option *ngFor="let product of products" [value]="product">{{ product }}</option>
+          <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName" (change)="saveComponent(component)">
+            <option *ngFor="let product of component.vendor?.products" [value]="product">{{ product }}</option>
           </select>
         </td>
         <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>
