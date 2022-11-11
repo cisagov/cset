@@ -90,7 +90,7 @@ export class GroupingBlockComponent implements OnInit {
    * Indicates if all domain maturity filters have been turned off for the domain
    */
   allDomainMaturityLevelsHidden(): boolean {
-    if (this.isDomain()) {
+    if (this.isDomain() && (!this.assessSvc.isISE())) {
       if (this.acetFilteringSvc.allDomainMaturityLevelsHidden(this.grouping.title)) {
         return true;
       }
