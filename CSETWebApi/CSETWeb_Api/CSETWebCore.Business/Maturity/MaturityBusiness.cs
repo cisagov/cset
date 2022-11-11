@@ -28,6 +28,8 @@ namespace CSETWebCore.Business.Maturity
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
+        private int _maturityModelId;
+
         public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
@@ -2339,6 +2341,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
         {
+            this._maturityModelId = cisStructure.ModelId;
+
             var resp = new MaturityResponse();
 
             resp.MaturityTargetLevel = 100;         
@@ -2402,6 +2406,8 @@ namespace CSETWebCore.Business.Maturity
                     Comment = q.Comment,
                     MaturityLevelName = q.MaturityLevelName
                 };
+
+                newQ.Countable = IsQuestionCountable(this._maturityModelId, newQ);
 
                 q.Options.ForEach(o => {
                     newQ.Options.Add(o);
