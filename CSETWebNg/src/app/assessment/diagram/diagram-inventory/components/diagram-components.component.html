@@ -57,16 +57,12 @@
         </td>
         <td>
           <select class="form-control" [(ngModel)]="component.vendorName" (blur)="saveComponent(component)">
-            <option>Test Vendor 1</option>
-            <option>Test Vendor 2</option>
-            <option>Test Vendor 3</option>
+            <option *ngFor="let advisory of alertsAndAdvisories">{{ advisory.product_Tree.branches[0].name }}</option>
           </select>
         </td>
         <td>
           <select class="form-control" [(ngModel)]="component.productName" (blur)="saveComponent(component)">
-            <option>Product Name 1</option>
-            <option>Product Name 2</option>
-            <option>Product Name 3</option>
+            <option *ngFor="let advisory of alertsAndAdvisories">{{ advisory.product_Tree.branches[0].branches[0].name }}</option>
           </select>
         </td>
         <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>

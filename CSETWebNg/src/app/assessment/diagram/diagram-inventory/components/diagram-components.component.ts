@@ -27,6 +27,7 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
+import { AlertsAndAdvisoriesService } from '../../../../services/alerts-and-advisories.service';
 
 @Component({
   selector: 'app-diagram-components',
@@ -47,11 +48,16 @@ export class DiagramComponentsComponent implements OnInit {
   assetTypes: any;
   sal: any;
   criticality: any;
+  alertsAndAdvisories: any[] = []
 
   /**
    *
    */
-  constructor(public diagramSvc: DiagramService, public dialog: MatDialog,) { }
+  constructor(
+    public diagramSvc: DiagramService,
+    public dialog: MatDialog,
+    private alertsAndAdvisoriesSvc: AlertsAndAdvisoriesService
+  ) { }
 
   /**
    *
@@ -60,6 +66,11 @@ export class DiagramComponentsComponent implements OnInit {
     this.diagramSvc.getAllSymbols().subscribe((x: any) => {
       this.assetTypes = x;
     });
+
+    this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((csafs: any[]) => {
+      this.alertsAndAdvisories = csafs;
+    })
+
     this.getComponents();
   }
 

@@ -446,15 +446,15 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/alertsandadvisories")]
         [HttpGet]
-        public IEnumerable<object> GetAlertsAndAdvisories()
+        public IEnumerable<CommonSecurityAdvisoryFrameworkObject> GetAlertsAndAdvisories()
         {
-            string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/"));
-            List<object> csafFiles = new List<object>();
+            string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
+            List<CommonSecurityAdvisoryFrameworkObject> csafFiles = new List<CommonSecurityAdvisoryFrameworkObject>();
 
             foreach (var filePath in filePaths) 
             {
                 var jsonString = System.IO.File.ReadAllText(filePath);
-                csafFiles.Add(JsonConvert.DeserializeObject(jsonString));
+                csafFiles.Add(JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString));
             }
 
             return csafFiles;
