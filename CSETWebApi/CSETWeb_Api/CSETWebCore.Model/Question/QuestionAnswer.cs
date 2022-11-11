@@ -55,9 +55,12 @@ namespace CSETWebCore.Model.Question
         public int FindingNum { get; set; }
         public int? Answer_Id { get; set; }
 
+        public int MaturityModelId { get; set; }
+
         /// <summary>
         /// Indicates the maturity level of the question/requirement/statement.
         /// This is NOT the maturity_level_id from the MATURITY_LEVELS table.
+        /// This is the normalized ordinal "level", e.g., 1, 2, 3, etc.
         /// </summary>
         public int MaturityLevel { get; set; }
 

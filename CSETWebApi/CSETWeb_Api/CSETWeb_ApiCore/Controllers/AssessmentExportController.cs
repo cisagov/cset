@@ -39,7 +39,6 @@ namespace CSETWebCore.Api.Controllers
         {
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
-            int currentUserId = int.Parse(_token.Payload(Constants.Constants.Token_UserId));
 
 
             // determine extension (.csetw, .acet)

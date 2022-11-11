@@ -86,7 +86,7 @@ namespace CSETWebCore.Helpers
 
 
             // Generate a token for this user and add to the response
-            string token = _transactionSecurity.GenerateToken(loginUser.UserId, login.TzOffset, -1, null, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(loginUser.UserId, null, login.TzOffset, -1, null, null, login.Scope);
             resp.Token = token;
 
 
@@ -180,7 +180,7 @@ namespace CSETWebCore.Helpers
 
 
                 // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, login.TzOffset, -1, assessmentId, null, login.Scope);
+                string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
 
                 // Build response object
                 LoginResponse resp = new LoginResponse
@@ -199,6 +199,68 @@ namespace CSETWebCore.Helpers
 
 
                 return resp;
+        }
+
+
+        /// <summary>
+        /// Generates a 10-character key for anonymous access.
+        /// The alpha characters are all caps.
+        /// </summary>
+        /// <returns></returns>
+        public string GenerateAccessKey()
+        {
+            var key = "";
+            var keyIsUnique = false;
+
+            while (!keyIsUnique)
+            {
+                key = UniqueIdGenerator.Instance.GetBase32UniqueId(10).ToUpper();
+                if (_context.ACCESS_KEY.Count(x => x.AccessKey == key) == 0)
+                {
+                    keyIsUnique = true;
+                }
+            }
+
+            var dbAK = new ACCESS_KEY() 
+            {
+                AccessKey = key,
+                GeneratedDate = DateTime.UtcNow
+            };
+
+            _context.ACCESS_KEY.Add(dbAK);
+            _context.SaveChanges();
+
+            return key;
+        }
+
+
+        /// <summary>
+        /// Emulates credential authentication solely by providing
+        /// a valid Access Key.
+        /// </summary>
+        /// <returns></returns>
+        public LoginResponse AuthenticateAccessKey(AnonymousLogin login)
+        {
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == login.AccessKey);
+
+            if (ak == null)
+            {
+                // supplied access key does not exist
+                return null;
+            }
+
+            var resp = new LoginResponse()
+            {
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+            };
+
+            // Generate a token for this user and add to the response
+            string token = _transactionSecurity.GenerateToken(null, login.AccessKey, login.TzOffset, -1, null, null, login.Scope);
+            resp.Token = token;
+
+            return resp;
         }
     }
 }

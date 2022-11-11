@@ -25,7 +25,8 @@
   <div class="d-flex flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
     <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
-      <div class="mr-3 answered-count" *ngIf="!!groupings" matTooltip="Indicates the number of answered questions out of the total for this page">
+      <div class="mr-3 answered-count" *ngIf="!!groupings"
+        matTooltip="Indicates the number of answered questions out of the total for this page">
         {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
       </div>
       <div>
@@ -75,6 +76,10 @@
 
 
     <!-- top level -->
+    <p class="mb-4" *ngIf="!!groupings">
+      Unanswered questions are calculated as a '{{questionsSvc.getAnswerButtonLabel(modelId, 'N')}}' response
+    </p>
+    
     <ng-template [ngIf]="!!groupings">
       <div *ngFor="let g of groupings" class="w-100">
         <app-grouping-block [grouping]="g"></app-grouping-block>

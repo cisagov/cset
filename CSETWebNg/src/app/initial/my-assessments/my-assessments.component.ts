@@ -137,13 +137,23 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   *
-   * @returns
+   * Determines if a particular column should be included in the display.
    */
-  showAnalytics() {
-    var show = this.configSvc.behaviors?.showAnalyticsColumnOnLanding ?? false;
+  showColumn(column: string) {
+    if (column == 'primary-assessor') {
 
-    return show;
+      // hide the column for anonymous - there is no primary assessor user
+      if (this.configSvc.config.isRunningAnonymous) {
+        return false;
+      }
+
+      return !this.ncuaSvc.switchStatus;      
+    }
+
+    if (column == 'analytics') {
+      var show = this.configSvc.behaviors?.showAnalyticsColumnOnLanding ?? false;
+      return show;
+    }
   }
 
 
