@@ -110,14 +110,14 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   getIssues() {
-    let myIssues = [];
     this.ncuaSvc.assessmentsToMerge.forEach(assessId => {
       this.assessSvc.getAssessmentToken(assessId).then(() => {
         this.parentQuestionIds.forEach(parentId => {
 
           // Get issues and all their data
           this.questionSvc.getDetails(parentId, 'Maturity').subscribe(
-            (details) => {
+            (details) => {       
+              let myIssues = [];
               details.findings.forEach(find => {
                 myIssues.push(find);
 
@@ -126,7 +126,7 @@ export class MergeExaminationsComponent implements OnInit {
                 }
               });
             });
-            myIssues = [];
+            //myIssues = [];
         });
       });
     });
