@@ -38,7 +38,7 @@ import { DemographicExtendedService } from '../../../../services/demographic-ext
 })
 export class DemographicsExtendedComponent implements OnInit {
 
-  sectorList: Sector[];ks
+  sectorList: Sector[];
   subSectorList: Subsector[];
 
   regionList: Region[];
@@ -153,6 +153,7 @@ export class DemographicsExtendedComponent implements OnInit {
   getDemographics() {
     this.demoSvc.getDemographics().subscribe(
       (data: Demographic) => {
+        console.log(data);
         this.demographicData = data;
 
         // populate Subsector (industry) dropdown based on Sector
@@ -321,5 +322,10 @@ export class DemographicsExtendedComponent implements OnInit {
       data: this.sectorList
     };
     this.dialog.open(SectorHelpComponent, config);
+  }
+
+  setCyberRisk(value:string){    
+    this.demographicData.cyberRiskService = value;
+    this.updateDemographics();
   }
 }

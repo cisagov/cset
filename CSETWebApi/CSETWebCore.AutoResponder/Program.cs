@@ -23,12 +23,18 @@ namespace CSETWebCore.AutoResponder
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            bool test = false;
+            if(args.Length > 1)
+            {
+                test = true;
+            }
+
             // Setup Host
             var host = CreateDefaultBuilder().Build();
             // Invoke Worker
             using IServiceScope serviceScope = host.Services.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
-            if(DayOfWeek.Sunday == DateTime.Now.DayOfWeek)
+            if(DayOfWeek.Monday == DateTime.Now.DayOfWeek || test)
             {
                 var workerInstance = provider.GetRequiredService<WeeklyStatusWorker>();
                 workerInstance.ProcessEmails();
