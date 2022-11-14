@@ -183,13 +183,16 @@ export class AssessmentService {
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
 
-    return this.http
+    let data = this.http
       .post(
         this.apiUrl + 'assessmentdetail',
         JSON.stringify(assessment),
         headers
       )
       .subscribe();
+
+      console.log("update post is done\n")
+      return data;
   }
 
   /**
