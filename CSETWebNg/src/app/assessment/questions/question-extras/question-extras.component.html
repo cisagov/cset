@@ -43,7 +43,7 @@
           </svg>
       </button>
 
-        <button id="btn_supp_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
+        <button id="btn_SUPP_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
             <svg *ngIf="whichSupplementalIcon() == 'I'" viewBox="0 0 30 30"
@@ -69,7 +69,7 @@
             </svg>
         </button>
 
-      <button *ngIf="!this.assessSvc.isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
+      <button id="btn_CMNT_{{ myQuestion.questionId }}" *ngIf="!this.assessSvc.isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
           [matTooltip]="has('CMNT')==='inline' ? 'Comments with content':'Comment'" matTooltipPosition="above">
           <svg viewBox="0 0 32 32"
               style="height: 31px; width: 32px; margin: auto; margin-top: 5px; margin-left: -2px;">
@@ -155,7 +155,9 @@
         </span>
     </div>
 
-    <app-in-view *ngIf="autoLoadSupplemental()" (inView$)="forceLoadSupplemental()"></app-in-view>
+    <app-in-view *ngIf="autoLoadSupplemental()" (inView$)="forceLoadQuestionExtra('SUPP')"></app-in-view>
+
+    <app-in-view *ngIf="autoLoadComments()" (inView$)="forceLoadQuestionExtra('CMNT')"></app-in-view>
 
     <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="layoutSvc.hp">
 
@@ -198,7 +200,7 @@
                 <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category:
                     </span>{{tab?.relatedFrameworkCategory}}</div>
-                <div *ngIf="!tab?.isMaturity && tab?.levelName">
+                <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
