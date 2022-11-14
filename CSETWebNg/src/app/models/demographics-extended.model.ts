@@ -35,6 +35,7 @@ export interface ExtendedDemographics {
     cioExists?: string;
     cisoExists?: string;
     cyberTrainingProgramExists?: string;
+    cyberRiskService? :string;
 }
 
 export interface Sector {
