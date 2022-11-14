@@ -308,4 +308,8 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     comp.hasSpecifyField = hasSpecifyField;
     components.push(comp);
   }
+
+  usesRAC() {
+    return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
+  }
 }
