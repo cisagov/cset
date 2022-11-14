@@ -61,7 +61,7 @@ export class QuestionsComponent implements AfterViewChecked {
 
 
   /**
-   * 
+   *
    */
   constructor(
     public questionsSvc: QuestionsService,
@@ -104,9 +104,9 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   updateComponentsOverride() {
-    //divide the component override processing 
+    //divide the component override processing
     //and component questions into two portions
-    //and call and update from here.    
+    //and call and update from here.
 
     //clear out the navigation overrides
     //then call the get overrides questions api
@@ -132,8 +132,8 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
-   * @param targetID 
+   *
+   * @param targetID
    */
   scroll(targetID: string) {
     const t = document.getElementById(targetID);
@@ -164,7 +164,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   getQuestionCounts() {
     this.questionsSvc.getQuestionsList().subscribe(
@@ -191,14 +191,14 @@ export class QuestionsComponent implements AfterViewChecked {
         else {
           this.assessSvc.applicationMode = 'Q';
           modified = true;
-        }        
+        }
 
         // set toggle visibility
         this.showQuestionsToggle = this.setHasQuestions;
         this.showRequirementsToggle = this.setHasRequirements;
         if (data.onlyMode) {
           this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
-          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');       
+          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
         }
 
         if (modified) {
@@ -256,7 +256,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   visibleGroupCount() {
     let count = 0;
@@ -294,7 +294,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
@@ -306,5 +306,9 @@ export class QuestionsComponent implements AfterViewChecked {
       .subscribe(() => {
         this.refreshQuestionVisibility();
       });
+  }
+
+  usesRAC() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
 }

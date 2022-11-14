@@ -598,17 +598,21 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Programatically clicks the Supplemental icon button to force the lazy load of its content.
+   * Programmatically clicks a question extra button to force the lazy load of its content.
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
-  forceLoadSupplemental() {
+  forceLoadQuestionExtra(extra: string) {
     if (!!this.mode || this.mode === '') {
       return;
     }
 
     this.expanded = false;
-    const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.questionId) as HTMLElement;
+    const btn: HTMLElement = document.getElementById(`btn_${extra}_` + this.myQuestion.questionId) as HTMLElement;
     btn.click();
+  }
+
+  autoLoadComments() {
+    return this.usesRAC();
   }
 
   /**
@@ -722,5 +726,10 @@ export class QuestionExtrasComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Checks if the current assessment uses the Rapid Assessment Control Set.
+   */
+  usesRAC() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
+  }
 }

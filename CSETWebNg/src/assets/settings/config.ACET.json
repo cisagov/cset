@@ -3,7 +3,7 @@
     "installationMode": "ACET",
     "galleryLayout": "NCUA",
     "behaviors": {
-        "defaultTitle":"ACET",
+        "defaultTitle":"ACET",        
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,
@@ -11,7 +11,7 @@
         "showAnalyticsAtTheEnd": false,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splashACET.html",
-        "showFacilityName": true,
+        "showFacilityName": false,
         "showCityName": true,
         "showStateName": true,
         "showContacts": true,
