@@ -8,7 +8,7 @@
         <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="SOURCE:TSA" />
         <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="SOURCE:TSA" />
 
-        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF" />
+        <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
 
         <!-- ACET-specific screens -->
@@ -109,7 +109,7 @@
         <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
             <node id="maturity-questions-2338" displaytext="Anticipate">
                 <node id="maturity-questions-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions/2343" />
-                <node id="maturity-questions-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions/2344" />                
+                <node id="maturity-questions-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions/2344" />
                 <node id="maturity-questions-2345" displaytext="Contextual Awareness" path="assessment/{:id}/maturity-questions/2345"/>
                 <node id="maturity-questions-2346" displaytext="Coordinated Protection" path="assessment/{:id}/maturity-questions/2346"/>
                 <node id="maturity-questions-2347" displaytext="Diversity" path="assessment/{:id}/maturity-questions/2347" />
@@ -225,7 +225,7 @@
         <!-- Results - CIS -->
         <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:CIS" />
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
-        
+
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />
         <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" condition="MATURITY:MVRA" />
@@ -255,4 +255,4 @@
 
     </node>
 
-</nav> 
+</nav>
