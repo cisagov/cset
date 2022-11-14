@@ -1,0 +1,49 @@
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+
+    <div *ngFor="let d of model.Domain" class="page-break">
+        <div class="cpg-domain-bar">
+            {{d.title}}
+        </div>
+
+        <table *ngFor="let q of d.Question" class="cpg-table">
+            <tr>
+                <th style="width: 45%">
+                    {{q.displaynumber}}
+                    <span [innerHTML]="q.questiontext.substr(0, 20)"></span>
+                </th>
+                <th style="width: 25%">
+                    CURRENT ASSESSMENT
+                </th>
+                <th style="width: 30%">
+                    NOTES
+                </th>
+            </tr>
+            <tr>
+                <td [innerHTML]="q.questiontext"></td>
+                <td>
+                    <div class="text-nowrap">
+                        <i *ngIf="q.answer == 'Y'" class="far fa-lg fa-check-square"></i>
+                        <i *ngIf="q.answer != 'Y'" class="far fa-lg fa-square"></i> 
+                        IMPLEMENTED
+                    </div>
+                    <div class="text-nowrap">
+                        <i *ngIf="q.answer == 'I'" class="far fa-lg fa-check-square"></i>
+                        <i *ngIf="q.answer != 'I'" class="far fa-lg fa-square"></i>  IN PROGRESS
+                    </div>
+                    <div class="text-nowrap">
+                        <i *ngIf="q.answer == 'N'" class="far fa-lg fa-check-square"></i>
+                        <i *ngIf="q.answer != 'N'" class="far fa-lg fa-square"></i>  NOT STARTED
+                    </div>
+                </td>
+                
+                <td>
+                    {{q.comment}}
+                </td>
+            </tr>
+
+
+
+        </table>
+    </div>
+
+</div>

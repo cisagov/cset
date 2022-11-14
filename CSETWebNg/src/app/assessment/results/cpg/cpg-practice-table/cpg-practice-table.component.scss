@@ -1,0 +1,35 @@
+
+.cpg-domain-bar {
+    background-color: #6BA443; 
+    color: white; 
+    text-align: center; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+
+.cpg-table {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.cpg-table th {
+    background-color: #1A3667; 
+    color: white; 
+    padding: 1rem .5rem;
+    border-right: 1px solid white;
+    font-size: .8rem;
+}
+
+.cpg-table th:last-child {
+    border-right: 1px solid #1a3667;
+}
+
+.cpg-table td {
+    border: 1px solid #1a3667;
+    padding: 1rem .5rem;
+    font-size: .8rem;
+    vertical-align: top;
+}
