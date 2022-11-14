@@ -31,6 +31,7 @@
 <h4>Infrastructure Taxonomy</h4>
 
 <div class="mb-5">
+
     <p>
         Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
     </p>
@@ -163,7 +164,7 @@
         <p class="font-italic">
             For the following question <u>do not</u> consider available resilience/restoration capabilities such as back
             up
-            servers, alternate cyber systems, and disaster recovery plan:</p>
+            servers, alternate cyber systems, and disaster recovery plans:</p>
         <p class="font-italic">
             What would be the initial <u>geographic impact</u> (Municipality/County/State) of your decreased
             business/operations as the result of a significant/major disruption to your critical cyber services?
@@ -220,6 +221,29 @@
                 {{i.value}}
             </option>
         </select>
-    </div>
-
+    </div>    
+ <div class="form-group mb-5">
+        <p>
+            Additional Cybersecurity Risk Service
+            In addition to the CSET reports available, Cyber Florida will provide a select number of participants with information directly related to education and training courses that target the cybersecurity improvement areas identified from the risk assessment information submitted. The free service will also identify the knowledge and skills necessary to mitigate cyber risks within the submitter’s agency, organization, or company. Additionally, the selected participants will have free access to a full suite of cyber workforce development toolsets that will identify skills gaps, display various training pathways for upskilling employees, and assist with finding the most qualified new cyber talent, if needed. To be considered for the no-cost analysis, interested participants must fully complete their CSET risk assessment.            
+        </p>
+        <p class="font-italic">Are you interested in being considered for this free assessment follow-on service?</p>
+        <div class="d-flex flex-column ml-3">            
+            <input class="radio-custom" name="CFYes" id="CFYes" type="radio" autocomplete="off" 
+                tabindex="0"
+                (click)="setCyberRisk('Y')"
+                [checked]="demographicData.cyberRiskService == 'Y'">
+            <label class="radio-custom-label" for="CFYes">Yes</label>            
+            <input class="radio-custom" name="CFNo" id="CFNo" type="radio" autocomplete="off" 
+                tabindex="1"
+                (click)="setCyberRisk('N')"
+                [checked]="demographicData.cyberRiskService == 'N'">
+            <label class="radio-custom-label" for="CFNo">No</label>
+            <input class="radio-custom" name="CFMaybe" id="CFMaybe" type="radio" autocomplete="off" 
+                  tabindex="2"
+                  (click)="setCyberRisk('M')"
+                  [checked]="demographicData.cyberRiskService == 'M'">
+             <label class="radio-custom-label" for="CFMaybe">Maybe Later</label>                 
+         </div>
+    </div>    
 </div>
