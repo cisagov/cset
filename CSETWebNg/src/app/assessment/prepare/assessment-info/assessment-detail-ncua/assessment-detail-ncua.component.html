@@ -154,7 +154,7 @@
             <div class="form-group col-md-6">
                 <label class="mb-1" for="assets">Assets</label>
                 <input type="text" maxlength="21" class="form-control" id="assets" name="assets" tabindex="0"
-                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+                [(ngModel)]="assessment.assets" (blur)="updateAssets($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
         </div>
         <div class="form-row">
