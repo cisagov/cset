@@ -401,6 +401,14 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
     }
 
+    public class jISE_ACTIONS_FINDINGS
+    {
+        public Int32 Finding_Id { get; set; }
+        public Int32 Mat_Question_Id { get; set; }
+        public String Action_Items_Override { get; set; }
+
+    }
+
     public class jANSWER
     {
         [Required]
