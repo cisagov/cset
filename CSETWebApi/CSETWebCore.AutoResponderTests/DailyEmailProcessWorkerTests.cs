@@ -75,6 +75,17 @@ namespace CSETWebCore.AutoResponder.Tests
             dailyInstance.NowDate = DateTime.Now.AddDays(28);
             dailyInstance.ProcessEmails();
 
+            dailyInstance.NowDate = DateTime.Now.AddDays(7*6);
+            dailyInstance.ProcessEmails();
+            
+            dailyInstance.NowDate = DateTime.Now.AddDays((7 * 6)+1);
+            dailyInstance.ProcessEmails();
+
+            dailyInstance.NowDate = DateTime.Now.AddDays((7 * 10));
+            dailyInstance.ProcessEmails();
+
+            dailyInstance.NowDate = DateTime.Now.AddDays((7 * 10) + 1);
+            dailyInstance.ProcessEmails();
         }
 
         private IHostBuilder CreateDefaultBuilder()

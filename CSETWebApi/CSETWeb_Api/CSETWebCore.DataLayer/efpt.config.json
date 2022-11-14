@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model2",
+   "OutputPath": "Model",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -1003,6 +1003,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[GetAnswerDistribMaturity]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[GetApplicationModeDefault]",
          "ObjectType": 1
       },
@@ -1103,6 +1107,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_Assessments_Completion_For_Access_Key]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_Assessments_Completion_For_User]",
          "ObjectType": 1
       },
@@ -1120,6 +1128,10 @@
       },
       {
          "Name": "[dbo].[usp_CopyIntoSet]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_countsForLevelsByGroupMaturityModel]",
          "ObjectType": 1
       },
       {

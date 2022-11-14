@@ -231,6 +231,6 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     showAsterisks(): boolean {
-        return this.assessSvc.assessment.maturityModel.modelName == 'CPG';
+        return this.assessSvc.assessment.maturityModel?.modelName == 'CPG';
     }
 }

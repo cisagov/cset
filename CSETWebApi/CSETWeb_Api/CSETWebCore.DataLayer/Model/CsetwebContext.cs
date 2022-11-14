@@ -263,8 +263,8 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Assessment_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
-            }); 
-            
+            });
+
             modelBuilder.Entity<ADDRESS>(entity =>
             {
                 entity.HasKey(e => new { e.AddressType, e.Id })

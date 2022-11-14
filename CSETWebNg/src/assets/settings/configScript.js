@@ -64,8 +64,8 @@ async function getConfigs(masterConfig, configChain) {
       masterConfig = processDataOverrides(data, masterConfig);
     });
   }
-  //console.log("final config");
-  //console.log(masterConfig);
+  console.log("final config");
+  console.log(masterConfig);
 }
 function switchConfigsForMode(installationMode) {  
   switch (installationMode) {

@@ -1,5 +1,5 @@
 {
-    "currentConfigChain": ["development","ACET"],
+    "currentConfigChain": ["develop","ACET"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
