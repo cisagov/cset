@@ -25,7 +25,6 @@ namespace CSETWebCore.DataLayer.Model
         public string Recommendations { get; set; }
         public string Vulnerabilities { get; set; }
         public DateTime? Resolution_Date { get; set; }
-        public int? Importance_Id { get; set; }
         [StringLength(250)]
         public string Title { get; set; }
         [StringLength(50)]
