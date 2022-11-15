@@ -27,6 +27,8 @@ import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
+import { AssessmentService } from './assessment.service';
+import { MaturityService } from './maturity.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -65,16 +67,29 @@ let headers = {
   // CORE+ question trigger/state manager
   showCorePlus: boolean = false;
 
-  // CORE+ Only questions (17+)
+  // CORE+ Only
   showExtraQuestions: boolean = false;
+
+  // Variables to manage ISE issues state
+  issuesFinishedLoading: boolean = false;
+  questionCheck = new Map();
+  issueFindingId = new Map();
+  deleteHistory = new Set();
+
+  // Keeps track of Issues with unassigned Types for report notification
+  unassignedIssueTitles: any = [];
+  unassignedIssues: boolean = false;
+
 
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public acetFilteringSvc: AcetFilteringService
-  ) { 
+    public acetFilteringSvc: AcetFilteringService,
+    private maturitySvc: MaturityService,
+    private assessmentSvc: AssessmentService
+  ) {
     this.init();
   }
 
@@ -97,8 +112,9 @@ let headers = {
 
 
   /*
-  * The assessment merge functionality
+  * The following functions are all used for the 'Assessment merge' functionality
   */
+
   // Opens merge toggle checkboxes on the assessment selection (landing) page
   prepExaminationMerge() {
     if (this.prepForMerge === false) {
@@ -120,7 +136,7 @@ let headers = {
     if (optionChecked) {
       tempCharter = this.pullAssessmentCharter(assessment);
 
-      // Used as the new main charter number if the user deselects the first exam that was selected (see line 130)
+      // Sets a fallback charter number if the user deselects the first exam that they selected
       if (this.assessmentsToMerge.length === 1) {
         this.backupCharter = tempCharter;
       }
@@ -169,6 +185,7 @@ let headers = {
     });
   }
 
+  // Fires off 2 - 10 assessments to the API to run the stored proc to check for conflicting answers
   getAnswers() {
     let id1 = this.assessmentsToMerge[0];
     let id2 = this.assessmentsToMerge[1];
@@ -188,25 +205,27 @@ let headers = {
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }
 
-  /*
-  * Pull Credit Union filter data to be used in ISE assessment detail filter search
-  */
- getCreditUnionData() {
-   headers.params = headers.params.set('model', 'ISE');
-
-   return this.http.get(this.configSvc.apiUrl + 'getCreditUnionData', headers);
- }
 
   /*
-  * Pull Credit Union filter data to be used in ISE assessment detail filter search
+  * The following functions are used to help manage some of the ISE Maturity model "state". I realize
+  * this probably isn't ideal in an application as big as CSET, but this is the fastest way to iterate
+  * over client requests until things solidify and they stop changing things back and forth.
   */
- getIseAnsweredQuestions() {
-  return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
-}
 
-  /*
-  * Manage the ISE maturity levels.
-  */
+  // Clears necessary variables on assessment drop
+  reset() {
+    this.questionCheck.clear();
+    this.issueFindingId.clear();
+    this.deleteHistory.clear();
+  }
+
+  // Pull Credit Union filter data to be used in ISE assessment detail filter search
+  getCreditUnionData() {
+    headers.params = headers.params.set('model', 'ISE');
+    return this.http.get(this.configSvc.apiUrl + 'getCreditUnionData', headers);
+  }
+
+  //Manage the ISE maturity levels.
   updateAssetSize(amount: string) {
     this.assetsAsString = amount;
     this.assetsAsNumber = parseInt(amount);
@@ -217,30 +236,46 @@ let headers = {
     if (this.usingExamLevelOverride === false) {
       this.getExamLevelFromAssets();
     } else if (this.usingExamLevelOverride === true) {
-      // TODO
+      return this.chosenOverrideLevel;
     }
   }
 
   getExamLevelFromAssets() {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (this.assetsAsNumber > 50000000) {
       this.proposedExamLevel = 'CORE';
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(2).subscribe();
+      }
     } else {
       this.proposedExamLevel = 'SCUEP';
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(1).subscribe();
+      }
     }
   }
 
   updateExamLevelOverride(level: number) {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (level === 0) {
       this.usingExamLevelOverride = false;
       this.chosenOverrideLevel = "No Override";
+      this.getExamLevelFromAssets();
     } else if (level === 1) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "SCUEP";
+      this.maturitySvc.saveLevel(1).subscribe();
     } else if (level === 2) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "CORE";
+      this.maturitySvc.saveLevel(2).subscribe();
     }
-
     this.refreshGroupList(level);
   }
 
@@ -272,6 +307,62 @@ let headers = {
 
   toggleExtraQuestionStatus() {
     this.showExtraQuestions = !this.showExtraQuestions;
+  }
+
+  // Used to check answer completion for ISE reports
+  getIseAnsweredQuestions() {
+    return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
+  }
+
+  // translates the maturity_Level_Id into the maturity_Level
+  translateExamLevel(matLevelId: number) {
+    if(matLevelId === 17) {
+      return 'SCUE';
+    } else if (matLevelId === 18 || matLevelId === 19) {
+      return 'CORE';
+    }
+  }
+
+  // translates the maturity_Level_Id into the maturity_Level
+  translateExamLevelToInt(matLevelString: string) {
+    if(matLevelString === 'SCUE') { //SCUEP, but cut off because the substring(0, 4)
+      return 17;
+    } else if (matLevelString === 'CORE') {
+      return 18;
+    }
+  }
+
+  isParentQuestion(q: any) {
+    if ( q.title == 'Stmt 1'
+    ||   q.title == 'Stmt 2'
+    ||   q.title == 'Stmt 3'
+    ||   q.title == 'Stmt 4'
+    ||   q.title == 'Stmt 5'
+    ||   q.title == 'Stmt 6'
+    ||   q.title == 'Stmt 7'
+    ||   q.title == 'Stmt 8'
+    ||   q.title == 'Stmt 9'
+    ||   q.title == 'Stmt 10'
+    ||   q.title == 'Stmt 11'
+    ||   q.title == 'Stmt 12'
+    ||   q.title == 'Stmt 13'
+    ||   q.title == 'Stmt 14'
+    ||   q.title == 'Stmt 15'
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22'
+    ||   q.title == 'Stmt 23') {
+      return true;
+    }
+    return false;
+  }
+
+  isIse() {
+    return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
 }

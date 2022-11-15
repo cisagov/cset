@@ -21,15 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
-import { QuestionResponse, Domain, Category } from '../../models/questions.model';
+import { QuestionResponse, Category } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
+import { CompletionService } from '../../services/completion.service';
 
 @Component({
   selector: 'app-questions',
@@ -60,10 +61,11 @@ export class QuestionsComponent implements AfterViewChecked {
 
 
   /**
-   * 
+   *
    */
   constructor(
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
@@ -102,9 +104,9 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   updateComponentsOverride() {
-    //divide the component override processing 
+    //divide the component override processing
     //and component questions into two portions
-    //and call and update from here.    
+    //and call and update from here.
 
     //clear out the navigation overrides
     //then call the get overrides questions api
@@ -130,8 +132,8 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
-   * @param targetID 
+   *
+   * @param targetID
    */
   scroll(targetID: string) {
     const t = document.getElementById(targetID);
@@ -162,7 +164,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   getQuestionCounts() {
     this.questionsSvc.getQuestionsList().subscribe(
@@ -196,7 +198,7 @@ export class QuestionsComponent implements AfterViewChecked {
         this.showRequirementsToggle = this.setHasRequirements;
         if (data.onlyMode) {
           this.showQuestionsToggle = (this.assessSvc.applicationMode == 'Q');
-          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');       
+          this.showRequirementsToggle = (this.assessSvc.applicationMode == 'R');
         }
 
         if (modified) {
@@ -221,12 +223,16 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   loadQuestions() {
     this.assessSvc.currentTab = 'questions';
+    this.completionSvc.reset();
+
     this.questionsSvc.getQuestionsList().subscribe(
       (response: QuestionResponse) => {
         this.assessSvc.applicationMode = response.applicationMode;
         this.setHasRequirements = (response.requirementCount > 0);
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
+
+        this.completionSvc.setQuestionArray(response);
 
         this.categories = response.categories;
 
@@ -250,7 +256,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   visibleGroupCount() {
     let count = 0;
@@ -288,7 +294,7 @@ export class QuestionsComponent implements AfterViewChecked {
   }
 
   /**
-   * 
+   *
    */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
@@ -300,5 +306,9 @@ export class QuestionsComponent implements AfterViewChecked {
       .subscribe(() => {
         this.refreshQuestionVisibility();
       });
+  }
+
+  usesRAC() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
 }

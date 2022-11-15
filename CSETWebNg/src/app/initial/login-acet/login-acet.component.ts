@@ -68,7 +68,7 @@ export class LoginAcetComponent implements OnInit {
       this.continueStandAlone();
     } else {
       // reset login status
-      this.authenticationService.logout();
+      //this.authenticationService.logout();
 
       // default the page as 'login'
       this.mode = 'LOGIN';
@@ -142,6 +142,10 @@ export class LoginAcetComponent implements OnInit {
 
   continueStandAlone() {
     this.router.navigate(['/home']);
+  }
+
+  refreshWindow() {
+    window.location.reload();
   }
 
   exit() {

@@ -177,41 +177,43 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * Considers whether the app is running as CSET Online 
+   * Considers whether the app is running as CSET Online
    * or on a mobile device and decides if the item should show.
    */
   showMenuItem(item: string) {
 
-    // This is not applicable to a large enterprise setup.  
+    // This is not applicable to a large enterprise setup.
     // Also, we are hiding the FAA gallery cards for now.
     if (item == 'enable protected features') {
-      return (!this.configSvc.isCsetOnline);
+      return (this.configSvc.behaviors?.showEnableProtectedFeatures ?? true);
     }
 
     if (item == 'parameter editor') {
-      return (!this.configSvc.isMobile());
+      var show = this.configSvc.behaviors?.showMenuParameterEditor ?? true;
+      show = show && !this.configSvc.isMobile();
+      return (show);
     }
 
     // This should not be offered in mobile or CSET Online
     if (item == 'import modules') {
-      return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
+      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleImport ?? true));
     }
 
     // This should not be offered in mobile or CSET Online
     if (item == 'module builder') {
-      return (!this.configSvc.isMobile() && !this.configSvc.isCsetOnline);
+      return (this.configSvc.behaviors?.showModuleBuilder);
     }
-    
+
     if (item == 'module content report') {
-      return (!this.configSvc.isMobile());
+      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleContentReport ?? true));
     }
-    
+
     if (item == 'trend') {
-      return (!this.configSvc.isMobile() &&  !this.configSvc.isCsetOnline);
+      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showTrend ?? true));
     }
 
     if (item == 'compare') {
-      return (!this.configSvc.isMobile() &&  !this.configSvc.isCsetOnline);
+      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true));
     }
 
     return true;
@@ -220,8 +222,7 @@ export class TopMenusComponent implements OnInit {
   /**
    * Allows us to hide items for certain skins
    */
-   showItemForCurrentSkin(item: string) {
-
+  showItemForCurrentSkin(item: string) {
     // custom behavior for ACET
     if (this.skin === 'ACET') {
       if (item === 'assessment documents') {
@@ -229,11 +230,12 @@ export class TopMenusComponent implements OnInit {
       }
     }
 
-    return true;
+    var show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
+    return show;
   }
 
   /**
-   * 
+   *
    */
   showUserMenuItem() {
     if (this.auth.isLocal) {
@@ -276,12 +278,30 @@ export class TopMenusComponent implements OnInit {
       && !this.isModuleBuilder(this.router.url);
   }
 
+  /**
+   * Determines if the user menu should display.
+   */
   showUserMenu() {
+    if (this.configSvc.config.isRunningAnonymous) {
+      return false;
+    }
+
     return this.router.url !== '/resource-library'
       && this.router.url !== '/importModule'
       && !this.isModuleBuilder(this.router.url);
   }
 
+  /**
+   * Determines if the 'anonymous' version of the user menu
+   * should display.
+   */
+  showAnonymousMenu() {
+    return this.configSvc.config.isRunningAnonymous;
+  }
+
+  /**
+   * 
+   */
   editParameters() {
     if (this.dialog.openDialogs[0]) {
 

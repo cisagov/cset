@@ -28,7 +28,9 @@ namespace CSETWebCore.Business.Maturity
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
-        private readonly List<string> _modelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
+        private int _maturityModelId;
+
+        public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
@@ -74,8 +76,10 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int GetMaturityTargetLevel(int assessmentId)
         {
+            // Start with a high value to include all questions by default
+            int targetLevel = 100;
+
             // The maturity target level is stored similar to a SAL level
-            int targetLevel = 1;
             var myLevel = _context.ASSESSMENT_SELECTED_LEVELS
                 .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
                 .FirstOrDefault();
@@ -158,6 +162,75 @@ namespace CSETWebCore.Business.Maturity
                 });
             }
             return levels;
+        }
+
+        public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
+        {
+
+            var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
+
+            //while the answer text is not null 
+            // increment the achieved level
+            // must achieve level 1 before we can achieve level 2 ....
+            //
+
+            bool isLevelAchieved = false;
+            int nextLevel = 0;
+
+            foreach(var item in list)
+            {
+
+                switch (item.Answer_Text)
+                {
+                    case "N":
+                        isLevelAchieved = item.Answer_Text2 == null;                        
+                        break;
+                    case "U":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 == null;
+                        break;
+                    case "Y":
+                        isLevelAchieved = isLevelAchieved && item.Answer_Text2 != null;
+                        if (!isLevelAchieved)
+                        {
+                            nextLevel++;
+                            pushLevel(nextLevel, item);
+                        }
+                        break;
+                }
+                
+            }
+            List<GroupScores> groupScores = new List<GroupScores>();
+
+            foreach(var keyPair in levels)
+            {
+                groupScores.Add(new GroupScores()
+                {
+                    Group_Id = keyPair.Key.GROUPING_ID,
+                    Maturity_Level_Id = keyPair.Key.Maturity_Level_Id,
+                    Maturity_Level_Name = "We'll get there"
+                });
+            }
+            return groupScores;
+        }
+
+        private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
+        private void pushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        {
+            //if the previous level was achieved then we can go for the next level
+            //other wise we cannot
+            int level = 0;
+            if (nextLevel == 0)
+            {
+                levels.Add(item, nextLevel);
+            }
+            if(levels.TryGetValue(item, out level))
+            {
+                if(nextLevel== level+1)
+                {
+                    levels.Add(item, nextLevel);
+                }
+                //else we did not and keep the previous level (ie. cannot skip 1 and goto 2 or 3
+            }
         }
 
 
@@ -422,7 +495,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // default the target level if the model supports a target level
-                if (_modelsWithTargetLevel.Contains(mm.Model_Name))
+                if (ModelsWithTargetLevel.Contains(mm.Model_Name))
                 {
                     var targetLevel = _context.ASSESSMENT_SELECTED_LEVELS
                         .Where(l => l.Assessment_Id == assessmentId && l.Level_Name == Constants.Constants.MaturityLevel)
@@ -628,8 +701,8 @@ namespace CSETWebCore.Business.Maturity
           levelScore.Level = level;
           var capabilities = domains.SelectMany(x => x.CapabilityScores);
           var tiers = capabilities.SelectMany(z => z.LevelScores.Where(x => x.TotalTiers > 0 && x.Level == level));
-          levelScore.TotalTiers = tiers.Sum(x => x.TotalTiers);
-          levelScore.TotalPassed = tiers.Sum(x => x.TotalPassed);
+          levelScore.TotalTiers = tiers.Count();
+          levelScore.TotalPassed = tiers.Count(x => x.Credit == 100);
           if (levelScore.TotalTiers != 0)
           {
               var total = (double)levelScore.TotalPassed / levelScore.TotalTiers;
@@ -764,8 +837,8 @@ namespace CSETWebCore.Business.Maturity
                       QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                       ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                       Sequence = myQ.Sequence,
-                      MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                      MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                      MaturityLevel = myQ.Maturity_Level.Level,
+                      MaturityLevelName = myQ.Maturity_Level.Level_Name,
                       DisplayNumber = myQ.Question_Title,
                       ParentQuestionId = myQ.Parent_Question_Id,
                       QuestionType = myQ.Mat_Question_Type,
@@ -856,7 +929,7 @@ namespace CSETWebCore.Business.Maturity
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             var questionQuery = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Where(q =>
                 myModel.model_id == q.Maturity_Model_Id);
 
@@ -958,17 +1031,20 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
-                        freeResponseAnswer = answer?.a.Free_Response_Answer,
+                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityModelId = sg.Maturity_Model_Id,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
+                        SetName = string.Empty                        
                     };
+
+                    qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
                     {
@@ -1012,6 +1088,40 @@ namespace CSETWebCore.Business.Maturity
             });
 
             return dict;
+        }
+
+
+        /// <summary>
+        /// This method attempts to identify which questions are countable
+        /// in the UI's answer completion widget on the questions page.  
+        /// Maybe the real solution is a new property on the question 
+        /// record itself, but for now we will try to identify which
+        /// questions should not be counted.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
+        {
+            // EDM and CRR - parent questions are unanswerable and not countable
+            if (modelId == 3 || modelId == 4)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            // VADR - child questions are freeform and not countable
+            if (modelId == 7)
+            {
+                return qa.ParentQuestionId == null;
+            }
+
+            // ISE - parent questions are not answerable and not countable
+            if (modelId == 10)
+            {
+                return !qa.IsParentQuestion;
+            }
+
+            return true;
         }
 
 
@@ -1107,12 +1217,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public double GetIseAnswerCompletionRate(int assessmentId)
         {
-            var irp = GetOverallIrpNumber(assessmentId);
+            var irp = GetOverallIseIrpNumber(assessmentId);
 
             // get the highest maturity level for the risk level (use the stairstep model)
             var topMatLevel = GetIseTopMatLevelForRisk(irp);
 
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
+            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
 
             var answeredCount = 0;
             var totalCount = 0;
@@ -1182,14 +1292,9 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-
-
-
-
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
@@ -1644,11 +1749,11 @@ namespace CSETWebCore.Business.Maturity
         public List<string> GetIseMaturityRange(int assessmentId)
         {
             Model.Acet.ACETDashboard irpCalculation = GetIseIrpCalculation(assessmentId);
-            int assetLevel = Int32.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
+            int assetLevel = long.Parse(irpCalculation.Assets) > 50000000 ? 2 : 1;
             bool targetBandOnly = GetTargetBandOnly(assessmentId);
             int irpRating = irpCalculation.Override > 0 ? irpCalculation.Override : assetLevel;
             if (!targetBandOnly)
-                irpRating = 3; //Do the default configuration
+                irpRating = 2; //Do the default configuration
             return IrpSwitchIse(irpRating);
         }
 
@@ -1926,6 +2031,18 @@ namespace CSETWebCore.Business.Maturity
             return overall;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public int GetOverallIseIrpNumber(int assessmentId)
+        {
+            var calc = GetIseIrpCalculation(assessmentId);
+            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
+            return overall;
+        }
+
 
         /// <summary>
         /// Get all IRP calculations for display
@@ -2034,6 +2151,15 @@ namespace CSETWebCore.Business.Maturity
             //IRP Section
             result.Override = assessment.IRPTotalOverride ?? 0;
             result.OverrideReason = assessment.IRPTotalOverrideReason;
+
+            var scuepIRPLevel = 1;
+            var coreIRPLevel = 2;
+
+            if(result.Override == 0)
+            {
+                result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : scuepIRPLevel;
+            }
+
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
@@ -2215,9 +2341,11 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
         {
+            this._maturityModelId = cisStructure.ModelId;
+
             var resp = new MaturityResponse();
 
-            resp.MaturityTargetLevel = 1;         
+            resp.MaturityTargetLevel = 100;         
 
             foreach (var g in cisStructure.Groupings)
             {
@@ -2278,6 +2406,8 @@ namespace CSETWebCore.Business.Maturity
                     Comment = q.Comment,
                     MaturityLevelName = q.MaturityLevelName
                 };
+
+                newQ.Countable = IsQuestionCountable(this._maturityModelId, newQ);
 
                 q.Options.ForEach(o => {
                     newQ.Options.Add(o);

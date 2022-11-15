@@ -14,19 +14,20 @@ namespace CSETWebCore.Interfaces.Helpers
         void Init(string tokenString);
         string Payload(string claim);
         int? PayloadInt(string claim);
-        string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId,
+        string GenerateToken(int? userId, string accessKey, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId,
             string scope);
         bool IsTokenValid(string tokenString);
         string ReadTokenPayload(JwtSecurityToken token, string claim);
         void AuthorizeUserForAssessment(int assessmentId);
         void ValidateTokenForAssessment(int assessmentId);
-        int GetCurrentUserId();
+        int? GetCurrentUserId();
         void GenerateSecret();
         string GetSecret();
-        int GetUserId();
+        int? GetUserId();
+        string GetAccessKey();
         int AssessmentForUser();
         int AssessmentForUser(string tokenString);
-        int AssessmentForUser(int userId, int? assessmentId);
+        int AssessmentForUser(int? userId, string accessKey, int? assessmentId);
         void AuthorizeAdminRole();
         bool AmILastAdminWithUsers(int assessmentId);
         void Throw401();

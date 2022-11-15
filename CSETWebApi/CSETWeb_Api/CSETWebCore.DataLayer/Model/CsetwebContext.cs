@@ -18,6 +18,8 @@ namespace CSETWebCore.DataLayer.Model
         {
         }
 
+        public virtual DbSet<ACCESS_KEY> ACCESS_KEY { get; set; }
+        public virtual DbSet<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }
         public virtual DbSet<ADDRESS> ADDRESS { get; set; }
         public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
         public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
@@ -142,6 +144,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
+        public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
         public virtual DbSet<JWT> JWT { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
         public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
@@ -208,8 +211,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-        public virtual DbSet<RISK_AREA> RISK_AREA { get; set; }
-        public virtual DbSet<RISK_SUB_RISK_AREA> RISK_SUB_RISK_AREA { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -236,6 +237,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
+        public virtual DbSet<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
         public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
         public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
         public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
@@ -246,6 +248,23 @@ namespace CSETWebCore.DataLayer.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
+            {
+                entity.HasKey(e => new { e.AccessKey, e.Assessment_Id });
+
+                entity.HasOne(d => d.AccessKeyNavigation)
+                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                    .HasForeignKey(d => d.AccessKey)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+            });
+
             modelBuilder.Entity<ADDRESS>(entity =>
             {
                 entity.HasKey(e => new { e.AddressType, e.Id })
@@ -1882,18 +1901,33 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS>(entity =>
             {
-                entity.HasKey(e => e.Question_Id)
+                entity.HasKey(e => e.Mat_Question_Id)
                     .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Question_Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.Mat_Question_Id).ValueGeneratedNever();
 
-                entity.HasOne(d => d.Question)
+                entity.HasOne(d => d.Mat_Question)
                     .WithOne(p => p.ISE_ACTIONS)
-                    .HasForeignKey<ISE_ACTIONS>(d => d.Question_Id)
+                    .HasForeignKey<ISE_ACTIONS>(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
+            });
+
+            modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
+            {
+                entity.HasKey(e => new { e.Finding_Id, e.Mat_Question_Id });
+
+                entity.HasOne(d => d.Finding)
+                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
+                    .HasForeignKey(d => d.Finding_Id)
+                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ISE_ACTIONS");
             });
 
             modelBuilder.Entity<JWT>(entity =>
@@ -2045,7 +2079,7 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Type)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
 
-                entity.HasOne(d => d.Maturity_LevelNavigation)
+                entity.HasOne(d => d.Maturity_Level)
                     .WithMany(p => p.MATURITY_QUESTIONS)
                     .HasForeignKey(d => d.Maturity_Level_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2923,17 +2957,6 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
             });
 
-            modelBuilder.Entity<RISK_SUB_RISK_AREA>(entity =>
-            {
-                entity.HasKey(e => e.Sub_Risk_Area_Id)
-                    .HasName("PK_SUB_RISK_AREA_1");
-
-                entity.HasOne(d => d.Risk_AreaNavigation)
-                    .WithMany(p => p.RISK_SUB_RISK_AREA)
-                    .HasForeignKey(d => d.Risk_Area)
-                    .HasConstraintName("FK_RISK_SUB_RISK_AREA_RISK_AREA");
-            });
-
             modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
             {
                 entity.HasKey(e => e.Sal_Determination_Type)
@@ -3311,6 +3334,16 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            });
+
+            modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.EmailSentDate });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.USER_EMAIL_HISTORY)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_USER_EMAIL_HISTORY_USERS");
             });
 
             modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>

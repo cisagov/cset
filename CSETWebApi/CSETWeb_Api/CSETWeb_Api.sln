@@ -31,7 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.UpgradeLibrary"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.BusinessTests", "CSETWebCore.BusinessTests\CSETWebCore.BusinessTests.csproj", "{85A5D909-3D41-4DDA-8321-D6B7D1605605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.ApiTests", "CSETWebCore.ApiTests\CSETWebCore.ApiTests.csproj", "{6F6398A2-2C5C-435C-8149-EB876BC1ABF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.ApiTests", "CSETWebCore.ApiTests\CSETWebCore.ApiTests.csproj", "{6F6398A2-2C5C-435C-8149-EB876BC1ABF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.AutoResponder", "..\CSETWebCore.AutoResponder\CSETWebCore.AutoResponder.csproj", "{EA32CF88-A553-4656-855D-9ECEA8191353}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.AutoResponderTests", "..\CSETWebCore.AutoResponderTests\CSETWebCore.AutoResponderTests.csproj", "{EDCA7204-4F64-40F0-ACD8-DA18F7465106}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -192,6 +196,26 @@ Global
 		{6F6398A2-2C5C-435C-8149-EB876BC1ABF7}.NCUA|Any CPU.Build.0 = Debug|Any CPU
 		{6F6398A2-2C5C-435C-8149-EB876BC1ABF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F6398A2-2C5C-435C-8149-EB876BC1ABF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.localdb|Any CPU.Build.0 = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.localhost|Any CPU.Build.0 = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.NCUA|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.NCUA|Any CPU.Build.0 = Debug|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA32CF88-A553-4656-855D-9ECEA8191353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.localdb|Any CPU.Build.0 = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.localhost|Any CPU.Build.0 = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.NCUA|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.NCUA|Any CPU.Build.0 = Debug|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCA7204-4F64-40F0-ACD8-DA18F7465106}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -67,7 +67,7 @@ export class LoginRraComponent implements OnInit {
       this.continueStandAlone();
     } else {
       // reset login status
-      this.authenticationService.logout();
+      //this.authenticationService.logout();
       // default the page as 'login'
       this.mode = 'LOGIN';
       if (this.route.snapshot.params['eject']) {

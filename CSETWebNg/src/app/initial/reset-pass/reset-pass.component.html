@@ -33,7 +33,7 @@
 
         <div class="mb-4 mr-4 ml-4 p-3 bgc-black c-white"
             [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
-            <div *ngIf="configSvc.installationMode === ''">
+            <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 Enter the email address associated with your CSET account.
             </div>
             <div *ngIf="configSvc.installationMode === 'RRA'">

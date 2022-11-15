@@ -41,7 +41,7 @@ export class AssessmentDetailComponent implements OnInit {
   assessment: AssessmentDetail = {};
 
   /**
-   * 
+   *
    */
   constructor(
     private assessSvc: AssessmentService,
@@ -58,7 +58,7 @@ export class AssessmentDetailComponent implements OnInit {
 
 
   /**
-   * Called every time this page is loaded.  
+   * Called every time this page is loaded.
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
@@ -77,7 +77,7 @@ export class AssessmentDetailComponent implements OnInit {
         this.assessSvc.updateAssessmentDetails(this.assessment);
       }
     }
-    
+
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
@@ -94,7 +94,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   update(e) {
     // default Assessment Name if it is left empty
@@ -109,7 +109,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   setCharterPad() {
     if (!!this.assessment) {
@@ -118,17 +118,17 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param text 
-   * @param padChar 
-   * @param size 
+   *
+   * @param text
+   * @param padChar
+   * @param size
    */
   padLeft(text: string, padChar: string, size: number): string {
     return (String(padChar).repeat(size) + text).substr((size * -1), size);
   }
 
   /**
-   * 
+   *
    */
   createAcetName() {
     if (this.configSvc.installationMode === "ACET") {
@@ -144,5 +144,17 @@ export class AssessmentDetailComponent implements OnInit {
         this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
       }
     }
+  }
+
+  showFacilityName() {
+    return this.configSvc.behaviors.showFacilityName;
+  }
+
+  showCityName() {
+    return this.configSvc.behaviors.showCityName;
+  }
+
+  showStateName() {
+    return this.configSvc.behaviors.showStateName;
   }
 }

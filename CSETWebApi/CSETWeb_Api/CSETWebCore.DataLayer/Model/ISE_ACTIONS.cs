@@ -13,14 +13,24 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public partial class ISE_ACTIONS
     {
+        public ISE_ACTIONS()
+        {
+            ISE_ACTIONS_FINDINGS = new HashSet<ISE_ACTIONS_FINDINGS>();
+        }
+
         [Key]
-        public int Question_Id { get; set; }
+        public int Mat_Question_Id { get; set; }
         public string Description { get; set; }
         [StringLength(1000)]
         public string Action_Items { get; set; }
+        [StringLength(100)]
+        public string Regulatory_Citation { get; set; }
+        public int? Parent_Id { get; set; }
 
-        [ForeignKey("Question_Id")]
+        [ForeignKey("Mat_Question_Id")]
         [InverseProperty("ISE_ACTIONS")]
-        public virtual MATURITY_QUESTIONS Question { get; set; }
+        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace CSETWebCore.Model.Demographic
         public string CioExists { get; set; }
         public string CisoExists { get; set; }
         public string CyberTrainingProgramExists { get; set; }
+        public string cyberRiskService { get; set; }
     }
 
 

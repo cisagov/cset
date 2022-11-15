@@ -61,6 +61,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
+    // check for access key if userid not there
+    if (this.authSvc.userToken()
+      && this.parser.decodeToken(this.authSvc.userToken()).acckey) {
+      return true;
+    }
+
     this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
     return false;
   }

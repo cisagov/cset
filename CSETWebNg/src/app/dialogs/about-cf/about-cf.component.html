@@ -59,7 +59,7 @@
           <h3 class="mt-4">Contact</h3>
           <p class="mb-3 wrap-text">
             To learn more about Cyber Florida, visit  <a target="_blank" rel="noopener noreferrer" href="https://cyberflorida.org/">Cyber Florida</a> or contact            
-            <a class="wrap-text" href="mailto:outreach@cyberflorida.org" class="mailto">outreach@cyberflorida.org</a>.
+            <a class="wrap-text mailto" *ngIf="helpContactEmail?.trim().length > 0" href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a> {{helpContactPhone}}            
           </p>
       </article>
     </section>
