@@ -73,7 +73,7 @@ export class LoginCsetComponent implements OnInit {
       this.continueStandAlone();
     } else {
       // reset login status
-      this.authenticationService.logout();
+      //this.authenticationService.logout();
       // default the page as 'login'
       this.mode = 'LOGIN';
       this.checkForEjection(this.route.snapshot.queryParams['token']);
