@@ -110,7 +110,7 @@ export class PageVisibilityService {
 
 
 
-      // ORIGIN 
+      // ORIGIN
       if (c.startsWith('ORIGIN:') || c.startsWith('ORIGIN-ANY(')) {
         show = show && this.originAny(c);
       }
@@ -130,7 +130,9 @@ export class PageVisibilityService {
         show = show && !this.maturityAny(c);
       }
 
-
+      if (c.startsWith('STANDARD-NOT:') || c.startsWith('STANDARD-NONE(')) {
+        show = show && !this.standardAny(c);
+      }
 
       // Look for a maturity target level greater than X
       if (c.startsWith('TARGET-LEVEL-GT:')) {
@@ -235,6 +237,21 @@ export class PageVisibilityService {
     return has;
   }
 
+    /**
+   *
+   * @param rule
+   * @returns
+   */
+  standardAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has ||
+      (this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard(t.trim()));
+    });
+    return has;
+  }
+
   /**
    * Parses the value(s) following the first colon or open paren
    * and returns a list of them.
@@ -260,4 +277,4 @@ export class PageVisibilityService {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
   }
-} 
+}

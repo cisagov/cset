@@ -190,6 +190,7 @@ import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
+import { LogoutComponent } from './initial/logout/logout.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -234,6 +235,7 @@ const appRoutes: Routes = [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'logout', component: LogoutComponent },
       { path: 'reset-pass', component: ResetPassComponent },
       {
         path: 'landing-page-tabs',
