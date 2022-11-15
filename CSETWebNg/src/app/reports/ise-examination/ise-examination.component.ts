@@ -40,10 +40,16 @@ import { AssessmentService } from '../../services/assessment.service';
 export class IseExaminationComponent implements OnInit {
   response: any = {};
   findingsResponse: any = {};
+  actionItemsForParent: any = {};
+  actionData: any = {};
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
   storeIndividualIssues: Map<String, String> = new Map<String, String>();
   showSubcats: Map<String, boolean> = new Map<String, boolean>();
+
+  masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -57,12 +63,19 @@ export class IseExaminationComponent implements OnInit {
   supplementalFactsTotal: number = 0;
   supplementalFactsInCat: string = '';
 
+  nonReportables: string[] = [];
+  nonReportablesTotal: number = 0;
+  nonReportablesInCat: string = '';
+
   summaryStatic: string = 'Performed review of the security program using the ISE Toolbox.';
   summaryForCopy: string = this.summaryStatic + '\n\n';
 
   resultsOfReviewForCopy: string = '';
 
   examLevel: string = '';
+
+  relaventIssues: boolean = false;
+  loadingCounter: number = 0;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -80,8 +93,10 @@ export class IseExaminationComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Examination Report - ISE");
 
+    
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
+        console.log(r)
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
@@ -102,7 +117,7 @@ export class IseExaminationComponent implements OnInit {
               if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
                 this.showSubcats.set(subcat?.title, true);
               }
-              if (this.requiredQuestion(question) && this.isParentQuestion(question)) {
+              if (this.requiredQuestion(question) && this.ncuaSvc.isParentQuestion(question)) {
                 let issueText = '';
                 issueText += 'Title: ' + question.title + '\n';
                 issueText += 'Question Text: ' + question.questionText + '\n';
@@ -119,41 +134,86 @@ export class IseExaminationComponent implements OnInit {
 
                 this.resultsOfReviewForCopy += issueText;
               }
+              this.loadingCounter ++;
             }
           }
         }
+
+        let examLevelString = this.examLevel.substring(0, 4);
+
+        this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any)=>{       
+          this.actionData = findingData;
+          for(let i = 0; i<this.actionData?.length; i++){
+            let actionItemRow = this.actionData[i];
+
+            if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
+              if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
+                
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+              } else {
+                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+
+                tempActionArray.push(actionItemRow);
+
+                this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+              }
+            }
+          }
+          console.log(this.masterActionItemsMap)
+        });
+
+
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (f: any) => {
+            this.findingsResponse = f;  
+    
+            for(let i = 0; i < this.findingsResponse?.length; i++) {
+              if(this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+                let finding = this.findingsResponse[i];
+                if(finding.finding.type === 'Examiner Finding') {
+                  this.addExaminerFinding(finding.category.title);
+                }
+                if(finding.finding.type === 'DOR') {
+                  this.addDOR(finding.category.title);
+                }
+                if(finding.finding.type === 'Supplemental Fact') {
+                  this.addSupplementalFact(finding.category.title);
+                }
+                if(finding.finding.type === 'Non-reportable') {
+                  this.addNonReportable(finding.category.title);
+                }
+                this.relaventIssues = true;
+              }
+            }
+            if(this.relaventIssues){
+
+              this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
+              this.categoryBuilder(this.dors);
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
+              this.categoryBuilder(this.examinerFindings);
+    
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
+              this.categoryBuilder(this.supplementalFacts);
+    
+              this.summaryForCopy += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
+              this.categoryBuilder(this.nonReportables);
+            } else {
+              this.summaryForCopy += 'No Issues were noted.';
+            }
+            
+            this.loadingCounter++;
+          },
+          error => console.log('Findings Error: ' + (<Error>error).message)
+        );
+
+
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
 
-    this.findSvc.GetAssessmentFindings().subscribe(
-      (f: any) => {
-        this.findingsResponse = f;  
-
-        for(let i = 0; i < this.findingsResponse?.length; i++) {
-          let finding = this.findingsResponse[i];
-          if(finding.finding.type === 'Examiner Finding') {
-            this.addExaminerFinding(finding.category.title);
-          }
-          if(finding.finding.type === 'DOR') {
-            this.addDOR(finding.category.title);
-          }
-          if(finding.finding.type === 'Supplemental Fact') {
-            this.addSupplementalFact(finding.category.title);
-          }
-        }
-
-        this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
-        this.categoryBuilder(this.examinerFindings);
-
-        this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
-        this.categoryBuilder(this.dors);
-
-        this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
-        this.categoryBuilder(this.supplementalFacts);
-      },
-      error => console.log('Findings Error: ' + (<Error>error).message)
-    );
+    
 
     // initializing all assessment factors / categories / parent questions to true (expanded)
     // used in checking if the section / question should be expanded or collapsed 
@@ -180,7 +240,9 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 16', true)                            .set('Stmt 17', true)
       .set('Stmt 18', true)                            .set('Stmt 19', true)
       .set('Stmt 20', true)                            .set('Stmt 21', true)
-      .set('Stmt 22', true)                            .set('Asset Inventory', true);
+      .set('Stmt 22', true)                            .set('Asset Inventory', true)
+      .set('Stmt 23', true)                            .set('Policies & Procedures', true)
+      .set('Due Diligence', true);
 
     this.storeIndividualIssues
       .set('Stmt 1', '')
@@ -194,7 +256,7 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 16', '')                            .set('Stmt 17', '')
       .set('Stmt 18', '')                            .set('Stmt 19', '')
       .set('Stmt 20', '')                            .set('Stmt 21', '')
-      .set('Stmt 22', '');
+      .set('Stmt 22', '')                            .set('Stmt 23', '');
 
     this.showSubcats
     .set('Information Security Program', true)       .set('Governance', true)
@@ -208,7 +270,8 @@ export class IseExaminationComponent implements OnInit {
     .set('Change & Configuration Management', true)  .set('Monitoring', false)
     .set('Logging', false)                            .set('Data Governance', false)
     .set('Conversion', false)                         .set('Software Development Process', false)
-    .set('Internal Audit Program', false)             .set('Asset Inventory', true);
+    .set('Internal Audit Program', false)             .set('Asset Inventory', true)
+    .set('Policies & Procedures', true)               .set('Due Diligence', false);
   }
 
   /**
@@ -228,41 +291,12 @@ export class IseExaminationComponent implements OnInit {
     }
     return false;
   }
-  /**
-   * checks if q is a parent question
-   */ 
-  isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
-      return true;
-    } 
-    return false;
-  }
+  
   /**
    * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
    */ 
   getParentQuestionTitle(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
       let endOfTitle = 6;
       // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
       if(title.charAt(6) != '.'){
@@ -302,6 +336,13 @@ export class IseExaminationComponent implements OnInit {
     this.supplementalFactsTotal ++;
   }
 
+  addNonReportable(title: any) {
+    if (!this.nonReportables.includes(title)) {
+      this.nonReportables.push(title);
+    }
+    this.nonReportablesTotal ++;
+  }
+
   inCatStringBuilder(total: number, length: number, findingName: string) {
     let inCategory = '';
     if (total === 1) {
@@ -324,6 +365,21 @@ export class IseExaminationComponent implements OnInit {
 
   newFunc() {
     window.print();
+  }
+
+  getChildQuestionNumber(title: string) {
+    if(!this.ncuaSvc.isParentQuestion(title)) {
+      let startOfNumber = title.indexOf('.') + 1;
+      return title.substring(startOfNumber);
+    }
+  }
+
+  checkShowActionItemMap(title: string, actionNum: number) {
+    let array = this.showActionItemsMap.get(title);
+    if(array.includes(actionNum.toString())){
+      return true;
+    }
+    return false;
   }
   
 }

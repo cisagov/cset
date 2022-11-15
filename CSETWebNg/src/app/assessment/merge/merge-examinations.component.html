@@ -39,6 +39,7 @@
     <div *ngIf="this.pageLoading === true">
         <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
+            {{ this.assessmentsProcessed }} / {{ this.ncuaSvc.assessmentsToMerge.length }} Assessments Processed
         </div>
     </div>
 </div>
@@ -46,7 +47,7 @@
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
     <div class="bgc-trans mt-2 mx-4 pr-4 d-flex flex-column flex-00a ">
         <ng-container *ngIf="this.mergeConflicts.length > 0 && this.pageLoading === false">
-        <div style="max-height: 600px; width: 64vw; margin: auto; overflow-y: scroll;">
+        <div style="max-height: 450px; width: 94vw; margin: auto; overflow-y: scroll;">
             <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
                 <tr>
                     <th>Statements</th>
@@ -85,18 +86,29 @@
                 (click)="createMergedAssessment()">Merge Examinations</button>
         </ng-container>
 
-        <ng-container *ngIf="this.mergeConflicts.length === 0 && this.pageLoading === false">
-
-            <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">        
-                <div class="alert-success mt-4 mb-4 p-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-                    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle" aria-label="Caution no questions"></span>
-                    <span class="fs-base-3 p-2 justify-content-center flex-11a">
-                        There are no conflicting answers within the chosen examinations.
-                        Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
-                        screen to select different examinations, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
-                        to proceed with the merge.
-                    </span>
+        <ng-container *ngIf="this.mergeConflicts.length === 0">
+            <ng-container *ngIf="this.pageLoading === false && this.attemptingToMerge === false">
+                <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">        
+                    <div class="alert-success mt-4 mb-4 p-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+                        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle" aria-label="Caution no questions"></span>
+                        <span class="fs-base-3 p-2 justify-content-center flex-11a">
+                            There are no conflicting answers within the chosen examinations.
+                            Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
+                            screen to select different examinations, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
+                            to proceed with the merge.
+                        </span>
+                    </div>
                 </div>
-            </div>
-
+            </ng-container>
+            <ng-container *ngIf="this.attemptingToMerge === true">
+                <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+                    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+                        <div class="spinner-size-50"></div>
+                        <p style="padding-left: 20px;">Merging in progress, please wait...</p>
+                    </div>
+                </div>
+            </ng-container>
         </ng-container>
+
+    </div>
+</div>

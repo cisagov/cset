@@ -393,6 +393,8 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            //Get All the Findings and issues with the findings. 
+
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
@@ -1527,6 +1529,42 @@ namespace CSETWebCore.Business.Reports
                 }
             }
         }
+
+        public List<SourceFiles> GetIseSourceFiles()
+        {
+
+            var data = (from g in _context.GEN_FILE
+                       join a in _context.MATURITY_SOURCE_FILES
+                           on g.Gen_File_Id equals a.Gen_File_Id
+                       join q in _context.MATURITY_QUESTIONS 
+                            on a.Mat_Question_Id equals q.Mat_Question_Id
+                      
+                       where q.Maturity_Model_Id == 10
+                       select new { a, q, g }).ToList();
+
+            List<SourceFiles> result = new List<SourceFiles>();
+            SourceFiles file = new SourceFiles();
+            foreach (var item in data)
+            {
+                try
+                {
+                    file.Mat_Question_Id = item.q.Mat_Question_Id;
+                    file.Gen_File_Id = item.g.Gen_File_Id;
+                    file.Title = item.g.Title;
+                } 
+                catch 
+                { 
+                
+                }
+                result.Add(file);
+               
+            }
+
+            return result;
+
+        }
+
+
     }
 }
 

@@ -129,6 +129,10 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', {responseType: 'text'});
     }
 
+    getActionItemsReport(examLevel: number) {        
+        const qstring = 'reports/acet/GetActionItemsReport?Exam_Level=' + examLevel;
+        return this.http.get(this.configSvc.apiUrl + qstring,  headers);
+    }
     /*
     * Get target band
     */
@@ -146,6 +150,10 @@ export class ACETService {
 
     getIseAnsweredQuestions() {
         return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
+    }
+
+    getIseSourceFiles() {
+        return this.http.get(this.apiUrl + 'reports/acet/getIseSourceFiles', headers);
     }
 
     /*

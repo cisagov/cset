@@ -28,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
+import { MaturityService } from './maturity.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -71,17 +72,24 @@ let headers = {
 
   // Variables to manage ISE issues state
   issuesFinishedLoading: boolean = false;
-  importantQuestionCheck = new Map();
+  questionCheck = new Map();
   issueFindingId = new Map();
   deleteHistory = new Set();
+
+  // Keeps track of Issues with unassigned Types for report notification
+  unassignedIssueTitles: any = [];
+  unassignedIssues: boolean = false;
+
 
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public acetFilteringSvc: AcetFilteringService
-  ) { 
+    public acetFilteringSvc: AcetFilteringService,
+    private maturitySvc: MaturityService,
+    private assessmentSvc: AssessmentService
+  ) {
     this.init();
   }
 
@@ -206,7 +214,7 @@ let headers = {
 
   // Clears necessary variables on assessment drop
   reset() {
-    this.importantQuestionCheck.clear();
+    this.questionCheck.clear();
     this.issueFindingId.clear();
     this.deleteHistory.clear();
   }
@@ -228,28 +236,45 @@ let headers = {
     if (this.usingExamLevelOverride === false) {
       this.getExamLevelFromAssets();
     } else if (this.usingExamLevelOverride === true) {
-      // TODO
+      return this.chosenOverrideLevel;
     }
   }
 
   getExamLevelFromAssets() {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (this.assetsAsNumber > 50000000) {
       this.proposedExamLevel = 'CORE';
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(2).subscribe();
+      }
     } else {
       this.proposedExamLevel = 'SCUEP';
+      if (this.usingExamLevelOverride === false) {
+        this.maturitySvc.saveLevel(1).subscribe();
+      }
     }
   }
 
   updateExamLevelOverride(level: number) {
+    if (!this.isIse()) {
+      return;
+    }
+
     if (level === 0) {
       this.usingExamLevelOverride = false;
       this.chosenOverrideLevel = "No Override";
+      this.getExamLevelFromAssets();
     } else if (level === 1) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "SCUEP";
+      this.maturitySvc.saveLevel(1).subscribe();
     } else if (level === 2) {
       this.usingExamLevelOverride = true;
       this.chosenOverrideLevel = "CORE";
+      this.maturitySvc.saveLevel(2).subscribe();
     }
     this.refreshGroupList(level);
   }
@@ -287,6 +312,57 @@ let headers = {
   // Used to check answer completion for ISE reports
   getIseAnsweredQuestions() {
     return this.http.get(this.apiUrl + 'reports/acet/getIseAnsweredQuestions', headers);
+  }
+
+  // translates the maturity_Level_Id into the maturity_Level
+  translateExamLevel(matLevelId: number) {
+    if(matLevelId === 17) {
+      return 'SCUE';
+    } else if (matLevelId === 18 || matLevelId === 19) {
+      return 'CORE';
+    }
+  }
+
+  // translates the maturity_Level_Id into the maturity_Level
+  translateExamLevelToInt(matLevelString: string) {
+    if(matLevelString === 'SCUE') { //SCUEP, but cut off because the substring(0, 4)
+      return 17;
+    } else if (matLevelString === 'CORE') {
+      return 18;
+    }
+  }
+
+  isParentQuestion(q: any) {
+    if ( q.title == 'Stmt 1'
+    ||   q.title == 'Stmt 2'
+    ||   q.title == 'Stmt 3'
+    ||   q.title == 'Stmt 4'
+    ||   q.title == 'Stmt 5'
+    ||   q.title == 'Stmt 6'
+    ||   q.title == 'Stmt 7'
+    ||   q.title == 'Stmt 8'
+    ||   q.title == 'Stmt 9'
+    ||   q.title == 'Stmt 10'
+    ||   q.title == 'Stmt 11'
+    ||   q.title == 'Stmt 12'
+    ||   q.title == 'Stmt 13'
+    ||   q.title == 'Stmt 14'
+    ||   q.title == 'Stmt 15'
+    ||   q.title == 'Stmt 16'
+    ||   q.title == 'Stmt 17'
+    ||   q.title == 'Stmt 18'
+    ||   q.title == 'Stmt 19'
+    ||   q.title == 'Stmt 20'
+    ||   q.title == 'Stmt 21'
+    ||   q.title == 'Stmt 22'
+    ||   q.title == 'Stmt 23') {
+      return true;
+    }
+    return false;
+  }
+
+  isIse() {
+    return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
 }
