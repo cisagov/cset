@@ -22,7 +22,7 @@ namespace CSETWebCore.Api.Controllers
         // if you want to use the gallery editor, change this to true
         private bool inDev = false;
 
-        public GalleryEditorController(ITokenManager token, CSETContext context)
+        public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
             _token = token;
             _context = context;
