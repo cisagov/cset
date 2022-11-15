@@ -32,6 +32,7 @@ import { MaturityService } from './maturity.service';
 import { Question } from '../models/questions.model';
 import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
+import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -386,13 +387,6 @@ let headers = {
 
   }
 
-  includeInSubmission(q: any) {
-    if((q.maturityLevel !== 'CORE+' || (q.maturityLevel === 'CORE+' && q.answerText !== 'U')) && !this.isParentQuestion(q)) {
-      return true;
-    }
-    return false;
-  }
-
   answerTextToNumber(text: string) {
     switch(text){
       case 'Y':
@@ -419,35 +413,41 @@ let headers = {
   }
 
   questionResponseBuilder() {
-    this.acetSvc.getIseAnsweredQuestions().subscribe(
+    this.acetSvc.getIseAllQuestions().subscribe(
       (r: any) => {
-        console.log(r)
         this.questions = r;
-        this.examLevel = this.questions?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
+        this.examLevel = this.getExamLevel();
 
         // goes through domains
-        for(let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+        for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
           let domain = this.questions?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
-          for(let j = 0; j < domain.components?.length; j++) {
+          for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             let childResponses = {"title": subcat?.questions[0].title, "children":[]};
             // goes through questions
-            for(let k = 0; k < subcat?.questions?.length; k++) {
-              let question = subcat?.questions[k];
-              
-              if(this.includeInSubmission(question)){
-                if (question.maturityLevel === 'CORE+') {
-                  this.examLevel = 'CORE+';
+            for (let k = 0; k < subcat?.questions?.length; k++) {
+              if (k != 0) { //don't want parent questions being included with children
+                let question = subcat?.questions[k];
+
+                if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
+                  question.answerText = 'U';
+                }
+                
+                else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
+                  if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                    this.examLevel = 'CORE+';
+                  }
+                  if (question.maturityLevel === 'SCUEP') {
+                    question.answerText = 'U';
+                  }
                 }
                 
                 childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
               }
             }
 
-            if(childResponses?.children?.length > 0) { //don't add CORE+ subcats with no answered statements
-              this.jsonString.questionData.push(childResponses);
-            }
+            this.jsonString.questionData.push(childResponses);
           }
         }
 
@@ -463,7 +463,7 @@ let headers = {
       (r: any) => {
         this.iseIrps = r.headerList[5]; //these are all the IRPs for ISE. If this changes in the future, this will need updated
 
-        for(let i = 0; i < this.iseIrps?.irpList?.length; i++) {
+        for (let i = 0; i < this.iseIrps?.irpList?.length; i++) {
           let currentIrp = this.iseIrps?.irpList[i];
 
           let irpResponse = {"examProfileNumber": currentIrp.item_Number, "response": currentIrp.response};
