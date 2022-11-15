@@ -22,19 +22,25 @@
 -------------------------->
 <div class="white-panel">
   <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="d-flex flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-    <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
-      <div class="d-flex align-items-start flex-11a">
+    <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
+      <div class="mr-3 answered-count" *ngIf="!!groupings"
+        matTooltip="Indicates the number of answered questions out of the total for this page">
+        {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
+      </div>
+      <div>
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
           matTooltip="Collapse All" aria-label="Collapse All">
           <i class="fas fa-compress-alt"></i></button>
         <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
           aria-label="Expand All"><i class="fas fa-expand-alt"></i></button>
-        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()" matTooltip="Filter">
+        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()"
+          matTooltip="Filter">
           <i class="cset-icons-filter" aria-label="Filter"></i>
         </button>
       </div>
+
     </div>
 
     <div class="d-block mb-2">
@@ -70,6 +76,10 @@
 
 
     <!-- top level -->
+    <p class="mb-4" *ngIf="!!groupings">
+      Unanswered questions are calculated as a '{{questionsSvc.getAnswerButtonLabel(modelId, 'N')}}' response
+    </p>
+    
     <ng-template [ngIf]="!!groupings">
       <div *ngFor="let g of groupings" class="w-100">
         <app-grouping-block [grouping]="g"></app-grouping-block>

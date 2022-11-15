@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
@@ -36,7 +36,7 @@ import { ConfigService } from '../../services/config.service';
   templateUrl: './executive.component.html',
   styleUrls: ['../reports.scss']
 })
-export class ExecutiveComponent implements OnInit, AfterViewChecked {
+export class ExecutiveComponent implements OnInit {
   response: any;
 
   chartPercentCompliance: Chart;
@@ -65,7 +65,7 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
     public analysisSvc: ReportAnalysisService,
     private titleService: Title,
     public acetSvc: ACETService,
-    public configSvc: ConfigService 
+    public configSvc: ConfigService
   ) { }
 
   ngOnInit() {
@@ -130,7 +130,7 @@ export class ExecutiveComponent implements OnInit, AfterViewChecked {
       });
   }
 
-  ngAfterViewChecked() {
-
+  usesRAC() {
+    return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
   }
 }

@@ -366,7 +366,7 @@ namespace CSETWebCore.Business.Contact
         /// <param name="userId"></param>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public int? GetUserRoleOnAssessment(int userId, int assessmentId)
+        public int? GetUserRoleOnAssessment(int? userId, int assessmentId)
         {
             var contact = _context.ASSESSMENT_CONTACTS.Where(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId).FirstOrDefault();
             if (contact != null)

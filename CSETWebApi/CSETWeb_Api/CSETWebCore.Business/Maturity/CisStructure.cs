@@ -99,11 +99,12 @@ namespace CSETWebCore.Business.Maturity
         {
             _myModel = new CisQuestions
             {
-                AssessmentId = this._assessmentId
+                AssessmentId = this._assessmentId,
+                ModelId = this._maturityModelId
             };
 
             allQuestions = _context.MATURITY_QUESTIONS
-                .Include(x => x.Maturity_LevelNavigation)
+                .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Where(q =>
                 _maturityModelId == q.Maturity_Model_Id).ToList();
@@ -192,8 +193,8 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
@@ -252,8 +253,8 @@ namespace CSETWebCore.Business.Maturity
                     QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                     ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                     Sequence = myQ.Sequence,
-                    MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                    MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                    MaturityLevel = myQ.Maturity_Level.Level,
+                    MaturityLevelName = myQ.Maturity_Level.Level_Name,
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
@@ -349,8 +350,8 @@ namespace CSETWebCore.Business.Maturity
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_LevelNavigation.Level,
-                        MaturityLevelName = myQ.Maturity_LevelNavigation.Level_Name,
+                        MaturityLevel = myQ.Maturity_Level.Level,
+                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,

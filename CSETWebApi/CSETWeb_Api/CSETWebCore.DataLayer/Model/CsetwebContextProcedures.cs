@@ -34,6 +34,7 @@ namespace CSETWebCore.DataLayer.Model
 
         protected void OnModelCreatingGeneratedProcedures(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Acet_GetActionItemsForReportResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<AcetAnswerDistributionResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_Compute_MaturityAllResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<analytics_compute_single_averages_maturityResult>().HasNoKey().ToView(null);
@@ -47,6 +48,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Get_Assess_Detail_Filter_DataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_Merge_ConflictsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetAnswerDistribMaturityResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetAreasOverallResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<GetChildrenAnswersResult>().HasNoKey().ToView(null);
@@ -70,8 +72,10 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<SP_SearchTablesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_AggregationCustomQuestionnaireLoadResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Answer_Components_DefaultResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_Assessments_Completion_For_Access_KeyResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_Completion_For_UserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_For_UserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_countsForLevelsByGroupMaturityModelResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_financial_attributesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GenerateSPRSScoreResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getAnswerComponentOverridesResult>().HasNoKey().ToView(null);
@@ -129,6 +133,44 @@ namespace CSETWebCore.DataLayer.Model
         public CsetwebContextProcedures(CsetwebContext context)
         {
             _context = context;
+        }
+
+        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, int? Exam_Level, int? Additional_Exam_Level, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "Assessment_Id",
+                    Value = Assessment_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Exam_Level",
+                    Value = Exam_Level ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Additional_Exam_Level",
+                    Value = Additional_Exam_Level ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Acet_GetActionItemsForReportResult>("EXEC @returnValue = [dbo].[Acet_GetActionItemsForReport] @Assessment_Id, @Exam_Level, @Additional_Exam_Level", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
         }
 
         public virtual async Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
@@ -750,6 +792,32 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<Get_RecommendationsResult>("EXEC @returnValue = [dbo].[Get_Recommendations] @value, @industry, @organization, @assetvalue", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<GetAnswerDistribMaturityResult>> GetAnswerDistribMaturityAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetAnswerDistribMaturityResult>("EXEC @returnValue = [dbo].[GetAnswerDistribMaturity] @assessment_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1499,6 +1567,33 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+        public virtual async Task<List<usp_Assessments_Completion_For_Access_KeyResult>> usp_Assessments_Completion_For_Access_KeyAsync(string accessKey, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "accessKey",
+                    Size = 20,
+                    Value = accessKey ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_Assessments_Completion_For_Access_KeyResult>("EXEC @returnValue = [dbo].[usp_Assessments_Completion_For_Access_Key] @accessKey", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<usp_Assessments_Completion_For_UserResult>> usp_Assessments_Completion_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1632,6 +1727,38 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[usp_CopyIntoSet_Delete] @DestinationSetName", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_countsForLevelsByGroupMaturityModelResult>> usp_countsForLevelsByGroupMaturityModelAsync(int? assessment_id, int? mat_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "mat_model_id",
+                    Value = mat_model_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_countsForLevelsByGroupMaturityModelResult>("EXEC @returnValue = [dbo].[usp_countsForLevelsByGroupMaturityModel] @assessment_id, @mat_model_id", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

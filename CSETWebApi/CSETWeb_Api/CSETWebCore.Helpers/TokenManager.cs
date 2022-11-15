@@ -140,15 +140,47 @@ namespace CSETWebCore.Helpers
         }
 
 
+        ///// <summary>
+        ///// Creates a JWT with payload claims for the specified userid.
+        ///// </summary>
+        ///// <returns></returns>
+        //public string GenerateToken(int userId, string accessKey, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
+        //{
+        //    return Blah(userId, null, tzOffset, expSeconds, assessmentId, aggregationId, scope);
+        //}
+
+
+        ///// <summary>
+        ///// Creates a JWT with payload claims for the specified access key.
+        ///// </summary>
+        ///// <returns></returns>
+        //public string GenerateToken(string accessKey, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
+        //{
+        //    return Blah(null, accessKey, tzOffset, expSeconds, assessmentId, aggregationId, scope);
+        //}
+
+
         /// <summary>
-        /// 
+        /// Creates a JWT with payload claims.  
         /// </summary>
-        /// <returns></returns>
-        public string GenerateToken(int userId, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
+        public string GenerateToken(int? userId, string accessKey, string tzOffset, int expSeconds, int? assessmentId, int? aggregationId, string scope)
         {
+            // Either a userId or accessKey will be supplied.  Use that identifier
+            // in constructing the securityKey.
+            string id = "";
+            if (userId != null)
+            {
+                id = userId.ToString();
+            }
+
+            if (accessKey != null)
+            {
+                id = accessKey;
+            }
+
             // Build securityKey.  For uniqueness, append the user identity (userId)
             var securityKey = new Microsoft
-                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + userId));
+                .IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + id));
 
             // Build credentials
             var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials
@@ -179,8 +211,9 @@ namespace CSETWebCore.Helpers
                 { "iss", "CSET_ISS" },
                 { "exp", UnixTime() + secondsUntilExpiry },
                 { Constants.Constants.Token_UserId, userId },
+                { Constants.Constants.Token_AccessKey, accessKey },
                 { Constants.Constants.Token_TimezoneOffsetKey, tzOffset },
-                { "scope", scope}
+                { "scope", scope }
             };
 
 
@@ -205,6 +238,9 @@ namespace CSETWebCore.Helpers
         }
 
 
+
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -213,7 +249,7 @@ namespace CSETWebCore.Helpers
         public bool IsTokenValid(string tokenString)
         {
             JwtSecurityToken token = null;
-
+            bool isLocal = _localInstallationHelper.IsLocalInstallation();
             try
             {
                 var handler = new JwtSecurityTokenHandler();
@@ -225,13 +261,24 @@ namespace CSETWebCore.Helpers
                 var parms = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                 {
                     RequireExpirationTime = true,
+                    ValidateLifetime = !isLocal,
                     ValidAudience = "CSET_AUD",
-                    ValidIssuer = "CSET_ISS",
-                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]))
+                    ValidIssuer = "CSET_ISS"
                 };
 
-                Microsoft.IdentityModel.Tokens.SecurityToken validatedToken;
-                var principal = handler.ValidateToken(tokenString, parms, out validatedToken);
+                if (token.Payload[Constants.Constants.Token_UserId] != null)
+                {
+                    parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]));
+                }
+
+                if (token.Payload[Constants.Constants.Token_AccessKey] != null)
+                {
+                    parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_AccessKey]));
+                }
+
+
+                var principal = handler
+                    .ValidateToken(tokenString, parms, out SecurityToken validatedToken);
             }
             catch (ArgumentException argExc)
             {
@@ -253,7 +300,7 @@ namespace CSETWebCore.Helpers
 
 
             // see if the token has expired (we aren't really concerned with expiration on local installations)
-            if (token.ValidTo < DateTime.UtcNow && !_localInstallationHelper.IsLocalInstallation())
+            if (token.ValidTo < DateTime.UtcNow && !isLocal)
             {
                 log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
 
@@ -291,7 +338,7 @@ namespace CSETWebCore.Helpers
         /// <param name="assessmentId"></param>
         public void AuthorizeUserForAssessment(int assessmentId)
         {
-            int currentUserId = GetUserId();
+            var currentUserId = GetUserId();
             int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
                                                                    && ac.UserId == currentUserId).Count();
             if (!(countAC > 0))
@@ -307,7 +354,7 @@ namespace CSETWebCore.Helpers
 
         public bool IsCurrentUserOnAssessment(int assessmentId)
         {
-            int currentUserId = GetUserId();
+            var currentUserId = GetUserId();
 
             int countAC = _context.ASSESSMENT_CONTACTS.Where(ac => ac.Assessment_Id == assessmentId
                                                                    && ac.UserId == currentUserId).Count();
@@ -335,9 +382,9 @@ namespace CSETWebCore.Helpers
         }
 
 
-        public int GetCurrentUserId()
+        public int? GetCurrentUserId()
         {
-            return PayloadInt(Constants.Constants.Token_UserId) ?? 0;
+            return PayloadInt(Constants.Constants.Token_UserId);
         }
 
 
@@ -411,10 +458,17 @@ namespace CSETWebCore.Helpers
         }
 
 
-        public int GetUserId()
+        public int? GetUserId()
         {
-            int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
-            return userId;
+            var uid = PayloadInt(Constants.Constants.Token_UserId);
+            return uid;
+        }
+
+
+        public string GetAccessKey()
+        {
+            var ak = Payload(Constants.Constants.Token_AccessKey);
+            return ak;
         }
 
 
@@ -426,20 +480,22 @@ namespace CSETWebCore.Helpers
         public int AssessmentForUser()
         {
             Init();
-            int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
+            int? userId = PayloadInt(Constants.Constants.Token_UserId);
+            string accessKey = Payload(Constants.Constants.Token_AccessKey);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return AssessmentForUser(userId, assessmentId);
+            return AssessmentForUser(userId, accessKey, assessmentId);
         }
 
 
         public int AssessmentForUser(String tokenString)
         {
             SetToken(tokenString);
-            int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
+            int? userId = PayloadInt(Constants.Constants.Token_UserId);
+            string accessKey = Payload(Constants.Constants.Token_AccessKey);
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
-            return AssessmentForUser(userId, assessmentId);
+            return AssessmentForUser(userId, accessKey, assessmentId);
         }
 
 
@@ -452,20 +508,28 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="assessmentId"></param>
-        public int AssessmentForUser(int userId, int? assessmentId)
+        public int AssessmentForUser(int? userId, string accessKey, int? assessmentId)
         {
             if (assessmentId == null)
             {
                 Throw401();
             }
 
-            int hits = _context.ASSESSMENT_CONTACTS.Count(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId);
-            if (hits == 0)
+            int hitsAC = _context.ASSESSMENT_CONTACTS.Count(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId);
+            if (hitsAC > 0)
             {
-                Throw401();
+                return (int)assessmentId;
             }
 
-            return (int)assessmentId;
+            int hitsAK = _context.ACCESS_KEY_ASSESSMENT.Count(aka => aka.AccessKey == accessKey && aka.Assessment_Id == assessmentId);
+            if (hitsAK > 0)
+            {
+                return (int)assessmentId;
+            }
+
+            Throw401();
+
+            return 0;
         }
 
 
@@ -475,7 +539,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public void AuthorizeAdminRole()
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
             int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
 
             if (assessmentId == null)
@@ -506,7 +570,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool AmILastAdminWithUsers(int assessmentId)
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
 
             var adminConnections = _context.ASSESSMENT_CONTACTS.Where(
                     ac => ac.Assessment_Id == assessmentId
@@ -534,9 +598,9 @@ namespace CSETWebCore.Helpers
             var resp = new HttpResponseMessage(HttpStatusCode.Unauthorized)
             {
                 Content = new StringContent("User not authorized for assessment"),
-                ReasonPhrase = "The current user is not authorized to access the target assessment"                
+                ReasonPhrase = "The current user is not authorized to access the target assessment"
             };
-            throw new Exception(resp.Content.ReadAsStringAsync().Result);        
+            throw new Exception(resp.Content.ReadAsStringAsync().Result);
         }
 
 
@@ -546,7 +610,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool IsAuthenticated()
         {
-            int userId = (int)PayloadInt(Constants.Constants.Token_UserId);
+            int? userId = PayloadInt(Constants.Constants.Token_UserId);
 
             return true;
         }

@@ -19,12 +19,12 @@ namespace CSETWebCore.Model.Findings
         public Importance Importance { get; set; }
         public string Title { get; set; }
         public string Type { get; set; }
+        public string Risk_Area { get; set; }
+        public string Sub_Risk { get; set; }
         public string Description { get; set; }
-        public int? Sub_Risk_Area_Id { get; set; }
-        public SubRiskArea SubRiskArea { get; set; }
-        public string Disposition { get; set; }
-        public Nullable<System.DateTime> Identified_Date { get; set; }
-        public Nullable<System.DateTime> Due_Date { get; set; }
+        public string Citations { get; set; }
+        public string ActionItems { get; set; }
+        public int Auto_Generated { get; set; }
 
         public List<FindingContact> Finding_Contacts { get; set; }
 
@@ -43,7 +43,6 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Title);
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
-            noValue = noValue && Sub_Risk_Area_Id == null;
 
             return noValue;
         }

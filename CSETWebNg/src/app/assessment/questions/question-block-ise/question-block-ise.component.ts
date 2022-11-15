@@ -36,6 +36,7 @@ import { QuestionDetailsContentViewModel } from '../../../models/question-extras
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 import { FindingsService } from '../../../services/findings.service';
 import { IssuesComponent } from '../issues/issues.component';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -64,33 +65,34 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
   altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-  textForSummary = "Results of Review (insert comments)";
+  textForSummary = "Statement Summary (insert comments)";
   summaryCommentCopy = "";
   summaryEditedCheck = false; 
 
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Comment - -\n';
+  summaryConvoBuffer = '\n- - End of Summary Comment - -\n';
 
-  // To do: Add this to a db table and pull in dynamically.
-  issueAutoPopulate = new Set([7190, 7195, 7196, 7198, 7199, 7200, 7201, 7203, 7204, 7205,
-    7206, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7216, 7217, 7219, 7220, 7222, 7223, 7224, 
-    7225, 7227, 7233, 7235, 7236, 7237, 7238, 7240, 7241, 7242, 7243, 7244, 7246, 7247, 7248, 
-    7249, 7251, 7252, 7253, 7256, 7258, 7259, 7263, 7264, 7267, 7268, 7269, 7270, 7271, 7272, 
-    7273, 7275, 7276, 7278, 7280, 7284, 7285, 7287, 7288, 7291, 7295, 7298, 7299, 7300, 7304]
-  );
 
+  // To do: eventually, these should be pulled in dynamically.
+  importantQuestions = new Set([7569, 7574, 7575, 7578, 7579, 7580, 7581, 7583, 7585, 7586, 7587, 7595, 7596, 
+    7597, 7598, 7599, 7600, 7601, 7605, 7606, 7608, 7610, 7613, 7614, 7615, 7616, 7620, 7625, 7629, 7630, 
+    7631, 7632, 7634, 7635, 7636, 7637, 7638, 7640, 7642, 7643, 7644, 7646, 7647, 7648, 7651, 7653, 7654, 
+    7658, 7659, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7672, 7673, 7675, 7677, 7681, 7682, 7684, 7685, 
+    7688, 7692, 7695, 7696, 7697, 7701]);
+  
   // Used to place buttons/text boxes at the bottom of each subcategory
-  finalScuepQuestion = new Set ([7196, 7201, 7206, 7214, 7217, 7220, 7225]);
-  finalCoreQuestion = new Set ([7233, 7238, 7244, 7249, 7256, 7265, 7273, 7276, 7281, 7285, 7289, 7293, 7296, 7301, 7304]);
-  finalCorePlusQuestion = new Set ([7312, 7316, 7322, 7332, 7338, 7344, 7351, 7359, 7366, 7373, 7381, 7390, 7395, 7400, 7408]);
-  finalExtraQuestion = new Set ([7421, 7429, 7444, 7450, 7458, 7465]);
+  finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
+  finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
+  finalCorePlusQuestion = new Set ([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7756, 7773, 7784, 7795, 7807, 7826, 7834, 7842, 7852]);
+  finalExtraQuestion = new Set ([7868, 7874, 7890, 7901, 7911, 7918, 7946]);
 
   showQuestionIds = false;
 
   iseExamLevel: string = "";
   showCorePlus: boolean = false;
-  showIssues: boolean = false;
+  showIssues: boolean = true;
   coreChecked: boolean = false;
 
   /**
@@ -103,6 +105,7 @@ export class QuestionBlockIseComponent implements OnInit {
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
+    public completionSvc: CompletionService,
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
     private findSvc: FindingsService
@@ -111,18 +114,38 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   *
-   */
+  *
+  */
   ngOnInit(): void {
+    this.setIssueMap();
+    
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
-
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
+
+      this.summaryCommentCopy = this.myGrouping.questions[0].comment;
 
       this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
         (details) => {
           this.extras = details;
           this.extras.questionId = this.myGrouping.questions[0].questionId;
-        });
+
+          this.extras.findings.forEach(find => {
+            if (find.auto_Generated === 1) {
+              find.question_Id = this.myGrouping.questions[0].questionId;
+              
+              // This is a check for post-merging ISE assessments.
+              // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
+              if (this.ncuaSvc.questionCheck.get(find.question_Id) !== undefined) {
+                this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+              } else {
+                this.deleteIssue(find.finding_Id, true);
+              }
+              
+            }
+          });
+          
+          this.ncuaSvc.issuesFinishedLoading = true;
+      });
 
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
@@ -138,12 +161,13 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       }
     }
+
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
     });
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
@@ -153,8 +177,8 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
-   * Toggles the Expanded property of the question block.
-   */
+  * Toggles the Expanded property of the question block.
+  */
   toggleExpansion() {
     // dispatch a 'mouseleave' event to all child elements to clear
     // any displayed glossary definitions so that they don't get orphaned
@@ -167,9 +191,9 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   /**
- * If there are no spaces in the question text assume it's a hex string
- * @param q
- */
+  * If there are no spaces in the question text assume it's a hex string
+  * @param q
+  */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
       return "normal";
@@ -177,25 +201,81 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
+  displayTooltip(maturityModelId: number, option: string) {
+    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    if (toolTip === 'Yes' || toolTip === 'No') {
+      toolTip = "";
+    }
+    return toolTip;
+  }
+
   /**
-   *
-   * @param ans
-   */
+  * Repopulates the map variables to correctly track/delete issues
+  */
+  setIssueMap() {
+    let parentId = 0;
+    let count = 0;
+
+    this.myGrouping.questions.forEach(question => {
+      parentId = question.parentQuestionId;
+
+      if (question.answer === 'N') {
+        count++;
+        this.ncuaSvc.questionCheck.set(parentId, count);
+      }
+      this.ncuaSvc.deleteHistory.clear();
+    });
+  }
+
+  deleteIssueMaps(findingId: number) {
+    const iterator = this.ncuaSvc.issueFindingId.entries();
+    let parentKey = 0;
+
+    for (let value of iterator) {
+      if (value[1] === findingId) {
+        parentKey = value[0];
+        this.ncuaSvc.questionCheck.delete(parentKey);
+        this.ncuaSvc.issueFindingId.delete(parentKey);
+        this.ncuaSvc.deleteHistory.add(parentKey);
+      }
+    }
+  }
+
+  /**
+  *
+  * @param ans
+  */
   showThisOption(ans: string) {
     return true;
   }
 
   shouldIShow(q: Question) {
+    // If running a SCUEP exam, always show level 1 (SCUEP) questions
+    let visible = false;
+    if (q.isParentQuestion || q.visible) {
+      visible = true;
+    }
+
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      return true;
+      if (visible) {
+        return true;
+      }
+      //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
-        return true;
+        if (visible) {
+          return true;
+        }
+        // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
-        if (q.questionId < 7409 && this.showCorePlus === true) { 
-          return true;
-        } else if (q.questionId >= 7409 && this.ncuaSvc.showExtraQuestions === true) {
-          return true;
+        if (q.questionId < 7853 && this.showCorePlus === true) { 
+          if (visible) {
+            return true;
+          }
+        } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
+          if (visible) {
+            return true;
+          }
         }
       }
     }
@@ -210,6 +290,8 @@ export class QuestionBlockIseComponent implements OnInit {
    */
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
+    let oldAnswerValue = q.answer;
+
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
@@ -233,17 +315,45 @@ export class QuestionBlockIseComponent implements OnInit {
       componentGuid: q.componentGuid
     };
 
-    if (q.answer === 'N' && this.issueAutoPopulate.has(q.questionId)) {
-      console.log("You've anwered no on an important question. Generating a new Issue.");
-      this.autoGenerateIssue(0);
-    }
+    // Errors out on ISE answers. Commenting out for now.
+    //this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
-
     this.refreshPercentAnswered();
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+    this.questionsSvc.storeAnswer(answer).subscribe
+    (result => {
+      this.checkForIssues(q, oldAnswerValue);
+    });
+  }
+
+  checkForIssues(q: Question, oldAnswerValue: string) {
+    let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
+    let value = (count != undefined) ? count : 0;
+
+    if (q.answer === 'N') {
+      value++;
+      this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
+
+      if (value >= 1 && !this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+        if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
+          this.autoGenerateIssue(q.parentQuestionId, 0);
+        }
+      }
+    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
+      value--;
+      if (value < 1) {
+        this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
+
+        if (this.ncuaSvc.issueFindingId.has(q.parentQuestionId)) {
+          let findId = this.ncuaSvc.issueFindingId.get(q.parentQuestionId);
+          this.ncuaSvc.issueFindingId.delete(q.parentQuestionId);
+          this.deleteIssue(findId, true);
+        }
+      } else {
+        this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
+      }
+    }
   }
 
   /**
@@ -285,7 +395,7 @@ export class QuestionBlockIseComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.isParentQuestion) {
+      if (q.parentQuestionId === null) {
         return;
       }
       if (q.visible) {
@@ -456,11 +566,35 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
   */
   storeSummaryComment(q: Question, e: any) {
-    // q.comment = e.target.value;
-    // this.summaryCommentCopy = q.comment;
     this.summaryCommentCopy = e.target.value;
-    this.summaryEditedCheck = true;
- 
+    this.summaryEditedCheck = true;    
+
+    let summarySegment = '';
+    // this.summaryCommentCopy = q.comment;
+    if (this.assessSvc.isISE()) {
+      let bracketContact = '[' + this.contactInitials + ']';
+
+      if (this.summaryCommentCopy.indexOf(bracketContact) !== 0) {
+        if (this.summaryCommentCopy !== '') {
+          if (this.summaryCommentCopy.indexOf('[') !== 0) {
+            summarySegment = bracketContact + ' ' + this.summaryCommentCopy;
+            this.summaryCommentCopy = summarySegment + this.summaryConvoBuffer;
+          }
+
+          else {
+            let previousContactInitials = this.summaryCommentCopy.substring(this.summaryCommentCopy.lastIndexOf('[') + 1, this.summaryCommentCopy.lastIndexOf(']'));
+            let endOfLastBuffer = this.summaryCommentCopy.lastIndexOf(this.summaryConvoBuffer) + this.summaryConvoBuffer.length;
+            if (previousContactInitials !== this.contactInitials) {
+                let oldComments = this.summaryCommentCopy.substring(0, endOfLastBuffer);
+                let newComment = this.summaryCommentCopy.substring(oldComments.length);
+
+                this.summaryCommentCopy = oldComments + bracketContact + ' ' + newComment + this.summaryConvoBuffer;
+            }
+          }
+        }
+      }
+    }
+
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -470,7 +604,7 @@ export class QuestionBlockIseComponent implements OnInit {
         questionNumber: q.displayNumber,
         answerText: q.answer,
         altAnswerText: q.altAnswerText,
-        comment: e.target.value,
+        comment: this.summaryCommentCopy,
         feedback: q.feedback,
         markForReview: q.markForReview,
         reviewed: q.reviewed,
@@ -496,7 +630,9 @@ export class QuestionBlockIseComponent implements OnInit {
       if (question.questionId === parentId) {
         // uses a local copy of the comment to avoid using API call
         if (this.summaryCommentCopy !== "") {
+          console.log('in get summary: ' + this.summaryCommentCopy)
           comment = this.summaryCommentCopy;
+          console.log('comment: ' + comment)
           return comment;
         }
         if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true){
@@ -532,8 +668,11 @@ export class QuestionBlockIseComponent implements OnInit {
 
 
   showCorePlusButton(id: number) {
-    if (this.isFinalQuestion(id) && this.iseExamLevel !== 'SCUEP') {
-      return true;
+    // SCUEP only shows SCUEP.
+    if (this.iseExamLevel !== 'SCUEP') {
+      if (this.isFinalQuestion(id)) {
+        return true;
+      }
     }
     return false;
   }
@@ -588,7 +727,7 @@ export class QuestionBlockIseComponent implements OnInit {
    *
    * @param findid
    */
-  addEditIssue(findid) {
+  addEditIssue(parentId, findid) {
     /* 
     * Per the customer's requests, an Issue's title should include the main 
     * grouping header text and the sub grouping header text.
@@ -597,14 +736,14 @@ export class QuestionBlockIseComponent implements OnInit {
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    if (this.myGrouping.questions[0].questionId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
     const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
+      question_Id: parentId,
       answer_Id: this.myGrouping.questions[0].answer_Id,
       finding_Id: findid,
       summary: '',
@@ -618,14 +757,14 @@ export class QuestionBlockIseComponent implements OnInit {
       vulnerabilities: '',
       title: name,
       type: null,
+      risk_Area: 'Transaction',
+      sub_Risk: 'Information Systems & Technology Controls',
       description: null,
-      sub_Risk_Area_Id: null,
-      subRiskArea: null,
-      disposition: null,
-      identified_Date: null,
-      due_Date: null
+      actionItems: null,
+      citations: null,
+      auto_Generated: 0
     };
-    
+
     this.dialog.open(IssuesComponent, {
       data: find,
       disableClose: true,
@@ -644,88 +783,106 @@ export class QuestionBlockIseComponent implements OnInit {
     });
   }
 
-  // Making a separate function ahead of the demo in case client wants custom functionality for
-  // auto generated issues vs manually created ones.
-  autoGenerateIssue(findid) {
+  // ISE "issues" should be generated if an examiner answers 'No' to
+  // 2 or more important questions with no popup.
+  autoGenerateIssue(parentId, findId) {
     let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7281) {
+    let desc = "";
+
+    if (parentId <= 7674) {
       name = ("Information Security Program, " + this.myGrouping.title);
     } else {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
-      question_Id: this.myGrouping.questions[0].questionId,
-      answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
-      summary: '',
-      finding_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: name,
-      type: null,
-      description: null,
-      sub_Risk_Area_Id: null,
-      subRiskArea: null,
-      disposition: null,
-      identified_Date: null,
-      due_Date: null
-    };
+    this.questionsSvc.getActionItems(parentId,findId).subscribe(
+      (data: any) => {
+        // Used to generate a description for ISE reports even if a user doesn't open the issue.
+        desc = data[0]?.description;
 
-    this.dialog.open(IssuesComponent, {
-      data: find,
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
-    }).afterClosed().subscribe(result => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
+        const find: Finding = {
+          question_Id: parentId,
+          answer_Id: this.myGrouping.questions[0].answer_Id,
+          finding_Id: findId,
+          summary: '',
+          finding_Contacts: null,
+          impact: '',
+          importance: null,
+          importance_Id: 1,
+          issue: '',
+          recommendations: '',
+          resolution_Date: null,
+          vulnerabilities: '',
+          title: name,
+          type: null,
+          risk_Area: 'Transaction',
+          sub_Risk: 'Information Systems & Technology Controls',
+          description: desc,
+          actionItems: null,
+          citations: null,
+          auto_Generated: 1
+        };
+
+        this.ncuaSvc.issueFindingId.set(parentId, findId);
+        this.findSvc.saveDiscovery(find).subscribe(() => {
+          const answerID = find.answer_Id;
+          this.findSvc.getAllDiscoveries(answerID).subscribe(
+            (response: Finding[]) => {
+              for (let i = 0; i < response.length; i++) {
+                if (response[i].auto_Generated === 1) {
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
+                }
+              }
+              this.extras.findings = response;
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+            },
+            error => console.log('Error updating findings | ' + (<Error>error).message)
+          );
+        });
+      });
   }
   
   /**
   * Deletes a discovery.
   * @param findingToDelete
   */
-  deleteIssue(findingToDelete) {
-    // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete Issue" + " '" + findingToDelete.summary + "?'";
+  deleteIssue(findingId, autoGenerated: boolean) {
+    let msg = "Are you sure you want to delete this issue?";
+    
+    if (autoGenerated === false) {
+      const dialogRef = this.dialog.open(ConfirmComponent);
+      dialogRef.componentInstance.confirmMessage = msg;
   
-    if (findingToDelete.summary === null) {
-      msg = "Are you sure you want to delete this issue?";
-    }
-
-    const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.componentInstance.confirmMessage = msg;
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteIssueMaps(findingId);
+          this.findSvc.deleteFinding(findingId).subscribe();
+          let deleteIndex = null;
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
+          }
+          this.extras.findings.splice(deleteIndex, 1);
+          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+        }
+      });
+    } else if (autoGenerated === true) {
+        this.findSvc.deleteFinding(findingId).subscribe();
         let deleteIndex = null;
   
-        for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
-            deleteIndex = i;
+          for (let i = 0; i < this.extras.findings.length; i++) {
+            if (this.extras.findings[i].finding_Id === findingId) {
+              deleteIndex = i;
+            }
           }
-        }
         this.extras.findings.splice(deleteIndex, 1);
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-  
       }
-    });
   }
 
+  
   
 }

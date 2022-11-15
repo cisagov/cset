@@ -50,6 +50,7 @@
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
+              "src/favicon_cf.ico",
               "src/uploadAssessment.html",
               "src/sass",
               "src/web.config"
@@ -200,23 +201,8 @@
           }
         }
       }
-    },
-    "csetweb-ng-e2e": {
-      "root": "",
-      "sourceRoot": "",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "csetweb-ng:serve"
-          }
-        }
-      }
-    }
-  },
-  "defaultProject": "csetweb-ng",
+    }   
+  },  
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

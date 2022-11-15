@@ -1,0 +1,30 @@
+{
+    "appCode": "CF",
+    "helpContactEmail": "secureflorida@cyberflorida.org",
+    "helpContactPhone": "",
+    "msgServerNotAvailable": "The server is unavailable. Contact the Cybersecure Florida Administrator at secureflorida@cyberflorida.org.",
+    "galleryLayout": "CF",
+    "installationMode": "CF",
+    "behaviors": {
+        "defaultTitle":"CSET-CF",
+        "showModuleBuilder": false,
+        "showAssessmentDocuments": false,
+        "showAggregation": false,
+        "showAnalytics": false,
+        "showAnalyticsAtTheEnd": false,
+        "splashPageHTML": "dist/assets/splash.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "defaultMaturityModel": "",
+        "isAcetOnly": false,
+        "showFacilityName": false,
+        "showCityName": false,
+        "showStateName": false,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true,
+        "allowDiagram":false,
+        "showPrivacyWarning":true
+    }
+}
+

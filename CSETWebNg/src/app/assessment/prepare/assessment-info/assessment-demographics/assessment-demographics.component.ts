@@ -68,6 +68,8 @@ export class AssessmentDemographicsComponent implements OnInit {
     demographicData: Demographic = {};
     orgTypes: any[];
 
+    showAsterisk = false;
+
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
@@ -106,6 +108,8 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
         this.refreshContacts();
         this.getOrganizationTypes();
+
+        this.showAsterisk = this.showAsterisks();
     }
 
     onSelectSector(sectorId: number) {
@@ -212,5 +216,21 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     updateDemographics() {
         this.demoSvc.updateDemographic(this.demographicData);
+    }
+
+    showOrganizationName() {
+      return this.configSvc.behaviors.showOrganizationName;
+    }
+
+    showBusinessAgencyName() {
+      return this.configSvc.behaviors.showBusinessAgencyName;
+    }
+
+    showCriticalService() {
+      return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
+    }
+
+    showAsterisks(): boolean {
+        return this.assessSvc.assessment.maturityModel?.modelName == 'CPG';
     }
 }

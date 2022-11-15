@@ -9,7 +9,7 @@ namespace CSETWebCore.Interfaces.User
         UserCreateResponse CreateUser(UserDetail userDetail, CSETContext tmpContext);
         void UpdateUser(int userid, string PrimaryEmail, CreateUser user);
         UserDetail GetUserDetail(string email);
-        CreateUser GetUserInfo(int userId);
+        CreateUser GetUserInfo(int? userId);
         UserCreateResponse CheckUserExists(UserDetail userDetail);
         UserDetail GetUserDetail(int userId);
 

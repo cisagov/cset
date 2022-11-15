@@ -26,6 +26,8 @@ namespace CSETWebCore.DataLayer.Model
         public string CyberTrainingProgramExists { get; set; }
         public int? SectorId { get; set; }
         public int? SubSectorId { get; set; }
+        [StringLength(10)]
+        public string CyberRiskService { get; set; }
 
         [ForeignKey("Assessment_Id")]
         [InverseProperty("DEMOGRAPHIC_ANSWERS")]

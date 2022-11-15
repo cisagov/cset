@@ -192,11 +192,11 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   showDocumentsIcon(): boolean {
-    
+
     return true;
   }
 
@@ -348,15 +348,15 @@ export class QuestionExtrasComponent implements OnInit {
       vulnerabilities: '',
       title: null,
       type: null,
+      risk_Area: null,
+      sub_Risk: null,
       description: null,
-      sub_Risk_Area_Id: null,
-      subRiskArea: null,
-      disposition: null,
-      identified_Date: null,
-      due_Date: null
+      actionItems: null,
+      citations: null,
+      auto_Generated: null,
     };
 
-    this.dialog.open(FindingsComponent, { 
+    this.dialog.open(FindingsComponent, {
         data: find,
         disableClose: true,
         width: this.layoutSvc.hp ? '90%' : '600px',
@@ -598,17 +598,21 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Programatically clicks the Supplemental icon button to force the lazy load of its content.
+   * Programmatically clicks a question extra button to force the lazy load of its content.
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
-  forceLoadSupplemental() {
+  forceLoadQuestionExtra(extra: string) {
     if (!!this.mode || this.mode === '') {
       return;
     }
 
     this.expanded = false;
-    const btn: HTMLElement = document.getElementById('btn_supp_' + this.myQuestion.questionId) as HTMLElement;
+    const btn: HTMLElement = document.getElementById(`btn_${extra}_` + this.myQuestion.questionId) as HTMLElement;
     btn.click();
+  }
+
+  autoLoadComments() {
+    return this.usesRAC();
   }
 
   /**
@@ -675,15 +679,9 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
-    // DOCUMENTS 
+    // DOCUMENTS
     if (mode == 'DOCS') {
-      if (this.configSvc.installationMode == 'ACET') {
-        return false;
-      }
-      
-      if (this.configSvc.installationMode == 'CF') {
-        return false;
-      }
+      return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
     return true;
@@ -728,5 +726,10 @@ export class QuestionExtrasComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Checks if the current assessment uses the Rapid Assessment Control Set.
+   */
+  usesRAC() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
+  }
 }

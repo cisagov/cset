@@ -24,40 +24,44 @@
   <h3>Reports</h3>
 
   <p>
-    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. 
-    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect the current state of the assessment.
-    <button mat-stroked-button (click)="openSnackBar()" >
+    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help
+    your organization’s cybersecurity planning and growth going forward.
+    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
+    the current state of the assessment.
+    <button *ngIf="!assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()">
       Printing Report Instructions
     </button>
   </p>
 
-  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">     
-    We appreciate your  participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources and enact appropriate legislation to create a more secure Sunshine State! 
-    
+  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">
+    We appreciate your participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
+    cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
+    through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources
+    and enact appropriate legislation to create a more secure Sunshine State!
+
   </p>
   <p>
-   
+
   </p>
 
   <div class="alert alert-warning" *ngIf="isMobile">
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4"
+    *ngIf="!isMobile && !this.assessSvc.isISE()">
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      Observations Tear-Out Sheets
+    </button>
+  </div>
   <div class="alert alert-warning" *ngIf="disableEntirePage">
     All demographics information on the Assessment Information page must be provided in order to view reports.
   </div>
+
   <div [class.div-shield]="disableEntirePage">
-
-    <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="!isMobile">
-      <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Observations Tear-Out Sheets
-      </button>
-    </div>
-
-    <div *ngIf="
-      !!assessSvc.assessment &&
-      (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile
-    " class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div
+      *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>Standards and Diagram</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         Executive Summary
@@ -246,7 +250,7 @@
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
-      <div *ngIf="disableIseReportLinks" class="
+      <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues" class="
         alert-warning
         mt-2
         mb-2
@@ -258,31 +262,54 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           Some reports are disabled until all statements have been answered.
         </span>
+        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
+            Please assign an "Issue Type" to the following issue which was generated:
+          </span>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
+            Please assign an "Issue Type" to the following issues which were generated:
+          </span><br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
+        </span>
+        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+          Some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
+            Please assign an "Issue Type" to the following issue which was generated:
+          </span>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
+            Please assign an "Issue Type" to the following issues which were generated:
+          </span><br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
+        </span>
       </div>
-      <p *ngIf="disableIseReportLinks"></p>
-      <button (click)="clickReportLink('isegaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Gap Report
-      </button>
-      <button (click)="clickReportLink('isecommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Comments and Marked for Review
-      </button>
       <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
         class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
-      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Scope Report
+      <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
-      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Examination Report
+      <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
+      <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        ISE Examiner Report
+      </button>
+      <!-- Below is commented out to hide background data for now -->
+      <!-- <button (click)="clickReportLink('isedata')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableIseReportLinks">
+        ISE Data Report
+      </button> -->
     </div>
 
 
@@ -337,6 +364,36 @@
       </div>
     </div>
 
+    <div>
+      
+    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>
+        Minimum Viable Resilience Assessment (MVRA) - DRAFT
+      </h4>
+
+      <div>
+        <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
+          MVRA Report
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <button *ngIf="!assessSvc.isISE()" tabindex="0"
+        class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+        (click)="clickExport()"
+        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+        <span>Export</span>
+      </button>
+      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="disableIseReportLinks">
+        ISE Examination Report
+      </button>
+    </div>
+
   </div>
   <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
 </div>

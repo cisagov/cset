@@ -88,8 +88,8 @@
                                 <p>{{ q.shortName }}</p>
                             </div>
 
-                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                             <app-question-text [questionText]="q.questionText"></app-question-text>
+                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                             <div *ngIf="openEndedQuestion && !!q.parentQuestionId">
                                 <textarea appAutoSize class="form-control" style="width: 100%; min-height: 40px;"
                                     [placeholder]="openendedtext" [(ngModel)]="q.freeResponseAnswer"

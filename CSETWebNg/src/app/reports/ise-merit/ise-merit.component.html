@@ -1,0 +1,381 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column">
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                MERIT SCOPE
+            </p>
+            <p
+                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align: center">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
+            </p>
+            <div class="cover-page-bottom mb-4">
+                <div>
+                    <img src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua" style="height: 185px" alt="ncua" />
+                </div>
+                <div style="
+                                    text-align: right;
+                                    font-weight: normal;
+                                    font-size: 18px;
+                                    flex-direction: column;
+                                    line-height: 150%;
+                                    padding-right: 2em;
+                                ">
+
+                    <div class="title-page-name">{{this.demographics?.information?.assessment_Name}}</div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessment_Date  |
+                        date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div class="title-page-content">{{this.demographics?.information?.assessor_Name}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="this.loadingCounter < 3; else mainContent" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+
+        <ng-template #mainContent>
+            <div class="page-break">
+                <div class="ml-3 mr-3 form">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Demographics</div>
+                        </div>
+                    </div>
+                    
+                    <table class="table-site-info">
+                        <tr>
+                            <td>Assessment Name:</td>
+                            <td>{{this.demographics?.information?.assessment_Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Assessment Date:</td>
+                            <td>{{this.demographics?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Credit Union:</td>
+                            <td>{{this.demographics?.information?.credit_Union_Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>City or Site Name:</td>
+                            <td>{{this.demographics?.information?.city_Or_Site_Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>State, Province or Region:</td>
+                            <td>{{this.demographics?.information?.state_Province_Or_Region}}</td>
+                        </tr>
+                        <tr>
+                            <td>Charter:</td>
+                            <td>{{this.demographics?.information?.charter}}</td>
+                        </tr>
+                        <tr>
+                            <td>Assets:</td>
+                            <td>{{this.demographics?.information?.assets | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td>Exam Level:</td>
+                            <td>{{this.examLevel}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page-break">
+                <div class="ml-3 mr-3">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Instructions</div>
+                        </div>
+                    </div>
+                    <p>
+                        Copy/Paste the contents of <strong>ISE Work Performed</strong> below into the Execution Result, Work Performed section of the MERIT ISE Scope.
+                        <br><br>
+                        Copy/Paste the contents of <strong>ISE Results of Review</strong> below into the Execution Result, Results of Review portion of the MERIT ISE Scope.
+                    </p>
+                    
+                </div>
+            </div>
+
+            <div class="page-break">
+                <div class="ml-3 mr-3">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Work Performed 
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                    [cdkCopyToClipboard]="'Completed the ISE work program'">
+                                    <span class="cset-icons-copy"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        <strong>Completed the ISE work program</strong>
+                    </p>
+                    
+                </div>
+            </div>
+
+            <div class="page-break">
+                <div class="ml-3 mr-3">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Results of Review 
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                    [cdkCopyToClipboard]="this.resultsOfReviewString">
+                                    <span class="cset-icons-copy" style="font-size: 14px;"></span>
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+                    <p>
+                        {{ this.resultsOfReviewStatic }}
+                    </p>
+                    <div *ngIf="this.relaventIssues">
+                        <div *ngIf="this.dorsTotal > 0">
+                            {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
+                            <div *ngFor="let issue of this.dors" style="padding-left: 30px">
+                                {{ issue }}
+                            </div>
+                            <br>
+                        </div>
+                        <div *ngIf="this.examinerFindingsTotal > 0">
+                            {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
+                            <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
+                                {{ issue }}
+                            </div>
+                            <br>
+                        </div>
+                        <div *ngIf="this.supplementalFactsTotal > 0">
+                            {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
+                            <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
+                                {{ issue }}
+                            </div>
+                            <br>
+                        </div>
+                        <div *ngIf="this.nonReportablesTotal > 0">
+                            {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length, 'Non-reportable') }}
+                            <div *ngFor="let issue of this.nonReportables" style="padding-left: 30px">
+                                {{ issue }}
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div *ngIf="!this.relaventIssues">
+                        <p>
+                            No Issues were noted.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break">
+                <div class="ml-3 mr-3">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Issues</div>
+                        </div>
+                    </div>
+                    <div *ngIf="this.relaventIssues">
+                        <div *ngFor="let finding of this.response">
+                            <div *ngIf="this.ncuaSvc.translateExamLevel(finding?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
+                                <div>
+                                    <strong>Question: </strong> {{ finding?.question?.question_Title }}
+                                </div>
+                                <div>
+                                    <strong>Title: </strong> {{ finding?.finding?.title }}
+                                </div>
+                                <div>
+                                    <strong>Issue Type: </strong> {{ finding?.finding?.type }}
+                                </div>
+                                
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                    [cdkCopyToClipboard]="(finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description">
+                                    <span class="cset-icons-copy"></span>
+                                </label>
+                                <strong> Description: </strong><br>
+                                {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
+                                    
+                                <br>
+                                <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
+                                    <span *ngIf="finding?.finding?.auto_Generated != 1">
+                                        <label *ngIf="(finding?.finding?.actionItems != null && finding?.finding?.actionItems != '')" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                        [cdkCopyToClipboard]="finding.finding.actionItems">
+                                            <span class="cset-icons-copy"> Copy All</span>
+                                        </label>
+                                        <label *ngIf="(finding?.finding?.actionItems == null || finding?.finding?.actionItems == '')" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                        [cdkCopyToClipboard]="'(no Action Items available)'">
+                                            <span class="cset-icons-copy"> Copy All</span>
+                                        </label>
+                                    </span>
+                                    <span *ngIf="finding?.finding?.auto_Generated == 1">
+                                        <label *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                        [cdkCopyToClipboard]="copyAllActionItems(this.masterActionItemsMap.get(finding?.finding?.finding_Id))">
+                                            <span class="cset-icons-copy"> Copy All</span>
+                                        </label>
+                                        <label *ngIf="!this.masterActionItemsMap.has(finding?.finding?.finding_Id)" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy All to Clipboard" 
+                                        [cdkCopyToClipboard]="'(no Action Items available)'">
+                                            <span class="cset-icons-copy"> Copy All</span>
+                                        </label>
+                                    </span>
+                                    <strong> Action Items: </strong>
+                                    <br>
+                                    <div *ngIf="finding?.finding?.auto_Generated != 1">
+                                        <div *ngIf="finding?.finding?.actionItems != null">
+                                            {{ finding?.finding?.actionItems }}
+                                        </div>
+                                        <div *ngIf="finding?.finding?.actionItems == null">
+                                            (no Action Items available)
+                                        </div>
+                                    </div>
+                                    <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id) && finding?.finding?.auto_Generated == 1">
+                                        <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(finding?.finding?.finding_Id); let i = index">
+                                            <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">    
+                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                        [cdkCopyToClipboard]="this.getChildQuestionNumber(allActionsInFinding.question_Title) + ': ' + allActionsInFinding.action_Items">
+                                                        <span class="cset-icons-copy" ></span>
+                                                </label> {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
+                                            </div>
+                                            
+                                            <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && finding?.finding?.actionItems == null">
+                                                (no Action Items available)
+                                            </div>
+                                        </div>
+                                        <!-- <div *ngIf="areAllActionItemsBlank(this.masterActionItemsMap.get(finding?.finding?.finding_Id))">
+                                            (no Action Items available)
+                                        </div> -->
+                                    </div>
+
+                                    <div *ngIf="!this.masterActionItemsMap.has(finding?.finding?.finding_Id) && finding?.finding?.auto_Generated == 1">
+                                        (no Action Items available)
+
+                                    </div>
+
+                                    <!-- <div *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id) == null || this.masterActionItemsMap.get(finding?.finding?.finding_Id) == '') && finding?.finding?.actionItems == null">
+                                        (no Action Items available)
+                                    </div> -->
+
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                        [cdkCopyToClipboard]="finding?.finding?.risk_Area">
+                                        <span class="cset-icons-copy"></span>
+                                    </label> <strong> Risk Area: </strong> {{ finding?.finding?.risk_Area }}
+                                    
+                                    <br>
+                                    
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                        [cdkCopyToClipboard]="finding?.finding?.sub_Risk">
+                                        <span class="cset-icons-copy"></span>
+                                    </label> <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
+                                    
+                                    <br>
+                                    <strong>Regulatory Citation: </strong>
+                                    <br>
+                                    <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
+                                        <div *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
+                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                    [cdkCopyToClipboard]="((this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                                    || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '') ? 
+                                                    ' ' : this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation + ', ') + finding?.finding?.citations">
+                                                    <span class="cset-icons-copy" ></span>
+                                            </label>
+                                            {{ (this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                                || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '') ? 
+                                                ' ' : this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation + ', ' }}{{ finding?.finding?.citations }}
+                                        </div>
+                                        <div *ngIf="(finding?.finding?.citations == null || finding?.finding?.citations == '') 
+                                                    && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != null
+                                                    && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != ''">
+                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                    [cdkCopyToClipboard]="this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation">
+                                                    <span class="cset-icons-copy" ></span>
+                                            </label> 
+                                            {{ this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation }}
+                                        </div>
+                                        <div *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
+                                            || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '')
+                                            && (finding?.finding?.citations == null || finding?.finding?.citations == '')">
+                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                    [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
+                                                    <span class="cset-icons-copy" ></span>
+                                            </label> 
+                                            (no Regulatory Citations available)
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px; 
+                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                                [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
+                                                <span class="cset-icons-copy" ></span>
+                                        </label> 
+                                        (no Regulatory Citations available)
+                                    </div>
+
+                                </div>
+                                <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                        [cdkCopyToClipboard]="cleanText(finding?.question?.supplemental_Info)">
+                                        <span class="cset-icons-copy"></span>
+                                    </label>
+                                    <strong> Supplemental Guidance: </strong> 
+                                    
+                                    <br>
+                                    <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
+                                    <span *ngIf="finding?.question?.supplemental_Info == ''">(no Supplemental Guidance available)</span>
+
+                                </div>
+                                
+                                <hr class="page-line">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div *ngIf="!this.relaventIssues">
+                        No Issues were noted.
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

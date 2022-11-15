@@ -30,6 +30,7 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 /**
@@ -69,6 +70,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
+    public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
@@ -135,6 +137,20 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
+   * Determines if the level indicator should show or be
+   * hidden.  Someday this behavior might be stored
+   * in the database as some model-specific behavior.
+   */
+  showLevelIndicator(q): boolean {
+    // CPG does not have levels - don't show it
+    if (q.maturityModelId == 11) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    *
    * @param ans
    */
@@ -171,6 +187,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
       is_Maturity: q.is_Maturity,
       componentGuid: q.componentGuid
     };
+
+    this.completionSvc.setAnswer(q.questionId, q.answer);
 
     this.refreshReviewIndicator();
 

@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
+import { Sort } from "@angular/material/sort";
+import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
   selector: 'zones',
@@ -32,6 +34,7 @@ import { DiagramService } from '../../../../services/diagram.service';
 export class ZonesComponent implements OnInit {
   zones = [];
   displayedColumns = ['type', 'label', 'sal', 'layer', 'owner', 'visible']
+  comparer: Comparer = new Comparer();
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
@@ -41,6 +44,31 @@ export class ZonesComponent implements OnInit {
   getZones() {
     this.diagramSvc.getDiagramZones().subscribe((x: any) => {
       this.zones = x;
+    });
+  }
+
+  sortData(sort: Sort) {
+
+    if (!sort.active || sort.direction === "") {
+      return;
+    }
+
+    this.zones.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "type":
+          return this.comparer.compare(a.zoneType, b.zoneType, isAsc);
+        case "label":
+          return this.comparer.compare(a.label, b.label, isAsc);
+        case "sal":
+          return this.comparer.compare(a.sal, b.sal, isAsc);
+        case "layer":
+          return this.comparer.compare(a.layerName, b.layerName, isAsc);
+        case "visible":
+          return this.comparer.compareBool(a.visible, b.visible, isAsc);
+        default:
+          return 0;
+      }
     });
   }
 }

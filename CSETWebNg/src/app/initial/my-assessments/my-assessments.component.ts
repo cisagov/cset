@@ -43,6 +43,8 @@ import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
+import { Comparer } from "../../helpers/comparer";
+import * as moment from "moment";
 
 
 interface UserAssessment {
@@ -70,7 +72,7 @@ interface UserAssessment {
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class MyAssessmentsComponent implements OnInit {
-  // assessments: UserAssessment[] = null;
+  comparer: Comparer = new Comparer();
   sortedAssessments: UserAssessment[] = null;
   unsupportedImportFile: boolean = false;
 
@@ -112,24 +114,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
-
+    this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
+    this.appCode = this.configSvc.config.appCode;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
-        this.titleSvc.setTitle('ACET');
-        this.appCode = 'ACET';
+        this.ncuaSvc.reset();
         break;
       case 'TSA':
-        this.titleSvc.setTitle('CSET-TSA');
-        this.appCode = 'TSA';
         this.isTSA=true;
         break;
-      case 'RRA':
-        this.titleSvc.setTitle('CISA - Ransomware Readiness');
-        this.appCode = 'RRA';
-        break;
       default:
-        this.titleSvc.setTitle('CSET');
-        this.appCode = 'CSET';
         this.isCSET=true;
     }
 
@@ -139,9 +133,30 @@ export class MyAssessmentsComponent implements OnInit {
       localStorage.removeItem('tree');
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
-    
+
     this.ncuaSvc.assessmentsToMerge = [];
   }  
+
+  /**
+   * Determines if a particular column should be included in the display.
+   */
+  showColumn(column: string) {
+    if (column == 'primary-assessor') {
+
+      // hide the column for anonymous - there is no primary assessor user
+      if (this.configSvc.config.isRunningAnonymous) {
+        return false;
+      }
+
+      return !this.ncuaSvc.switchStatus;      
+    }
+
+    if (column == 'analytics') {
+      var show = this.configSvc.behaviors?.showAnalyticsColumnOnLanding ?? false;
+      return show;
+    }
+  }
+
 
   getAssessments() {
     this.sortedAssessments = null;
@@ -241,15 +256,15 @@ export class MyAssessmentsComponent implements OnInit {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "assessment":
-          return compare(a.assessmentName, b.assessmentName, isAsc);
+          return this.comparer.compare(a.assessmentName, b.assessmentName, isAsc);
         case "date":
-          return compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
+          return this.comparer.compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
         case "assessor":
-          return compare(a.creatorName, b.creatorName, isAsc);
+          return this.comparer.compare(a.creatorName, b.creatorName, isAsc);
         case "type":
-          return compare(a.type, b.type, isAsc);
+          return this.comparer.compare(a.type, b.type, isAsc);
         case "status":
-          return compareBool(a.markedForReview, b.markedForReview, isAsc);
+          return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
         default:
           return 0;
       }
@@ -318,12 +333,11 @@ export class MyAssessmentsComponent implements OnInit {
     this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })
   }
 
-}
+  //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
+  systemTimeTranslator(lastModifiedDate: any) {
+    let localTime = moment.utc(lastModifiedDate).local();
 
+    return localTime;
+  }
 
-function compare(a, b, isAsc) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
-function compareBool(a, b, isAsc) {
-  return (a === b) ? 0 : a ? -1 * (isAsc ? 1 : -1) : 1 * (isAsc ? 1 : -1);
 }

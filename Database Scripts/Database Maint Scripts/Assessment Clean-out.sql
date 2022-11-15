@@ -10,6 +10,7 @@ GO
 -- Clean out all User-related information
 delete from [USERS]
 delete from [USER_DETAIL_INFORMATION]
+delete from [PASSWORD_HISTORY]
 
 DBCC CHECKIDENT ('[USERS]', RESEED, 0)
 GO
@@ -17,6 +18,10 @@ GO
 
 -- Clean out the JWT secret
 delete from [JWT]
+
+delete from [DIAGRAM_CONTAINER]
+
+delete from [NIST_SAL_INFO_TYPES]
 GO
 
 

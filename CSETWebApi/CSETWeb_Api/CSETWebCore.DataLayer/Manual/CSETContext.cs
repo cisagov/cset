@@ -271,6 +271,46 @@ namespace CSETWebCore.DataLayer.Model
 
 
         /// <summary>
+        /// Executes stored procedure usp_Assesments_Completion_For_AccessKey.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
+        public virtual IList<usp_Assessments_Completion_For_UserResult> usp_AssessmentsCompletionForAccessKey(string accessKey)
+        {
+            if (accessKey == null)
+                throw new ApplicationException("parameters may not be null");
+
+            IList<usp_Assessments_Completion_For_UserResult> myrval = null;
+            this.LoadStoredProc("usp_Assessments_Completion_For_Access_Key")
+                     .WithSqlParam("accessKey", accessKey)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_Assessments_Completion_For_UserResult>();
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Executes stored procedure usp_Assesments_Completion_For_User.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns>Total number of answered questions over total number of available questions for each assessment</returns>
+        public virtual IList<usp_countsForLevelsByGroupMaturityModelResults> usp_countsForLevelsByGroupMaturityModel(Nullable<int> assessment_id, Nullable<int> mat_model_id)
+        {
+            IList<usp_countsForLevelsByGroupMaturityModelResults> myrval = null;
+            this.LoadStoredProc("usp_countsForLevelsByGroupMaturityModel")
+                     .WithSqlParam("assessment_id", assessment_id)
+                     .WithSqlParam("mat_model_id", mat_model_id)
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<usp_countsForLevelsByGroupMaturityModelResults>();
+                     });
+            return myrval;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="originalEmail"></param>
@@ -650,6 +690,43 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
+        /// <summary>
+        /// Executes stored procedure GetMaturityDetailsCalculations.
+        /// </summary>
+        /// <param name="assessment_id"></param>
+        /// <returns></returns>
+        public virtual IList<AcetAnswerDistribution_Result> IseAnswerDistribution(Nullable<int> assessment_id, Nullable<int> targetLevel)
+        {
+            if (!assessment_id.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            var matLevel = 0;
+
+            switch (targetLevel)
+            {
+                case 1:
+                    matLevel = 17; // SCUEP
+                    break;
+                case 2:
+                    matLevel = 18; // CORE
+                    break;
+                case 3:
+                    matLevel = 19; // CORE+
+                    break;
+            }
+
+            IList<AcetAnswerDistribution_Result> myrval = null;
+            this.LoadStoredProc("IseAnswerDistribution")
+                     .WithSqlParam("assessment_id", assessment_id)
+                     .WithSqlParam("targetLevel", matLevel)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToList<AcetAnswerDistribution_Result>();
+                     });
+            return myrval;
+        }
+
 
         /// <summary>
         /// Executes stored procedure usp_StatementsReviewed.
@@ -822,6 +899,19 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     myrval = handler.ReadToList<Get_Assess_Detail_Filter_DataResult>();
                 });
+            return myrval;
+        }
+
+        public virtual IList<GetChildAnswersResult>Get_Children_Answers(int parentId, int assessId) {
+            IList<GetChildAnswersResult> myrval = null;
+            this.LoadStoredProc("GetChildrenAnswers")
+                .WithSqlParam("@Parent_Id", parentId)
+                .WithSqlParam("@Assess_Id", assessId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<GetChildAnswersResult>();
+                });
+                
             return myrval;
         }
     }

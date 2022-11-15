@@ -11,7 +11,7 @@
  
   The above copyright notice and this permission notice shall be included in all 
   copies or substantial portions of the Software. 
- 
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
@@ -21,7 +21,13 @@
   SOFTWARE. 
 -------------------------->
 <h4>Organization Details</h4>
+<div *ngIf="loading; else mainContent" class="w-100">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
 
+<ng-template #mainContent>
 <form #f="ngForm">
     <!-- Normal ACET Detail Boxes -->
     <ng-container *ngIf="this.assessment.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
@@ -38,7 +44,7 @@
             <div class="form-group col-md-6">
                 <label class="mb-1" for="date">Assessment Date</label>
                 <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
-                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAssessmentName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
                 <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
@@ -50,7 +56,7 @@
         <div class="form-group" *ngIf="configSvc.installationMode === 'ACET'">
             <label class="mb-1" for="creditUnion">Credit Union</label>
             <input type="text" maxlength="100" class="form-control" id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-                (change)="update($event)" (click)="update($event)" tabindex="0">
+                (change)="update($event)" tabindex="0">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -68,12 +74,12 @@
             <div class="form-group col-md-6">
                 <label class="mb-1" for="charter">Charter</label>
                 <input type="text" [maxlength]="5" class="form-control" id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
-                    (change)="update($event)" (blur)="update($event)" (input)="createAcetName()" tabindex="0">
+                    (change)="update($event)" (input)="createAssessmentName()" tabindex="0">
             </div>
             <div class="form-group col-md-6">
                 <label class="mb-1" for="assets">Assets</label>
                 <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                    [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+                    [(ngModel)]="assessment.assets" (change)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
             <div class="col-md-6"></div>
         </div>
@@ -86,20 +92,20 @@
                 <label class="mb-1" for="name">Assessment Name</label>
                 <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true" 
                     [(ngModel)]="assessment.assessmentName"
-                    (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+                    (blur)="update($event)" autofocus tabindex="0">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label class="mb-1" for="date">Assessment Date</label>
                 <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
-                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAcetName()" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+                    [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (input)="createAssessmentName()" (click)="picker.open()" tabindex="0">
                 <mat-datepicker #picker></mat-datepicker>
             </div>
             <div class="form-group col-md-6">
                 <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>
                 <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessmentEffectiveDate"
-                    [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (click)="effectiveDatePicker.open()" (ngModelChange)="update($event)" tabindex="0">
+                    [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (click)="effectiveDatePicker.open()" tabindex="0">
                 <mat-datepicker #effectiveDatePicker></mat-datepicker>
             </div>
         </div>
@@ -108,7 +114,7 @@
             <label class="mb-1" for="creditUnion">Credit Union Name</label>
             <input type="text" maxlength="100" class="form-control" 
                 id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
-                [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" (change)="update($event)" tabindex="0">
+                [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" tabindex="0">
             <cdk-virtual-scroll-viewport itemSize="20">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.name">
@@ -136,7 +142,7 @@
                 <input type="text" [maxlength]="5" class="form-control" 
                     id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
                     [formControl]="assessmentCharterControl" [matAutocomplete]="autoCharter" 
-                    (change)="update($event)" (blur)="update($event)" (input)="createAssessmentName()" tabindex="0">
+                    (blur)="update($event)" (input)="createAssessmentName()" tabindex="0">
                 <cdk-virtual-scroll-viewport itemSize="20">
                     <mat-autocomplete #autoCharter="matAutocomplete">
                         <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.charter">
@@ -147,8 +153,8 @@
             </div>
             <div class="form-group col-md-6">
                 <label class="mb-1" for="assets">Assets</label>
-                <input type="text" maxlength="100" class="form-control" id="assets" name="assets" tabindex="0"
-                [(ngModel)]="assessment.assets" (blur)="update($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
+                <input type="text" maxlength="21" class="form-control" id="assets" name="assets" tabindex="0"
+                [(ngModel)]="assessment.assets" (blur)="updateAssets($event)" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
         </div>
         <div class="form-row">
@@ -161,10 +167,10 @@
                 <select class="form-control" name="examOverride" [(ngModel)]="examOverride" 
                   (change)="updateOverride($event.target.value)" [disabled]="this.acetDashboard === undefined || this.ncuaSvc.proposedExamLevel == 'CORE'">
                     <option>No Override</option>
-                    <option>SCUEP</option>
                     <option>CORE</option>
                 </select>
             </div>
         </div>
     </ng-container>
 </form>
+</ng-template>

@@ -15,6 +15,14 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[ACCESS_KEY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ACCESS_KEY_ASSESSMENT]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[ADDRESS]",
          "ObjectType": 0
       },
@@ -459,6 +467,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ISE_ACTIONS_FINDINGS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[JWT]",
          "ObjectType": 0
       },
@@ -823,6 +835,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[USER_EMAIL_HISTORY]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[USER_SECURITY_QUESTIONS]",
          "ObjectType": 0
       },
@@ -907,6 +923,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[Acet_GetActionItemsForReport]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[AcetAnswerDistribution]",
          "ObjectType": 1
       },
@@ -980,6 +1000,10 @@
       },
       {
          "Name": "[dbo].[Get_Recommendations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAnswerDistribMaturity]",
          "ObjectType": 1
       },
       {
@@ -1083,6 +1107,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_Assessments_Completion_For_Access_Key]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_Assessments_Completion_For_User]",
          "ObjectType": 1
       },
@@ -1100,6 +1128,10 @@
       },
       {
          "Name": "[dbo].[usp_CopyIntoSet]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_countsForLevelsByGroupMaturityModel]",
          "ObjectType": 1
       },
       {

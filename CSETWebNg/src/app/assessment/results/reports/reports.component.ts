@@ -32,7 +32,11 @@ import { ReportService } from '../../../services/report.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
 import { DemographicExtendedService } from '../../../services/demographic-extended.service';
-import {MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { FileUploadClientService } from '../../../services/file-client.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { FindingsService } from '../../../services/findings.service';
 
 @Component({
     selector: 'app-reports',
@@ -46,6 +50,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * Indicates if all ACET questions have been answered.  This is only
      * used when the ACET model is in use and this is an ACET installation.
      */
+    unassignedIssueTitles: any = [];
+
     disableAcetReportLinks: boolean = true;
     disableIseReportLinks: boolean = true;
     disableEntirePage: boolean = false;
@@ -55,6 +61,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     isMobile = false;
 
     lastModifiedTimestamp = '';
+
+    exportExtension: string;
 
     dialogRef: MatDialogRef<any>;
     isCyberFlorida: boolean = false;
@@ -67,6 +75,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private acetSvc: ACETService,
+        private ncuaSvc: NCUAService,
+        public findSvc: FindingsService,
+        public fileSvc: FileUploadClientService,
+        public authSvc: AuthenticationService,
         private router: Router,
         private route: ActivatedRoute,
         public configSvc: ConfigService,
@@ -88,19 +100,21 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
     }
 
-    
+
 
     openSnackBar() {
-      this._snackBar.openFromComponent(PrintSnackComponent, {
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
+        this._snackBar.openFromComponent(PrintSnackComponent, {
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+        });
     }
 
     /**
      *
      */
     ngOnInit() {
+        this.exportExtension = localStorage.getItem('exportExtension');
+
         this.assessSvc.currentTab = 'results';
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
@@ -112,6 +126,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.configSvc.installationMode === 'ACET') {
             if (this.assessSvc.isISE()) {
                 this.checkIseDisabledStatus();
+
+                this.getAssessmentFindings();
             }
             else {
                 this.checkAcetDisabledStatus();
@@ -125,7 +141,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.disableEntirePage = !answered;
             });
         }
-        else{
+        else {
             this.isCyberFlorida = false;
         }
 
@@ -138,7 +154,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
-    
+
     /**
      *
      */
@@ -185,6 +201,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * If all ACET ISE statements are not answered, set the 'disable' flag
+     * to true.
+     */
     checkIseDisabledStatus() {
         this.disableIseReportLinks = true;
         if (!this.assessSvc.isISE()) {
@@ -197,6 +217,38 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
+    /**
+     * Gets all ISE Findings/Issues, 
+     * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
+     */
+    getAssessmentFindings() {
+        this.ncuaSvc.unassignedIssueTitles = [];
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (r: any) => {
+            let findings = r;
+            let title = '';
+            
+            for (let i = 0; i < findings?.length; i++) {
+                // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
+                if (this.ncuaSvc.translateExamLevel(findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+                    if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
+                        title = findings[i]?.category?.title + ', ' + findings[i]?.question?.question_Title;
+                        this.ncuaSvc.unassignedIssueTitles.push(title);
+                    }
+                }
+            }
+            if (this.ncuaSvc.unassignedIssueTitles?.length == 0){
+                this.ncuaSvc.unassignedIssues = false;
+            } else {
+                this.ncuaSvc.unassignedIssues = true;
+            }
+
+    
+          },
+          error => console.log('Findings Error: ' + (<Error>error).message)
+        );
+      }
 
     onSelectSecurity(val) {
         this.securitySelected = val;
@@ -218,23 +270,38 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     exportToExcel() {
         window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
     }
+
+    /**
+     * 
+     */
+    clickExport() {
+        // get short-term JWT from API
+        this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id)
+            .subscribe((response: any) => {
+                const url =
+                    this.fileSvc.exportUrl + "?token=" + response.token;
+
+                //if electron
+                window.location.href = url;
+            });
+    }
 }
 
 @Component({
     selector: 'snack-bar-component-example-snack',
-    template:' <span class="">To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button> ',
+    template: ' <span class="">To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button> ',
     styles: [
-      '',
+        '',
     ],
-  })
+})
 
-  export class PrintSnackComponent {
-    constructor( 
+export class PrintSnackComponent {
+    constructor(
         public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: any) { 
+        @Inject(MAT_SNACK_BAR_DATA) public data: any) {
     }
-        
-    closeMe(){
+
+    closeMe() {
 
     }
-  }
+}
