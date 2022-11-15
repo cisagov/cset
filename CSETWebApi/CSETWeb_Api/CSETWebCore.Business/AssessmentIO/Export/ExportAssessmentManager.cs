@@ -73,6 +73,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
             TinyMapper.Bind<FINDING, jFINDING>();
             TinyMapper.Bind<FINDING_CONTACT, jFINDING_CONTACT>();
+            TinyMapper.Bind<ISE_ACTIONS_FINDINGS, jISE_ACTIONS_FINDINGS>();
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
@@ -117,8 +118,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             foreach (var item in _context.ANSWER
-                .Include(x => x.FINDING)
-                .ThenInclude(x => x.FINDING_CONTACT)
+                .Include(x => x.FINDING).ThenInclude(x => x.ISE_ACTIONS_FINDINGS)
+                .Include(x => x.FINDING).ThenInclude(x => x.FINDING_CONTACT)
                 .Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
@@ -128,6 +129,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     foreach (var fc in f.FINDING_CONTACT)
                     {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<FINDING_CONTACT,jFINDING_CONTACT>(fc));
+                    }
+
+                    foreach (var action in f.ISE_ACTIONS_FINDINGS)
+                    {
+                        if (action != null)
+                        {
+                            model.jISE_ACTIONS_FINDINGS.Add(TinyMapper.Map<ISE_ACTIONS_FINDINGS, jISE_ACTIONS_FINDINGS>(action));
+                        }
                     }
                 }
             }

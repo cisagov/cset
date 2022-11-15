@@ -13,6 +13,7 @@ namespace CSETWebCore.DataLayer.Model
         public FINDING()
         {
             FINDING_CONTACT = new HashSet<FINDING_CONTACT>();
+            ISE_ACTIONS_FINDINGS = new HashSet<ISE_ACTIONS_FINDINGS>();
         }
 
         public int Answer_Id { get; set; }
@@ -47,5 +48,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual IMPORTANCE Importance { get; set; }
         [InverseProperty("Finding")]
         public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; }
+        [InverseProperty("Finding")]
+        public virtual ICollection<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
     }
 }

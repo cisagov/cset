@@ -34,7 +34,7 @@
       </div>
 
       <div *ngIf="mode === 'LOCAL'">
-        <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
+        <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
           <div class="d-flex flex-nowrap pl-3 pr-3">
             <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
             <div class="spinner-container" *ngIf="loading">

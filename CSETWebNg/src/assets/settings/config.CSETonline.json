@@ -22,7 +22,7 @@
         "showBusinessAgencyName": false,
         "showCriticalService": false,
         "showPrivacyWarning": true,
-        "showTrend:": false,
+        "showTrend": false,
         "showCompare": false,
         "showEnableProtectedFeatures": false
     }

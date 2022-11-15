@@ -35,6 +35,8 @@ import { DemographicExtendedService } from '../../../services/demographic-extend
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { NCUAService } from '../../../services/ncua.service';
+import { FindingsService } from '../../../services/findings.service';
 
 @Component({
     selector: 'app-reports',
@@ -48,6 +50,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
      * Indicates if all ACET questions have been answered.  This is only
      * used when the ACET model is in use and this is an ACET installation.
      */
+    unassignedIssueTitles: any = [];
+
     disableAcetReportLinks: boolean = true;
     disableIseReportLinks: boolean = true;
     disableEntirePage: boolean = false;
@@ -71,6 +75,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private acetSvc: ACETService,
+        private ncuaSvc: NCUAService,
+        public findSvc: FindingsService,
         public fileSvc: FileUploadClientService,
         public authSvc: AuthenticationService,
         private router: Router,
@@ -120,6 +126,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (this.configSvc.installationMode === 'ACET') {
             if (this.assessSvc.isISE()) {
                 this.checkIseDisabledStatus();
+
+                this.getAssessmentFindings();
             }
             else {
                 this.checkAcetDisabledStatus();
@@ -193,6 +201,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * If all ACET ISE statements are not answered, set the 'disable' flag
+     * to true.
+     */
     checkIseDisabledStatus() {
         this.disableIseReportLinks = true;
         if (!this.assessSvc.isISE()) {
@@ -205,6 +217,38 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
+    /**
+     * Gets all ISE Findings/Issues, 
+     * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
+     */
+    getAssessmentFindings() {
+        this.ncuaSvc.unassignedIssueTitles = [];
+        this.findSvc.GetAssessmentFindings().subscribe(
+          (r: any) => {
+            let findings = r;
+            let title = '';
+            
+            for (let i = 0; i < findings?.length; i++) {
+                // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
+                if (this.ncuaSvc.translateExamLevel(findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+                    if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
+                        title = findings[i]?.category?.title + ', ' + findings[i]?.question?.question_Title;
+                        this.ncuaSvc.unassignedIssueTitles.push(title);
+                    }
+                }
+            }
+            if (this.ncuaSvc.unassignedIssueTitles?.length == 0){
+                this.ncuaSvc.unassignedIssues = false;
+            } else {
+                this.ncuaSvc.unassignedIssues = true;
+            }
+
+    
+          },
+          error => console.log('Findings Error: ' + (<Error>error).message)
+        );
+      }
 
     onSelectSecurity(val) {
         this.securitySelected = val;

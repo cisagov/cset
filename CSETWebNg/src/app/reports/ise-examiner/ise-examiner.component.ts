@@ -42,6 +42,7 @@ export class IseExaminerComponent implements OnInit {
   hasComments: any[] = [];
 
   examLevel: string = '';
+  loadingCounter: number = 0;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -78,13 +79,13 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '') {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question)) {
                 this.hasComments.push(question);
-                console.log(this.hasComments);
               }
             }
           }
         }
+        this.loadingCounter++;
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
@@ -98,37 +99,6 @@ export class IseExaminerComponent implements OnInit {
       return false;
     }
     return true;
-  }
-
-  /**
-   * checks if q is a parent question
-   */ 
-   isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
-      return true;
-    } 
-    return false;
   }
 
   getAnswerDisplayLabel(answer: string){

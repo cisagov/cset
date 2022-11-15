@@ -467,6 +467,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ISE_ACTIONS_FINDINGS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[JWT]",
          "ObjectType": 0
       },

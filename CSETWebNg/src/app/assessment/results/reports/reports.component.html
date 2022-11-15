@@ -28,7 +28,7 @@
     your organization’s cybersecurity planning and growth going forward.
     The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
     the current state of the assessment.
-    <button mat-stroked-button (click)="openSnackBar()">
+    <button *ngIf="!assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()">
       Printing Report Instructions
     </button>
   </p>
@@ -250,7 +250,7 @@
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
-      <div *ngIf="disableIseReportLinks" class="
+      <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues" class="
         alert-warning
         mt-2
         mb-2
@@ -262,8 +262,32 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           Some reports are disabled until all statements have been answered.
+        </span>
+        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
+            Please assign an "Issue Type" to the following issue which was generated:
+          </span>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
+            Please assign an "Issue Type" to the following issues which were generated:
+          </span><br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
+        </span>
+        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+          Some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
+            Please assign an "Issue Type" to the following issue which was generated:
+          </span>
+          <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
+            Please assign an "Issue Type" to the following issues which were generated:
+          </span><br>
+          <span *ngFor="let title of this.ncuaSvc.unassignedIssueTitles; let i = index" style="padding-left: 40px;">
+            {{ title }}
+          </span><br>
         </span>
       </div>
       <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
@@ -271,12 +295,12 @@
         ISE Answered Statements
       </button>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Scope Report
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Examination Report
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Examiner Report
@@ -340,6 +364,8 @@
       </div>
     </div>
 
+    <div>
+      
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>
@@ -354,7 +380,7 @@
     </div>
 
     <div class="mt-5">
-      <button tabindex="0"
+      <button *ngIf="!assessSvc.isISE()" tabindex="0"
         class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
         (click)="clickExport()"
         matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
