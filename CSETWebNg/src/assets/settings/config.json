@@ -1,5 +1,5 @@
 {
-    "currentConfigChain": ["develop","ACET"],
+    "currentConfigChain": ["development","ACET"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -53,7 +53,7 @@
         "showCriticalService": true,
         "allowDiagram": true,
         "showPrivacyWarning": false,
-        "showTrend:": true,
+        "showTrend": true,
         "showCompare": true,
         "showEnableProtectedFeatures": true
     },
