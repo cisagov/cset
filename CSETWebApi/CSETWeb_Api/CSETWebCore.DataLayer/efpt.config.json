@@ -1327,7 +1327,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "(localdb)\\mssqllocaldb.CSETWeb2",
+   "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

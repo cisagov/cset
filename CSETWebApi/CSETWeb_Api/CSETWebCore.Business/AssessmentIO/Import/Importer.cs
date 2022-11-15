@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             TinyMapper.Bind<jFINDING, FINDING>(config =>
              {
                  config.Ignore(x => x.Finding_Id);
-             });            
+             });
             //copy the incoming information to an intermediary
             //then copy from the intermediary to destination
             //and permit updates.
@@ -187,10 +187,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     context.SaveChanges();
                 }
             }
-
-
-
-
 
             return _assessmentId;
         }

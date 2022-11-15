@@ -90,7 +90,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 config.Ignore(x => x.Question_Text);
             });
-            TinyMapper.Bind<AVAILABLE_MATURITY_MODELS, jAVAILABLE_MATURITY_MODELS>();            
+            TinyMapper.Bind<AVAILABLE_MATURITY_MODELS, jAVAILABLE_MATURITY_MODELS>();
         }
 
 

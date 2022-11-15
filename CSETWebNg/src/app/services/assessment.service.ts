@@ -184,12 +184,12 @@ export class AssessmentService {
     this.assessment = assessment;
 
     return this.http
-    .post(
-      this.apiUrl + 'assessmentdetail',
-      JSON.stringify(assessment),
-      headers
-    )
-    .subscribe();
+      .post(
+        this.apiUrl + 'assessmentdetail',
+        JSON.stringify(assessment),
+        headers
+      )
+      .subscribe();
   }
 
   /**
