@@ -42,6 +42,14 @@ import { AcetDashboard } from '../../../../models/acet-dashboard.model';
   templateUrl: './assessment-detail-ncua.component.html',
   host: { class: 'd-flex flex-column flex-11a' }
 })
+
+/**
+ * 
+ * TODO:
+ * Refactor this page to better fit the current NCUA requirements (comment for Brett)
+ * 
+ */
+
 export class AssessmentDetailNcuaComponent implements OnInit {
 
   assessment: AssessmentDetail = {};
@@ -197,15 +205,23 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     for (let i = 0; i < this.creditUnionOptions.length; i++) {
-      if (e.target !== undefined) {
+      if (e.target != null && e.target.value != null) {
         if (e.target.value === this.creditUnionOptions[i].name) {
+          this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
+
+          this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
+          this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         } else if (e.target.value === (this.creditUnionOptions[i].charter.toString())) {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
+          this.assessment.charter = this.creditUnionOptions[i].charter;
+
+          this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
+          this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
       }
     }
@@ -213,8 +229,24 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.createAssessmentName();
     this.setCharterPad();
 
+    this.assessSvc.updateAssessmentDetails(this.assessment);
+  }
+
+  updateAssets(e: any) {
+    // default Assessment Name if it is left empty
+    if (!!this.assessment) {
+      if (this.assessment.assessmentName.trim().length === 0) {
+        this.assessment.assessmentName = "(Untitled Assessment)";
+        this.createAssessmentName();
+      }
+    }
     
+   // this.assessment.assets = e.target.value;
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
+    console.log("CU name after asset update: " + this.assessment.creditUnion)
+    console.log("Charter after asset update: " + this.assessment.charter)
+    console.log("Assets after asset update: $" + this.assessment.assets)
+
     if (this.ncuaSvc.assetsAsNumber > 50000000) {
       this.updateOverride("No Override");
     }

@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-6">
         <div class="form-group">
-          <label for="title" class="form-label font-weight-bold">Title</label>
+          <label id="titleLabel" for="title" class="form-label font-weight-bold">Title</label>
           <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.title">
         </div>
       </div>
@@ -57,29 +57,20 @@
       <div class="col-6">
         <div class="form-group">
           <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
-          <select name="riskArea" id="riskArea" (change)="updateRiskArea($event.target.value)" class="form-control">
-            <!--<option value="Strategic">Strategic</option>
-            <option value="Compliance">Compliance</option>-->
+          <!-- locking risk for now, will need to remove '[disabled]="true"' from below later -->
+          <select name="riskArea" id="riskArea" class="form-control" [disabled]="true" [(ngModel)]="finding.risk_Area">
             <option value="Transaction">Transaction</option>
-            <!--<option value="Reputation">Reputation</option>-->
           </select>
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
           <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
-          <!--<select *ngIf="this.riskType === 'Strategic'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of strategicSubRisks"> {{ subrisk }}</option>
+          <select name="subrisk" id="subRisk" id="subrisk" class="form-control" [disabled]="true" [(ngModel)]="finding.sub_Risk">
+            <option value="Information Systems & Technology Controls">Information Systems & Technology Controls</option>
+            <!-- locking subrisk for now, will need to uncomment below and remove '[disabled]="true"' from above later -->
+            <!-- <option *ngFor="let subrisk of transactionSubRisks" value="{{subrisk}}"> {{ subrisk }}</option> -->
           </select>
-          <select *ngIf="this.riskType === 'Compliance'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of complianceSubRisks"> {{ subrisk }}</option>
-          </select>-->
-          <select *ngIf="this.riskType === 'Transaction'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of transactionSubRisks"> {{ subrisk }}</option>
-          </select>
-          <!--<select *ngIf="this.riskType === 'Reputation'" name="subrisk" id="subrisk" class="form-control">
-            <option *ngFor="let subrisk of reputationSubRisks"> {{ subrisk }}</option>
-          </select>-->
         </div> 
       </div>
     </div>
@@ -106,7 +97,7 @@
         <div class="row">
           <div class="col-12">
             <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
-            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"></textarea> <!-- [(ngModel)]="finding.description" -->
+            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control" [(ngModel)]="finding.actionItems"></textarea>
           </div>
         </div>
       </div>
@@ -135,8 +126,7 @@
                   <td class="left-table-cell" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ q.question_Text }}</td>
                   <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.answer_Text }}</td>
                   <td *ngIf="this.actionItems != null">
-                    <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}">{{ this.actionItems[i]?.action_Items }}
-                    </textarea>
+                    <textarea name="actionItems" id="actionItems" cols="100" [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" (blur)="updateActionText($event, q)">{{ this.actionItems[i]?.action_Items }}</textarea>
                   </td>
                 </tr>
               </ng-container>
