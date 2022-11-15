@@ -80,7 +80,6 @@ export class DiagramComponentsComponent implements OnInit {
       this.processProductNames(csafs);
     })
 
-    this.getComponents();
   }
 
   /**
@@ -89,6 +88,9 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
+      this.diagramComponentList.forEach(component => {
+        this.updateComponentVendor(component);
+      })
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
@@ -172,6 +174,8 @@ export class DiagramComponentsComponent implements OnInit {
         vendor.products.push(product);
       }
     });
+
+    this.getComponents();
   }
 
   updateComponentVendor(component) {
