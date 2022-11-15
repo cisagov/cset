@@ -251,18 +251,31 @@ export class QuestionBlockIseComponent implements OnInit {
 
   shouldIShow(q: Question) {
     // If running a SCUEP exam, always show level 1 (SCUEP) questions
+    let visible = false;
+    if (q.isParentQuestion || q.visible) {
+      visible = true;
+    }
+
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      return true;
+      if (visible) {
+        return true;
+      }
       //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
-        return true;
+        if (visible) {
+          return true;
+        }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
         if (q.questionId < 7853 && this.showCorePlus === true) { 
-          return true;
+          if (visible) {
+            return true;
+          }
         } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
-          return true;
+          if (visible) {
+            return true;
+          }
         }
       }
     }
