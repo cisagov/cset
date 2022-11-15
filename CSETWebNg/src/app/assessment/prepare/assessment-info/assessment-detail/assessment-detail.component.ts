@@ -147,7 +147,7 @@ export class AssessmentDetailComponent implements OnInit {
   }
 
   showFacilityName() {
-    return this.configSvc.installationMode !== 'ACET' && this.configSvc.behaviors.showFacilityName;
+    return this.configSvc.behaviors.showFacilityName;
   }
 
   showCityName() {

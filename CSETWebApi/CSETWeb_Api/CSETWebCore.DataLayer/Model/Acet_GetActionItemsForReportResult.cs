@@ -11,6 +11,8 @@ namespace CSETWebCore.DataLayer.Model
         public int Mat_Question_Id { get; set; }
         public int Finding_Id { get; set; }
         public string Question_Title { get; set; }
+        public string answer_text { get; set; }
+        public string Regulatory_Citation { get; set; }
         public string Action_Items { get; set; }
         public int Maturity_Level_Id { get; set; }
     }
