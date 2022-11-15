@@ -514,6 +514,7 @@ import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-p
 import { AlertsAndAdvisoriesComponent } from './assessment/diagram/diagram-inventory/components/alerts-and-advisories/alerts-and-advisories.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 import { RelatedQBlockComponent } from './reports/module-content/related-q-block/related-q-block.component';
+import { LogoutComponent } from './initial/logout/logout.component';
 
 
 
@@ -985,6 +986,7 @@ import { RelatedQBlockComponent } from './reports/module-content/related-q-block
         AlertsAndAdvisoriesComponent, 
         LoginAccessKeyComponent, 
         RelatedQBlockComponent, 
+        LogoutComponent, 
     ],
     providers: [
         ConfigService,

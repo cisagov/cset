@@ -21,6 +21,8 @@ namespace CSETWebCore.Model.Cis
     {
         public int AssessmentId { get; set; }
 
+        public int ModelId { get; set; }
+
         public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
 
         public Score GroupingScore { get; set; }
