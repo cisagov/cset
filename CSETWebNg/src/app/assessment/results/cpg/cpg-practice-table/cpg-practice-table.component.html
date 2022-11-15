@@ -2,14 +2,24 @@
 
     <div *ngFor="let d of model.Domain" class="page-break">
         <div class="cpg-domain-bar">
-            {{d.title}}
+            {{d.title}} ({{d.titlePrefix}})
         </div>
 
         <table *ngFor="let q of d.Question" class="cpg-table">
             <tr>
                 <th style="width: 45%">
-                    {{q.displaynumber}}
-                    <span [innerHTML]="q.questiontext.substr(0, 20)"></span>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <div class="mr-2 font-weight-bold">
+                                {{q.displaynumber}}
+                            </div>
+                            <div class="font-weight-normal">
+                                <span [innerHTML]="q.practice"></span>
+                            </div>
+                        </div>
+                        <div class="text-right ml-4 font-weight-normal" [innerHTML]="q.csf">
+                        </div>
+                    </div>
                 </th>
                 <th style="width: 25%">
                     CURRENT ASSESSMENT
@@ -19,23 +29,28 @@
                 </th>
             </tr>
             <tr>
-                <td [innerHTML]="q.questiontext"></td>
+                <td>
+                    <div class="cpg-header">TTP or Risk Addressed</div>
+                    <p [innerHTML]="q.ttp"></p>
+                    <div class="cpg-header">Recommended Action</div>
+                    <p [innerHTML]="q.recommended"></p>
+                </td>
                 <td>
                     <div class="text-nowrap">
                         <i *ngIf="q.answer == 'Y'" class="far fa-lg fa-check-square"></i>
-                        <i *ngIf="q.answer != 'Y'" class="far fa-lg fa-square"></i> 
+                        <i *ngIf="q.answer != 'Y'" class="far fa-lg fa-square"></i>
                         IMPLEMENTED
                     </div>
                     <div class="text-nowrap">
                         <i *ngIf="q.answer == 'I'" class="far fa-lg fa-check-square"></i>
-                        <i *ngIf="q.answer != 'I'" class="far fa-lg fa-square"></i>  IN PROGRESS
+                        <i *ngIf="q.answer != 'I'" class="far fa-lg fa-square"></i> IN PROGRESS
                     </div>
                     <div class="text-nowrap">
                         <i *ngIf="q.answer == 'N'" class="far fa-lg fa-check-square"></i>
-                        <i *ngIf="q.answer != 'N'" class="far fa-lg fa-square"></i>  NOT STARTED
+                        <i *ngIf="q.answer != 'N'" class="far fa-lg fa-square"></i> NOT STARTED
                     </div>
                 </td>
-                
+
                 <td>
                     {{q.comment}}
                 </td>
