@@ -34,7 +34,7 @@ namespace CSETWebCore.AutoResponder
         public void ProcessEmails()
         {
             var userlist = from u in _context.USERS                           
-                           where u.EmailSentCount < 3 && u.PrimaryEmail != null
+                           where u.EmailSentCount < 5 && u.PrimaryEmail != null
                            select u;
             
             var emailHistory = (from h in _context.USER_EMAIL_HISTORY
@@ -54,18 +54,18 @@ namespace CSETWebCore.AutoResponder
                             UpdateRecords(user);
                             break;
                         case 1:
-                        case 2:
                             //look to see if it has been a week since the last send date
                             //if it has then send it and update record
-                            DateTime lastSent;
-                            if (emailHistory.TryGetValue(user.UserId, out lastSent))
-                            {
-                                if (AtleastAWeekHasPassed(lastSent))
-                                {
-                                    _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
-                                    UpdateRecords(user);
-                                }
-                            }
+                            checkEmailSend(user, emailHistory, 1);
+                            break;
+                        case 2:
+                            checkEmailSend(user, emailHistory, 3);
+                            break;
+                        case 3:
+                            checkEmailSend(user, emailHistory, 6);
+                            break;
+                        case 4:
+                            checkEmailSend(user, emailHistory, 10);
                             break;
                         default:
                             //skip it 
@@ -75,6 +75,21 @@ namespace CSETWebCore.AutoResponder
                 }
             }
         }
+
+        private void checkEmailSend(USERS user, Dictionary<int,DateTime> emailHistory, int weekCheck)
+        {
+            DateTime lastSent;
+            if (emailHistory.TryGetValue(user.UserId, out lastSent))
+            {
+                if (AtleastAWeekHasPassed(lastSent, weekCheck))
+                {
+                    _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
+                    UpdateRecords(user);
+                }
+            }
+
+        }
+
 
         private static bool IsValidEmail(string email)
         {
@@ -98,10 +113,10 @@ namespace CSETWebCore.AutoResponder
             return !((day == DayOfWeek.Saturday) || (day == DayOfWeek.Sunday));
         }
 
-        private bool AtleastAWeekHasPassed(DateTime StartDate)
+        private bool AtleastAWeekHasPassed(DateTime StartDate, int weekspassed)
         {
             DateTime EndDate = this.NowDate;
-            return (EndDate - StartDate).TotalDays >= 7;
+            return (EndDate - StartDate).TotalDays >= 7*weekspassed;
         }
 
 

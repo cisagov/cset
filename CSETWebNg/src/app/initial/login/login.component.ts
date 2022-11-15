@@ -22,16 +22,11 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
-import { AssessmentService } from '../../services/assessment.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { NavigationEnd, Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
-import { EmailService } from '../../services/email.service';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +39,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     private titleSvc: Title
-  ) { }
+  ) { 
+  }
 
   ngOnInit() {
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);    

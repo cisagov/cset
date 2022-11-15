@@ -198,10 +198,7 @@ export class AuthenticationService {
 
 
     logout() {
-        // remove user from session storage to log user out
-        localStorage.clear();
-
-        this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
+        this.router.navigate(['/home/logout'], { queryParamsHandling: "preserve" });
     }
 
 
