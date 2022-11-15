@@ -2291,9 +2291,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructure(int assessmentId)
+        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental = false)
         {
-            var x = new MaturityStructure(assessmentId, _context);
+            var x = new MaturityStructure(assessmentId, _context, includeSupplemental);
             return x.ToXDocument();
         }
 

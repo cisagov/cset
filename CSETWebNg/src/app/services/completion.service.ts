@@ -59,6 +59,7 @@ export class CompletionService {
         })
       });
     } else if (!!data.groupings) {
+      console.log(data);
       // this version gathers questions from a Maturity response structure
       this.targetMaturityLevel = data.maturityTargetLevel;
 
@@ -117,6 +118,7 @@ export class CompletionService {
    * Tallies answered questions
    */
   countAnswers() {
+    console.log(this.questionflat);
     this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
     this.totalCount = this.questionflat.length;
   }
