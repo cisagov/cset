@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using NSoup.Parse;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -63,11 +64,45 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId);
+            var x = biz.GetMaturityStructure(assessmentId, true);
 
 
+            // Break out some of the pieces of the question text for ease of use on the UI.
+            // In the future it would be better to store these elements independently 
+            // somehow, in a flexible way that would benefit other models.  
+            var questionElements = x.Descendants("Question").ToList();
+            questionElements.ForEach(q => 
+            { 
+                var p = Parser.Parse(q.Attribute("questiontext").Value, ".");
+                var cpgPractice = p.Select(".cpg-practice");
+                q.SetAttributeValue("practice", cpgPractice.FirstOrDefault()?.Html());
 
-            return Ok(x);
+                p = Parser.Parse(q.Attribute("supplemental").Value, ".");
+
+                var cpgTtp = p.Select(".cpg-ttp");
+                q.SetAttributeValue("ttp", cpgTtp.FirstOrDefault()?.Html());
+                
+                var cpgRec = p.Select(".cpg-recommended");
+                q.SetAttributeValue("recommended", cpgRec.FirstOrDefault()?.Html());
+                
+                var cpgCsf = p.Select(".cpg-csf");
+
+                var csfString = cpgCsf.FirstOrDefault()?.Html();
+                if (csfString.IndexOf("<br") > -1)
+                {
+                    csfString = csfString.Substring(0, csfString.IndexOf("<br"));
+                }
+                var csfPieces = csfString.Split(",");
+                csfString = "";
+                foreach (string x in csfPieces)
+                {
+                    csfString += $"<span class=\"text-nowrap\">{x}</span>, ";
+                }
+                q.SetAttributeValue("csf", csfString.TrimEnd(" ,".ToCharArray()));
+            });          
+
+            var json = Helpers.CustomJsonWriter.Serialize(x.Root);
+            return Ok(json);
         }
     }
 }
