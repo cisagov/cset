@@ -1,0 +1,83 @@
+<!---------------------- 
+
+   Copyright 2022 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div *ngFor="let d of model.Domain">
+    <div class="cpg-domain-bar page-break">
+        {{d.title}} ({{d.titlePrefix}})
+    </div>
+
+    <table *ngFor="let q of d.Question" class="cpg-table">
+        <tr>
+            <th style="width: 45%">
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-row">
+                        <div class="mr-2 font-weight-bold">
+                            {{q.displaynumber}}
+                        </div>
+                        <div class="font-weight-normal">
+                            <span [innerHTML]="q.practice"></span>
+                        </div>
+                    </div>
+                    <div class="text-right ml-4 font-weight-normal" [innerHTML]="q.csf">
+                    </div>
+                </div>
+            </th>
+            <th style="width: 25%">
+                CURRENT ASSESSMENT
+            </th>
+            <th style="width: 30%">
+                NOTES
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div class="cpg-header">TTP or Risk Addressed</div>
+                <p [innerHTML]="q.ttp"></p>
+                <div class="cpg-header">Recommended Action</div>
+                <p [innerHTML]="q.recommended"></p>
+            </td>
+            <td>
+                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
+                    <i class="far fa-lg" 
+                        [class.fa-check-square]="q.answer == 'Y'"
+                        [class.fa-square]="q.answer != 'Y'"></i>
+                    IMPLEMENTED
+                </div>
+                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'I'">
+                    <i class="far fa-lg" 
+                        [class.fa-check-square]="q.answer == 'I'"
+                        [class.fa-square]="q.answer != 'I'"></i>
+                    IN PROGRESS
+                </div>
+                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
+                    <i class="far fa-lg" 
+                        [class.fa-check-square]="q.answer == 'N'"
+                        [class.fa-square]="q.answer != 'N'"></i>
+                    NOT STARTED
+                </div>
+            </td>
+            <td>
+                {{q.comment}}
+            </td>
+        </tr>
+    </table>
+</div>
