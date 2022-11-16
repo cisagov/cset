@@ -252,10 +252,18 @@ export class QuestionBlockIseComponent implements OnInit {
   shouldIShow(q: Question) {
     let visible = false;
 
+    if(q.maturityLevel === 3) {
+      if((q.questionId < 7853 && this.showCorePlus === true) || (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true)) {
+        visible = true;
+      }
+    }
+
     // always show parent questions
-    if (q.visible || q.isParentQuestion) {
+    if (q.visible || q.isParentQuestion) { 
       visible = true;
     }
+
+    
 
     // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
@@ -676,9 +684,9 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlusButton(id: number) {
     // SCUEP only shows SCUEP.
     if (this.iseExamLevel !== 'SCUEP') {
-      if (this.isFinalQuestion(id)) {
+      // if (this.isFinalQuestion(id)) {
         return true;
-      }
+      // }
     }
     return false;
   }
