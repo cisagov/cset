@@ -516,6 +516,7 @@ import { RelatedQBlockComponent } from './reports/module-content/related-q-block
 import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
 import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice-table/cpg-practice-table.component';
 import { LogoutComponent } from './initial/logout/logout.component';
+import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
 
 
 
@@ -989,7 +990,8 @@ import { LogoutComponent } from './initial/logout/logout.component';
         CpgReportComponent,
         CpgPracticeTableComponent, 
         RelatedQBlockComponent,
-        LogoutComponent, 
+        LogoutComponent,
+        CpgDomainSummaryComponent, 
     ],
     providers: [
         ConfigService,

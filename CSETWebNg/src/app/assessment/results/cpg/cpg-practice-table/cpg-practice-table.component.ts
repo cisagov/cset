@@ -28,7 +28,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 @Component({
   selector: 'app-cpg-practice-table',
   templateUrl: './cpg-practice-table.component.html',
-  styleUrls: ['./cpg-practice-table.component.scss']
+  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss']
 })
 export class CpgPracticeTableComponent implements OnInit {
 

@@ -914,5 +914,18 @@ namespace CSETWebCore.DataLayer.Model
                 
             return myrval;
         }
+
+        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId)
+        {
+            IList<GetAnswerDistribGroupingsResult> myrval = null;
+            this.LoadStoredProc("GetAnswerDistribGroupings")
+                .WithSqlParam("@assessmentId", assessmentId)
+                .ExecuteStoredProc((handler) =>
+                {
+                    myrval = handler.ReadToList<GetAnswerDistribGroupingsResult>();
+                });
+
+            return myrval;
+        }
     }
 }
