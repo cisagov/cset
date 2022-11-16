@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using NSoup.Parse;
 
+
 namespace CSETWebCore.Api.Controllers
 {
     /// <summary>
@@ -103,6 +104,78 @@ namespace CSETWebCore.Api.Controllers
 
             var json = Helpers.CustomJsonWriter.Serialize(x.Root);
             return Ok(json);
+        }
+
+
+        /// <summary>
+        /// Returns the answer percentage distributions for each of the
+        /// 8 CPG domains.
+        /// </summary>
+        [HttpGet]
+        [Route("api/answerdistrib/cpg/domains")]
+        public IActionResult GetAnswerDistribForDomains()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            
+            var resp = new List<AnswerDistribDomain>();
+
+            var dbList = _context.GetAnswerDistribGroupings(assessmentId);
+
+            foreach (var item in dbList)
+            {
+                if (!resp.Exists(x => x.Name == item.title))
+                {
+                    var domain = new AnswerDistribDomain()
+                    {
+                        Name = item.title,
+                        Series = InitializeSeries()
+                    };
+
+                    resp.Add(domain);
+                }
+
+                double percent = CalculatePercent(dbList, item);
+
+                var r = resp.First(x => x.Name == item.title);             
+                r.Series.First(x => x.Name == item.answer_text).Value = percent;
+            }
+
+            return Ok(resp);
+        }
+
+
+        /// <summary>
+        /// Calculates the percentage based on all answer values for the domain
+        /// </summary>
+        /// <returns></returns>
+        private double CalculatePercent(IList<GetAnswerDistribGroupingsResult> r, 
+            GetAnswerDistribGroupingsResult i)
+        {
+            var sum = r.Where(x => x.title == i.title)
+                .Select(x => x.answer_count).Sum();
+
+            return ((double)i.answer_count * 100d / (double)sum);
+        }
+
+
+        /// <summary>
+        /// Initializes 'empty' percentge slots for potential CPG answers.
+        /// </summary>
+        /// <returns></returns>
+        private List<Series> InitializeSeries()
+        {
+            var list = new List<Series>();
+
+            var values = new List<string>() { "Y", "I", "N", "U" };
+            foreach (string s in values)
+            {
+                list.Add(new Series() { 
+                     Name = s,
+                     Value = 0
+                });
+            }
+
+            return list;
         }
     }
 }
