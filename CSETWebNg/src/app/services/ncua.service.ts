@@ -385,6 +385,14 @@ let headers = {
     this.questionResponseBuilder();
     this.iseIrpResponseBuilder();
 
+    // do whatever send stuff necessary
+
+    this.jsonString = {
+      "questionData": [],
+      "examProfileData": [],
+      "metaData": []
+    }; // reset the string
+
   }
 
   answerTextToNumber(text: string) {
@@ -417,6 +425,7 @@ let headers = {
       (r: any) => {
         this.questions = r;
         this.examLevel = this.getExamLevel();
+        console.log(this.examLevel)
 
         // goes through domains
         for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -424,7 +433,7 @@ let headers = {
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            let childResponses = {"title": subcat?.questions[0].title, "children":[]};
+            let childResponses = {"title": subcat?.questions[0].title, "children":[]}; //uses parent's title
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               if (k != 0) { //don't want parent questions being included with children
@@ -438,11 +447,11 @@ let headers = {
                   if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                     this.examLevel = 'CORE+';
                   }
-                  if (question.maturityLevel === 'SCUEP') {
+                  else if (question.maturityLevel === 'SCUEP') {
                     question.answerText = 'U';
                   }
                 }
-                
+
                 childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
               }
             }
