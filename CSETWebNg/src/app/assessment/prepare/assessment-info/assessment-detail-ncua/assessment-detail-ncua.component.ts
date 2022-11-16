@@ -243,9 +243,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
    // this.assessment.assets = e.target.value;
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
-    console.log("CU name after asset update: " + this.assessment.creditUnion)
-    console.log("Charter after asset update: " + this.assessment.charter)
-    console.log("Assets after asset update: $" + this.assessment.assets)
+    this.acetDashboard.assets = this.assessment.assets;
 
     if (this.ncuaSvc.assetsAsNumber > 50000000) {
       this.updateOverride("No Override");
