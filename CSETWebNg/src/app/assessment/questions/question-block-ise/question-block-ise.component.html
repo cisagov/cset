@@ -143,13 +143,15 @@
 
                     <hr>
         
+                    <!-- The below is commented out because it was moved into the div with *ngIf="last" below. 
+                        This was kept in case problems come up -->
+
                     <!-- 7853 is currently the start of the CORE+ only questions and doesn't need this button -->
-                    <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7853"
+                    <!-- <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7853"
                       class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                       (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
-                    </button>
+                    </button> -->
         
-                    <!-- The below is commented out because it was moved into the div below. This was kept in case problems come up -->
                     <!-- <button *ngIf="isFinalQuestion(q.questionId)"
                       class="btn btn-na mt-2 mb-4" style="width: 20%"
                       (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
@@ -204,9 +206,17 @@
         
                 </div>
                 <div *ngIf="last">
-                    <button class="btn btn-na mt-2 mb-4" style="width: 20%" (click)="updateShowIssues()">
-                        {{ this.getIssuesButtonText() }}
-                    </button>
+                    <div>
+                        <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7853"
+                        class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                        (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn btn-na mt-2 mb-4" style="width: 20%" (click)="updateShowIssues()">
+                            {{ this.getIssuesButtonText() }}
+                        </button>
+                    </div>
         
                     <div *ngIf="showIssues === true" style="margin: 0.75em">
                         <table class="table" *ngIf="extras?.findings.length > 0">
