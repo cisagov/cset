@@ -32,6 +32,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<Get_Assess_Detail_Filter_DataResult>> Get_Assess_Detail_Filter_DataAsync(string model, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Get_Merge_ConflictsResult>> Get_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<Get_RecommendationsResult>> Get_RecommendationsAsync(int? value, int? industry, string organization, string assetvalue, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetAnswerDistribGroupingsResult>> GetAnswerDistribGroupingsAsync(int? assessmentId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetAnswerDistribMaturityResult>> GetAnswerDistribMaturityAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> GetApplicationModeDefaultAsync(int? Assessment_Id, OutputParameter<string> Application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetAreasDataResult>> GetAreasDataAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
