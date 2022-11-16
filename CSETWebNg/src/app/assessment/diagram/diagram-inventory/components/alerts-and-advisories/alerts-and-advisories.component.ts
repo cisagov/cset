@@ -16,7 +16,7 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { this.product = data.product; this.vendor = data.vendor }
+  ) { this.product = data.product; this.vendor = data.vendor; console.log(this.product.vulnerabilities) }
 
   ngOnInit(): void { }
 
