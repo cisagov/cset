@@ -316,6 +316,10 @@ export class MaturityFilteringService {
       // consider null answers as 'U'
       if ((q.answer == null || q.answer == 'U') && filterSvc.showFilters.includes('U')) {
         q.visible = true;
+
+        if (this.assesmentSvc.isISE() && q.isParentQuestion) { //skips parent question when checking for visibility
+          q.visible = false;
+        }
       }
 
       // evaluate other features
