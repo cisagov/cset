@@ -15,7 +15,7 @@
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="cve" style="width:200px">CVE #</th>
       <th mat-sort-header="score" style="width:200px">Score</th>
-      <th mat-sort-header="version" style="width:200px">Version</th>
+      <th mat-sort-header="version" style="width:200px">Affected Versions</th>
       <th mat-sort-header="serial" style="width:200px">Serial</th>
       <th mat-sort-header="linkDetails" style="width:200px">Link to the CVE details</th>
       <th mat-sort-header="linkWebsite" style="width:200px">Link to vendor website</th>
@@ -27,7 +27,13 @@
             {{ getCveScoreLevel(vulnerability.scores[0].cvss_V3.baseScore) }}
           </span>
         </td>
-        <td>FIX ME</td>
+        <td>
+          <ng-container *ngFor="let version of product.versions">
+            <div *ngIf="vulnerability.product_Status.known_Affected.includes(version.product_Id)">
+              {{ version.name }}
+            </div>
+          </ng-container>
+        </td>
         <td>FIX ME</td>
         <td><a [href]="product.cveUrl" target="_blank">{{ product.cveUrl }}</a></td>
         <td>FIX ME</td>
