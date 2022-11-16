@@ -514,7 +514,10 @@ import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-p
 import { AlertsAndAdvisoriesComponent } from './assessment/diagram/diagram-inventory/components/alerts-and-advisories/alerts-and-advisories.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 import { RelatedQBlockComponent } from './reports/module-content/related-q-block/related-q-block.component';
+import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
+import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice-table/cpg-practice-table.component';
 import { LogoutComponent } from './initial/logout/logout.component';
+import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
 
 
 
@@ -983,10 +986,14 @@ import { LogoutComponent } from './initial/logout/logout.component';
         AboutCfComponent,
         MvraSummaryPageComponent,
         MvraGapsPageComponent,
+        LoginAccessKeyComponent,
+        RelatedQBlockComponent,
+        CpgReportComponent,
+        CpgPracticeTableComponent, 
+        RelatedQBlockComponent,
+        LogoutComponent,
+        CpgDomainSummaryComponent, 
         AlertsAndAdvisoriesComponent, 
-        LoginAccessKeyComponent, 
-        RelatedQBlockComponent, 
-        LogoutComponent, 
     ],
     providers: [
         ConfigService,

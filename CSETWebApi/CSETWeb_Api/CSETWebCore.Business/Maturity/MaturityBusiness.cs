@@ -267,7 +267,7 @@ namespace CSETWebCore.Business.Maturity
             var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId);
+            var x = biz.GetMaturityStructure(assessmentId, true);
 
 
             int calculatedScore = 110;
@@ -2291,9 +2291,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructure(int assessmentId)
+        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental = false)
         {
-            var x = new MaturityStructure(assessmentId, _context);
+            var x = new MaturityStructure(assessmentId, _context, includeSupplemental);
             return x.ToXDocument();
         }
 

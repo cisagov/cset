@@ -145,6 +145,7 @@ namespace CSETWebCore.Helpers
                 }
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
+                xGrouping.SetAttributeValue("titlePrefix", sg.Title_Prefix);
 
                 var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
                 xGrouping.SetAttributeValue("remarks", remark != null ? remark.DomainRemarks : "");
@@ -166,16 +167,18 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("sequence", myQ.Sequence.ToString());
                     xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
+                    xQuestion.SetAttributeValue("comment", answer?.a.Comment ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
                     if (_includeText)
                     {
                         xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
 
+                        xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
+
                         xQuestion.SetAttributeValue("referencetext",
                             myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
                     }
-                    //xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
 
                     xGrouping.Add(xQuestion);
                 }

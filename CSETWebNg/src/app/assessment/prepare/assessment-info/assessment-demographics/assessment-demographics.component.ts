@@ -201,7 +201,6 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     changeIsScoped(event: any){
-        //this.demographicData.isScoped = event.target.value;
         this.updateDemographics();
     }
 
@@ -230,7 +229,11 @@ export class AssessmentDemographicsComponent implements OnInit {
       return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
     }
 
+    showEdmFields() {
+        return this.assessSvc.assessment?.maturityModel?.modelName == 'EDM';
+    }
+
     showAsterisks(): boolean {
-        return this.assessSvc.assessment.maturityModel?.modelName == 'CPG';
+        return this.assessSvc.assessment?.maturityModel?.modelName == 'CPG';
     }
 }

@@ -103,13 +103,13 @@
             </select>
         </div>
     </div>
-    <div class="d-flex flex-column justify-content-between flex-00a" *ngIf="configSvc.installationMode !== 'RRA'">
+    <div class="d-flex flex-column justify-content-between flex-00a" *ngIf="showEdmFields()">
         <div class="standard-item d-flex justify-content-between flex-11a">
             <div>
                 <input type="checkbox" id="edmIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1" (change)="changeIsScoped($event)" [(ngModel)]="demographicData.isScoped"
                 [checked]="demographicData.isScoped">
                 <label for="edmIsScoped" class="checkbox-custom-label">
-                   Check this box if suppliers are scoped to include other enterprise business units (EDM assessments only)
+                   Suppliers are scoped to include other enterprise business units
                 </label>
             </div>
       </div>
