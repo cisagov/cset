@@ -267,7 +267,7 @@ namespace CSETWebCore.Business.Maturity
             var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId);
+            var x = biz.GetMaturityStructure(assessmentId, true);
 
 
             int calculatedScore = 110;

@@ -46,8 +46,16 @@ export class CpgService {
    * the response to a specific domain.
    */
    getStructure() {
-    var url = this.configSvc.apiUrl + 'maturitystructure/cpg'
+    var url = this.configSvc.apiUrl + 'maturitystructure/cpg';
 
+    return this.http.get(url, headers);
+  }
+
+  /**
+   * 
+   */
+  getAnswerDistrib() {
+    var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains';
     return this.http.get(url, headers);
   }
 
