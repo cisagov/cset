@@ -2,9 +2,10 @@
 using CSETWebCore.Model.Findings;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Findings
 {
@@ -57,13 +58,14 @@ namespace CSETWebCore.Business.Findings
         /// 
         /// </summary>
         /// <param name="finding"></param>
-        public void UpdateFinding(Finding finding)
+        public int UpdateFinding(Finding finding)
         {
             FindingData fm = new FindingData(finding, _context);
-            fm.Save();
+            int id = fm.Save();
+            return id;
         }
 
-        public List<ActionItems> GetActionItems(int parentId)
+        public List<ActionItems> GetActionItems(int parentId, int finding_id)
         {
             //var actionsOnIssue = _context.MATURITY_QUESTIONS
             //    .Join(x => x.Mat_Question_Id)
@@ -71,23 +73,39 @@ namespace CSETWebCore.Business.Findings
                     
                 );
             var table = from questions in _context.MATURITY_QUESTIONS
-                        join actions in _context.ISE_ACTIONS
-                            on questions.Mat_Question_Id equals actions.Mat_Question_Id
+                        join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
+                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = finding_id } 
+                            equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id}                 
+                           into overrides from o in overrides.DefaultIfEmpty() 
                         where questions.Parent_Question_Id == parentId
-                        select new { actions };
-            foreach(var action in table.ToList())
+                        select new { actions = actions, overrides = o };
+            foreach(var row in table.ToList())
             {
                 actionItems.Add(
                     new ActionItems()
                     {
-                        Question_Id = action.actions.Mat_Question_Id,
-                        Description = action.actions.Description,
-                        Action_Items = action.actions.Action_Items,
-                        Regulatory_Citation = action.actions.Regulatory_Citation
+                        Question_Id = row.actions.Mat_Question_Id,
+                        Description = row.actions.Description,
+                        Action_Items = row.overrides==null
+                        ?row.actions.Action_Items:row.overrides.Action_Items_Override,
+                        Regulatory_Citation = row.actions.Regulatory_Citation
                     }
                 );
             }
             return actionItems;
+        }
+
+        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id, int examLevel)
+        {
+            int additionalExamLevel = 17; //initialized as SCUEP
+            if(examLevel == 18) //if CORE, include CORE+ in the stored proc
+            {
+                additionalExamLevel = 19; //CORE+
+            }
+
+            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id, examLevel, additionalExamLevel);
+            return data;
+
         }
 
 
@@ -191,6 +209,28 @@ namespace CSETWebCore.Business.Findings
             }
 
             return webF;
+        }
+
+        public void UpdateIssues(ActionItemTextUpdate items)
+        {
+            foreach(var item in items.actionTextItems)
+            {
+                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.finding_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
+                if (save == null)
+                {
+                    _context.ISE_ACTIONS_FINDINGS.Add(new ISE_ACTIONS_FINDINGS()
+                    {
+                        Mat_Question_Id = item.Mat_Question_Id,
+                        Finding_Id = items.finding_Id,
+                        Action_Items_Override = item.ActionItemOverrideText
+                    });
+                }
+                else
+                {
+                    save.Action_Items_Override = item.ActionItemOverrideText;
+                }
+            }
+            _context.SaveChanges();
         }
     }
 }

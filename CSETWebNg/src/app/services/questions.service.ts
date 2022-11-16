@@ -124,9 +124,9 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
   */
-  getActionItems(parentId: number) {
+  getActionItems(parentId: number, finding_id: number) {
     headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems', headers);
+    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id='+finding_id, headers);
   }
 
   /**
@@ -137,6 +137,15 @@ export class QuestionsService {
     answer.questionType = localStorage.getItem('questionSet');
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
+
+  /**
+   * Posts multiple (all) Answers to the API.
+   * @param answers
+   */
+  storeAllAnswers(answers: Answer[]) {
+    return this.http.post(this.configSvc.apiUrl + 'storeAllAnswers', answers, headers);
+  }
+
 
   /**
    * Posts a block of answers to the API.

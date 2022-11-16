@@ -142,11 +142,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId)
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery]int finding_id)
         {
             int assessId = _token.AssessmentForUser();
             FindingsManager fm = new FindingsManager(_context, assessId);
-            return fm.GetActionItems(parentId);
+            return fm.GetActionItems(parentId,finding_id);
         }
 
         /// <summary>
@@ -308,6 +308,32 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Persists multiple (all) assessment answers at once
+        /// during the ISE assessment merge process. This could probably
+        /// be combined with the above function, but I don't have the time
+        /// to do so currently
+        /// </summary>
+        [HttpPost]
+        [Route("api/storeAllAnswers")]
+        public IActionResult StoreAllAnswers([FromBody] List<Answer> answers)
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            if (answers == null || answers.Count == 0)
+            {
+                return Ok(0);
+            }
+
+            foreach (var answer in answers)
+            {
+                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                mb.StoreAnswer(assessmentId, answer);
+            }
+            
+            return Ok();
+        }
+
 
         /// <summary>
         /// Returns the details under a given questions details
@@ -401,11 +427,17 @@ namespace CSETWebCore.Api.Controllers
                             on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
                          join category in _context.MATURITY_GROUPINGS
                             on question.Grouping_Id equals category.Grouping_Id
-                         join importance in _context.IMPORTANCE
-                            on finding.Importance_Id equals importance.Importance_Id
+
+                         //join filesBridge in _context.MATURITY_SOURCE_FILES
+                         //   on question.Mat_Question_Id equals filesBridge.Mat_Question_Id
+                         //join files in _context.GEN_FILE
+                         //   on filesBridge.Gen_File_Id equals files.Gen_File_Id
+
+                         // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
                          where answer.Assessment_Id == assessmentId
-                         orderby finding.Type, question.Mat_Question_Id
-                         select new { finding, answer, question, category, importance };
+                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"), 
+                            finding.Type.StartsWith("Examiner"), finding.Type.StartsWith("DOR"), question.Mat_Question_Id
+                         select new { finding, answer, question, category };
 
             return Ok(result.ToList());
         }
@@ -466,7 +498,21 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var fm = new FindingsManager(_context, assessmentId);
-            fm.UpdateFinding(finding);
+            var id = fm.UpdateFinding(finding);
+            return Ok(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ///
+        [HttpPost]
+        [Route("api/SaveIssueOverrideText")]
+        public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
+        {
+            int assessmentId = _token.AssessmentForUser();            
+            var fm = new FindingsManager(_context, assessmentId);
+            fm.UpdateIssues(item);
             return Ok();
         }
 
