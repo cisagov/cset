@@ -25,7 +25,7 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Finding, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
+import { Finding, ActionItemText, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
 import { QuestionsService } from '../../../services/questions.service';
 
@@ -53,18 +53,16 @@ export class IssuesComponent implements OnInit {
   loading: boolean;
   showRequiredHelper: boolean = false;
 
-  riskType: string = "Transaction";
-  /*strategicSubRisks = ['Other', 'Organizational Risk Management Program', 'Staffing', 'Field of Membership', 'Product/Service', 
-                       'Outsourcing', 'Program Monitoring, Oversight, & Reporting', 'Business/Strategic/Budgeting', 
-                       'Board of Director Oversight', 'Training', 'Capital Plans'];
-  complianceSubRisks = ['Regulatory Compliance', 'Policies & Procedures', 'Other', 'Consumer Compliance', 'BSA', 
-                        'Reporting, Fair Lending'];*/
-  transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
+  // Per client request: "Just make them static for now"
+  risk: string = "Transaction";
+  subRisk: string = "Information Systems & Technology Controls";
+  /*transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
                          'Fraud', 'Other', 'Supervisory Committee Activities', 'Full and Fair Disclosure', 'Electronic Payment & Card Services', 
                          'Recordkeeping-Significant', 'Security Program', 'Account Verification', 'Policies & Procedures', 
-                         'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];
-  //reputationSubRisks = ['Other', 'Management', 'Insider Activities', 'Legal', 'Reporting'];
-
+                         'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];*/
+  
+  updatedActionText: string[] = [];
+  ActionItemList = new Map();
 
   constructor(
     private dialog: MatDialogRef<IssuesComponent>,
@@ -106,9 +104,12 @@ export class IssuesComponent implements OnInit {
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
       this.finding = response;
 
-      this.questionsSvc.getActionItems(this.questionID).subscribe(
+      this.questionsSvc.getActionItems(this.questionID, this.finding.finding_Id).subscribe(
         (data: any) => {
           this.actionItems = data;
+
+          this.finding.risk_Area = this.risk;
+          this.finding.sub_Risk = this.subRisk;
 
           if (this.autoGen === 1) {
             this.finding.auto_Generated = 1;
@@ -167,12 +168,25 @@ export class IssuesComponent implements OnInit {
     }
 
   updateRiskArea(riskArea: string) {
-    this.riskType = riskArea;
+    this.risk = riskArea;
+  }
+
+  updateSubRisk(subRisk: string) {
+    this.subRisk = subRisk;
+  }
+
+  updateActionText(e: any, q: any) {    
+    const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
+    this.ActionItemList.set(q.mat_Question_Id, item);
   }
 
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
+    
+    let mapToArray = Array.from(this.ActionItemList.values());
+    this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
+    
 
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
@@ -180,6 +194,8 @@ export class IssuesComponent implements OnInit {
       });
     } else {
       this.showRequiredHelper = true;
+      let el = document.getElementById("titleLabel");
+      el.scrollIntoView();
     }
   }
 
