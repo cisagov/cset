@@ -250,30 +250,36 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   shouldIShow(q: Question) {
-    // If running a SCUEP exam, always show level 1 (SCUEP) questions
     let visible = false;
+
+    // always show parent questions
     if (q.visible || q.isParentQuestion) {
       visible = true;
     }
 
+    // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
       if (visible) {
+        this.refreshPercentAnswered(); // updates filtered %completed circles, and keeps it in step when switching between filters
         return true;
       }
       //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
         if (visible) {
+          this.refreshPercentAnswered();
           return true;
         }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
         if (q.questionId < 7853 && this.showCorePlus === true) { 
           if (visible) {
+            this.refreshPercentAnswered();
             return true;
           }
         } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
           if (visible) {
+            this.refreshPercentAnswered();
             return true;
           }
         }
