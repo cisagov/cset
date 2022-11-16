@@ -23,6 +23,7 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
+        static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(DiagramManager));
 
         //private IHttpContextAccessor _httpContext;
 
@@ -650,6 +651,7 @@ namespace CSETWebCore.Business.Diagram
             catch (Exception ex)
             {
                 var message = ex.Message;
+                _logger.Error(message);
             }
             finally
             {
