@@ -21,42 +21,52 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../../../services/config.service';
+import { CpgService } from '../../../../services/cpg.service';
 
-const headers = {
-  headers: new HttpHeaders().set("Content-Type", "application/json"),
-  params: new HttpParams()
-};
-
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-cpg-domain-summary',
+  templateUrl: './cpg-domain-summary.component.html',
+  styleUrls: ['./cpg-domain-summary.component.scss']
 })
-export class CpgService {
+export class CpgDomainSummaryComponent implements OnInit {
+
+  answerDistribByDomain = [];
+  xAxisTicks = [0, 25, 50, 75, 100];
+  answerDistribColorScheme = { domain: ['#28A745', '#FFC107', '#DC3545', '#c8c8c8'] };
 
   constructor(
-    private http: HttpClient,
+    private cpgSvc: CpgService,
     private configSvc: ConfigService
   ) { }
 
-
   /**
-   * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
-   * the response to a specific domain.
+   * 
    */
-   getStructure() {
-    var url = this.configSvc.apiUrl + 'maturitystructure/cpg';
+  ngOnInit(): void {
+    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
 
-    return this.http.get(url, headers);
+      resp.forEach(r => {
+        r.series.forEach(element => {
+          if (element.name == 'U') {
+            element.name = 'Unanswered';
+          } else {
+            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
+          }
+        });
+      });
+
+      this.answerDistribByDomain = resp;
+
+      console.log(resp);
+    });
   }
 
   /**
    * 
    */
-  getAnswerDistrib() {
-    var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains';
-    return this.http.get(url, headers);
+  formatPercent(x: any) {
+    return x + '%';
   }
-
 }
