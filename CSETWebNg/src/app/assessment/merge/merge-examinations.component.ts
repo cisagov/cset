@@ -120,13 +120,18 @@ export class MergeExaminationsComponent implements OnInit {
               let myIssues = [];
               details.findings.forEach(find => {
                 myIssues.push(find);
+              });
 
-                if (myIssues.length > 0) {
+              if (myIssues.length > 0) {
+                if (this.assessmentIssues.get(parentId) !== undefined) {
+                  let arr = this.assessmentIssues.get(parentId);
+                  let savedIssues = arr.concat(myIssues);
+                  this.assessmentIssues.set(parentId, savedIssues);
+                } else {
                   this.assessmentIssues.set(parentId, myIssues);
                 }
-              });
+              }
             });
-            //myIssues = [];
         });
       });
     });
