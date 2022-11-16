@@ -64,7 +64,7 @@
         </div>
 
         <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-            <ng-container *ngFor="let q of myGrouping.questions">
+            <ng-container *ngFor="let q of myGrouping.questions; let last = last">
                 <div class="d-flex flex-column" [class.question-row]="q.parentQuestionId === null" [class.pb-3]="q.parentQuestionId === null" [class.display-none]="!shouldIShow(q)">
                     <div class="w-100 d-flex flex-row">
                         <div class="number-and-text" [ngStyle]="{'padding-top': (q.parentQuestionId === null && q.questionId !== 7568) ? '2.5rem' : '0.2rem'}">
@@ -149,7 +149,8 @@
                       (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
                     </button>
         
-                    <button *ngIf="isFinalQuestion(q.questionId)"
+                    <!-- The below is commented out because it was moved into the div below. This was kept in case problems come up -->
+                    <!-- <button *ngIf="isFinalQuestion(q.questionId)"
                       class="btn btn-na mt-2 mb-4" style="width: 20%"
                       (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
                     </button>
@@ -190,17 +191,62 @@
                         </table>
                         
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
-                    </div>
+                    </div> -->
     
-                    <div *ngIf="isFinalQuestion(q.questionId)">
+                    <!-- <div *ngIf="isFinalQuestion(q.questionId)">
                         <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
                           (change)="storeSummaryComment(q, $event)"></textarea>
-                    </div>
+                    </div> -->
     
                     <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
                       class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                     </app-question-extras>
         
+                </div>
+                <div *ngIf="last">
+                    <button class="btn btn-na mt-2 mb-4" style="width: 20%" (click)="updateShowIssues()">
+                        {{ this.getIssuesButtonText() }}
+                    </button>
+        
+                    <div *ngIf="showIssues === true" style="margin: 0.75em">
+                        <table class="table" *ngIf="extras?.findings.length > 0">
+                            <tr>
+                                <th>Issue</th>
+                                <th>Title</th>
+                                <th style="text-align: center;">Auto Generated</th>
+                                <th style="width:5%;"></th>
+                                <th style="width:5%;"></th>
+                            </tr>
+                            <tr *ngFor="let find of extras?.findings; let i = index" style="box-sizing: content-box;height:20px;">
+                                <td>
+                                    <div>Issue {{ i+1 }}</div>
+                                </td>
+                                <td style="height:20px">
+                                    <div>{{find.title}}</div>
+                                </td>
+                                <td style="text-align: center">
+                                    <div *ngIf="find.auto_Generated === 1">Yes</div>
+                                    <div *ngIf="find.auto_Generated === 0"> - </div>
+                                </td>
+                                <td>
+                                    <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                                      (click)="addEditIssue(q.parentQuestionId, find.finding_Id)">
+                                        <span class="mr-1 cset-icons-pencil"></span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                                      (click)="deleteIssue(find.finding_Id, false)">
+                                        <span class="mr-1 cset-icons-trash-can"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
+                    </div>
+                    <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                        (change)="storeSummaryComment(q, $event)"></textarea>
                 </div>
             </ng-container>
         </div>
