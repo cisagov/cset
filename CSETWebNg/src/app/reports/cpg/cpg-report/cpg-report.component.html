@@ -20,29 +20,37 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="flex-container">
-    <div class="column">
-        <p
-            style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 18px; Color: #0f3c7a;">
-            {{title}}
-        </p>
-    </div>
-    <div class="column">
-        <p style="text-align: center">
-            <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
-        </p>
+<div class="report-body mb-5">
+
+    <app-cover-sheet-a [title]="'CYBERSECURITY PERFORMANCE GOALS (CPG)'" [assessmentName]="assessmentName"
+        [assessmentDate]="assessmentDate" [assessorName]="assessorName"></app-cover-sheet-a>
+
+    <div class="page-break">
+        <app-report-disclaimer></app-report-disclaimer>
     </div>
 
-    <div class="cover-page-bottom">
-        <app-logo-for-reports></app-logo-for-reports>
-        <div style="flex-direction: column; line-height: 150%; padding-right: 5rem">
-            <div>{{assessmentName}}</div>
-            <div>
-                {{assessmentDate | date:'dd-MMM-yyyy'}}
-            </div>
-            <div>
-                {{assessorName}}
-            </div>
+    <div class="page-break">
+        <app-report-advisory></app-report-advisory>
+    </div>
+
+
+    <div class="page-break">
+        <h1>Security Practice Summary</h1>
+        <p>
+            This chart shows the answer distribution for each of the Security Practice categories.
+        </p>
+        <div class="chart mb-5">
+            <app-cpg-domain-summary></app-cpg-domain-summary>
         </div>
     </div>
+
+    
+    <div class="page-break">
+        <h1>Checklist</h1>
+        <p>
+            This table lists all security practices and how they have been answered.
+        </p>
+        <app-cpg-practice-table></app-cpg-practice-table>
+    </div>
+
 </div>

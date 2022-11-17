@@ -379,6 +379,19 @@
       </div>
     </div>
 
+    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>
+        Cybersecurity Performance Goals (CPG)
+      </h4>
+
+      <div>
+        <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
+          CPG Report
+        </button>
+      </div>
+    </div>
+
     <div class="mt-5">
       <button *ngIf="!assessSvc.isISE()" tabindex="0"
         class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"

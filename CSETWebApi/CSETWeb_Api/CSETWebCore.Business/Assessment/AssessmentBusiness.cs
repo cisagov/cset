@@ -330,6 +330,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
 
+                assessment.CreatorName = new User.UserBusiness(_context, null)
+                    .GetUserDetail((int)assessment.CreatorId).FullName;
+
                 assessment.UseStandard = result.aa.UseStandard;
                 if (assessment.UseStandard)
                 {

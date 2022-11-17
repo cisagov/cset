@@ -40,8 +40,35 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 _context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
-                if(String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
+                if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
+
+                    //find the new group and insert it
+                    //renumber both groups                    
+                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == moveItem.gallery_Item_Id).FirstOrDefault();
+                    if (dbItem != null)
+                    {
+                        
+                        var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
+                        var newGroupItem = new GALLERY_GROUP_DETAILS()
+                        {
+                            Gallery_Item_Id = moveItem.gallery_Item_Id,
+                            Column_Index = int.Parse(moveItem.newIndex),
+                            Group_Id = int.Parse(moveItem.toId)
+                        };
+                        _context.GALLERY_GROUP_DETAILS.Add(newGroupItem);
+                        detailsNewList.Insert(int.Parse(moveItem.newIndex), newGroupItem);
+                        RenumberGroup(detailsNewList);
+                        
+                        _context.SaveChanges();
+                    }
+                    
+
+                }
+                else if (String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
                 {
+
+                    
+
                     //we are changing position of the rows. 
                     //move the item from the old index to the new index and then 
                     //update the indexes of everything below them.
@@ -369,6 +396,7 @@ namespace CSETWebCore.Api.Controllers
         public string toId { get;set; }
         public string oldIndex { get; set; }
         public string newIndex { get; set; }
+        public int gallery_Item_Id { get; set; }
     }
 
     public class UpdateItem
