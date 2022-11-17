@@ -72,8 +72,8 @@ namespace CSETWebCore.Api.Controllers
             // In the future it would be better to store these elements independently 
             // somehow, in a flexible way that would benefit other models.  
             var questionElements = x.Descendants("Question").ToList();
-            questionElements.ForEach(q => 
-            { 
+            questionElements.ForEach(q =>
+            {
                 var p = Parser.Parse(q.Attribute("questiontext").Value, ".");
                 var cpgPractice = p.Select(".cpg-practice");
                 q.SetAttributeValue("practice", cpgPractice.FirstOrDefault()?.Html());
@@ -82,10 +82,10 @@ namespace CSETWebCore.Api.Controllers
 
                 var cpgTtp = p.Select(".cpg-ttp");
                 q.SetAttributeValue("ttp", cpgTtp.FirstOrDefault()?.Html());
-                
+
                 var cpgRec = p.Select(".cpg-recommended");
                 q.SetAttributeValue("recommended", cpgRec.FirstOrDefault()?.Html());
-                
+
                 var cpgCsf = p.Select(".cpg-csf");
 
                 var csfString = cpgCsf.FirstOrDefault()?.Html();
@@ -100,7 +100,14 @@ namespace CSETWebCore.Api.Controllers
                     csfString += $"<span class=\"text-nowrap\">{x}</span>, ";
                 }
                 q.SetAttributeValue("csf", csfString.TrimEnd(" ,".ToCharArray()));
-            });          
+
+
+                // a few child properties can be promoted to their own named properties
+                // for less complexity in the UI
+                q.SetAttributeValue("cost", q.Elements("Prop").FirstOrDefault(x => x.Attribute("name").Value == "COST")?.Attribute("value").Value);
+                q.SetAttributeValue("impact", q.Elements("Prop").FirstOrDefault(x => x.Attribute("name").Value == "IMPACT")?.Attribute("value").Value);
+                q.SetAttributeValue("complexity", q.Elements("Prop").FirstOrDefault(x => x.Attribute("name").Value == "COMPLEXITY")?.Attribute("value").Value);
+            });
 
             var json = Helpers.CustomJsonWriter.Serialize(x.Root);
             return Ok(json);
@@ -116,7 +123,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAnswerDistribForDomains()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            
+
             var resp = new List<AnswerDistribDomain>();
 
             var dbList = _context.GetAnswerDistribGroupings(assessmentId);
@@ -136,7 +143,7 @@ namespace CSETWebCore.Api.Controllers
 
                 double percent = CalculatePercent(dbList, item);
 
-                var r = resp.First(x => x.Name == item.title);             
+                var r = resp.First(x => x.Name == item.title);
                 r.Series.First(x => x.Name == item.answer_text).Value = percent;
             }
 
@@ -148,7 +155,7 @@ namespace CSETWebCore.Api.Controllers
         /// Calculates the percentage based on all answer values for the domain
         /// </summary>
         /// <returns></returns>
-        private double CalculatePercent(IList<GetAnswerDistribGroupingsResult> r, 
+        private double CalculatePercent(IList<GetAnswerDistribGroupingsResult> r,
             GetAnswerDistribGroupingsResult i)
         {
             var sum = r.Where(x => x.title == i.title)
@@ -169,9 +176,10 @@ namespace CSETWebCore.Api.Controllers
             var values = new List<string>() { "Y", "I", "N", "U" };
             foreach (string s in values)
             {
-                list.Add(new Series() { 
-                     Name = s,
-                     Value = 0
+                list.Add(new Series()
+                {
+                    Name = s,
+                    Value = 0
                 });
             }
 

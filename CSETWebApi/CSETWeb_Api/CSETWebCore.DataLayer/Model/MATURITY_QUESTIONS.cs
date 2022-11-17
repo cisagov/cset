@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             InverseParent_Question = new HashSet<MATURITY_QUESTIONS>();
             MATURITY_ANSWER_OPTIONS = new HashSet<MATURITY_ANSWER_OPTIONS>();
+            MATURITY_QUESTION_PROPS = new HashSet<MATURITY_QUESTION_PROPS>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_REFERENCE_TEXT = new HashSet<MATURITY_REFERENCE_TEXT>();
             MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
@@ -72,6 +73,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; }
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<MATURITY_QUESTION_PROPS> MATURITY_QUESTION_PROPS { get; set; }
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         [InverseProperty("Mat_Question")]
