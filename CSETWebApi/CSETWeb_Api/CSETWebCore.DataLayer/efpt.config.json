@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Model2",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -520,6 +520,10 @@
       },
       {
          "Name": "[dbo].[MATURITY_POSSIBLE_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MATURITY_QUESTION_PROPS]",
          "ObjectType": 0
       },
       {
