@@ -1,9 +1,10 @@
 export class ListTest {
     title?:string;
     group_title?:string;
-    children?: Array<ListTest>;
+    children?: ListTest[] =[];
     gallery_Item_Id?: number; 
-    group_Id?:number;
+    group_Id?:number;    
+    isUnused?: boolean = false;
 }
 
 export class GalleryItem {
@@ -30,4 +31,5 @@ export class MoveItem{
     oldIndex!: string;
     newIndex!: string;
     Layout_Name!: string;
+    gallery_Item_Id?: number;
 }

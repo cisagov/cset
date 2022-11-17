@@ -36,7 +36,6 @@ namespace CSETWebCore.Api.Controllers
         {
             //if the appcode is null throw an exception
             //if it is not null return the default for the app
-
             string app_code = _tokenManager.Payload(Constants.Constants.Token_Scope);
             if (app_code == null)
             {
