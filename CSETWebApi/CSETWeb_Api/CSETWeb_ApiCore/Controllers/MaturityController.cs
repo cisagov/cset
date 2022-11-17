@@ -199,7 +199,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId);
+            var x = biz.GetMaturityStructure(assessmentId, true);
 
 
             var j = "";

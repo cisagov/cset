@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var crrStructure = biz.GetMaturityStructure(assessmentId);
+            var crrStructure = biz.GetMaturityStructure(assessmentId, false);
 
             var deficiencyData = new MaturityBasicReportData()
             {

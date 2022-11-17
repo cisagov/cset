@@ -513,7 +513,11 @@ import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-sum
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 import { RelatedQBlockComponent } from './reports/module-content/related-q-block/related-q-block.component';
+import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
+import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice-table/cpg-practice-table.component';
 import { LogoutComponent } from './initial/logout/logout.component';
+import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
+import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 
 
 
@@ -984,7 +988,12 @@ import { LogoutComponent } from './initial/logout/logout.component';
         MvraGapsPageComponent,
         LoginAccessKeyComponent,
         RelatedQBlockComponent,
-        LogoutComponent, 
+        CpgReportComponent,
+        CpgPracticeTableComponent, 
+        RelatedQBlockComponent,
+        LogoutComponent,
+        CpgDomainSummaryComponent,
+        CpgCostImpactComplexityComponent, 
     ],
     providers: [
         ConfigService,
