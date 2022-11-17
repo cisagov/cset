@@ -5,6 +5,14 @@
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return $"{FirstName} {LastName}".Trim();
+            }
+        }
         public string PrimaryEmail { get; set; }
         public string saveEmail { get; set; }
         public string Title { get; set; }

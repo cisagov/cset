@@ -23,6 +23,10 @@
     font-size: .8rem;
 }
 
+.cpg-table th:first-child {
+    border-left: 1px solid #1a3667;
+}
+
 .cpg-table th:last-child {
     border-right: 1px solid #1a3667;
 }
