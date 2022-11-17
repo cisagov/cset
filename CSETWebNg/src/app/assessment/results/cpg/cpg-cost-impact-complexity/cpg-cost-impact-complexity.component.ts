@@ -10,6 +10,8 @@ export class CpgCostImpactComplexityComponent implements OnInit {
   @Input()
   cost: string;
 
+  costDisplay = "";
+
   @Input()
   impact: string;
 
@@ -22,6 +24,7 @@ export class CpgCostImpactComplexityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.costDisplay = "$".repeat(Number.parseInt(this.cost));
   }
 
 }
