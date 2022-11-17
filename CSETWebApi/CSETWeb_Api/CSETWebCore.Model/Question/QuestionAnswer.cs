@@ -77,6 +77,12 @@ namespace CSETWebCore.Model.Question
         public List<Cis.Option> Options { get; set; } = new List<Cis.Option>();
 
 
+        /// <summary>
+        /// Contains any properties belonging to the question.
+        /// </summary>
+        public List<QuestionProp> Props { get; set; } = new List<QuestionProp>();
+
+
         public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }
