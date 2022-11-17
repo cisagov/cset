@@ -379,7 +379,7 @@ namespace CSETWebCore.Business.Maturity
             var response = new List<DomainAnswers>();
 
 
-            var structure = new MaturityStructure(assessmentId, _context);
+            var structure = new MaturityStructure(assessmentId, _context, false);
 
 
             // In this model sructure, the Goal element represents domains
@@ -404,6 +404,11 @@ namespace CSETWebCore.Business.Maturity
             return response;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int, string> GetSourceFiles()
         {
             List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
@@ -427,7 +432,6 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return result;
-
         }
 
 
@@ -2291,7 +2295,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental = false)
+        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental)
         {
             var x = new MaturityStructure(assessmentId, _context, includeSupplemental);
             return x.ToXDocument();
