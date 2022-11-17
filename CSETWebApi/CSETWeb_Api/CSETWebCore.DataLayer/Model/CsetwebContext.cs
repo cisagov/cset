@@ -159,6 +159,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
         public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
+        public virtual DbSet<MATURITY_QUESTION_PROPS> MATURITY_QUESTION_PROPS { get; set; }
         public virtual DbSet<MATURITY_QUESTION_TYPES> MATURITY_QUESTION_TYPES { get; set; }
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
@@ -2099,6 +2100,17 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.InverseParent_Question)
                     .HasForeignKey(d => d.Parent_Question_Id)
                     .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS");
+            });
+
+            modelBuilder.Entity<MATURITY_QUESTION_PROPS>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.PropertyName });
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.MATURITY_QUESTION_PROPS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS");
             });
 
             modelBuilder.Entity<MATURITY_REFERENCES>(entity =>

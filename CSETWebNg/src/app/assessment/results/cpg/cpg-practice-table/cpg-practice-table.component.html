@@ -50,6 +50,9 @@
         </tr>
         <tr>
             <td>
+                <app-cpg-cost-impact-complexity 
+                    [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">                    
+                </app-cpg-cost-impact-complexity>
                 <div class="cpg-header">TTP or Risk Addressed</div>
                 <p [innerHTML]="q.ttp"></p>
                 <div class="cpg-header">Recommended Action</div>

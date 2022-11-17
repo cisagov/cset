@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { AssessmentService } from '../../../services/assessment.service';
 import { RraDataService } from '../../../services/rra-data.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class CpgReportComponent implements OnInit {
    */
   constructor(
     public rraDataSvc: RraDataService,
-    public titleSvc: Title
+    public titleSvc: Title,
+    private assessSvc: AssessmentService
   ) { }
 
   /**
@@ -29,9 +31,10 @@ export class CpgReportComponent implements OnInit {
   ngOnInit(): void {
     this.titleSvc.setTitle("CPGs Report - CSET");
 
-    this.rraDataSvc.getRRADetail().subscribe(resp => {
-      console.log(resp);
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
+      this.assessmentName = assessmentDetail.assessmentName;
+      this.assessmentDate = assessmentDetail.assessmentDate;
+      this.assessorName = assessmentDetail.creatorName;
     });
   }
-
 }

@@ -517,6 +517,7 @@ import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.componen
 import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice-table/cpg-practice-table.component';
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
+import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 
 
 
@@ -991,7 +992,8 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
         CpgPracticeTableComponent, 
         RelatedQBlockComponent,
         LogoutComponent,
-        CpgDomainSummaryComponent, 
+        CpgDomainSummaryComponent,
+        CpgCostImpactComplexityComponent, 
     ],
     providers: [
         ConfigService,
