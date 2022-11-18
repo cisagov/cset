@@ -33,6 +33,7 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
+import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public maturityFilteringSvc: MaturityFilteringService,
     private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
+    public completionSvc: CompletionService,
     private dialog: MatDialog
   ) {
 
@@ -100,6 +102,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
+        this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
 
