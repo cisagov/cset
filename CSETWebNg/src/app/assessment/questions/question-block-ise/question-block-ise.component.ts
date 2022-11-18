@@ -85,8 +85,8 @@ export class QuestionBlockIseComponent implements OnInit {
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
   finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
-  finalCorePlusQuestion = new Set ([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7756, 7773, 7784, 7795, 7807, 7826, 7834, 7842, 7852]);
-  finalExtraQuestion = new Set ([7868, 7874, 7890, 7901, 7911, 7918, 7946]);
+  finalCorePlusQuestion = new Set ([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7755, 7771, 7779, 7790, 7802, 7821, 7830, 7838, 7851]);
+  finalExtraQuestion = new Set ([7867, 7873, 7889, 7900, 7910, 7917, 7946, 7965, 8001]);
 
   showQuestionIds = false;
 
@@ -257,25 +257,17 @@ export class QuestionBlockIseComponent implements OnInit {
     }
 
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      if (visible) {
-        return true;
-      }
+      return true;
       //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
-        if (visible) {
-          return true;
-        }
+        return true;
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
-        if (q.questionId < 7853 && this.showCorePlus === true) { 
-          if (visible) {
-            return true;
-          }
-        } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
-          if (visible) {
-            return true;
-          }
+        if (q.questionId < 7852 && this.showCorePlus === true) { 
+          return true;
+        } else if (q.questionId >= 7852 && this.ncuaSvc.showExtraQuestions === true) {
+          return true;
         }
       }
     }
