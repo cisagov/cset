@@ -250,12 +250,11 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   shouldIShow(q: Question) {
-    // If running a SCUEP exam, always show level 1 (SCUEP) questions
     let visible = false;
     if (q.isParentQuestion || q.visible) {
       visible = true;
     }
-
+    // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
       return true;
       //If running a CORE exam, always show level 2 (CORE) questions
