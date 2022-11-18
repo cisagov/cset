@@ -25,7 +25,7 @@ export class AboutCfComponent implements OnInit {
         }
         
       }
-    version = environment.version;
+    version = environment.visibleVersion;
     helpContactEmail = this.configSvc.helpContactEmail;
     helpContactPhone = this.configSvc.helpContactPhone;
 
