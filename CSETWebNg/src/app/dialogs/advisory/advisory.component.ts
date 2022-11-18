@@ -30,7 +30,7 @@ import { ConfigService } from '../../services/config.service';
   selector: 'app-advisory',
   templateUrl: './advisory.component.html',
   // tslint:disable-next-line:use-host-property-decorator
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AdvisoryComponent {
   appLongName: string;
@@ -46,6 +46,7 @@ export class AdvisoryComponent {
   ) {
     switch (configSvc.installationMode) {
       case '':
+      case 'CSET':
         this.appLongName = 'Cyber Security Evaluation Tool';
         this.appShortName = 'CSET';
         this.orgLongName = 'Cybersecurity & Infrastructure Security Agency';
@@ -67,13 +68,13 @@ export class AdvisoryComponent {
         this.orgShortName = 'TSA';
         this.showIntellectualPropertyRightsAssertion = false;
         break;
-        case 'CF':
-          this.appLongName = 'Cyber Security Evaluation Tool';
-          this.appShortName = 'CSET';
-          this.orgLongName = 'Cyber Florida';
-          this.orgShortName = 'CF';
-          this.showIntellectualPropertyRightsAssertion = false;
-          break;
+      case 'CF':
+        this.appLongName = 'Cyber Security Evaluation Tool';
+        this.appShortName = 'CSET';
+        this.orgLongName = 'Cyber Florida';
+        this.orgShortName = 'CF';
+        this.showIntellectualPropertyRightsAssertion = false;
+        break;
       case 'RRA':
         this.appLongName = 'Ransomware Readiness Assessment';
         this.appShortName = 'RRA';
@@ -81,7 +82,7 @@ export class AdvisoryComponent {
         this.orgShortName = 'CISA';
         // this.showIntellectualPropertyRightsAssertion = true;
         // this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
-          break;
+        break;
     }
   }
 
