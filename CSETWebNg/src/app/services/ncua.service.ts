@@ -355,7 +355,9 @@ let headers = {
     ||   q.title == 'Stmt 20'
     ||   q.title == 'Stmt 21'
     ||   q.title == 'Stmt 22'
-    ||   q.title == 'Stmt 23') {
+    ||   q.title == 'Stmt 23'
+    ||   q.title == 'Stmt 24'
+    ||   q.title == 'Stmt 25') {
       return true;
     }
     return false;

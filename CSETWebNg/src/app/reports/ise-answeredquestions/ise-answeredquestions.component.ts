@@ -89,7 +89,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     .set('Logging', false)                            .set('Data Governance', false)
     .set('Conversion', false)                         .set('Software Development Process', false)
     .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    .set('Policies & Procedures', true);
+    .set('Policies & Procedures', true)               .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
+    .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);;
   }
 
   requiredQuestion(q: any) {
