@@ -273,7 +273,7 @@ export class MaturityFilteringService {
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
           break;
         case 'ISE':
-          this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
+          this.acetFilteringSvc.setIseQuestionVisibility(q, this.currentDomainName);
           break;
         case 'CMMC':
         case 'CMMC2':

@@ -207,9 +207,9 @@
                 </div>
                 <div *ngIf="last">
                     <div>
-                        <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7853"
+                        <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
                         class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                        (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
+                        (click)="updateCorePlusStatus()">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
                         </button>
                     </div>
                     <div>
