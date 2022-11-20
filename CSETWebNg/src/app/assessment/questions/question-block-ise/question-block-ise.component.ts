@@ -252,18 +252,9 @@ export class QuestionBlockIseComponent implements OnInit {
   shouldIShow(q: Question) {
     let visible = false;
 
-    if(q.maturityLevel === 3) {
-      if((q.questionId < 7853 && this.showCorePlus === true) || (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true)) {
-        visible = true;
-      }
-    }
-
-    // always show parent questions
     if (q.visible || q.isParentQuestion) { 
       visible = true;
     }
-
-    
 
     // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
@@ -280,12 +271,12 @@ export class QuestionBlockIseComponent implements OnInit {
         }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
-        if (q.questionId < 7853 && this.showCorePlus === true) { 
+        if (q.questionId < 7852 && this.showCorePlus === true) { 
           if (visible) {
             this.refreshPercentAnswered();
             return true;
           }
-        } else if (q.questionId >= 7853 && this.ncuaSvc.showExtraQuestions === true) {
+        } else if (q.questionId >= 7852 && this.ncuaSvc.showExtraQuestions === true) {
           if (visible) {
             this.refreshPercentAnswered();
             return true;
@@ -412,7 +403,7 @@ export class QuestionBlockIseComponent implements OnInit {
       if (q.parentQuestionId === null) {
         return;
       }
-      if (q.visible) {
+      if (q.visible && q.maturityLevel != 3) {
 
           totalCount++;
           if (q.answer && q.answer !== "U") {
@@ -705,7 +696,7 @@ export class QuestionBlockIseComponent implements OnInit {
     return false;
   }
 
-  updateCorePlusStatus(q: Question) {
+  updateCorePlusStatus() {
     this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {
