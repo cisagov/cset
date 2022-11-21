@@ -111,7 +111,8 @@ export class ListItemsComponent implements OnInit {
  
 
   deleteGalleryItem(id: any) {
-    console.log(id + " would be deleted");
+    console.log("deleting item");
+    console.log(id);
     this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
       (r: any) => {
         // this.response = r;
@@ -123,7 +124,7 @@ export class ListItemsComponent implements OnInit {
   }
 
   deleteGalleryGroup(item:any) {
-    console.log(item.group_Id);
+    console.log(item);
     this.svcGalleryEditor.deleteGalleryGroup(item).subscribe(
       (r: any) => {
         this.updateItems();
