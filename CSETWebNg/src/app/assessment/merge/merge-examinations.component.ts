@@ -32,9 +32,9 @@ export class MergeExaminationsComponent implements OnInit {
   assessmentComments = new Map();
   assessmentIssues = new Map();
   newAnswerIds = new Map();
-  parentQuestionIds = new Set([7568,7577,7582,7588,7594,7602,7607,7612,7619,7628,7633,
-                              7639,7645,7652,7655,7661,7669,7674,7679,7683,7687,7691,
-                              7694,7699,7853,7869,7875,7891,7902, 7912, 7919]);
+  parentQuestionIds = new Set([7568,7577,7582,7588,7594,7602,7607,7612,7619,7628,7633, 
+                              7639,7645,7652,7655,7661,7669,7674,7679,7683,7687,7691, 
+                              7694,7699,7852,7868,7874,7890,7901,7911,7918,7947,7966]);
 
   // Assessment Names & pieces of the merged assessment naming convention
   assessmentNames: string[] = [];

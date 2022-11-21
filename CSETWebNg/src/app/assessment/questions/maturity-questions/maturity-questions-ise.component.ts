@@ -37,6 +37,7 @@ import { CisService } from '../../../services/cis.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
+import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public cisSvc: CisService,
     public ncuaSvc: NCUAService,
+    public completionSvc: CompletionService,
     private dialog: MatDialog
   ) {
 
@@ -114,6 +116,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
       (response: MaturityQuestionResponse) => {
+        this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         
