@@ -332,35 +332,11 @@ let headers = {
     }
   }
 
-  isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1'
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22'
-    ||   q.title == 'Stmt 23'
-    ||   q.title == 'Stmt 24'
-    ||   q.title == 'Stmt 25') {
-      return true;
+  isParentQuestion(title: string) {
+    if ( title.toString().includes('.') ) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   isIse() {

@@ -96,11 +96,11 @@
                                     <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
                                 </tr>
                                 <ng-container *ngFor="let q of c.questions">
-                                    <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q)">
+                                    <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)">
                                         <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                         <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q)" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, q.answerText) }}</td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="pr-3"> </td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, q.answerText) }}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pr-3"> </td>
                                         <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>

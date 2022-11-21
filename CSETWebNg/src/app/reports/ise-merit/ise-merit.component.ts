@@ -136,7 +136,6 @@ export class IseMeritComponent implements OnInit {
             this.response = r; 
  
             for(let i = 0; i < this.response?.length; i++) {
-              console.log(this.examLevel.substring(0, 4))
               if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
     
                 let finding = this.response[i];
@@ -303,11 +302,9 @@ export class IseMeritComponent implements OnInit {
 
   areAllActionItemsBlank(allActionsInFinding: any) {
     if(allActionsInFinding != null) {
-      console.log(allActionsInFinding)
       for(let i = 0; i < allActionsInFinding?.length; i++) {
 
         if(allActionsInFinding[i].action_Items != null && allActionsInFinding[i].action_Items != '') {
-          console.log(allActionsInFinding[i].question_Title + ' is false')
           return false;
         }
       }
