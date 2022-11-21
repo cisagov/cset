@@ -1,12 +1,10 @@
 <div>Type Enter to Update a value <Select (change)="layoutChange($event)">
   <option></option>
-  <option>CSET</option>
-  <option>CF</option>
-  <option>NCUA</option>
-  <option>TSA</option>
-</Select> </div>
+  <option *ngFor="let layout of layouts">{{layout.layoutName}}</option>
+</Select> 
+</div>
 <div class="section-bdy">  
-  <app-list-items [listTest]="{ children: list }" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="true"></app-list-items>
+  <app-list-items [listTest]="{ children: list }" [unusedList]="unusedListCopy" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="true"></app-list-items>
 </div>
 
 

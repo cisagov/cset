@@ -12,7 +12,8 @@ import { isNgTemplate } from '@angular/compiler';
 })
 export class ListItemsComponent implements OnInit {
   @Input() listTest!: ListTest;
-  @Input() isRoot: boolean = false;
+  @Input() unusedList: ListTest[];
+  @Input() isRoot: boolean = false;  
   @Output() treeNeedsRefreshed: EventEmitter<string> = new EventEmitter<string>();
   faArrows = faArrows;
 
@@ -25,26 +26,39 @@ export class ListItemsComponent implements OnInit {
   showNewItemFields:boolean = false;
 
   constructor(private svcGalleryEditor: GalleryEditorService ){   
-    
+    this.unusedList = [];
     this.options = {
       group: 'test',
       onUpdate: (event: any) => {
+
+
         console.log('updated');
-        //if event.from.id and event.to.id are empty then we are moving a whole group
-        //changing the index of the rows
-        //if event.from.id and event.to.id are the same we are moving within a group
-        //if event.from.id and event.to.id are different we are moving from one group to another
-
-        // console.log(event.from.id);
-        // console.log(event.to.id);        
-        console.log(event.oldIndex +":"+ event.newIndex)
+        let v = this.listTest.children;
+        let tIsUnused = v?v[0].isUnused:false;
+        if(event.from.id == '' && event.to.id == '' && tIsUnused){
+          return;
+        }
         let item = new MoveItem();
-        item.fromId = event.from.id;
-        item.toId = event.to.id;
-        item.newIndex = event.newIndex;
-        item.oldIndex = event.oldIndex;
-        item.Layout_Name = event.Layout_Name;
-
+        if(tIsUnused)
+        {
+          //I'm moving it into a group and need to know 
+          //what group is my destination          
+          console.log(event);
+          console.log(event.oldIndex +":"+ event.newIndex);
+          item.fromId = event.from.id;
+          item.toId = event.to.id;
+          item.newIndex = event.newIndex;
+          item.oldIndex = event.oldIndex;
+          item.Layout_Name = event.Layout_Name;
+        }
+        else{        
+          console.log(event.oldIndex +":"+ event.newIndex)          
+          item.fromId = event.from.id;
+          item.toId = event.to.id;
+          item.newIndex = event.newIndex;
+          item.oldIndex = event.oldIndex;
+          item.Layout_Name = event.Layout_Name;
+        }
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onAdd: (event: any) => {
@@ -58,6 +72,10 @@ export class ListItemsComponent implements OnInit {
         item.newIndex = event.newIndex;
         item.oldIndex = event.oldIndex;
         item.Layout_Name = event.Layout_Name;
+        
+        let v = this.unusedList[event.oldIndex];
+        
+        item.gallery_Item_Id = v.gallery_Item_Id;
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onRemove: (event: any) => {        
@@ -67,7 +85,7 @@ export class ListItemsComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {        
   }
   
 
@@ -93,7 +111,8 @@ export class ListItemsComponent implements OnInit {
  
 
   deleteGalleryItem(id: any) {
-    console.log(id + " would be deleted");
+    console.log("deleting item");
+    console.log(id);
     this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
       (r: any) => {
         // this.response = r;
@@ -105,7 +124,7 @@ export class ListItemsComponent implements OnInit {
   }
 
   deleteGalleryGroup(item:any) {
-    console.log(item.group_Id);
+    console.log(item);
     this.svcGalleryEditor.deleteGalleryGroup(item).subscribe(
       (r: any) => {
         this.updateItems();

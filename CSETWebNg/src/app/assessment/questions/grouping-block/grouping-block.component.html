@@ -89,7 +89,7 @@
     </ng-container>
     <ng-container *ngIf="this.ncuaSvc.getExtraQuestionStatus() === true">
         <hr *ngIf="grouping.groupingID === 2566">
-        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2573"
+        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2575"
             class="btn btn-na form-check-label mt-2 mb-4" (click)="this.ncuaSvc.toggleExtraQuestionStatus()">
             Hide Extra Statements
         </button>

@@ -64,6 +64,7 @@ using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
 using System.Text.Json;
+using CSETWebCore.Api.Error;
 
 namespace CSETWeb_ApiCore
 {
@@ -171,6 +172,7 @@ namespace CSETWeb_ApiCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -214,6 +216,7 @@ namespace CSETWeb_ApiCore
                     Path.Combine(env.ContentRootPath, "WebApp")),
                 RequestPath = ""
             });
+            app.ConfigureExceptionHandler();
             app.UseRouting();
             app.UseCors("AllowAll");
             app.UseAuthentication();

@@ -190,15 +190,34 @@ namespace CSETWebCore.Business.Assessment
                 .ThenInclude(x => x.INFORMATION)
                 .ToList();
 
+            var allStandards = _context.SETS.ToList();
+
             TinyMapper.Bind<ASSESSMENTS, usp_Assessments_For_UserResult>();
             var list = new List<usp_Assessments_For_UserResult>();
             foreach (var l in dbAssessmentList)
             {
+                AssessmentDetail assessment = GetAssessmentDetail(l.Assessment_Id);
                 var aaa = TinyMapper.Map<ASSESSMENTS, usp_Assessments_For_UserResult>(l.Assessment);
                 aaa.AssessmentId = l.Assessment_Id;
                 aaa.AssessmentName = l.Assessment.INFORMATION.Assessment_Name;
-                aaa.SelectedMaturityModel = "";
-                aaa.SelectedStandards = "";
+                aaa.SelectedMaturityModel = assessment.MaturityModel?.ModelName ?? "";
+                if (assessment.UseStandard)
+                {
+                    for (int i = 0; i < assessment.Standards.Count; i++)
+                    {
+                        aaa.SelectedStandards += allStandards.Find(s => s.Set_Name == assessment.Standards[i])?.Short_Name + ", ";
+
+                        if (i == assessment.Standards.Count - 1)
+                        {
+                            aaa.SelectedStandards = aaa.SelectedStandards[..^2];
+                        }
+                    }
+                }
+                else 
+                {
+                    aaa.SelectedStandards = "";
+                }
+
                 list.Add(aaa);
             }
 
@@ -329,6 +348,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
+
+                assessment.CreatorName = new User.UserBusiness(_context, null)
+                    .GetUserDetail((int)assessment.CreatorId)?.FullName;
 
                 assessment.UseStandard = result.aa.UseStandard;
                 if (assessment.UseStandard)

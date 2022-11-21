@@ -33,7 +33,7 @@
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
 		<div *ngFor="let listChild of listTest.children">            
-			<app-list-items [listTest]="listChild" (treeNeedsRefreshed)="parentEventHandlerFunction()"></app-list-items>
+			<app-list-items [listTest]="listChild" [unusedList]="unusedList" (treeNeedsRefreshed)="parentEventHandlerFunction()"></app-list-items>
 		</div>
 	</div>
 </div>
