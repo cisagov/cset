@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
                 webpath = Path.Combine(_webHost.ContentRootPath, "WebApp");
             }                
             
-            var path = Path.Combine(webpath, "assets","config.json");
+            var path = Path.Combine(webpath, "assets", "settings", "config.json");
             //if the files are there then assume we are running together
             //replace and return it. 
 
@@ -116,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
         private JsonElement processConfig(HostString newBase, string scheme)
         {
             _webHost.WebRootPath = Path.Combine(_webHost.ContentRootPath, "../../../CSETWebNg/src");
-            var path = Path.Combine(_webHost.WebRootPath, "assets/config.json");
+            var path = Path.Combine(_webHost.WebRootPath, "assets/settings/config.json");
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
