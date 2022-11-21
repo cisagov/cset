@@ -306,7 +306,7 @@
                                     <br>
                                     <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
                                     <br>
-                                    <strong>Regulatory Citation: </strong>
+                                    <strong> Regulatory Citation: </strong>
                                     <br>
                                     <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
                                         <div *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
@@ -336,7 +336,15 @@
                                     <br>
                                     <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
                                     <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
-
+                                    <br>
+                                    <strong> Source Files: </strong> 
+                                    <br>
+                                    <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
+                                        <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
+                                            {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
+                                        </div>
+                                    </span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Source Files available)</span>
                                 </div>
                                 
 
