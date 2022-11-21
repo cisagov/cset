@@ -32,7 +32,7 @@ import { ConfigService } from '../../services/config.service';
 })
 export class AboutRraComponent implements OnInit {
 
-  version = environment.version;
+  version = environment.visibleVersion;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
