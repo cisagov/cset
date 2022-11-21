@@ -67,6 +67,8 @@ namespace CSETWebCore.Api.Controllers
             {
                 JObject document = JObject.Parse(System.IO.File.ReadAllText(path));
 
+                document.Add("rewrittenByRedirect", "true");
+
                 JToken element = document["app"];
 
                 element["url"] = context.Host.Host;
@@ -127,6 +129,7 @@ namespace CSETWebCore.Api.Controllers
                         using (JsonDocument jDoc = JsonDocument.Parse(contents))
                         {
                             JsonElement root = jDoc.RootElement.Clone();
+                            
                             JsonElement overrideVal;
                             if (root.TryGetProperty("override", out overrideVal) != false)
                                 if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
@@ -164,7 +167,7 @@ namespace CSETWebCore.Api.Controllers
                                 {
                                     element.WriteTo(writer);
                                 }
-                            }
+                            }                           
                             writer.WriteEndObject();    
                         }
                         // create new JsonDocument with edited values
