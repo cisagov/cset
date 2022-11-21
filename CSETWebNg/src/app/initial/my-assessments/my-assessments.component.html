@@ -24,14 +24,14 @@
     <div class="p-0 d-flex flex-column justify-content-start flex-11a">
         <!-- <p>{{this.authSvc.userToken()}}</p> -->
         <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
-    
+
             <div *ngIf="browserIsIE" class="alert alert-danger text-left">
                 Internet Explorer has been detected as your current browser.
                 Some functionality of CSET is not fully supported by Internet Explorer.
                 Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
                 your experience.
             </div>
-    
+
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
                 <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
@@ -52,13 +52,13 @@
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
                             </label>
-    
+
                             <label *ngIf="configSvc.installationMode === 'ACET'" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
                                 <span class="cset-icons-export-excel fs-base mr-2"></span>
                                 <label for="importFile" class="m-0">Export All to Excel</label>
                             </label>
-    
+
                             <label *ngIf="this.ncuaSvc.switchStatus" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
                                 <span class="fs-base mr-2"></span>
@@ -138,16 +138,16 @@
                 </p>
             </ng-template>
         </div>
-    
+
         <div *ngIf="sortedAssessments == null">
             <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
                 <div class="spinner-size-50"></div>
             </div>
         </div>
-    
+
         <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
             <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
-    
+
             <!-- table for larger layouts -->
             <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
                 class="assessment-summary" style="overflow-x:auto">
@@ -172,7 +172,7 @@
                     <td>{{assessment.type}}</td>
                     <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                     <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) | date:'medium'}}</td>
-                    <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.creatorName}}</td>
+                    <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">{{assessment.creatorName}}</td>
                     <td>
                       <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
                         <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
@@ -211,7 +211,7 @@
                     </td>
                 </tr>
             </table>
-    
+
             <!-- table for handset portrait -->
             <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
                 class="assessment-summary" style="overflow-x:auto">
@@ -243,7 +243,7 @@
                 </tr>
             </table>
             </ng-container>
-    
+
             <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
             class="assessment-summary" style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
@@ -293,7 +293,7 @@
             class="btn btn-primary"
             matTooltip="Merge checked examinations"
             style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">Start Merge</button>
-    
+
         <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
             <p>There are no assessments available.</p>
         </div> -->

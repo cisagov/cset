@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   unusedListCopy: ListTest[] = []; 
   
     response: any;
+  layouts: any;
 
   constructor(public gallerySvc: GalleryEditorService,
     library: FaIconLibrary,
@@ -27,6 +28,12 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.gallerySvc.getGalleryLayouts().subscribe(
+      (data:any)=>{
+        this.layouts = data;
+
+      }
+    );
     this.updateItems();  
   }
 
