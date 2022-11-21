@@ -251,22 +251,36 @@ export class QuestionBlockIseComponent implements OnInit {
 
   shouldIShow(q: Question) {
     let visible = false;
-    if (q.isParentQuestion || q.visible) {
+
+    if (q.visible || q.isParentQuestion) { 
       visible = true;
     }
+
     // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      return true;
+      if (visible) {
+        this.refreshPercentAnswered(); // updates filtered %completed circles, and keeps it in step when switching between filters
+        return true;
+      }
       //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
-        return true;
+        if (visible) {
+          this.refreshPercentAnswered();
+          return true;
+        }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
         if (q.questionId < 7852 && this.showCorePlus === true) { 
-          return true;
+          if (visible) {
+            this.refreshPercentAnswered();
+            return true;
+          }
         } else if (q.questionId >= 7852 && this.ncuaSvc.showExtraQuestions === true) {
-          return true;
+          if (visible) {
+            this.refreshPercentAnswered();
+            return true;
+          }
         }
       }
     }
@@ -389,7 +403,7 @@ export class QuestionBlockIseComponent implements OnInit {
       if (q.parentQuestionId === null) {
         return;
       }
-      if (q.visible) {
+      if (q.visible && q.maturityLevel != 3) {
 
           totalCount++;
           if (q.answer && q.answer !== "U") {
@@ -661,9 +675,9 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlusButton(id: number) {
     // SCUEP only shows SCUEP.
     if (this.iseExamLevel !== 'SCUEP') {
-      if (this.isFinalQuestion(id)) {
+      // if (this.isFinalQuestion(id)) {
         return true;
-      }
+      // }
     }
     return false;
   }
@@ -682,7 +696,7 @@ export class QuestionBlockIseComponent implements OnInit {
     return false;
   }
 
-  updateCorePlusStatus(q: Question) {
+  updateCorePlusStatus() {
     this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {

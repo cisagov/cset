@@ -64,7 +64,7 @@
         </div>
 
         <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
-            <ng-container *ngFor="let q of myGrouping.questions">
+            <ng-container *ngFor="let q of myGrouping.questions; let last = last">
                 <div class="d-flex flex-column" [class.question-row]="q.parentQuestionId === null" [class.pb-3]="q.parentQuestionId === null" [class.display-none]="!shouldIShow(q)">
                     <div class="w-100 d-flex flex-row">
                         <div class="number-and-text" [ngStyle]="{'padding-top': (q.parentQuestionId === null && q.questionId !== 7568) ? '2.5rem' : '0.2rem'}">
@@ -148,13 +148,26 @@
                       class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                       (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
                     </button>
+    
+                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
+                      class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                    </app-question-extras>
         
-                    <button *ngIf="isFinalQuestion(q.questionId)"
-                      class="btn btn-na mt-2 mb-4" style="width: 20%"
-                      (click)="updateShowIssues()">{{ this.getIssuesButtonText() }}
-                    </button>
+                </div>
+                <div *ngIf="last">
+                    <div>
+                        <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
+                        class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
+                        (click)="updateCorePlusStatus()">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn btn-na mt-2 mb-4" style="width: 20%" (click)="updateShowIssues()">
+                            {{ this.getIssuesButtonText() }}
+                        </button>
+                    </div>
         
-                    <div *ngIf="showIssues === true && isFinalQuestion(q.questionId)" style="margin: 0.75em">
+                    <div *ngIf="showIssues === true" style="margin: 0.75em">
                         <table class="table" *ngIf="extras?.findings.length > 0">
                             <tr>
                                 <th>Issue</th>
@@ -191,16 +204,8 @@
                         
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
-    
-                    <div *ngIf="isFinalQuestion(q.questionId)">
-                        <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                          (change)="storeSummaryComment(q, $event)"></textarea>
-                    </div>
-    
-                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
-                      class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
-                    </app-question-extras>
-        
+                    <textarea appAutoSize class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                        (change)="storeSummaryComment(q, $event)"></textarea>
                 </div>
             </ng-container>
         </div>
