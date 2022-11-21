@@ -42,7 +42,7 @@
 <ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
     <ng-container
-        *ngIf="grouping.visible || (assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
+        *ngIf="grouping.visible || (grouping.visible && assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
 
         <div class="capability-group-heading"
             *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">

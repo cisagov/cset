@@ -292,7 +292,7 @@ let headers = {
   }
 
   showCorePlusOnlySubCats(id: number) {
-    if (id >= 2564 && this.getExamLevel() === 'CORE') {
+    if (id >= 2567 && this.getExamLevel() === 'CORE') {
       return true;
     }
   }
