@@ -51,22 +51,6 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Answered Statements Report - ISE");
 
-    // this.showSubcats
-    // .set('Information Security Program', true)       .set('Governance', true)
-    // .set('Risk Assessment', true)                    .set('Incident Response', true)
-    // .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
-    // .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
-    // .set('Controls Testing', true)                   .set('Corrective Actions', true)
-    // .set('Training', true)                           .set('Vulnerability & Patch Management', true)
-    // .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
-    // .set('Network Security', true)                   .set('Data Leakage Protection', true)
-    // .set('Change & Configuration Management', true)  .set('Monitoring', false)
-    // .set('Logging', false)                            .set('Data Governance', false)
-    // .set('Conversion', false)                         .set('Software Development Process', false)
-    // .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    // .set('Policies & Procedures', true)               .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
-    // .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);
-
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
