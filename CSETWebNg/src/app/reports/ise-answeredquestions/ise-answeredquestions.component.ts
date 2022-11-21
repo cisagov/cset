@@ -51,6 +51,22 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Answered Statements Report - ISE");
 
+    this.showSubcats
+    .set('Information Security Program', true)       .set('Governance', true)
+    .set('Risk Assessment', true)                    .set('Incident Response', true)
+    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
+    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
+    .set('Controls Testing', true)                   .set('Corrective Actions', true)
+    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
+    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
+    .set('Network Security', true)                   .set('Data Leakage Protection', true)
+    .set('Change & Configuration Management', true)  .set('Monitoring', false)
+    .set('Logging', false)                            .set('Data Governance', false)
+    .set('Conversion', false)                         .set('Software Development Process', false)
+    .set('Internal Audit Program', false)             .set('Asset Inventory', true)
+    .set('Policies & Procedures', true)               .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
+    .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);
+
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
@@ -76,21 +92,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
 
-    this.showSubcats
-    .set('Information Security Program', true)       .set('Governance', true)
-    .set('Risk Assessment', true)                    .set('Incident Response', true)
-    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
-    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
-    .set('Controls Testing', true)                   .set('Corrective Actions', true)
-    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
-    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
-    .set('Network Security', true)                   .set('Data Leakage Protection', true)
-    .set('Change & Configuration Management', true)  .set('Monitoring', false)
-    .set('Logging', false)                            .set('Data Governance', false)
-    .set('Conversion', false)                         .set('Software Development Process', false)
-    .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    .set('Policies & Procedures', true)               .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
-    .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);;
+    
   }
 
   requiredQuestion(q: any) {
@@ -98,35 +100,6 @@ export class IseAnsweredQuestionsComponent implements OnInit {
       return false;
     }
     return true;
-  }
-
-  parentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22'
-    ||   q.title == 'Stmt 23') {
-      return true;
-    } 
-    return false;
   }
   
 }
