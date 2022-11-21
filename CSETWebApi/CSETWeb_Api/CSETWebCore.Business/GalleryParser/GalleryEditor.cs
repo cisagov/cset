@@ -234,17 +234,21 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
 
-        public void DeleteGalleryItem(int id)
+        public void DeleteGalleryItem(int id, int group_id)
         {
-            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == id).FirstOrDefault();
-            _context.GALLERY_GROUP_DETAILS.Remove(item);
-            _context.SaveChanges();
+            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == id && x.Group_Id == group_id).FirstOrDefault();
+            if (item != null)
+            {
+                _context.GALLERY_GROUP_DETAILS.Remove(item);
+                _context.SaveChanges();
+            }
+
 
         }
 
-        public void DeleteGalleryGroup(int id)
+        public void DeleteGalleryGroup(int id, string layout)
         {
-            var groups = _context.GALLERY_ROWS.Remove(_context.GALLERY_ROWS.Where(x => x.Group_Id == id).First());
+            var groups = _context.GALLERY_ROWS.Remove(_context.GALLERY_ROWS.Where(x => x.Group_Id == id && x.Layout_Name == layout).First());
             _context.SaveChanges();
         }
 
@@ -262,6 +266,16 @@ namespace CSETWebCore.Business.GalleryParser
                        
                         
             return query.Except(queryExcept.ToList(), new GalleryItemComparer()).ToArray();
+        }
+
+        public List<GalleryLayout> GetLayouts()
+        {
+            List<GalleryLayout> layouts = new List<GalleryLayout>();
+            foreach(var g in _context.GALLERY_LAYOUT)
+            {
+                layouts.Add(new GalleryLayout() { LayoutName = g.Layout_Name });
+            }
+            return layouts;
         }
     }
 
