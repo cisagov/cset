@@ -523,6 +523,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_QUESTION_PROPS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_QUESTION_TYPES]",
          "ObjectType": 0
       },

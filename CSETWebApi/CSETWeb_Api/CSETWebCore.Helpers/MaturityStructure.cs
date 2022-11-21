@@ -39,7 +39,7 @@ namespace CSETWebCore.Helpers
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText = true)
+        public MaturityStructure(int assessmentId, CSETContext context, bool includeText)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
@@ -81,6 +81,7 @@ namespace CSETWebCore.Helpers
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
+                .Include(x => x.MATURITY_QUESTION_PROPS)
                 .Where(q =>
                 model.model_id == q.Maturity_Model_Id).ToList();
 
@@ -145,6 +146,7 @@ namespace CSETWebCore.Helpers
                 }
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
+                xGrouping.SetAttributeValue("titlePrefix", sg.Title_Prefix);
 
                 var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
                 xGrouping.SetAttributeValue("remarks", remark != null ? remark.DomainRemarks : "");
@@ -166,16 +168,26 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("sequence", myQ.Sequence.ToString());
                     xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
+                    xQuestion.SetAttributeValue("comment", answer?.a.Comment ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
                     if (_includeText)
                     {
                         xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
 
+                        xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
+
                         xQuestion.SetAttributeValue("referencetext",
                             myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
                     }
-                    //xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
+
+                    foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
+                    {
+                        var xProp = new XElement("Prop");
+                        xProp.SetAttributeValue("name", prop.PropertyName);
+                        xProp.SetAttributeValue("value", prop.PropertyValue);
+                        xQuestion.Add(xProp);
+                    }
 
                     xGrouping.Add(xQuestion);
                 }

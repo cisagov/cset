@@ -16,8 +16,10 @@ export class AppComponent implements OnInit{
 
   list!: ListTest[]; 
   unusedList!: ListTest[]; 
+  unusedListCopy: ListTest[] = []; 
   
     response: any;
+  layouts: any;
 
   constructor(public gallerySvc: GalleryEditorService,
     library: FaIconLibrary,
@@ -26,6 +28,12 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.gallerySvc.getGalleryLayouts().subscribe(
+      (data:any)=>{
+        this.layouts = data;
+
+      }
+    );
     this.updateItems();  
   }
 
@@ -50,7 +58,9 @@ export class AppComponent implements OnInit{
     );
     this.gallerySvc.getGalleryUnsedItems().subscribe(  (x: any) => {
       this.unusedList = x;
-      this.gallerySvc.setUnusedItems(this.unusedList);
+      this.gallerySvc.setUnusedItems(this.unusedList);   
+      this.unusedListCopy = [];  
+      this.unusedList.forEach(i=> {i.isUnused=true;this.unusedListCopy.push(i);})
     },
     error => console.log('Gallery Layout error ' + (<Error>error).message)
   );

@@ -20,7 +20,7 @@ namespace CSETWebCore.Api.Controllers
         private IGalleryEditor _galleryEditor;
 
         // if you want to use the gallery editor, change this to true
-        private bool inDev = false;
+        private bool inDev = true;
 
         public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
@@ -39,8 +39,35 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 _context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
-                if(String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
+                if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
+
+                    //find the new group and insert it
+                    //renumber both groups                    
+                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == moveItem.gallery_Item_Id).FirstOrDefault();
+                    if (dbItem != null)
+                    {
+                        
+                        var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
+                        var newGroupItem = new GALLERY_GROUP_DETAILS()
+                        {
+                            Gallery_Item_Id = moveItem.gallery_Item_Id,
+                            Column_Index = int.Parse(moveItem.newIndex),
+                            Group_Id = int.Parse(moveItem.toId)
+                        };
+                        _context.GALLERY_GROUP_DETAILS.Add(newGroupItem);
+                        detailsNewList.Insert(int.Parse(moveItem.newIndex), newGroupItem);
+                        RenumberGroup(detailsNewList);
+                        
+                        _context.SaveChanges();
+                    }
+                    
+
+                }
+                else if (String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
                 {
+
+                    
+
                     //we are changing position of the rows. 
                     //move the item from the old index to the new index and then 
                     //update the indexes of everything below them.
@@ -239,7 +266,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryItem")]
-        public IActionResult DeleteItem(int id)
+        public IActionResult DeleteItem(int id, int group_id)
         {
             if (!inDev)
             {
@@ -247,7 +274,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryItem(id);
+                _galleryEditor.DeleteGalleryItem(id, group_id);
                 return Ok();
             }
             catch (Exception e)
@@ -255,7 +282,25 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        
+        [HttpGet]
+        [Route("api/gallery/getlayouts")]
+        public IActionResult GetLayouts()
+        {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
+            try
+            {
+                
+                return Ok(_galleryEditor.GetLayouts());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         /// <summary>
         /// Deletes the item
         /// </summary>
@@ -263,7 +308,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryGroup")]
-        public IActionResult DeleteGroup(int id)
+        public IActionResult DeleteGroup(int id, string layout)
         {
             if (!inDev)
             {
@@ -271,27 +316,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryGroup(id);
+                _galleryEditor.DeleteGalleryGroup(id, layout);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        [HttpGet]
-        [Route("api/gallery/getLayouts")]
-        public IActionResult getLayouts()
-        {
-            if (!inDev)
-            {
-                return Ok(200);
-            }
-            try
-            {
-                return Ok(_galleryEditor.GetLayout());
             }
             catch (Exception e)
             {
@@ -368,6 +394,7 @@ namespace CSETWebCore.Api.Controllers
         public string toId { get;set; }
         public string oldIndex { get; set; }
         public string newIndex { get; set; }
+        public int gallery_Item_Id { get; set; }
     }
 
     public class UpdateItem

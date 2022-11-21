@@ -1378,12 +1378,9 @@ namespace CSETWebCore.Business.Reports
         {
             var query = (
                 from amm in _context.AVAILABLE_MATURITY_MODELS
-                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
-                join asl in _context.ASSESSMENT_SELECTED_LEVELS on amm.Assessment_Id equals asl.Assessment_Id into xx
-                from asl2 in xx.DefaultIfEmpty()
-                where asl2.Level_Name == Constants.Constants.MaturityLevel
+                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id                
                 where amm.Assessment_Id == _assessmentId
-                select new { amm, mm, asl2 }
+                select new { amm, mm }
                 ).FirstOrDefault();
 
 
@@ -1393,9 +1390,13 @@ namespace CSETWebCore.Business.Reports
                 TargetLevel = null
             };
 
-            if (query.asl2 != null)
+            var asl = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == _assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
+
+            if (asl != null)
             {
-                response.TargetLevel = int.Parse(query.asl2.Standard_Specific_Sal_Level);
+                response.TargetLevel = int.Parse(asl.Standard_Specific_Sal_Level);
             }
 
             return response;
