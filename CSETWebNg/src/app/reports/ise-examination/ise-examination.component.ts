@@ -240,9 +240,11 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 16', true)                            .set('Stmt 17', true)
       .set('Stmt 18', true)                            .set('Stmt 19', true)
       .set('Stmt 20', true)                            .set('Stmt 21', true)
-      .set('Stmt 22', true)                            .set('Asset Inventory', true)
-      .set('Stmt 23', true)                            .set('Policies & Procedures', true)
-      .set('Due Diligence', true);
+      .set('Stmt 22', true)                            .set('Stmt 23', true)
+      .set('Stmt 24', true)                            .set('Asset Inventory', true)
+      .set('Stmt 25', true)                            .set('Policies & Procedures', true)
+      .set('Due Diligence', true)                      .set('CISA Ransomware Readiness Assessment (RRA) BASIC', true)
+      .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', true);
 
     this.storeIndividualIssues
       .set('Stmt 1', '')
@@ -256,7 +258,8 @@ export class IseExaminationComponent implements OnInit {
       .set('Stmt 16', '')                            .set('Stmt 17', '')
       .set('Stmt 18', '')                            .set('Stmt 19', '')
       .set('Stmt 20', '')                            .set('Stmt 21', '')
-      .set('Stmt 22', '')                            .set('Stmt 23', '');
+      .set('Stmt 22', '')                            .set('Stmt 23', '')
+      .set('Stmt 24', '')                            .set('Stmt 25', '');
 
     this.showSubcats
     .set('Information Security Program', true)       .set('Governance', true)
@@ -271,7 +274,9 @@ export class IseExaminationComponent implements OnInit {
     .set('Logging', false)                            .set('Data Governance', false)
     .set('Conversion', false)                         .set('Software Development Process', false)
     .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    .set('Policies & Procedures', true)               .set('Due Diligence', false);
+    .set('Policies & Procedures', true)               .set('Due Diligence', false)
+    .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
+    .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);
   }
 
   /**
