@@ -36,6 +36,7 @@
         "showModuleImport": true,
         "showModuleContentReport": true,
         "showAssessmentDocuments": true,
+        "showFacilitatorDropDown": true,
         "showNameDisclaimer":false,
         "showAggregation": true,
         "showAnalytics": true,
