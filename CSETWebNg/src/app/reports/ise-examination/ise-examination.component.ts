@@ -42,12 +42,15 @@ export class IseExaminationComponent implements OnInit {
   findingsResponse: any = {};
   actionItemsForParent: any = {};
   actionData: any = {};
+  files: any = {};
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
   storeIndividualIssues: Map<String, String> = new Map<String, String>();
   showSubcats: Map<String, boolean> = new Map<String, boolean>();
 
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+
+  sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -184,6 +187,26 @@ export class IseExaminationComponent implements OnInit {
             for(let i = 0; i < this.findingsResponse?.length; i++) {
               if(this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let finding = this.findingsResponse[i];
+                this.questionsSvc.getDetails(finding.question.mat_Question_Id, 'Maturity').subscribe(
+                  (r: any) => {
+                    this.files = r;
+
+                    let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
+
+                    for (let i = 0; i < sourceDocList?.length; i++) {
+                      if(!this.sourceFilesMap.has(finding.question.mat_Question_Id)){
+              
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, [sourceDocList[i]]);
+                      } else {
+                        let tempFileArray = this.sourceFilesMap.get(finding.question.mat_Question_Id);
+        
+                        tempFileArray.push(sourceDocList[i]);
+        
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, tempFileArray);
+                      }
+                    }
+                  }
+                );
                 if(finding.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(finding.category.title);
                 }
