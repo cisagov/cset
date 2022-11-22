@@ -38,7 +38,6 @@ export interface Product {
   name: string;
   vulnerabilities: Vulnerability[];
   versions: { name: string; product_Id: string }[]
-  cveUrl: string;
 }
 
 interface Vulnerability {
@@ -186,7 +185,6 @@ export class DiagramComponentsComponent implements OnInit {
       const product: Product = {
         name: advisory.product_Tree.branches[0].branches[0].name,
         vulnerabilities: advisory.vulnerabilities,
-        cveUrl: advisory.document.references[0].url,
         versions: []
       };
 

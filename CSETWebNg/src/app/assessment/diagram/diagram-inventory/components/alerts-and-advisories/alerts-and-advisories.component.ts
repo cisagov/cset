@@ -59,4 +59,8 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
       return `${score} LOW`;
     }
   }
+
+  getCveUrl(cve: string) {
+    return 'https://nvd.nist.gov/vuln/detail/' + cve;
+  }
 }
