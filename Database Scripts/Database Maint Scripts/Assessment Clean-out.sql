@@ -1,6 +1,8 @@
 
 -- Clean out all Assessment-related information
 delete from [DOCUMENT_FILE]
+delete from [ACCESS_KEY_ASSESSMENT]
+delete from [ACCESS_KEY]
 delete from [ASSESSMENTS]
 
 DBCC CHECKIDENT ('[ASSESSMENTS]', RESEED, 0);
@@ -23,6 +25,3 @@ delete from [DIAGRAM_CONTAINER]
 
 delete from [NIST_SAL_INFO_TYPES]
 GO
-
-
-
