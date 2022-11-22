@@ -73,14 +73,6 @@ export class QuestionBlockIseComponent implements OnInit {
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Comment - -\n';
   summaryConvoBuffer = '\n- - End of Summary Comment - -\n';
-
-
-  // To do: eventually, these should be pulled in dynamically.
-  importantQuestions = new Set([7569, 7574, 7575, 7578, 7579, 7580, 7581, 7583, 7585, 7586, 7587, 7595, 7596, 
-    7597, 7598, 7599, 7600, 7601, 7605, 7606, 7608, 7610, 7613, 7614, 7615, 7616, 7620, 7625, 7629, 7630, 
-    7631, 7632, 7634, 7635, 7636, 7637, 7638, 7640, 7642, 7643, 7644, 7646, 7647, 7648, 7651, 7653, 7654, 
-    7658, 7659, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7672, 7673, 7675, 7677, 7681, 7682, 7684, 7685, 
-    7688, 7692, 7695, 7696, 7697, 7701]);
   
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
@@ -94,6 +86,9 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlus: boolean = false;
   showIssues: boolean = true;
   coreChecked: boolean = false;
+
+  autoGenerateInProgress: boolean = false;
+  
 
   /**
    * Constructor.
@@ -251,22 +246,36 @@ export class QuestionBlockIseComponent implements OnInit {
 
   shouldIShow(q: Question) {
     let visible = false;
-    if (q.isParentQuestion || q.visible) {
+
+    if (q.visible || q.isParentQuestion) { 
       visible = true;
     }
+
     // If running a SCUEP exam, always show level 1 (SCUEP) questions
     if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      return true;
+      if (visible) {
+        this.refreshPercentAnswered(); // updates filtered %completed circles, and keeps it in step when switching between filters
+        return true;
+      }
       //If running a CORE exam, always show level 2 (CORE) questions
     } else if (this.iseExamLevel === 'CORE') {
       if (q.maturityLevel === 2) {
-        return true;
+        if (visible) {
+          this.refreshPercentAnswered();
+          return true;
+        }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
         if (q.questionId < 7852 && this.showCorePlus === true) { 
-          return true;
+          if (visible) {
+            this.refreshPercentAnswered();
+            return true;
+          }
         } else if (q.questionId >= 7852 && this.ncuaSvc.showExtraQuestions === true) {
-          return true;
+          if (visible) {
+            this.refreshPercentAnswered();
+            return true;
+          }
         }
       }
     }
@@ -389,7 +398,7 @@ export class QuestionBlockIseComponent implements OnInit {
       if (q.parentQuestionId === null) {
         return;
       }
-      if (q.visible) {
+      if (q.visible && q.maturityLevel != 3) {
 
           totalCount++;
           if (q.answer && q.answer !== "U") {
@@ -661,9 +670,9 @@ export class QuestionBlockIseComponent implements OnInit {
   showCorePlusButton(id: number) {
     // SCUEP only shows SCUEP.
     if (this.iseExamLevel !== 'SCUEP') {
-      if (this.isFinalQuestion(id)) {
+      // if (this.isFinalQuestion(id)) {
         return true;
-      }
+      // }
     }
     return false;
   }
@@ -682,7 +691,7 @@ export class QuestionBlockIseComponent implements OnInit {
     return false;
   }
 
-  updateCorePlusStatus(q: Question) {
+  updateCorePlusStatus() {
     this.showCorePlus = !this.showCorePlus;
 
     if (this.showCorePlus) {
@@ -815,6 +824,7 @@ export class QuestionBlockIseComponent implements OnInit {
         };
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);
+
         this.findSvc.saveDiscovery(find).subscribe(() => {
           const answerID = find.answer_Id;
           this.findSvc.getAllDiscoveries(answerID).subscribe(
@@ -831,7 +841,7 @@ export class QuestionBlockIseComponent implements OnInit {
             error => console.log('Error updating findings | ' + (<Error>error).message)
           );
         });
-      });
+    });
   }
   
   /**
@@ -874,6 +884,5 @@ export class QuestionBlockIseComponent implements OnInit {
       }
   }
 
-  
   
 }
