@@ -214,12 +214,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
-        } else if (e.target.value === (this.creditUnionOptions[i].charter.toString())) {
+        } else if ((e.target.value.padStart(5, '0')) === (this.creditUnionOptions[i].charter.toString())) {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
-
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
