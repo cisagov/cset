@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
+import { Product, Vendor } from '../diagram-components.component';
 
 @Component({
   selector: 'app-alerts-and-advisories',
@@ -9,10 +10,15 @@ import { Sort } from '@angular/material/sort';
 })
 export class AlertsAndAdvisoriesComponent implements OnInit {
 
-  constructor(private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>) { }
+  product: Product;
+  vendor: Vendor;
 
-  ngOnInit(): void {
-  }
+  constructor(
+    private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { this.product = data.product; this.vendor = data.vendor; console.log(this.product.vulnerabilities) }
+
+  ngOnInit(): void { }
 
   close() {
     return this.dialog.close();
@@ -24,5 +30,33 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
     }
 
     //TODO: Implement column sorting
+  }
+
+  getCveScoreColor(score: number) {
+    if (score >= 7) {
+      return '#DC3545'; // red
+    }
+
+    if (score >= 4 && score < 7) {
+      return '#FFC107'; // yellow
+    }
+
+    if (score < 4) {
+      return '#28A745'; // green
+    }
+  }
+
+  getCveScoreLevel(score: number) {
+    if (score >= 7) {
+      return `${score} HIGH`
+    }
+
+    if (score >= 4 && score < 7) {
+      return `${score} MEDIUM`;
+    }
+
+    if (score < 4) {
+      return `${score} LOW`;
+    }
   }
 }
