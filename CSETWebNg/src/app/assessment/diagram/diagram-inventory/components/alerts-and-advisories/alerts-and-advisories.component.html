@@ -21,7 +21,7 @@
       <th mat-sort-header="linkWebsite" style="width:200px">Link to vendor website</th>
 
       <tr *ngFor="let vulnerability of product.vulnerabilities">
-        <td>{{ vulnerability.cve.substring(4) }}</td>
+        <td>{{ vulnerability.cve }}</td>
         <td>
           <span class="cve-score" [ngStyle]="{ 'backgroundColor': getCveScoreColor(vulnerability.scores[0].cvss_V3.baseScore)}">
             {{ getCveScoreLevel(vulnerability.scores[0].cvss_V3.baseScore) }}
