@@ -42,6 +42,7 @@ export class QuestionFiltersComponent implements OnInit {
 
   question = "Question";
   questions = "questions";
+  observations = "observations";
   answerOptions: any[];
 
   constructor(
@@ -71,6 +72,9 @@ export class QuestionFiltersComponent implements OnInit {
     if (this.configSvc.installationMode === 'ACET') {
       this.question = "Statement";
       this.questions = "statements";
+      if (this.assessSvc.isISE()) {
+        this.observations = "issues";
+      }
     }
     this.refreshAnswerOptions();
   }

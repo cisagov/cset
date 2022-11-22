@@ -42,12 +42,15 @@ export class IseExaminationComponent implements OnInit {
   findingsResponse: any = {};
   actionItemsForParent: any = {};
   actionData: any = {};
+  files: any = {};
 
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
   storeIndividualIssues: Map<String, String> = new Map<String, String>();
   showSubcats: Map<String, boolean> = new Map<String, boolean>();
 
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
+
+  sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -96,7 +99,6 @@ export class IseExaminationComponent implements OnInit {
     
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
-        console.log(r)
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
@@ -106,9 +108,24 @@ export class IseExaminationComponent implements OnInit {
           // goes through subcategories
           for(let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
+
+            // initializing all assessment factors / categories / parent questions to true (expanded)
+            // used in checking if the section / question should be expanded or collapsed
+            this.expandedOptions.set(subcat?.title, true);
+            if (subcat?.questions[0]?.maturityLevel !== 'CORE+') {
+              this.showSubcats.set(subcat.title, true);
+            } else {
+              this.showSubcats.set(subcat.title, false);
+            }
+
             // goes through questions
             for(let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+
+              if (k === 0) {
+                this.expandedOptions.set(question.title, true);
+                this.storeIndividualIssues.set(question.title, '');
+              }
 
               if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                 this.examLevel = 'CORE+';
@@ -170,6 +187,26 @@ export class IseExaminationComponent implements OnInit {
             for(let i = 0; i < this.findingsResponse?.length; i++) {
               if(this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let finding = this.findingsResponse[i];
+                this.questionsSvc.getDetails(finding.question.mat_Question_Id, 'Maturity').subscribe(
+                  (r: any) => {
+                    this.files = r;
+
+                    let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
+
+                    for (let i = 0; i < sourceDocList?.length; i++) {
+                      if(!this.sourceFilesMap.has(finding.question.mat_Question_Id)){
+              
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, [sourceDocList[i]]);
+                      } else {
+                        let tempFileArray = this.sourceFilesMap.get(finding.question.mat_Question_Id);
+        
+                        tempFileArray.push(sourceDocList[i]);
+        
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, tempFileArray);
+                      }
+                    }
+                  }
+                );
                 if(finding.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(finding.category.title);
                 }
@@ -213,70 +250,6 @@ export class IseExaminationComponent implements OnInit {
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
 
-    
-
-    // initializing all assessment factors / categories / parent questions to true (expanded)
-    // used in checking if the section / question should be expanded or collapsed 
-    this.expandedOptions
-      .set('Information Security Program', true)       .set('Governance', true)
-      .set('Risk Assessment', true)                    .set('Incident Response', true)
-      .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
-      .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
-      .set('Controls Testing', true)                   .set('Corrective Actions', true)
-      .set('Training', true)                           .set('Vulnerability & Patch Management', true)
-      .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
-      .set('Network Security', true)                   .set('Data Leakage Protection', true)
-      .set('Change & Configuration Management', true)  .set('Monitoring', true)
-      .set('Logging', true)                            .set('Data Governance', true)
-      .set('Conversion', true)                         .set('Software Development Process', true)
-      .set('Internal Audit Program', true)             .set('Stmt 1', true)
-      .set('Stmt 2', true)                             .set('Stmt 3', true)
-      .set('Stmt 4', true)                             .set('Stmt 5', true)
-      .set('Stmt 6', true)                             .set('Stmt 7', true)
-      .set('Stmt 8', true)                             .set('Stmt 9', true)
-      .set('Stmt 10', true)                            .set('Stmt 11', true)
-      .set('Stmt 12', true)                            .set('Stmt 13', true)
-      .set('Stmt 14', true)                            .set('Stmt 15', true)
-      .set('Stmt 16', true)                            .set('Stmt 17', true)
-      .set('Stmt 18', true)                            .set('Stmt 19', true)
-      .set('Stmt 20', true)                            .set('Stmt 21', true)
-      .set('Stmt 22', true)                            .set('Stmt 23', true)
-      .set('Stmt 24', true)                            .set('Asset Inventory', true)
-      .set('Stmt 25', true)                            .set('Policies & Procedures', true)
-      .set('Due Diligence', true)                      .set('CISA Ransomware Readiness Assessment (RRA) BASIC', true)
-      .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', true);
-
-    this.storeIndividualIssues
-      .set('Stmt 1', '')
-      .set('Stmt 2', '')                             .set('Stmt 3', '')
-      .set('Stmt 4', '')                             .set('Stmt 5', '')
-      .set('Stmt 6', '')                             .set('Stmt 7', '')
-      .set('Stmt 8', '')                             .set('Stmt 9', '')
-      .set('Stmt 10', '')                            .set('Stmt 11', '')
-      .set('Stmt 12', '')                            .set('Stmt 13', '')
-      .set('Stmt 14', '')                            .set('Stmt 15', '')
-      .set('Stmt 16', '')                            .set('Stmt 17', '')
-      .set('Stmt 18', '')                            .set('Stmt 19', '')
-      .set('Stmt 20', '')                            .set('Stmt 21', '')
-      .set('Stmt 22', '')                            .set('Stmt 23', '')
-      .set('Stmt 24', '')                            .set('Stmt 25', '');
-
-    this.showSubcats
-    .set('Information Security Program', true)       .set('Governance', true)
-    .set('Risk Assessment', true)                    .set('Incident Response', true)
-    .set('Technology Service Providers', true)       .set('Business Continuity / Disaster Recovery', true)
-    .set('Cybersecurity Controls', true)             .set('Information Security Program', true)
-    .set('Controls Testing', true)                   .set('Corrective Actions', true)
-    .set('Training', true)                           .set('Vulnerability & Patch Management', true)
-    .set('Anti-Virus/Anti-Malware', true)            .set('Access Controls', true)
-    .set('Network Security', true)                   .set('Data Leakage Protection', true)
-    .set('Change & Configuration Management', true)  .set('Monitoring', false)
-    .set('Logging', false)                            .set('Data Governance', false)
-    .set('Conversion', false)                         .set('Software Development Process', false)
-    .set('Internal Audit Program', false)             .set('Asset Inventory', true)
-    .set('Policies & Procedures', true)               .set('Due Diligence', false)
-    .set('CISA Ransomware Readiness Assessment (RRA) BASIC', false)
-    .set('CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE', false);
   }
 
   /**
