@@ -323,10 +323,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer).subscribe
     (result => {
-      if (answer.answerText === 'N' && this.autoGenerateInProgress === false) {
-        this.autoGenerateInProgress = true;
-        this.checkForIssues(q, oldAnswerValue);
-      }
+      this.checkForIssues(q, oldAnswerValue);
     });
   }
 
@@ -835,7 +832,6 @@ export class QuestionBlockIseComponent implements OnInit {
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {
                   this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
-                  this.autoGenerateInProgress = false;
                 }
               }
               this.extras.findings = response;
@@ -884,7 +880,6 @@ export class QuestionBlockIseComponent implements OnInit {
             }
           }
         this.extras.findings.splice(deleteIndex, 1);
-        this.autoGenerateInProgress = false;
         this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
       }
   }
