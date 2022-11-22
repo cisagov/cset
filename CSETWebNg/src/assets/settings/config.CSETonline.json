@@ -1,14 +1,17 @@
 {
     "isRunningAnonymous": true,
+    "galleryLayout": "ONLINE",
     "behaviors": {
         "defaultTitle":"CSET-Online",
         "showModuleBuilder": false,
         "showModuleImport": false,
         "showAggregation": false,
         "showAnalytics": true,
+        "showFacilitatorDropDown": false,
         "showAnalyticsAtTheEnd": true,
         "showAnalyticsColumnOnLanding": true,
         "showAssessmentDocuments": false,
+        "showNameDisclaimer":true,
         "showMenuParameterEditor": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
