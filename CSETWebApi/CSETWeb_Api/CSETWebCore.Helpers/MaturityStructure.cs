@@ -39,7 +39,7 @@ namespace CSETWebCore.Helpers
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText = true)
+        public MaturityStructure(int assessmentId, CSETContext context, bool includeText)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
@@ -81,6 +81,7 @@ namespace CSETWebCore.Helpers
             var questions = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
+                .Include(x => x.MATURITY_QUESTION_PROPS)
                 .Where(q =>
                 model.model_id == q.Maturity_Model_Id).ToList();
 
@@ -178,6 +179,14 @@ namespace CSETWebCore.Helpers
 
                         xQuestion.SetAttributeValue("referencetext",
                             myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
+                    }
+
+                    foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
+                    {
+                        var xProp = new XElement("Prop");
+                        xProp.SetAttributeValue("name", prop.PropertyName);
+                        xProp.SetAttributeValue("value", prop.PropertyValue);
+                        xQuestion.Add(xProp);
                     }
 
                     xGrouping.Add(xQuestion);

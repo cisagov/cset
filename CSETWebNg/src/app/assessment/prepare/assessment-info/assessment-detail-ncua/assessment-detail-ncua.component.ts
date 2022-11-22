@@ -214,12 +214,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
-        } else if (e.target.value === (this.creditUnionOptions[i].charter.toString())) {
+        } else if ((e.target.value.padStart(5, '0')) === (this.creditUnionOptions[i].charter.toString())) {
           this.assessment.creditUnion = this.creditUnionOptions[i].name;
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
-
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
@@ -243,9 +242,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
    // this.assessment.assets = e.target.value;
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
-    console.log("CU name after asset update: " + this.assessment.creditUnion)
-    console.log("Charter after asset update: " + this.assessment.charter)
-    console.log("Assets after asset update: $" + this.assessment.assets)
+    this.acetDashboard.assets = this.assessment.assets;
 
     if (this.ncuaSvc.assetsAsNumber > 50000000) {
       this.updateOverride("No Override");

@@ -485,6 +485,7 @@ PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Delete row from [dbo].[IRP]')
 DELETE FROM [dbo].[IRP] WHERE [IRP_ID] = 55
+DELETE FROM [dbo].[ASSESSMENT_IRP] WHERE [IRP_ID] = 55
 
 PRINT(N'Delete row from [dbo].[GALLERY_LAYOUT]')
 DELETE FROM [dbo].[GALLERY_LAYOUT] WHERE [Layout_Name] = N'Florida'

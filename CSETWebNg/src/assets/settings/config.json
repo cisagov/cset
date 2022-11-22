@@ -1,5 +1,6 @@
 {
-    "currentConfigChain": [],
+    "NOTENODE":"Casing on config chain matters",
+    "currentConfigChain": ["CSETonline"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -35,6 +36,8 @@
         "showModuleImport": true,
         "showModuleContentReport": true,
         "showAssessmentDocuments": true,
+        "showFacilitatorDropDown": true,
+        "showNameDisclaimer":false,
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,

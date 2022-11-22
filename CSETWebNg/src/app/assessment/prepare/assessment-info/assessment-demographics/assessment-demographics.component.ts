@@ -229,9 +229,15 @@ export class AssessmentDemographicsComponent implements OnInit {
       return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
     }
 
+    
     showEdmFields() {
         return this.assessSvc.assessment?.maturityModel?.modelName == 'EDM';
     }
+
+    showFacilitator() {
+        return this.configSvc.behaviors.showFacilitatorDropDown;
+    }
+
 
     showAsterisks(): boolean {
         return this.assessSvc.assessment?.maturityModel?.modelName == 'CPG';
