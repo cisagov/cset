@@ -25,7 +25,7 @@ namespace UpgradeLibrary.Upgrade
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading database version 12.0.0.7 to 12.0.0.8: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 12.0.0.8 to 12.0.0.9: " + e.Message);
             }
         }
     }
