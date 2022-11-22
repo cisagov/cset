@@ -62,17 +62,20 @@
         </td>
         <td>
           <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName" (change)="saveComponent(component)">
-            <option *ngFor="let product of component.vendor?.products" [value]="product">{{ product }}</option>
+            <option *ngFor="let product of component.vendor?.products" [value]="product.name">{{ product.name }}</option>
           </select>
         </td>
         <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>
         <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)"/></td>
         <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)"/></td>
         <td>
-          <button class="btn" (click)="showAlertsAndAdvisories()"
-          matTooltip="View the alerts and advisories associated with this network component.">
+          <div matTooltip="Select a vendor and product to view the alerts and advisories associated with this network component"
+          [matTooltipDisabled]="component.productName">
+            <button class="btn" (click)="showAlertsAndAdvisories(component)" [disabled]="!component.productName"
+            matTooltip="View the alerts and advisories associated with this network component.">
             <span class="icon-link-button-text-dark" style="color: #1a53ff">Alerts & Advisories</span>
           </button>
+        </div>
         </td>
     </tr>
 </table>

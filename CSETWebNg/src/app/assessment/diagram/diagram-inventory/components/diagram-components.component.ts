@@ -29,9 +29,27 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
 import { AlertsAndAdvisoriesService } from '../../../../services/alerts-and-advisories.service';
 
-interface Vendor {
+export interface Vendor {
   name: string;
-  products: string[];
+  products: Product[];
+}
+
+export interface Product {
+  name: string;
+  vulnerabilities: Vulnerability[];
+  versions: { name: string; product_Id: string }[]
+  cveUrl: string;
+}
+
+interface Vulnerability {
+  cve: string;
+  cwe: any;
+  notes: any[];
+  product_Status: any;
+  references: any[];
+  remediations: any[];
+  scores: any[];
+  title: string;
 }
 
 @Component({
@@ -53,7 +71,6 @@ export class DiagramComponentsComponent implements OnInit {
   assetTypes: any;
   sal: any;
   criticality: any;
-  alertsAndAdvisories: any[] = [];
   vendors: Vendor[] = [];
 
   /**
@@ -74,8 +91,6 @@ export class DiagramComponentsComponent implements OnInit {
     });
 
     this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((csafs: any[]) => {
-      this.alertsAndAdvisories = csafs;
-
       this.processVendorNames(csafs);
       this.processProductNames(csafs);
     })
@@ -100,11 +115,12 @@ export class DiagramComponentsComponent implements OnInit {
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
-  showAlertsAndAdvisories() {
-    this.dialogRef = this.dialog.open(AlertsAndAdvisoriesComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+  showAlertsAndAdvisories(component) {
+    console.log(component);
+    this.dialogRef = this.dialog.open(AlertsAndAdvisoriesComponent, {
+       data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
+      });
+    this.dialogRef.afterClosed().subscribe();
   }
 
   sortData(sort: Sort) {
@@ -164,13 +180,23 @@ export class DiagramComponentsComponent implements OnInit {
     });
   }
 
-  // Parse product names from CSAF files. Products are tied to vendors.
+  // Parse product names from CSAF files. Products are tied to vendors. CVEs are then tied to products.
   processProductNames(csafs) {
     csafs.forEach(advisory => {
-      const product: string = advisory.product_Tree.branches[0].branches[0].name;
+      const product: Product = {
+        name: advisory.product_Tree.branches[0].branches[0].name,
+        vulnerabilities: advisory.vulnerabilities,
+        cveUrl: advisory.document.references[0].url,
+        versions: []
+      };
+
+      advisory.product_Tree.branches[0].branches.forEach(branch => {
+        product.versions.push({ name: branch.branches[0].name, product_Id: branch.branches[0].product.product_Id})
+      })
+
       const vendor: Vendor = this.vendors.find(v => v.name === advisory.product_Tree.branches[0].name);
 
-      if (vendor && !vendor.products.includes(product)) {
+      if (vendor && !vendor.products.find(p => p.name === product.name)) {
         vendor.products.push(product);
       }
     });
