@@ -359,11 +359,29 @@
                                         <span class="cset-icons-copy"></span>
                                     </label>
                                     <strong> Supplemental Guidance: </strong> 
-                                    
                                     <br>
                                     <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
                                     <span *ngIf="finding?.question?.supplemental_Info == ''">(no Supplemental Guidance available)</span>
 
+                                    <br>
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                        [cdkCopyToClipboard]="this.copyAllSourceFiles(finding?.question?.mat_Question_Id)">
+                                        <span class="cset-icons-copy"></span>
+                                    </label>
+                                    <strong> Source Files: </strong> 
+                                    <br>
+                                    <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
+                                        <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
+                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                                [cdkCopyToClipboard]="file.title + ' (Section: ' + file.section_Ref + ')'">
+                                                <span class="cset-icons-copy"></span>
+                                            </label>
+                                            {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
+                                        </div>
+                                    </span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Source Files available)</span>
                                 </div>
                                 
                                 <hr class="page-line">
