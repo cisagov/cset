@@ -293,6 +293,32 @@ export class AcetFilteringService {
         }
     }
 
+    /**
+     * Indicates if the ACET question should be visible based on current
+     * filtering.
+     */
+     public setIseQuestionVisibility(q: Question, currentDomainName: string): boolean {
+        if (!!this.domainFilters) {
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).settings;
+
+            if (filtersForDomain.find(s => s.level == q.maturityLevel && s.value == false)) {
+               if(q.maturityLevel == 3 && filtersForDomain.find(s => s.level == 2 && s.value == true)) {
+                q.visible = true;
+               } else {
+                    return;
+               }
+            } else {
+               
+
+                q.visible = true;
+            }
+        } else {
+            
+
+            q.visible = true;
+        }
+    }
+
 
     /**
      * Sets the new value in the service's filter map and tells the host page

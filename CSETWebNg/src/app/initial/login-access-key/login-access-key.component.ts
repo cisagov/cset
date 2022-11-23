@@ -12,6 +12,8 @@ import { AssessmentService } from '../../services/assessment.service';
 import { EmailService } from '../../services/email.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { PasswordStatusResponse } from '../../models/reset-pass.model';
 
 @Component({
   selector: 'app-login-access-key',
@@ -68,8 +70,8 @@ export class LoginAccessKeyComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog
-  ) { 
-  
+  ) {
+
   }
 
   /**
@@ -131,6 +133,8 @@ export class LoginAccessKeyComponent implements OnInit {
           this.loading = false;
           this.incorrectEmailOrPassword = false;
 
+          this.checkPasswordReset();
+
           // show the access key controls
           this.pageMode = 'ACCESS-KEY';
 
@@ -161,6 +165,44 @@ export class LoginAccessKeyComponent implements OnInit {
           this.incorrectEmailOrPassword = true;
         }
       );
+  }
+
+  /**
+   *
+   */
+  checkPasswordReset() {
+    this.authSvc.passwordStatus()
+      .subscribe((result: PasswordStatusResponse) => {
+        if (result) {
+          if (!result.resetRequired) {
+            this.openPasswordDialog(true);
+          }
+        }
+      });
+  }
+
+  openPasswordDialog(showWarning: boolean) {
+    if (localStorage.getItem("returnPath")) {
+      if (!Number(localStorage.getItem("redirectid"))) {
+        this.hasPath(localStorage.getItem("returnPath"));
+      }
+    }
+    this.dialog
+      .open(ChangePasswordComponent, {
+        width: "300px",
+        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.checkPasswordReset();
+      });
+  }
+
+  hasPath(rpath: string) {
+    if (rpath != null) {
+      localStorage.removeItem("returnPath");
+      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+    }
   }
 
   /**

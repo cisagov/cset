@@ -15,7 +15,6 @@ const headers = {
   providedIn: 'root'
 })
 export class GalleryEditorService {
- 
   
   allitems:ListTest[]= [];
   unusedItemList: ListTest[]= [];
@@ -84,6 +83,10 @@ export class GalleryEditorService {
     });
   }
 
+  getGalleryLayouts() {
+    return  this.http.get("http://localhost:5000/api/gallery/getlayouts");
+  }
+
   cloneGalleryItem(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
@@ -129,7 +132,8 @@ export class GalleryEditorService {
   deleteGalleryItem(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
       params: {
-        id: item.gallery_Item_Id
+        id: item.gallery_Item_Id,
+        group_id: item.parent_Id
       }
     });
   }
@@ -137,7 +141,8 @@ export class GalleryEditorService {
   deleteGalleryGroup(item: any) {
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
       params: {
-        id: item.group_Id
+        id: item.group_Id,
+        layout: this.layoutName
       }
     });
   }

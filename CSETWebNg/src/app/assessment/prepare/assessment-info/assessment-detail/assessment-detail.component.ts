@@ -64,13 +64,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.assessment = this.assessSvc.assessment;
 
     // a few things for a brand new assessment
-    if (this.assessSvc.isBrandNew) {
-      // set up some ACET-specific things for an ACET install
-      if (this.configSvc.installationMode === 'ACET') {
-        this.assessSvc.setAcetDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
-
+    if (this.assessSvc.isBrandNew) {      
       // RRA install presets the maturity model
       if (this.configSvc.installationMode === 'RRA') {
         this.assessSvc.setRraDefaults();
@@ -79,18 +73,11 @@ export class AssessmentDetailComponent implements OnInit {
     }
 
     this.assessSvc.isBrandNew = false;
-
-    this.setCharterPad();
-
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
     if (assessDate.getFullYear() <= 1900) {
       this.assessment.assessmentDate = null;
-    }
-    if (this.configSvc.installationMode === "ACET") {
-      if (this.assessment.assessmentName === "New Assessment")
-        this.createAcetName();
-    }
+    }    
   }
 
   /**
@@ -103,47 +90,11 @@ export class AssessmentDetailComponent implements OnInit {
         this.assessment.assessmentName = "(Untitled Assessment)";
       }
     }
-    this.createAcetName();
-    this.setCharterPad();
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
-  /**
-   *
-   */
-  setCharterPad() {
-    if (!!this.assessment) {
-      this.assessment.charter = this.padLeft(this.assessment.charter, '0', 5);
-    }
-  }
-
-  /**
-   *
-   * @param text
-   * @param padChar
-   * @param size
-   */
-  padLeft(text: string, padChar: string, size: number): string {
-    return (String(padChar).repeat(size) + text).substr((size * -1), size);
-  }
-
-  /**
-   *
-   */
-  createAcetName() {
-    if (this.configSvc.installationMode === "ACET") {
-      this.assessment.assessmentName = "ACET"
-      if (this.assessment.charter) {
-        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
-      }
-      if (this.assessment.creditUnion) {
-        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.creditUnion;
-      }
-      if (this.assessment.assessmentDate) {
-        let date = new Date(Date.parse(this.assessment.assessmentDate));
-        this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
-      }
-    }
+  showAssessmentNameDisclaimer(){
+    return this.configSvc.behaviors.showNameDisclaimer;
   }
 
   showFacilityName() {

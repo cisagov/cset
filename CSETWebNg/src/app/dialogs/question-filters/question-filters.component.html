@@ -74,7 +74,7 @@
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
         <label for="cbShowDisc" class="checkbox-custom-label d-block">
-          Show {{questions}} with observations
+          Show {{questions}} with {{observations}}
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">

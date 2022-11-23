@@ -21,7 +21,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         // if you want to use the gallery editor, change this to true
-        private bool inDev = false;
+        private bool inDev = true;
 
         public GalleryEditorController(ITokenManager token, IGalleryEditor galleryEditor, CSETContext context)
         {
@@ -267,7 +267,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryItem")]
-        public IActionResult DeleteItem(int id)
+        public IActionResult DeleteItem(int id, int group_id)
         {
             if (!inDev)
             {
@@ -275,7 +275,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryItem(id);
+                _galleryEditor.DeleteGalleryItem(id, group_id);
                 return Ok();
             }
             catch (Exception e)
@@ -283,7 +283,25 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        
+        [HttpGet]
+        [Route("api/gallery/getlayouts")]
+        public IActionResult GetLayouts()
+        {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
+            try
+            {
+                
+                return Ok(_galleryEditor.GetLayouts());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         /// <summary>
         /// Deletes the item
         /// </summary>
@@ -291,7 +309,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryGroup")]
-        public IActionResult DeleteGroup(int id)
+        public IActionResult DeleteGroup(int id, string layout)
         {
             if (!inDev)
             {
@@ -299,27 +317,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryGroup(id);
+                _galleryEditor.DeleteGalleryGroup(id, layout);
                 return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        [HttpGet]
-        [Route("api/gallery/getLayouts")]
-        public IActionResult getLayouts()
-        {
-            if (!inDev)
-            {
-                return Ok(200);
-            }
-            try
-            {
-                return Ok(_galleryEditor.GetLayout());
             }
             catch (Exception e)
             {

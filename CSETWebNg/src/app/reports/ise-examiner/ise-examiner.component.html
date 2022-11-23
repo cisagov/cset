@@ -158,7 +158,7 @@
                     </div>
                     <div>
                         <span class="font-weight-bold">Response: </span>
-                        <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q) ? this.answerDisplayLabel(q.answerText) : ' ' }}</span>
+                        <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ? this.getAnswerDisplayLabel(q.answerText) : ' ' }}</span>
                     </div>
                     <div>
                         <div class="font-weight-bold">Comments: </div>

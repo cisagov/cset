@@ -12,7 +12,7 @@ export class AboutTsaComponent implements OnInit {
  
 
   ngOnInit(): void {};
-  version = environment.version;
+  version = environment.visibleVersion;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
