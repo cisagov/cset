@@ -197,7 +197,7 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   displayTooltip(maturityModelId: number, option: string) {
-    let toolTip = this.questionsSvc.getAnswerDisplayLabel(maturityModelId, option);
+    let toolTip = this.questionsSvc.answerDisplayLabel(maturityModelId, option);
     if (toolTip === 'Yes' || toolTip === 'No') {
       toolTip = "";
     }

@@ -124,11 +124,11 @@
     ],
     "answersACET": [
         {
-            "note": "This will only apply in the ACET skin.  See QuestionsService",
             "code": "A",
             "buttonLabel": "Yes(C)",
             "buttonCss": "btn-alt",
-            "answerLabel": "Yes Compensating Control"
+            "answerLabel": "Yes Compensating Control",
+            "note": "This will only apply in the ACET skin.  See QuestionsService"
         }
     ],
     "answersCPG": [

@@ -68,10 +68,10 @@ export class RankedQuestionsComponent implements OnInit {
       row.rank = i++;
       switch (row.answerText) {
         case 'U':
-          row.displayAnswer = this.questionsSvc.getAnswerDisplayLabel(0, 'U');
+          row.displayAnswer = this.questionsSvc.answerDisplayLabel(0, 'U');
           break;
         case 'N':
-          row.displayAnswer = this.questionsSvc.getAnswerDisplayLabel(0, 'N');
+          row.displayAnswer = this.questionsSvc.answerDisplayLabel(0, 'N');
           break;
       }
     }
