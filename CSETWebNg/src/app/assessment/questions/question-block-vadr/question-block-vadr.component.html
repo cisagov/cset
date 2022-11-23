@@ -107,10 +107,10 @@
                             data-toggle="buttons">
                             <label *ngFor="let option of answerOptions" class="btn form-check-label"
                                 [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                                [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
+                                [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelId, option)">
                                 <input name="q_{{q.questionId}}" class="form-check-input" type="radio"
                                     autocomplete="off" (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                    {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
+                                    {{questionsSvc.answerButtonLabel(maturityModelId, option)}}
                             </label>
 
 
@@ -181,10 +181,10 @@
                         <div class="btn-group btn-group-toggle answer-group ml-0 mt-2" data-toggle="buttons">
                             <label *ngFor="let option of answerOptions" class="btn form-check-label"
                                 [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-                                [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
+                                [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelId, option)">
                                 <input name="q_{{q.questionId}}" class="form-check-input" type="radio"
                                     autocomplete="off" (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                    {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
+                                    {{questionsSvc.answerButtonLabel(maturityModelId, option)}}
                             </label>
 
 
