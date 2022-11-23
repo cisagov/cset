@@ -79,9 +79,10 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question)) {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question.title)) {
                 this.hasComments.push(question);
               }
+
             }
           }
         }
