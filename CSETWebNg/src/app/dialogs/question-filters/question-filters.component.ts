@@ -87,7 +87,7 @@ export class QuestionFiltersComponent implements OnInit {
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
       this.answerOptions.push({ 
         value: o, 
-        text: this.questionsSvc.getAnswerDisplayLabel(this.filterSvc.maturityModelId, o) });
+        text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelId, o) });
     });
 
     if (this.assessSvc.isISE()) {

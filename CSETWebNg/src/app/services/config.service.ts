@@ -46,8 +46,6 @@ export class ConfigService {
 
   behaviors: any;
 
-  buttonClasses = {};
-
   salLabels = {};
 
   private initialized = false;
@@ -131,8 +129,6 @@ export class ConfigService {
 
     this.populateLabelValues();
 
-    this.populateButtonClasses();
-
     this.initialized = true;
   }
 
@@ -146,19 +142,7 @@ export class ConfigService {
     this.salLabels["H"] = "High";
     this.salLabels["VH"] = "Very High";
   }
-
-  /**
-   * Associates a CSS class with each answer option.
-   */
-  populateButtonClasses() {
-    this.buttonClasses["Y"] = "btn-yes";
-    this.buttonClasses["N"] = "btn-no";
-    this.buttonClasses["NA"] = "btn-na";
-    this.buttonClasses["A"] = "btn-alt";
-    this.buttonClasses["Iss"] = "btn-iss";
-    this.buttonClasses["I"] = "btn-inc";
-  }
-
+  
   /**
    * A convenience method so that consumers can quickly know whether
    * CSET is currently running as a mobile app or not.

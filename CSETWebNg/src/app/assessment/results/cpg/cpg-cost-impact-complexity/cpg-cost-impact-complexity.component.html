@@ -1,5 +1,5 @@
-<div class="d-flex flex-row pb-3">
-    <div class="mr-3">COST: {{cost}}</div>
-    <div class="mr-3">IMPACT: {{impact}}</div>
-    <div class="mr-3">COMPLEXITY: {{complexity}}</div>
+<div class="d-flex flex-row pb-3 align-items-center">
+    <div class="mr-3 text-nowrap align-middle">COST: <span class="green-dollars align-middle">{{greenDollars}}</span><span class="gray-dollars align-middle">{{grayDollars}}</span></div>
+    <div class="mr-3 text-nowrap">IMPACT: <span [class]="lowMedHigh(impact)">{{impact}}</span></div>
+    <div class="mr-3 text-nowrap">COMPLEXITY: <span [class]="lowMedHigh(complexity)">{{complexity}}</span></div>
 </div>
