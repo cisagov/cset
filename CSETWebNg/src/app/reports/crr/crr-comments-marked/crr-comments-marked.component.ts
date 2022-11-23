@@ -169,7 +169,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.questionsSvc.getAnswerDisplayLabel(4, abb);
+    return this.questionsSvc.answerDisplayLabel(4, abb);
   }
 
   printReport() {
