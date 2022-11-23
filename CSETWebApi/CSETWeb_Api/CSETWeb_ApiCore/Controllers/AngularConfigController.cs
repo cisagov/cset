@@ -59,13 +59,15 @@ namespace CSETWebCore.Api.Controllers
                 webpath = Path.Combine(_webHost.ContentRootPath, "WebApp");
             }                
             
-            var path = Path.Combine(webpath, "assets","config.json");
+            var path = Path.Combine(webpath, "assets", "settings", "config.json");
             //if the files are there then assume we are running together
             //replace and return it. 
 
             if (System.IO.File.Exists(path))
             {
                 JObject document = JObject.Parse(System.IO.File.ReadAllText(path));
+
+                document.Add("rewrittenByRedirect", "true");
 
                 JToken element = document["app"];
 
@@ -116,7 +118,7 @@ namespace CSETWebCore.Api.Controllers
         private JsonElement processConfig(HostString newBase, string scheme)
         {
             _webHost.WebRootPath = Path.Combine(_webHost.ContentRootPath, "../../../CSETWebNg/src");
-            var path = Path.Combine(_webHost.WebRootPath, "assets/config.json");
+            var path = Path.Combine(_webHost.WebRootPath, "assets/settings/config.json");
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
@@ -127,6 +129,7 @@ namespace CSETWebCore.Api.Controllers
                         using (JsonDocument jDoc = JsonDocument.Parse(contents))
                         {
                             JsonElement root = jDoc.RootElement.Clone();
+                            
                             JsonElement overrideVal;
                             if (root.TryGetProperty("override", out overrideVal) != false)
                                 if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
@@ -164,7 +167,7 @@ namespace CSETWebCore.Api.Controllers
                                 {
                                     element.WriteTo(writer);
                                 }
-                            }
+                            }                           
                             writer.WriteEndObject();    
                         }
                         // create new JsonDocument with edited values

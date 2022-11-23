@@ -98,13 +98,13 @@
                     <ng-container *ngFor="let c of f.components">
                         <ng-container *ngFor="let q of c.questions">
                             <tr>
-                                <td *ngIf="isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td *ngIf="isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
 
-                                <td *ngIf="isParentQuestion(q)" class="background-3 pr-3"> </td>
-                                <td *ngIf="!isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ answerToNumber(q.answerText) }}</td>
+                                <td *ngIf="isParentQuestion(q.title)" class="background-3 pr-3"> </td>
+                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ answerToNumber(q.answerText) }}</td>
 
-                                <td *ngIf="isParentQuestion(q)" class="background-3">
+                                <td *ngIf="isParentQuestion(q.title)" class="background-3">
                                     <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
                                         <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
                                     </label>

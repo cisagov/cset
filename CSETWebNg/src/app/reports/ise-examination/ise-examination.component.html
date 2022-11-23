@@ -189,25 +189,25 @@
                                         </td>
                                     </tr>
                                     <ng-container *ngFor="let q of c.questions">
-                                        <tr *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q)) && shouldExpand(c.title)">
-                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <tr *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
 
-                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
-                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3" [innerHTML]="q.questionText"></td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
 
-                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="background-3 pr-3"> </td>
-                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ questionsSvc.answerDisplayLabel(10, q.answerText) }}</td>
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3"> </td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, q.answerText) }}</td>
 
-                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="background-3 pr-3">
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3">
                                                 {{acetSvc.getAbbrev(q.maturityLevel)}}
                                             </td>
-                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q)" class="background-3">
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3">
                                                 <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
                                                     <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
                                                 </label>
                                             </td>
-                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                         </tr>
                                     </ng-container>
                                 </ng-container>
@@ -228,7 +228,7 @@
                     <div *ngFor="let f of d.assessmentFactors">
                         <div *ngFor="let c of f.components">
                             <div *ngFor="let q of c.questions">
-                                <div *ngIf="this.ncuaSvc.isParentQuestion(q)">
+                                <div *ngIf="this.ncuaSvc.isParentQuestion(q.title)">
                                     <div>
                                         <span class="font-weight-bold">Title: </span>
                                         <span class="pr-3">{{ q.title }}</span>
@@ -306,7 +306,7 @@
                                     <br>
                                     <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
                                     <br>
-                                    <strong>Regulatory Citation: </strong>
+                                    <strong> Regulatory Citation: </strong>
                                     <br>
                                     <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
                                         <div *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
@@ -336,7 +336,15 @@
                                     <br>
                                     <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
                                     <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
-
+                                    <br>
+                                    <strong> Source Files: </strong> 
+                                    <br>
+                                    <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
+                                        <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
+                                            {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
+                                        </div>
+                                    </span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Source Files available)</span>
                                 </div>
                                 
 

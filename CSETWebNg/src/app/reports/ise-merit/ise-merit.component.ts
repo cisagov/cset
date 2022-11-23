@@ -50,6 +50,7 @@ export class IseMeritComponent implements OnInit {
   //                 finding_Id, <question_Id, [action_Items]>
   // manualOrAutoMap: Map<number, string> = new Map<number, string>();
 
+  sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
@@ -136,10 +137,29 @@ export class IseMeritComponent implements OnInit {
             this.response = r; 
  
             for(let i = 0; i < this.response?.length; i++) {
-              console.log(this.examLevel.substring(0, 4))
               if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
     
                 let finding = this.response[i];
+                this.questionsSvc.getDetails(finding.question.mat_Question_Id, 'Maturity').subscribe(
+                  (r: any) => {
+                    this.files = r;
+
+                    let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
+
+                    for (let i = 0; i < sourceDocList?.length; i++) {
+                      if(!this.sourceFilesMap.has(finding.question.mat_Question_Id)){
+              
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, [sourceDocList[i]]);
+                      } else {
+                        let tempFileArray = this.sourceFilesMap.get(finding.question.mat_Question_Id);
+        
+                        tempFileArray.push(sourceDocList[i]);
+        
+                        this.sourceFilesMap.set(finding.question.mat_Question_Id, tempFileArray);
+                      }
+                    }
+                  }
+                );
                 if(finding.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(finding.category.title);
                 }
@@ -303,16 +323,27 @@ export class IseMeritComponent implements OnInit {
 
   areAllActionItemsBlank(allActionsInFinding: any) {
     if(allActionsInFinding != null) {
-      console.log(allActionsInFinding)
       for(let i = 0; i < allActionsInFinding?.length; i++) {
 
         if(allActionsInFinding[i].action_Items != null && allActionsInFinding[i].action_Items != '') {
-          console.log(allActionsInFinding[i].question_Title + ' is false')
           return false;
         }
       }
       return true;
 
+    }
+  }
+
+  copyAllSourceFiles(id: number) {
+    if (this.sourceFilesMap.has(id)) {
+      let copyString = '';
+      let allSourceFiles = this.sourceFilesMap.get(id);
+      for (let i = 0; i < allSourceFiles.length; i++) {
+        copyString += allSourceFiles[i].title + ' (Section: ' + allSourceFiles[i].section_Ref + ')\n'
+      }
+      return copyString;
+    } else {
+      return '(no Source Files available)';
     }
   }
 }

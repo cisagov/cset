@@ -30,16 +30,16 @@ export class ListItemsComponent implements OnInit {
     this.options = {
       group: 'test',
       onUpdate: (event: any) => {
-        console.log('updated');
-        //if event.from.id and event.to.id are empty then we are moving a whole group
-        //changing the index of the rows
-        //if event.from.id and event.to.id are the same we are moving within a group
-        //if event.from.id and event.to.id are different we are moving from one group to another
 
-        // console.log(event.from.id);
+
+        console.log('updated');
         let v = this.listTest.children;
+        let tIsUnused = v?v[0].isUnused:false;
+        if(event.from.id == '' && event.to.id == '' && tIsUnused){
+          return;
+        }
         let item = new MoveItem();
-        if(v?v[0].isUnused:false)
+        if(tIsUnused)
         {
           //I'm moving it into a group and need to know 
           //what group is my destination          
@@ -111,7 +111,8 @@ export class ListItemsComponent implements OnInit {
  
 
   deleteGalleryItem(id: any) {
-    console.log(id + " would be deleted");
+    console.log("deleting item");
+    console.log(id);
     this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
       (r: any) => {
         // this.response = r;
@@ -123,7 +124,7 @@ export class ListItemsComponent implements OnInit {
   }
 
   deleteGalleryGroup(item:any) {
-    console.log(item.group_Id);
+    console.log(item);
     this.svcGalleryEditor.deleteGalleryGroup(item).subscribe(
       (r: any) => {
         this.updateItems();

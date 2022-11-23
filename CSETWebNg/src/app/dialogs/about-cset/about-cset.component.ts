@@ -33,7 +33,7 @@ import { ConfigService } from '../../services/config.service';
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class AboutCsetComponent implements OnInit {
-  version = environment.version;
+  version = environment.visibleVersion;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
