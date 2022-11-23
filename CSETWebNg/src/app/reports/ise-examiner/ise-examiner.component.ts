@@ -101,17 +101,4 @@ export class IseExaminerComponent implements OnInit {
     }
     return true;
   }
-
-  getAnswerDisplayLabel(answer: string){
-    if(answer == "Y"){
-      return "Yes";
-    } 
-    if(answer == "N"){
-      return "No";
-    } 
-    if(answer == "U"){
-      return "Unanswered";
-    } 
-  }
-  
 }
