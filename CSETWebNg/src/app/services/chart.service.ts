@@ -200,7 +200,7 @@ export class ChartService {
     let segmentLabels = [];
     x.labels.forEach(element => {
       segmentColors.push(this.segmentColor(element));
-      segmentLabels.push(this.questionsSvc.getAnswerDisplayLabel(0, element));
+      segmentLabels.push(this.questionsSvc.answerDisplayLabel(0, element));
     });
 
 
