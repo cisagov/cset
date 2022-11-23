@@ -79,9 +79,10 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question)) {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question.title)) {
                 this.hasComments.push(question);
               }
+
             }
           }
         }
@@ -100,17 +101,4 @@ export class IseExaminerComponent implements OnInit {
     }
     return true;
   }
-
-  getAnswerDisplayLabel(answer: string){
-    if(answer == "Y"){
-      return "Yes";
-    } 
-    if(answer == "N"){
-      return "No";
-    } 
-    if(answer == "U"){
-      return "Unanswered";
-    } 
-  }
-  
 }

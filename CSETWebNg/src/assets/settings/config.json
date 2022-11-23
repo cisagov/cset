@@ -68,37 +68,37 @@
         {
             "code": "Y",
             "buttonLabel": "Yes",
-            "buttonColor": "",
+            "buttonCss": "btn-yes",
             "answerLabel": "Yes"
         },
         {
             "code": "N",
             "buttonLabel": "No",
-            "buttonColor": "",
+            "buttonCss": "btn-no",
             "answerLabel": "No"
         },
         {
             "code": "NA",
             "buttonLabel": "N/A",
-            "buttonColor": "",
+            "buttonCss": "btn-na",
             "answerLabel": "N/A"
         },
         {
             "code": "A",
             "buttonLabel": "Alt",
-            "buttonColor": "",
+            "buttonCss": "btn-alt",
             "answerLabel": "Alternate"
         },
         {
             "code": "I",
             "buttonLabel": "Inc",
-            "buttonColor": "",
+            "buttonCss": "btn-inc",
             "answerLabel": "Incomplete"
         },
         {
             "code": "Iss",
             "buttonLabel": "Issue(N)",
-            "buttonColor": "",
+            "buttonCss": "btn-iss",
             "answerLabel": "No with Issue(s)"
         }
     ],
@@ -106,19 +106,19 @@
         {
             "code": "Y",
             "buttonLabel": "Fully",
-            "buttonColor": "",
+            "buttonCss": "btn-yes",
             "answerLabel": "Fully Implemented"
         },
         {
             "code": "N",
             "buttonLabel": "Not",
-            "buttonColor": "",
+            "buttonCss": "btn-no",
             "answerLabel": "Not Implemented"
         },
         {
             "code": "A",
             "buttonLabel": "Partial",
-            "buttonColor": "",
+            "buttonCss": "btn-alt",
             "answerLabel": "Partially Implemented"
         }
     ],
@@ -126,27 +126,34 @@
         {
             "code": "A",
             "buttonLabel": "Yes(C)",
-            "buttonColor": "",
-            "answerLabel": "Yes Compensating Control"
+            "buttonCss": "btn-alt",
+            "answerLabel": "Yes Compensating Control",
+            "note": "This will only apply in the ACET skin.  See QuestionsService"
         }
     ],
     "answersCPG": [
         {
             "code": "Y",
-            "buttonLabel": "Implemented",
-            "buttonColor": "",
+            "buttonLabel": "Imp",
+            "buttonCss": "btn-yes",
             "answerLabel": "Implemented"
         },
         {
             "code": "I",
-            "buttonLabel": "In Progress",
-            "buttonColor": "",
+            "buttonLabel": "Prog",
+            "buttonCss": "btn-na",
             "answerLabel": "In Progress"
         },
         {
+            "code": "S",
+            "buttonLabel": "Scoped",
+            "buttonCss": "btn-alt",
+            "answerLabel": "Scoped"
+        },
+        {
             "code": "N",
-            "buttonLabel": "Not Started",
-            "buttonColor": "",
+            "buttonLabel": "Not",
+            "buttonCss": "btn-no",
             "answerLabel": "Not Started"
         }
     ]
