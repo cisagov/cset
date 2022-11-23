@@ -26,7 +26,7 @@
         </td>
         <td *ngIf="!q?.isParentQuestion" [class]="answerCellClass(q?.answer)">
             <div class="text-center font-weight-bold" style="width: 7rem">
-                {{questionsSvc.getAnswerDisplayLabel(3, q?.answer)}}
+                {{questionsSvc.answerDisplayLabel(3, q?.answer)}}
             </div>
         </td>
         <td *ngIf="q?.isParentQuestion">
