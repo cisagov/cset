@@ -173,7 +173,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var list = new List<Series>();
 
-            var values = new List<string>() { "Y", "I", "N", "U" };
+            var values = new List<string>() { "Y", "I", "S", "N", "U" };
             foreach (string s in values)
             {
                 list.Add(new Series()

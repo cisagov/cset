@@ -10,6 +10,9 @@ export class CpgCostImpactComplexityComponent implements OnInit {
   @Input()
   cost: string;
 
+  greenDollars = "";
+  grayDollars = "";
+
   @Input()
   impact: string;
 
@@ -22,6 +25,11 @@ export class CpgCostImpactComplexityComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.greenDollars = "$".repeat(Number.parseInt(this.cost));
+    this.grayDollars = "$".repeat(4 - Number.parseInt(this.cost));
   }
 
+  lowMedHigh(val: string) {
+    return "lmh " + val.toLocaleLowerCase();
+  }
 }
