@@ -30,6 +30,7 @@ import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
 import { FindingsService } from '../../services/findings.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-ise-examiner',
@@ -49,6 +50,7 @@ export class IseExaminerComponent implements OnInit {
   constructor(
     public reportSvc: ReportService,
     public assessSvc: AssessmentService,
+    public questionsSvc: QuestionsService,
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,

@@ -88,6 +88,7 @@ export class QuestionBlockIseComponent implements OnInit {
   coreChecked: boolean = false;
 
   autoGenerateInProgress: boolean = false;
+  maturityModelId: number;
   
 
   /**
@@ -115,6 +116,9 @@ export class QuestionBlockIseComponent implements OnInit {
     this.setIssueMap();
     
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
+      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+      this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
+
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
       this.summaryCommentCopy = this.myGrouping.questions[0].comment;
@@ -141,8 +145,6 @@ export class QuestionBlockIseComponent implements OnInit {
           
           this.ncuaSvc.issuesFinishedLoading = true;
       });
-
-      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();

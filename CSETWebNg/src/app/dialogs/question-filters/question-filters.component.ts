@@ -85,9 +85,17 @@ export class QuestionFiltersComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      this.answerOptions.push({ 
-        value: o, 
-        text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelId, o) });
+      if(this.assessSvc.isISE()) {
+        this.answerOptions.push({ 
+          value: o, 
+          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelId, o) 
+        });
+      } else {
+        this.answerOptions.push({ 
+          value: o, 
+          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelId, o) 
+        });
+      }
     });
 
     if (this.assessSvc.isISE()) {
