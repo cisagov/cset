@@ -8,7 +8,9 @@ const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 const gotTheLock = app.requestSingleInstanceLock();
 
-const configSetup = require('./dist/assets/settings/configScript');
+const configSetup = require('./dist/assets/settings/configScript.js');
+
+console.log(configSetup)
 let config = require('./dist/assets/settings/config.json');
 
 configSetup.getConfigs(config, config.currentConfigChain).then(() => {
