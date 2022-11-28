@@ -29,7 +29,6 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SprsScoreComponent } from '../assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 const headers = {
   headers: new HttpHeaders()
@@ -56,18 +55,16 @@ export class QuestionsService {
    */
   public scrollToTarget: any;
 
-  /**
-   * Persists the current selection of the 'auto load supplemental' preference.
-   */
-  autoLoadSupplementalSetting: boolean;
 
+  /**
+   * 
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService
   ) {
-    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
     this.initializeAnswerButtonDefs();
   }
 
@@ -80,7 +77,6 @@ export class QuestionsService {
    * A reference to the current question list.
    */
   questions: QuestionResponse = null;
-
 
 
   /**
@@ -127,6 +123,22 @@ export class QuestionsService {
   getActionItems(parentId: number, finding_id: number) {
     headers.params = headers.params.set('parentId', parentId);
     return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + finding_id, headers);
+  }
+
+  /**
+   * Analyzes the current 'auto load supplemental' preference and the maturity model
+   */
+  autoLoadSupplemental(modelId?: number) {
+    if (this.configSvc.config.supplementalAutoloadInitialValue) {
+      return true;
+    }
+
+    // CPG - auto load supplemental
+    if (modelId == 11) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
