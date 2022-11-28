@@ -1,3 +1,7 @@
+module.exports = {
+  getConfigs: getConfigs
+};
+
 function isElectron() {
   // Renderer process
   if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
@@ -56,7 +60,7 @@ async function getConfigs(masterConfig, configChain) {
     var isElectronVar = isElectron();
     var leading = isElectronVar?"":"/";
     var tmpURL = leading + `assets/settings/config.${config}.json`;
-    
+
     //console.log("getting" + tmpURL);
     var tmpConfig = await getConfig(tmpURL).then((data) => {
       //console.log("applying:" + config);
@@ -67,7 +71,7 @@ async function getConfigs(masterConfig, configChain) {
   console.log("final config");
   console.log(masterConfig);
 }
-function switchConfigsForMode(installationMode) {  
+function switchConfigsForMode(installationMode) {
   switch (installationMode) {
     case "ACET":
       {
@@ -90,7 +94,7 @@ function switchConfigsForMode(installationMode) {
       }
       break;
     case "TSA":
-      {        
+      {
         // change favicon and title
         var link = document.querySelector("link[rel~='icon']");
         link.href = "assets/icons/favicon_tsa.ico?app=tsa1";
