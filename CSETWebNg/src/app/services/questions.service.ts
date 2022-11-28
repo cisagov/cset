@@ -321,6 +321,11 @@ export class QuestionsService {
     });
 
     this.answerButtonDefs.push({
+      modelId: 10,
+      answers: this.configSvc.config.answersISE
+    });
+
+    this.answerButtonDefs.push({
       modelId: 11,
       answers: this.configSvc.config.answersCPG
     });
