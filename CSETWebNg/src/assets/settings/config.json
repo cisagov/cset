@@ -131,6 +131,24 @@
             "note": "This will only apply in the ACET skin.  See QuestionsService"
         }
     ],
+    "answersISE": [
+        {
+            "code": "Y",
+            "buttonLabel": "Yes",
+            "buttonCss": "btn-yes",
+            "answerLabel": ""
+        },
+        {
+            "code": "N",
+            "buttonLabel": "No",
+            "buttonCss": "btn-no",
+            "answerLabel": ""
+        },
+        {
+            "code": "U",
+            "buttonLabel": "Unanswered"
+        }
+    ],
     "answersCPG": [
         {
             "code": "Y",
