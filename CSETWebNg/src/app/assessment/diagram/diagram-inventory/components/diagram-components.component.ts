@@ -25,7 +25,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
 import { AlertsAndAdvisoriesService } from '../../../../services/alerts-and-advisories.service';
 
@@ -63,8 +63,6 @@ export class DiagramComponentsComponent implements OnInit {
   @Output()
   componentsChange = new EventEmitter<any>();
 
-  dialogRef: MatDialogRef<any>;
-
   comparer: Comparer = new Comparer();
   displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
@@ -77,7 +75,7 @@ export class DiagramComponentsComponent implements OnInit {
    */
   constructor(
     public diagramSvc: DiagramService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private alertsAndAdvisoriesSvc: AlertsAndAdvisoriesService
   ) { }
 
@@ -116,10 +114,9 @@ export class DiagramComponentsComponent implements OnInit {
 
   showAlertsAndAdvisories(component) {
     console.log(component);
-    this.dialogRef = this.dialog.open(AlertsAndAdvisoriesComponent, {
-       data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
-      });
-    this.dialogRef.afterClosed().subscribe();
+    this.dialog.open(AlertsAndAdvisoriesComponent, {
+      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
+    });
   }
 
   sortData(sort: Sort) {
