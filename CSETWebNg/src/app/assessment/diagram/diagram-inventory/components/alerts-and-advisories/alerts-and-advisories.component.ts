@@ -3,6 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Product, Vendor } from '../diagram-components.component';
 
+interface cveWarning {
+  level: string;
+  color: string;
+}
+
 @Component({
   selector: 'app-alerts-and-advisories',
   templateUrl: './alerts-and-advisories.component.html',
@@ -16,7 +21,7 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { this.product = data.product; this.vendor = data.vendor; console.log(this.product.vulnerabilities) }
+  ) { this.product = data.product; this.vendor = data.vendor;  }
 
   ngOnInit(): void { }
 
@@ -32,31 +37,26 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
     //TODO: Implement column sorting
   }
 
-  getCveScoreColor(score: number) {
-    if (score >= 7) {
-      return '#DC3545'; // red
+  getCveWarning(score: number): cveWarning {
+
+    if (score >= 9) {
+      return { level: 'CRITICAL', color: '#000000' }; // black
+    }
+
+    if (score >= 7 && score < 9) {
+      return { level: 'HIGH', color: '#d9534f' }; // red
     }
 
     if (score >= 4 && score < 7) {
-      return '#FFC107'; // yellow
+      return { level: 'MEDIUM', color: '#ec971f' }; // yellowish orange
     }
 
     if (score < 4) {
-      return '#28A745'; // green
+      return { level: 'LOW', color: '#53aa33' }; // green
     }
   }
 
-  getCveScoreLevel(score: number) {
-    if (score >= 7) {
-      return `${score} HIGH`
-    }
-
-    if (score >= 4 && score < 7) {
-      return `${score} MEDIUM`;
-    }
-
-    if (score < 4) {
-      return `${score} LOW`;
-    }
+  getCveUrl(cve: string) {
+    return 'https://nvd.nist.gov/vuln/detail/' + cve;
   }
 }
