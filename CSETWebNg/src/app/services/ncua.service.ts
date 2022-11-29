@@ -99,6 +99,7 @@ let headers = {
     "questionData": []
   };
   examLevel: string = '';
+  submitInProgress: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -364,6 +365,7 @@ let headers = {
   }
 
   submitToMerit(findings: any) {
+    this.submitInProgress = true;
     this.questionResponseBuilder(findings);
     this.iseIrpResponseBuilder();
   }
@@ -531,6 +533,7 @@ let headers = {
     a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
     a.setAttribute('download', filename);
     a.click();
+    this.submitInProgress = false;
   }
 
 }
