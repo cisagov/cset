@@ -154,7 +154,7 @@
                     <div *ngIf="isKeyGenerated" class="mt-3 alert alert-success mb-3">
                         <p style="font-size: 1.3rem">
                             Your Access Key is <strong>{{generatedKey}}</strong>
-                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                 [cdkCopyToClipboard]="generatedKey">
                                 <span class="cset-icons-copy"></span>
@@ -183,7 +183,7 @@
                     </p>
                     <p>
                         If you choose to provide personal or sensitive information in any field within CSET Online,
-                        that information will be stored in CSET and will be publicly disclosed. 
+                        that information will be stored in CSET and will be publicly disclosed.
                     </p>
                 </div>
             </div>
@@ -196,8 +196,11 @@
                 <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
                 <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                 href="https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
-                <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
+                <div class="row">
+                  <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
+                  <a class="mr-2" (click)="showDisclaimer()">Disclaimer</a>
+                </div>
             </div>
         </div>
     </div>
