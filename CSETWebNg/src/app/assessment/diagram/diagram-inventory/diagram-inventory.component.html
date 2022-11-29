@@ -24,10 +24,17 @@
   <h5>Component Inventory</h5>
 
   <div *ngIf="componentsExist">
-    <div class="d-flex justify-content-start mb-3 mt-4">
+    <div class="d-flex justify-content-between mb-3 mt-4">
       <button class="btn btn-primary" (click)="getExport()">
         <i class="cset-icons-export-excel mr-2"></i>
         Export to Excel</button>
+
+      <button class="btn btn-primary" (click)="openFileBrowser()"
+      matTooltip="Select CSAF JSON files to upload.">
+        <i class="cset-icons-import mr-2"></i>
+        Update Alerts & Advisories Database</button>
+        <input id="csafUpload" type="file" multiple (change)="fileSelect($event)"
+        class="display-none">
     </div>
     <div class="row stretch mb-3">
       <div class="col-12">
