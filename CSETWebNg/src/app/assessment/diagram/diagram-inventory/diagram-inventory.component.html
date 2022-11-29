@@ -29,11 +29,11 @@
         <i class="cset-icons-export-excel mr-2"></i>
         Export to Excel</button>
 
-      <button class="btn btn-primary" (click)="openFileBrowser()"
+      <button class="btn btn-primary" (click)="openFileBrowserForCsafUpload()"
       matTooltip="Select CSAF JSON files to upload.">
         <i class="cset-icons-import mr-2"></i>
         Update Alerts & Advisories Database</button>
-        <input id="csafUpload" type="file" multiple (change)="fileSelect($event)"
+        <input id="csafUpload" type="file" accept=".json" multiple (change)="fileSelect($event)"
         class="display-none">
     </div>
     <div class="row stretch mb-3">
