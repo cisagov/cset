@@ -46,7 +46,6 @@ export class CpgDomainSummaryComponent implements OnInit {
    */
   ngOnInit(): void {
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
@@ -58,8 +57,6 @@ export class CpgDomainSummaryComponent implements OnInit {
       });
 
       this.answerDistribByDomain = resp;
-
-      console.log(resp);
     });
   }
 
