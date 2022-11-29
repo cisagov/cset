@@ -67,19 +67,19 @@
             [class.answer-selected]="mySubCategory.subCategoryAnswer === 'Y'">
             <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
-              [checked]="mySubCategory.subCategoryAnswer === 'Y'">{{questionsSvc.getAnswerButtonLabel(0, 'Y')}}
+              [checked]="mySubCategory.subCategoryAnswer === 'Y'">{{questionsSvc.answerButtonLabel(0, 'Y')}}
           </label>
           <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
             [class.answer-selected]="mySubCategory.subCategoryAnswer === 'N'">
             <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
-              [checked]="mySubCategory.subCategoryAnswer === 'N'">{{questionsSvc.getAnswerButtonLabel(0, 'N')}}
+              [checked]="mySubCategory.subCategoryAnswer === 'N'">{{questionsSvc.answerButtonLabel(0, 'N')}}
           </label>
           <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
             [class.answer-selected]="mySubCategory.subCategoryAnswer === 'NA'">
             <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
               autocomplete="off" (click)="setBlockAnswer('NA')" tabindex="0"
-              [checked]="mySubCategory.subCategoryAnswer === 'NA'">{{questionsSvc.getAnswerButtonLabel(0, 'NA')}}
+              [checked]="mySubCategory.subCategoryAnswer === 'NA'">{{questionsSvc.answerButtonLabel(0, 'NA')}}
           </label>
           <label *ngIf="showThisOption('A')" class="btn btn-na form-check-label" style="visibility: hidden;">
             <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio" tabindex="0"
@@ -116,11 +116,11 @@
         <div>
           <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
             <label *ngFor="let option of answerOptions" class="btn form-check-label"
-              [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-              [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
+              [class]="questionsSvc.answerOptionCss(0, option)" [class.answer-selected]="q.answer === option"
+              [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelId, option)">
               <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
+                {{questionsSvc.answerButtonLabel(maturityModelId, option)}}
             </label>
 
             <!-- Mark For Review Flag  -->
@@ -157,11 +157,11 @@
         <div>
           <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
             <label *ngFor="let option of answerOptions" class="btn form-check-label align-items-center"
-              [class]="configSvc.buttonClasses[option]" [class.answer-selected]="q.answer === option"
-              [matTooltip]="questionsSvc.getAnswerDisplayLabel(maturityModelId, option)">
+              [class]="questionsSvc.answerOptionCss(0, option)" [class.answer-selected]="q.answer === option"
+              [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelId, option)">
               <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                 (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                {{questionsSvc.getAnswerButtonLabel(maturityModelId, option)}}
+                {{questionsSvc.answerButtonLabel(maturityModelId, option)}}
             </label>
 
             <!-- Mark For Review Flag  -->

@@ -197,7 +197,7 @@
                                             <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3" [innerHTML]="q.questionText"></td>
 
                                             <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3"> </td>
-                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ questionsSvc.getAnswerDisplayLabel(10, q.answerText) }}</td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ questionsSvc.answerButtonLabel(10, q.answerText) }}</td>
 
                                             <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3">
                                                 {{acetSvc.getAbbrev(q.maturityLevel)}}

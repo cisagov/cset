@@ -17,6 +17,8 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatRelevantAnswers> GetQuestionsList();
         List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
         List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList();
+        List<MatAnsweredQuestionDomain> GetIseAllQuestionList();
+
         List<SourceFiles> GetIseSourceFiles();
         List<string> GetDomains();
 

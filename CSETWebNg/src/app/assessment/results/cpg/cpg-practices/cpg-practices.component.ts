@@ -21,21 +21,18 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Component, OnInit } from '@angular/core';
 
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
+@Component({
+  selector: 'app-cpg-practices',
+  templateUrl: './cpg-practices.component.html',
+  styleUrls: ['./cpg-practices.component.scss']
+})
+export class CpgPracticesComponent implements OnInit {
 
-export const environment = {
-  production: false,
-  appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:5001/api/',
-  docUrl: 'https://localhost:5001/Documents/',
-  analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
-  appCode: 'CSET',
-  visibleVersion: "11.5",
-  version: '12.0.0.13',
-  helpContactEmail: 'cset@cisa.dhs.gov',
-  helpContactPhone: ''
-};
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

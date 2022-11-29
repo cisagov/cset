@@ -1,5 +1,33 @@
 div {
     font-size: .75rem;
     font-weight: 700;
-    color: #aaa;
+}
+
+.green-dollars {
+    font-size: 1.2rem;
+    color: #5e8144;
+}
+
+.gray-dollars {
+    font-size: 1.2rem;
+    color: #c6cdb6;
+}
+
+.lmh {
+    color: white;
+    font-variant: small-caps;
+    font-weight: bold;
+    padding: 2px .5rem;
+}
+
+.low {
+    background-color: #5e8144;
+}
+
+.medium {
+    background-color: #aa6601;
+}
+
+.high {
+    background-color: #be3538;
 }

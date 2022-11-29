@@ -29,7 +29,6 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SprsScoreComponent } from '../assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
 
 const headers = {
   headers: new HttpHeaders()
@@ -56,19 +55,17 @@ export class QuestionsService {
    */
   public scrollToTarget: any;
 
-  /**
-   * Persists the current selection of the 'auto load supplemental' preference.
-   */
-  autoLoadSupplementalSetting: boolean;
 
+  /**
+   * 
+   */
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService
   ) {
-    this.autoLoadSupplementalSetting = (this.configSvc.config.supplementalAutoloadInitialValue || false);
-    this.initializeAnswerButtonLabels();
+    this.initializeAnswerButtonDefs();
   }
 
   /**
@@ -80,7 +77,6 @@ export class QuestionsService {
    * A reference to the current question list.
    */
   questions: QuestionResponse = null;
-
 
 
   /**
@@ -126,7 +122,23 @@ export class QuestionsService {
   */
   getActionItems(parentId: number, finding_id: number) {
     headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id='+finding_id, headers);
+    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + finding_id, headers);
+  }
+
+  /**
+   * Analyzes the current 'auto load supplemental' preference and the maturity model
+   */
+  autoLoadSupplemental(modelId?: number) {
+    if (this.configSvc.config.supplementalAutoloadInitialValue) {
+      return true;
+    }
+
+    // CPG - auto load supplemental
+    if (modelId == 11) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
@@ -302,31 +314,36 @@ export class QuestionsService {
   }
 
 
-  private answerLabelModels: any[] = [];
+  private answerButtonDefs: any[] = [];
 
   /**
    * Incorporates settings from config.json into the
-   * service so that answer labels can be searched.
+   * service so that answer button properties can be searched.
    */
-  initializeAnswerButtonLabels() {
+  initializeAnswerButtonDefs() {
     // load default answer set
-    this.answerLabelModels.push({ 
+    this.answerButtonDefs.push({
       modelId: 0,
       answers: this.configSvc.config.answersDefault
     });
 
-    this.answerLabelModels.push({ 
+    this.answerButtonDefs.push({
       modelId: 9,
       answers: this.configSvc.config.answersMVRA
     });
 
-    this.answerLabelModels.push({ 
+    this.answerButtonDefs.push({
+      modelId: 10,
+      answers: this.configSvc.config.answersISE
+    });
+
+    this.answerButtonDefs.push({
       modelId: 11,
       answers: this.configSvc.config.answersCPG
     });
 
     // ACET labels are only used in the ACET skin
-    this.answerLabelModels.push({ 
+    this.answerButtonDefs.push({
       skin: 'ACET',
       modelId: 1,
       answers: this.configSvc.config.answersACET
@@ -334,39 +351,47 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   * Finds the button definition and return its CSS
    */
-  getAnswerButtonLabel(modelId: Number, answerCode: string): string {
-    return this.findAns(modelId, answerCode).buttonLabel;
+  answerOptionCss(modelId: Number, answerCode: string) {
+    return this.findAnsDefinition(modelId, answerCode).buttonCss;
   }
 
   /**
-   * 
+   * Finds the button definition and returns its label
    */
-  getAnswerDisplayLabel(modelId: Number, answerCode: string) {
-    return this.findAns(modelId, answerCode).answerLabel;
+  answerButtonLabel(modelId: Number, answerCode: string): string {
+    return this.findAnsDefinition(modelId, answerCode).buttonLabel;
   }
 
   /**
-   * Find the answer in the default object or the model-specific object.
+   * Finds the button definition and returns its full label (tooltip)
    */
-  findAns(modelId: Number, answerCode: string) {
+  answerDisplayLabel(modelId: Number, answerCode: string) {
+    return this.findAnsDefinition(modelId, answerCode).answerLabel;
+  }
+
+  /**
+   * Finds the answer in the default object or the model-specific object.
+   * Standards questions screen pass '0' for the modelId.
+   */
+  findAnsDefinition(modelId: Number, answerCode: string) {
 
     // first look for a skin-specific label set
-    let ans = this.answerLabelModels.find(x => x.skin == this.configSvc.installationMode
+    let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
       && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
     if (ans) {
       return ans;
     }
 
     // next, look for a model-specific label set with no skin defined
-    ans = this.answerLabelModels.find(x => !x.skin && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+    ans = this.answerButtonDefs.find(x => !x.skin && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
     if (ans) {
       return ans;
     }
 
-    // fallback to default label set
-    ans = this.answerLabelModels[0].answers.find(x => x.code == answerCode);
+    // fallback to default definition set
+    ans = this.answerButtonDefs[0].answers.find(x => x.code == answerCode);
     if (ans) {
       return ans;
     }

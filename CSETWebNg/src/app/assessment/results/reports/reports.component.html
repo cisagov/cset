@@ -407,6 +407,13 @@
     </div>
 
   </div>
-  <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+  <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+
+  <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
+    <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit()" tabindex="0">Submit to MERIT</button>
+  </div>
 
 </div>

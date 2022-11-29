@@ -34,7 +34,7 @@ export class CpgDomainSummaryComponent implements OnInit {
 
   answerDistribByDomain = [];
   xAxisTicks = [0, 25, 50, 75, 100];
-  answerDistribColorScheme = { domain: ['#28A745', '#FFC107', '#DC3545', '#c8c8c8'] };
+  answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
 
   constructor(
     private cpgSvc: CpgService,
@@ -46,7 +46,6 @@ export class CpgDomainSummaryComponent implements OnInit {
    */
   ngOnInit(): void {
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
@@ -58,8 +57,6 @@ export class CpgDomainSummaryComponent implements OnInit {
       });
 
       this.answerDistribByDomain = resp;
-
-      console.log(resp);
     });
   }
 
