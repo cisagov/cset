@@ -20,8 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-row pb-3 align-items-center">
-    <div class="mr-3 text-nowrap align-middle">COST: <span class="green-dollars align-middle">{{greenDollars}}</span><span class="gray-dollars align-middle">{{grayDollars}}</span></div>
-    <div class="mr-3 text-nowrap">IMPACT: <span [class]="lowMedHigh(impact)">{{impact}}</span></div>
-    <div class="mr-3 text-nowrap">COMPLEXITY: <span [class]="lowMedHigh(complexity)">{{complexity}}</span></div>
+<div class="white-panel d-flex flex-column flex-11a">
+    <h3 class="d-flex flex-column flex-00a">Security Practice Checklist</h3>
+    <p>
+        This table lists all security practices and how they have been answered.
+    </p>
+    
+    <app-cpg-practice-table></app-cpg-practice-table>
+    
+    <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
 </div>
