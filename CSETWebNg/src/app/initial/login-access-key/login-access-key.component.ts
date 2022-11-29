@@ -10,8 +10,7 @@ import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { EmailService } from '../../services/email.service';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
 import { PasswordStatusResponse } from '../../models/reset-pass.model';
 
@@ -58,7 +57,7 @@ export class LoginAccessKeyComponent implements OnInit {
   loginAccessKeyFailed = false;
 
   /**
-   * 
+   *
    */
   constructor(
     public layoutSvc: LayoutService,
@@ -75,7 +74,7 @@ export class LoginAccessKeyComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -104,14 +103,14 @@ export class LoginAccessKeyComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   emailValid() {
     return this.emailSvc.validAddress(this.model.email);
   }
 
   /**
-   * 
+   *
    */
   setMode(newMode: string) {
     this.mode = newMode;
@@ -206,7 +205,7 @@ export class LoginAccessKeyComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   checkForEjection(token: string) {
     if (this.route.snapshot.params['eject']) {
@@ -235,7 +234,7 @@ export class LoginAccessKeyComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   loginWithAccessKey() {
     this.authSvc.loginWithAccessKey(this.loginAccessKey).subscribe((resp) => {
@@ -250,7 +249,7 @@ export class LoginAccessKeyComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   generateKey() {
     this.isGenerating = true;
@@ -260,6 +259,10 @@ export class LoginAccessKeyComponent implements OnInit {
       this.isGenerating = false;
       this.isKeyGenerated = true;
     });
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 
 }
