@@ -30,6 +30,7 @@ import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
 import { FindingsService } from '../../services/findings.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { QuestionsService } from '../../services/questions.service';
 
 @Component({
   selector: 'app-ise-examiner',
@@ -49,6 +50,7 @@ export class IseExaminerComponent implements OnInit {
   constructor(
     public reportSvc: ReportService,
     public assessSvc: AssessmentService,
+    public questionsSvc: QuestionsService,
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
@@ -79,9 +81,10 @@ export class IseExaminerComponent implements OnInit {
                 }
               }
               
-              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question)) {
+              if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question.title)) {
                 this.hasComments.push(question);
               }
+
             }
           }
         }
@@ -100,17 +103,4 @@ export class IseExaminerComponent implements OnInit {
     }
     return true;
   }
-
-  getAnswerDisplayLabel(answer: string){
-    if(answer == "Y"){
-      return "Yes";
-    } 
-    if(answer == "N"){
-      return "No";
-    } 
-    if(answer == "U"){
-      return "Unanswered";
-    } 
-  }
-  
 }
