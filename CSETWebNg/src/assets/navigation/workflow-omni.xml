@@ -230,6 +230,10 @@
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />
         <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" condition="MATURITY:MVRA" />
 
+        <!-- Results - CPG -->
+        <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:CPG" />
+        <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
+
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">
