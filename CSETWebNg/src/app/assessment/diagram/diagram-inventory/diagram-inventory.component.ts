@@ -34,24 +34,24 @@ export class DiagramInventoryComponent implements OnInit {
   componentsExist: boolean = true;
 
   /**
-   * 
+   *
    */
   constructor(public diagramSvc: DiagramService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() { }
 
   /**
-   * 
+   *
    */
   onChange(list: any) {
     this.componentsExist = list.length > 0;
   }
 
   /**
-   * 
+   *
    */
   getExport() {
     this.diagramSvc.getExport().subscribe(data => {
@@ -60,5 +60,13 @@ export class DiagramInventoryComponent implements OnInit {
       error => {
         console.log('Error downloading file');
       });
+  }
+
+  /**
+   * Programmatically clicks the corresponding file upload element.
+   */
+  openFileBrowser() {
+    const element: HTMLElement = document.getElementById('csafUpload') as HTMLElement;
+    element.click();
   }
 }
