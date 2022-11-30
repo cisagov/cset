@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -440,7 +441,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// get cset diagram templates
+        /// get all availabes alerts & advisories from the stored CSAF json files
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
@@ -458,6 +459,60 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return csafFiles;
+        }
+
+        /// <summary>
+        /// get cset diagram templates
+        /// </summary>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/alertsandadvisories")]
+        [HttpPost]
+        public IActionResult UpdateAlertsAndAdvisories()
+        {
+            var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
+
+            if (multipartBoundary == null)
+            {
+                // unsupported media type
+                return StatusCode(415);
+            }
+
+            string csafFilesDirectory = Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF");
+
+            int assessmentId = _token.AssessmentForUser();
+
+            try
+            {
+                var formFiles = HttpContext.Request.Form.Files;
+
+                foreach (FormFile file in formFiles)
+                {
+                    if (!file.FileName.EndsWith(".json"))
+                    {
+                        return StatusCode(415);
+                    }
+
+                    //TODO: Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
+
+                    if (file.Length > 0) 
+                    {
+                        string filePath = Path.Combine(csafFilesDirectory, file.FileName);
+
+                        //TODO: Verify files are overwriten, might need to check for file existence first.
+
+                        using (Stream fileStream = new FileStream(filePath, FileMode.Create)) {
+                            file.CopyTo(fileStream);
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+
+            return Ok("CSAF files uploaded successfully.");
         }
 
         /// <summary>
