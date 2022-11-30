@@ -370,6 +370,7 @@ import { CommentsMfrComponent } from './reports/commentsmfr/commentsmfr.componen
 import { RraSummaryComponent } from './assessment/results/mat-rra/rra-summary/rra-summary.component';
 import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary-all/rra-summary-all.component';
 import { ReportDisclaimerComponent } from './reports/general/report-disclaimer/report-disclaimer.component';
+import { OnlineDisclaimerComponent } from './dialogs/online-disclaimer/online-disclaimer.component';
 import { ReportAdvisoryComponent } from './reports/general/report-advisory/report-advisory.component';
 import { RraLevelsComponent } from './assessment/results/mat-rra/rra-levels/rra-levels.component';
 import { RraAnswerCountsComponent } from './assessment/results/mat-rra/rra-answer-counts/rra-answer-counts.component';
@@ -518,6 +519,8 @@ import { CpgPracticeTableComponent } from './assessment/results/cpg/cpg-practice
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-summary/cpg-domain-summary.component';
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
+import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
+import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
 
 
 
@@ -968,19 +971,19 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         PrivacyWarningComponent,
-        PrivacyWarningRejectComponent, 
-        SearchPageComponent, 
-        LogoTsaComponent, 
+        PrivacyWarningRejectComponent,
+        SearchPageComponent,
+        LogoTsaComponent,
         CfLayoutMainComponent,
-        OptionBlockComponent, 
-        DemographicsExtendedComponent, 
-        SectorHelpComponent, 
-        AnalyticsCompareComponent, 
-        AssessmentDetailCfComponent, 
-        LoginCfComponent, 
-        MvraGapsComponent, 
-        MvraSummaryComponent, 
-        MvraAnswerFunctionsComponent, 
+        OptionBlockComponent,
+        DemographicsExtendedComponent,
+        SectorHelpComponent,
+        AnalyticsCompareComponent,
+        AssessmentDetailCfComponent,
+        LoginCfComponent,
+        MvraGapsComponent,
+        MvraSummaryComponent,
+        MvraAnswerFunctionsComponent,
         MvraAnswerDomainsComponent,
         MvraReportComponent,
         AboutCfComponent,
@@ -989,11 +992,14 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
         LoginAccessKeyComponent,
         RelatedQBlockComponent,
         CpgReportComponent,
-        CpgPracticeTableComponent, 
+        CpgPracticeTableComponent,
         RelatedQBlockComponent,
         LogoutComponent,
         CpgDomainSummaryComponent,
-        CpgCostImpactComplexityComponent, 
+        CpgCostImpactComplexityComponent,
+        CpgSummaryComponent,
+        CpgPracticesComponent,
+        OnlineDisclaimerComponent,
     ],
     providers: [
         ConfigService,
@@ -1001,7 +1007,7 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
         {
           provide: APP_INITIALIZER,
           useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
-            return () => {              
+            return () => {
               return configSvc.loadConfig().then(() => {
                 return authSvc.checkLocal();
               });
