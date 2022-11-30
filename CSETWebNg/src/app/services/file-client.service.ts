@@ -231,7 +231,8 @@ export class FileUploadClientService {
       const req = new HttpRequest('POST', apiEndpoint, formData,
         {
           headers: tmpheader,
-          reportProgress: true
+          reportProgress: true,
+          responseType: 'text'
         }
       );
 
@@ -253,7 +254,8 @@ export class FileUploadClientService {
         } else if (event instanceof HttpResponseBase) {
           if (event.status != 200) { //MAYBE: Make this >= 400
             let errObj = {
-              message: "File Import Failed", //TODO: get error message from backend / more detail
+              message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
+              : "Some files failed to import. Ensure the JSON is properly formatted.",
             };
             progress.error(errObj);
           }

@@ -142,7 +142,7 @@ export class UploadExportComponent implements OnInit {
             if (this.data.isCsafUpload) {
               this.canBeClosed = true;
               this.dialog.disableClose = false;
-              this.statusText = 'File Upload Successful'
+              this.statusText = 'File upload successful'
             } else {
               this.dialog.close();
             }
