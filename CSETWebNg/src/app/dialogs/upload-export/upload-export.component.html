@@ -29,7 +29,8 @@
       <mat-list class="pt-0">
         <mat-list-item class="p-0" *ngFor="let file of files">
           <label mat-line class="fs-base-5">{{file.name}}</label>
-          <mat-progress-bar *ngIf="progress" style="width: 65%" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+          <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+          <i *ngIf="progress[file.name].progress.source.hasError" class="fa-solid fa-xmark ml-1" style="color: red"></i>
         </mat-list-item>
       </mat-list>
       <label class="mt-2">{{statusText}}</label>
