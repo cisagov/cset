@@ -1,0 +1,397 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Emerson reported this vulnerability to CISA and M&M Software."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "If an attacker can socially engineer a valid user into loading a manipulated project file, malicious code can be executed without notice.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy, Transportation Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-021-05 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-021-05"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "WAGO M&M Software fdtCONTAINER (Update C)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:39.409160+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-021-05",
+      "initial_release_date": "2021-06-17T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:39.409160+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "4.6.0 and 4.6.20304.x",
+                "product": {
+                  "name": "fdtCONTAINER - 4.6.0 and 4.6.20304.x",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3 (Based on FDT 1.2.x)",
+                "product": {
+                  "name": "dtmINSPECTOR - 3 (Based on FDT 1.2.x)",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "dtmINSPECTOR"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.5.0 and 3.5.20304.x",
+                "product": {
+                  "name": "fdtCONTAINER - 3.5.0 and 3.5.20304.x",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "4.5.0 and 4.5.20304.x",
+                "product": {
+                  "name": "fdtCONTAINER - 4.5.0 and 4.5.20304.x",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "- and  including  2.5.1",
+                "product": {
+                  "name": "Weidm\u00fcller WI Manager - - and  including  2.5.1",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Weidm\u00fcller WI Manager"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1.05 and <",
+                "product": {
+                  "name": "Mitsubishi Electric MELSOFT FieldDeviceConfigurator - 1.05 and <",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Mitsubishi Electric MELSOFT FieldDeviceConfigurator"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "> 3.5",
+                "product": {
+                  "name": "fdtCONTAINER - > 3.5",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.6.0 and 3.6.20304.x",
+                "product": {
+                  "name": "fdtCONTAINER - 3.6.0 and 3.6.20304.x",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "5.0 - and  including  5.0.5.31",
+                "product": {
+                  "name": "PEPPERL+FUCHS PACTware - 5.0 - and  including  5.0.5.31",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PEPPERL+FUCHS PACTware"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "04088-9000-0001 | 4088-9000-0002 and 7000003-312",
+                "product": {
+                  "name": "Emerson Rosemount Transmitter Interface Software (RTIS) SKUs - 04088-9000-0001 | 4088-9000-0002 and 7000003-312",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Emerson Rosemount Transmitter Interface Software (RTIS) SKUs"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "> 4.5",
+                "product": {
+                  "name": "fdtCONTAINER - > 4.5",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "fdtCONTAINER"
+          }
+        ],
+        "category": "vendor",
+        "name": "M&M Software GmbH, a subsidiary of WAGO Kontakttechnik"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-12525",
+      "cwe": {
+        "id": "CWE-502",
+        "name": "Deserialization of Untrusted Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability has been discovered in the fdtCONTAINER component issued by M&M Software and used by other products, including RTIS and PACTware. An attacker could exploit this vulnerability on the workstation by supplying/providing a manipulated project file. If that manipulated project file is loaded, malicious code could be executed without notice.\u00a0CVE-2020-12525 has been assigned to this vulnerability. A CVSS v3 base score of 7.3 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "nvd.nist.gov",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-12525"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "M&M Software recommends users choose one of the following solutions:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The CERT@VDE advisory for M&M Software also recommends the following mitigation practices:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://cert.vde.com/en-us/advisories/vde-2020-048"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Emerson has published a notification (EMR.RMT20004.Rev3) for this vulnerability in RTIS. RTIS users should review this notification for additional information specific to RTIS.\nCERT@VDE has published an advisory (VDE-2021-001) for this vulnerability in PEPPERL+FUCHS PACTware.\nCERT@VDE has published an advisory (VDE-2021-002) for this vulnerability in Weidm\u00fcller FDT/DTM Software with WI Manager.\nMitsubishi Electric has published advisory\u00a02020-020 concerning the vulnerability in MELSOFT FieldDeviceConfigurator.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2020-020_en.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ]
+        }
+      ]
+    }
+  ]
+}

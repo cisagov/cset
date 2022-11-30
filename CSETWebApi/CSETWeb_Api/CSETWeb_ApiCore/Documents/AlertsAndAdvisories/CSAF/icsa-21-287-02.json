@@ -1,0 +1,407 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Harshit Shukla reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker with access to the host to view sensitive information, gain code execution, cause a redirection to an arbitrary external domain, and perform actions on behalf of an unsuspecting user.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Transportation Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: India",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-287-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-287-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Uffizio GPS Tracker",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:11.663643+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-287-02",
+      "initial_release_date": "2021-10-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:11.663643+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "GPS Tracker - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GPS Tracker"
+          }
+        ],
+        "category": "vendor",
+        "name": "Uffizio"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-17483",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Visiting through the browser or doing curl on the vulnerable host at Port 9000 responds with JSON body, revealing information about deployed GPS devices.CVE-2020-17483 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-17483"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Uffizio is aware of these vulnerabilities and has not supplied any mitigations or workarounds. Contact Uffizio for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.uffizio.com/contact"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-17485",
+      "cwe": {
+        "id": "CWE-434",
+        "name": "Unrestricted Upload of File with Dangerous Type"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The web server can be compromised by uploading and executing a web/reverse shell. An attacker could then run commands, browse system files, and browse local resources.CVE-2020-17485 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-17485"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Uffizio is aware of these vulnerabilities and has not supplied any mitigations or workarounds. Contact Uffizio for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.uffizio.com/contact"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-17484",
+      "cwe": {
+        "id": "CWE-601",
+        "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker can construct a URL within the application that causes a redirection to an arbitrary external domain.CVE-2020-17484 has been assigned to this vulnerability. A CVSS v3 base score of 4.7 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-17484"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Uffizio is aware of these vulnerabilities and has not supplied any mitigations or workarounds. Contact Uffizio for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.uffizio.com/contact"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.7,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32927",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker may be able to inject client-side JavaScript code on multiple instances within the application.CVE-2021-32927 has been assigned to this vulnerability. A CVSS v3 base score of 7.1 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-32927"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Uffizio is aware of these vulnerabilities and has not supplied any mitigations or workarounds. Contact Uffizio for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.uffizio.com/contact"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32929",
+      "cwe": {
+        "id": "CWE-352",
+        "name": "Cross-Site Request Forgery (CSRF)"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "This application-wide vulnerability may allow an attacker to perform unintended actions on behalf of a user.CVE-2021-32929 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-32929"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Uffizio is aware of these vulnerabilities and has not supplied any mitigations or workarounds. Contact Uffizio for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.uffizio.com/contact"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

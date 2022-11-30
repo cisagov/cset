@@ -1,0 +1,1242 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Ta-Lun Yen of TXOne IoT/ICS Security Research Labs of Trend Micro, working with Trend Micro\u2019s Zero Day Initiative, reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could be used to hijack TCP sessions and allow remote command execution.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-245-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-245-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Mitsubishi Electric Multiple Products (Update D)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:40.730692+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-20-245-01",
+      "initial_release_date": "2022-05-31T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:40.730692+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 13",
+                "product": {
+                  "name": "R12CCPU-V - <= 13",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "R12CCPU-V"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22081",
+                "product": {
+                  "name": "Q03UDECPU - 5  digits of serial number <= 22081",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Q03UDECPU"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "IU1-1M20-D - *",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IU1-1M20-D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22081",
+                "product": {
+                  "name": "QnUDEHCPU(n=04/06/10/13/20/26/50/100) - 5  digits of serial number <= 22081",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QnUDEHCPU(n=04/06/10/13/20/26/50/100)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.210",
+                "product": {
+                  "name": "FX5UC-32M*/**-TS - <= 1.210",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX5UC-32M*/**-TS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2020",
+                "product": {
+                  "name": "FR-F800-E Series - <= 2020",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR-F800-E Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 14",
+                "product": {
+                  "name": "RD78Gn(n=48163264) - <= 14",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RD78Gn(n=48163264)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Q06CCPU-V - *",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Q06CCPU-V"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22051",
+                "product": {
+                  "name": "L26CPU-(P)BT - 5  digits of serial number <= 22051",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "L26CPU-(P)BT"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 01.44.000",
+                "product": {
+                  "name": "GOT2000 Series GT21 Model - <= 01.44.000",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GOT2000 Series GT21 Model"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 03",
+                "product": {
+                  "name": "GT25-J71GN13-T2 - <= 03",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT25-J71GN13-T2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 21092",
+                "product": {
+                  "name": "QJ71E71-100 - 5  digits of serial number <= 21092",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QJ71E71-100"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "NZ2FT-MT - *",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "NZ2FT-MT"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2020",
+                "product": {
+                  "name": "FR-E800-EPA Series Production - <= 2020",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR-E800-EPA Series Production"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.002",
+                "product": {
+                  "name": "FX5-ENET - <= 1.002",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX5-ENET"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "GOT1000 Series GT14 Model - *",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GOT1000 Series GT14 Model"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 24031",
+                "product": {
+                  "name": "Q24DHCCPU-V - 5  digits of serial number <= 24031",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Q24DHCCPU-V"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "MR-J4-TM - *",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MR-J4-TM"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "LE7-40GU-L - *",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "LE7-40GU-L"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 20082",
+                "product": {
+                  "name": "QJ71MT91 - 5  digits of serial number <= 20082",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QJ71MT91"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "01",
+                "product": {
+                  "name": "RD55UP12-V - 01",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RD55UP12-V"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 24031",
+                "product": {
+                  "name": "Q24DHCCPU-VG - 5  digits of serial number <= 24031",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Q24DHCCPU-VG"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 48",
+                "product": {
+                  "name": "RJ71EN71 - <= 48",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RJ71EN71"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22051",
+                "product": {
+                  "name": "LnCPU(-P)(n=02/06/26) - 5  digits of serial number <= 22051",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "LnCPU(-P)(n=02/06/26)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2020",
+                "product": {
+                  "name": "FR-A8NCG - <= 2020",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR-A8NCG"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "NZ2FT-EIP - *",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "NZ2FT-EIP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "QJ71WS96 - *",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QJ71WS96"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2020",
+                "product": {
+                  "name": "FR-A800-E Series - <= 2020",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR-A800-E Series"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "QJ71MES96 - *",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QJ71MES96"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 50",
+                "product": {
+                  "name": "RnCPU(n=04/08/16/32/120) - <= 50",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnCPU(n=04/08/16/32/120)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 01.44.000",
+                "product": {
+                  "name": "GS Series GS21 Model - <= 01.44.000",
+                  "product_id": "CSAFPID-00031"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GS Series GS21 Model"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "3  digits of serial number <= 20X",
+                "product": {
+                  "name": "FX3GE-**M*/** - 3  digits of serial number <= 20X",
+                  "product_id": "CSAFPID-00032"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX3GE-**M*/**"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.002",
+                "product": {
+                  "name": "FX5-ENET/IP - <= 1.002",
+                  "product_id": "CSAFPID-00033"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX5-ENET/IP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.03D",
+                "product": {
+                  "name": "NZ2GACP620-60 - <= 1.03D",
+                  "product_id": "CSAFPID-00034"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "NZ2GACP620-60"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Conveyor Tracking Application APR-nTR3FH APR-nTR6FH APR-nTR12FH APR-nTR20FH(n=12) - *",
+                  "product_id": "CSAFPID-00035"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Conveyor Tracking Application APR-nTR3FH APR-nTR6FH APR-nTR12FH APR-nTR20FH(n=12)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22031",
+                "product": {
+                  "name": "QnUDPVCPU(n=04/06/13/26) - 5  digits of serial number <= 22031",
+                  "product_id": "CSAFPID-00036"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QnUDPVCPU(n=04/06/13/26)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2020",
+                "product": {
+                  "name": "FR-E800-EPB Series Production - <= 2020",
+                  "product_id": "CSAFPID-00037"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR-E800-EPB Series Production"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 05",
+                "product": {
+                  "name": "RnPSFCPU(n=08/16/32/120) - <= 05",
+                  "product_id": "CSAFPID-00038"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnPSFCPU(n=08/16/32/120)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "MR-JE-C - *",
+                  "product_id": "CSAFPID-00039"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MR-JE-C"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 22",
+                "product": {
+                  "name": "RnSFCPU (n=08/16/32/120) - <= 22",
+                  "product_id": "CSAFPID-00040"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnSFCPU (n=08/16/32/120)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.000",
+                "product": {
+                  "name": "FX5-CCLGN-MS - 1.000",
+                  "product_id": "CSAFPID-00041"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX5-CCLGN-MS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 22031",
+                "product": {
+                  "name": "QnUDVCPU(n=03/04/06/13/26) - 5  digits of serial number <= 22031",
+                  "product_id": "CSAFPID-00042"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "QnUDVCPU(n=03/04/06/13/26)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.14",
+                "product": {
+                  "name": "FX3U-ENET - <= 1.14",
+                  "product_id": "CSAFPID-00043"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX3U-ENET"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "5  digits of serial number <= 21092",
+                "product": {
+                  "name": "LJ71E71-100 - 5  digits of serial number <= 21092",
+                  "product_id": "CSAFPID-00044"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "LJ71E71-100"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.14",
+                "product": {
+                  "name": "FX3U-ENET-P502 - <= 1.14",
+                  "product_id": "CSAFPID-00045"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX3U-ENET-P502"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.14",
+                "product": {
+                  "name": "FX3U-ENET-L - <= 1.14",
+                  "product_id": "CSAFPID-00046"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX3U-ENET-L"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.03D",
+                "product": {
+                  "name": "NZ2GACP620-300 - <= 1.03D",
+                  "product_id": "CSAFPID-00047"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "NZ2GACP620-300"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.22",
+                "product": {
+                  "name": "FX3U-ENET-ADP - <= 1.22",
+                  "product_id": "CSAFPID-00048"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX3U-ENET-ADP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 11",
+                "product": {
+                  "name": "RJ71GN11-T2 - <= 11",
+                  "product_id": "CSAFPID-00049"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RJ71GN11-T2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 14",
+                "product": {
+                  "name": "RD78GHV - <= 14",
+                  "product_id": "CSAFPID-00050"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RD78GHV"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 14",
+                "product": {
+                  "name": "RD78GHW - <= 14",
+                  "product_id": "CSAFPID-00051"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RD78GHW"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 50",
+                "product": {
+                  "name": "RnENCPU(n=04/08/16/32/120) - <= 50",
+                  "product_id": "CSAFPID-00052"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnENCPU(n=04/08/16/32/120)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.000",
+                "product": {
+                  "name": "FX5UJ-**M*/** - 1.000",
+                  "product_id": "CSAFPID-00053"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FX5UJ-**M*/**"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 18",
+                "product": {
+                  "name": "RnCPU(n=00/01/02) - <= 18",
+                  "product_id": "CSAFPID-00054"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnCPU(n=00/01/02)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 09",
+                "product": {
+                  "name": "RD55UP06-V - <= 09",
+                  "product_id": "CSAFPID-00055"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RD55UP06-V"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 24",
+                "product": {
+                  "name": "RnPCPU(n=08/16/32/120) - <= 24",
+                  "product_id": "CSAFPID-00056"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RnPCPU(n=08/16/32/120)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Mitsubishi Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-16226",
+      "cwe": {
+        "id": "CWE-342",
+        "name": "Predictable Exact Value from Previous Values"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected products are vulnerable to impersonation of a legitimate device by a malicious actor, which may allow an attacker to remotely execute arbitrary commands.CVE-2020-16226 has been assigned to this vulnerability. A CVSS v3 base score of 7.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038",
+          "CSAFPID-00039",
+          "CSAFPID-00040",
+          "CSAFPID-00041",
+          "CSAFPID-00042",
+          "CSAFPID-00043",
+          "CSAFPID-00044",
+          "CSAFPID-00045",
+          "CSAFPID-00046",
+          "CSAFPID-00047",
+          "CSAFPID-00048",
+          "CSAFPID-00049",
+          "CSAFPID-00050",
+          "CSAFPID-00051",
+          "CSAFPID-00052",
+          "CSAFPID-00053",
+          "CSAFPID-00054",
+          "CSAFPID-00055",
+          "CSAFPID-00056"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-16226"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric recommends that users take the following mitigation measures to minimize the risk of exploiting this vulnerability:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi also recommends users update the following products to their respective versions:\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please contact a Mitsubishi Electric representative for more information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056"
+          ],
+          "url": "https://www.mitsubishielectric.com/fa/support/index.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056"
+          ]
+        }
+      ]
+    }
+  ]
+}

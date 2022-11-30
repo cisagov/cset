@@ -1,0 +1,305 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Florent Montel and Fr\u00e9d\u00e9ric Cikala discovered the authentication bypass vulnerability, and Davy\u00a0Douhine of RandoriSec discovered the improper access control vulnerability."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "ATTENTION: Remotely exploitable/low skill level to exploit",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Commercial Facilities, Energy, Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Europe, United States, Australia",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Windhagen, Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC/ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-045-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-045-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Geutebr\u00fcck IP Cameras",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:02.430884+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-17-045-02",
+      "initial_release_date": "2017-02-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:02.430884+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.11.0.12",
+                "product": {
+                  "name": "G-Cam/EFD-2250 - 1.11.0.12",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "G-Cam/EFD-2250"
+          }
+        ],
+        "category": "vendor",
+        "name": "Geutebr\u00fcck"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-5174",
+      "cwe": {
+        "id": "CWE-288",
+        "name": "Authentication Bypass Using an Alternate Path or Channel"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An authentication bypass vulnerability has been identified. The existing file system architecture could allow attackers to bypass the access control that may allow remote code execution.CVE-2017-5174 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5174"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Geutebr\u00fcck recommends customers download and update with the newest patch from this location by registering for a new web club account or logging into an existing account.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.geutebrueck.com/en_EN/login.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "http://www.geutebrueck.com/en_EN/login.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2017-5173",
+      "cwe": {
+        "id": "CWE-78",
+        "name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An improper neutralization of special elements vulnerability has been identified. If special elements are not properly neutralized, an attacker can call multiple parameters that can allow access to the root level operating system which could allow remote code execution.CVE-2017-5173 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5173"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Geutebr\u00fcck recommends customers download and update with the newest patch from this location by registering for a new web club account or logging into an existing account.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.geutebrueck.com/en_EN/login.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "http://www.geutebrueck.com/en_EN/login.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

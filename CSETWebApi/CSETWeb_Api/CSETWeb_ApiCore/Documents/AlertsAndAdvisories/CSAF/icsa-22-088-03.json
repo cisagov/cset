@@ -11,28 +11,88 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely. Successful exploitation of these vulnerabilities could allow an attacker to modify a victim\u2019s system files or information, disclose application full path, disclose sensitive information to an unauthorized actor, and launch a common web attack.. CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to modify a victim\u2019s system files or information, disclose application full path, disclose sensitive information to an unauthorized actor, and launch a common web attack.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Switzerland",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-22-088-03 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-22-088-03 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-088-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
       }
     ],
     "title": "Hitachi Energy LinkOne WebView",
@@ -40,8 +100,8 @@
       "current_release_date": "2022-10-10T21:50:53.606179+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-22-088-03",
@@ -50,12 +110,12 @@
         {
           "date": "2022-10-10T21:50:53.606179+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,10 +126,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.22",
+                "name": "3.25",
                 "product": {
-                  "name": "Hitachi Energy - v3.22",
-                  "product_id": "1"
+                  "name": "LinkOne WebView - 3.25",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
@@ -80,10 +140,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.24",
+                "name": "3.23",
                 "product": {
-                  "name": "Hitachi Energy - v3.24",
-                  "product_id": "2"
+                  "name": "LinkOne WebView - 3.23",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
@@ -94,10 +154,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.26",
+                "name": "3.22",
                 "product": {
-                  "name": "Hitachi Energy - v3.26",
-                  "product_id": "3"
+                  "name": "LinkOne WebView - 3.22",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
@@ -108,10 +168,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.25",
+                "name": "3.24",
                 "product": {
-                  "name": "Hitachi Energy - v3.25",
-                  "product_id": "4"
+                  "name": "LinkOne WebView - 3.24",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
@@ -122,10 +182,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.20",
+                "name": "3.26",
                 "product": {
-                  "name": "Hitachi Energy - v3.20",
-                  "product_id": "5"
+                  "name": "LinkOne WebView - 3.26",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
@@ -136,10 +196,10 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "v3.23",
+                "name": "3.20",
                 "product": {
-                  "name": "Hitachi Energy - v3.23",
-                  "product_id": "6"
+                  "name": "LinkOne WebView - 3.20",
+                  "product_id": "CSAFPID-0006"
                 }
               }
             ],
@@ -162,22 +222,28 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Multiple stored XSS vulnerabilities exist in the LinkOne application, allowing multiple web attacks and the theft of sensitive information.",
+          "text": "Multiple stored XSS vulnerabilities exist in the LinkOne application, allowing multiple web attacks and the theft of sensitive information.CVE-2021-40337 has been assigned to these vulnerabilities. A CVSS v3 base score of 4.2 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-40337"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N"
         }
@@ -187,12 +253,12 @@
           "category": "vendor_fix",
           "details": "Hitachi Energy recommends applying the available security patch or updating LinkOne to v3.27. Contact Hitachi Energy for more information on applying the security patch or updating LinkOne to v3.27",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us"
         },
@@ -200,12 +266,12 @@
           "category": "vendor_fix",
           "details": "Recommended security practices and firewall configurations can help protect the application from attacks that originate from outside the network. Such practices include physically protecting the application from direct access by unauthorized personnel, having no direct connections to the Internet. For the end-user of the application, it is recommended to use the latest browser when accessing the LinkOne application.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -213,12 +279,12 @@
           "category": "vendor_fix",
           "details": "For more information, review Hitachi Energy\u2019s security advisory 8DBD000079",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000079&LanguageCode=en&DocumentPartId=&Action=Launch"
         },
@@ -226,12 +292,12 @@
           "category": "vendor_fix",
           "details": "Additional recommendation is to follow the hardening guidelines published by The Center for Internet Security (CIS) to protect the host Operating System on which the LinkOne is hosted.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisecurity.org/about-us/"
         },
@@ -239,66 +305,14 @@
           "category": "vendor_fix",
           "details": "For additional information and support please contact your product provider or Hitachi Energy service.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -310,16 +324,15 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ]
         }
-      ],
-      "title": "CVE-2021-40337"
+      ]
     },
     {
       "cve": "CVE-2021-40338",
@@ -330,22 +343,28 @@
       "notes": [
         {
           "category": "summary",
-          "text": "When an error happens during the query operation in the application due to a misconfiguration in the web server configuration file, debug mode in LinkOne application is activated and shows the full path of the directory.",
+          "text": "When an error happens during the query operation in the application due to a misconfiguration in the web server configuration file, debug mode in LinkOne application is activated and shows the full path of the directory.CVE-2021-40338 has been assigned to this vulnerability. A CVSS v3 base score of 3.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-40338"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
         }
@@ -355,12 +374,12 @@
           "category": "vendor_fix",
           "details": "Hitachi Energy recommends applying the available security patch or updating LinkOne to v3.27. Contact Hitachi Energy for more information on applying the security patch or updating LinkOne to v3.27",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us"
         },
@@ -368,12 +387,12 @@
           "category": "vendor_fix",
           "details": "Recommended security practices and firewall configurations can help protect the application from attacks that originate from outside the network. Such practices include physically protecting the application from direct access by unauthorized personnel, having no direct connections to the Internet. For the end-user of the application, it is recommended to use the latest browser when accessing the LinkOne application.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -381,12 +400,12 @@
           "category": "vendor_fix",
           "details": "For more information, review Hitachi Energy\u2019s security advisory 8DBD000079",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000079&LanguageCode=en&DocumentPartId=&Action=Launch"
         },
@@ -394,12 +413,12 @@
           "category": "vendor_fix",
           "details": "Additional recommendation is to follow the hardening guidelines published by The Center for Internet Security (CIS) to protect the host Operating System on which the LinkOne is hosted.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisecurity.org/about-us/"
         },
@@ -407,66 +426,14 @@
           "category": "vendor_fix",
           "details": "For additional information and support please contact your product provider or Hitachi Energy service.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -478,16 +445,15 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ]
         }
-      ],
-      "title": "CVE-2021-40338"
+      ]
     },
     {
       "cve": "CVE-2021-40339",
@@ -497,22 +463,28 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The LinkOne application is lacking HTTP Headers, allowing an attacker to retrieve sensitive information.",
+          "text": "The LinkOne application is lacking HTTP Headers, allowing an attacker to retrieve sensitive information.CVE-2021-40339 has been assigned to this vulnerability. A CVSS v3 base score of 3.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-40339"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
         }
@@ -522,12 +494,12 @@
           "category": "vendor_fix",
           "details": "Hitachi Energy recommends applying the available security patch or updating LinkOne to v3.27. Contact Hitachi Energy for more information on applying the security patch or updating LinkOne to v3.27",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us"
         },
@@ -535,12 +507,12 @@
           "category": "vendor_fix",
           "details": "Recommended security practices and firewall configurations can help protect the application from attacks that originate from outside the network. Such practices include physically protecting the application from direct access by unauthorized personnel, having no direct connections to the Internet. For the end-user of the application, it is recommended to use the latest browser when accessing the LinkOne application.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -548,12 +520,12 @@
           "category": "vendor_fix",
           "details": "For more information, review Hitachi Energy\u2019s security advisory 8DBD000079",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000079&LanguageCode=en&DocumentPartId=&Action=Launch"
         },
@@ -561,12 +533,12 @@
           "category": "vendor_fix",
           "details": "Additional recommendation is to follow the hardening guidelines published by The Center for Internet Security (CIS) to protect the host Operating System on which the LinkOne is hosted.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisecurity.org/about-us/"
         },
@@ -574,66 +546,14 @@
           "category": "vendor_fix",
           "details": "For additional information and support please contact your product provider or Hitachi Energy service.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -645,16 +565,15 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ]
         }
-      ],
-      "title": "CVE-2021-40339"
+      ]
     },
     {
       "cve": "CVE-2021-40340",
@@ -665,22 +584,28 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Misconfiguration in the ASP server causes server and ASP.net information to be shown. An attacker can use this information as a reconnaissance for further exploitation.",
+          "text": "Misconfiguration in the ASP server causes server and ASP.net information to be shown. An attacker can use this information as a reconnaissance for further exploitation.CVE-2021-40340 has been assigned to this vulnerability. A CVSS v3 base score of 3.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-40340"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
         }
@@ -690,12 +615,12 @@
           "category": "vendor_fix",
           "details": "Hitachi Energy recommends applying the available security patch or updating LinkOne to v3.27. Contact Hitachi Energy for more information on applying the security patch or updating LinkOne to v3.27",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us"
         },
@@ -703,12 +628,12 @@
           "category": "vendor_fix",
           "details": "Recommended security practices and firewall configurations can help protect the application from attacks that originate from outside the network. Such practices include physically protecting the application from direct access by unauthorized personnel, having no direct connections to the Internet. For the end-user of the application, it is recommended to use the latest browser when accessing the LinkOne application.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -716,12 +641,12 @@
           "category": "vendor_fix",
           "details": "For more information, review Hitachi Energy\u2019s security advisory 8DBD000079",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://search.abb.com/library/Download.aspx?DocumentID=8DBD000079&LanguageCode=en&DocumentPartId=&Action=Launch"
         },
@@ -729,12 +654,12 @@
           "category": "vendor_fix",
           "details": "Additional recommendation is to follow the hardening guidelines published by The Center for Internet Security (CIS) to protect the host Operating System on which the LinkOne is hosted.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.cisecurity.org/about-us/"
         },
@@ -742,66 +667,14 @@
           "category": "vendor_fix",
           "details": "For additional information and support please contact your product provider or Hitachi Energy service.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ],
           "url": "https://www.hitachienergy.com/contact-us/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ],
-          "url": "https://www.cisa.gov/uscert/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -813,16 +686,15 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
           ]
         }
-      ],
-      "title": "CVE-2021-40340"
+      ]
     }
   ]
 }

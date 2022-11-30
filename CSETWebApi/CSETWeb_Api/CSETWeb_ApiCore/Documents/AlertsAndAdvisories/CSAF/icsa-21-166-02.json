@@ -1,0 +1,447 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Irfan Ahmed and Adeen Ayub of Virginia Commonwealth University and Hyunguk Yoo of the University of New Orleans reported these vulnerabilities to Automation Direct."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to log in as a currently or previously authenticated user or discover passwords for valid users.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Information Technology",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-166-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-166-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Automation Direct CLICK PLC CPU Modules",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:16.422003+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-166-02",
+      "initial_release_date": "2021-06-15T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:16.422003+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "C0-1x < 3.00",
+                "product": {
+                  "name": "CLICK PLC CPU Modules - C0-1x < 3.00",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CLICK PLC CPU Modules"
+          }
+        ],
+        "category": "vendor",
+        "name": "Automation Direct"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-32980",
+      "cwe": {
+        "id": "CWE-288",
+        "name": "Authentication Bypass Using an Alternate Path or Channel"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The firmware does not protect against additional software programming connections. An attacker can connect to the PLC while an existing connection is already active.CVE-2021-32980 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32980"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct reports these vulnerabilities are all mitigated by Version 3.00 and recommends users update software and firmware to the latest version.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.automationdirect.com/support/software-downloads?itemcode=CLICK"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct also recommends users follow its security guidelines.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cdn.automationdirect.com/static/manuals/c0userm/appxa.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32984",
+      "cwe": {
+        "id": "CWE-288",
+        "name": "Authentication Bypass Using an Alternate Path or Channel"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "All programming connections receive the same unlocked privileges, which can result in a privilege escalation. During the time the PLC is unlocked by an authorized user, an attacker can connect to the PLC and read the project without authorization.CVE-2021-32984 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32984"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct reports these vulnerabilities are all mitigated by Version 3.00 and recommends users update software and firmware to the latest version.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.automationdirect.com/support/software-downloads?itemcode=CLICK"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct also recommends users follow its security guidelines.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cdn.automationdirect.com/static/manuals/c0userm/appxa.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32986",
+      "cwe": {
+        "id": "CWE-288",
+        "name": "Authentication Bypass Using an Alternate Path or Channel"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "After the PLC is unlocked by an authorized user, the unlocked state does not timeout. If the programming software is interrupted, the PLC remains unlocked. All subsequent programming connections are allowed without authorization. The PLC is only relocked by a power cycle, or when the programming software disconnects correctly.CVE-2021-32986 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32986"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct reports these vulnerabilities are all mitigated by Version 3.00 and recommends users update software and firmware to the latest version.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.automationdirect.com/support/software-downloads?itemcode=CLICK"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct also recommends users follow its security guidelines.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cdn.automationdirect.com/static/manuals/c0userm/appxa.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32982",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Passwords are sent as plaintext during unlocking and project transfers. An attacker who has network visibility can observe the password exchange.CVE-2021-32982 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32982"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct reports these vulnerabilities are all mitigated by Version 3.00 and recommends users update software and firmware to the latest version.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.automationdirect.com/support/software-downloads?itemcode=CLICK"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct also recommends users follow its security guidelines.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cdn.automationdirect.com/static/manuals/c0userm/appxa.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32978",
+      "cwe": {
+        "id": "CWE-256",
+        "name": "Unprotected Storage of Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The programming protocol allows for a previously entered password and lock state to be read by an attacker. If the previously entered password was successful, the attacker can then use the password to unlock the PLC.CVE-2021-32978 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32978"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct reports these vulnerabilities are all mitigated by Version 3.00 and recommends users update software and firmware to the latest version.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.automationdirect.com/support/software-downloads?itemcode=CLICK"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Automation Direct also recommends users follow its security guidelines.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cdn.automationdirect.com/static/manuals/c0userm/appxa.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

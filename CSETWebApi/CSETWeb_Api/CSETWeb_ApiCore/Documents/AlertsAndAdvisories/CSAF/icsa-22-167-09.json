@@ -1,0 +1,907 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could cause crashes and unrestricted file access, impacting the product\u2019s confidentiality, integrity, and availability.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-22-167-09 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-167-09"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Siemens SCALANCE LPE9403 Third-Party Vulnerabilities",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:08.935919+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-22-167-09",
+      "initial_release_date": "2022-06-16T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:08.935919+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.0",
+                "product": {
+                  "name": "SCALANCE LPE9403 - < 2.0",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE LPE9403"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-27304",
+      "cwe": {
+        "id": "CWE-22",
+        "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The CivetWeb web library does not validate uploaded filepaths when running on an OS other than Windows when using the built-in HTTP form-based file upload mechanism, via the mg_handle_form_request API. Web applications using the file upload form handler, as well as those that use parts of the user-controlled filename in the output path, are susceptible to directory traversal.CVE-2020-27304 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-27304"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-20317",
+      "cwe": {
+        "id": "CWE-665",
+        "name": "Improper Initialization"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A corrupted timer tree caused the task wakeup to be missing in the timerqueue_add function in lib/timerqueue.c. This flaw allows a local attacker with special user privileges to cause a denial-of-service condition, slowing and eventually stopping the system while running OSP.CVE-2021-20317 has been assigned to this vulnerability. A CVSS v3 base score of 4.4 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-20317"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.4,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33910",
+      "cwe": {
+        "id": "CWE-770",
+        "name": "Allocation of Resources Without Limits or Throttling"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The use of alloca function with an uncontrolled size in function unit_name_path_escape allows a local attacker, able to mount a filesystem on a very long path, to crash systemd and the whole system by allocating a large space in the stack.CVE-2021-33910 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33910"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-36221",
+      "cwe": {
+        "id": "CWE-362",
+        "name": "Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A race condition vulnerability exists in Go. The incoming requests\u2019 bodies are not closed after the handler panic, which could lead to a Reverse Proxy crash.CVE-2021-36221 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-36221"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-39293",
+      "cwe": {
+        "id": "CWE-770",
+        "name": "Allocation of Resources Without Limits or Throttling"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The fix for CVE-2021-33196 can be bypassed by crafted inputs. As a result, the NewReader and OpenReader functions in archive/zip can still cause a panic or an unrecoverable fatal error when reading an archive that claims to contain a large number of files, regardless of its actual size.CVE-2021-39293 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-39293"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-41089",
+      "cwe": {
+        "id": "CWE-281",
+        "name": "Improper Preservation of Permissions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in Moby (Docker Engine) where attempting to copy files using docker cp into a specially crafted container can result in UNIX file permission changes for existing files in the host\u2019s filesystem, widening access to others. This does not directly allow files to be read, modified, or executed without an additional cooperating process.CVE-2021-41089 has been assigned to this vulnerability. A CVSS v3 base score of 2.8 has been calculated; the CVSS vector string is (AV:L/AC:H/PR:L/UI:N/S:C/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-41089"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 2.8,
+            "baseSeverity": "LOW",
+            "vectorString": "CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-41091",
+      "cwe": {
+        "id": "CWE-732",
+        "name": "Incorrect Permission Assignment for Critical Resource"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in Moby (Docker Engine) where the data directory contains subdirectories with insufficiently restricted permissions, allowing otherwise unprivileged Linux users to traverse directory contents and execute programs.CVE-2021-41091 has been assigned to this vulnerability. A CVSS v3 base score of 6.3 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-41091"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-41092",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in the Docker CLI where running docker login my-private-registry.example.com with a misconfigured configuration file would result in any provided credentials being sent to registry-1.docker.io rather than the intended private registry.CVE-2021-41092 has been assigned to this vulnerability. A CVSS v3 base score of 5.4 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-41092"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.4,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-41103",
+      "cwe": {
+        "id": "CWE-22",
+        "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in container where container root directories and some plugins have insufficiently restricted permissions, allowing otherwise unprivileged Linux users to traverse directory contents and execute programs.CVE-2021-41103 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-41103"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2022-0847",
+      "cwe": {
+        "id": "CWE-281",
+        "name": "Improper Preservation of Permissions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability exists in the \u201cflags\u201d member of the new pipe buffer structure in the Linux kernel and could contain stale values. An unprivileged local user could use this to write to pages in the page cache backed by read only files and as such escalate their privileges on the system.CVE-2022-0847 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-0847"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users of the affected product update to Version 2.0 or later.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/ view/109811123/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 operational guidelines for industrial security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-222547",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-222547.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

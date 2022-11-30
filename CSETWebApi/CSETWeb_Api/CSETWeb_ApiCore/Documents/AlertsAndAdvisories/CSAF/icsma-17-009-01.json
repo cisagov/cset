@@ -1,0 +1,300 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "This updated advisory is a follow-up to the original advisory titled ICSMA-17-009-01 St. Jude Merlin@home Transmitter Vulnerability that was published January 9, 2017, on the NCCIC/ICS-CERT web site."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "This updated advisory is a follow-up to the original advisory titled ICSMA-17-009-01 St. Jude Merlin@home Transmitter Vulnerability that was published January 9, 2017, on the NCCIC/ICS-CERT web site.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Company headquarters location"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-17-009-01A - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-17-009-01A"
+      }
+    ],
+    "title": "St. Jude Merlin@home Transmitter Vulnerability (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:03.719022+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-17-009-01A",
+      "initial_release_date": "2017-02-06T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:03.719022+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 8.2.2",
+                "product": {
+                  "name": "Inductive models EX1100 - < 8.2.2",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Inductive models EX1100"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 8.2.2",
+                "product": {
+                  "name": "Inductive models EX1100 with MerlinOnDemand capability - < 8.2.2",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Inductive models EX1100 with MerlinOnDemand capability"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 8.2.2",
+                "product": {
+                  "name": "RF models EX1150 - < 8.2.2",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RF models EX1150"
+          }
+        ],
+        "category": "vendor",
+        "name": "St. Jude Medical"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-5149",
+      "cwe": {
+        "id": "CWE-300",
+        "name": "Channel Accessible by Non-Endpoint"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The identities of the endpoints for the communication channel between the transmitter and St. Jude Medical\u2019s web site, Merlin.net, are not verified. This may allow a remote attacker to access or influence communications between the identified endpoints. CVE-2017-5149 has been assigned to this vulnerability. A CVSS v3 base score of 8.9 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "cwe.mitre.org",
+          "url": "http://cwe.mitre.org/data/definitions/300.html"
+        },
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5149"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "St. Jude Medical has developed an updated software version for all Merlin@home transmitters, including inductive Merlin@home transmitters with the MerlinOnDemand capability, which mitigates the identified vulnerability and provides additional security enhancements.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The new version of the transmitter software, Version 8.2.2, will be automatically updated over a period of several months, when all models of the Merlin@home transmitters are connected to an Ethernet, WiFi, cellular network, or a landline. St. Jude Medical recommends that users keep Merlin@home transmitters powered and connected at all times to receive this update and future updates.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information about the vulnerability or the software update process, users can review information from St. Jude Medical at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://media.sjm.com/newsroom/news-releases/news-releases-details/2017/St-Jude-Medical-Announces-Cybersecurity-Updates/default.aspx",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "http://media.sjm.com/newsroom/news-releases/news-releases-details/2017/St-Jude-Medical-Announces-Cybersecurity-Updates/default.aspx"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Patients and healthcare providers with questions can call the Merlin hotline at1-877-696-3754 or visit www.sjm.com/Merlin for more information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "http://www.sjm.com/Merlin"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The FDA issued a safety communication on January 9, 2017, Cybersecurity Vulnerabilities Identified in St. Jude Medical\u2019s Implantable Cardiac Devices and Merlin@home Transmitter, which includes recommendations for patients and healthcare providers and is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.fda.gov/MedicalDevices/Safety/AlertsandNotices/ucm535843.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "http://www.fda.gov/MedicalDevices/Safety/AlertsandNotices/ucm535843.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "St. Jude Medical is continuing to work with ICS-CERT and the FDA to address additional security issues that have been identified. As additional information becomes available, ICS-CERT in coordination with the FDA, will release additional information products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds Internet users that directly connecting any device to the Internet without explicitly controlling communication with or access to the connected device, significantly increases the risk of a cybersecurity-related event.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT provides recommended security practices on the ICS-CERT web page at\u00a0http://ics-cert.us-cert.gov/content/recommended-practices. ICS-CERT reminds members of the healthcare and public health sector to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/content/recommended-practices"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site (http://ics-cert.us-cert.gov/).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.9,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Billy Rios and Jonathan Butts of Whitescope LLC reported these vulnerabilities to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "As part of the normal functionality of this device, the N\u2019Vision Clinician Programmer may store Personal Health Information (PHI) or Personal Identifying Information (PII). Successful exploitation of these vulnerabilities may allow an attacker with physical access to an 8870 N\u2019Vision Compact Flash card to access this PHI or PII.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Dublin, Ireland",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-18-137-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-18-137-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Medtronic N'Vision Clinician Programmer (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:05.884830+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-18-137-01",
+      "initial_release_date": "2018-07-12T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:05.884830+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "8870 N'Vision removable Application Card - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "8870 N'Vision removable Application Card"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "8840 N'Vision Clinician Programmer - *",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "8840 N'Vision Clinician Programmer"
+          }
+        ],
+        "category": "vendor",
+        "name": "Medtronic"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-8849",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product does not encrypt the following sensitive information while at rest: PII \u2013 Personally Identifiable Information. Some combination of personal data that enables the unique identification of an individual. PII is defined as \u201cinformation that can be used to distinguish or trace an individual\u2019s identity, either alone or when combined with other personal or identifying information that is linked or linkable to a specific individual.\u201dPHI \u2013 Protected Health Information. Some combination of PII and associated health related data.CVE-2018-8849 has been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8849"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has not developed a product update to address the vulnerabilities, but is reinforcing security reminders within this advisory to help reduce the risk associated with the vulnerabilities.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The 8870 Therapy Application card stores PHI and PII as part of its normal operating procedure and should be handled, managed and secured in a manner consistent with the applicable laws for patient data privacy.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends users take additional defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, hospitals and clinicians should:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has released additional patient focused information, at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.medtronic.com/security",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.medtronic.com/security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-10631",
+      "cwe": {
+        "id": "CWE-693",
+        "name": "Protection Mechanism Failure"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The 8840 Clinician Programmer executes the application program from the 8870 Application Card. An attacker with physical access to an 8870 Application Card and sufficient technical capability can modify the contents of this card, including the binary executables. If modified to bypass protection mechanisms, this malicious code will be run when the card is inserted into an 8840 Clinician Programmer.CVE-2018-10631 has been assigned to this vulnerability. A CVSS v3 base\u00a0score of 6.3 has been assigned; the CVSS vector string is (AV:P/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-10631"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has not developed a product update to address the vulnerabilities, but is reinforcing security reminders within this advisory to help reduce the risk associated with the vulnerabilities.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The 8870 Therapy Application card stores PHI and PII as part of its normal operating procedure and should be handled, managed and secured in a manner consistent with the applicable laws for patient data privacy.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic recommends users take additional defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, hospitals and clinicians should:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Medtronic has released additional patient focused information, at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.medtronic.com/security",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.medtronic.com/security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    }
+  ]
+}

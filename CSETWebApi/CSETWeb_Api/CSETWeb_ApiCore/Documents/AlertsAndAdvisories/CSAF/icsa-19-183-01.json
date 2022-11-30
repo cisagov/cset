@@ -1,0 +1,298 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Zhang Xiaoming, Zhang Jiawei, Sun Zhonghao and Luo bing of CNCERT/CC reported this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could result in a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: France",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nNCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-183-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-183-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://ics-cert.us-cert.gov/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Schneider Electric Modicon Controllers",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:19.023364+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-183-01",
+      "initial_release_date": "2019-07-02T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:19.023364+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.01",
+                "product": {
+                  "name": "Modicon M340 - < 3.01",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon M340"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Modicon Quantum - *",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon Quantum"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Modicon Premium - *",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon Premium"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.80",
+                "product": {
+                  "name": "Modicon M580 - < 2.80",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Modicon M580"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6819",
+      "cwe": {
+        "id": "CWE-754",
+        "name": "Improper Check for Unusual or Exceptional Conditions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker could create a denial-of-service condition by sending a specific crafted Modbus frame to the affected device.CVE-2019-6819 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-6819"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has recommended the following to mitigate this vulnerability.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/M580_BMEP582040_SV2.80/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Modicon M340 \u2013 The vulnerability is fixed in v3.01 and is available for download below:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/M580_BMEP582040_SV2.80/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Modicon M580 \u2013 The vulnerability is fixed in v2.80 and is available for download below:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/M580_BMEP582040_SV2.80/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric\u2019s Modicon Quantum controllers have reached the end of their life and are no longer commercially available. They have been replaced by the Modicon M580 ePAC controller, Schneider Electric\u2019s most current product. Schneider Electric recommends users migrate to the Modicon M580 ePAC.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To mitigate risks associated with this Modbus vulnerability, users should immediately set up network segmentation and implement a firewall to block all unauthorized access to Port 502/TCP.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric general security recommendations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, please see Schneider Electric advisory: SEVD-2019-134-05",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://download.schneider-electric.com/files?p_enDocType=Technical+leaflet&p_File_Name=SEVD-2019-134-05+-+Modicon+Controller.pdf&p_Doc_Ref=SEVD-2019-134-05"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    }
+  ]
+}

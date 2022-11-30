@@ -1,0 +1,1213 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "n/a"
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow information disclosure, privilege escalation, or remote code execution.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Communications, Critical Manufacturing, Energy, Financial Services, Healthcare and Public Health, Transportation Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:\u00a0",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-043-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-043-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "WIBU SYSTEMS AG WibuKey Digital Rights Management (Update D)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:55.094201+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-043-03",
+      "initial_release_date": "2019-05-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:55.094201+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.20",
+                "product": {
+                  "name": "Siemens SICAM 230 - <= 7.20",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Siemens SICAM 230"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< P007",
+                "product": {
+                  "name": "3.16 - < P007",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "3.16"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Siemens SISHIP EMCS IMAC IPMS - *",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Siemens SISHIP EMCS IMAC IPMS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.20 (7.50 and 7.60 may also be affected if WibuKey was installed manually)",
+                "product": {
+                  "name": "Sprecher Automation SPRECON-V460 products - <= 7.20 (7.50 and 7.60 may also be affected if WibuKey was installed manually)",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Sprecher Automation SPRECON-V460 products"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 9.2",
+                "product": {
+                  "name": "COPA-DATA straton workbench - <= 9.2",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "COPA-DATA straton workbench"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.14.25 and 3.15.18",
+                "product": {
+                  "name": "Phoenix Contact MEVIEW3 - < 3.14.25 and 3.15.18",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Phoenix Contact MEVIEW3"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< P025",
+                "product": {
+                  "name": "3.14 - < P025",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "3.14"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< P018",
+                "product": {
+                  "name": "3.15 - < P018",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "3.15"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.20 (7.50 and 7.60 may also be affected if WibuKey was installed manually)",
+                "product": {
+                  "name": "COPA-DATA zenon products - <= 7.20 (7.50 and 7.60 may also be affected if WibuKey was installed manually)",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "COPA-DATA zenon products"
+          }
+        ],
+        "category": "vendor",
+        "name": "WIBU-SYSTEMS AG"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-3989",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A specially crafted IRP (I/O request packet) can cause the driver to return uninitialized memory, which may result in kernel memory disclosure.CVE-2018-3989 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3989"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Updated Wibu Systems Software can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.wibu.com/support/user/downloads-user-software.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.wibu.com/support/user/downloads-user-software.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has an updated software version for the affected SISHIP products that resolves the vulnerabilities. Users are advised to contact Siemens customer support for details.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has released the following updates for WinCC OA that address the WibuKey vulnerabilities (login required):",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "WinCC OA users can also apply the following general mitigations below to resolve the vulnerabilities.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to WibuKey DRM Version 6.50 or newer for all affected Siemens products. Siemens also recommends mitigating CVE-2018-3991 by blocking Port 22347/TCP. For detailed information, see Siemens security advisories SSA-760124, SSA-844562, and SSA-902727 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "COPA-DATA recommends users upgrade WibuKey DRM to Version 6.50a or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see COPA_DATA\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Sprecher Automation recommends users upgrade WibuKey DRM to Version 6.50b or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see Sprecher Automation\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact has calculated different CVSS vectors from those in the Vulnerability Overview section. See the Phoenix Contact or CERT@VDE advisory for details.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact recommends those using dongle-based licensing to update to WibuKey Version 6.50 or newer. MEVIEW3 Versions 3.14.25 and 3.15.18 will include Version 6.50 of WibuKey. For those using hardware code-based licensing, Phoenix Contact recommends removing the WibuKey application. For detailed information, the Phoenix Contact MEVIEW3 security advisory can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.phoenixcontact.com/psirt",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CERT@VDE has also published an advisory for the Phoenix Contact MEVIEW3 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://cert.vde.com/de-de/advisories/vde-2019-003",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-3990",
+      "cwe": {
+        "id": "CWE-787",
+        "name": "Out-of-bounds Write"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A specially crafted IRP (I/O request packet) can cause a buffer overflow resulting in kernel memory corruption, which may allow privilege escalation.CVE-2018-3990 has been assigned to this vulnerability. A CVSS v3 base score of 9.3 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3990"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Updated Wibu Systems Software can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.wibu.com/support/user/downloads-user-software.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.wibu.com/support/user/downloads-user-software.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has an updated software version for the affected SISHIP products that resolves the vulnerabilities. Users are advised to contact Siemens customer support for details.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has released the following updates for WinCC OA that address the WibuKey vulnerabilities (login required):",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "WinCC OA users can also apply the following general mitigations below to resolve the vulnerabilities.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to WibuKey DRM Version 6.50 or newer for all affected Siemens products. Siemens also recommends mitigating CVE-2018-3991 by blocking Port 22347/TCP. For detailed information, see Siemens security advisories SSA-760124, SSA-844562, and SSA-902727 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "COPA-DATA recommends users upgrade WibuKey DRM to Version 6.50a or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see COPA_DATA\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Sprecher Automation recommends users upgrade WibuKey DRM to Version 6.50b or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see Sprecher Automation\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact has calculated different CVSS vectors from those in the Vulnerability Overview section. See the Phoenix Contact or CERT@VDE advisory for details.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact recommends those using dongle-based licensing to update to WibuKey Version 6.50 or newer. MEVIEW3 Versions 3.14.25 and 3.15.18 will include Version 6.50 of WibuKey. For those using hardware code-based licensing, Phoenix Contact recommends removing the WibuKey application. For detailed information, the Phoenix Contact MEVIEW3 security advisory can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.phoenixcontact.com/psirt",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CERT@VDE has also published an advisory for the Phoenix Contact MEVIEW3 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://cert.vde.com/de-de/advisories/vde-2019-003",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.3,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-3991",
+      "cwe": {
+        "id": "CWE-122",
+        "name": "Heap-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A specially crafted TCP packet sent to Port 22347/TCP can cause a heap overflow, which may lead to remote code execution.CVE-2018-3991 has been assigned to this vulnerability. A CVSS v3 base score of 10.0 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3991"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Updated Wibu Systems Software can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.wibu.com/support/user/downloads-user-software.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.wibu.com/support/user/downloads-user-software.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has an updated software version for the affected SISHIP products that resolves the vulnerabilities. Users are advised to contact Siemens customer support for details.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has released the following updates for WinCC OA that address the WibuKey vulnerabilities (login required):",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.winccoa.com/downloads/category/patches-316-1.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "WinCC OA users can also apply the following general mitigations below to resolve the vulnerabilities.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to WibuKey DRM Version 6.50 or newer for all affected Siemens products. Siemens also recommends mitigating CVE-2018-3991 by blocking Port 22347/TCP. For detailed information, see Siemens security advisories SSA-760124, SSA-844562, and SSA-902727 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "COPA-DATA recommends users upgrade WibuKey DRM to Version 6.50a or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see COPA_DATA\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.copadata.com/fileadmin/user_upload/faq/files/CD_SVA_2019_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Sprecher Automation recommends users upgrade WibuKey DRM to Version 6.50b or newer, restrict physical and network access, segment network traffic, ensure systems using WibuKey WkLAN Server are not external facing, and apply application whitelisting. For detailed information, see Sprecher Automation\u2019s security advisory at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.sprecher-automation.com/fileadmin/kundendaten/teaser/News/2018/SPRECON-V460_Security_Vulnerability_Announcement_2019-01_Issue_1.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact has calculated different CVSS vectors from those in the Vulnerability Overview section. See the Phoenix Contact or CERT@VDE advisory for details.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Phoenix Contact recommends those using dongle-based licensing to update to WibuKey Version 6.50 or newer. MEVIEW3 Versions 3.14.25 and 3.15.18 will include Version 6.50 of WibuKey. For those using hardware code-based licensing, Phoenix Contact recommends removing the WibuKey application. For detailed information, the Phoenix Contact MEVIEW3 security advisory can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.phoenixcontact.com/psirt",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CERT@VDE has also published an advisory for the Phoenix Contact MEVIEW3 at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://cert.vde.com/de-de/advisories/vde-2019-003",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.phoenixcontact.com/psirt"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 10.0,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1303 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Schneider Electric reported these vulnerabilities to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could cause a denial of service, allow arbitrary execution of code with system level privileges, or send users to arbitrary websites.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Commercial Facilities, Energy, Food and Agriculture, Government Facilities, Transportation Systems, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: France",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-144-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-144-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Schneider Electric Floating License Manager",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:02.103200+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-18-144-01",
+      "initial_release_date": "2018-05-24T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:02.103200+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.0",
+                "product": {
+                  "name": "EcoStruxure Modicon Builder - <= 3.0",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EcoStruxure Modicon Builder"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "8.2 (Standard DC HC Editions)",
+                "product": {
+                  "name": "EcoStruxure Power Monitoring Expert - 8.2 (Standard DC HC Editions)",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EcoStruxure Power Monitoring Expert"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "7.30 | 7.40",
+                "product": {
+                  "name": "SCADA Expert Vijeo Citect / CitectSCADA - 7.30 | 7.40",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCADA Expert Vijeo Citect / CitectSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.x (formerly Power Manager)",
+                "product": {
+                  "name": "Energy Expert - 1.x (formerly Power Manager)",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Energy Expert"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "8.x (formerly PowerSCADA Expert) (Only with Advanced Reports and Dashboards Module)",
+                "product": {
+                  "name": "EcoStruxure Power SCADA Operations - 8.x (formerly PowerSCADA Expert) (Only with Advanced Reports and Dashboards Module)",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EcoStruxure Power SCADA Operations"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "7.2.x",
+                "product": {
+                  "name": "StruxureWare Power Monitoring Expert - 7.2.x",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "StruxureWare Power Monitoring Expert"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "4.40 | 4.50",
+                "product": {
+                  "name": "Vijeo Historian/CitectHistorian - 4.40 | 4.50",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vijeo Historian/CitectHistorian"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "8.1 (Standard DC HC Editions)",
+                "product": {
+                  "name": "StruxureWare Power Monitoring Expert - 8.1 (Standard DC HC Editions)",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "StruxureWare Power Monitoring Expert"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 4.3 | SP1",
+                "product": {
+                  "name": "PlantStruxure PES - < 4.3 | SP1",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PlantStruxure PES"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "8.0 (Standard DC HC Buildings Editions)",
+                "product": {
+                  "name": "StruxureWare Power Monitoring Expert - 8.0 (Standard DC HC Buildings Editions)",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "StruxureWare Power Monitoring Expert"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2015 | 2016",
+                "product": {
+                  "name": "CitectSCADA - 2015 | 2016",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CitectSCADA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2016",
+                "product": {
+                  "name": "CitectHistorian - 2016",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CitectHistorian"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2016-2177",
+      "cwe": {
+        "id": "CWE-122",
+        "name": "Heap-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "OpenSSL incorrectly uses pointer arithmetic for heap-buffer boundary checks, which may allow denial of service attacks or other unspecified behavior.CVE-2016-2177 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-2177"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends that users of affected Citect and PlantStruxure products download and install the new version of the software located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users using EcoStruxure Modicon Builder V3.0 are recommended to download and use the new version (V3.1) located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://partner.schneider-electric.com/partners/Menu/MyPartnership (login required)",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://partner.schneider-electric.com/partners/Menu/MyPartnership"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "StructureWare 7.2.x users should upgrade to Version 7.2.2 and apply the floating licensing manager (FLM) patch from the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "EcoStruxure/StruxureWare Power Monitoring Expert and Power SCADA Operations users need to upgrade to Version 8.2. Energy Expert users need to upgrade to Version 1.3. Once these are upgraded apply the Cumulative Update (CU) 2 located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has also released security notifications which contain further details and upgrade instructions at the following links:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2016-10395",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "This vulnerability can be exploited to cause an out-of-bounds memory read access, which may allow remote code execution with system privileges.CVE-2016-10395 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-10395"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends that users of affected Citect and PlantStruxure products download and install the new version of the software located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users using EcoStruxure Modicon Builder V3.0 are recommended to download and use the new version (V3.1) located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://partner.schneider-electric.com/partners/Menu/MyPartnership (login required)",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://partner.schneider-electric.com/partners/Menu/MyPartnership"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "StructureWare 7.2.x users should upgrade to Version 7.2.2 and apply the floating licensing manager (FLM) patch from the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "EcoStruxure/StruxureWare Power Monitoring Expert and Power SCADA Operations users need to upgrade to Version 8.2. Energy Expert users need to upgrade to Version 1.3. Once these are upgraded apply the Cumulative Update (CU) 2 located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has also released security notifications which contain further details and upgrade instructions at the following links:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2017-5571",
+      "cwe": {
+        "id": "CWE-601",
+        "name": "URL Redirection to Untrusted Site ('Open Redirect')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An open redirect vulnerability has been identified, which may allow remote attackers to redirect users to arbitrary websites for phishing attacks.CVE-2017-5571 has been assigned to this vulnerability. A CVSS v3 base score of 6.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-5571"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends that users of affected Citect and PlantStruxure products download and install the new version of the software located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/documents/downloads/Floating_License_Manager_v2.1.0.0.zip"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users using EcoStruxure Modicon Builder V3.0 are recommended to download and use the new version (V3.1) located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://partner.schneider-electric.com/partners/Menu/MyPartnership (login required)",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://partner.schneider-electric.com/partners/Menu/MyPartnership"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "StructureWare 7.2.x users should upgrade to Version 7.2.2 and apply the floating licensing manager (FLM) patch from the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/n2fh1ym594pqvl87kf0zjsigamuryrje"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "EcoStruxure/StruxureWare Power Monitoring Expert and Power SCADA Operations users need to upgrade to Version 8.2. Energy Expert users need to upgrade to Version 1.3. Once these are upgraded apply the Cumulative Update (CU) 2 located at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://schneider-electric.box.com/s/kkdikodcksjj1dznqy68ko0j28wct7vb"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has also released security notifications which contain further details and upgrade instructions at the following links:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.citect.schneider-electric.com/safety-and-security-central/36-security-notifications/9134-vulnerabilities-within-schneider-electric-floating-license-manager"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-137-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-144-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2018-046-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.1,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012"
+          ]
+        }
+      ]
+    }
+  ]
+}

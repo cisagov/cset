@@ -11,28 +11,78 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely. Successful exploitation of these vulnerabilities could allow an attacker to disclose or tamper data in communication between the air conditioning system and the external computers or cause a denial-of-service condition.. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to disclose or tamper data in communication between the air conditioning system and the external computers or cause a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-22-160-01 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-22-160-01 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-160-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
       }
     ],
     "title": "Mitsubishi Electric Air Conditioning Systems",
@@ -40,8 +90,8 @@
       "current_release_date": "2022-10-10T21:51:02.695829+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-22-160-01",
@@ -50,12 +100,12 @@
         {
           "date": "2022-10-10T21:51:02.695829+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,281 +116,281 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.10",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.10",
-                  "product_id": "1"
+                  "name": "GB-50ADA-J - <= 3.21",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "GB-50ADA-J"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.10",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "2"
+                  "name": "EB-50GU-A - <= 7.10",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "EB-50GU-A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "3"
+                  "name": "AE-50A - <= 7.97",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-50A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "4"
+                  "name": "GB-50AD - <= 3.21",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "GB-50AD"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "5"
+                  "name": "EW-50J - <= 7.97",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "EW-50J"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.10",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.10",
-                  "product_id": "6"
+                  "name": "G-150AD - <= 3.21",
+                  "product_id": "CSAFPID-0006"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "G-150AD"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "7"
+                  "name": "AE-200E - <= 7.97",
+                  "product_id": "CSAFPID-0007"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-200E"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "8"
+                  "name": "TE-200A - <= 7.97",
+                  "product_id": "CSAFPID-0008"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "TE-200A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "9"
+                  "name": "AE-200J - <= 7.97",
+                  "product_id": "CSAFPID-0009"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-200J"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.10",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "10"
+                  "name": "EB-50GU-J - <= 7.10",
+                  "product_id": "CSAFPID-00010"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "EB-50GU-J"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "11"
+                  "name": "GB-50ADA-A - <= 3.21",
+                  "product_id": "CSAFPID-00011"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "GB-50ADA-A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "12"
+                  "name": "EW-50E - <= 7.97",
+                  "product_id": "CSAFPID-00012"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "EW-50E"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "13"
+                  "name": "TW-50A - <= 7.97",
+                  "product_id": "CSAFPID-00013"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "TW-50A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "14"
+                  "name": "AE-50E - <= 7.97",
+                  "product_id": "CSAFPID-00014"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-50E"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "15"
+                  "name": "AE-200A - <= 7.97",
+                  "product_id": "CSAFPID-00015"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-200A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=7.97",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=7.97",
-                  "product_id": "16"
+                  "name": "EW-50A - <= 7.97",
+                  "product_id": "CSAFPID-00016"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "EW-50A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "17"
+                  "name": "TE-50A - <= 7.97",
+                  "product_id": "CSAFPID-00017"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "TE-50A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 7.97",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "18"
+                  "name": "AE-50J - <= 7.97",
+                  "product_id": "CSAFPID-00018"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AE-50J"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "19"
+                  "name": "AG-150A-A - <= 3.21",
+                  "product_id": "CSAFPID-00019"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AG-150A-A"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=3.21",
+                "name": "<= 3.21",
                 "product": {
-                  "name": "Mitsubishi Electric - <=3.21",
-                  "product_id": "20"
+                  "name": "AG-150A-J - <= 3.21",
+                  "product_id": "CSAFPID-00020"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Air Conditioning Systems"
+            "name": "AG-150A-J"
           }
         ],
         "category": "vendor",
@@ -358,36 +408,42 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Use of a broken or risky cryptographic algorithm allows a remote unauthenticated attacker to cause a disclosure of an encrypted message from the air conditioning systems by sniffing encrypted communications.",
+          "text": "Use of a broken or risky cryptographic algorithm allows a remote unauthenticated attacker to cause a disclosure of an encrypted message from the air conditioning systems by sniffing encrypted communications.CVE-2022-24296 has been assigned to this vulnerability. A CVSS v3 base score of 3.1 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-24296"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N"
         }
@@ -397,26 +453,26 @@
           "category": "vendor_fix",
           "details": "Mitsubishi recommends updating the following air conditioning system\u2019s firmware to the latest versions:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -424,26 +480,26 @@
           "category": "vendor_fix",
           "details": "To minimize the risk of these vulnerabilities being exploited, please make sure air conditioning systems are properly configured as recommended by Mitsubishi Electric. Mitsubishi Electric recommends taking the following mitigation measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -451,134 +507,53 @@
           "category": "vendor_fix",
           "details": "See Mitsubishi Electric\u2019s security bulletin for more information.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2022-005_en.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
@@ -592,30 +567,29 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ]
         }
-      ],
-      "title": "CVE-2022-24296"
+      ]
     },
     {
       "cve": "CVE-2016-2183",
@@ -626,36 +600,42 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The DES and Triple DES ciphers, as used in the TLS, SSH, and IPSec protocols and other protocols and products, have a birthday bound of approximately 4 billion blocks. This which makes it easier for remote attackers to obtain cleartext data via a birthday attack against a long duration encrypted session, as demonstrated by an HTTPS session using Triple DES in CBC mode (a.k.a. a \u201cSweet32\u201d attack).",
+          "text": "The DES and Triple DES ciphers, as used in the TLS, SSH, and IPSec protocols and other protocols and products, have a birthday bound of approximately 4 billion blocks. This which makes it easier for remote attackers to obtain cleartext data via a birthday attack against a long duration encrypted session, as demonstrated by an HTTPS session using Triple DES in CBC mode (a.k.a. a \u201cSweet32\u201d attack).CVE-2016-2183 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-2183"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
         }
@@ -665,26 +645,26 @@
           "category": "vendor_fix",
           "details": "Mitsubishi recommends updating the following air conditioning system\u2019s firmware to the latest versions:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -692,26 +672,26 @@
           "category": "vendor_fix",
           "details": "To minimize the risk of these vulnerabilities being exploited, please make sure air conditioning systems are properly configured as recommended by Mitsubishi Electric. Mitsubishi Electric recommends taking the following mitigation measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -719,134 +699,53 @@
           "category": "vendor_fix",
           "details": "See Mitsubishi Electric\u2019s security bulletin for more information.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2022-005_en.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
@@ -860,30 +759,29 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ]
         }
-      ],
-      "title": "CVE-2016-2183"
+      ]
     },
     {
       "cve": "CVE-2013-2566",
@@ -894,36 +792,42 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The RC4 algorithm, as used in the TLS protocol and SSL protocol, has many single-byte biases that make it easier for remote attackers to conduct plaintext-recovery attacks via statistical analysis of ciphertext in a large number of sessions using the same plaintext.",
+          "text": "The RC4 algorithm, as used in the TLS protocol and SSL protocol, has many single-byte biases that make it easier for remote attackers to conduct plaintext-recovery attacks via statistical analysis of ciphertext in a large number of sessions using the same plaintext.CVE-2013-2566 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-2566"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
         }
@@ -933,26 +837,26 @@
           "category": "vendor_fix",
           "details": "Mitsubishi recommends updating the following air conditioning system\u2019s firmware to the latest versions:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -960,26 +864,26 @@
           "category": "vendor_fix",
           "details": "To minimize the risk of these vulnerabilities being exploited, please make sure air conditioning systems are properly configured as recommended by Mitsubishi Electric. Mitsubishi Electric recommends taking the following mitigation measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -987,134 +891,53 @@
           "category": "vendor_fix",
           "details": "See Mitsubishi Electric\u2019s security bulletin for more information.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2022-005_en.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
@@ -1128,30 +951,29 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ]
         }
-      ],
-      "title": "CVE-2013-2566"
+      ]
     },
     {
       "cve": "CVE-2015-2808",
@@ -1162,36 +984,42 @@
       "notes": [
         {
           "category": "summary",
-          "text": "This vulnerability makes it easier for remote attackers to conduct plaintext-recovery attacks against the initial bytes of a stream by sniffing network traffic that relies on keys affected by the Invariance Weakness. An attacker can then use a brute-force approach involving LSB values (a.k.a. the \u201cBar Mitzvah\u201d issue).",
+          "text": "This vulnerability makes it easier for remote attackers to conduct plaintext-recovery attacks against the initial bytes of a stream by sniffing network traffic that relies on keys affected by the Invariance Weakness. An attacker can then use a brute-force approach involving LSB values (a.k.a. the \u201cBar Mitzvah\u201d issue).CVE-2015-2808 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-2808"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
         }
@@ -1201,26 +1029,26 @@
           "category": "vendor_fix",
           "details": "Mitsubishi recommends updating the following air conditioning system\u2019s firmware to the latest versions:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -1228,26 +1056,26 @@
           "category": "vendor_fix",
           "details": "To minimize the risk of these vulnerabilities being exploited, please make sure air conditioning systems are properly configured as recommended by Mitsubishi Electric. Mitsubishi Electric recommends taking the following mitigation measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -1255,134 +1083,53 @@
           "category": "vendor_fix",
           "details": "See Mitsubishi Electric\u2019s security bulletin for more information.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2022-005_en.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
@@ -1396,30 +1143,29 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ]
         }
-      ],
-      "title": "CVE-2015-2808"
+      ]
     },
     {
       "cve": "CVE-2009-3555",
@@ -1430,36 +1176,42 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The TLS protocol and the SSL Protocol 3.0 and earlier do not properly associate renegotiation handshakes with an existing connection in some third-party products. This allows machine-in-the-middle attackers to insert data into sessions protected by TLS or SSL by sending an unauthenticated request processed retroactively by a server in a post-renegotiation context.",
+          "text": "The TLS protocol and the SSL Protocol 3.0 and earlier do not properly associate renegotiation handshakes with an existing connection in some third-party products. This allows machine-in-the-middle attackers to insert data into sessions protected by TLS or SSL by sending an unauthenticated request processed retroactively by a server in a post-renegotiation context.CVE-2009-3555 has been assigned to this vulnerability. A CVSS v3 base score of 7.4 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-3555"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
         }
@@ -1469,26 +1221,26 @@
           "category": "vendor_fix",
           "details": "Mitsubishi recommends updating the following air conditioning system\u2019s firmware to the latest versions:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -1496,26 +1248,26 @@
           "category": "vendor_fix",
           "details": "To minimize the risk of these vulnerabilities being exploited, please make sure air conditioning systems are properly configured as recommended by Mitsubishi Electric. Mitsubishi Electric recommends taking the following mitigation measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -1523,134 +1275,53 @@
           "category": "vendor_fix",
           "details": "See Mitsubishi Electric\u2019s security bulletin for more information.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2022-005_en.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ],
           "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
@@ -1664,30 +1335,29 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020"
           ]
         }
-      ],
-      "title": "CVE-2009-3555"
+      ]
     }
   ]
 }

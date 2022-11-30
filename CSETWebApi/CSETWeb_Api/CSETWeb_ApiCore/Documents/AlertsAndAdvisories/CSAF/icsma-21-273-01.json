@@ -1,0 +1,437 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Endres Puschner - Max Planck Institute for Security and Privacy, Bochum, Christoph Saatjohann - FH M\u00fcnster University of Applied Sciences, Christian Dresen - FH M\u00fcnster University of Applied Sciences, and Markus Willing - University of Muenster, discovered these issues as part of broader academic research of cardiac devices and reported them to Boston Scientific."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow an attacker with physical access to the affected device to obtain patient protected health information (PHI), and/or compromise the integrity of the device. The affected device is not network connected and does not contain hardware to be network connected.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-21-273-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsma-21-273-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Boston Scientific Zoom Latitude",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:08.383639+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-21-273-01",
+      "initial_release_date": "2021-09-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:08.383639+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "Boston Scientific reports these vulnerabilities affects the ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) Model 3120.",
+                "product": {
+                  "name": "ZOOM LATITUDE Programmer/Recorder/Monitor Model 3120 - Boston Scientific reports these vulnerabilities affects the ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) Model 3120.",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ZOOM LATITUDE Programmer/Recorder/Monitor Model 3120"
+          }
+        ],
+        "category": "vendor",
+        "name": "Boston Scientific"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-38400",
+      "cwe": {
+        "id": "CWE-916",
+        "name": "Use of Password Hash With Insufficient Computational Effort"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with physical access to the affected device can remove the hard disk drive or create a specially crafted USB to extract the password hash for brute force reverse engineering of the system password.CVE-2021-38400 has been assigned to this vulnerability. A CVSS v3 base score of 6.9 has been calculated; the CVSS vector string is (AV:P/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38400"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific is in the process of transitioning all users to a replacement programmer with enhanced security, the LATITUDE Programming System, Model 3300. Boston Scientific will not issue a product update to address the identified vulnerabilities in the ZOOM LATITUDE Programming System, Model 3120.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To reduce the risk of exploitation, Boston Scientific recommends those still utilizing the ZOOM LATITUDE PRM Model 3120 implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-38394",
+      "cwe": {
+        "id": "CWE-1278",
+        "name": "Missing Protection Against Hardware Reverse Engineering Using Integrated Circuit (IC) Imaging Techniques"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with physical access to the device can extract the binary that checks for the hardware key and reverse engineer it, which could be used to create a physical duplicate of a valid hardware key. The hardware key allows access to special settings when inserted.CVE-2021-38394 has been assigned to this vulnerability. A CVSS v3 base score of 6.2 has been calculated; the CVSS vector string is (AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38394"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific is in the process of transitioning all users to a replacement programmer with enhanced security, the LATITUDE Programming System, Model 3300. Boston Scientific will not issue a product update to address the identified vulnerabilities in the ZOOM LATITUDE Programming System, Model 3120.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To reduce the risk of exploitation, Boston Scientific recommends those still utilizing the ZOOM LATITUDE PRM Model 3120 implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.2,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-38392",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A skilled attacker with physical access to the affected device can gain access to the hard disk drive of the device to change the telemetry region and could use this setting to interrogate or program an implantable device in any region in the world.CVE-2021-38392 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38392"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific is in the process of transitioning all users to a replacement programmer with enhanced security, the LATITUDE Programming System, Model 3300. Boston Scientific will not issue a product update to address the identified vulnerabilities in the ZOOM LATITUDE Programming System, Model 3120.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To reduce the risk of exploitation, Boston Scientific recommends those still utilizing the ZOOM LATITUDE PRM Model 3120 implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-38396",
+      "cwe": {
+        "id": "CWE-353",
+        "name": "Missing Support for Integrity Check"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The programmer installation utility does not perform a cryptographic authenticity or integrity checks of the software on the flash drive. An attacker could leverage this weakness to install unauthorized software using a specially crafted USB.CVE-2021-38396 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38396"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific is in the process of transitioning all users to a replacement programmer with enhanced security, the LATITUDE Programming System, Model 3300. Boston Scientific will not issue a product update to address the identified vulnerabilities in the ZOOM LATITUDE Programming System, Model 3120.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To reduce the risk of exploitation, Boston Scientific recommends those still utilizing the ZOOM LATITUDE PRM Model 3120 implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-38398",
+      "cwe": {
+        "id": "CWE-1329",
+        "name": "Reliance on Component That is Not Updateable"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected device uses off-the-shelf software components that contain unpatched vulnerabilities. A malicious attacker with physical access to the affected device could exploit these vulnerabilities.CVE-2021-38398 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38398"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific is in the process of transitioning all users to a replacement programmer with enhanced security, the LATITUDE Programming System, Model 3300. Boston Scientific will not issue a product update to address the identified vulnerabilities in the ZOOM LATITUDE Programming System, Model 3120.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "To reduce the risk of exploitation, Boston Scientific recommends those still utilizing the ZOOM LATITUDE PRM Model 3120 implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

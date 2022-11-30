@@ -1,0 +1,495 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "BD discovered these vulnerabilities and reported them to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may lead to loss or corruption of data.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-18-142-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-18-142-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "BD Kiestra and InoquIA Systems (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:00.399557+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-18-142-01",
+      "initial_release_date": "2018-10-11T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:00.399557+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.0.1.0",
+                "product": {
+                  "name": "Database (DB) Manager - 3.0.1.0",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Database (DB) Manager"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.0.0.0 and",
+                "product": {
+                  "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - PerformA - 3.0.0.0 and",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - PerformA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.0.1.0",
+                "product": {
+                  "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - Database (DB) Manager - 3.0.1.0",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - Database (DB) Manager"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.1.0.2 and",
+                "product": {
+                  "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - ReadA Overview - 1.1.0.2 and",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "BD Kiestra TLA WCA InoqulA+ speciman processor - ReadA Overview"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "3.0.0.0 and .",
+                "product": {
+                  "name": "PerformA - 3.0.0.0 and .",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PerformA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.1.0.2 and",
+                "product": {
+                  "name": "ReadA Overview - 1.1.0.2 and",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ReadA Overview"
+          }
+        ],
+        "category": "vendor",
+        "name": "Becton, Dickinson and Company (BD)"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-10593",
+      "cwe": {
+        "id": "CWE-356",
+        "name": "Product UI does not Warn User of Unsafe Actions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in DB Manager and PerformA allows an authorized user with access to a privileged account on a BD Kiestra system to issue SQL commands, which may result in data corruption.CVE-2018-10593 has been assigned to this vulnerability. A CVSS v3 base score of 5.6 has been calculated; the CVSS vector string is (AV:A/AC:H/PR:H/UI:R/S:U/C:N/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-10593"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:H/PR:H/UI:R/S:U/C:N/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "BD has developed a mitigation to prevent authorized users with access to a privileged account on a BD Kiestra system from triggering SQL functions. This mitigation also remediates a limited set of ePHI patient data that can be exposed when a privileged user executes a select SQL statement in the ReadA Overview. BD is in the process of deploying the mitigation remotely or on premise, depending on user preference.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Until mitigations are in place, BD recommends the following compensating controls. These controls require user action in order to reduce risk associated with these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For product support or site-specific concerns, users in North America may contact Lab Automation Regional Phone Support via email lab_automation_phone_support@bd.com or by phone (1-800-638-8663). Users in EMEA may contact Customer Service Desk via email csd@bd.com or by phone (+31 512 540 623).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more specific details regarding these vulnerabilities, the associated mitigations, and links to user manuals, please see the BD Product Security Bulletin at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.bd.com/en-us/support/product-security-and-privacy",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.bd.com/en-us/support/product-security-and-privacy"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:H/PR:H/UI:R/S:U/C:N/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-10595",
+      "cwe": {
+        "id": "CWE-356",
+        "name": "Product UI does not Warn User of Unsafe Actions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in ReadA allows an authorized user with access to a privileged account on a BD Kiestra system to issue SQL commands, which may result in loss or corruption of data.CVE-2018-10595 has been assigned to this vulnerability. A CVSS v3 base score of 6.3 has been calculated; the CVSS vector string is (AV:A/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-10595"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "BD has developed a mitigation to prevent authorized users with access to a privileged account on a BD Kiestra system from triggering SQL functions. This mitigation also remediates a limited set of ePHI patient data that can be exposed when a privileged user executes a select SQL statement in the ReadA Overview. BD is in the process of deploying the mitigation remotely or on premise, depending on user preference.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Until mitigations are in place, BD recommends the following compensating controls. These controls require user action in order to reduce risk associated with these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For product support or site-specific concerns, users in North America may contact Lab Automation Regional Phone Support via email lab_automation_phone_support@bd.com or by phone (1-800-638-8663). Users in EMEA may contact Customer Service Desk via email csd@bd.com or by phone (+31 512 540 623).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more specific details regarding these vulnerabilities, the associated mitigations, and links to user manuals, please see the BD Product Security Bulletin at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.bd.com/en-us/support/product-security-and-privacy",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.bd.com/en-us/support/product-security-and-privacy"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ]
+        }
+      ]
+    }
+  ]
+}

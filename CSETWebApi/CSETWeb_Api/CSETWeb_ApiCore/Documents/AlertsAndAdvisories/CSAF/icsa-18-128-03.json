@@ -1,0 +1,282 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Karsten Sohr from TZI Bremen reported this vulnerability to Siemens."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability may allow an attacker in a privileged network position to read data from and write data to the encrypted communication channel between the app and a server.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Commercial facilities",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-128-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-128-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Siemens Siveillance VMS Video Mobile App",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:24.375845+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-18-128-03",
+      "initial_release_date": "2018-05-08T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:24.375845+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 12.1a | 2018 R1",
+                "product": {
+                  "name": "Siveillance VMS Video for Android - < 12.1a | 2018 R1",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Siveillance VMS Video for Android"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 12.1a | 2018 R1",
+                "product": {
+                  "name": "Siveillance VMS Video for iOS - < 12.1a | 2018 R1",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Siveillance VMS Video for iOS"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-4849",
+      "cwe": {
+        "id": "CWE-295",
+        "name": "Improper Certificate Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Improper certificate validation could allow an attacker in a privileged network position to read data from and write data to the encrypted communication channel between the app and a server. The vulnerability could be exploited by an attacker in a privileged network position, which allows interception of the communication channel between the affected app and a server (such as man-in-the-middle). However, an attacker must be able to generate a certificate that results for the validation algorithm in a checksum identical to a trusted certificate.CVE-2018-4849 has been assigned to this vulnerability. A CVSS v3 base score of 4.8 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-4849"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has provided the following updates and recommends that all users update to the newest version:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://play.google.com/store/apps/details?id=com.siemens.siveillancevms",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://play.google.com/store/apps/details?id=com.siemens.siveillancevms"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://itunes.apple.com/us/app/siveillance-vmsvideo/id1045047239",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://itunes.apple.com/us/app/siveillance-vmsvideo/id1045047239"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure Siemens strongly recommends users protect network access to affected products with appropriate mechanisms. It is advised to follow recommended security practices in order to run the devices in a protected IT environment.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on this vulnerability and associated mitigation practices, please see the Siemens security advisory SSA-468514 on their website:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.com/cert/advisories",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.siemens.com/cert/advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.8,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    }
+  ]
+}

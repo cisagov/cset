@@ -1,0 +1,319 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "--------- Begin Update A Part 6 of 7 ---------"
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could impact or compromise patient confidentiality and system integrity. Philips\u2019 analysis has shown these issues, if fully exploited, may allow an attacker of low skill to provide unexpected input into the application, execute arbitrary code, alter the intended control flow of the system, and access sensitive information.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Brazil, Mexico",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Netherlands",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-19-120-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-19-120-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Philips Tasy EMR (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:49:52.473886+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-19-120-01",
+      "initial_release_date": "2019-11-07T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:49:52.473886+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.02.1744",
+                "product": {
+                  "name": "Tasy EMR Versions - <= 3.02.1744",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Tasy EMR Versions"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.02.1757",
+                "product": {
+                  "name": "Tasy WebPortal - <= 3.02.1757",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Tasy WebPortal"
+          }
+        ],
+        "category": "vendor",
+        "name": "Philips"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-6562",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users. CVE-2019-6562 has been assigned to this vulnerability. A CVSS v3 base score of 4.1 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N).. --------- Begin Update A Part 5 of 7 ---------CVE-2019-6562 has been assigned to this vulnerability. A CVSS v3 base score of 4.1 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-6562"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips advises users to update to the most recently released versions of the product, following the Tasy EMR release schedule. Update Tasy EMR, to version 3.03.1745 or higher and update Tasy WebPortal, to version 3.03.1758 or higher.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips also recommends users follow the instructions in the product configuration manual and follow market standard best practices from the application server manufacturer documentation related to security.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users should upgrade Service Packs as soon as possible. Hosted solutions will be patched automatically. Users running the application on premise are always alerted via release notes on changes to the system.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.1,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2019-13557",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "There is an information exposure vulnerability which may allow a remote attacker to access system and configuration information. CVE-2019-13557 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N).. --------- End Update A Part 5 of 7 ---------CVE-2019-13557 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-13557"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips advises users to update to the most recently released versions of the product, following the Tasy EMR release schedule. Update Tasy EMR, to version 3.03.1745 or higher and update Tasy WebPortal, to version 3.03.1758 or higher.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips also recommends users follow the instructions in the product configuration manual and follow market standard best practices from the application server manufacturer documentation related to security.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users should upgrade Service Packs as soon as possible. Hosted solutions will be patched automatically. Users running the application on premise are always alerted via release notes on changes to the system.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.fda.gov/MedicalDevices/DigitalHealth/ucm373213.htm"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    }
+  ]
+}

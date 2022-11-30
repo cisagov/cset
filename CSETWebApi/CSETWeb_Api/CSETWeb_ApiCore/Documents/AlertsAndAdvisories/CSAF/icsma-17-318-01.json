@@ -1,0 +1,273 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Philips reported a vulnerability in the Philips\u2019 IntelliSpace Cardiovascular and Xcelera cardiac image and information management systems. Philips has produced updates that mitigate this vulnerability in the affected products."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Philips reported a vulnerability in the Philips\u2019 IntelliSpace Cardiovascular and Xcelera cardiac image and information management systems. Philips has produced updates that mitigate this vulnerability in the affected products.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Company headquarters location"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-17-318-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-17-318-01"
+      }
+    ],
+    "title": "Philips IntelliSpace Cardiovascular System and Xcelera System Vulnerability",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:24.658546+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-17-318-01",
+      "initial_release_date": "2017-11-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:24.658546+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2.3.0",
+                "product": {
+                  "name": "IntelliSpace Cardiovascular - <= 2.3.0",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "IntelliSpace Cardiovascular"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= R4.1L1",
+                "product": {
+                  "name": "Xcelera - <= R4.1L1",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Xcelera"
+          }
+        ],
+        "category": "vendor",
+        "name": "Philips"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-14111",
+      "cwe": {
+        "id": "CWE-522",
+        "name": "Insufficiently Protected Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Credentials are stored in cleartext in system files that may allow an attacker with elevated privileges to gain unauthorized access to data to include patient health information, system resources, and misuse of connected assets. CVE-2017-14111 has been assigned to this vulnerability. A CVSS v3 base score of 7.2 has been assigned; the CVSS vector string is (CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "cwe.mitre.org",
+          "url": "http://cwe.mitre.org/data/definitions/522.html"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-14111"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips is producing software hotfix updates for all IntelliSpace Cardiovascular and latest Xcelera versions, some of which are available upon request, while other versions are in the process of development and are expected to be completed by the end of 2017.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips has initiated a voluntary medical device correction aligned with IntelliSpace Cardiovascular proactive field change order (reference FCO83000202) to be issued as IntelliSpace Cardiovascular updates become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific IntelliSpace Cardiovascular or Xcelera installations are advised by Philips to contact their local Philips service support team or their regional service support. Philips\u2019 contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "http://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security web site for the latest security information for Philips products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for security recommended practices on the ICS-CERT web page at\u00a0http://ics-cert.us-cert.gov/content/recommended-practices. ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/content/recommended-practices"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site (http://ics-cert.us-cert.gov/).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    }
+  ]
+}

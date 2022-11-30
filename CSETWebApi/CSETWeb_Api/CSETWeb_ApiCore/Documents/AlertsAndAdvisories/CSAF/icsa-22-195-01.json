@@ -1,0 +1,1825 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow an attacker to reboot, cause denial-of-service conditions, or impact the system by other means through a buffer overflow.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also provides a section for control systems security recommended practices on the ICS webpage at cisa.gov/ics. Several CISA products detailing cyber defense best practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing suspected malicious activity should follow established internal procedures and report findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-22-195-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-195-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Siemens SCALANCE X Switch Devices",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:23.107175+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-22-195-01",
+      "initial_release_date": "2022-07-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:23.107175+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT PRO (6GK5201-3JR10-2BA6) - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT PRO (6GK5201-3JR10-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT PRO (6GK5204-0JA10-2BA6) - *",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT PRO (6GK5204-0JA10-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE XF206-1 (6GK5206-1BC00-2AF2) - < 5.2.6",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF206-1 (6GK5206-1BC00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X200-4P IRT (6GK5200-4AH00-2BA3) - *",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X200-4P IRT (6GK5200-4AH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2IRT (6GK5202-2BB10-2BA3) - *",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2IRT (6GK5202-2BB10-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X204-2FM (6GK5204-2BB11-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2FM (6GK5204-2BB11-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR10-2BA6) - *",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR10-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204IRT (6GK5204-0BA00-2BF2) - *",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204IRT (6GK5204-0BA00-2BF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X204-2 (6GK5204-2BB10-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2 (6GK5204-2BB10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X206-1LD (6GK5206-1BC10-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X206-1LD (6GK5206-1BC10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT (6GK5201-3BH00-2BA3) - *",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT (6GK5201-3BH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT (6GK5204-0BA00-2BA3) - *",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT (6GK5204-0BA00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE XF204-2 (6GK5204-2BC00-2AF2) - < 5.2.6",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204-2 (6GK5204-2BC00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204-2BA IRT (6GK5204-2AA00-2BD2) - *",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204-2BA IRT (6GK5204-2AA00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF201-3P IRT (6GK5201-3JR00-2BA6) - *",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF201-3P IRT (6GK5201-3JR00-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X208 (6GK5208-0BA10-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X208 (6GK5208-0BA10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X208PRO (6GK5208-0HA10-2AA6) - < 5.2.6",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X208PRO (6GK5208-0HA10-2AA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X204-2LD TS (6GK5204-2BC10-2CA2) - < 5.2.6",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2LD TS (6GK5204-2BC10-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR00-2BA6) - *",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR00-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X204-2LD (6GK5204-2BC10-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2LD (6GK5204-2BC10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT (6GK5202-2BH10-2BA3) - *",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT (6GK5202-2BH10-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE XF204 (6GK5204-0BA00-2AF2) - < 5.2.6",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204 (6GK5204-0BA00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X224 (6GK5224-0BA00-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X224 (6GK5224-0BA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X212-2 (6GK5212-2BB00-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X212-2 (6GK5212-2BB00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X204-2TS (6GK5204-2BB10-2CA2) - < 5.2.6",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2TS (6GK5204-2BB10-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT (6GK5204-0BA10-2BA3) - *",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT (6GK5204-0BA10-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X206-1 (6GK5206-1BB10-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X206-1 (6GK5206-1BB10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT PRO (6GK5201-3BH00-2BD2) - *",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT PRO (6GK5201-3BH00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204IRT (6GK5204-0BA10-2BF2) - *",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204IRT (6GK5204-0BA10-2BF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF202-2P IRT (6GK5202-2BH00-2BD2) - *",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF202-2P IRT (6GK5202-2BH00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X216 (6GK5216-0BA00-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00031"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X216 (6GK5216-0BA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE XF208 (6GK5208-0BA00-2AF2) - < 5.2.6",
+                  "product_id": "CSAFPID-00032"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF208 (6GK5208-0BA00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X200-4P IRT (6GK5200-4AH10-2BA3) - *",
+                  "product_id": "CSAFPID-00033"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X200-4P IRT (6GK5200-4AH10-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT (6GK5202-2BH00-2BA3) - *",
+                  "product_id": "CSAFPID-00034"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT (6GK5202-2BH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 5.2.6",
+                "product": {
+                  "name": "SCALANCE X212-2LD (6GK5212-2BC00-2AA3) - < 5.2.6",
+                  "product_id": "CSAFPID-00035"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X212-2LD (6GK5212-2BC00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2IRT (6GK5202-2BB00-2BA3) - *",
+                  "product_id": "CSAFPID-00036"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2IRT (6GK5202-2BB00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT (6GK5201-3BH10-2BA3) - *",
+                  "product_id": "CSAFPID-00037"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT (6GK5201-3BH10-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT PRO (6GK5204-0JA00-2BA6) - *",
+                  "product_id": "CSAFPID-00038"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT PRO (6GK5204-0JA00-2BA6)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-26647",
+      "cwe": {
+        "id": "CWE-330",
+        "name": "Use of Insufficiently Random Values"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The webserver of affected devices calculates session IDs and nonces in an insecure manner. This could allow an unauthenticated remote attacker to brute force session IDs and hijack existing sessions.CVE-2022-26647 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-26647"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends updating to the latest version of its software if available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109811753/firmware-update-version-5-2-6-for-scalance-x-200-?lc=en-ww"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can implement to reduce exploitation risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 Operational Guidelines for Industrial Security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-310038.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-310038.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2022-26648",
+      "cwe": {
+        "id": "CWE-120",
+        "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Affected devices do not properly validate the GET parameter XNo of incoming HTTP requests. This could allow an unauthenticated remote attacker to crash affected devices.CVE-2022-26648 has been assigned to this vulnerability. A CVSS v3 base score of 8.2 has been assigned; the CVSS vector string is (AV:A/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:H)",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-26648"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends updating to the latest version of its software if available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109811753/firmware-update-version-5-2-6-for-scalance-x-200-?lc=en-ww"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can implement to reduce exploitation risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 Operational Guidelines for Industrial Security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-310038.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-310038.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2022-26649",
+      "cwe": {
+        "id": "CWE-120",
+        "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Affected devices do not properly validate the URI of incoming HTTP GET requests. This could allow an unauthenticated remote attacker to crash affected devices.CVE-2022-26649 has been assigned to this vulnerability. A CVSS v3 base score of 9.6 has been assigned; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-26649"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends updating to the latest version of its software if available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109811753/firmware-update-version-5-2-6-for-scalance-x-200-?lc=en-ww"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that customers can implement to reduce exploitation risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens recommends protecting network access to devices with appropriate mechanisms. To operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens\u2019 Operational Guidelines for Industrial Security and following recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found on the Siemens industrial security webpage.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information see Siemens Security Advisory SSA-310038.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-310038.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage at cisa.gov/ics in the technical information paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038"
+          ]
+        }
+      ]
+    }
+  ]
+}

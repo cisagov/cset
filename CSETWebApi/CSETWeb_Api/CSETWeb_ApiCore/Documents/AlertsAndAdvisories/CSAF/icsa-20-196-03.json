@@ -1,0 +1,975 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens thanks the following parties for their efforts:"
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to affect the availability, read sensitive data, and gain remote code execution on the affected devices.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Chemical, Energy, Food and Agriculture, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-196-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-196-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+      }
+    ],
+    "title": "Siemens SICAM MMU, SICAM T, and SICAM SGU",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:51.799600+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-20-196-03",
+      "initial_release_date": "2020-07-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:51.799600+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.05",
+                "product": {
+                  "name": "SICAM MMU - < 2.05",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SICAM MMU"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SICAM SGU - *",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SICAM SGU"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.18",
+                "product": {
+                  "name": "SICAM T - < 2.18",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SICAM T"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-10037",
+      "cwe": {
+        "id": "CWE-125",
+        "name": "Out-of-bounds Read"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "By performing a flooding attack against the web server, an attacker might be able to gain read access to the device\u2019s memory, and reveal confidential information.CVE-2020-10037 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10037"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10038",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with access to the device\u2019s web server might be able to execute administrative commands without authentication.\u00a0CVE-2020-10038 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10038"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10039",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker in a privileged network position between a legitimate user and the web server might be able to conduct a man-in-the-middle attack and gain read and write access to the transmitted data.\u00a0CVE-2020-10039 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10039"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10040",
+      "cwe": {
+        "id": "CWE-916",
+        "name": "Use of Password Hash With Insufficient Computational Effort"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with local access to the device might be able to retrieve passwords in clear text.\u00a0CVE-2020-10040 has been assigned to this vulnerability. A CVSS v3 base score of 6.2 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10040"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.2,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10041",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A stored cross-site-scripting (XSS) vulnerability is present in different locations of the web application. \u00a0An attacker might be able to take over a session of a legitimate user.CVE-2020-10041 has been assigned to this vulnerability. A CVSS v3 base score of 9.6 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10041"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10042",
+      "cwe": {
+        "id": "CWE-120",
+        "name": "Buffer Copy without Checking Size of Input ('Classic Buffer Overflow')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A buffer overflow in various positions of the web application might enable an attacker with access to the web application to execute arbitrary code over the network.\u00a0CVE-2020-10042 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10042"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10043",
+      "cwe": {
+        "id": "CWE-80",
+        "name": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The web server could allow cross-site scripting (XSS) attacks if unsuspecting users are tricked into accessing a malicious link.\u00a0CVE-2020-10043 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10043"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10044",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with access to the network could be able to install specially crafted firmware on the device.\u00a0CVE-2020-10044 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10044"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10045",
+      "cwe": {
+        "id": "CWE-294",
+        "name": "Authentication Bypass by Capture-replay"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An error in the challenge-response procedure could allow an attacker to replay authentication traffic and gain access to protected areas of the web application.\u00a0CVE-2020-10045 has been assigned to this vulnerability. A CVSS v3 base score of 8.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10045"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates, where available:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://support.industry.siemens.com/cs/products/7kg9661-1aa00-1aa0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations that users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for Industrial Security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-305120",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-305120.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
+          ]
+        }
+      ]
+    }
+  ]
+}

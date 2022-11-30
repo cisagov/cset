@@ -1,0 +1,1543 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Antonio Kulhanek reported CVE-2021-39369 to Philips. Philips reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could allow an unauthorized person or process to eavesdrop, view or modify data, gain system access, perform code execution, install unauthorized software, or affect system data integrity in such a way as to negatively impact the confidentiality, integrity, or availability of the system.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Netherlands",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-21-187-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsma-21-187-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Philips Vue PACS (Update B)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:18.904376+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-21-187-01",
+      "initial_release_date": "2022-04-05T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:18.904376+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 12.2.x.x",
+                "product": {
+                  "name": "Vue PACS - <= 12.2.x.x",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vue PACS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 12.2.1.5",
+                "product": {
+                  "name": "Vue Motion - <= 12.2.1.5",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vue Motion"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 12.2.x.x",
+                "product": {
+                  "name": "Vue MyVue - <= 12.2.x.x",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vue MyVue"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 12.2.x.x",
+                "product": {
+                  "name": "Vue Speech - <= 12.2.x.x",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Vue Speech"
+          }
+        ],
+        "category": "vendor",
+        "name": "Philips"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-1938",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product receives input or data, but it does not validate or incorrectly validates that the input has the properties that are required to process the data safely and correctly.CVE-2020-1938 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-1938"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-12326",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software performs operations on a memory buffer, but it can read from or write to a memory location that is outside of the intended boundary of the buffer. This vulnerability exists within a third party software component (Redis).CVE-2018-12326 and CVE-2018-11218 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-12326"
+        },
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-11218"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-11218",
+      "cwe": {
+        "id": "CWE-287",
+        "name": "Improper Authentication"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "When an actor claims to have a given identity, the software does not prove or insufficiently proves that the claim is correct. This vulnerability exists within a third party software component (Redis).CVE-2020-4670 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-4670"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-4670",
+      "cwe": {
+        "id": "CWE-1188",
+        "name": "Insecure Default Initialization of Resource"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software initializes or sets a resource with a default that is intended to be changed by the administrator, but the default is not secure.CVE-2018-8014 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8014"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8014",
+      "cwe": {
+        "id": "CWE-324",
+        "name": "Use of a Key Past its Expiration Date"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product uses a cryptographic key or password past its expiration date, which diminishes its safety significantly by increasing the timing window for cracking attacks against that key.CVE-2021-33020 has been assigned to this vulnerability. A CVSS v3 base score of 8.2 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33020"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33020",
+      "cwe": {
+        "id": "CWE-665",
+        "name": "Improper Initialization"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not initialize or incorrectly initializes a resource, which might leave the resource in an unexpected state when it is accessed or used. This vulnerability exists within a third party software component (7-Zip).CVE-2018-10115 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-10115"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-10115",
+      "cwe": {
+        "id": "CWE-710",
+        "name": "Improper Adherence to Coding Standards"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not follow certain coding rules for development, which can lead to resultant weaknesses or increase the severity of the associated vulnerabilities.CVE-2021-27501 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-27501"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-27501",
+      "cwe": {
+        "id": "CWE-327",
+        "name": "Use of a Broken or Risky Cryptographic Algorithm"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The use of a broken or risky cryptographic algorithm is an unnecessary risk that may result in the exposure of sensitive information.CVE-2021-33018 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33018"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33018",
+      "cwe": {
+        "id": "CWE-693",
+        "name": "Protection Mechanism Failure"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product does not use or incorrectly uses a protection mechanism that provides sufficient defense against directed attacks against the product.CVE-2021-27497 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-27497"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-27497",
+      "cwe": {
+        "id": "CWE-1214"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Weaknesses in this category is related to a software system's data integrity components. This vulnerability exists within a third party software component (Oracle Database).CVE-2012-1708 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-1708"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2012-1708",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in an output used as a webpage that is served to other users.CVE-2015-9251 has been assigned to this vulnerability. A CVSS v3 base score of 6.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-9251"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.1,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2015-9251",
+      "cwe": {
+        "id": "CWE-707",
+        "name": "Improper Neutralization"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product does not ensure or incorrectly ensures structured messages or data are well formed and that certain security properties are met before being read from an upstream component or sent to a downstream component.CVE-2021-27493 has been assigned to this vulnerability. A CVSS v3 base score of 6.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-27493"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.1,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-27493",
+      "cwe": {
+        "id": "CWE-176",
+        "name": "Improper Handling of Unicode Encoding"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not properly handle when an input contains Unicode encoding.CVE-2019-9636 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-9636"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2019-9636",
+      "cwe": {
+        "id": "CWE-522",
+        "name": "Insufficiently Protected Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The product transmits or stores authentication credentials, but it uses an insecure method susceptible to unauthorized interception and/or retrieval.CVE-2021-33024 has been assigned to this vulnerability. A CVSS v3 base score of 3.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33024"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 3.7,
+            "baseSeverity": "LOW",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33024",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors.CVE-2021-33022 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33022"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33022",
+      "cwe": {
+        "id": "CWE-23",
+        "name": "Relative Path Traversal"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The VideoStream function allows authenticated users access to files stored outside the web root.CVE-2021-39369 has been assigned to this vulnerability. A CVSS v3 base score of 2.7 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-39369"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Philips has released the following plans to address these vulnerabilities:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://incenter.medical.philips.com/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Releases are subject to country specific regulations. Users with questions regarding their specific Philips Vue PACS installations and new release eligibility should contact a Philips Sales representative or submit a quote request in the eService portal at: Login - eService (philips.com).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://eservice.philips.com/Account/Login?returnUrl=%2F"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The Philips advisory is available. Please see the Philips product security website for the latest security information for Philips products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 2.7,
+            "baseSeverity": "LOW",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
+          ]
+        }
+      ]
+    }
+  ]
+}

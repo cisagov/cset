@@ -1,0 +1,795 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could compromise confidentiality and integrity.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-131-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-131-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Siemens Linux-based Products (Update J)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:46.729163+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-131-03",
+      "initial_release_date": "2022-06-16T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:46.729163+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.1.39 | 3.3",
+                "product": {
+                  "name": "SIMATIC CP 1242-7 GPRS V2 - <= 3.1.39 | 3.3",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1242-7 GPRS V2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "5.0 and 6.4",
+                "product": {
+                  "name": "RUGGEDCOM RM1224 - 5.0 and 6.4",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RUGGEDCOM RM1224"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.2 | 1",
+                "product": {
+                  "name": "TIM 1531 IRC (6GK7543-1MX00-0XE0) - < 2.2 | 1",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TIM 1531 IRC (6GK7543-1MX00-0XE0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV550 H (6GF3550-0GE10) - < 3.1",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV550 H (6GF3550-0GE10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "and  including 3.1.39 and 3.3",
+                "product": {
+                  "name": "SIPLUS NET CP 1242-7 V2 (6AG1242-7KX31-7XE0) - and  including 3.1.39 and 3.3",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIPLUS NET CP 1242-7 V2 (6AG1242-7KX31-7XE0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 1.1",
+                "product": {
+                  "name": "SIMATIC CP 1545-1 - < 1.1",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1545-1"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.0 | SP1",
+                "product": {
+                  "name": "SINEMA Remote Connect Server - < 3.0 | SP1",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SINEMA Remote Connect Server"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.1.3",
+                "product": {
+                  "name": "SCALANCE SC-600 - < 2.1.3",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE SC-600"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV560 U (6GF3560-0LE10) - < 3.1",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV560 U (6GF3560-0LE10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "3.1.39 and -  those  < 3.3.3",
+                "product": {
+                  "name": "SIMATIC CP 1243-1 (incl. SIPLUS variants) - 3.1.39 and -  those  < 3.3.3",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1243-1 (incl. SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIMATIC MV500 Family - *",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV500 Family"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1.0 -  those  < 1.6",
+                "product": {
+                  "name": "SIMATIC Cloud Connect 7 CC712 (6GK1411-1AC00) - 1.0 -  those  < 1.6",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC Cloud Connect 7 CC712 (6GK1411-1AC00)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= <= 3.1.39 | 3.3",
+                "product": {
+                  "name": "SIMATIC CP 1243-7 LTE EU - >= <= 3.1.39 | 3.3",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1243-7 LTE EU"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "and  including 3.1.39 and 3.3.46",
+                "product": {
+                  "name": "SIPLUS S7-1200 CP 1243-1 (6AG1243-1BX30-2AX0) - and  including 3.1.39 and 3.3.46",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIPLUS S7-1200 CP 1243-1 (6AG1243-1BX30-2AX0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV550 S (6GF3550-0CD10) - < 3.1",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV550 S (6GF3550-0CD10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.2 | 1",
+                "product": {
+                  "name": "SIPLUS TIM 1532 (6AG1543-1MX00-7XE0) - < 2.2 | 1",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIPLUS TIM 1532 (6AG1543-1MX00-7XE0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "3.1.39 and -  those  < 3.3.46",
+                "product": {
+                  "name": "SIMATIC CP 1243-8 IRC - 3.1.39 and -  those  < 3.3.46",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1243-8 IRC"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "5.0 and 6.4",
+                "product": {
+                  "name": "SCALANCE M-800 - 5.0 and 6.4",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE M-800"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV540 H (6GF3540-0GE10) - < 3.1",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV540 H (6GF3540-0GE10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1.0 -  those  < 1.6",
+                "product": {
+                  "name": "SIMATIC Cloud Connect 7 CC716 (6GK1411-5AC00) - 1.0 -  those  < 1.6",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC Cloud Connect 7 CC716 (6GK1411-5AC00)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "8.3.0.1 | 8.6.0 and 8.7.0",
+                "product": {
+                  "name": "SCALANCE W1750D - 8.3.0.1 | 8.6.0 and 8.7.0",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE W1750D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2.0",
+                "product": {
+                  "name": "SIMATIC CP 1542SP-1 - >= 2.0",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1542SP-1"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV560 X (6GF3560-0HE10) - < 3.1",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV560 X (6GF3560-0HE10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2.0",
+                "product": {
+                  "name": "SIMATIC CP 1543SP-1 (incl SIPLUS variants) - >= 2.0",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1543SP-1 (incl SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.1",
+                "product": {
+                  "name": "SIMATIC MV540 S (6GF3540-0CD10) - < 3.1",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC MV540 S (6GF3540-0CD10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= <= 3.1.39 | 3.3",
+                "product": {
+                  "name": "SIMATIC CP 1243-7 LTE US - >= <= 3.1.39 | 3.3",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1243-7 LTE US"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2.0",
+                "product": {
+                  "name": "SIMATIC CP 1542SP-1 IRC (incl. SIPLUS variants) - >= 2.0",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1542SP-1 IRC (incl. SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 3.0",
+                "product": {
+                  "name": "SIMATIC CP 1543-1 (incl. SIPLUS variants) - < 3.0",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC CP 1543-1 (incl. SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "and  including 3.1.39 and 3.3.46",
+                "product": {
+                  "name": "SIPLUS S7-1200 CP 1243-1 RAIL (6AG2243-1BX30-1XE0) - and  including 3.1.39 and 3.3.46",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIPLUS S7-1200 CP 1243-1 RAIL (6AG2243-1BX30-1XE0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "5.0 and 6.4",
+                "product": {
+                  "name": "SCALANCE S615 - 5.0 and 6.4",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE S615"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-25705",
+      "cwe": {
+        "id": "CWE-330",
+        "name": "Use of Insufficiently Random Values"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A flaw in ICMP packets in the Linux kernel may allow an attacker to quickly scan open UDP ports. This flaw allows an off-path remote attacker to effectively bypass source port UDP randomization. Software that relies on UDP source port randomization are indirectly affected as well.\u00a0CVE-2020-25705 has been assigned to this vulnerability. A CVSS v3 base score of 7.4 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-25705"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends applying updates where applicable:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109800773"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to the Siemens operational guidelines for industrial security and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information, please refer to Siemens Security Advisory SSA-324955",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-324955.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.4,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,515 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Ali Abbasi from Ruhr University of Bochum reported this vulnerability to Siemens."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could expose additional diagnostic functionality to an attacker with physical access to the UART interface during boot process.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-318-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-318-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Siemens S7-1200 and S7-200 SMART CPUs (Update B)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:13.781760+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-318-02",
+      "initial_release_date": "2020-07-14T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:13.781760+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 9.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU ST30 (6ES7 288-1ST30-0AA0) - < and 2.5.0 and  function state (fs) <= 9.",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU ST30 (6ES7 288-1ST30-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.3.0 and  function state (fs) <= 3.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR20s (6ES7 288-1CR20-0AA0) - < and 2.3.0 and  function state (fs) <= 3.",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR20s (6ES7 288-1CR20-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 11.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU SR20 (6ES7 288-1SR20-0AA0) - < and 2.5.0 and  function state (fs) <= 11.",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU SR20 (6ES7 288-1SR20-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.2.2 and  function state (fs) <= 8.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR40 (6ES7 288-1CR40-0AA0) - < and 2.2.2 and  function state (fs) <= 8.",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR40 (6ES7 288-1CR40-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 8.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU ST60 (6ES7 288-1ST60-0AA0) - < and 2.5.0 and  function state (fs) <= 8.",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU ST60 (6ES7 288-1ST60-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.2.2 and  function state (fs) <= 10.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR60 (6ES7 288-1CR60-0AA0) - < and 2.2.2 and  function state (fs) <= 10.",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR60 (6ES7 288-1CR60-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.3.0 and  function state (fs) <= 3.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR60s (6ES7 288-1CR60-0AA0) - < and 2.3.0 and  function state (fs) <= 3.",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR60s (6ES7 288-1CR60-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.3.0 and  function state (fs) <= 3.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR30s (6ES7 288-1CR30-0AA0) - < and 2.3.0 and  function state (fs) <= 3.",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR30s (6ES7 288-1CR30-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "11 ;",
+                "product": {
+                  "name": "SIMATIC S7-1200 CPU family v4.x (including SIPLUS variants) - 11 ;",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-1200 CPU family v4.x (including SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 9.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU ST20 (6ES7 288-1ST20-0AA0) - < and 2.5.0 and  function state (fs) <= 9.",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU ST20 (6ES7 288-1ST20-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 8.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU ST40 (6ES7 288-1ST40-0AA0) - < and 2.5.0 and  function state (fs) <= 8.",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU ST40 (6ES7 288-1ST40-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 12.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU SR60 (6ES7 288-1SR60-0AA0) - < and 2.5.0 and  function state (fs) <= 12.",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU SR60 (6ES7 288-1SR60-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIMATIC S7-1200 CPU family prior to v4.x (including SIPLUS variants) - *",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-1200 CPU family prior to v4.x (including SIPLUS variants)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.3.0 and  function state (fs) <= 3.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU CR40s (6ES7 288-1CR40-0AA0) - < and 2.3.0 and  function state (fs) <= 3.",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU CR40s (6ES7 288-1CR40-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 10.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU SR40 (6ES7 288-1SR40-0AA0) - < and 2.5.0 and  function state (fs) <= 10.",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU SR40 (6ES7 288-1SR40-0AA0)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< and 2.5.0 and  function state (fs) <= 10.",
+                "product": {
+                  "name": "SIMATIC S7-200 SMART CPU SR30 (6ES7 288-1SR30-0AA0) - < and 2.5.0 and  function state (fs) <= 10.",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC S7-200 SMART CPU SR30 (6ES7 288-1SR30-0AA0)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-13945",
+      "cwe": {
+        "id": "CWE-749",
+        "name": "Exposed Dangerous Method or Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with physical access to the UART interface could access additional diagnostic functionality. Successful exploitation could compromise confidentiality, integrity, and availability of the affected system. CVE-2019-13945 has been assigned to this vulnerability. A CVSS v3 base score of 6.8 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-13945"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific mitigations for the referenced products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. Siemens recommends users configure their environment according to the Siemens Operational Guidelines for Industrial Security and follow the recommendations in the product manuals to operate the devices in a protected environment.\nAdditional information on industrial security by Siemens can be found at: https://www.siemens.com/industrialsecurity.\nFor further inquiries on security vulnerabilities in Siemens products, please contact the Siemens ProductCERT:\u00a0 http://www.siemens.com/cert/advisories.\nFor more information on the vulnerability and more detailed mitigation instructions, please see Siemens Security Advisory SSA-686531 at the following location:\u00a0 http://www.siemens.com/cert/advisories.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
+          ],
+          "url": "http://www.siemens.com/cert/advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "This vulnerability is not exploitable remotely; no known public exploits specifically target this vulnerability.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.8,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
+          ]
+        }
+      ]
+    }
+  ]
+}

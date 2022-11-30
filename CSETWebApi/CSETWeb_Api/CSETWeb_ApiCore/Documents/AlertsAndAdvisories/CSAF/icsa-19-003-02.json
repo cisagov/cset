@@ -1,0 +1,407 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "JPCERT in coordination with Yokogawa reported this this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to cause Vnet/IP network communications to controlled devices to become unavailable.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Food and Agriculture",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-003-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-003-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Yokogawa Vnet/IP Open Communication Driver",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:24.084691+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-003-02",
+      "initial_release_date": "2019-01-03T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:24.084691+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R3.10.00 - R3.75.00)",
+                "product": {
+                  "name": "Exaopc - (R3.10.00 - R3.75.00)",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Exaopc"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R9.02.00 - R10.02.00)",
+                "product": {
+                  "name": "FAST/TOOLS - (R9.02.00 - R10.02.00)",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FAST/TOOLS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R3.05.00 - R3.09.50)",
+                "product": {
+                  "name": "CENTUM CS 3000 - (R3.05.00 - R3.09.50)",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM CS 3000"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R3.05.00 - R3.09.50)",
+                "product": {
+                  "name": "CENTUM CS 3000 Entry Class - (R3.05.00 - R3.09.50)",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM CS 3000 Entry Class"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R1.02.00 - R4.02.00)",
+                "product": {
+                  "name": "ProSafe-RS - (R1.02.00 - R4.02.00)",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ProSafe-RS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R4.01.00 - R6.03.10)",
+                "product": {
+                  "name": "CENTUM VP Entry Class - (R4.01.00 - R6.03.10)",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM VP Entry Class"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R6.03.01 - R8.01.90)",
+                "product": {
+                  "name": "B/M9000 VP - (R6.03.01 - R8.01.90)",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "B/M9000 VP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R2.06.00 - R3.31.00)",
+                "product": {
+                  "name": "PRM - (R2.06.00 - R3.31.00)",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PRM"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R4.01.00 - R6.03.10)",
+                "product": {
+                  "name": "CENTUM VP - (R4.01.00 - R6.03.10)",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM VP"
+          }
+        ],
+        "category": "vendor",
+        "name": "Yokogawa"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-16196",
+      "cwe": {
+        "id": "CWE-399",
+        "name": "Resource Management Errors"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The Vnet/IP Open Communication Driver has a vulnerability that could allow an attacker to stop the communications functionality of the Vnet/IP Open Communication Driver, resulting in a denial of service.CVE-2018-16196 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-16196"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa recommends users of affected devices and versions update to the latest available release.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Details about the products, affected revisions, and suggested mitigations are available in the Yokogawa Security Advisory Report YSAR-18-0008: denial of service (DoS) vulnerability in Vnet/IP Open Communication Driver.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see Yokogawa Security Advisory Report YSAR-18-0008 at the following location for more information:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://web-material3.yokogawa.com/YSAR-18-0008-E.pdf",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://web-material3.yokogawa.com/YSAR-18-0008-E.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For questions related to this report and details regarding how to update to the newest revision, please visit the Yokogawa security website (registration required):",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://contact.yokogawa.com/cs/gw?c-id=000498",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ],
+          "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
+          ]
+        }
+      ]
+    }
+  ]
+}

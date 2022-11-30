@@ -11,28 +11,78 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow a remote unauthenticated attacker to send tampered communication packets or create/overwrite any file and run any commands.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Food and Agriculture. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow a remote unauthenticated attacker to send tampered communication packets or create/overwrite any file and run any commands.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Food and Agriculture",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-20-224-01 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-20-224-01 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-224-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "Yokogawa CENTUM (Update A)",
@@ -40,8 +90,8 @@
       "current_release_date": "2022-10-10T21:51:09.330733+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-20-224-01",
@@ -50,12 +100,12 @@
         {
           "date": "2022-10-10T21:51:09.330733+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -65,72 +115,72 @@
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "R5.04.01",
+                "category": "product_version_range",
+                "name": ">= R5.04.01 | <= R5.05.01",
                 "product": {
-                  "name": "Yokogawa - R5.04.01",
-                  "product_id": "1"
+                  "name": "B/M9000CS - >= R5.04.01 | <= R5.05.01",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "CENTUM"
+            "name": "B/M9000CS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= R4.01.00 | <= R6.07.00 (Including CENTUM VP Entry Class)",
+                "product": {
+                  "name": "CENTUM VP - >= R4.01.00 | <= R6.07.00 (Including CENTUM VP Entry Class)",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM VP"
           },
           {
             "branches": [
               {
                 "category": "product_version",
-                "name": "(R3.72.00",
+                "name": "(R3.72.00 - R3.78.00)",
                 "product": {
-                  "name": "Yokogawa - (R3.72.00",
-                  "product_id": "2"
+                  "name": "Exaopc - (R3.72.00 - R3.78.00)",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "CENTUM"
+            "name": "Exaopc"
           },
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "R4.01.00",
+                "category": "product_version_range",
+                "name": ">= R3.08.10 | <= R3.09.50 (Including CENTUM CS 3000 Entry Class)",
                 "product": {
-                  "name": "Yokogawa - R4.01.00",
-                  "product_id": "3"
+                  "name": "CENTUM CS 3000 - >= R3.08.10 | <= R3.09.50 (Including CENTUM CS 3000 Entry Class)",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "CENTUM"
+            "name": "CENTUM CS 3000"
           },
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "R6.01.01",
+                "category": "product_version_range",
+                "name": ">= R6.01.01 | <= R8.03.01",
                 "product": {
-                  "name": "Yokogawa - R6.01.01",
-                  "product_id": "4"
+                  "name": "B/M9000 VP - >= R6.01.01 | <= R8.03.01",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
             "category": "product_name",
-            "name": "CENTUM"
-          },
-          {
-            "branches": [
-              {
-                "category": "product_version",
-                "name": "R3.08.10",
-                "product": {
-                  "name": "Yokogawa - R3.08.10",
-                  "product_id": "5"
-                }
-              }
-            ],
-            "category": "product_name",
-            "name": "CENTUM"
+            "name": "B/M9000 VP"
           }
         ],
         "category": "vendor",
@@ -148,21 +198,27 @@
       "notes": [
         {
           "category": "summary",
-          "text": "This vulnerability may allow a remote unauthenticated attacker to send tampered communication packets.\u00a0",
+          "text": "This vulnerability may allow a remote unauthenticated attacker to send tampered communication packets.\u00a0CVE-2020-5608 has been assigned to this vulnerability. A CVSS v3 base score of 8.1 has been assigned; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-5608"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H"
         }
@@ -172,11 +228,11 @@
           "category": "vendor_fix",
           "details": "Yokogawa recommends\u00a0the following mitigations:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -184,11 +240,11 @@
           "category": "vendor_fix",
           "details": "For questions related to this report, please contact Yokogawa support.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
         },
@@ -196,49 +252,13 @@
           "category": "vendor_fix",
           "details": "More details can also be found in Yokogawa\u2019s security advisory report number YSAR-20-0001",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -250,15 +270,14 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ]
         }
-      ],
-      "title": "CVE-2020-5608"
+      ]
     },
     {
       "cve": "CVE-2020-5609",
@@ -269,21 +288,27 @@
       "notes": [
         {
           "category": "summary",
-          "text": "This vulnerability may allow a remote attacker to create or overwrite any file, run any commands.\u00a0",
+          "text": "This vulnerability may allow a remote attacker to create or overwrite any file, run any commands.\u00a0CVE-2020-5609 has been assigned to this vulnerability. A CVSS v3 base score of 8.1 has been assigned; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-5609"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H"
         }
@@ -293,11 +318,11 @@
           "category": "vendor_fix",
           "details": "Yokogawa recommends\u00a0the following mitigations:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -305,11 +330,11 @@
           "category": "vendor_fix",
           "details": "For questions related to this report, please contact Yokogawa support.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
         },
@@ -317,49 +342,13 @@
           "category": "vendor_fix",
           "details": "More details can also be found in Yokogawa\u2019s security advisory report number YSAR-20-0001",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ],
           "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
-          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -371,15 +360,14 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
           ]
         }
-      ],
-      "title": "CVE-2020-5609"
+      ]
     }
   ]
 }

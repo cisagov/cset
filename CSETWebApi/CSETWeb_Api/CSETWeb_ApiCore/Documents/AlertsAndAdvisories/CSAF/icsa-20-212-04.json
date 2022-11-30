@@ -1,0 +1,1243 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Mashav Sapir of Claroty reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability may allow an attacker to obtain unauthorized information, modify information, and cause a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan\u00a0",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-212-04 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-212-04"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/publications/emailscams_0905.pdf"
+      }
+    ],
+    "title": "Mitsubishi Electric Factory Automation Engineering Products (Update H)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:29.273327+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-20-212-04",
+      "initial_release_date": "2022-05-24T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:29.273327+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.21X",
+                "product": {
+                  "name": "MX MESInterface - <= 1.21X",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MX MESInterface"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< ersion3 | 3.200J",
+                "product": {
+                  "name": "GT SoftGOT1000 - < ersion3 | 3.200J",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT SoftGOT1000"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.04E",
+                "product": {
+                  "name": "SLMP Data Collector - <= 1.04E",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SLMP Data Collector"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.16S",
+                "product": {
+                  "name": "Network Interface Board CC IE Field Utility - <= 1.16S",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Network Interface Board CC IE Field Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< ersion1 | 1.241B",
+                "product": {
+                  "name": "GT SoftGOT2000 - < ersion1 | 1.241B",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT SoftGOT2000"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.00A",
+                "product": {
+                  "name": "CC-Link IE Control Network Data Collector - 1.00A",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CC-Link IE Control Network Data Collector"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 4.4",
+                "product": {
+                  "name": "MELFA-Works - <= 4.4",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELFA-Works"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.00A",
+                "product": {
+                  "name": "CC-Link IE TSN Data Collector - 1.00A",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CC-Link IE TSN Data Collector"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.010L",
+                "product": {
+                  "name": "CW Configurator - <= 1.010L",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CW Configurator"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.23Z",
+                "product": {
+                  "name": "Network Interface Board CC-Link Ver.2 Utility - <= 1.23Z",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Network Interface Board CC-Link Ver.2 Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "1.00A",
+                "product": {
+                  "name": "CC-Link IE Field Network Data Collector - 1.00A",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CC-Link IE Field Network Data Collector"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "Position Board utility 2 - *",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Position Board utility 2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.004E",
+                "product": {
+                  "name": "MI Configurator - <= 1.004E",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MI Configurator"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.100E",
+                "product": {
+                  "name": "CPU Module Logging Configuration Tool - <= 1.100E",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CPU Module Logging Configuration Tool"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.12N",
+                "product": {
+                  "name": "MX MESInterface-R - <= 1.12N",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MX MESInterface-R"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 4.20W",
+                "product": {
+                  "name": "MX Component - <= 4.20W",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MX Component"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.167Z",
+                "product": {
+                  "name": "MT Works2 - <= 1.167Z",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MT Works2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.13P",
+                "product": {
+                  "name": "Setting/Monitoring tools for the C Controller module (SW3PVC-CCPU) - <= 3.13P",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Setting/Monitoring tools for the C Controller module (SW3PVC-CCPU)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.063R",
+                "product": {
+                  "name": "GX Works3 - <= 1.063R",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GX Works3"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "FR Configurator SW3 - *",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR Configurator SW3"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "MELSOFT EM Software Development Kit - *",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSOFT EM Software Development Kit"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.125F",
+                "product": {
+                  "name": "MR Configurator2 - <= 1.125F",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MR Configurator2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.005F",
+                "product": {
+                  "name": "Motion Control Setting - <= 1.005F",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Motion Control Setting"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.1.4.0",
+                "product": {
+                  "name": "MTConnect Data Collector - <= 1.1.4.0",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MTConnect Data Collector"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.241B",
+                "product": {
+                  "name": "GT Designer3 Version1 (GOT2000) - <= 1.241B",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT Designer3 Version1 (GOT2000)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.26C",
+                "product": {
+                  "name": "FR Configurator2 - <= 1.26C",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FR Configurator2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.03D",
+                "product": {
+                  "name": "M_CommDTM-IO-Link - <= 1.03D",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "M_CommDTM-IO-Link"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.100E",
+                "product": {
+                  "name": "GX LogViewer - <= 1.100E",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GX LogViewer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.241B",
+                "product": {
+                  "name": "GT Designer3 Version1 (GOT1000) - <= 1.241B",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT Designer3 Version1 (GOT1000)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.06G",
+                "product": {
+                  "name": "MELSOFT Complete Clean Up Tool - <= 1.06G",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSOFT Complete Clean Up Tool"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "C Controller Interface Module Utility - *",
+                  "product_id": "CSAFPID-00031"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "C Controller Interface Module Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.53F",
+                "product": {
+                  "name": "PX Developer - <= 1.53F",
+                  "product_id": "CSAFPID-00032"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PX Developer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "MELSEC WinCPU Setting Utility - *",
+                  "product_id": "CSAFPID-00033"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSEC WinCPU Setting Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.29F",
+                "product": {
+                  "name": "Network Interface Board CC IE Control Utility - <= 1.29F",
+                  "product_id": "CSAFPID-00034"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Network Interface Board CC IE Control Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 34L",
+                "product": {
+                  "name": "Network Interface Board MNETH Utility - <= 34L",
+                  "product_id": "CSAFPID-00035"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Network Interface Board MNETH Utility"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2.74C",
+                "product": {
+                  "name": "MELSOFT Navigator - <= 2.74C",
+                  "product_id": "CSAFPID-00036"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSOFT Navigator"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.005F",
+                "product": {
+                  "name": "Motorizer - <= 1.005F",
+                  "product_id": "CSAFPID-00037"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Motorizer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 4.12N",
+                "product": {
+                  "name": "Setting/Monitoring tools for the C Controller module (SW4PVC-CCPU) - <= 4.12N",
+                  "product_id": "CSAFPID-00038"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Setting/Monitoring tools for the C Controller module (SW4PVC-CCPU)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 8.504A",
+                "product": {
+                  "name": "GX Developer - <= 8.504A",
+                  "product_id": "CSAFPID-00039"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GX Developer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2.15R",
+                "product": {
+                  "name": "MX Sheet - <= 2.15R",
+                  "product_id": "CSAFPID-00040"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MX Sheet"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.73B",
+                "product": {
+                  "name": "RT ToolBox2 - <= 3.73B",
+                  "product_id": "CSAFPID-00041"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RT ToolBox2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.17T",
+                "product": {
+                  "name": "MELSOFT iQ AppPortal - <= 1.17T",
+                  "product_id": "CSAFPID-00042"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MELSOFT iQ AppPortal"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.601B",
+                "product": {
+                  "name": "GX Works2 - <= 1.601B",
+                  "product_id": "CSAFPID-00043"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GX Works2"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "GT Designer2 Classic - *",
+                  "product_id": "CSAFPID-00044"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GT Designer2 Classic"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.42U",
+                "product": {
+                  "name": "Data Transfer - <= 3.42U",
+                  "product_id": "CSAFPID-00045"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Data Transfer"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 5.1",
+                "product": {
+                  "name": "EZSocket - <= 5.1",
+                  "product_id": "CSAFPID-00046"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EZSocket"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.82L",
+                "product": {
+                  "name": "RT ToolBox3 - <= 1.82L",
+                  "product_id": "CSAFPID-00047"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RT ToolBox3"
+          }
+        ],
+        "category": "vendor",
+        "name": "Mitsubishi Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-14521",
+      "cwe": {
+        "id": "CWE-428",
+        "name": "Unquoted Search Path or Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple Mitsubishi Electric Factory Automation engineering software products have a malicious code execution vulnerability. A malicious attacker could use this vulnerability to obtain information, modify information, and cause a denial-of-service condition.CVE-2020-14521 has been assigned to this vulnerability. A CVSS v3 base score of 8.3 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038",
+          "CSAFPID-00039",
+          "CSAFPID-00040",
+          "CSAFPID-00041",
+          "CSAFPID-00042",
+          "CSAFPID-00043",
+          "CSAFPID-00044",
+          "CSAFPID-00045",
+          "CSAFPID-00046",
+          "CSAFPID-00047"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-14521"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric recommends the following mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to the Mitsubishi Electric website for details on available patches.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.mitsubishielectric.com/en/psirt/vulnerability/pdf/2020-007_en.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Download the latest version of each software product and update it.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.mitsubishielectric.com/fa/#software"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to the manual for help to update affected products.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For users of a product that has not released a fixed version or who cannot immediately update the product, Mitsubishi Electric recommends taking the following mitigation measures to minimize risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information about the vulnerabilities or Mitsubishi Electric's compensating control is available by contacting a Mitsubishi Electric representative.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ],
+          "url": "https://www.mitsubishielectric.com/fa/support/index.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047"
+          ]
+        }
+      ]
+    }
+  ]
+}

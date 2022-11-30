@@ -11,28 +11,88 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities may allow unauthorized file uploads and command execution by a remote user, which could result in loss of availability, confidentiality, and integrity of the workstation.\u00a0. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Energy, Food and Agriculture, Government Facilities, Transportation Systems, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities may allow unauthorized file uploads and command execution by a remote user, which could result in loss of availability, confidentiality, and integrity of the workstation.\u00a0",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Energy, Food and Agriculture, Government Facilities, Transportation Systems, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: France",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-21-063-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-21-063-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-063-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
       }
     ],
     "title": "Schneider Electric EcoStruxure Building Operation (EBO)",
@@ -40,8 +100,8 @@
       "current_release_date": "2022-10-10T21:50:23.077977+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-21-063-02",
@@ -50,12 +110,12 @@
         {
           "date": "2022-10-10T21:50:23.077977+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -65,58 +125,58 @@
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "v1.9",
+                "category": "product_version_range",
+                "name": ">= 2.0 | <= 3.1",
                 "product": {
-                  "name": "Schneider Electric - v1.9",
-                  "product_id": "1"
+                  "name": "WebStation - >= 2.0 | <= 3.1",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "EcoStruxure Building Operation"
+            "name": "WebStation"
           },
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "v1.9",
+                "category": "product_version_range",
+                "name": ">= 1.9 | <= 3.1",
                 "product": {
-                  "name": "Schneider Electric - v1.9",
-                  "product_id": "2"
+                  "name": "Enterprise Server installer - >= 1.9 | <= 3.1",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "EcoStruxure Building Operation"
+            "name": "Enterprise Server installer"
           },
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "v2.0",
+                "category": "product_version_range",
+                "name": ">= 1.9 | <= 3.1",
                 "product": {
-                  "name": "Schneider Electric - v2.0",
-                  "product_id": "3"
+                  "name": "WebReports - >= 1.9 | <= 3.1",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "EcoStruxure Building Operation"
+            "name": "WebReports"
           },
           {
             "branches": [
               {
-                "category": "product_version",
-                "name": "v2.0",
+                "category": "product_version_range",
+                "name": ">= 2.0 | <= 3.1",
                 "product": {
-                  "name": "Schneider Electric - v2.0",
-                  "product_id": "4"
+                  "name": "Enterprise Central installer - >= 2.0 | <= 3.1",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "EcoStruxure Building Operation"
+            "name": "Enterprise Central installer"
           }
         ],
         "category": "vendor",
@@ -134,20 +194,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An unrestricted upload of a file with dangerous type vulnerability could allow an authenticated remote user to upload arbitrary files due to incorrect verification of user supplied files and achieve remote code execution.",
+          "text": "An unrestricted upload of a file with dangerous type vulnerability could allow an authenticated remote user to upload arbitrary files due to incorrect verification of user supplied files and achieve remote code execution.CVE-2020-7569 has been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:L/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7569"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:L/A:L"
         }
@@ -157,10 +223,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -168,56 +234,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -229,14 +251,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-7569"
+      ]
     },
     {
       "cve": "CVE-2020-7570",
@@ -247,20 +268,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An improper neutralization of an input during webpage generation vulnerability could allow an authenticated remote user to inject arbitrary web script or HTML due to incorrect sanitization of user-supplied data and achieve a stored cross-site scripting attack against other WebReport users.",
+          "text": "An improper neutralization of an input during webpage generation vulnerability could allow an authenticated remote user to inject arbitrary web script or HTML due to incorrect sanitization of user-supplied data and achieve a stored cross-site scripting attack against other WebReport users.CVE-2020-7570 has been assigned to this vulnerability. A CVSS v3 base score of 6.4 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7570"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:L"
         }
@@ -270,10 +297,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -281,56 +308,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -342,14 +325,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-7570"
+      ]
     },
     {
       "cve": "CVE-2020-7571",
@@ -360,20 +342,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Multiple improper neutralizations of an input during webpage generation vulnerabilities could allow a remote attacker to inject arbitrary web script or HTML due to incorrect sanitization of user supplied data and achieve a reflected cross-site scripting attack against other WebReport users.",
+          "text": "Multiple improper neutralizations of an input during webpage generation vulnerabilities could allow a remote attacker to inject arbitrary web script or HTML due to incorrect sanitization of user supplied data and achieve a reflected cross-site scripting attack against other WebReport users.CVE-2020-7571 has been assigned to this vulnerability. A CVSS v3 base score of 6.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7571"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
         }
@@ -383,10 +371,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -394,56 +382,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -455,14 +399,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-7571"
+      ]
     },
     {
       "cve": "CVE-2020-7572",
@@ -473,20 +416,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An improper restriction of XML external entity reference vulnerability could allow an authenticated remote user to inject arbitrary XML code and obtain disclosure of confidential data, cause a denial-of-service condition, or execute server-side request forgery due to improper configuration of the XML parser.",
+          "text": "An improper restriction of XML external entity reference vulnerability could allow an authenticated remote user to inject arbitrary XML code and obtain disclosure of confidential data, cause a denial-of-service condition, or execute server-side request forgery due to improper configuration of the XML parser.CVE-2020-7572 has been assigned to this vulnerability. A CVSS v3 base score of 6.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:L/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7572"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:L/A:H"
         }
@@ -496,10 +445,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -507,56 +456,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -568,14 +473,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-7572"
+      ]
     },
     {
       "cve": "CVE-2020-7573",
@@ -586,20 +490,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An improper access control vulnerability could allow a remote attacker access to restricted web resources due to improper access control.",
+          "text": "An improper access control vulnerability could allow a remote attacker access to restricted web resources due to improper access control.CVE-2020-7573 has been assigned to this vulnerability. A CVSS v3 base score of 5.0 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7573"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L"
         }
@@ -609,10 +519,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -620,56 +530,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -681,14 +547,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-7573"
+      ]
     },
     {
       "cve": "CVE-2020-28209",
@@ -699,20 +564,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An unquoted search path vulnerability could allow any local Windows user with write permissions on at least one of the subfolders of the connect agent service binary path to gain the privilege of the user who started the service.\u00a0 By default, the Enterprise Server and Enterprise Central is always installed at a location requiring Administrator privileges, so this vulnerability is only valid if the application has been installed on a non-secure location.",
+          "text": "An unquoted search path vulnerability could allow any local Windows user with write permissions on at least one of the subfolders of the connect agent service binary path to gain the privilege of the user who started the service.\u00a0 By default, the Enterprise Server and Enterprise Central is always installed at a location requiring Administrator privileges, so this vulnerability is only valid if the application has been installed on a non-secure location.CVE-2020-28209 has been assigned to this vulnerability. A CVSS v3 base score of 2.0 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:H/UI:R/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28209"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:H/UI:R/S:U/C:L/I:N/A:N"
         }
@@ -722,10 +593,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -733,56 +604,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -794,14 +621,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-28209"
+      ]
     },
     {
       "cve": "CVE-2020-28210",
@@ -812,20 +638,26 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An improper neutralization of an input during webpage generation vulnerability could allow an attacker to inject HTML and JavaScript code into the user's browser.",
+          "text": "An improper neutralization of an input during webpage generation vulnerability could allow an attacker to inject HTML and JavaScript code into the user's browser.CVE-2020-28210 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28210"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
         }
@@ -835,10 +667,10 @@
           "category": "vendor_fix",
           "details": "Schneider Electric recommends users upgrade to Version 3.2 of EBO as it is not impacted by any of these vulnerabilities. For assistance in upgrading, contact Schneider Electric Customer Care Center or your Schneider Electric representative.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/work/support/country-selector/contact-us.jsp"
         },
@@ -846,56 +678,12 @@
           "category": "vendor_fix",
           "details": "For versions prior to 3.2, fixes are now available in the form of a hotfix patch. Please refer to SEVD-2020-315-04\u00a0for specific information about how to apply the patch.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ],
           "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-04/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -907,14 +695,13 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004"
           ]
         }
-      ],
-      "title": "CVE-2020-28210"
+      ]
     }
   ]
 }

@@ -1,0 +1,627 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Michael DePlante (@izobashi) and rgod, working with Trend Micro\u2019s Zero Day Initiative, reported these vulnerabilities to CISA. Siemens ProductCERT assisted coordination with Open Design Alliance."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow code execution in the context of the current process or cause a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-047-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-047-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Open Design Alliance Drawings SDK (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:06.173380+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-047-01",
+      "initial_release_date": "2021-05-06T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:06.173380+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2021.12",
+                "product": {
+                  "name": "Drawings SDK - < 2021.12",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Drawings SDK"
+          }
+        ],
+        "category": "vendor",
+        "name": "Open Design Alliance"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-25178",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a stack-based buffer overflow while processing malformed DXF and DWG files. This could allow an attacker to execute code or cause a denial-of-service condition.CVE-2021-25178 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25178"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-25177",
+      "cwe": {
+        "id": "CWE-843",
+        "name": "Access of Resource Using Incompatible Type ('Type Confusion')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A type confusion issue exists when rendering malformed DXF and DWG files. This could allow an attacker to execute code or cause a denial-of-service condition.CVE-2021-25177 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25177"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-25176",
+      "cwe": {
+        "id": "CWE-822",
+        "name": "Untrusted Pointer Dereference"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A NULL pointer dereference exists when rendering malformed DXF and DWG files. This could allow an attacker to execute code or cause a denial-of-service condition.CVE-2021-25176 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25176"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-25175",
+      "cwe": {
+        "id": "CWE-704",
+        "name": "Incorrect Type Conversion or Cast"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A type conversion issue exists when rendering malformed DXF and DWG files. This could allow an attacker to execute code or cause a denial-of-service condition.CVE-2021-25175 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25175"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-25174",
+      "cwe": {
+        "id": "CWE-789",
+        "name": "Memory Allocation with Excessive Size Value"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A memory corruption issue exists when reading malformed DGN files. This could allow an attacker to execute code or cause a denial-of-service condition.CVE-2021-25174 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25174"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-25173",
+      "cwe": {
+        "id": "CWE-789",
+        "name": "Memory Allocation with Excessive Size Value"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A memory allocation with excessive size issue exists when reading malformed DGN files. This could allow an attacker to execute code or cause a denial-of-service condition. CVE-2021-25173 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).. --------- Begin Update A Part 3 of 3 ---------CVE-2021-25173 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-25173"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-31784",
+      "cwe": {
+        "id": "CWE-787",
+        "name": "Out-of-bounds Write"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An out-of-bounds write issue exists in the file-reading procedure Drawings SDK before 2021.6 on all supported by ODA platforms in static configuration. This could allow an attacker to execute code or cause a denial-of-service condition. CVE-2021-31784 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).. --------- End Update A Part 3 of 3 ---------CVE-2021-31784 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-31784"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Open Design Alliance recommends updating to v2021.12 or later. Instructions for ODA members can be found here (Login Required).",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://docs.opendesign.com/td/frames.html?frmname=topic&frmfile=MovingToNewVersion.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to Open Design Alliance\u2019s Security Advisories.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.opendesign.com/security-advisories"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information on products dependent on the affected Drawings SDK see the following vendor security advisories:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-663999.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

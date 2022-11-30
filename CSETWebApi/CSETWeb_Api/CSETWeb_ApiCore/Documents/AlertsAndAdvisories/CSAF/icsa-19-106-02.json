@@ -11,28 +11,78 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. This vulnerability allows a remote attacker to change the settings or alter the programming of the device.\u00a0. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy, Transportation Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "This vulnerability allows a remote attacker to change the settings or alter the programming of the device.\u00a0",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy, Transportation Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States, Germany, Switzerland, Poland, China, India",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-19-106-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-19-106-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-106-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "WAGO Series 750-88x and 750-87x",
@@ -40,8 +90,8 @@
       "current_release_date": "2022-10-10T21:51:14.154552+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-19-106-02",
@@ -50,12 +100,12 @@
         {
           "date": "2022-10-10T21:51:14.154552+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,225 +116,225 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "1"
+                  "name": "750-880 - < FW14",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-880"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW11",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "2"
+                  "name": "750-871 - < FW11",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-871"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW07",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "3"
+                  "name": "750-872 - < FW07",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-872"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "4"
+                  "name": "750-884 - < FW14",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-884"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "5"
+                  "name": "750-882 - < FW14",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-882"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "6"
+                  "name": "750-829 - < FW14",
+                  "product_id": "CSAFPID-0006"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-829"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "7"
+                  "name": "750-881 - < FW14",
+                  "product_id": "CSAFPID-0007"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-881"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW07",
+                "name": "< FW06",
                 "product": {
-                  "name": "WAGO - <FW07",
-                  "product_id": "8"
+                  "name": "750-830 - < FW06",
+                  "product_id": "CSAFPID-0008"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-830"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW08",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "9"
+                  "name": "750-849 - < FW08",
+                  "product_id": "CSAFPID-0009"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-849"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW11",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW11",
-                  "product_id": "10"
+                  "name": "750-852 - < FW14",
+                  "product_id": "CSAFPID-00010"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-852"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW08",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW08",
-                  "product_id": "11"
+                  "name": "750-885 - < FW14",
+                  "product_id": "CSAFPID-00011"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-885"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW07",
+                "name": "< FW07",
                 "product": {
-                  "name": "WAGO - <FW07",
-                  "product_id": "12"
+                  "name": "750-873 - < FW07",
+                  "product_id": "CSAFPID-00012"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-873"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "13"
+                  "name": "750-889 - < FW14",
+                  "product_id": "CSAFPID-00013"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-889"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "14"
+                  "name": "750-330 - < FW14",
+                  "product_id": "CSAFPID-00014"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-330"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW14",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW14",
-                  "product_id": "15"
+                  "name": "750-352 - < FW14",
+                  "product_id": "CSAFPID-00015"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-352"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<FW06",
+                "name": "< FW14",
                 "product": {
-                  "name": "WAGO - <FW06",
-                  "product_id": "16"
+                  "name": "750-831 - < FW14",
+                  "product_id": "CSAFPID-00016"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Series 750-88x and 750-87x"
+            "name": "750-831"
           }
         ],
         "category": "vendor",
@@ -302,32 +352,38 @@
       "notes": [
         {
           "category": "summary",
-          "text": "By exploiting the undocumented service access, it is possible to change the settings of a device and access web-based management with administrator privileges. An attacker can exploit this vulnerability to lock other users out from the device or open closed network ports. It is also possible to use this service access as an FTP user and exchange or delete the application.",
+          "text": "By exploiting the undocumented service access, it is possible to change the settings of a device and access web-based management with administrator privileges. An attacker can exploit this vulnerability to lock other users out from the device or open closed network ports. It is also possible to use this service access as an FTP user and exchange or delete the application.CVE-2019-10712 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10712"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -337,22 +393,22 @@
           "category": "vendor_fix",
           "details": "WAGO released a security advisory available at:https://www.wago.com/de/download/public/Sicherheitshinweis-SA-SYS-2019-001/SA-SYS-2019-001.pdf",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
           ],
           "url": "https://www.wago.com/de/download/public/Sicherheitshinweis-SA-SYS-2019-001/SA-SYS-2019-001.pdf"
         },
@@ -360,22 +416,22 @@
           "category": "vendor_fix",
           "details": "WAGO recommends updating to the newest firmware as listed above and taking the following defensive measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -383,22 +439,22 @@
           "category": "vendor_fix",
           "details": "CERT@VDE has published an advisory regarding this vulnerability at the following location:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -406,93 +462,24 @@
           "category": "vendor_fix",
           "details": "https://cert.vde.com/en-us/advisories/vde-2019-008",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-008"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -504,26 +491,25 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016"
           ]
         }
-      ],
-      "title": "CVE-2019-10712"
+      ]
     }
   ]
 }

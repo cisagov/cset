@@ -11,28 +11,68 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely. Successful exploitation of this vulnerability could cause a denial-of-service condition, change control logic, or disable communication links.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of this vulnerability could cause a denial-of-service condition, change control logic, or disable communication links.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-22-172-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-22-172-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-172-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "JTEKT TOYOPUC",
@@ -40,8 +80,8 @@
       "current_release_date": "2022-10-10T21:50:20.200224+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-22-172-02",
@@ -50,12 +90,12 @@
         {
           "date": "2022-10-10T21:50:20.200224+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -68,13 +108,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "1"
+                  "name": "Nano CPU Type=TUC-6941 - *",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "Nano CPU Type=TUC-6941"
           },
           {
             "branches": [
@@ -82,13 +122,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "2"
+                  "name": "PC10E Type=TCC-4737 - *",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10E Type=TCC-4737"
           },
           {
             "branches": [
@@ -96,13 +136,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "3"
+                  "name": "PC3JX-D Type=TCC-6902 - *",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC3JX-D Type=TCC-6902"
           },
           {
             "branches": [
@@ -110,13 +150,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "4"
+                  "name": "PC10EL Type=TCC-4747 - *",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10EL Type=TCC-4747"
           },
           {
             "branches": [
@@ -124,13 +164,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "5"
+                  "name": "PCDL Type=TKC-6688 - *",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PCDL Type=TKC-6688"
           },
           {
             "branches": [
@@ -138,13 +178,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "6"
+                  "name": "PC10GE Type=TCC-6464 - *",
+                  "product_id": "CSAFPID-0006"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10GE Type=TCC-6464"
           },
           {
             "branches": [
@@ -152,13 +192,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "7"
+                  "name": "PC10B Type=TCC-1021 - *",
+                  "product_id": "CSAFPID-0007"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10B Type=TCC-1021"
           },
           {
             "branches": [
@@ -166,13 +206,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "8"
+                  "name": "PC10B-P Type=TCC-6373 - *",
+                  "product_id": "CSAFPID-0008"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10B-P Type=TCC-6373"
           },
           {
             "branches": [
@@ -180,13 +220,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "9"
+                  "name": "PC3JX Type=TCC-6901 - *",
+                  "product_id": "CSAFPID-0009"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC3JX Type=TCC-6901"
           },
           {
             "branches": [
@@ -194,13 +234,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "10"
+                  "name": "Nano 10GX Type=TUC-1157 - *",
+                  "product_id": "CSAFPID-00010"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "Nano 10GX Type=TUC-1157"
           },
           {
             "branches": [
@@ -208,13 +248,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "11"
+                  "name": "PC10P-DP Type=TCC-6726 - *",
+                  "product_id": "CSAFPID-00011"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10P-DP Type=TCC-6726"
           },
           {
             "branches": [
@@ -222,13 +262,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "12"
+                  "name": "PC10P Type=TCC-6372 - *",
+                  "product_id": "CSAFPID-00012"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10P Type=TCC-6372"
           },
           {
             "branches": [
@@ -236,13 +276,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "13"
+                  "name": "Plus CPU Type=TCC-6740 - *",
+                  "product_id": "CSAFPID-00013"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "Plus CPU Type=TCC-6740"
           },
           {
             "branches": [
@@ -250,13 +290,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "14"
+                  "name": "PC10P-DP-IO Type=TCC-6752 - *",
+                  "product_id": "CSAFPID-00014"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10P-DP-IO Type=TCC-6752"
           },
           {
             "branches": [
@@ -264,13 +304,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "15"
+                  "name": "PC10PE Type=TCC-1101 - *",
+                  "product_id": "CSAFPID-00015"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10PE Type=TCC-1101"
           },
           {
             "branches": [
@@ -278,13 +318,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "16"
+                  "name": "PC10G-CPU Type=TCC-6353 - *",
+                  "product_id": "CSAFPID-00016"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10G-CPU Type=TCC-6353"
           },
           {
             "branches": [
@@ -292,13 +332,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "JTEKT - *",
-                  "product_id": "17"
+                  "name": "PC10PE-1616P Type=TCC-1102 - *",
+                  "product_id": "CSAFPID-00017"
                 }
               }
             ],
             "category": "product_name",
-            "name": "TOYOPUC Products"
+            "name": "PC10PE-1616P Type=TCC-1102"
           }
         ],
         "category": "vendor",
@@ -316,33 +356,39 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product lacks authentication functionality, which could allow an attacker to change controller configurations, manipulate data, or cause a denial-of-service condition.",
+          "text": "The affected product lacks authentication functionality, which could allow an attacker to change controller configurations, manipulate data, or cause a denial-of-service condition.CVE-2022-29951 has been assigned to this vulnerability. A CVSS v3 base score of 7.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-29951"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H"
         }
@@ -352,73 +398,25 @@
           "category": "vendor_fix",
           "details": "JTEKT has provided the following workarounds:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -430,27 +428,26 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017"
           ]
         }
-      ],
-      "title": "CVE-2022-29951"
+      ]
     },
     {
       "cve": "CVE-2022-29958",
@@ -461,33 +458,39 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product lacks privilege separation capabilities, which could allow an attacker to execute arbitrary machine code.",
+          "text": "The affected product lacks privilege separation capabilities, which could allow an attacker to execute arbitrary machine code.CVE-2022-29958 has been assigned to this vulnerability. A CVSS v3 base score of 7.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-29951"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H"
         }
@@ -497,73 +500,25 @@
           "category": "vendor_fix",
           "details": "JTEKT has provided the following workarounds:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -575,27 +530,26 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017"
           ]
         }
-      ],
-      "title": "CVE-2022-29958"
+      ]
     }
   ]
 }

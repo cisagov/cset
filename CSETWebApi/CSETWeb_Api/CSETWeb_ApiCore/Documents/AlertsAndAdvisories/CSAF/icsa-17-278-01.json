@@ -1,0 +1,217 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "David Atch of CyberX reported the vulnerability to ICS-CERT."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "ATTENTION: Remotely exploitable/low skill level to exploit.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Chemical, Critical Manufacturing, Dams, Energy, Food and Agriculture, Government Facilities, Transportation Systems, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Boston, Massachusetts",
+        "title": "Company headquarters location"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-278-01A - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-278-01A"
+      }
+    ],
+    "title": "GE CIMPLICITY (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:08.731569+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-17-278-01A",
+      "initial_release_date": "2017-10-10T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:08.731569+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 9.0",
+                "product": {
+                  "name": "CIMPLICITY - <= 9.0",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CIMPLICITY"
+          }
+        ],
+        "category": "vendor",
+        "name": "GE"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-31465",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A function reads a packet to indicate the next packet length. The next packet length is not verified, allowing a buffer overwrite that could lead to an arbitrary remote code execution. CVE-2017-12732 has been assigned to this vulnerability. A CVSS v3 base score of 6.8 has been assigned; the CVSS vector string is (AV:A/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-12732"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "GE has released CIMPLICITY software Version 9.5 and they recommend that users update to that version or the latest version. The Series 90 TCP/IP communications support has been deprecated and users are encouraged to use the \u201cconvert to triplex\u201d application tool, which has been available since CIMPLICITY Version 6.1, to obtain communication support if needed. Documentation and information on procedures, as well as the upgrade to Version 9.5, can be located at the following location (login required):",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://digitalsupport.ge.com/communities/CC_Contact",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://digitalsupport.ge.com/communities/CC_Contact"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "In addition, ICS-CERT recommends that users take the following measures to protect themselves from social engineering attacks:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.8,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:A/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

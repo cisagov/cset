@@ -1,0 +1,255 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Researchers Jonathan Butts and Billy Rios of Whitescope have identified two vulnerabilities in Boston Scientific\u2019s ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) \u2013 Model 3120. Boston Scientific has provided compensating controls to reduce the risk of exploitation."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Researchers Jonathan Butts and Billy Rios of Whitescope have identified two vulnerabilities in Boston Scientific\u2019s ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) \u2013 Model 3120. Boston Scientific has provided compensating controls to reduce the risk of exploitation.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "n/a",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "ICS-CERT also provides a section for security recommended practices on the ICS-CERT web page at\u00a0http://ics-cert.us-cert.gov/content/recommended-practices. ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site (http://ics-cert.us-cert.gov/).",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSMA-17-292-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-17-292-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/content/recommended-practices"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Boston Scientific ZOOM LATITUDE PRM Vulnerabilities",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:24.183870+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSMA-17-292-01",
+      "initial_release_date": "2017-10-19T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:24.183870+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) - Model 3120 - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ZOOM LATITUDE Programmer/Recorder/Monitor (PRM) - Model 3120"
+          }
+        ],
+        "category": "vendor",
+        "name": "Boston Scientific"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-14014",
+      "cwe": {
+        "id": "CWE-321",
+        "name": "Use of Hard-coded Cryptographic Key"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected device uses a hard-coded cryptographic key to encrypt PHI prior to having it transferred to removable media. CVE-2017-14014 been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been assigned; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "cwe.mitre.org",
+          "url": "https://cwe.mitre.org/data/definitions/321.html"
+        },
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-14014"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific will not be issuing a product update to address the identified vulnerabilities in the ZOOM LATITUDE PRM \u2013 Model 3120. Boston Scientific has identified compensating controls to reduce the risk of exploitation and recommends that users implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2017-14012",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected device uses a hard-coded cryptographic key to encrypt PHI prior to having it transferred to removable media. CVE-2017-14014 been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been assigned; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N). The affected device does not encrypt PHI at rest. CVE-2017-14012 been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been assigned; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "cwe.mitre.org",
+          "url": "https://cwe.mitre.org/data/definitions/321.html"
+        },
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-14012"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Boston Scientific will not be issuing a product update to address the identified vulnerabilities in the ZOOM LATITUDE PRM \u2013 Model 3120. Boston Scientific has identified compensating controls to reduce the risk of exploitation and recommends that users implement the following measures:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

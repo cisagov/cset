@@ -1,0 +1,335 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "ABB reported this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to prevent legitimate access to an affected system node, remotely cause an affected system node to stop, take control of an affected system node, or insert and run arbitrary code in an affected system node.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Switzerland",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:\n\u2022\u00a0\u00a0 \u00a0Minimize network exposure for all control system devices and/or systems, and ensure that they are not accessible from the Internet.\n\u2022\u00a0\u00a0 \u00a0Locate control system networks and remote devices behind firewalls, and isolate them from the business network.\n\u2022\u00a0\u00a0 \u00a0When remote access is required, use secure methods, such as virtual private networks (VPNs), recognizing that VPNs may have vulnerabilities and should be updated to the most current version available. Also recognize that VPN is only as secure as the connected devices.\n\u2022\u00a0\u00a0 \u00a0Do not click web links or open unsolicited attachments in email messages.\n\u2022\u00a0\u00a0 \u00a0Refer to Recognizing and Avoiding Email Scams for more information on avoiding email scams.\n\u2022\u00a0\u00a0 \u00a0Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.\n\u2022\u00a0\u00a0 \u00a0Only use software from trusted sources.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-178-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-178-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/cas/tips/ST04-014.html"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://ics-cert.us-cert.gov/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "ABB CP651 HMI",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:49:55.933176+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-178-02",
+      "initial_release_date": "2019-06-27T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:49:55.933176+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP551100R0001 | B1  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP651 order code - 1SAP551100R0001 | B1  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP651 order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP565100R0001 | B1  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP665 order code - 1SAP565100R0001 | B1  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP665 order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP561100R0001 | B1  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP661 order code - 1SAP561100R0001 | B1  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP661 order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP561200R0001 | A0  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP661-WEB order code - 1SAP561200R0001 | A0  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP661-WEB order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP576200R0001 | A0  with BSP < UN30 1.76 .",
+                "product": {
+                  "name": "CP676-WEB order code - 1SAP576200R0001 | A0  with BSP < UN30 1.76 .",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP676-WEB order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP576100R0001 | B1  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP676 order code - 1SAP576100R0001 | B1  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP676 order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP551200R0001 | A0  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP651-WEB order code - 1SAP551200R0001 | A0  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP651-WEB order code"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "1SAP565200R0001 | A0  with BSP < UN30 1.76",
+                "product": {
+                  "name": "CP665-WEB order code - 1SAP565200R0001 | A0  with BSP < UN30 1.76",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CP665-WEB order code"
+          }
+        ],
+        "category": "vendor",
+        "name": "ABB"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-10995",
+      "cwe": {
+        "id": "CWE-798",
+        "name": "Use of Hard-coded Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The ABB CP651 HMI component implements hidden administrative accounts that are used during the provisioning phase of the HMI interface.CVE-2019-10995 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10995"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "ABB recommends users apply the BSP update on affected CP600 control panels at their earliest convenience.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008"
+          ],
+          "url": "http://search.abb.com/library/Download.aspx?DocumentID=BSPCP600UN30V231&LanguageCode=en&DocumentPartId=&Action=Launch"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see ABB cybersecurity advisory document number 3ADR010402 for more information about this vulnerability and two other security issues and their mitigations.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008"
+          ],
+          "url": "https://library.e.abb.com/public/b2edb894b46242fda29eb7644a068161/ABB-Advisory_3ADR010402.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008"
+          ]
+        }
+      ]
+    }
+  ]
+}

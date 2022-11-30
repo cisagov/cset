@@ -1,0 +1,527 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Sharon Brizinov of Claroty reported these vulnerabilities to AVEVA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities, if exploited and chained together, could allow a malicious entity to achieve arbitrary code execution with system privileges or cause a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, and Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United Kingdom",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-180-05 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-180-05"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "AVEVA System Platform (Update A)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:14.527762+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-180-05",
+      "initial_release_date": "2021-07-27T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:14.527762+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2017 | <= 2020 | R2 P01",
+                "product": {
+                  "name": "AVEVA reports the vulnerability affects AVEVA System Platform - >= 2017 | <= 2020 | R2 P01",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AVEVA reports the vulnerability affects AVEVA System Platform"
+          }
+        ],
+        "category": "vendor",
+        "name": "AVEVA Software, LLC"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-33008",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not perform any authentication for functionality that requires a provable user identity.CVE-2021-33008 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33008"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutoBuild service is intended to be used only on the GR Node of System Platform during configuration. If the AutoBuild service is enabled on any Runtime nodes, it should be disabled. Furthermore, if the AutoBuild functionality is not used on the GR Node, the AutoBuild service can be disabled on the GR Node as an alternative mitigation that does not require patching.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends users who need to continually use the AutoBuild functionality and cannot disable it in System Platform Versions 2017 through 2020 R2 P01 (inclusive) are affected by the vulnerabilities and should first upgrade to one of the System Platform versions listed below, then apply the corresponding security update:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see AVEVA\u2019s security bulletin AVEVA-2021-002 for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2021-002.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-33010",
+      "cwe": {
+        "id": "CWE-248",
+        "name": "Uncaught Exception"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An exception is thrown from a function, but it is not caught, which may cause a denial-of-service condition. CVE-2021-33010 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).. --------- Begin Update A Part 1 of 1 ---------CVE-2021-33010 has been assigned to this vulnerability. A CVSS v3 base score of 6.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-33010"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutoBuild service is intended to be used only on the GR Node of System Platform during configuration. If the AutoBuild service is enabled on any Runtime nodes, it should be disabled. Furthermore, if the AutoBuild functionality is not used on the GR Node, the AutoBuild service can be disabled on the GR Node as an alternative mitigation that does not require patching.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends users who need to continually use the AutoBuild functionality and cannot disable it in System Platform Versions 2017 through 2020 R2 P01 (inclusive) are affected by the vulnerabilities and should first upgrade to one of the System Platform versions listed below, then apply the corresponding security update:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see AVEVA\u2019s security bulletin AVEVA-2021-002 for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2021-002.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32981",
+      "cwe": {
+        "id": "CWE-22",
+        "name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software uses external input to construct a pathname that is intended to identify a file or directory that is located underneath a restricted parent directory, but the software does not properly neutralize special elements within the pathname that can cause the pathname to resolve to a location that is outside of the restricted directory.CVE-2021-32981 has been assigned to this vulnerability. A CVSS v3 base score of 7.2 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32981"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutoBuild service is intended to be used only on the GR Node of System Platform during configuration. If the AutoBuild service is enabled on any Runtime nodes, it should be disabled. Furthermore, if the AutoBuild functionality is not used on the GR Node, the AutoBuild service can be disabled on the GR Node as an alternative mitigation that does not require patching.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends users who need to continually use the AutoBuild functionality and cannot disable it in System Platform Versions 2017 through 2020 R2 P01 (inclusive) are affected by the vulnerabilities and should first upgrade to one of the System Platform versions listed below, then apply the corresponding security update:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see AVEVA\u2019s security bulletin AVEVA-2021-002 for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2021-002.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32985",
+      "cwe": {
+        "id": "CWE-346",
+        "name": "Origin Validation Error"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not properly verify that the source of data or communication is valid.CVE-2021-32985 has been assigned to this vulnerability. A CVSS v3 base score of 7.2 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32985"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutoBuild service is intended to be used only on the GR Node of System Platform during configuration. If the AutoBuild service is enabled on any Runtime nodes, it should be disabled. Furthermore, if the AutoBuild functionality is not used on the GR Node, the AutoBuild service can be disabled on the GR Node as an alternative mitigation that does not require patching.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends users who need to continually use the AutoBuild functionality and cannot disable it in System Platform Versions 2017 through 2020 R2 P01 (inclusive) are affected by the vulnerabilities and should first upgrade to one of the System Platform versions listed below, then apply the corresponding security update:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see AVEVA\u2019s security bulletin AVEVA-2021-002 for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2021-002.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-32977",
+      "cwe": {
+        "id": "CWE-347",
+        "name": "Improper Verification of Cryptographic Signature"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not verify, or incorrectly verifies, the cryptographic signature for data. CVE-2021-32977 has been assigned to this vulnerability. A CVSS v3 base score of 7.2 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).. --------- End Update A Part 1 of 1 ---------CVE-2021-32977 has been assigned to this vulnerability. A CVSS v3 base score of 7.2 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-32977"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends organizations evaluate the impact of these vulnerabilities based on their operational environment, architecture, and product implementation.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AutoBuild service is intended to be used only on the GR Node of System Platform during configuration. If the AutoBuild service is enabled on any Runtime nodes, it should be disabled. Furthermore, if the AutoBuild functionality is not used on the GR Node, the AutoBuild service can be disabled on the GR Node as an alternative mitigation that does not require patching.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "AVEVA recommends users who need to continually use the AutoBuild functionality and cannot disable it in System Platform Versions 2017 through 2020 R2 P01 (inclusive) are affected by the vulnerabilities and should first upgrade to one of the System Platform versions listed below, then apply the corresponding security update:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://softwaresupportsp.aveva.com/#/connectivityhub/details?id=24f8a620-7b2e-4cd9-5973-08d91f9da2f8"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see AVEVA\u2019s security bulletin AVEVA-2021-002 for more information.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.aveva.com/content/dam/aveva/documents/support/cyber-security-updates/SecurityBulletin_AVEVA-2021-002.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.2,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

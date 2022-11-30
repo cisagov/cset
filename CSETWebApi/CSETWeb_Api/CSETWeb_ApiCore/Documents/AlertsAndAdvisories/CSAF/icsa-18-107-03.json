@@ -1,0 +1,609 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Rockwell Automation reported these vulnerabilities to NCCIC from the semi-annual Cisco IOS and IOS XE Software Security Advisory Bundled Publication."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could result in loss of availability, confidentiality, and/or integrity caused by memory exhaustion, module restart, information corruption, and/or information exposure.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Critical Manufacturing, Energy, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Wisconsin, USA",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-107-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-107-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Rockwell Automation Stratix Services Router",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:22.234002+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-18-107-03",
+      "initial_release_date": "2018-04-17T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:22.234002+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.6.3M1",
+                "product": {
+                  "name": "Allen-Bradley Stratix 5900 Services Router - <= 15.6.3M1",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 5900 Services Router"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-0158",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the Internet Key Exchange Version 2 (IKEv2) module of Cisco IOS Software and Cisco IOS XE Software could allow an unauthenticated remote attacker to cause a memory leak or a reload of an affected device that leads to a denial of service (DoS) condition. The vulnerability is due to incorrect processing of certain IKEv2 packets. An attacker could exploit this vulnerability by sending crafted IKEv2 packets to an affected device to be processed. A successful exploit could cause an affected device to continuously consume memory and eventually reload, resulting in a DoS condition.CVE-2018-0158 has been assigned to this vulnerability. A CVSS v3 base score of 8.6 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-0158"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released knowledge base article 1073313 which can be found at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/ (login required)",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Cisco has released Snort Rules 46110 and 46111 to help address CVE-2018-0158 and CVE-2018-0151. See new rules at:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0151: Users who do not use the Adaptive QoS for DMVPN feature can deny all traffic destined to UDP port 18999 on an affected device by using a Control Plane Policing (CoPP) policy. If the Adaptive QoS for DMVPN feature is later configured, the device must be upgraded to an unaffected release of Cisco IOS Software or Cisco IOS XE Software and the CoPP policy must be removed.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0167 and CVE-2018-0175 have no specific mitigations in place. See the following Cisco Vulnerability advisory for more details:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation also recommends that users implement the following general security guidelines:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS-CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT website.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.6,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-0151",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the quality of service (QoS) subsystem of Cisco IOS Software and Cisco IOS XE Software could allow an unauthenticated remote attacker to cause a DoS condition or execute arbitrary code with elevated privileges. The vulnerability is due to incorrect bounds checking of certain values in packets that are destined for UDP port 18999 of an affected device. An attacker could exploit this vulnerability by sending malicious packets to an affected device. When the packets are processed, an exploitable buffer overflow condition may occur. A successful exploit could allow the attacker to execute arbitrary code on the affected device with elevated privileges. The attacker could also leverage this vulnerability to cause the device to reload, causing a temporary DoS condition while the device is reloading. The malicious packets must be destined to and processed by an affected device. Traffic transiting a device will not trigger the vulnerability.. CVE-2018-0151 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).The malicious packets must be destined to and processed by an affected device. Traffic transiting a device will not trigger the vulnerability.",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-0151"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released knowledge base article 1073313 which can be found at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/ (login required)",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Cisco has released Snort Rules 46110 and 46111 to help address CVE-2018-0158 and CVE-2018-0151. See new rules at:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0151: Users who do not use the Adaptive QoS for DMVPN feature can deny all traffic destined to UDP port 18999 on an affected device by using a Control Plane Policing (CoPP) policy. If the Adaptive QoS for DMVPN feature is later configured, the device must be upgraded to an unaffected release of Cisco IOS Software or Cisco IOS XE Software and the CoPP policy must be removed.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0167 and CVE-2018-0175 have no specific mitigations in place. See the following Cisco Vulnerability advisory for more details:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation also recommends that users implement the following general security guidelines:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS-CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT website.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-0167",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A buffer overflow vulnerability in the LLDP subsystem of Cisco IOS Software, Cisco IOS XE Software, and Cisco IOS XR Software could allow an adjacent, unauthenticated attacker to cause a DoS condition or execute arbitrary code with elevated privileges.CVE-2018-0167 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-0167"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released knowledge base article 1073313 which can be found at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/ (login required)",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Cisco has released Snort Rules 46110 and 46111 to help address CVE-2018-0158 and CVE-2018-0151. See new rules at:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0151: Users who do not use the Adaptive QoS for DMVPN feature can deny all traffic destined to UDP port 18999 on an affected device by using a Control Plane Policing (CoPP) policy. If the Adaptive QoS for DMVPN feature is later configured, the device must be upgraded to an unaffected release of Cisco IOS Software or Cisco IOS XE Software and the CoPP policy must be removed.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0167 and CVE-2018-0175 have no specific mitigations in place. See the following Cisco Vulnerability advisory for more details:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation also recommends that users implement the following general security guidelines:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS-CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT website.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-0175",
+      "cwe": {
+        "id": "CWE-134",
+        "name": "Use of Externally-Controlled Format String"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A format string vulnerability in the LLDP subsystem of Cisco IOS Software and Cisco IOS XE Software could allow an adjacent, unauthenticated attacker to cause a DoS condition or execute arbitrary code with elevated privileges.CVE-2018-0175 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-0175"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released knowledge base article 1073313 which can be found at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/ (login required)",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1073313/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Cisco has released Snort Rules 46110 and 46111 to help address CVE-2018-0158 and CVE-2018-0151. See new rules at:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisco.com/web/software/286271056/117258/sf-rules-2018-03-29-new.html"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0151: Users who do not use the Adaptive QoS for DMVPN feature can deny all traffic destined to UDP port 18999 on an affected device by using a Control Plane Policing (CoPP) policy. If the Adaptive QoS for DMVPN feature is later configured, the device must be upgraded to an unaffected release of Cisco IOS Software or Cisco IOS XE Software and the CoPP policy must be removed.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "CVE-2018-0167 and CVE-2018-0175 have no specific mitigations in place. See the following Cisco Vulnerability advisory for more details:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180328-lldp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation also recommends that users implement the following general security guidelines:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS-CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT website.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

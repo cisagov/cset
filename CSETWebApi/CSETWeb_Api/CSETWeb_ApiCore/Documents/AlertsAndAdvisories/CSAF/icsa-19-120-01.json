@@ -1,0 +1,373 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Younes Dragoni of Nozomi Networks reported CVE-2019-10952\u00a0to NCCIC. George Lashenko of CyberX reported CVE-2019-10954 to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could allow a remote attacker to render the web server unavailable and/or place the controller in a major non-recoverable faulted state (MNRF).",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-120-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-120-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Rockwell Automation CompactLogix 5370",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:49:57.453694+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-120-01",
+      "initial_release_date": "2019-04-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:49:57.453694+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "20 - <= 30.014",
+                "product": {
+                  "name": "CompactLogix 5370 L1 controllers - 20 - <= 30.014",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CompactLogix 5370 L1 controllers"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "20 - <= 30.014",
+                "product": {
+                  "name": "Compact GuardLogix 5370 controllers - 20 - <= 30.014",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Compact GuardLogix 5370 controllers"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "20 - <= 30.014",
+                "product": {
+                  "name": "Armor Compact GuardLogix 5370 controllers - 20 - <= 30.014",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Armor Compact GuardLogix 5370 controllers"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "20 - <= 30.014",
+                "product": {
+                  "name": "CompactLogix 5370 L2 controllers - 20 - <= 30.014",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CompactLogix 5370 L2 controllers"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "20 - <= 30.014",
+                "product": {
+                  "name": "CompactLogix 5370 L3 controllers - 20 - <= 30.014",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CompactLogix 5370 L3 controllers"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-10952",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker could send a crafted HTTP/HTTPS request to render the web server unavailable and/or lead to remote code execution caused by a stack-based buffer overflow vulnerability. A cold restart is required for recovering the system.CVE-2019-10952 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10952"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell recommends the following:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/494865/page/1"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Apply FRN 31.011 or later from: https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?Keyword=5370&crumb=112\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?Keyword=5370&crumb=112\u00a0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information please refer to Rockwell\u2019s Security Advisory: https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1075979\u00a0(login required)",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1075979"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2019-10954",
+      "cwe": {
+        "id": "CWE-121",
+        "name": "Stack-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker could send crafted SMTP packets to cause a denial-of-service condition where the controller enters a major non-recoverable faulted state (MNRF).\u00a0CVE-2019-10954 has been assigned to this vulnerability. A CVSS v3 base score of 8.6 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10954"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell recommends the following:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/494865/page/1"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Apply FRN 31.011 or later from: https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?Keyword=5370&crumb=112\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?Keyword=5370&crumb=112\u00a0"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information please refer to Rockwell\u2019s Security Advisory: https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1075979\u00a0(login required)",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1075979"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.6,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -11,28 +11,88 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could crash the device or allow access to sensitive information.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Water and Wastewater Systems. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could crash the device or allow access to sensitive information.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Taiwan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-20-056-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-20-056-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-056-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
       }
     ],
     "title": "Moxa ioLogik 2542-HSPA Series Controllers and IOs, and IOxpress Configuration Utility",
@@ -40,8 +100,8 @@
       "current_release_date": "2022-10-10T21:50:52.484162+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-20-056-02",
@@ -50,12 +110,12 @@
         {
           "date": "2022-10-10T21:50:52.484162+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,29 +126,29 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "3.0",
+                "name": "2.3.0 or",
                 "product": {
-                  "name": "Moxa - 3.0",
-                  "product_id": "1"
+                  "name": "IOxpress configuration utility - 2.3.0 or",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "ioLogik 2542-HSPA Series Controllers and IOs, and IOxpress Configuration Utility"
+            "name": "IOxpress configuration utility"
           },
           {
             "branches": [
               {
                 "category": "product_version",
-                "name": "2.3.0",
+                "name": "3.0 or  lower",
                 "product": {
-                  "name": "Moxa - 2.3.0",
-                  "product_id": "2"
+                  "name": "ioLogik 2500 series - 3.0 or  lower",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "ioLogik 2542-HSPA Series Controllers and IOs, and IOxpress Configuration Utility"
+            "name": "ioLogik 2500 series"
           }
         ],
         "category": "vendor",
@@ -106,18 +166,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Sensitive information is stored in configuration files without encryption, which may allow an attacker to access an administrative account.",
+          "text": "Sensitive information is stored in configuration files without encryption, which may allow an attacker to access an administrative account.CVE-2019-18238 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-18238"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
         }
@@ -127,8 +193,8 @@
           "category": "vendor_fix",
           "details": "Moxa has developed a solution to address these vulnerabilities: Please contact Moxa Technical Support for a security patch.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/support/support/technical-support"
         },
@@ -136,53 +202,17 @@
           "category": "vendor_fix",
           "details": "Please see Moxa\u2019s security advisory for more information.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/en/support/support/security-advisory/iologik-2542-hspa-series-ioxpress-vulnerabilities"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
         }
@@ -196,12 +226,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2019-18238"
+      ]
     },
     {
       "cve": "CVE-2020-7003",
@@ -212,18 +241,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Sensitive information is transmitted over some web applications in clear text.",
+          "text": "Sensitive information is transmitted over some web applications in clear text.CVE-2020-7003 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7003"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
         }
@@ -233,8 +268,8 @@
           "category": "vendor_fix",
           "details": "Moxa has developed a solution to address these vulnerabilities: Please contact Moxa Technical Support for a security patch.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/support/support/technical-support"
         },
@@ -242,53 +277,17 @@
           "category": "vendor_fix",
           "details": "Please see Moxa\u2019s security advisory for more information.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/en/support/support/security-advisory/iologik-2542-hspa-series-ioxpress-vulnerabilities"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
         }
@@ -302,12 +301,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2020-7003"
+      ]
     },
     {
       "cve": "CVE-2019-18242",
@@ -318,18 +316,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "Frequent and multiple requests for short-term use may cause the web server to fail.",
+          "text": "Frequent and multiple requests for short-term use may cause the web server to fail.CVE-2019-18242 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-18242"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
         }
@@ -339,8 +343,8 @@
           "category": "vendor_fix",
           "details": "Moxa has developed a solution to address these vulnerabilities: Please contact Moxa Technical Support for a security patch.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/support/support/technical-support"
         },
@@ -348,53 +352,17 @@
           "category": "vendor_fix",
           "details": "Please see Moxa\u2019s security advisory for more information.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.moxa.com/en/support/support/security-advisory/iologik-2542-hspa-series-ioxpress-vulnerabilities"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:\u00a0",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.us-cert.gov/sites/default/files/publications/emailscams_0905.pdf"
         },
         {
           "category": "vendor_fix",
           "details": "Refer to Avoiding Social Engineering and Phishing Attacks for more information on social engineering attacks.",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
         }
@@ -408,12 +376,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2019-18242"
+      ]
     }
   ]
 }
