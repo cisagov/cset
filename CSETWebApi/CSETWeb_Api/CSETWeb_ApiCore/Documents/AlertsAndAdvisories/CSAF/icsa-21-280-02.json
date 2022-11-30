@@ -1,0 +1,901 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Victor Mayoral Vilches of Alias Robotics reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could lead to privilege escalation, data exfiltration, control of the robot, and a denial-of-service condition.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Healthcare and Public Health, Transportation Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Denmark",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-280-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-280-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Mobile Industrial Robots Vehicles and MiR Fleet Software",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:14.289289+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-280-02",
+      "initial_release_date": "2021-10-07T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:14.289289+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.10.2.1",
+                "product": {
+                  "name": "MiR100 MiR200 MiR250 MiR500 MiR1000 in MiR Robot Software - < 2.10.2.1",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiR100 MiR200 MiR250 MiR500 MiR1000 in MiR Robot Software"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 2.10.2.1",
+                "product": {
+                  "name": "MiR Fleet in MiR Fleet Software - < 2.10.2.1",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MiR Fleet in MiR Fleet Software"
+          }
+        ],
+        "category": "vendor",
+        "name": "Mobile Industrial Robots (MiR)"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-7184",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An authenticated local attacker with an account on the MiR robot operating system can exploit a Linux kernel vulnerability to perform privilege escalation to root or cause a denial-of-service condition.CVE-2017-7184 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-7184"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2017-18255",
+      "cwe": {
+        "id": "CWE-190",
+        "name": "Integer Overflow or Wraparound"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A handler in the Linux kernel prior to Version 4.11 allows local users to cause a denial-of-service condition or other unspecified impact(s) via use of a large value.CVE-2017-18255 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-18255"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10271",
+      "cwe": {
+        "id": "CWE-668",
+        "name": "Exposure of Resource to Wrong Sphere"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Two APIs to the Robot Operating System (ROS) used in MiR robots were accessible from both wired and wireless network interfaces. Using these APIs, an attacker could take control of the robot, cause a denial-of-service condition, and exfiltrate data over the web interface.CVE-2020-10271 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10271"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.8,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10272",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Robot Operating System (ROS) default packages are used, which expose the computational graph without any authentication. This could allow an attacker with access to the internal wireless and wired networks to take control of the robot.CVE-2020-10272 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10272"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10273",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "An attacker with physical access to the hard drive, or an attacker with a local account on the robot operating system could extract sensitive data.CVE-2020-10273 has been assigned to this vulnerability. A CVSS v3 base score of 6.2 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10273"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.2,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10276",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "MiR robots shipped before June 2020 had default passwords set for the SICK safety PLC. An attacker with access to the internal network of the robot could use the default credentials to manipulate the safety PLC, effectively disabling the emergency stop function.\u00a0CVE-2020-10276 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10276"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10277",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "MiR robots ship with the option to boot from a connected USB drive. The ability to boot from USB is an insecure default configuration that is changeable by integrators. Integrators are informed and instructed in writing to evaluate disabling USB boot. If left enabled, an attacker with physical access to the robot could abuse this functionality to manipulate or exfiltrate data stored on the robot\u2019s hard drive.CVE-2020-10277 has been assigned to this vulnerability. A CVSS v3 base score of 6.4 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10277"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.4,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10278",
+      "cwe": {
+        "id": "CWE-284",
+        "name": "Improper Access Control"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The lack of a BIOS password is an insecure default configuration, changeable by integrators. Integrators are informed and instructed in writing to evaluate BIOS protection.\u00a0CVE-2020-10278 has been assigned to this vulnerability. A CVSS v3 base score of 4.6 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10278"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.6,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10279",
+      "cwe": {
+        "id": "CWE-276",
+        "name": "Incorrect Default Permissions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "MiR software versions prior to v2.8.3 contain system configurations with insecure defaults, allowing an authorized local attacker with access to the robot operating system (ROS) to perform privilege escalation or cause denial-of-service.CVE-2020-10279 has been assigned to this vulnerability. A CVSS v3 base score of 8.4 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10279"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.4,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-10280",
+      "cwe": {
+        "id": "CWE-239",
+        "name": "Failure to Handle Incomplete Element"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The Apache server on Port 80 hosting the web interface is vulnerable to a denial-of-service condition when an attacker spams incomplete HTTP headers, effectively blocking the access to the dashboard.CVE-2020-10280 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-10280"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "MiR recommends users upgrade affected products to the latest version. New software versions can be found on the MiR Distributor portal (login required).",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.mobile-industrial-robots.com/en/sitetools/distributor-login/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information, refer to MiR\u2019s security advisories page.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://mobile-industrial-robots.com/en/about-mir/security-advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "MiR instructs customers to explicitly change default credentials upon configuring the robots, including default SSID and password to the WiFi access point.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002"
+          ]
+        }
+      ]
+    }
+  ]
+}

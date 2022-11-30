@@ -11,28 +11,68 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Low attack complexity. Successful exploitation of this vulnerability could cause a loss of sensitive information and unauthorized changes.. CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of this vulnerability could cause a loss of sensitive information and unauthorized changes.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple Sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-22-167-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-22-167-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-22-167-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "AutomationDirect DirectLOGIC with Serial Communication",
@@ -40,8 +80,8 @@
       "current_release_date": "2022-10-10T21:50:52.271929+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-22-167-02",
@@ -50,12 +90,12 @@
         {
           "date": "2022-10-10T21:50:52.271929+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,127 +106,127 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "1"
+                  "name": "D0-06DD2-D - < 2.72",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DD2-D"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "2"
+                  "name": "D0-06DD1-D - < 2.72",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DD1-D"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "3"
+                  "name": "D0-06DR-D - < 2.72",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DR-D"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "4"
+                  "name": "D0-06AR - < 2.72",
+                  "product_id": "CSAFPID-0004"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06AR"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "5"
+                  "name": "D0-06DR - < 2.72",
+                  "product_id": "CSAFPID-0005"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DR"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "6"
+                  "name": "D0-06AA - < 2.72",
+                  "product_id": "CSAFPID-0006"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06AA"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "7"
+                  "name": "D0-06DA - < 2.72",
+                  "product_id": "CSAFPID-0007"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DA"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "8"
+                  "name": "D0-06DD1 - < 2.72",
+                  "product_id": "CSAFPID-0008"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DD1"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v2.72",
+                "name": "< 2.72",
                 "product": {
-                  "name": "AutomationDirect - <v2.72",
-                  "product_id": "9"
+                  "name": "D0-06DD2 - < 2.72",
+                  "product_id": "CSAFPID-0009"
                 }
               }
             ],
             "category": "product_name",
-            "name": "DirectLOGIC with Serial Communication"
+            "name": "D0-06DD2"
           }
         ],
         "category": "vendor",
@@ -204,25 +244,31 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The product is vulnerable to a specifically crafted serial message to the CPU serial port that will cause the PLC to respond with the PLC password in cleartext. This could allow an attacker to access and make unauthorized changes.",
+          "text": "The product is vulnerable to a specifically crafted serial message to the CPU serial port that will cause the PLC to respond with the PLC password in cleartext. This could allow an attacker to access and make unauthorized changes.CVE-2022-2003 has been assigned to this vulnerability. A CVSS v3 base score of 7.7 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2022-2003"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N"
         }
@@ -232,15 +278,15 @@
           "category": "vendor_fix",
           "details": "AutomationDirect recommends users upgrade to firmware Version 2.72 or later, which will no longer respond with the password when requested with the specially crafted message.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ],
           "url": "https://cdn.automationdirect.com/static/firmware/"
         },
@@ -248,15 +294,15 @@
           "category": "vendor_fix",
           "details": "Additional mitigation for brute force password access has also been added. Three incorrect password entries will result in a 3-hour lock out of password entry. Power cycle will allow subsequent password attempts.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -264,15 +310,15 @@
           "category": "vendor_fix",
           "details": "While automation networks and systems have built-in password protection schemes, this is only one step in securing the affected systems. Automation control system networks must incorporate data protection and security measures at least as robust as a typical business computer system. AutomationDirect recommends users of PLCs, HMI products, and other SCADA system products perform independent network security analysis to determine the proper level of security required for the application.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -280,15 +326,15 @@
           "category": "vendor_fix",
           "details": "AutomationDirect has identified the specific mitigation actions listed below:",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -296,49 +342,17 @@
           "category": "vendor_fix",
           "details": "Please refer to the following link for supporting information related to security considerations.",
           "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ],
           "url": "https://support.automationdirect.com/docs/securityconsiderations.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics\u00a0Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics\u00a0in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -350,19 +364,18 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009"
           ]
         }
-      ],
-      "title": "CVE-2022-2003"
+      ]
     }
   ]
 }

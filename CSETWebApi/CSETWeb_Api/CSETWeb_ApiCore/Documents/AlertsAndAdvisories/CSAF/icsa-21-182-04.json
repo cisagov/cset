@@ -1,0 +1,549 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Chizuru Toyama of TXOne IoT/ICS Security Research Labs, working with Trend Micro\u2019s Zero Day Initiative, reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "An attacker could exploit this vulnerability by impersonating administrators to disclose configuration information of the air conditioning system in order to tamper with operation information and system configuration.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-182-04 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-182-04"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Mitsubishi Electric Air Conditioning System",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:58.293658+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-182-04",
+      "initial_release_date": "2021-07-01T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:58.293658+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.09",
+                "product": {
+                  "name": "EB-50GU-J - <= 7.09",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EB-50GU-J"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.20",
+                "product": {
+                  "name": "AG-150A-J - <= 3.20",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AG-150A-J"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.20",
+                "product": {
+                  "name": "AG-150A-A - <= 3.20",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AG-150A-A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 1.30",
+                "product": {
+                  "name": "CMS-RMD-J - <= 1.30",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CMS-RMD-J"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "EW-50A - <= 7.93",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EW-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2.50 | <= 3.35",
+                "product": {
+                  "name": "G-50A - >= 2.50 | <= 3.35",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "G-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "TW-50A - <= 7.93",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TW-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "AE-50A - <= 7.93",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AE-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.20",
+                "product": {
+                  "name": "GB-50ADA-A - <= 3.20",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GB-50ADA-A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "EW-50E - <= 7.93",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EW-50E"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "TE-200A - <= 7.93",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TE-200A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "TE-50A - <= 7.93",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "TE-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 3.20",
+                "product": {
+                  "name": "GB-50ADA-J - <= 3.20",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GB-50ADA-J"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "AE-50E - <= 7.93",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AE-50E"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "AE-200A - <= 7.93",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AE-200A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2.20",
+                "product": {
+                  "name": "PAC-YG50ECA - <= 2.20",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PAC-YG50ECA"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.09",
+                "product": {
+                  "name": "EB-50GU-A - <= 7.09",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "EB-50GU-A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": ">= 2.50 | <= 3.35",
+                "product": {
+                  "name": "GB-50A - >= 2.50 | <= 3.35",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "GB-50A"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 7.93",
+                "product": {
+                  "name": "AE-200E - <= 7.93",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "AE-200E"
+          }
+        ],
+        "category": "vendor",
+        "name": "Mitsubishi Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-20593",
+      "cwe": {
+        "id": "CWE-303",
+        "name": "Incorrect Implementation of Authentication Algorithm"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Web functions of Mitsubishi Electric air conditioning systems have a privilege escalation vulnerability due to incorrect implementation of the authentication algorithm. This vulnerability may allow an attacker to impersonate an administrator and tamper with information (e.g., operation information and configuration of the air conditioning system).CVE-2021-20593 has been assigned to this vulnerability. A CVSS v3 base score of 7.1 has been assigned; the CVSS vector string is (AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-20593"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric has created the following versions to address the issue, and recommends users update to one of the following versions below or newer:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Mitsubishi Electric recommends users take the following mitigation measures to minimize the risks associated with this vulnerability:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please contact a distributor or Mitsubishi Electric representative for available updates.\u00a0",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019"
+          ]
+        }
+      ]
+    }
+  ]
+}

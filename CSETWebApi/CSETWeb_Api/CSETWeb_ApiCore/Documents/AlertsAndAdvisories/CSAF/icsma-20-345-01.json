@@ -11,28 +11,68 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable with adjacent access/low skill level to exploit. Successful exploitation of these vulnerabilities together could result in the attacker being able to modify or fabricate data from the implanted cardiac device being uploaded to the CareLink Network and remotely execute code on the MCL Smart Patient Reader device, which could allow control of a paired cardiac device. The exploitation must be initiated within Bluetooth signal proximity of the vulnerable product. Medtronic is currently unaware of any cyberattack, privacy breach, or patient harm as a result of these vulnerabilities.. CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities together could result in the attacker being able to modify or fabricate data from the implanted cardiac device being uploaded to the CareLink Network and remotely execute code on the MCL Smart Patient Reader device, which could allow control of a paired cardiac device. The exploitation must be initiated within Bluetooth signal proximity of the vulnerable product. Medtronic is currently unaware of any cyberattack, privacy breach, or patient harm as a result of these vulnerabilities.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Ireland",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSMA-20-345-01 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSMA-20-345-01 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsma-20-345-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "Medtronic MyCareLink Smart",
@@ -40,8 +80,8 @@
       "current_release_date": "2022-10-10T21:51:04.670149+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSMA-20-345-01",
@@ -50,12 +90,12 @@
         {
           "date": "2022-10-10T21:51:04.670149+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -68,13 +108,13 @@
                 "category": "product_version",
                 "name": "*",
                 "product": {
-                  "name": "Medtronic - *",
-                  "product_id": "1"
+                  "name": "Smart Model 25000 Patient Reader - *",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "MyCareLink (MCL) Smart Model 25000 Patient Reader"
+            "name": "Smart Model 25000 Patient Reader"
           }
         ],
         "category": "vendor",
@@ -92,17 +132,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected products contain an authentication protocol vulnerability where the method used to authenticate between the MCL Smart Patient Reader and the Medtronic MyCareLink Smart mobile app is vulnerable to bypass. This vulnerability enables an attacker to use another mobile device or malicious application on the patient\u2019s smartphone to authenticate to the patient\u2019s Medtronic Smart Reader, fooling the device into believing it is communicating with the original Medtronic smart phone application when executed within range of Bluetooth communication.",
+          "text": "The affected products contain an authentication protocol vulnerability where the method used to authenticate between the MCL Smart Patient Reader and the Medtronic MyCareLink Smart mobile app is vulnerable to bypass. This vulnerability enables an attacker to use another mobile device or malicious application on the patient\u2019s smartphone to authenticate to the patient\u2019s Medtronic Smart Reader, fooling the device into believing it is communicating with the original Medtronic smart phone application when executed within range of Bluetooth communication.CVE-2020-25183 has been assigned to this vulnerability. A CVSS v3 base score of 8.0 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-25183"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
         }
@@ -112,7 +158,7 @@
           "category": "vendor_fix",
           "details": "A firmware update to eliminates these vulnerabilities has been developed by Medtronic and is available by updating the MyCareLink Smartapp via the associated mobile application store. Upgrading to the latest v5.2 mobile application version will ensure the Patient Reader is also updated on next use. The user\u2019s smart phone must be updated to the following operating system version for the patches to be applied: iOS 10 and above; Android 6.0 and above.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -120,7 +166,7 @@
           "category": "vendor_fix",
           "details": "Medtronic has released additional patient focused information:\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/security"
         },
@@ -128,7 +174,7 @@
           "category": "vendor_fix",
           "details": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html"
         },
@@ -136,7 +182,7 @@
           "category": "vendor_fix",
           "details": "In response to these vulnerabilities, Medtronic has applied additional controls for monitoring and responding to improper use of the MCL Smart Patient Reader:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -144,7 +190,7 @@
           "category": "vendor_fix",
           "details": "Medtronic recommends that users take additional defensive measures to minimize risk. Specifically, users should:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -152,25 +198,9 @@
           "category": "vendor_fix",
           "details": "Report any concerning behavior regarding these products to your healthcare provider or a Medtronic representative.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -182,11 +212,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2020-25183"
+      ]
     },
     {
       "cve": "CVE-2020-25187",
@@ -197,17 +226,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected products are vulnerable when an authenticated attacker runs a debug command, which can be sent to the patient reader and cause a heap overflow event within the MCL Smart Patient Reader software stack. The heap overflow could allow an attacker to remotely execute code on the MCL Smart Patient Reader, potentially leading to control of the device",
+          "text": "The affected products are vulnerable when an authenticated attacker runs a debug command, which can be sent to the patient reader and cause a heap overflow event within the MCL Smart Patient Reader software stack. The heap overflow could allow an attacker to remotely execute code on the MCL Smart Patient Reader, potentially leading to control of the deviceCVE-2020-25187 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-25187"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H"
         }
@@ -217,7 +252,7 @@
           "category": "vendor_fix",
           "details": "A firmware update to eliminates these vulnerabilities has been developed by Medtronic and is available by updating the MyCareLink Smartapp via the associated mobile application store. Upgrading to the latest v5.2 mobile application version will ensure the Patient Reader is also updated on next use. The user\u2019s smart phone must be updated to the following operating system version for the patches to be applied: iOS 10 and above; Android 6.0 and above.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -225,7 +260,7 @@
           "category": "vendor_fix",
           "details": "Medtronic has released additional patient focused information:\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/security"
         },
@@ -233,7 +268,7 @@
           "category": "vendor_fix",
           "details": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html"
         },
@@ -241,7 +276,7 @@
           "category": "vendor_fix",
           "details": "In response to these vulnerabilities, Medtronic has applied additional controls for monitoring and responding to improper use of the MCL Smart Patient Reader:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -249,7 +284,7 @@
           "category": "vendor_fix",
           "details": "Medtronic recommends that users take additional defensive measures to minimize risk. Specifically, users should:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -257,25 +292,9 @@
           "category": "vendor_fix",
           "details": "Report any concerning behavior regarding these products to your healthcare provider or a Medtronic representative.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -287,11 +306,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2020-25187"
+      ]
     },
     {
       "cve": "CVE-2020-27252",
@@ -302,17 +320,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected products are vulnerable to a race condition in the MCL Smart Patient Reader software update system, which allows unsigned firmware to be uploaded and executed on the Patient Reader. If exploited, an attacker could remotely execute code on the MCL Smart Patient Reader device, leading to control of the device.",
+          "text": "The affected products are vulnerable to a race condition in the MCL Smart Patient Reader software update system, which allows unsigned firmware to be uploaded and executed on the Patient Reader. If exploited, an attacker could remotely execute code on the MCL Smart Patient Reader device, leading to control of the device.CVE-2020-27252 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-27252"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H"
         }
@@ -322,7 +346,7 @@
           "category": "vendor_fix",
           "details": "A firmware update to eliminates these vulnerabilities has been developed by Medtronic and is available by updating the MyCareLink Smartapp via the associated mobile application store. Upgrading to the latest v5.2 mobile application version will ensure the Patient Reader is also updated on next use. The user\u2019s smart phone must be updated to the following operating system version for the patches to be applied: iOS 10 and above; Android 6.0 and above.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -330,7 +354,7 @@
           "category": "vendor_fix",
           "details": "Medtronic has released additional patient focused information:\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/security"
         },
@@ -338,7 +362,7 @@
           "category": "vendor_fix",
           "details": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.medtronic.com/xg-en/product-security/security-bulletins.html"
         },
@@ -346,7 +370,7 @@
           "category": "vendor_fix",
           "details": "In response to these vulnerabilities, Medtronic has applied additional controls for monitoring and responding to improper use of the MCL Smart Patient Reader:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -354,7 +378,7 @@
           "category": "vendor_fix",
           "details": "Medtronic recommends that users take additional defensive measures to minimize risk. Specifically, users should:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -362,25 +386,9 @@
           "category": "vendor_fix",
           "details": "Report any concerning behavior regarding these products to your healthcare provider or a Medtronic representative.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -392,11 +400,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2020-27252"
+      ]
     }
   ]
 }

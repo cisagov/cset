@@ -1,0 +1,1149 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Cisco reported these vulnerabilities to Rockwell Automation."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may result in denial-of-service conditions, unauthorized privilege escalation, web socket hijacking, relative path traversal, or command injection.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-110-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-110-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Rockwell Automation Stratix Switches",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:08.073815+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-110-02",
+      "initial_release_date": "2021-04-20T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:08.073815+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(7)E3",
+                "product": {
+                  "name": "Stratix 5400 - <= 15.2(7)E3",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 5400"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(7)E3",
+                "product": {
+                  "name": "Stratix 5700 - <= 15.2(7)E3",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 5700"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(7)E3",
+                "product": {
+                  "name": "Stratix 5410 - <= 15.2(7)E3",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 5410"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(7)E3",
+                "product": {
+                  "name": "Stratix 8000 - <= 15.2(7)E3",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 8000"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 16.12.01",
+                "product": {
+                  "name": "Stratix 5800 - <= 16.12.01",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 5800"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-1392",
+      "cwe": {
+        "id": "CWE-522",
+        "name": "Insufficiently Protected Credentials"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the CLI command permissions of Cisco IOS and Cisco IOS XE software could allow an authenticated attacker to retrieve the password for Common Industrial Protocol (CIP) and then remotely configure the affected device as an administrative user.CVE-2021-1392 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1392"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1403",
+      "cwe": {
+        "id": "CWE-345",
+        "name": "Insufficient Verification of Data Authenticity"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the web UI feature of Cisco IOS XE software could allow an unauthenticated, remote attacker to conduct a cross-site WebSocket hijacking (CSWSH) attack and cause a denial-of-service condition on an affected device.CVE-2021-1403 has been assigned to this vulnerability. A CVSS v3 base score of 7.4 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1403"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.4,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1352",
+      "cwe": {
+        "id": "CWE-823",
+        "name": "Use of Out-of-range Pointer Offset"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the DECnet protocol processing of Cisco IOS XE software could allow an unauthenticated, adjacent attacker to cause a denial-of-service condition on an affected device. An attacker could exploit this vulnerability by sending DECnet traffic to an affected device. A successful exploit could allow the attacker to cause the affected device to reload, resulting in a denial-of-service condition. This vulnerability affects Stratix 5800 devices if they are running a vulnerable release of Cisco IOS XE software and have the DECnet protocol enabled. DECnet is not enabled by default.CVE-2021-1352 has been assigned to this vulnerability. A CVSS v3 base score of 7.4 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1352"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.4,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1442",
+      "cwe": {
+        "id": "CWE-532",
+        "name": "Insertion of Sensitive Information into Log File"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in a diagnostic command for the Plug and Play (PnP) subsystem of Cisco IOS XE software could allow an authenticated, local attacker to elevate privileges to the level of an administrator on an affected Stratix 5800. Plug-and-Play is disabled after Express Setup has completed.CVE-2021-1442 has been assigned to this vulnerability. A CVSS v3 base score of 7.0 has been calculated; the CVSS vector string is (AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1442"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.0,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1452",
+      "cwe": {
+        "id": "CWE-78",
+        "name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the Stratix 5800 switches could allow an unauthenticated, physical attacker to execute persistent code at boot time and break the chain of trust.CVE-2021-1452 has been assigned to this vulnerability. A CVSS v3 base score of 6.8 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1452"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.8,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1443",
+      "cwe": {
+        "id": "CWE-77",
+        "name": "Improper Neutralization of Special Elements used in a Command ('Command Injection')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A vulnerability in the web UI of the IOS XE software could allow a remote, authenticated attacker to execute arbitrary code with root privileges on the underlying operating system of the affected device. To exploit this vulnerability, an attacker would need to have admin credentials to the device.CVE-2021-1443 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1443"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.5,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2021-1220",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple vulnerabilities in the Web UI feature of IOS XE software could allow an authenticated, remote attacker with read-only privileges to cause the web management software to hang and consume vty line instances resulting in a denial-of-service condition.CVE-2021-1220 and CVE-2021-1356 have been assigned to these vulnerabilities. A CVSS v3 base score of 4.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-1220"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation encourages users of the affected Stratix devices to update to an available firmware revision that addresses the associated risk.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the\u00a0Rockwell Automation security advisory for more detailed information.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/1130763"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Where a fix is not yet available, users who are unable to update are directed towards the risk mitigation strategies provided below, and are encouraged, when possible, to apply general security guidelines to employ multiple strategies simultaneously.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Currently, Rockwell Automation is working to address these vulnerabilities and will continue to provide updates as these fixes become available.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following network-based vulnerability mitigations for embedded products:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following software/PC-based mitigation strategies:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends the following general mitigations:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/answer_view/a_id/0494865"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    }
+  ]
+}

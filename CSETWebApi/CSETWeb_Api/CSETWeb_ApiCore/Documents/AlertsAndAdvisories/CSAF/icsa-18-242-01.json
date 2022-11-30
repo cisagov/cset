@@ -1,0 +1,953 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Philips reported these vulnerabilities to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation from an attacker within the same subnet may impact or compromise user contact details, unit integrity, and/or unit availability. The vulnerabilities may allow attackers to provide unexpected input into the application, execute arbitrary code, display unit information, or potentially cause e-Alert to crash.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Netherlands",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-242-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-242-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Philips e-Alert Unit",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:38.246918+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-18-242-01",
+      "initial_release_date": "2018-08-30T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:38.246918+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= R2.1",
+                "product": {
+                  "name": "Philips e-Alert Unit (non-medical device) - <= R2.1",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Philips e-Alert Unit (non-medical device)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Philips"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-8850",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not validate input properly, allowing an attacker to craft the input in a form that is not expected by the rest of the application. This would lead to parts of the unit receiving unintended input, which may result in altered control flow, arbitrary control of a resource, or arbitrary code execution.CVE-2018-8850 has been assigned to this vulnerability. A CVSS v3 base score of 7.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8850"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8846",
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is then served to other users.CVE-2018-8846 has been assigned to this vulnerability. A CVSS v3 base score of 7.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8846"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-14803",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The Philips e-Alert contains a banner disclosure vulnerability that could allow attackers to obtain extraneous product information, such as OS and software components, via the HTTP response header that is normally not available to the attacker, but might be useful information in an attack.CVE-2018-14803\u00a0has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-14803"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8848",
+      "cwe": {
+        "id": "CWE-276",
+        "name": "Incorrect Default Permissions"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software, upon installation, sets incorrect permissions for an object that exposes it to an unintended actor.CVE-2018-8848 has been assigned to this vulnerability. A CVSS v3 base score of 7.1 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8848"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8842",
+      "cwe": {
+        "id": "CWE-319",
+        "name": "Cleartext Transmission of Sensitive Information"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors. The Philips e-Alert communication channel is not encrypted which could therefore lead to disclosure of personal contact information and application login credentials from within the same subnet.CVE-2018-8842 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8842"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8844",
+      "cwe": {
+        "id": "CWE-352",
+        "name": "Cross-Site Request Forgery (CSRF)"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The web application does not, or cannot, sufficiently verify whether a well-formed, valid, consistent request was intentionally provided by the user who submitted the request.CVE-2018-8844 has been assigned to this vulnerability. A CVSS v3 base score of 6.8 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8844"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.8,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8852",
+      "cwe": {
+        "id": "CWE-384",
+        "name": "Session Fixation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "When authenticating a user or otherwise establishing a new user session, the software gives an attacker the opportunity to steal authenticated sessions without invalidating any existing session identifier.CVE-2018-8852 has been assigned to this vulnerability. A CVSS v3 base score of 6.4 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8852"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.4,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-8854",
+      "cwe": {
+        "id": "CWE-400",
+        "name": "Uncontrolled Resource Consumption"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The software does not properly restrict the size or amount of resources requested or influenced by an actor, which can be used to consume more resources than intended.CVE-2018-8854 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8854"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "In June of 2018, Philips released Version R2.1 to remediate CWE-319, CWE-20, CWE-798, and CWE-384. \u00a0Philips has another product software update planned for the end of 2018 that addresses CWE-400, CWE-79, CWE-276, CWE-200, and CWE-352.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Philips will communicate service options to all affected install-base users.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Please see the Philips product security website for the latest public security information on this matter and for other Philips products:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.philips.com/productsecurity",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.philips.com/productsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As an immediate mitigation to the vulnerabilities on the LAN until the update can be applied, Philips recommends that users:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Users with questions regarding their specific e-Alert installations should contact their local Philips service support team or their regional e-Alert service support. Contact information is available at the following location:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1441 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Ismail Bulbil reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to view device configuration information.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Critical Manufacturing, Energy, Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-260-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-19-260-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Honeywell Performance IP Cameras and Performance NVRs",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:12.818396+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-260-03",
+      "initial_release_date": "2019-09-17T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:12.818396+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEW4PER2B",
+                "product": {
+                  "name": "Performance IP Series cameras - HEW4PER2B",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32204",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32204",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H4W2PER2",
+                "product": {
+                  "name": "Performance IP Series cameras - H4W2PER2",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H2W2PC1M",
+                "product": {
+                  "name": "Performance IP Series cameras - H2W2PC1M",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN321124",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN321124",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HBW2PER2",
+                "product": {
+                  "name": "Performance IP Series cameras - HBW2PER2",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN643164",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN643164",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN04113",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN04113",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN64304",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN64304",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HBW2PER1",
+                "product": {
+                  "name": "Performance IP Series cameras - HBW2PER1",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H4W2PER3",
+                "product": {
+                  "name": "Performance IP Series cameras - H4W2PER3",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08144",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08144",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HED3PR3",
+                "product": {
+                  "name": "Performance IP Series cameras - HED3PR3",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16384",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16384",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32104",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32104",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32284",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32284",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN04103L",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN04103L",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16304",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16304",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H4D3PRV3",
+                "product": {
+                  "name": "Performance IP Series cameras - H4D3PRV3",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16284",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16284",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN643484",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN643484",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN64204",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN64204",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08103",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08103",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN643324",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN643324",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32103L",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32103L",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32384",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32384",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEW4PER2",
+                "product": {
+                  "name": "Performance IP Series cameras - HEW4PER2",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16143",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16143",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN162244",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN162244",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEW2PER3",
+                "product": {
+                  "name": "Performance IP Series cameras - HEW2PER3",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H4W8PR2",
+                "product": {
+                  "name": "Performance IP Series cameras - H4W8PR2",
+                  "product_id": "CSAFPID-00031"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16144",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16144",
+                  "product_id": "CSAFPID-00032"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16204",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16204",
+                  "product_id": "CSAFPID-00033"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN04123",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN04123",
+                  "product_id": "CSAFPID-00034"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HBD3PR1",
+                "product": {
+                  "name": "Performance IP Series cameras - HBD3PR1",
+                  "product_id": "CSAFPID-00035"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HBD3PR2",
+                "product": {
+                  "name": "Performance IP Series cameras - HBD3PR2",
+                  "product_id": "CSAFPID-00036"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H2W4PER3",
+                "product": {
+                  "name": "Performance IP Series cameras - H2W4PER3",
+                  "product_id": "CSAFPID-00037"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEW4PER3B",
+                "product": {
+                  "name": "Performance IP Series cameras - HEW4PER3B",
+                  "product_id": "CSAFPID-00038"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H4D3PRV2",
+                "product": {
+                  "name": "Performance IP Series cameras - H4D3PRV2",
+                  "product_id": "CSAFPID-00039"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN323164",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN323164",
+                  "product_id": "CSAFPID-00040"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN322164",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN322164",
+                  "product_id": "CSAFPID-00041"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "H2W2PER3",
+                "product": {
+                  "name": "Performance IP Series cameras - H2W2PER3",
+                  "product_id": "CSAFPID-00042"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HPW2P1",
+                "product": {
+                  "name": "Performance IP Series cameras - HPW2P1",
+                  "product_id": "CSAFPID-00043"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16123",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16123",
+                  "product_id": "CSAFPID-00044"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08113",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08113",
+                  "product_id": "CSAFPID-00045"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16103L",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16103L",
+                  "product_id": "CSAFPID-00046"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16103",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16103",
+                  "product_id": "CSAFPID-00047"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16184",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16184",
+                  "product_id": "CSAFPID-00048"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN081124",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN081124",
+                  "product_id": "CSAFPID-00049"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HBW8PR2",
+                "product": {
+                  "name": "Performance IP Series cameras - HBW8PR2",
+                  "product_id": "CSAFPID-00050"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN32304",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN32304",
+                  "product_id": "CSAFPID-00051"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16163",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16163",
+                  "product_id": "CSAFPID-00052"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN04103",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN04103",
+                  "product_id": "CSAFPID-00053"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08103L",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08103L",
+                  "product_id": "CSAFPID-00054"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08123",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08123",
+                  "product_id": "CSAFPID-00055"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08104",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08104",
+                  "product_id": "CSAFPID-00056"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN08143",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN08143",
+                  "product_id": "CSAFPID-00057"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEW2PER2",
+                "product": {
+                  "name": "Performance IP Series cameras - HEW2PER2",
+                  "product_id": "CSAFPID-00058"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "HEN16104",
+                "product": {
+                  "name": "Performance IP Series cameras - HEN16104",
+                  "product_id": "CSAFPID-00059"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Performance IP Series cameras"
+          }
+        ],
+        "category": "vendor",
+        "name": "Honeywell"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-13523",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The integrated web server of the affected devices could allow remote attackers to obtain web configuration data in JSON format for IP cameras and NVRs (Network Video Recorders), which can be accessed without authentication over the network.\u00a0CVE-2019-13523 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038",
+          "CSAFPID-00039",
+          "CSAFPID-00040",
+          "CSAFPID-00041",
+          "CSAFPID-00042",
+          "CSAFPID-00043",
+          "CSAFPID-00044",
+          "CSAFPID-00045",
+          "CSAFPID-00046",
+          "CSAFPID-00047",
+          "CSAFPID-00048",
+          "CSAFPID-00049",
+          "CSAFPID-00050",
+          "CSAFPID-00051",
+          "CSAFPID-00052",
+          "CSAFPID-00053",
+          "CSAFPID-00054",
+          "CSAFPID-00055",
+          "CSAFPID-00056",
+          "CSAFPID-00057",
+          "CSAFPID-00058",
+          "CSAFPID-00059"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-13523"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Honeywell has released firmware update packages for all affected products. The updates can be obtained with a customer account at the following location (login required):",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://mywebtech.honeywell.com/Home",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ],
+          "url": "https://mywebtech.honeywell.com/Home"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Honeywell also recommends the following mitigating factors that users should take to mitigate this vulnerability:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "More information on this issue can be found in Honeywell security notification SN 2019-04-30 01 at the following location on the Honeywell site:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.security.honeywell.com/-/media/Security/Resources/PDF/Product-Warranty/Security-Notification-May-2019-pdf.pdf?la=en-US&hash=15B712A99CD068FF0D8CB494BC96AB46E2122672",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ],
+          "url": "https://www.security.honeywell.com/-/media/Security/Resources/PDF/Product-Warranty/Security-Notification-May-2019-pdf.pdf?la=en-US&hash=15B712A99CD068FF0D8CB494BC96AB46E2122672"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,481 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Cisco discovered these vulnerabilities during internal testing. Rockwell Automation reported these vulnerabilities to ICS-CERT."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "ATTENTION: Remotely exploitable/low skill level to exploit",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Critical Manufacturing, Energy, and Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: Milwaukee, Wisconsin",
+        "title": "Company headquarters location"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-17-208-04 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-17-208-04"
+      }
+    ],
+    "title": "Rockwell Automation Allen-Bradley Stratix and ArmorStratix",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:00.368798+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-17-208-04",
+      "initial_release_date": "2017-08-24T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:00.368798+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Allen-Bradley Stratix 5410 Industrial Distribution Switches - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 5410 Industrial Distribution Switches"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Allen-Bradley Stratix 5900 Services Router - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 5900 Services Router"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Stratix 8300 Modular Managed Ethernet Switches - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Stratix 8300 Modular Managed Ethernet Switches"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Allen-Bradley Stratix 8000 Modular Managed Ethernet Switche - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 8000 Modular Managed Ethernet Switche"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Allen-Bradley Stratix 5700 and ArmorStratix\u2122 5700 Industrial Managed Ethernet Switches - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 5700 and ArmorStratix\u2122 5700 Industrial Managed Ethernet Switches"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 15.2(5)EA.fc4",
+                "product": {
+                  "name": "Allen-Bradley Stratix 5400 Industrial Ethernet Switches - <= 15.2(5)EA.fc4",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Allen-Bradley Stratix 5400 Industrial Ethernet Switches"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2017-6736",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Cisco Systems, Inc. has identified multiple SNMP remote code execution vulnerabilities in Cisco IOS and IOS XE Software affecting version of Allen-Bradley Stratix and ArmorStratix. To exploit these vulnerabilities via SNMP v2c or earlier, attacker must know the SNMP read-only community string for the affected system. To exploit these vulnerabilities in SNMP v3, an attacker must authenticate with user credentials. If exploited, this could allow a remote attacker to execute arbitrary code on the affected Stratix and ArmorStratix system.CVE-2017-6736, CVE-2017-6737, CVE-2017-6738, CVE-2017-6739, CVE-2017-6740, CVE-2017-6741, CVE-2017-6742, CVE-2017-6743 and CVE-2017-6744 have been assigned to these vulnerabilities. A CVSS v3 base score of 8.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6736"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6737"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6738"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6739"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6740"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6741"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6742"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6743"
+        },
+        {
+          "category": "external",
+          "summary": "cve.mitre.org",
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6744"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "According to Rockwell Automation, multiple Cisco Systems, Inc. vulnerabilities in the Simple Network Management Protocol (SNMP) subsystem of Cisco IO and IOS XE software have been identified which affect certain products in the Allen-Bradley Stratix and ArmorStratix product lines.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information about the SNMP vulnerabilities identified by Cisco, see their advisory at the link below:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20170629-snmp",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20170629-snmp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation recommends users of affected products consult the suggestions below and, when possible, employ multiple strategies to mitigate their risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For the Stratix 8300 Product Family, Catalog Numbers 1783-RMS, Rockwell Automation suggests updating to v15.2(4a)EA5 or later. This can be found at the following link:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?famID=15",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://compatibility.rockwellautomation.com/Pages/MultiProductDownload.aspx?famID=15"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has provided interim compensating controls for the remaining Allen-Bradley Stratix and ArmorStratix switches to help reduce the risk of exploitation of these vulnerabilities. Rockwell Automation encourages users to evaluate the compensating controls provided below and apply the possible mitigations.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Details on how to use the Command Line Interface to disable or limit access to SNMP or individual MIBs can be found at Knowledgebase Article ID 1055391. A login is required to view the article.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/55484https:/rockwellautomation.custhelp.com/app/answers/detail/a_id/1055391"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Note: The Stratix device may not have all of the MIBs installed/active.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As new versions of firmware are released to remediate this vulnerability, Rockwell Automation will provide mitigation updates in their advisory. For more information about these vulnerabilities, mitigation updates, and Rockwell Automation\u2019s general security guidelines, please see Rockwell Automation\u2019s security advisory found at the following link. A login is required to view the advisory.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1055133",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1055133"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT recommends that users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "ICS-CERT also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available in the ICS\u2011CERT Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies, that is available for download from the ICS-CERT web site.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to ICS-CERT for tracking and correlation against other incidents.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006"
+          ]
+        }
+      ]
+    }
+  ]
+}

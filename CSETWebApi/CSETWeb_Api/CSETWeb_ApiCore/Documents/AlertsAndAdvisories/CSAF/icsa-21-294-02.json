@@ -11,28 +11,88 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low attack complexity. Successful exploitation of these vulnerabilities could allow an attacker to access unauthorized information, remotely execute code, access the application directory and escalate privileges, take over the system where the software is installed, and modify the installation directory and upload malicious files.. CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to access unauthorized information, remotely execute code, access the application directory and escalate privileges, take over the system where the software is installed, and modify the installation directory and upload malicious files.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Taiwan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-21-294-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-21-294-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-294-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
       }
     ],
     "title": "Delta Electronics DIALink",
@@ -40,8 +100,8 @@
       "current_release_date": "2022-10-10T21:50:42.945021+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-21-294-02",
@@ -50,12 +110,12 @@
         {
           "date": "2022-10-10T21:50:42.945021+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,10 +126,10 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=1.2.4.0",
+                "name": "<= 1.2.4.0",
                 "product": {
-                  "name": "Delta Electronics - <=1.2.4.0",
-                  "product_id": "1"
+                  "name": "DIALink - <= 1.2.4.0",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
@@ -92,17 +152,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product runs by default on HTTP, which may allow an attacker to be positioned between the traffic and perform a machine-in-the-middle attack to access information without authorization.",
+          "text": "The affected product runs by default on HTTP, which may allow an attacker to be positioned between the traffic and perform a machine-in-the-middle attack to access information without authorization.CVE-2021-38418 has been assigned to this vulnerability. A CVSS v3 base score of 8.8 has been calculated; the CVSS vector string is (AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38418"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -112,41 +178,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -158,11 +192,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38418"
+      ]
     },
     {
       "cve": "CVE-2021-38428",
@@ -173,17 +206,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter name of the API schedule, which may allow an attacker to remotely execute code.",
+          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter name of the API schedule, which may allow an attacker to remotely execute code.CVE-2021-38428 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38428"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N"
         }
@@ -193,41 +232,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -239,11 +246,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38428"
+      ]
     },
     {
       "cve": "CVE-2021-38488",
@@ -254,17 +260,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter comment of the API events, which may allow an attacker to remotely execute code.",
+          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter comment of the API events, which may allow an attacker to remotely execute code.CVE-2021-38488 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38488"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N"
         }
@@ -274,41 +286,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -320,11 +300,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38488"
+      ]
     },
     {
       "cve": "CVE-2021-38407",
@@ -335,17 +314,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter name of the API devices, which may allow an attacker to remotely execute code.",
+          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter name of the API devices, which may allow an attacker to remotely execute code.CVE-2021-38407 \u00a0has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38407"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N"
         }
@@ -355,41 +340,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -401,11 +354,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38407"
+      ]
     },
     {
       "cve": "CVE-2021-38403",
@@ -416,17 +368,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter supplier of the API maintenance, which may allow an attacker to remotely execute code.",
+          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter supplier of the API maintenance, which may allow an attacker to remotely execute code.CVE-2021-38403 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38403"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N"
         }
@@ -436,41 +394,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -482,11 +408,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38403"
+      ]
     },
     {
       "cve": "CVE-2021-38411",
@@ -497,17 +422,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter deviceName of the API modbusWriter-Reader, which may allow an attacker to remotely execute code.",
+          "text": "The affected product is vulnerable to cross-site scripting because an authenticated attacker can inject arbitrary JavaScript code into the parameter deviceName of the API modbusWriter-Reader, which may allow an attacker to remotely execute code.CVE-2021-38411 has been assigned to this vulnerability. A CVSS v3 base score of 5.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38411"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N"
         }
@@ -517,41 +448,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -563,11 +462,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38411"
+      ]
     },
     {
       "cve": "CVE-2021-38424",
@@ -578,17 +476,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The tag interface of the affected product is vulnerable to an attacker injecting formulas into the tag data. Those formulas may then be executed when it is opened with a spreadsheet application.",
+          "text": "The tag interface of the affected product is vulnerable to an attacker injecting formulas into the tag data. Those formulas may then be executed when it is opened with a spreadsheet application.CVE-2021-38424 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38424"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:L"
         }
@@ -598,41 +502,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -644,11 +516,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38424"
+      ]
     },
     {
       "cve": "CVE-2021-38422",
@@ -659,17 +530,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product stores sensitive information in cleartext, which may allow an attacker to have extensive access to the application directory and escalate privileges.",
+          "text": "The affected product stores sensitive information in cleartext, which may allow an attacker to have extensive access to the application directory and escalate privileges.CVE-2021-38422 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38422"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -679,41 +556,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -725,11 +570,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38422"
+      ]
     },
     {
       "cve": "CVE-2021-38416",
@@ -740,17 +584,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product insecurely loads libraries, which may allow an attacker to use DLL hijacking and takeover the system where the software is installed.",
+          "text": "The affected product insecurely loads libraries, which may allow an attacker to use DLL hijacking and takeover the system where the software is installed.CVE-2021-38416 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38416"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -760,41 +610,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -806,11 +624,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38416"
+      ]
     },
     {
       "cve": "CVE-2021-38420",
@@ -821,17 +638,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The affected product\u2019s default permissions give extensive permissions to low-privileged user accounts, which may allow an attacker to modify the installation directory and upload malicious files.",
+          "text": "The affected product\u2019s default permissions give extensive permissions to low-privileged user accounts, which may allow an attacker to modify the installation directory and upload malicious files.CVE-2021-38420 has been assigned to this vulnerability. A CVSS v3 base score of 7.8 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-38420"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -841,41 +664,9 @@
           "category": "vendor_fix",
           "details": "Delta Electronics is aware of the vulnerabilities and is currently working on an update.\u00a0",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://us-cert.cisa.gov/ncas/tips/ST04-014"
         }
       ],
       "scores": [
@@ -887,11 +678,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2021-38420"
+      ]
     }
   ]
 }

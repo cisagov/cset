@@ -11,28 +11,78 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit/public exploits are available. Successful exploitation may allow an attacker to gain visibility to usernames/passwords and personal data. Insufficient encryption and cryptographic integrity checks can lead to altered, corrupted, or disclosed sensitive data. Disclosure of personal data can occur by replacing a trusted node with a malicious node.. CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation may allow an attacker to gain visibility to usernames/passwords and personal data. Insufficient encryption and cryptographic integrity checks can lead to altered, corrupted, or disclosed sensitive data. Disclosure of personal data can occur by replacing a trusted node with a malicious node.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Healthcare and Public Health",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Netherlands",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSMA-18-086-01 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSMA-18-086-01 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/ICSMA-18-086-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "Philips Alice 6 Vulnerabilities (Update B)",
@@ -40,8 +90,8 @@
       "current_release_date": "2022-10-10T21:50:16.613872+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSMA-18-086-01",
@@ -50,12 +100,12 @@
         {
           "date": "2022-10-10T21:50:16.613872+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,15 +116,15 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<=R8.0.3",
+                "name": "<= R8.0.3",
                 "product": {
-                  "name": "Philips - <=R8.0.3",
-                  "product_id": "1"
+                  "name": "Version - <= R8.0.3",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Philips Alice 6 System product"
+            "name": "Version"
           }
         ],
         "category": "vendor",
@@ -92,17 +142,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "When an actor claims to have a given identity, the software does not prove or insufficiently proves that the claim is correct. This weakness can lead to the exposure of resources or functionality to unintended actors, possibly providing attackers with sensitive information or the ability to execute arbitrary code.",
+          "text": "When an actor claims to have a given identity, the software does not prove or insufficiently proves that the claim is correct. This weakness can lead to the exposure of resources or functionality to unintended actors, possibly providing attackers with sensitive information or the ability to execute arbitrary code.CVE-2018-5451 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-5451"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
         }
@@ -112,7 +168,7 @@
           "category": "vendor_fix",
           "details": "Philips will notify users of the identified vulnerabilities and will coordinate with users to schedule updates. Philips is scheduled to release a new product version and supporting product documentation for Q1 of 2019. For all users of the Alice 6 System product, Version R8.0.3 or prior, Philips will update the devices to R8.0.4. Philips encourages users to use Philips validated and authorized changes only for the Alice 6 device supported by Philips\u2019 authorized personnel, or under Philips\u2019 explicit published directions for patches, updates, or releases.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -120,7 +176,7 @@
           "category": "vendor_fix",
           "details": "As an interim mitigation to the vulnerabilities until the update can be applied, Philips recommends that users:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -128,7 +184,7 @@
           "category": "vendor_fix",
           "details": "Users with questions regarding their specific Alice 6 installations should contact their local Philips service support team or their regional Alice 6 service support. Contact information is available at the following location:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -136,33 +192,9 @@
           "category": "vendor_fix",
           "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -174,11 +206,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2018-5451"
+      ]
     },
     {
       "cve": "CVE-2018-7498",
@@ -189,17 +220,23 @@
       "notes": [
         {
           "category": "summary",
-          "text": "The lack of proper data encryption passes up the guarantees of confidentiality, integrity, and accountability that properly implemented encryption conveys.",
+          "text": "The lack of proper data encryption passes up the guarantees of confidentiality, integrity, and accountability that properly implemented encryption conveys.CVE-2018-7498 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1"
+          "CSAFPID-0001"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-7498"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N"
         }
@@ -209,7 +246,7 @@
           "category": "vendor_fix",
           "details": "Philips will notify users of the identified vulnerabilities and will coordinate with users to schedule updates. Philips is scheduled to release a new product version and supporting product documentation for Q1 of 2019. For all users of the Alice 6 System product, Version R8.0.3 or prior, Philips will update the devices to R8.0.4. Philips encourages users to use Philips validated and authorized changes only for the Alice 6 device supported by Philips\u2019 authorized personnel, or under Philips\u2019 explicit published directions for patches, updates, or releases.",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -217,7 +254,7 @@
           "category": "vendor_fix",
           "details": "As an interim mitigation to the vulnerabilities until the update can be applied, Philips recommends that users:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -225,7 +262,7 @@
           "category": "vendor_fix",
           "details": "Users with questions regarding their specific Alice 6 installations should contact their local Philips service support team or their regional Alice 6 service support. Contact information is available at the following location:",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -233,33 +270,9 @@
           "category": "vendor_fix",
           "details": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions",
           "product_ids": [
-            "1"
+            "CSAFPID-0001"
           ],
           "url": "https://www.usa.philips.com/healthcare/solutions/customer-service-solutions"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -271,11 +284,10 @@
             "version": "3.0"
           },
           "products": [
-            "1"
+            "CSAFPID-0001"
           ]
         }
-      ],
-      "title": "CVE-2018-7498"
+      ]
     }
   ]
 }

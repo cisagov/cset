@@ -1,0 +1,1457 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens reported these vulnerabilities to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow arbitrary code execution, a partial denial-of-service condition, or information disclosure.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Chemical, Critical Manufacturing, Energy, Food and Agriculture, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-043-05 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-043-05"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Siemens Intel Active Management Technology of SIMATIC IPCs",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:51:13.858286+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-043-05",
+      "initial_release_date": "2019-02-12T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:51:13.858286+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 19.01.14",
+                "product": {
+                  "name": "SIMATIC IPC647D - < 19.01.14",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC647D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< R1.30.0",
+                "product": {
+                  "name": "SIMATIC IPC547E - < R1.30.0",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC547E"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 22.01.06",
+                "product": {
+                  "name": "SIMATIC FieldPG M5 - < 22.01.06",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC FieldPG M5"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 19.02.11",
+                "product": {
+                  "name": "SIMATIC IPC827D - < 19.02.11",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC827D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 19.01.14",
+                "product": {
+                  "name": "SIMATIC IPC847D - < 19.01.14",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC847D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 19.02.11",
+                "product": {
+                  "name": "SIMATIC IPC627D - < 19.02.11",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC627D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 21.01.09",
+                "product": {
+                  "name": "SIMATIC IPC427E - < 21.01.09",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC427E"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 19.02.11",
+                "product": {
+                  "name": "SIMATIC IPC677D - < 19.02.11",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC677D"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< R1.23.0",
+                "product": {
+                  "name": "SIMATIC IPC547G - < R1.23.0",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC547G"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 23.01.04",
+                "product": {
+                  "name": "SIMATIC ITP1000 - < 23.01.04",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC ITP1000"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "< 21.01.09",
+                "product": {
+                  "name": "SIMATIC IPC477E - < 21.01.09",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC IPC477E"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-3616",
+      "cwe": {
+        "id": "CWE-310",
+        "name": "Cryptographic Issues"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A Bleichenbacher-style side channel vulnerability in TLS implementation in Intel Active Management Technology before v12.0.5 may allow an unauthenticated user to obtain the TLS session key via the network.CVE-2018-3616 has been assigned to this vulnerability. A CVSS v3 base score of 5.9 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3616"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to the latest version. Additional information as well as upgrades can be found at the following link.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/us/en/view/109747626",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/us/en/view/109747626"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The vulnerabilities are resolved in the following versions for each product listed:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring e the environment according to Siemens\u2019 operational guidelines for Industrial Security (Download: https://www.siemens.com/cert/operational-guidelines-industrial-security), and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on Industrial Security by Siemens can be found at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.com/industrialsecurity",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information see Siemens\u2019 security advisory SSA-377318 at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information regarding the Intel Active Management Technology (AMT) see:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-3657",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple buffer overflows in Intel AMT in Intel CSME firmware versions before 12.0.5 may allow a privileged user to execute arbitrary code with Intel AMT execution privilege via local access.CVE-2018-3657 has been assigned to this vulnerability. A CVSS v3 base score of 6.7 has been calculated; the CVSS vector string is (AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3657"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to the latest version. Additional information as well as upgrades can be found at the following link.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/us/en/view/109747626",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/us/en/view/109747626"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The vulnerabilities are resolved in the following versions for each product listed:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring e the environment according to Siemens\u2019 operational guidelines for Industrial Security (Download: https://www.siemens.com/cert/operational-guidelines-industrial-security), and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on Industrial Security by Siemens can be found at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.com/industrialsecurity",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information see Siemens\u2019 security advisory SSA-377318 at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information regarding the Intel Active Management Technology (AMT) see:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.7,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-3658",
+      "cwe": {
+        "id": "CWE-399",
+        "name": "Resource Management Errors"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "Multiple memory leaks in Intel AMT in Intel CSME firmware versions before 12.0.5 may allow an unauthenticated user with Intel AMT provisioned to cause a partial denial-of-service condition via network access.CVE-2018-3658 has been assigned to this vulnerability. A CVSS v3 base score of 5.3 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-3658"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends users upgrade to the latest version. Additional information as well as upgrades can be found at the following link.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/us/en/view/109747626",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/us/en/view/109747626"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The vulnerabilities are resolved in the following versions for each product listed:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109738122/simatic-field-pg-m5-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109742593/simatic-ipc427e-(microbox-pc)-ipc-477e-ipc477e-pro-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109481624/simatic-ipc547e-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109750349/simatic-ipc547g-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109474954/simatic-ipc627d-(box-pc)-ipc677d-ipc827d-(box-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109037779/simatic-ipc647d-ipc847d-(rack-pc)-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://support.industry.siemens.com/cs/document/109748173/simatic-itp1000-latest-bios-version?dti=0&lc=en-US"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Siemens has identified the following specific workarounds and mitigations users can apply to reduce the risk:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring e the environment according to Siemens\u2019 operational guidelines for Industrial Security (Download: https://www.siemens.com/cert/operational-guidelines-industrial-security), and following the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/cert/operational-guidelines-industrial-security"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on Industrial Security by Siemens can be found at:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.siemens.com/industrialsecurity",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For additional information see Siemens\u2019 security advisory SSA-377318 at the following location:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "http://www.siemens.com/cert/en/cert-security-advisories.htm",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "http://www.siemens.com/cert/en/cert-security-advisories.htm"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information regarding the Intel Active Management Technology (AMT) see:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ],
+          "url": "https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00141.html"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011"
+          ]
+        }
+      ]
+    }
+  ]
+}

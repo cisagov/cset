@@ -1,0 +1,448 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Rockwell Automation working with Trend Micro\u2019s Zero Day Initiative reported these vulnerabilities to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities may allow a remote authenticated attacker to manipulate data of affected devices.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Chemical, Commercial Facilities, Critical Manufacturing, Energy, Government Facilities, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: United States",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA also recommends users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-170-05 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-170-05"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.us-cert.gov/ncas/tips/ST04-014"
+      }
+    ],
+    "title": "Rockwell Automation FactoryTalk View SE",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:48.619685+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-20-170-05",
+      "initial_release_date": "2020-06-18T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:48.619685+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "FactoryTalk View SE - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "FactoryTalk View SE"
+          }
+        ],
+        "category": "vendor",
+        "name": "Rockwell Automation"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-12029",
+      "cwe": {
+        "id": "CWE-20",
+        "name": "Improper Input Validation"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product does not properly validate input of filenames within a project directory. A remote, unauthenticated attacker may be able to execute a crafted file on a remote endpoint that may result in remote code execution (RCE).\u00a0CVE-2020-12029 has been assigned to this vulnerability. A CVSS v3 base score of 9.0 has been assigned; the CVSS vector string is (AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N).\u00a0",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-12029"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released new versions of the affected products to mitigate the reported vulnerabilities. Affected users who are not able to apply the latest update are encouraged to seek additional mitigations or workarounds from the vendor\u2019s published guidelines in their security advisory.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1126944"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12029 Rockwell Automation recommends applying patch 1126289. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12031 Rockwell Automation recommends applying patch 1126290. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12028 and CVE-2020-12027 Rockwell Automation recommends enabling built in security features found within FactoryTalk View SE. Users should follow guidance found in knowledge base articles 109056 and 1126943 to set up IPSec and/or HTTPs.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.0,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-12031",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "After bypassing memory corruption mechanisms found in the operating system, a local, authenticated attacker may corrupt the associated memory space allowing for arbitrary code execution.CVE-2020-12031 has been assigned to this vulnerability. A CVSS v3 base score of 7.5 has been assigned; the CVSS vector string is (AV:L/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-12031"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released new versions of the affected products to mitigate the reported vulnerabilities. Affected users who are not able to apply the latest update are encouraged to seek additional mitigations or workarounds from the vendor\u2019s published guidelines in their security advisory.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1126944"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12029 Rockwell Automation recommends applying patch 1126289. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12031 Rockwell Automation recommends applying patch 1126290. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12028 and CVE-2020-12027 Rockwell Automation recommends enabling built in security features found within FactoryTalk View SE. Users should follow guidance found in knowledge base articles 109056 and 1126943 to set up IPSec and/or HTTPs.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:H/PR:L/UI:R/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-12028",
+      "cwe": {
+        "id": "CWE-264"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "A remote, authenticated attacker may be able to utilize certain handlers to interact with the data on the remote endpoint since those handlers do not enforce appropriate permissions.CVE-2020-12028 has been assigned to this vulnerability. A CVSS v3 base score of 7.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-12028"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released new versions of the affected products to mitigate the reported vulnerabilities. Affected users who are not able to apply the latest update are encouraged to seek additional mitigations or workarounds from the vendor\u2019s published guidelines in their security advisory.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1126944"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12029 Rockwell Automation recommends applying patch 1126289. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12031 Rockwell Automation recommends applying patch 1126290. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12028 and CVE-2020-12027 Rockwell Automation recommends enabling built in security features found within FactoryTalk View SE. Users should follow guidance found in knowledge base articles 109056 and 1126943 to set up IPSec and/or HTTPs.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.3,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-12027",
+      "cwe": {
+        "id": "CWE-200",
+        "name": "Exposure of Sensitive Information to an Unauthorized Actor"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product discloses the hostnames and file paths for certain files within the system. A remote, authenticated attacker may be able to leverage this information for reconnaissance efforts.\u00a0CVE-2020-12027 has been assigned to this vulnerability. A CVSS v3 base score of 4.3 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-12027"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Rockwell Automation has released new versions of the affected products to mitigate the reported vulnerabilities. Affected users who are not able to apply the latest update are encouraged to seek additional mitigations or workarounds from the vendor\u2019s published guidelines in their security advisory.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://rockwellautomation.custhelp.com/app/answers/detail/a_id/1126944"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12029 Rockwell Automation recommends applying patch 1126289. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12031 Rockwell Automation recommends applying patch 1126290. Before installing this patch, the patch rollup dated 06 Apr 2020 or later MUST be applied. 1066644 \u2013 Patch Roll-up for CPR9 SRx.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For CVE-2020-12028 and CVE-2020-12027 Rockwell Automation recommends enabling built in security features found within FactoryTalk View SE. Users should follow guidance found in knowledge base articles 109056 and 1126943 to set up IPSec and/or HTTPs.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 4.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

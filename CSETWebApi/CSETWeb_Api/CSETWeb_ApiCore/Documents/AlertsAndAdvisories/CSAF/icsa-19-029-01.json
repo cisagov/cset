@@ -1,0 +1,259 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Kaspersky Lab reported this vulnerability to Yokogawa, and JPCERT reported this vulnerability to NCCIC."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to remotely upload files, allowing execution of arbitrary code.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Critical Manufacturing, Energy, Food and Agriculture",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Japan",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-19-029-01 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-029-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Yokogawa License Manager Service",
+    "tracking": {
+      "current_release_date": "2022-10-04T01:12:09.111104+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-19-029-01",
+      "initial_release_date": "2019-01-29T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-04T01:12:09.111104+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R5.01.00 - R6.06.00)",
+                "product": {
+                  "name": "CENTUM VP - (R5.01.00 - R6.06.00)",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM VP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R5.01.00 - R6.06.00)",
+                "product": {
+                  "name": "CENTUM VP Entry Class - (R5.01.00 - R6.06.00)",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "CENTUM VP Entry Class"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R7.01.01 - R8.02.03)",
+                "product": {
+                  "name": "B/M9000 VP - (R7.01.01 - R8.02.03)",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "B/M9000 VP"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R3.01.00 - R4.04.00)",
+                "product": {
+                  "name": "ProSafe-RS - (R3.01.00 - R4.04.00)",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "ProSafe-RS"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "(R4.01.00 - R4.02.00)",
+                "product": {
+                  "name": "PRM - (R4.01.00 - R4.02.00)",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "PRM"
+          }
+        ],
+        "category": "vendor",
+        "name": "Yokogawa"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2019-5909",
+      "cwe": {
+        "id": "CWE-434",
+        "name": "Unrestricted Upload of File with Dangerous Type"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "UNRESTRICTED UPLOAD OF FILE WITH DANGEROUS TYPE CWE-434: Multiple Yokogawa products utilize a service intended to verify the validity of licensed products being utilized. The service running on affected products does not properly restrict the upload of potentially malicious files, which could result in execution of arbitrary code. CVE-2019-5909 has been assigned to this vulnerability. A CVSS v3 base score of 8.1 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-5909"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Yokogawa recommends users of affected devices and versions update to the latest available release. Details about the products, affected revisions, and suggested mitigations are available in the Yokogawa Security Advisory Report \u201cYSAR-198-0001: Vulnerability of access control in License Manager Service of Yokogawa products.\u201d\u00a0 This advisory can be found at the following location:https://web-material3.yokogawa.com/1/20653/files/YSAR-19-0001-E.pdfFor questions related to this report and details regarding how to update to the newest revision, please visit the Yokogawa security website (registration required):\u00a0 https://contact.yokogawa.com/cs/gw?c-id=000498",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ],
+          "url": "https://contact.yokogawa.com/cs/gw?c-id=000498"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 8.1,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005"
+          ]
+        }
+      ]
+    }
+  ]
+}

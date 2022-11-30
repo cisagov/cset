@@ -1,0 +1,517 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Evgeniy Druzhinin and IIya Karpov of Rostelecom-Solar and an anonymous researcher reported these vulnerabilities to Schneider Electric."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to obtain unauthorized access to the internal product LAN, which could result in exposure of sensitive information, denial of service, and remote code execution when access to a resource from an attacker is not restricted or incorrectly restricted.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities, Energy, Food and Agriculture, Government Facilities, Transportation Systems, Water and Wastewater Systems",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: France",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on\u00a0us-cert.cisa.gov. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on us-cert.cisa.gov in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-20-343-03 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-20-343-03"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Schneider Electric Easergy T300",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:49.925971+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-20-343-03",
+      "initial_release_date": "2020-12-08T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:49.925971+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version_range",
+                "name": "<= 2.7",
+                "product": {
+                  "name": "Easergy T300 with firmware - <= 2.7",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "Easergy T300 with firmware"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2020-7561",
+      "cwe": {
+        "id": "CWE-306",
+        "name": "Missing Authentication for Critical Function"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a missing authentication for critical function vulnerability, which may allow an attacker to expose information, cause a denial-of-service condition, and remotely execute arbitrary code.CVE-2020-7561 has been assigned to this vulnerability. A CVSS v3 base score of 10.0 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-7561"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users upgrade to v2.7.1, which is available from the Schneider Electric Customer Care Center. Alternatively, users may disable port forwarding in the product firewall.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/work/support/contacts.jsp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to the Schneider Electric Recommended Cybersecurity Best Practices document.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/download/document/7EN52-0390/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Schneider Electric\u2019s security bulletin SEVD-2020-315-06 for specific mitigation details.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-06/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 10.0,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-28215",
+      "cwe": {
+        "id": "CWE-862",
+        "name": "Missing Authorization"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a missing authorization vulnerability, which may allow an attacker to gain access to sensitive information, cause a denial-of-service condition, and remotely execute arbitrary code when access control checks are not applied consistently.CVE-2020-28215 has been assigned to this vulnerability. A CVSS v3 base score of 7.7 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28215"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users upgrade to v2.7.1, which is available from the Schneider Electric Customer Care Center. Alternatively, users may disable port forwarding in the product firewall.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/work/support/contacts.jsp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to the Schneider Electric Recommended Cybersecurity Best Practices document.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/download/document/7EN52-0390/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Schneider Electric\u2019s security bulletin SEVD-2020-315-06 for specific mitigation details.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-06/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.7,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-28216",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a missing encryption of sensitive data vulnerability, which may allow an attacker to read network traffic over HTTP protocol.CVE-2020-28216 has been assigned to this vulnerability. A CVSS v3 base score of 7.6 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28216"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users upgrade to v2.7.1, which is available from the Schneider Electric Customer Care Center. Alternatively, users may disable port forwarding in the product firewall.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/work/support/contacts.jsp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to the Schneider Electric Recommended Cybersecurity Best Practices document.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/download/document/7EN52-0390/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Schneider Electric\u2019s security bulletin SEVD-2020-315-06 for specific mitigation details.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-06/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.6,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-28217",
+      "cwe": {
+        "id": "CWE-311",
+        "name": "Missing Encryption of Sensitive Data"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable to a missing encryption of sensitive data vulnerability, which may allow an attacker to read network traffic over IEC60870-5-104 protocol.CVE-2020-28217 has been assigned to this vulnerability. A CVSS v3 base score of 6.7 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28217"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users upgrade to v2.7.1, which is available from the Schneider Electric Customer Care Center. Alternatively, users may disable port forwarding in the product firewall.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/work/support/contacts.jsp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to the Schneider Electric Recommended Cybersecurity Best Practices document.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/download/document/7EN52-0390/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Schneider Electric\u2019s security bulletin SEVD-2020-315-06 for specific mitigation details.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-06/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.7,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2020-28218",
+      "cwe": {
+        "id": "CWE-1021",
+        "name": "Improper Restriction of Rendered UI Layers or Frames"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "The affected product is vulnerable due to an improper restriction of rendered UI layers or frames vulnerability, which may allow an attacker to trick a user into initiating an unintended action.CVE-2020-28218 has been assigned to this vulnerability. A CVSS v3 base score of 6.3 has been calculated; the CVSS vector string is (AV:L/AC:H/PR:N/UI:R/S:C/C:N/I:H/A:L).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2020-28218"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:C/C:N/I:H/A:L"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric recommends users upgrade to v2.7.1, which is available from the Schneider Electric Customer Care Center. Alternatively, users may disable port forwarding in the product firewall.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/work/support/contacts.jsp"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends the following industry cybersecurity best practices:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information refer to the Schneider Electric Recommended Cybersecurity Best Practices document.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/us/en/download/document/7EN52-0390/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Refer to Schneider Electric\u2019s security bulletin SEVD-2020-315-06 for specific mitigation details.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.se.com/ww/en/download/document/SEVD-2020-315-06/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 6.3,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:L/AC:H/PR:N/UI:R/S:C/C:N/I:H/A:L",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "n/a"
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of these vulnerabilities could misinform or control the safety instrumented system which could result in arbitrary code execution, system shutdown, or the compromise of safety systems.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "Critical Infrastructure Sectors: Multiple Sectors",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "Countries/Areas Deployed: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "Company Headquarters Location: France",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social engineering attacks:",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-18-107-02 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-18-107-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      }
+    ],
+    "title": "Schneider Electric Triconex Tricon (Update B)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:50:29.557005+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-18-107-02",
+      "initial_release_date": "2018-12-18T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:50:29.557005+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "10.0-10.4",
+                "product": {
+                  "name": "MP Model 3008 firmware - 10.0-10.4",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "MP Model 3008 firmware"
+          }
+        ],
+        "category": "vendor",
+        "name": "Schneider Electric"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2018-8872",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "System calls read\u00a0directly from memory addresses within the control program area without any verification.\u00a0 Manipulating this data could allow attacker data to be copied anywhere within memory.CVE-2018-8872 has been assigned to this vulnerability. A CVSS v3 base score of 9.0 has been calculated; the CVSS vector string is (AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-8872"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released the following security notification:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2017-347-01/",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2017-347-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends that users upgrade to the latest Triconex Tricon CX version. Tricon CX v11.4 is now available and is compliant with the IEC 62443 cybersecurity standard and includes multiple security enhancements that meet the challenges posed by HatMan malware techniques and other sophisticated methods of attack. To upgrade your system, contact your field site support representative or contact Schneider Electric support.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Triconex users should contact their local Schneider Electric office for assistance. With this engagement, Schneider Electric will gather data from each Tricon safety system installation, analyze for the presence of the malware, and carry out any necessary malware removal procedures.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For users who choose to gather data from each Tricon safety system installation on their own, instructions and support material is available for download via the Schneider Electric Process Automation customer support portal (login required). The data will still need to be sent to Schneider Electric for analysis. As of February 1, 2019, Schneider Electric will require customers to have a support contract in place to engage with the HatMan malware detection service.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Once Schneider Electric has analyzed this data, Triconex users will receive a report for each Tricon system analyzed. This report will advise whether the malware was detected, and what the next steps are to remove the malware if detected.A YARA rule that matches the binary components of the HatMan malware is available for download athttps://ics-cert.us-cert.gov/sites/default/files/file_attach/MAR-17-352-01.yara or by contacting Schneider Electric Customer Support.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/file_attach/MAR-17-352-01.yara"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The HatMan malware requires unrestricted access to the safety network via remote network or physical access. Additionally, the malware requires the Tricon key switch to be in the \u201cPROGRAM\u201d mode to successfully deploy its payload.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric continues to recommend users always implement the instructions in the \u201cSecurity Considerations\u201d section in the standard Triconex documentation (i.e., Planning and Installation Guides and TriStation 1131 Developers Guide), which include the following:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "HatMan malware specifically targets these vulnerabilities. These vulnerabilities are exploitable remotely. High skill level is needed to exploit.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 9.0,
+            "baseSeverity": "CRITICAL",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    },
+    {
+      "cve": "CVE-2018-7522",
+      "cwe": {
+        "id": "CWE-119",
+        "name": "Improper Restriction of Operations within the Bounds of a Memory Buffer"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "When a system call is made, registers are stored to a fixed memory location. Modifying the data in this location could allow attackers to gain supervisor-level access and control system states.CVE-2018-7522 has been assigned to this vulnerability. A CVSS v3 base score of 7.9 has been assigned; the CVSS vector string is (AV:L/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-7522"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric has released the following security notification:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "https://www.schneider-electric.com/en/download/document/SEVD-2017-347-01/",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.schneider-electric.com/en/download/document/SEVD-2017-347-01/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric strongly recommends that users upgrade to the latest Triconex Tricon CX version. Tricon CX v11.4 is now available and is compliant with the IEC 62443 cybersecurity standard and includes multiple security enhancements that meet the challenges posed by HatMan malware techniques and other sophisticated methods of attack. To upgrade your system, contact your field site support representative or contact Schneider Electric support.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Triconex users should contact their local Schneider Electric office for assistance. With this engagement, Schneider Electric will gather data from each Tricon safety system installation, analyze for the presence of the malware, and carry out any necessary malware removal procedures.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For users who choose to gather data from each Tricon safety system installation on their own, instructions and support material is available for download via the Schneider Electric Process Automation customer support portal (login required). The data will still need to be sent to Schneider Electric for analysis. As of February 1, 2019, Schneider Electric will require customers to have a support contract in place to engage with the HatMan malware detection service.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Once Schneider Electric has analyzed this data, Triconex users will receive a report for each Tricon system analyzed. This report will advise whether the malware was detected, and what the next steps are to remove the malware if detected.A YARA rule that matches the binary components of the HatMan malware is available for download athttps://ics-cert.us-cert.gov/sites/default/files/file_attach/MAR-17-352-01.yara or by contacting Schneider Electric Customer Support.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/sites/default/files/file_attach/MAR-17-352-01.yara"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "The HatMan malware requires unrestricted access to the safety network via remote network or physical access. Additionally, the malware requires the Tricon key switch to be in the \u201cPROGRAM\u201d mode to successfully deploy its payload.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Schneider Electric continues to recommend users always implement the instructions in the \u201cSecurity Considerations\u201d section in the standard Triconex documentation (i.e., Planning and Installation Guides and TriStation 1131 Developers Guide), which include the following:",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "HatMan malware specifically targets these vulnerabilities. These vulnerabilities are exploitable remotely. High skill level is needed to exploit.",
+          "product_ids": [
+            "CSAFPID-0001"
+          ],
+          "url": "https://www.cisa.gov/uscert/ics/advisories/"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 7.9,
+            "baseSeverity": "HIGH",
+            "vectorString": "CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001"
+          ]
+        }
+      ]
+    }
+  ]
+}

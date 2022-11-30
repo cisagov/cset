@@ -11,28 +11,88 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow an attacker to decrypt passwords,\n                      bypass authentication, and deny service to the device. In addition, these vulnerabilities could\n                      interact with third-party vulnerabilities to cause other impacts to integrity, confidentiality,\n                      and availability.. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow an attacker to decrypt passwords,\n                      bypass authentication, and deny service to the device. In addition, these vulnerabilities could\n                      interact with third-party vulnerabilities to cause other impacts to integrity, confidentiality,\n                      and availability.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these\n                      vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to\n                      deploying defensive measures.NCCIC also provides a section for control systems security recommended\n                        practices on the ICS-CERT web page. Several recommended practices are available for reading\n                      and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth\n                        Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion\n                        Detection and Mitigation Strategies.Organizations observing any suspected\n                      malicious activity should follow their established internal procedures and report their findings\n                      to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC also recommends that users take the following measures to protect themselves from social\n                      engineering attacks:",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-19-155-01 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-19-155-01 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-155-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
       }
     ],
     "title": "PHOENIX CONTACT PLCNext AXC F 2152",
@@ -40,8 +100,8 @@
       "current_release_date": "2022-10-10T21:50:45.972931+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-19-155-01",
@@ -50,12 +110,12 @@
         {
           "date": "2022-10-10T21:50:45.972931+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,29 +126,29 @@
             "branches": [
               {
                 "category": "product_version",
-                "name": "1046568",
+                "name": "2404267",
                 "product": {
-                  "name": "Phoenix Contact - 1046568",
-                  "product_id": "1"
+                  "name": "AXC F 2152 - 2404267",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "PLCNext AXC F 2152"
+            "name": "AXC F 2152"
           },
           {
             "branches": [
               {
                 "category": "product_version",
-                "name": "2404267",
+                "name": "1046568  (Starterkit)",
                 "product": {
-                  "name": "Phoenix Contact - 2404267",
-                  "product_id": "2"
+                  "name": "AXC F 2152 - 1046568  (Starterkit)",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "PLCNext AXC F 2152"
+            "name": "AXC F 2152"
           }
         ],
         "category": "vendor",
@@ -105,18 +165,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "A remote attacker can exploit a server\u2019s private key by sending carefully constructed\n                      UserIdentityTokens encrypted with the Basic128Rsa15 security policy. This could allow an attacker\n                      to decrypt passwords even if encrypted with another security policy such as Basic256Sha256.",
+          "text": "A remote attacker can exploit a server\u2019s private key by sending carefully constructed\n                      UserIdentityTokens encrypted with the Basic128Rsa15 security policy. This could allow an attacker\n                      to decrypt passwords even if encrypted with another security policy such as Basic256Sha256.CVE-2018-7559 has been assigned to this vulnerability. A CVSS v3 base score\n                      of 7.6 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2018-7559"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L"
         }
@@ -126,8 +192,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact recommends affected users update to firmware release 2019.0 LTS or later, update\n                      to PLCNext Engineer release 2019.0 LTS or later, and apply the following specific mitigations\n                      below:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=2404267&library=usen&pcck=P-21-14-01&tab=1&selectedCategory=ALL"
         },
@@ -135,8 +201,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact also recommends users operate the devices in closed networks or environments\n                      protected with a suitable firewall. For detailed information on recommendations for measures to\n                      protect network-capable devices, please refer to the Phoenix Contact application note \u201cArt.-Nr.\n                      107913: AH EN INDUSTRIAL SECURITY - Measures to protect network-capable devices with Ethernet\n                      connection against unauthorized access,\u201d which can be found at the following link:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -144,8 +210,8 @@
           "category": "vendor_fix",
           "details": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf\n",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf"
         },
@@ -153,8 +219,8 @@
           "category": "vendor_fix",
           "details": "For more information, CERT@VDE has released a security advisory available at the following link:\n                    ",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -162,46 +228,10 @@
           "category": "vendor_fix",
           "details": "https://cert.vde.com/en-us/advisories/vde-2019-009",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-009"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these\n                      vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to\n                      deploying defensive measures.NCCIC also provides a section for control systems security recommended\n                        practices on the ICS-CERT web page. Several recommended practices are available for reading\n                      and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth\n                        Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion\n                        Detection and Mitigation Strategies.Organizations observing any suspected\n                      malicious activity should follow their established internal procedures and report their findings\n                      to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC also recommends that users take the following measures to protect themselves from social\n                      engineering attacks:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
         }
       ],
       "scores": [
@@ -213,12 +243,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2018-7559"
+      ]
     },
     {
       "cve": "CVE-2019-10998",
@@ -229,18 +258,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An attacker with physical access to the device can manipulate SD card data, which could allow an\n                      attacker to bypass the authentication of the device. This device is designed for use in a\n                      protected industrial environment with restricted physical access.",
+          "text": "An attacker with physical access to the device can manipulate SD card data, which could allow an\n                      attacker to bypass the authentication of the device. This device is designed for use in a\n                      protected industrial environment with restricted physical access.CVE-2019-10998 has been assigned to this vulnerability. A CVSS v3 base score\n                      of 6.8 has been calculated; the CVSS vector string is (AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10998"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -250,8 +285,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact recommends affected users update to firmware release 2019.0 LTS or later, update\n                      to PLCNext Engineer release 2019.0 LTS or later, and apply the following specific mitigations\n                      below:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=2404267&library=usen&pcck=P-21-14-01&tab=1&selectedCategory=ALL"
         },
@@ -259,8 +294,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact also recommends users operate the devices in closed networks or environments\n                      protected with a suitable firewall. For detailed information on recommendations for measures to\n                      protect network-capable devices, please refer to the Phoenix Contact application note \u201cArt.-Nr.\n                      107913: AH EN INDUSTRIAL SECURITY - Measures to protect network-capable devices with Ethernet\n                      connection against unauthorized access,\u201d which can be found at the following link:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -268,8 +303,8 @@
           "category": "vendor_fix",
           "details": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf\n",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf"
         },
@@ -277,8 +312,8 @@
           "category": "vendor_fix",
           "details": "For more information, CERT@VDE has released a security advisory available at the following link:\n                    ",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -286,46 +321,10 @@
           "category": "vendor_fix",
           "details": "https://cert.vde.com/en-us/advisories/vde-2019-009",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-009"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these\n                      vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to\n                      deploying defensive measures.NCCIC also provides a section for control systems security recommended\n                        practices on the ICS-CERT web page. Several recommended practices are available for reading\n                      and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth\n                        Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion\n                        Detection and Mitigation Strategies.Organizations observing any suspected\n                      malicious activity should follow their established internal procedures and report their findings\n                      to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC also recommends that users take the following measures to protect themselves from social\n                      engineering attacks:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
         }
       ],
       "scores": [
@@ -337,12 +336,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2019-10998"
+      ]
     },
     {
       "cve": "CVE-2019-10997",
@@ -353,18 +351,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An attacker trying to connect to the device using a man-in-the-middle setup may crash the PLC\n                      service, resulting in a denial of service condition. The device must then be rebooted, or the PLC\n                      service must be restarted manually via Linux shell.",
+          "text": "An attacker trying to connect to the device using a man-in-the-middle setup may crash the PLC\n                      service, resulting in a denial of service condition. The device must then be rebooted, or the PLC\n                      service must be restarted manually via Linux shell.CVE-2019-10997 has been assigned to this vulnerability. A CVSS v3 base score\n                      of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10997"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
         }
@@ -374,8 +378,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact recommends affected users update to firmware release 2019.0 LTS or later, update\n                      to PLCNext Engineer release 2019.0 LTS or later, and apply the following specific mitigations\n                      below:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=2404267&library=usen&pcck=P-21-14-01&tab=1&selectedCategory=ALL"
         },
@@ -383,8 +387,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact also recommends users operate the devices in closed networks or environments\n                      protected with a suitable firewall. For detailed information on recommendations for measures to\n                      protect network-capable devices, please refer to the Phoenix Contact application note \u201cArt.-Nr.\n                      107913: AH EN INDUSTRIAL SECURITY - Measures to protect network-capable devices with Ethernet\n                      connection against unauthorized access,\u201d which can be found at the following link:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -392,8 +396,8 @@
           "category": "vendor_fix",
           "details": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf\n",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf"
         },
@@ -401,8 +405,8 @@
           "category": "vendor_fix",
           "details": "For more information, CERT@VDE has released a security advisory available at the following link:\n                    ",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -410,46 +414,10 @@
           "category": "vendor_fix",
           "details": "https://cert.vde.com/en-us/advisories/vde-2019-009",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-009"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these\n                      vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to\n                      deploying defensive measures.NCCIC also provides a section for control systems security recommended\n                        practices on the ICS-CERT web page. Several recommended practices are available for reading\n                      and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth\n                        Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion\n                        Detection and Mitigation Strategies.Organizations observing any suspected\n                      malicious activity should follow their established internal procedures and report their findings\n                      to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC also recommends that users take the following measures to protect themselves from social\n                      engineering attacks:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
         }
       ],
       "scores": [
@@ -461,12 +429,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2019-10997"
+      ]
     },
     {
       "cve": "CVE-2019-10997",
@@ -477,18 +444,24 @@
       "notes": [
         {
           "category": "summary",
-          "text": "This product uses older versions of several open-source software components containing\n                      vulnerabilities that may affect availability, integrity, or confidentiality of the AXC F 2152. See\n                      the full list of CVE identifiers in CERT VDE advisory number VDE",
+          "text": "This product uses older versions of several open-source software components containing\n                      vulnerabilities that may affect availability, integrity, or confidentiality of the AXC F 2152. See\n                      the full list of CVE identifiers in CERT VDE advisory number VDE-2019-009. Please see link in the Mitigations section for additional details.CVE-2019-10997 has been assigned to this vulnerability. A CVSS v3 base score\n                      of 7.5 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2"
+          "CSAFPID-0001",
+          "CSAFPID-0002"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-10997"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
         }
@@ -498,8 +471,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact recommends affected users update to firmware release 2019.0 LTS or later, update\n                      to PLCNext Engineer release 2019.0 LTS or later, and apply the following specific mitigations\n                      below:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/online/portal/us/?uri=pxc-oc-itemdetail:pid=2404267&library=usen&pcck=P-21-14-01&tab=1&selectedCategory=ALL"
         },
@@ -507,8 +480,8 @@
           "category": "vendor_fix",
           "details": "Phoenix Contact also recommends users operate the devices in closed networks or environments\n                      protected with a suitable firewall. For detailed information on recommendations for measures to\n                      protect network-capable devices, please refer to the Phoenix Contact application note \u201cArt.-Nr.\n                      107913: AH EN INDUSTRIAL SECURITY - Measures to protect network-capable devices with Ethernet\n                      connection against unauthorized access,\u201d which can be found at the following link:",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -516,8 +489,8 @@
           "category": "vendor_fix",
           "details": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf\n",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.phoenixcontact.com/assets/downloads_ed/local_pc/web_dwl_technical_info/ah_en_industrial_security_107913_en_01.pdf"
         },
@@ -525,8 +498,8 @@
           "category": "vendor_fix",
           "details": "For more information, CERT@VDE has released a security advisory available at the following link:\n                    ",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -534,46 +507,10 @@
           "category": "vendor_fix",
           "details": "https://cert.vde.com/en-us/advisories/vde-2019-009",
           "product_ids": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-009"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these\n                      vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to\n                      deploying defensive measures.NCCIC also provides a section for control systems security recommended\n                        practices on the ICS-CERT web page. Several recommended practices are available for reading\n                      and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth\n                        Strategies.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion\n                        Detection and Mitigation Strategies.Organizations observing any suspected\n                      malicious activity should follow their established internal procedures and report their findings\n                      to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC also recommends that users take the following measures to protect themselves from social\n                      engineering attacks:",
-          "product_ids": [
-            "1",
-            "2"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
         }
       ],
       "scores": [
@@ -585,12 +522,11 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2"
+            "CSAFPID-0001",
+            "CSAFPID-0002"
           ]
         }
-      ],
-      "title": "CVE-2019-10997"
+      ]
     }
   ]
 }

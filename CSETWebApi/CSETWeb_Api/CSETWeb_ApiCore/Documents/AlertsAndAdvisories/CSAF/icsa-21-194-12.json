@@ -1,0 +1,2512 @@
+{
+  "document": {
+    "acknowledgments": [
+      {
+        "summary": "Siemens reported this vulnerability to CISA."
+      }
+    ],
+    "category": "csaf_security_advisory",
+    "csaf_version": "2.0",
+    "distribution": {
+      "text": "Disclosure is not limited",
+      "tlp": {
+        "label": "WHITE",
+        "url": "https://us-cert.cisa.gov/tlp/"
+      }
+    },
+    "lang": "en-US",
+    "notes": [
+      {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
+        "category": "summary",
+        "text": "Successful exploitation of this vulnerability could allow an attacker to cause a heap-based buffer overflow.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Multiple",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "CISA recommends users take defensive measures to minimize the risk of exploitation of this vulnerability. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "CISA reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.\nCISA also provides a section for control systems security recommended practices on the ICS webpage on cisa.gov/ics. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS webpage on cisa.gov/ics in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.\nOrganizations observing any suspected malicious activity should follow their established internal procedures and report their findings to CISA for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
+      }
+    ],
+    "publisher": {
+      "category": "coordinator",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
+      "name": "CISA",
+      "namespace": "https://www.cisa.gov/"
+    },
+    "references": [
+      {
+        "category": "self",
+        "summary": "ICS Advisory ICSA-21-194-12 - Web Scraped Version",
+        "url": "https://us-cert.cisa.gov/ics/advisories/icsa-21-194-12"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/alerts/ICS-ALERT-10-301-01"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://us-cert.cisa.gov/ics/tips/ICS-TIP-12-146-01B"
+      }
+    ],
+    "title": "Siemens VxWorks-based Industrial Products (Update C)",
+    "tracking": {
+      "current_release_date": "2022-10-10T21:49:58.352667+00:00",
+      "generator": {
+        "engine": {
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
+        }
+      },
+      "id": "ICSA-21-194-12",
+      "initial_release_date": "2022-05-12T00:00:00+00:00",
+      "revision_history": [
+        {
+          "date": "2022-10-10T21:49:58.352667+00:00",
+          "legacy_version": "Update A",
+          "number": "1",
+          "summary": "Publication Date"
+        }
+      ],
+      "status": "final",
+      "version": "1"
+    }
+  },
+  "product_tree": {
+    "branches": [
+      {
+        "branches": [
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X208PRO (6GK5208-0HA10-2AA6) - *",
+                  "product_id": "CSAFPID-0001"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X208PRO (6GK5208-0HA10-2AA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR00-2BA6) - *",
+                  "product_id": "CSAFPID-0002"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT PRO (6GK5202-2JR00-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M (6GK5308-2GG00-2AA2) - *",
+                  "product_id": "CSAFPID-0003"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M (6GK5308-2GG00-2AA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (230V) (6GK5302- 7GD00-3EA3) - *",
+                  "product_id": "CSAFPID-0004"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (230V) (6GK5302- 7GD00-3EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF208 (6GK5208-0BA00-2AF2) - *",
+                  "product_id": "CSAFPID-0005"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF208 (6GK5208-0BA00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204-2LD (6GK5204-2BC10-2AA3) - *",
+                  "product_id": "CSAFPID-0006"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2LD (6GK5204-2BC10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-3LD (6GK5307-3BM00-2AA3) - *",
+                  "product_id": "CSAFPID-0007"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-3LD (6GK5307-3BM00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204-2 (6GK5204-2BC00-2AF2) - *",
+                  "product_id": "CSAFPID-0008"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204-2 (6GK5204-2BC00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2IRT (6GK5202-2BB00-2BA3) - *",
+                  "product_id": "CSAFPID-0009"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2IRT (6GK5202-2BB00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M PoE (230V ports on front) (6GK5324-4QG00-3AR2) - *",
+                  "product_id": "CSAFPID-00010"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M PoE (230V ports on front) (6GK5324-4QG00-3AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "2015 and 2021 (Drives manufactured in 2022 are not affected)",
+                "product": {
+                  "name": "SINAMICS PERFECT HARMONY GH180 Drives - 2015 and 2021 (Drives manufactured in 2022 are not affected)",
+                  "product_id": "CSAFPID-00011"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SINAMICS PERFECT HARMONY GH180 Drives"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (24V ports on front) (6GK5324-4GG00-1ER2) - *",
+                  "product_id": "CSAFPID-00012"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (24V ports on front) (6GK5324-4GG00-1ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M PoE (24V ports on rear) (6GK5324-4QG00-1HR2) - *",
+                  "product_id": "CSAFPID-00013"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M PoE (24V ports on rear) (6GK5324-4QG00-1HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on front) (6GK5324-4GG10-3ER2) - *",
+                  "product_id": "CSAFPID-00014"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on front) (6GK5324-4GG10-3ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LD (6GK5308-2FM10-2AA3) - *",
+                  "product_id": "CSAFPID-00015"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LD (6GK5308-2FM10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on front) (6GK5324-4GG00-4ER2) - *",
+                  "product_id": "CSAFPID-00016"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on front) (6GK5324-4GG00-4ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M (6GK5308-2GG10-2AA2) - *",
+                  "product_id": "CSAFPID-00017"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M (6GK5308-2GG10-2AA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X216 (6GK5216-0BA00-2AA3) - *",
+                  "product_id": "CSAFPID-00018"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X216 (6GK5216-0BA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (230V ports on front) (6GK5324-0GG00-3AR2) - *",
+                  "product_id": "CSAFPID-00019"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (230V ports on front) (6GK5324-0GG00-3AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (230V) (6GK5307-2FD00-3EA3) - *",
+                  "product_id": "CSAFPID-00020"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (230V) (6GK5307-2FD00-3EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (24V coated) (6GK5302-7GD00-1GA3) - *",
+                  "product_id": "CSAFPID-00021"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (24V coated) (6GK5302-7GD00-1GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on rear) (6GK5324-4GG10-4JR2) - *",
+                  "product_id": "CSAFPID-00022"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on rear) (6GK5324-4GG10-4JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (24V ports on rear) (6GK5324-0GG00-1HR2) - *",
+                  "product_id": "CSAFPID-00023"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (24V ports on rear) (6GK5324-0GG00-1HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LH (6GK5308-2FN00-2AA3) - *",
+                  "product_id": "CSAFPID-00024"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LH (6GK5308-2FN00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2 (6GK5308-2FL10-2AA3) - *",
+                  "product_id": "CSAFPID-00025"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2 (6GK5308-2FL10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (2x 230V coated) (6GK5307-2FD00-4GA3) - *",
+                  "product_id": "CSAFPID-00026"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (2x 230V coated) (6GK5307-2FD00-4GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X202-2P IRT (6GK5202-2BH00-2BA3) - *",
+                  "product_id": "CSAFPID-00027"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X202-2P IRT (6GK5202-2BH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M PoE TS (24V ports on front) (6GK5324-4QG00-1CR2) - *",
+                  "product_id": "CSAFPID-00028"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M PoE TS (24V ports on front) (6GK5324-4QG00-1CR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (230V coated) (6GK5302-7GD00-3GA3) - *",
+                  "product_id": "CSAFPID-00029"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (230V coated) (6GK5302-7GD00-3GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LD (6GK5308-2FM00-2AA3) - *",
+                  "product_id": "CSAFPID-00030"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LD (6GK5308-2FM00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X212-2LD (6GK5212-2BC00-2AA3) - *",
+                  "product_id": "CSAFPID-00031"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X212-2LD (6GK5212-2BC00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204-2FM (6GK5204-2BB11-2AA3) - *",
+                  "product_id": "CSAFPID-00032"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2FM (6GK5204-2BB11-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF202-2P IRT (6GK5202-2BH00-2BD2) - *",
+                  "product_id": "CSAFPID-00033"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF202-2P IRT (6GK5202-2BH00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M TS (24V) (6GK5324-0GG00-1CR2) - *",
+                  "product_id": "CSAFPID-00034"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M TS (24V) (6GK5324-0GG00-1CR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M TS (6GK5308-2GG10-2CA2) - *",
+                  "product_id": "CSAFPID-00035"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M TS (6GK5308-2GG10-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (24V coated) (6GK5307-2FD00-1GA3) - *",
+                  "product_id": "CSAFPID-00036"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (24V coated) (6GK5307-2FD00-1GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (2x 24V coated) (6GK5307-2FD00-2GA3) - *",
+                  "product_id": "CSAFPID-00037"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (2x 24V coated) (6GK5307-2FD00-2GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 24V ports on rear) (6GK5324-4GG10-2JR2) - *",
+                  "product_id": "CSAFPID-00038"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 24V ports on rear) (6GK5324-4GG10-2JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT PRO (6GK5204-0JA00-2BA6) - *",
+                  "product_id": "CSAFPID-00039"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT PRO (6GK5204-0JA00-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF201-3P IRT (6GK5201-3JR00-2BA6) - *",
+                  "product_id": "CSAFPID-00040"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF201-3P IRT (6GK5201-3JR00-2BA6)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X212-2 (6GK5212-2BB00-2AA3) - *",
+                  "product_id": "CSAFPID-00041"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X212-2 (6GK5212-2BB00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 24V ports on rear) (6GK5324-4GG00-2JR2) - *",
+                  "product_id": "CSAFPID-00042"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 24V ports on rear) (6GK5324-4GG00-2JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2 (6GK5308-2FL00-2AA3) - *",
+                  "product_id": "CSAFPID-00043"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2 (6GK5308-2FL00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-3 (6GK5307-3BL10-2AA3) - *",
+                  "product_id": "CSAFPID-00044"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-3 (6GK5307-3BL10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (2x 24V coated) (6GK5302-7GD00-2GA3) - *",
+                  "product_id": "CSAFPID-00045"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (2x 24V coated) (6GK5302-7GD00-2GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X206-1 (6GK5206-1BB10-2AA3) - *",
+                  "product_id": "CSAFPID-00046"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X206-1 (6GK5206-1BB10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204IRT (6GK5204-0BA00-2BA3) - *",
+                  "product_id": "CSAFPID-00047"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204IRT (6GK5204-0BA00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on rear) (6GK5324-4GG00-3JR2) - *",
+                  "product_id": "CSAFPID-00048"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on rear) (6GK5324-4GG00-3JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X306-1LD FE (6GK5306-1BF00-2AA3) - *",
+                  "product_id": "CSAFPID-00049"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X306-1LD FE (6GK5306-1BF00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIMATIC RF180C (6GT2002-0JD00) - *",
+                  "product_id": "CSAFPID-00050"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC RF180C (6GT2002-0JD00)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X310FE (6GK5310-0BA10-2AA3) - *",
+                  "product_id": "CSAFPID-00051"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X310FE (6GK5310-0BA10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X310FE (6GK5310-0BA00-2AA3) - *",
+                  "product_id": "CSAFPID-00052"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X310FE (6GK5310-0BA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 24V ports on front) (6GK5324-4GG10-2ER2) - *",
+                  "product_id": "CSAFPID-00053"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 24V ports on front) (6GK5324-4GG10-2ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X310 (6GK5310-0FA00-2AA3) - *",
+                  "product_id": "CSAFPID-00054"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X310 (6GK5310-0FA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204 (6GK5204-0BA00-2AF2) - *",
+                  "product_id": "CSAFPID-00055"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204 (6GK5204-0BA00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M PoE (6GK5308-2QG10-2AA2) - *",
+                  "product_id": "CSAFPID-00056"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M PoE (6GK5308-2QG10-2AA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X320-1 FE (6GK5320-1BD00-2AA3) - *",
+                  "product_id": "CSAFPID-00057"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X320-1 FE (6GK5320-1BD00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204-2 (6GK5204-2BB10-2AA3) - *",
+                  "product_id": "CSAFPID-00058"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2 (6GK5204-2BB10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on rear) (6GK5324-4GG00-4JR2) - *",
+                  "product_id": "CSAFPID-00059"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on rear) (6GK5324-4GG00-4JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LH+ (6GK5308-2FP10-2AA3) - *",
+                  "product_id": "CSAFPID-00060"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LH+ (6GK5308-2FP10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on front) (6GK5324-4GG00-3ER2) - *",
+                  "product_id": "CSAFPID-00061"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on front) (6GK5324-4GG00-3ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on rear) (6GK5324-4GG10-3JR2) - *",
+                  "product_id": "CSAFPID-00062"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (100-240VAC/60-250VDC ports on rear) (6GK5324-4GG10-3JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIPLUS NET SCALANCE X308-2 (6AG1308-2FL10-4AA3) - *",
+                  "product_id": "CSAFPID-00063"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIPLUS NET SCALANCE X308-2 (6AG1308-2FL10-4AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (2x 230V) (6GK5302-7GD00-4EA3) - *",
+                  "product_id": "CSAFPID-00064"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (2x 230V) (6GK5302-7GD00-4EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M PoE (24V ports on front) (6GK5324-4QG00-1AR2) - *",
+                  "product_id": "CSAFPID-00065"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M PoE (24V ports on front) (6GK5324-4QG00-1AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (230V coated) (6GK5307-2FD00-3GA3) - *",
+                  "product_id": "CSAFPID-00066"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (230V coated) (6GK5307-2FD00-3GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X200-4P IRT (6GK5200-4AH00-2BA3) - *",
+                  "product_id": "CSAFPID-00067"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X200-4P IRT (6GK5200-4AH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X208 (6GK5208-0BA10-2AA3) - *",
+                  "product_id": "CSAFPID-00068"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X208 (6GK5208-0BA10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on front) (6GK5324-4GG10-4ER2) - *",
+                  "product_id": "CSAFPID-00069"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 100-240VAC/60-250VDC ports on front) (6GK5324-4GG10-4ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (24V ports on front) (6GK5324-4GG10-1ER2) - *",
+                  "product_id": "CSAFPID-00070"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (24V ports on front) (6GK5324-4GG10-1ER2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (24V) (6GK5302-7GD00-1EA3) - *",
+                  "product_id": "CSAFPID-00071"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (24V) (6GK5302-7GD00-1EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIMATIC RFID 181EIP (6GT2002-0JD20) - *",
+                  "product_id": "CSAFPID-00072"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC RFID 181EIP (6GT2002-0JD20)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204IRT (6GK5204-0BA00-2BF2) - *",
+                  "product_id": "CSAFPID-00073"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204IRT (6GK5204-0BA00-2BF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SIMATIC RF182C (6GT2002-0JD10) - *",
+                  "product_id": "CSAFPID-00074"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SIMATIC RF182C (6GT2002-0JD10)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (230V ports on rear) (6GK5324-0GG00-3HR2) - *",
+                  "product_id": "CSAFPID-00075"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (230V ports on rear) (6GK5324-0GG00-3HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204-2LD TS (6GK5204-2BC10-2CA2) - *",
+                  "product_id": "CSAFPID-00076"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2LD TS (6GK5204-2BC10-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X224 (6GK5224-0BA00-2AA3) - *",
+                  "product_id": "CSAFPID-00077"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X224 (6GK5224-0BA00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (2x 24V) (6GK5307-2FD00-2EA3) - *",
+                  "product_id": "CSAFPID-00078"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (2x 24V) (6GK5307-2FD00-2EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (2x 230V) (6GK5307-2FD00-4EA3) - *",
+                  "product_id": "CSAFPID-00079"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (2x 230V) (6GK5307-2FD00-4EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (230V ports on rear) (6GK5324-0GG10-3HR2) - *",
+                  "product_id": "CSAFPID-00080"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (230V ports on rear) (6GK5324-0GG10-3HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (24V ports on front) (6GK5324-0GG00-1AR2) - *",
+                  "product_id": "CSAFPID-00081"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (24V ports on front) (6GK5324-0GG00-1AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X408-2 (6GK5408-2FD00-2AA2) - *",
+                  "product_id": "CSAFPID-00082"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X408-2 (6GK5408-2FD00-2AA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (24V ports on rear) (6GK5324-4GG00-1JR2) - *",
+                  "product_id": "CSAFPID-00083"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (24V ports on rear) (6GK5324-4GG00-1JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (2x 24V) (6GK5302-7GD00-2EA3) - *",
+                  "product_id": "CSAFPID-00084"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (2x 24V) (6GK5302-7GD00-2EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-3LD (6GK5307-3BM10-2AA3) - *",
+                  "product_id": "CSAFPID-00085"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-3LD (6GK5307-3BM10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M TS (24V) (6GK5324-0GG10-1CR2) - *",
+                  "product_id": "CSAFPID-00086"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M TS (24V) (6GK5324-0GG10-1CR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M PoE (6GK5308-2QG00-2AA2) - *",
+                  "product_id": "CSAFPID-00087"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M PoE (6GK5308-2QG00-2AA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-3 (6GK5307-3BL00-2AA3) - *",
+                  "product_id": "CSAFPID-00088"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-3 (6GK5307-3BL00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M PoE (230V ports on rear) (6GK5324-4QG00-3HR2) - *",
+                  "product_id": "CSAFPID-00089"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M PoE (230V ports on rear) (6GK5324-4QG00-3HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "RUGGEDCOM WIN5200 series subscriber unit - *",
+                  "product_id": "CSAFPID-00090"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RUGGEDCOM WIN5200 series subscriber unit"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X307-2 EEC (24V) (6GK5307-2FD00-1EA3) - *",
+                  "product_id": "CSAFPID-00091"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X307-2 EEC (24V) (6GK5307-2FD00-1EA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF206-1 (6GK5206-1BC00-2AF2) - *",
+                  "product_id": "CSAFPID-00092"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF206-1 (6GK5206-1BC00-2AF2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X204-2TS (6GK5204-2BB10-2CA2) - *",
+                  "product_id": "CSAFPID-00093"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X204-2TS (6GK5204-2BB10-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2M TS (6GK5308-2GG00-2CA2) - *",
+                  "product_id": "CSAFPID-00094"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2M TS (6GK5308-2GG00-2CA2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LH+ (6GK5308-2FP00-2AA3) - *",
+                  "product_id": "CSAFPID-00095"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LH+ (6GK5308-2FP00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "RUGGEDCOM WIN5100 series subscriber unit - *",
+                  "product_id": "CSAFPID-00096"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "RUGGEDCOM WIN5100 series subscriber unit"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XF204-2BA IRT (6GK5204-2AA00-2BD2) - *",
+                  "product_id": "CSAFPID-00097"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XF204-2BA IRT (6GK5204-2AA00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (24V ports on front) (6GK5324-0GG10-1AR2) - *",
+                  "product_id": "CSAFPID-00098"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (24V ports on front) (6GK5324-0GG10-1AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X302-7 EEC (2x 230V coated) (6GK5302-7GD00-4GA3) - *",
+                  "product_id": "CSAFPID-00099"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X302-7 EEC (2x 230V coated) (6GK5302-7GD00-4GA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X320-1-2LD FE (6GK5320-3BF00-2AA3) - *",
+                  "product_id": "CSAFPID-000100"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X320-1-2LD FE (6GK5320-3BF00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X304-2FE (6GK5304-2BD00-2AA3) - *",
+                  "product_id": "CSAFPID-000101"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X304-2FE (6GK5304-2BD00-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (24V ports on rear) (6GK5324-4GG10-1JR2) - *",
+                  "product_id": "CSAFPID-000102"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (24V ports on rear) (6GK5324-4GG10-1JR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT (6GK5201-3BH00-2BA3) - *",
+                  "product_id": "CSAFPID-000103"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT (6GK5201-3BH00-2BA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X310 (6GK5310-0FA10-2AA3) - *",
+                  "product_id": "CSAFPID-000104"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X310 (6GK5310-0FA10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (24V ports on rear) (6GK5324-0GG10-1HR2) - *",
+                  "product_id": "CSAFPID-000105"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (24V ports on rear) (6GK5324-0GG10-1HR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-12M (230V ports on front) (6GK5324-0GG10-3AR2) - *",
+                  "product_id": "CSAFPID-000106"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-12M (230V ports on front) (6GK5324-0GG10-3AR2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X201-3P IRT PRO (6GK5201-3BH00-2BD2) - *",
+                  "product_id": "CSAFPID-000107"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X201-3P IRT PRO (6GK5201-3BH00-2BD2)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X308-2LH (6GK5308-2FN10-2AA3) - *",
+                  "product_id": "CSAFPID-000108"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X308-2LH (6GK5308-2FN10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE X206-1LD (6GK5206-1BC10-2AA3) - *",
+                  "product_id": "CSAFPID-000109"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE X206-1LD (6GK5206-1BC10-2AA3)"
+          },
+          {
+            "branches": [
+              {
+                "category": "product_version",
+                "name": "*",
+                "product": {
+                  "name": "SCALANCE XR324-4M EEC (2x 24V ports on front) (6GK5324-4GG00-2ER2) - *",
+                  "product_id": "CSAFPID-000110"
+                }
+              }
+            ],
+            "category": "product_name",
+            "name": "SCALANCE XR324-4M EEC (2x 24V ports on front) (6GK5324-4GG00-2ER2)"
+          }
+        ],
+        "category": "vendor",
+        "name": "Siemens"
+      }
+    ]
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2021-29998",
+      "cwe": {
+        "id": "CWE-122",
+        "name": "Heap-based Buffer Overflow"
+      },
+      "notes": [
+        {
+          "category": "summary",
+          "text": "There is a DHCP vulnerability in Wind River VxWorks, for versions prior to 6.5. This vulnerability could cause a heap overflow if exploited. CVE-2021-29998 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+          "title": "Vulnerability Summary"
+        }
+      ],
+      "product_status": {
+        "known_affected": [
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003",
+          "CSAFPID-0004",
+          "CSAFPID-0005",
+          "CSAFPID-0006",
+          "CSAFPID-0007",
+          "CSAFPID-0008",
+          "CSAFPID-0009",
+          "CSAFPID-00010",
+          "CSAFPID-00011",
+          "CSAFPID-00012",
+          "CSAFPID-00013",
+          "CSAFPID-00014",
+          "CSAFPID-00015",
+          "CSAFPID-00016",
+          "CSAFPID-00017",
+          "CSAFPID-00018",
+          "CSAFPID-00019",
+          "CSAFPID-00020",
+          "CSAFPID-00021",
+          "CSAFPID-00022",
+          "CSAFPID-00023",
+          "CSAFPID-00024",
+          "CSAFPID-00025",
+          "CSAFPID-00026",
+          "CSAFPID-00027",
+          "CSAFPID-00028",
+          "CSAFPID-00029",
+          "CSAFPID-00030",
+          "CSAFPID-00031",
+          "CSAFPID-00032",
+          "CSAFPID-00033",
+          "CSAFPID-00034",
+          "CSAFPID-00035",
+          "CSAFPID-00036",
+          "CSAFPID-00037",
+          "CSAFPID-00038",
+          "CSAFPID-00039",
+          "CSAFPID-00040",
+          "CSAFPID-00041",
+          "CSAFPID-00042",
+          "CSAFPID-00043",
+          "CSAFPID-00044",
+          "CSAFPID-00045",
+          "CSAFPID-00046",
+          "CSAFPID-00047",
+          "CSAFPID-00048",
+          "CSAFPID-00049",
+          "CSAFPID-00050",
+          "CSAFPID-00051",
+          "CSAFPID-00052",
+          "CSAFPID-00053",
+          "CSAFPID-00054",
+          "CSAFPID-00055",
+          "CSAFPID-00056",
+          "CSAFPID-00057",
+          "CSAFPID-00058",
+          "CSAFPID-00059",
+          "CSAFPID-00060",
+          "CSAFPID-00061",
+          "CSAFPID-00062",
+          "CSAFPID-00063",
+          "CSAFPID-00064",
+          "CSAFPID-00065",
+          "CSAFPID-00066",
+          "CSAFPID-00067",
+          "CSAFPID-00068",
+          "CSAFPID-00069",
+          "CSAFPID-00070",
+          "CSAFPID-00071",
+          "CSAFPID-00072",
+          "CSAFPID-00073",
+          "CSAFPID-00074",
+          "CSAFPID-00075",
+          "CSAFPID-00076",
+          "CSAFPID-00077",
+          "CSAFPID-00078",
+          "CSAFPID-00079",
+          "CSAFPID-00080",
+          "CSAFPID-00081",
+          "CSAFPID-00082",
+          "CSAFPID-00083",
+          "CSAFPID-00084",
+          "CSAFPID-00085",
+          "CSAFPID-00086",
+          "CSAFPID-00087",
+          "CSAFPID-00088",
+          "CSAFPID-00089",
+          "CSAFPID-00090",
+          "CSAFPID-00091",
+          "CSAFPID-00092",
+          "CSAFPID-00093",
+          "CSAFPID-00094",
+          "CSAFPID-00095",
+          "CSAFPID-00096",
+          "CSAFPID-00097",
+          "CSAFPID-00098",
+          "CSAFPID-00099",
+          "CSAFPID-000100",
+          "CSAFPID-000101",
+          "CSAFPID-000102",
+          "CSAFPID-000103",
+          "CSAFPID-000104",
+          "CSAFPID-000105",
+          "CSAFPID-000106",
+          "CSAFPID-000107",
+          "CSAFPID-000108",
+          "CSAFPID-000109",
+          "CSAFPID-000110"
+        ]
+      },
+      "references": [
+        {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2021-29998"
+        },
+        {
+          "category": "external",
+          "summary": "www.first.org",
+          "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "remediations": [
+        {
+          "category": "vendor_fix",
+          "details": "Siemens recommends that the affected product versions listed as \u201cAll versions prior to v4.1.4\u201d to Update to v4.1.4 or later.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ],
+          "url": "https://support.industry.siemens.com/cs/ww/en/view/109808359/"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For SINAMICS PERFECT HARMONY GH180 Drives:",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-910883.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "As a general security measure, Siemens strongly recommends protecting network access to devices with appropriate mechanisms. In order to operate the devices in a protected IT environment, Siemens recommends configuring the environment according to Siemens Operational Guidelines for Industrial Security, and to follow the recommendations in the product manuals.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ],
+          "url": "https://cert-portal.siemens.com/operational-guidelines-industrial-security.pdf"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "Additional information on industrial security by Siemens can be found at: https://www.siemens.com/industrialsecurity.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ],
+          "url": "https://www.siemens.com/industrialsecurity"
+        },
+        {
+          "category": "vendor_fix",
+          "details": "For more information about this vulnerability and the associated remediations, please see Siemens publication number SSA-560465.",
+          "product_ids": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ],
+          "url": "https://cert-portal.siemens.com/productcert/pdf/ssa-560465.pdf"
+        }
+      ],
+      "scores": [
+        {
+          "cvss_v3": {
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "vectorString": "CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.0"
+          },
+          "products": [
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003",
+            "CSAFPID-0004",
+            "CSAFPID-0005",
+            "CSAFPID-0006",
+            "CSAFPID-0007",
+            "CSAFPID-0008",
+            "CSAFPID-0009",
+            "CSAFPID-00010",
+            "CSAFPID-00011",
+            "CSAFPID-00012",
+            "CSAFPID-00013",
+            "CSAFPID-00014",
+            "CSAFPID-00015",
+            "CSAFPID-00016",
+            "CSAFPID-00017",
+            "CSAFPID-00018",
+            "CSAFPID-00019",
+            "CSAFPID-00020",
+            "CSAFPID-00021",
+            "CSAFPID-00022",
+            "CSAFPID-00023",
+            "CSAFPID-00024",
+            "CSAFPID-00025",
+            "CSAFPID-00026",
+            "CSAFPID-00027",
+            "CSAFPID-00028",
+            "CSAFPID-00029",
+            "CSAFPID-00030",
+            "CSAFPID-00031",
+            "CSAFPID-00032",
+            "CSAFPID-00033",
+            "CSAFPID-00034",
+            "CSAFPID-00035",
+            "CSAFPID-00036",
+            "CSAFPID-00037",
+            "CSAFPID-00038",
+            "CSAFPID-00039",
+            "CSAFPID-00040",
+            "CSAFPID-00041",
+            "CSAFPID-00042",
+            "CSAFPID-00043",
+            "CSAFPID-00044",
+            "CSAFPID-00045",
+            "CSAFPID-00046",
+            "CSAFPID-00047",
+            "CSAFPID-00048",
+            "CSAFPID-00049",
+            "CSAFPID-00050",
+            "CSAFPID-00051",
+            "CSAFPID-00052",
+            "CSAFPID-00053",
+            "CSAFPID-00054",
+            "CSAFPID-00055",
+            "CSAFPID-00056",
+            "CSAFPID-00057",
+            "CSAFPID-00058",
+            "CSAFPID-00059",
+            "CSAFPID-00060",
+            "CSAFPID-00061",
+            "CSAFPID-00062",
+            "CSAFPID-00063",
+            "CSAFPID-00064",
+            "CSAFPID-00065",
+            "CSAFPID-00066",
+            "CSAFPID-00067",
+            "CSAFPID-00068",
+            "CSAFPID-00069",
+            "CSAFPID-00070",
+            "CSAFPID-00071",
+            "CSAFPID-00072",
+            "CSAFPID-00073",
+            "CSAFPID-00074",
+            "CSAFPID-00075",
+            "CSAFPID-00076",
+            "CSAFPID-00077",
+            "CSAFPID-00078",
+            "CSAFPID-00079",
+            "CSAFPID-00080",
+            "CSAFPID-00081",
+            "CSAFPID-00082",
+            "CSAFPID-00083",
+            "CSAFPID-00084",
+            "CSAFPID-00085",
+            "CSAFPID-00086",
+            "CSAFPID-00087",
+            "CSAFPID-00088",
+            "CSAFPID-00089",
+            "CSAFPID-00090",
+            "CSAFPID-00091",
+            "CSAFPID-00092",
+            "CSAFPID-00093",
+            "CSAFPID-00094",
+            "CSAFPID-00095",
+            "CSAFPID-00096",
+            "CSAFPID-00097",
+            "CSAFPID-00098",
+            "CSAFPID-00099",
+            "CSAFPID-000100",
+            "CSAFPID-000101",
+            "CSAFPID-000102",
+            "CSAFPID-000103",
+            "CSAFPID-000104",
+            "CSAFPID-000105",
+            "CSAFPID-000106",
+            "CSAFPID-000107",
+            "CSAFPID-000108",
+            "CSAFPID-000109",
+            "CSAFPID-000110"
+          ]
+        }
+      ]
+    }
+  ]
+}

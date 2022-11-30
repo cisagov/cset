@@ -11,28 +11,78 @@
       "text": "Disclosure is not limited",
       "tlp": {
         "label": "WHITE",
-        "url": "https://www.first.org/tlp/"
+        "url": "https://us-cert.cisa.gov/tlp/"
       }
     },
     "lang": "en-US",
     "notes": [
       {
+        "category": "legal_disclaimer",
+        "text": "All information products included in https://us-cert.cisa.gov/ics are provided \"as is\" for informational purposes only. The Department of Homeland Security (DHS) does not provide any warranties of any kind regarding any information contained within. DHS does not endorse any commercial product or service, referenced in this product or otherwise. Further dissemination of this product is governed by the Traffic Light Protocol (TLP) marking in the header. For more information about TLP, see https://us-cert.cisa.gov/tlp/.",
+        "title": "Legal Notice"
+      },
+      {
         "category": "summary",
-        "text": "Exploitable remotely/low skill level to exploit. Successful exploitation of these vulnerabilities could allow a compromise of the managed switch, resulting in disruption of communication, and root access to the operating system.. CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities\u00a0. COUNTRIES/AREAS DEPLOYED: Worldwide",
-        "title": "Summary"
+        "text": "Successful exploitation of these vulnerabilities could allow a compromise of the managed switch, resulting in disruption of communication, and root access to the operating system.",
+        "title": "Risk evaluation"
+      },
+      {
+        "category": "other",
+        "text": "CRITICAL INFRASTRUCTURE SECTORS: Commercial Facilities\u00a0",
+        "title": "Critical infrastructure sectors"
+      },
+      {
+        "category": "other",
+        "text": "COUNTRIES/AREAS DEPLOYED: Worldwide",
+        "title": "Countries/areas deployed"
+      },
+      {
+        "category": "other",
+        "text": "COMPANY HEADQUARTERS LOCATION: Germany",
+        "title": "Company headquarters location"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
+        "title": "Recommended Practices"
+      },
+      {
+        "category": "general",
+        "text": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
+        "title": "Recommended Practices"
       }
     ],
     "publisher": {
       "category": "coordinator",
-      "contact_details": "CISAservicedesk@cisa.dhs.gov",
+      "contact_details": "Email: CISAservicedesk@cisa.dhs.gov;\n Toll Free: 1-888-282-0870",
       "name": "CISA",
       "namespace": "https://www.cisa.gov/"
     },
     "references": [
       {
         "category": "self",
-        "summary": "ICS Advisory ICSA-19-164-02 - Web Version - CSAF Version 2.0",
+        "summary": "ICS Advisory ICSA-19-164-02 - Web Scraped Version",
         "url": "https://us-cert.cisa.gov/ics/advisories/ICSA-19-164-02"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/advisories/"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
+      },
+      {
+        "category": "external",
+        "summary": "Recommended Practices",
+        "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
       }
     ],
     "title": "WAGO Industrial Managed Switches 852-303, 852-1305, and 852-1505",
@@ -40,8 +90,8 @@
       "current_release_date": "2022-10-10T21:51:15.839193+00:00",
       "generator": {
         "engine": {
-          "name": "CISA USCert CSAF Generator",
-          "version": "1"
+          "name": "CISA CSAF Generator",
+          "version": "1.0.0"
         }
       },
       "id": "ICSA-19-164-02",
@@ -50,12 +100,12 @@
         {
           "date": "2022-10-10T21:51:15.839193+00:00",
           "legacy_version": "Update A",
-          "number": "1.0.0",
+          "number": "1",
           "summary": "Publication Date"
         }
       ],
       "status": "final",
-      "version": "1.0.0"
+      "version": "1"
     }
   },
   "product_tree": {
@@ -66,43 +116,43 @@
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v1.2.2.S0",
+                "name": "< 1.1.6.S0",
                 "product": {
-                  "name": "WAGO - <v1.2.2.S0",
-                  "product_id": "1"
+                  "name": "Industrial Managed Switch 852-1305 - < 1.1.6.S0",
+                  "product_id": "CSAFPID-0001"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Industrial Managed Switches 852-303, 852-1305, and 852-1505"
+            "name": "Industrial Managed Switch 852-1305"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v1.1.6.S0",
+                "name": "< 1.1.5.S0",
                 "product": {
-                  "name": "WAGO - <v1.1.6.S0",
-                  "product_id": "2"
+                  "name": "Industrial Managed Switch 852-1505 - < 1.1.5.S0",
+                  "product_id": "CSAFPID-0002"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Industrial Managed Switches 852-303, 852-1305, and 852-1505"
+            "name": "Industrial Managed Switch 852-1505"
           },
           {
             "branches": [
               {
                 "category": "product_version_range",
-                "name": "<v1.1.5.S0",
+                "name": "< 1.2.2.S0",
                 "product": {
-                  "name": "WAGO - <v1.1.5.S0",
-                  "product_id": "3"
+                  "name": "Industrial Managed Switch 852-303 - < 1.2.2.S0",
+                  "product_id": "CSAFPID-0003"
                 }
               }
             ],
             "category": "product_name",
-            "name": "Industrial Managed Switches 852-303, 852-1305, and 852-1505"
+            "name": "Industrial Managed Switch 852-303"
           }
         ],
         "category": "vendor",
@@ -120,19 +170,25 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An attacker with access to the hard-coded credentials may gain access to the operating system of the managed switch with root privileges, which may allow manipulation of the operating system of the managed switch.",
+          "text": "An attacker with access to the hard-coded credentials may gain access to the operating system of the managed switch with root privileges, which may allow manipulation of the operating system of the managed switch.CVE-2019-12550 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-12550"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -142,9 +198,9 @@
           "category": "vendor_fix",
           "details": "WAGO recommends users update their managed switch to the latest firmware published June 7, 2019, or later. New firmware can be requested in the Runtime Software dropdown within the Downloads section at the links below:",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -152,9 +208,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-303",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-303"
         },
@@ -162,9 +218,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1305",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1305"
         },
@@ -172,9 +228,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1505",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1505"
         },
@@ -182,9 +238,9 @@
           "category": "vendor_fix",
           "details": "WAGO also recommends users implement the following security measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -192,41 +248,11 @@
           "category": "vendor_fix",
           "details": "For more information CERT@VDE has released a security notification which can be viewed at the following link:https://cert.vde.com/en-us/advisories/vde-2019-013",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-013"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -238,13 +264,12 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ]
         }
-      ],
-      "title": "CVE-2019-12550"
+      ]
     },
     {
       "cve": "CVE-2019-12549",
@@ -255,19 +280,25 @@
       "notes": [
         {
           "category": "summary",
-          "text": "An attacker with access to the hard-coded SSH key may disrupt communication or compromise the managed switch. The SSH-keys cannot be regenerated by users and all switches use the same key.\u00a0 ",
+          "text": "An attacker with access to the hard-coded SSH key may disrupt communication or compromise the managed switch. The SSH-keys cannot be regenerated by users and all switches use the same key.\u00a0 CVE-2019-12549 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).. 3.2.3\u00a0\u00a0 \u00a0USING COMPONENTS WITH KNOWN VULNERABILITIES 3.2.3\u00a0\u00a0 \u00a0USING COMPONENTS WITH KNOWN VULNERABILITIES. The listed managed switches use outdated third-party components with known vulnerabilities. See the full list of CVE identifiers in CERT@VDE advisory number VDE-2019-013.\u00a0CVE-2019-12549 has been assigned to this vulnerability. A CVSS v3 base score of 9.8 has been assigned; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
           "title": "Vulnerability Summary"
         }
       ],
       "product_status": {
         "known_affected": [
-          "1",
-          "2",
-          "3"
+          "CSAFPID-0001",
+          "CSAFPID-0002",
+          "CSAFPID-0003"
         ]
       },
       "references": [
         {
+          "category": "external",
+          "summary": "web.nvd.nist.gov",
+          "url": "http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2019-12549"
+        },
+        {
+          "category": "external",
           "summary": "www.first.org",
           "url": "https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
         }
@@ -277,9 +308,9 @@
           "category": "vendor_fix",
           "details": "WAGO recommends users update their managed switch to the latest firmware published June 7, 2019, or later. New firmware can be requested in the Runtime Software dropdown within the Downloads section at the links below:",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -287,9 +318,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-303",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-303"
         },
@@ -297,9 +328,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1305",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1305"
         },
@@ -307,9 +338,9 @@
           "category": "vendor_fix",
           "details": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1505",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.wago.com/us/switches/industrial-managed-switch/p/852-1505"
         },
@@ -317,9 +348,9 @@
           "category": "vendor_fix",
           "details": "WAGO also recommends users implement the following security measures:",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://www.cisa.gov/uscert/ics/advisories/"
         },
@@ -327,41 +358,11 @@
           "category": "vendor_fix",
           "details": "For more information CERT@VDE has released a security notification which can be viewed at the following link:https://cert.vde.com/en-us/advisories/vde-2019-013",
           "product_ids": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ],
           "url": "https://cert.vde.com/en-us/advisories/vde-2019-013"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC recommends users take defensive measures to minimize the risk of exploitation of these vulnerabilities. Specifically, users should:",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/advisories/"
-        },
-        {
-          "category": "mitigation",
-          "details": "NCCIC reminds organizations to perform proper impact analysis and risk assessment prior to deploying defensive measures.NCCIC also provides a section for control systems security recommended practices on the ICS-CERT web page. Several recommended practices are available for reading and download, including Improving Industrial Control Systems Cybersecurity with Defense-in-Depth Strategies.",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/sites/default/files/recommended_practices/NCCIC_ICS-CERT_Defense_in_Depth_2016_S508C.pdf"
-        },
-        {
-          "category": "mitigation",
-          "details": "Additional mitigation guidance and recommended practices are publicly available on the ICS-CERT website in the Technical Information Paper, ICS-TIP-12-146-01B--Targeted Cyber Intrusion Detection and Mitigation Strategies.Organizations observing any suspected malicious activity should follow their established internal procedures and report their findings to NCCIC for tracking and correlation against other incidents.",
-          "product_ids": [
-            "1",
-            "2",
-            "3"
-          ],
-          "url": "https://www.cisa.gov/uscert/ics/tips/ICS-TIP-12-146-01B"
         }
       ],
       "scores": [
@@ -373,13 +374,12 @@
             "version": "3.0"
           },
           "products": [
-            "1",
-            "2",
-            "3"
+            "CSAFPID-0001",
+            "CSAFPID-0002",
+            "CSAFPID-0003"
           ]
         }
-      ],
-      "title": "CVE-2019-12549"
+      ]
     }
   ]
 }
