@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { saveAs } from "file-saver";
+import { FileUploadClientService } from '../../../services/file-client.service';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -36,7 +37,7 @@ export class DiagramInventoryComponent implements OnInit {
   /**
    *
    */
-  constructor(public diagramSvc: DiagramService) { }
+  constructor(public diagramSvc: DiagramService, private fileSvc: FileUploadClientService) { }
 
   /**
    *
@@ -65,8 +66,18 @@ export class DiagramInventoryComponent implements OnInit {
   /**
    * Programmatically clicks the corresponding file upload element.
    */
-  openFileBrowser() {
+  openFileBrowserForCsafUpload() {
     const element: HTMLElement = document.getElementById('csafUpload') as HTMLElement;
     element.click();
+  }
+
+  fileSelect(e) {
+    const files = [...e.target.files];
+
+    this.fileSvc.uploadCsafFiles(files).subscribe(result => {
+    },
+    err => {
+
+    });
   }
 }

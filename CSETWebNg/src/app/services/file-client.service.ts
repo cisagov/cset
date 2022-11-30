@@ -209,6 +209,25 @@ export class FileUploadClientService {
     });
     return this.http.request(req);
   }
+
+   /**
+   * POSTs an array of CSAF json files to the persist in the API
+   */
+    uploadCsafFiles(fileItems: File[]): any {
+      const apiEndpoint = this.configSvc.apiUrl + 'diagram/alertsandadvisories';
+      const formData: FormData = new FormData();
+
+      console.log(fileItems);
+
+      fileItems.forEach((fileItem: File, i) => {
+        formData.append('fileItem', fileItem, fileItem.name);
+      })
+
+      const req = new HttpRequest('POST', apiEndpoint, formData, {
+        reportProgress: true // for progress data
+      });
+      return this.http.request(req);
+    }
 }
 
 export class LinkedSet {
