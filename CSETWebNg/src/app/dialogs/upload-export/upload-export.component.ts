@@ -22,12 +22,10 @@
 //
 ////////////////////////////////
 import { ImportAssessmentService } from './../../services/import-assessment.service';
+import { FileUploadClientService } from '../../services/file-client.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AssessmentService } from '../../services/assessment.service';
-import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'app-upload-export',
@@ -51,8 +49,7 @@ export class UploadExportComponent implements OnInit {
 
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
     private importSvc: ImportAssessmentService,
-    private assessSvc: AssessmentService,
-    private router: Router,
+    private fileSvc: FileUploadClientService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -100,7 +97,11 @@ export class UploadExportComponent implements OnInit {
 
     // start the upload and save the progress map
 
-    this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
+    if (this.data.isCsafUpload) {
+      this.progress = this.fileSvc.uploadCsafFiles(this.files)
+    } else {
+      this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
+    }
 
     // convert the progress map into an array
     const allProgressObservables = [];
@@ -138,12 +139,18 @@ export class UploadExportComponent implements OnInit {
         comp => {
           count += 1
           if(count >= allProgressObservables.length){
-            this.dialog.close();
+            if (this.data.isCsafUpload) {
+              this.canBeClosed = true;
+              this.dialog.disableClose = false;
+              this.statusText = 'File Upload Successful'
+            } else {
+              this.dialog.close();
+            }
           }
         }
       )
     });
-    
+
     // forkJoin(allProgressObservables).subscribe(end => {
     //   // ... the dialog can be closed again...
     //   this.canBeClosed = true;
