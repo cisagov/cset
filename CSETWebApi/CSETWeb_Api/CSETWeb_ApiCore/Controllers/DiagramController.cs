@@ -462,7 +462,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// get cset diagram templates
+        /// uploads new CSAF json files to Documents/AlertsAndAdvisories/CSAF to be used for network diagram alerts & advisories
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
@@ -480,8 +480,6 @@ namespace CSETWebCore.Api.Controllers
 
             string csafFilesDirectory = Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF");
 
-            int assessmentId = _token.AssessmentForUser();
-
             try
             {
                 var formFiles = HttpContext.Request.Form.Files;
@@ -493,17 +491,29 @@ namespace CSETWebCore.Api.Controllers
                         return StatusCode(415);
                     }
 
-                    //TODO: Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
+                    // Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        byte[] bytes = ms.ToArray();
+                        JsonSerializerSettings settings = new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Error };
+                        // This line will throw an error if the uploaded json does not follow the CSAF format.
+                        JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(bytes), settings);
+                    }
 
-                    if (file.Length > 0) 
+                    if (file.Length > 0)
                     {
                         string filePath = Path.Combine(csafFilesDirectory, file.FileName);
 
-                        //TODO: Verify files are overwriten, might need to check for file existence first.
-
-                        using (Stream fileStream = new FileStream(filePath, FileMode.Create)) {
+                        // Existing json files with the same name are overwritten.
+                        using (Stream fileStream = new FileStream(filePath, FileMode.Create))
+                        {
                             file.CopyTo(fileStream);
                         }
+                    }
+                    else 
+                    {
+                        return BadRequest("An uploaded json file was empty.");
                     }
                 }
             }
