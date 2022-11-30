@@ -217,9 +217,7 @@ export class FileUploadClientService {
       const apiEndpoint = this.configSvc.apiUrl + 'diagram/alertsandadvisories';
       const formData: FormData = new FormData();
 
-      console.log(fileItems);
-
-      fileItems.forEach((fileItem: File, i) => {
+      fileItems.forEach((fileItem: File) => {
         formData.append('fileItem', fileItem, fileItem.name);
       })
 
