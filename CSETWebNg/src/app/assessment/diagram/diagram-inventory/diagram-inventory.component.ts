@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { saveAs } from "file-saver";
 import { FileUploadClientService } from '../../../services/file-client.service';
+import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -37,7 +39,10 @@ export class DiagramInventoryComponent implements OnInit {
   /**
    *
    */
-  constructor(public diagramSvc: DiagramService, private fileSvc: FileUploadClientService) { }
+  constructor(public diagramSvc: DiagramService,
+     private fileSvc: FileUploadClientService,
+     private dialog: MatDialog
+    ) { }
 
   /**
    *
@@ -72,12 +77,6 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   fileSelect(e) {
-    const files = [...e.target.files];
-
-    this.fileSvc.uploadCsafFiles(files).subscribe(result => {
-    },
-    err => {
-
-    });
+    this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } });
   }
 }

@@ -113,7 +113,6 @@ export class DiagramComponentsComponent implements OnInit {
   }
 
   showAlertsAndAdvisories(component) {
-    console.log(component);
     this.dialog.open(AlertsAndAdvisoriesComponent, {
       data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
     });

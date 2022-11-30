@@ -513,7 +513,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                     else 
                     {
-                        return BadRequest("An uploaded json file was empty.");
+                        return BadRequest("JSON file cannot be empty.");
                     }
                 }
             }
@@ -522,7 +522,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e);
             }
 
-            return Ok("CSAF files uploaded successfully.");
+            return Ok("CSAF file upload success.");
         }
 
         /// <summary>
