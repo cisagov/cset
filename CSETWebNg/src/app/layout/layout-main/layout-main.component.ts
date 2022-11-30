@@ -31,6 +31,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -41,7 +42,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' },
- 
+
 })
 export class LayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
@@ -61,12 +62,12 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public router: Router
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     if (this.configSvc.installationMode === 'RRA') {
-      
+
     }
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.isFooterOpen();
@@ -95,5 +96,9 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }

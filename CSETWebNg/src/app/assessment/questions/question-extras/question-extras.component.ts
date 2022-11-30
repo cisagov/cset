@@ -594,7 +594,7 @@ export class QuestionExtrasComponent implements OnInit {
   // }
 
   autoLoadSupplemental() {
-    return this.questionsSvc.autoLoadSupplementalSetting;
+    return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel?.modelId);
   }
 
   /**

@@ -192,6 +192,8 @@ import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-p
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
 import { LogoutComponent } from './initial/logout/logout.component';
+import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
+import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -393,6 +395,9 @@ const appRoutes: Routes = [
               { path: 'rra-gaps', component: RraGapsComponent },
               { path: 'mvra-gaps-page', component: MvraGapsPageComponent },
               { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
+              { path: 'cpg-summary-page', component: CpgSummaryComponent },
+              { path: 'cpg-practices-page', component: CpgPracticesComponent },
+
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },

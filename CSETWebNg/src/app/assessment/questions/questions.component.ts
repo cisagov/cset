@@ -31,6 +31,7 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
+import { ɵNullViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-questions',
@@ -74,7 +75,7 @@ export class QuestionsComponent implements AfterViewChecked {
   ) {
     const magic = this.navSvc.getMagic();
 
-    this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplementalSetting;
+    this.autoLoadSupplementalInfo = this.questionsSvc.autoLoadSupplemental();
 
     // if running in IE, turn off the auto load feature
     if (this.browserIsIE()) {
@@ -277,9 +278,9 @@ export class QuestionsComponent implements AfterViewChecked {
    * Stores the Supplemental auto-load setting in the service
    * for access by the child components.
    */
-  persistAutoLoadSetting() {
-    this.questionsSvc.autoLoadSupplementalSetting = this.autoLoadSupplementalInfo;
-  }
+  // persistAutoLoadSetting() {
+  //   this.questionsSvc.autoLoadSupplemental = this.autoLoadSupplementalInfo;
+  // }
 
   /**
    * Controls the mass expansion/collapse of all subcategories on the screen.
