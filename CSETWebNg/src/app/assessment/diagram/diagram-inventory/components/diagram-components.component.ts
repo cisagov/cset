@@ -87,9 +87,8 @@ export class DiagramComponentsComponent implements OnInit {
       this.assetTypes = x;
     });
 
-    this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((csafs: any[]) => {
-      this.processVendorNames(csafs);
-      this.processProductNames(csafs);
+    this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((vendors: Vendor[]) => {
+      this.vendors = vendors;
       this.getComponents();
     })
 
@@ -163,47 +162,6 @@ export class DiagramComponentsComponent implements OnInit {
         default:
           return 0;
       }
-    });
-  }
-
-  // Parse vendor names from CSAF files.
-  processVendorNames(csafs) {
-    csafs.forEach(advisory => {
-      const vendor: Vendor = { name: advisory.product_Tree.branches[0].name, products: [] }
-      if (!this.vendors.find(e => e.name === vendor.name)) {
-        this.vendors.push(vendor);
-      }
-    });
-
-    this.vendors.sort((a, b) => {
-      return this.comparer.compare(a.name.toUpperCase(), b.name.toUpperCase(), true);
-    })
-  }
-
-  // Parse product names from CSAF files. Products are tied to vendors. CVEs are then tied to products.
-  processProductNames(csafs) {
-    csafs.forEach(advisory => {
-      const product: Product = {
-        name: advisory.product_Tree.branches[0].branches[0].name,
-        vulnerabilities: advisory.vulnerabilities,
-        versions: []
-      };
-
-      advisory.product_Tree.branches[0].branches.forEach(branch => {
-        product.versions.push({ name: branch.branches[0].name, product_Id: branch.branches[0].product.product_Id})
-      })
-
-      const vendor: Vendor = this.vendors.find(v => v.name === advisory.product_Tree.branches[0].name);
-
-      if (vendor && !vendor.products.find(p => p.name === product.name)) {
-        vendor.products.push(product);
-      }
-    });
-
-    this.vendors.forEach(vendor => {
-      vendor.products.sort((a, b) => {
-        return this.comparer.compare(a.name.toUpperCase(), b.name.toUpperCase(), true);
-      });
     });
   }
 

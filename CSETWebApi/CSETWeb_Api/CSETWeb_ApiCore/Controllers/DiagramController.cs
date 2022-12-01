@@ -441,24 +441,52 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// get all availabes alerts & advisories from the stored CSAF json files
+        /// Get all availabes alerts & advisories from the stored CSAF json files.
+        /// Vendor is the top level class that houses products, which then holds vulnerabilites.
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
         [Route("api/diagram/alertsandadvisories")]
         [HttpGet]
-        public IEnumerable<CommonSecurityAdvisoryFrameworkObject> GetAlertsAndAdvisories()
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisories()
         {
             string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
-            List<CommonSecurityAdvisoryFrameworkObject> csafFiles = new List<CommonSecurityAdvisoryFrameworkObject>();
+            List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
 
             foreach (var filePath in filePaths) 
             {
-                var jsonString = System.IO.File.ReadAllText(filePath);
-                csafFiles.Add(JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString));
+                string jsonString = System.IO.File.ReadAllText(filePath);
+                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString);
+
+                var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
+                var existingVendor = vendors.Find(v => v.Name == vendor.Name);
+
+                // Use existing vendor from list if present
+                if (existingVendor != null) 
+                { 
+                    vendor = existingVendor;
+                }
+
+                var product = new CommonSecurityAdvisoryFrameworkProduct(csafObj);
+                if (!vendor.Products.Exists(p => p.Name == product.Name)) 
+                { 
+                    vendor.Products.Add(product);
+                }
+
+                if (existingVendor == null) 
+                { 
+                    vendors.Add(vendor);
+                }
             }
 
-            return csafFiles;
+            vendors.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+
+            foreach (var vendor in vendors) 
+            { 
+                vendor.Products.Sort((a,b) => string.Compare(a.Name, b.Name, true));
+            }
+
+            return vendors;
         }
 
         /// <summary>
