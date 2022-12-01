@@ -59,7 +59,6 @@ interface Vulnerability {
 export class DiagramComponentsComponent implements OnInit {
 
   diagramComponentList: any;
-  loading: boolean = true;
 
   @Output()
   componentsChange = new EventEmitter<any>();
@@ -91,6 +90,7 @@ export class DiagramComponentsComponent implements OnInit {
     this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((csafs: any[]) => {
       this.processVendorNames(csafs);
       this.processProductNames(csafs);
+      this.getComponents();
     })
 
   }
@@ -100,12 +100,11 @@ export class DiagramComponentsComponent implements OnInit {
    */
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
-      this.diagramComponentList = x;
-      this.diagramComponentList.forEach(component => {
+      x.forEach(component => {
         this.updateComponentVendor(component);
       })
+      this.diagramComponentList = x;
       this.componentsChange.emit(this.diagramComponentList);
-      this.loading = false;
     });
   }
 
@@ -175,6 +174,10 @@ export class DiagramComponentsComponent implements OnInit {
         this.vendors.push(vendor);
       }
     });
+
+    this.vendors.sort((a, b) => {
+      return this.comparer.compare(a.name.toUpperCase(), b.name.toUpperCase(), true);
+    })
   }
 
   // Parse product names from CSAF files. Products are tied to vendors. CVEs are then tied to products.
@@ -197,7 +200,11 @@ export class DiagramComponentsComponent implements OnInit {
       }
     });
 
-    this.getComponents();
+    this.vendors.forEach(vendor => {
+      vendor.products.sort((a, b) => {
+        return this.comparer.compare(a.name.toUpperCase(), b.name.toUpperCase(), true);
+      });
+    });
   }
 
   updateComponentVendor(component) {
