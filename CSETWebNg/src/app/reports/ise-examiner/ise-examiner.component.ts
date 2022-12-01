@@ -59,7 +59,7 @@ export class IseExaminerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Examiner Report - ISE");
+    this.titleService.setTitle("Examiner Notes - ISE");
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
