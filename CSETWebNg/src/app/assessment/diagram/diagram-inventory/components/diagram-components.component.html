@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngIf="!diagramComponentList; else mainContent" class="spinner-container" style="margin: 2em auto">
+<div *ngIf="diagramComponentList.length == 0; else mainContent" class="spinner-container" style="margin: 2em auto">
   <div style="max-width: 50px; max-height: 50px;"></div>
 </div>
 <ng-template #mainContent>
