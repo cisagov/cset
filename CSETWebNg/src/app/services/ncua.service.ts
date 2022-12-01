@@ -33,6 +33,7 @@ import { Question } from '../models/questions.model';
 import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
+import { replace } from 'lodash';
 
 let headers = {
     headers: new HttpHeaders()
@@ -450,7 +451,6 @@ let headers = {
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
-                    console.log('in for '+ question.title + ' | ' + findings[m]?.finding?.type)
                     switch (findings[m]?.finding?.type) {
                       case "DOR":
                         childResponses.issues.dors++;
@@ -513,7 +513,9 @@ let headers = {
 
     this.jsonString.metaData.push(metaDataInfo);
 
-    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json');
+
+
+    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json', this.jsonString.metaData.guid);
 
     this.jsonString = { // reset the string
       "metaData": [],
@@ -528,12 +530,24 @@ let headers = {
     }; 
   }
 
-  saveToJsonFile(text: string, filename: string){
-    let a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
-    a.setAttribute('download', filename);
-    a.click();
+  saveToJsonFile(data: string, filename: string, guid: string){
+    // let a = document.createElement('a');
+    // a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
+    // a.setAttribute('download', filename);
+    // a.click();
+    const fileValue = new MeritFileExport();
+    fileValue.data = data;
+    fileValue.fileName = filename.replace(':', '_').replace(':', '_');
+    fileValue.guid = guid;
+
+    this.acetSvc.sendFileToMerit(fileValue).subscribe();
     this.submitInProgress = false;
   }
 
+}
+
+export class MeritFileExport {
+  fileName: string;
+  data: string;
+  guid: string;
 }

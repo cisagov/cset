@@ -156,6 +156,11 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'reports/acet/getIseAllQuestions', headers);
     }
 
+    // Sends the generated json file to MERIT
+    sendFileToMerit(fileValue: any) {
+        return this.http.post(this.apiUrl + 'meritFileExport', fileValue, headers);
+    }
+
     getIseSourceFiles() {
         return this.http.get(this.apiUrl + 'reports/acet/getIseSourceFiles', headers);
     }
