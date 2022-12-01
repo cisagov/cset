@@ -20,11 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
+<div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+  <div style="max-width: 50px; max-height: 50px;"></div>
+</div>
+<ng-template #mainContent>
+  <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
     <th mat-sort-header="label" style="width:200px">Label</th>
     <th mat-sort-header="hasUniqueQuestions">Has Unique Questions</th>
     <th mat-sort-header="sal">Sal</th>
-    <th mat-sort-header="criticality" >Criticality</th>
+    <th mat-sort-header="criticality">Criticality</th>
     <th mat-sort-header="layer">Layer</th>
     <th mat-sort-header="ipAddress">IP Address</th>
     <th mat-sort-header="assetType">Asset Type</th>
@@ -40,44 +44,47 @@
     <th mat-sort-header="alertsAndAdvisories">Alerts & Advisories</th>
 
     <tr *ngFor="let component of diagramComponentList; let i = index">
-        <td>{{component.label}}</td>
-        <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1" [(ngModel)]="component.hasUniqueQuestions" [disabled]="true"
-          [checked]="component.hasUniqueQuestions" > </td>
-        <td>{{component.sal}}</td>
-        <td> {{component.criticality}} </td>
-        <td>{{component.layerName}}</td>
-        <td>{{component.ipAddress}}</td>
-        <td>{{component.assetType}}</td>
-        <td>{{component.zoneLabel}}</td>
-        <td>{{component.description}}</td>
-        <td>{{component.hostName}}</td>
-        <td style="padding-left: 20px;">
-            <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
-              [checked]="component.visible" [disabled]="true" >
-        </td>
-        <td>
-          <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
-            <option [ngValue]="null">-- Select Vendor --</option>
-            <option *ngFor="let vendor of vendors" [value]="vendor.name">{{ vendor.name }}</option>
-          </select>
-        </td>
-        <td>
-          <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName" (change)="saveComponent(component)">
-            <option [ngValue]="null">-- Select Product --</option>
-            <option *ngFor="let product of component.vendor?.products" [value]="product.name">{{ product.name }}</option>
-          </select>
-        </td>
-        <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)"/></td>
-        <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)"/></td>
-        <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)"/></td>
-        <td>
-          <div matTooltip="Select a vendor and product to view the alerts and advisories associated with this network component"
+      <td>{{component.label}}</td>
+      <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1"
+          [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions"> </td>
+      <td>{{component.sal}}</td>
+      <td> {{component.criticality}} </td>
+      <td>{{component.layerName}}</td>
+      <td>{{component.ipAddress}}</td>
+      <td>{{component.assetType}}</td>
+      <td>{{component.zoneLabel}}</td>
+      <td>{{component.description}}</td>
+      <td>{{component.hostName}}</td>
+      <td style="padding-left: 20px;">
+        <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
+          [checked]="component.visible" [disabled]="true">
+      </td>
+      <td>
+        <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
+          <option [ngValue]="null">-- Select Vendor --</option>
+          <option *ngFor="let vendor of vendors" [value]="vendor.name">{{ vendor.name }}</option>
+        </select>
+      </td>
+      <td>
+        <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName"
+          (change)="saveComponent(component)">
+          <option [ngValue]="null">-- Select Product --</option>
+          <option *ngFor="let product of component.vendor?.products" [value]="product.name">{{ product.name }}</option>
+        </select>
+      </td>
+      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
+      <td>
+        <div
+          matTooltip="Select a vendor and product to view the alerts and advisories associated with this network component"
           [matTooltipDisabled]="component.productName">
-            <button class="btn" (click)="showAlertsAndAdvisories(component)" [disabled]="!component.productName"
+          <button class="btn" (click)="showAlertsAndAdvisories(component)" [disabled]="!component.productName"
             matTooltip="View the alerts and advisories associated with this network component.">
             <span class="icon-link-button-text-dark" style="color: #1a53ff">Alerts & Advisories</span>
           </button>
         </div>
-        </td>
+      </td>
     </tr>
-</table>
+  </table>
+</ng-template>
