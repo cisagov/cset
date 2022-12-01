@@ -49,7 +49,7 @@
   </div>
 
   <div class="d-flex flex-column justify-content-start align-items-start mb-4"
-    *ngIf="!isMobile && !this.assessSvc.isISE()">
+    *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>

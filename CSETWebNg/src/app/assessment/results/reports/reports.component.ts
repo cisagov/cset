@@ -165,6 +165,22 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * Decides whether the Observation Tear-Out Sheets 
+     * link should be shown.
+     */
+    showObservationTearouts() {
+        if (this.assessSvc.isISE()) {
+            return false;
+        }
+
+        if (this.isMobile) {
+            return false;
+        }
+
+        return this.configSvc.behaviors.showObservations;
+    }
+
+    /**
      *
      * @param reportType
      */
