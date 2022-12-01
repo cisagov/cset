@@ -515,7 +515,7 @@ let headers = {
 
 
 
-    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json', this.jsonString.metaData.guid);
+    this.saveToJsonFile(JSON.stringify(this.jsonString), info.assessment_Name + '.json', this.jsonString.metaData.guid);
 
     this.jsonString = { // reset the string
       "metaData": [],
@@ -544,7 +544,7 @@ let headers = {
       (r: any) => {
         let exists = r; //these are all the IRPs for ISE. If this changes in the future, this will need updated
 
-        if(exists) { //and eventually an 'overwrite' boolean or something
+        if (exists) { //and eventually an 'overwrite' boolean or something
           this.acetSvc.newMeritFile(fileValue).subscribe();
         } else {
           this.acetSvc.overwriteMeritFile(fileValue).subscribe();
