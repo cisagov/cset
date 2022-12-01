@@ -540,7 +540,19 @@ let headers = {
     fileValue.fileName = filename.replace(':', '_').replace(':', '_');
     fileValue.guid = guid;
 
-    this.acetSvc.sendFileToMerit(fileValue).subscribe();
+    this.acetSvc.doesMeritFileExist(fileValue).subscribe(
+      (r: any) => {
+        let exists = r; //these are all the IRPs for ISE. If this changes in the future, this will need updated
+
+        if(exists) { //and eventually an 'overwrite' boolean or something
+          this.acetSvc.newMeritFile(fileValue).subscribe();
+        } else {
+          this.acetSvc.overwriteMeritFile(fileValue).subscribe();
+        }
+
+      }
+    )
+
     this.submitInProgress = false;
   }
 
