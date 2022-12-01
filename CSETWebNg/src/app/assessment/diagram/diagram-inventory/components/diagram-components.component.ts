@@ -1,3 +1,4 @@
+import { identity } from 'rxjs';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -58,7 +59,7 @@ interface Vulnerability {
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  diagramComponentList: any;
+  diagramComponentList: any[] = [];
 
   @Output()
   componentsChange = new EventEmitter<any>();
@@ -99,10 +100,10 @@ export class DiagramComponentsComponent implements OnInit {
    */
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
-      x.forEach(component => {
+      this.diagramComponentList = x;
+      this.diagramComponentList.forEach(component => {
         this.updateComponentVendor(component);
       })
-      this.diagramComponentList = x;
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
