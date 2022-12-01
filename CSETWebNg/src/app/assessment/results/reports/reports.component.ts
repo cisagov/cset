@@ -67,6 +67,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     dialogRef: MatDialogRef<any>;
     isCyberFlorida: boolean = false;
 
+    findings: any = null;
+
     /**
      *
      */
@@ -226,14 +228,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.ncuaSvc.unassignedIssueTitles = [];
         this.findSvc.GetAssessmentFindings().subscribe(
           (r: any) => {
-            let findings = r;
+            this.findings = r;
             let title = '';
             
-            for (let i = 0; i < findings?.length; i++) {
+            for (let i = 0; i < this.findings?.length; i++) {
                 // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
-                if (this.ncuaSvc.translateExamLevel(findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
-                    if (findings[i]?.finding?.type == null || findings[i]?.finding?.type == '') {
-                        title = findings[i]?.category?.title + ', ' + findings[i]?.question?.question_Title;
+                if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+                    if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
+                        title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
                         this.ncuaSvc.unassignedIssueTitles.push(title);
                     }
                 }

@@ -88,11 +88,18 @@ let headers = {
   iseIrps: any = null;
   information: any =null;
   jsonString: any = {
-    "questionData": [],
+    "metaData": [],
+    "issuesTotal": {
+      "dors": 0,
+      "examinerFindings": 0,
+      "supplementalFacts": 0,
+      "nonReportables": 0
+    },
     "examProfileData": [],
-    "metaData": []
+    "questionData": []
   };
   examLevel: string = '';
+  submitInProgress: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -357,20 +364,10 @@ let headers = {
     return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
-  submitToMerit() {
-    console.log('in submitToMerit')
-
-    this.questionResponseBuilder();
+  submitToMerit(findings: any) {
+    this.submitInProgress = true;
+    this.questionResponseBuilder(findings);
     this.iseIrpResponseBuilder();
-
-    // do whatever send stuff necessary
-
-    this.jsonString = {
-      "questionData": [],
-      "examProfileData": [],
-      "metaData": []
-    }; // reset the string
-
   }
 
   answerTextToNumber(text: string) {
@@ -398,12 +395,22 @@ let headers = {
     }
   }
 
-  questionResponseBuilder() {
+  /**
+   * trims the child number 'Stmt ' off the given 'title', leaving what the statement number the 'title' is from
+   */ 
+   getParentQuestionTitleNumber(title: string) {
+    if(this.isParentQuestion(title)) {
+      let spaceIndex = title.indexOf(' ') + 1;
+
+      return title.substring(spaceIndex);
+    }
+  }
+
+  questionResponseBuilder(findings) {
     this.acetSvc.getIseAllQuestions().subscribe(
       (r: any) => {
         this.questions = r;
         this.examLevel = this.getExamLevel();
-        console.log(this.examLevel)
 
         // goes through domains
         for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
@@ -411,12 +418,21 @@ let headers = {
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            let childResponses = {"title": subcat?.questions[0].title, "children":[]}; //uses parent's title
+            let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
+                                 "category": subcat?.title,
+                                 "issues": 
+                                    {
+                                      "dors": 0,
+                                      "examinerFindings": 0,
+                                      "supplementalFacts": 0,
+                                      "nonReportables": 0
+                                    },
+                                  "children":[]
+                                };
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
               if (k != 0) { //don't want parent questions being included with children
-                let question = subcat?.questions[k];
-
                 if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                   question.answerText = 'U';
                 }
@@ -431,6 +447,32 @@ let headers = {
                 }
 
                 childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
+              } else { //if it's a parent question, deal with possible issues
+                for (let m = 0; m < findings?.length; m++) {
+                  if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
+                    console.log('in for '+ question.title + ' | ' + findings[m]?.finding?.type)
+                    switch (findings[m]?.finding?.type) {
+                      case "DOR":
+                        childResponses.issues.dors++;
+                        this.jsonString.issuesTotal.dors++;
+                        break;
+                      case "Examiner Finding":
+                        childResponses.issues.examinerFindings++;
+                        this.jsonString.issuesTotal.examinerFindings++;
+                        break;
+                      case "Supplemental Fact":
+                        childResponses.issues.supplementalFacts++;
+                        this.jsonString.issuesTotal.supplementalFacts++;
+                        break;
+                      case "Non-reportable":
+                        childResponses.issues.nonReportables++;
+                        this.jsonString.issuesTotal.nonReportables++;
+                        break;
+                      default:
+                        break;
+                    }
+                  }
+                }
               }
             }
 
@@ -439,8 +481,6 @@ let headers = {
         }
 
         this.metaDataBuilder();
-        console.log(JSON.stringify(this.jsonString, null, '\t'))
-
       }
     );
   }
@@ -472,6 +512,28 @@ let headers = {
     };
 
     this.jsonString.metaData.push(metaDataInfo);
+
+    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json');
+
+    this.jsonString = { // reset the string
+      "metaData": [],
+      "issuesTotal": {
+        "dors": 0,
+        "examinerFindings": 0,
+        "supplementalFacts": 0,
+        "nonReportables": 0
+      },
+      "examProfileData": [],
+      "questionData": []
+    }; 
+  }
+
+  saveToJsonFile(text: string, filename: string){
+    let a = document.createElement('a');
+    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
+    a.setAttribute('download', filename);
+    a.click();
+    this.submitInProgress = false;
   }
 
 }
