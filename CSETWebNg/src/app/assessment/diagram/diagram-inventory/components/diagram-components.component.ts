@@ -59,6 +59,7 @@ interface Vulnerability {
 export class DiagramComponentsComponent implements OnInit {
 
   diagramComponentList: any;
+  loading: boolean = true;
 
   @Output()
   componentsChange = new EventEmitter<any>();
@@ -104,6 +105,7 @@ export class DiagramComponentsComponent implements OnInit {
         this.updateComponentVendor(component);
       })
       this.componentsChange.emit(this.diagramComponentList);
+      this.loading = false;
     });
   }
 
