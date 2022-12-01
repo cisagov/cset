@@ -43,7 +43,7 @@
     <th mat-sort-header="physicalLocation">Physical Location</th>
     <th mat-sort-header="alertsAndAdvisories">Alerts & Advisories</th>
 
-    <tr *ngFor="let component of diagramComponentList; let i = index">
+    <tr *ngFor="let component of diagramComponentList;">
       <td>{{component.label}}</td>
       <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1"
           [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions"> </td>
