@@ -32,19 +32,14 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class CpgPracticeTableComponent implements OnInit {
 
-  initialized = false;
-  dataError = false;
-
-  response: any;
   model: any;
 
-  something: any[];
 
   /**
    * 
    */
   constructor(
-    public cpgSvc: CpgService,
+    public cpgSvc: CpgService
   ) { }
 
   /**
@@ -53,13 +48,6 @@ export class CpgPracticeTableComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
       this.model = resp.Model;
-
-      console.log(this.model);
-
-
     });
-
-
   }
-
 }

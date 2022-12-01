@@ -82,10 +82,15 @@ namespace CSETWebCore.Business.Notification
             string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\assessmentInviteTemplate_" + this._scope + ".html");
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // Build the name if supplied.  
-            string contactName = string.Empty;
+            string contactName = String.Empty;
             if (!string.IsNullOrEmpty(contact.FirstName) || !string.IsNullOrEmpty(contact.FirstName))
             {
                 contactName = (contact.FirstName + " " + contact.LastName).Trim() + ",";
+            }
+
+            if (contact.Body == null)
+            {
+                contact.Body = String.Empty;
             }
 
             bodyHtml = bodyHtml.Replace("{{name}}", contactName);
@@ -208,21 +213,21 @@ namespace CSETWebCore.Business.Notification
         /// </summary>
         /// <param name="mail">MailMessage mail = new MailMessage("you@yourcompany.com", "user@hotmail.com");</param>
         public void SendMail(MailMessage mail)
-        {   
+        {
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // apply stylesheet
             string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\inlineStylesheet.html");
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
             // apply corresponding footer
-           
+
             string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
             string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
             string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
-           
+
             SmtpClient client = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,

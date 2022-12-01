@@ -1353,12 +1353,13 @@ namespace CSETWebCore.Business.Reports
             var findings = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
-                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mqs
-                            from mq in mqs.DefaultIfEmpty()
-                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into rs
-                            from r in rs.DefaultIfEmpty()
+                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+                            from mq in mq1.DefaultIfEmpty()
+                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
+                            from r in r1.DefaultIfEmpty()
                             join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id
+                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
+                            from i in i1.DefaultIfEmpty()
                             where c.Assessment_Id == _assessmentId
                             orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                             select new { a, b, c, mq, r, d, i.Value }).ToList();
