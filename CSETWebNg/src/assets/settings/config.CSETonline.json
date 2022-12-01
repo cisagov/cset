@@ -11,6 +11,7 @@
         "showAnalyticsAtTheEnd": true,
         "showAnalyticsColumnOnLanding": true,
         "showAssessmentDocuments": false,
+        "showObservations": false,
         "showNameDisclaimer":true,
         "showMenuParameterEditor": true,
         "splashPageHTML": "dist/assets/splash.html",

@@ -672,11 +672,16 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
 
-    // ISE
+    // ISE model always hides Observations
     if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
       if (mode == 'DISC') {
         return false;
       }
+    }
+
+    // OBSERVATIONS
+    if (mode == 'DISC') {
+      return this.configSvc.behaviors.showObservations;
     }
 
     // DOCUMENTS
