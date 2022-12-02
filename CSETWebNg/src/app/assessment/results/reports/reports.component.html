@@ -49,7 +49,7 @@
   </div>
 
   <div class="d-flex flex-column justify-content-start align-items-start mb-4"
-    *ngIf="!isMobile && !this.assessSvc.isISE()">
+    *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
@@ -290,10 +290,6 @@
           </span><br>
         </span>
       </div>
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        ISE Answered Statements
-      </button>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
         [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
@@ -302,8 +298,12 @@
         [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
+        ISE Answered Statements
+      </button>
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        ISE Examiner Report
+        ISE Examiner Notes
       </button>
       <!-- Below is commented out to hide background data for now -->
       <!-- <button (click)="clickReportLink('isedata')" tabindex="0" class="btn btn-link btn-link-dark text-left"
@@ -407,6 +407,14 @@
     </div>
 
   </div>
-  <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+  <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+
+  <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
+    <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0" 
+      [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit to MERIT</button>
+  </div>
 
 </div>

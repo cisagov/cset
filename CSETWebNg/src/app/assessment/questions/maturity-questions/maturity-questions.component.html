@@ -77,9 +77,17 @@
 
     <!-- top level -->
     <p class="mb-4" *ngIf="!!groupings">
-      Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, 'N')}}' response
+    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, 'N')}}' response
     </p>
-    
+    <div class="mb-4" *ngIf="this.assessSvc.assessment.maturityModel.modelId == 11">
+      CPG Answer Key
+      <ul>
+        <li><Strong style="color:#006000; font-size: large;">Imp</Strong>lemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.</li>
+        <li>In <Strong style="color:#0a4b6e; font-size: large;">Prog</Strong>ress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.</li>
+        <li><Strong style="color:#b17300; font-size: large;">Scoped</Strong> - An organization has identified the full set of required activities required to meet the stated outcome of a goal.</li>
+        <li><Strong style="color:#990000; font-size: large;">Not</Strong> Implemented - An organization has no immediate plans to implement the recommended actions for a goal.</li>
+      </ul>
+    </div>    
     <ng-template [ngIf]="!!groupings">
       <div *ngFor="let g of groupings" class="w-100">
         <app-grouping-block [grouping]="g"></app-grouping-block>

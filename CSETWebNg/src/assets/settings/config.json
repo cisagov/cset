@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["CSETonline"],
+    "currentConfigChain": ["CSET"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -36,6 +36,7 @@
         "showModuleImport": true,
         "showModuleContentReport": true,
         "showAssessmentDocuments": true,
+        "showObservations": true,
         "showFacilitatorDropDown": true,
         "showNameDisclaimer":false,
         "showAggregation": true,
@@ -129,6 +130,24 @@
             "buttonCss": "btn-alt",
             "answerLabel": "Yes Compensating Control",
             "note": "This will only apply in the ACET skin.  See QuestionsService"
+        }
+    ],
+    "answersISE": [
+        {
+            "code": "Y",
+            "buttonLabel": "Yes",
+            "buttonCss": "btn-yes",
+            "answerLabel": ""
+        },
+        {
+            "code": "N",
+            "buttonLabel": "No",
+            "buttonCss": "btn-no",
+            "answerLabel": ""
+        },
+        {
+            "code": "U",
+            "buttonLabel": "Unanswered"
         }
     ],
     "answersCPG": [

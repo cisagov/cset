@@ -99,8 +99,8 @@
                                     <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)">
                                         <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                         <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!parentQuestion(q)" class="pr-3">{{ questionsSvc.answerDisplayLabel(10, q.answerText) }}</td>
-                                        <td *ngIf="parentQuestion(q)" class="pr-3"> </td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pr-3">{{ questionsSvc.answerButtonLabel(10, q.answerText) }}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pr-3"> </td>
                                         <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>
