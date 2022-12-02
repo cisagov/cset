@@ -71,6 +71,12 @@
                         [class.fa-square]="q.answer != 'I'"></i>
                     IN PROGRESS
                 </div>
+                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'S'">
+                    <i class="far fa-lg" 
+                        [class.fa-check-square]="q.answer == 'S'"
+                        [class.fa-square]="q.answer != 'S'"></i>
+                    SCOPED
+                </div>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
                     <i class="far fa-lg" 
                         [class.fa-check-square]="q.answer == 'N'"

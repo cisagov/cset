@@ -23,8 +23,7 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div
-        class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal">
         <span class="col-sm-12">Local Installation</span>
       </div>
@@ -43,11 +42,12 @@
         </span>
 
         <!-- Navbar Toggler Button -->
-        <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
+        <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse"
+          data-target="#csetNavbarCollapse">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
         <!-- Menus -->
-      <app-top-menus class="w-100"></app-top-menus>
+        <app-top-menus class="w-100"></app-top-menus>
       </nav>
     </div>
 
@@ -71,11 +71,14 @@
           <div class="footer-section-2 p-2">
             <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
               <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
-            <span class="mr-2 ml-2">|</span>  
-            <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
-            <span class="mr-2 ml-2">|</span>
+                (click)="showDisclaimer()">Disclaimer</a>
+              <span class="mr-2 ml-2">|</span>
+              <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
+              <span class="mr-2 ml-2">|</span>
+              <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
+              <span class="mr-2 ml-2">|</span>
               <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                 href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
               <span class="mr-2 ml-2">|</span>

@@ -29,6 +29,10 @@ import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-m
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
 import { MaturityService } from './maturity.service';
+import { Question } from '../models/questions.model';
+import { ACETService } from './acet.service';
+import { IRPService } from './irp.service';
+import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -80,7 +84,22 @@ let headers = {
   unassignedIssueTitles: any = [];
   unassignedIssues: boolean = false;
 
-
+  questions: any = null;
+  iseIrps: any = null;
+  information: any =null;
+  jsonString: any = {
+    "metaData": [],
+    "issuesTotal": {
+      "dors": 0,
+      "examinerFindings": 0,
+      "supplementalFacts": 0,
+      "nonReportables": 0
+    },
+    "examProfileData": [],
+    "questionData": []
+  };
+  examLevel: string = '';
+  submitInProgress: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -88,6 +107,8 @@ let headers = {
     public dialog: MatDialog,
     public acetFilteringSvc: AcetFilteringService,
     private maturitySvc: MaturityService,
+    private acetSvc: ACETService,
+    private irpSvc: IRPService,
     private assessmentSvc: AssessmentService
   ) {
     this.init();
@@ -341,6 +362,178 @@ let headers = {
 
   isIse() {
     return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
+  }
+
+  submitToMerit(findings: any) {
+    this.submitInProgress = true;
+    this.questionResponseBuilder(findings);
+    this.iseIrpResponseBuilder();
+  }
+
+  answerTextToNumber(text: string) {
+    switch(text){
+      case 'Y':
+        return 0;
+      case 'N':
+        return 1;
+      case 'U':
+        return 2;
+    }
+  }
+
+  /**
+   * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
+   */ 
+  getParentQuestionTitle(title: string) {
+    if(!this.isParentQuestion(title)) {
+      let endOfTitle = 6;
+      // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
+      if(title.charAt(6) != '.'){
+        endOfTitle = endOfTitle + 1;
+      }
+      return title.substring(0, endOfTitle);
+    }
+  }
+
+  /**
+   * trims the child number 'Stmt ' off the given 'title', leaving what the statement number the 'title' is from
+   */ 
+   getParentQuestionTitleNumber(title: string) {
+    if(this.isParentQuestion(title)) {
+      let spaceIndex = title.indexOf(' ') + 1;
+
+      return title.substring(spaceIndex);
+    }
+  }
+
+  questionResponseBuilder(findings) {
+    this.acetSvc.getIseAllQuestions().subscribe(
+      (r: any) => {
+        this.questions = r;
+        this.examLevel = this.getExamLevel();
+
+        // goes through domains
+        for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+          let domain = this.questions?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for (let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
+                                 "category": subcat?.title,
+                                 "issues": 
+                                    {
+                                      "dors": 0,
+                                      "examinerFindings": 0,
+                                      "supplementalFacts": 0,
+                                      "nonReportables": 0
+                                    },
+                                  "children":[]
+                                };
+            // goes through questions
+            for (let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
+              if (k != 0) { //don't want parent questions being included with children
+                if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
+                  question.answerText = 'U';
+                }
+                
+                else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
+                  if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                    this.examLevel = 'CORE+';
+                  }
+                  else if (question.maturityLevel === 'SCUEP') {
+                    question.answerText = 'U';
+                  }
+                }
+
+                childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
+              } else { //if it's a parent question, deal with possible issues
+                for (let m = 0; m < findings?.length; m++) {
+                  if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
+                    console.log('in for '+ question.title + ' | ' + findings[m]?.finding?.type)
+                    switch (findings[m]?.finding?.type) {
+                      case "DOR":
+                        childResponses.issues.dors++;
+                        this.jsonString.issuesTotal.dors++;
+                        break;
+                      case "Examiner Finding":
+                        childResponses.issues.examinerFindings++;
+                        this.jsonString.issuesTotal.examinerFindings++;
+                        break;
+                      case "Supplemental Fact":
+                        childResponses.issues.supplementalFacts++;
+                        this.jsonString.issuesTotal.supplementalFacts++;
+                        break;
+                      case "Non-reportable":
+                        childResponses.issues.nonReportables++;
+                        this.jsonString.issuesTotal.nonReportables++;
+                        break;
+                      default:
+                        break;
+                    }
+                  }
+                }
+              }
+            }
+
+            this.jsonString.questionData.push(childResponses);
+          }
+        }
+
+        this.metaDataBuilder();
+      }
+    );
+  }
+
+  iseIrpResponseBuilder() {
+    this.irpSvc.getIRPList().subscribe(
+      (r: any) => {
+        this.iseIrps = r.headerList[5]; //these are all the IRPs for ISE. If this changes in the future, this will need updated
+
+        for (let i = 0; i < this.iseIrps?.irpList?.length; i++) {
+          let currentIrp = this.iseIrps?.irpList[i];
+
+          let irpResponse = {"examProfileNumber": currentIrp.item_Number, "response": currentIrp.response};
+          this.jsonString.examProfileData.push(irpResponse);
+        }
+
+      }
+    );
+  }
+
+  metaDataBuilder() { 
+    let info = this.questions?.information;
+    let metaDataInfo = {
+      "assessmentName": info.assessment_Name,
+      "examiner": info.assessor_Name.trim(),
+      "creationDate": info.assessment_Date,
+      "examLevel": this.examLevel,
+      "guid": 'TBD'
+    };
+
+    this.jsonString.metaData.push(metaDataInfo);
+
+    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json');
+
+    this.jsonString = { // reset the string
+      "metaData": [],
+      "issuesTotal": {
+        "dors": 0,
+        "examinerFindings": 0,
+        "supplementalFacts": 0,
+        "nonReportables": 0
+      },
+      "examProfileData": [],
+      "questionData": []
+    }; 
+  }
+
+  saveToJsonFile(text: string, filename: string){
+    let a = document.createElement('a');
+    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
+    a.setAttribute('download', filename);
+    a.click();
+    this.submitInProgress = false;
   }
 
 }

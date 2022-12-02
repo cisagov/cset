@@ -137,6 +137,14 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>Ransomware Readiness</span>
             </button>
+            <a *ngIf="isGuideVisible('MVRA')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_mvra/index.htm">
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>MVRA</span>
+            </a>
+            <a *ngIf="isGuideVisible('CPG')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cpg/index.htm">
+                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
+                <span>CPG</span>
+            </a>
             <a *ngIf="isGuideVisible('TSA')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>TSA</span>
