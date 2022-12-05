@@ -63,8 +63,7 @@ namespace CSETWebCore.Api.Controllers
         public void SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
-            int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
-            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             DecodeDiagram(req);
             lock (_object)
             {
@@ -165,8 +164,7 @@ namespace CSETWebCore.Api.Controllers
         public DiagramResponse GetDiagram()
         {
             // get the assessment ID from the JWT
-            int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
-            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             var response = _diagram.GetDiagram((int)assessmentId);
 
@@ -202,8 +200,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult HasDiagram()
         {
             // get the assessment ID from the JWT
-            int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
-            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             return Ok(_diagram.HasDiagram((int)assessmentId));
         }
@@ -224,8 +221,7 @@ namespace CSETWebCore.Api.Controllers
                 return string.Empty;//BadRequest("request payload not sent");
             }
 
-            int userId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
-            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             try
             {
@@ -418,7 +414,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/diagram/exportExcel")]
         public IActionResult GetExcelExportDiagram()
         {
-            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var stream = new ExcelExporter(_context,_dataHandling, _maturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
@@ -434,7 +430,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         public IEnumerable<DiagramTemplate> GetTemplates()
         {
-            var userId = _token.PayloadInt(Constants.Constants.Token_UserId);
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
 
             var templates = _diagram.GetDiagramTemplates();
             return templates;
