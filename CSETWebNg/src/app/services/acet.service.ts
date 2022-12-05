@@ -171,6 +171,11 @@ export class ACETService {
         return this.http.post(this.apiUrl + 'overwriteMeritFile', fileValue, headers);
     }
 
+    // Gets a new guid
+    generateNewGuid() {
+        return this.http.get(this.apiUrl + 'generateNewGuid', headers);
+    }
+
     getIseSourceFiles() {
         return this.http.get(this.apiUrl + 'reports/acet/getIseSourceFiles', headers);
     }

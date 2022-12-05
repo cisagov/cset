@@ -89,7 +89,13 @@ let headers = {
   iseIrps: any = null;
   information: any =null;
   jsonString: any = {
-    "metaData": [],
+    "metaData": {
+      "assessmentName": '',
+      "examiner": '',
+      "creationDate": null,
+      "examLevel": '',
+      "guid": ''
+    },
     "issuesTotal": {
       "dors": 0,
       "examinerFindings": 0,
@@ -503,6 +509,7 @@ let headers = {
 
   metaDataBuilder() { 
     let info = this.questions?.information;
+    let date = info.assessment_Date
     let metaDataInfo = {
       "assessmentName": info.assessment_Name,
       "examiner": info.assessor_Name.trim(),
@@ -511,23 +518,14 @@ let headers = {
       "guid": 'TBD'
     };
 
-    this.jsonString.metaData.push(metaDataInfo);
+    this.jsonString.metaData = metaDataInfo;
 
+    let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
+    let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
+                  ' ' + metaDataInfo.creationDate;
 
-
-    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json', this.jsonString.metaData.guid);
-
-    this.jsonString = { // reset the string
-      "metaData": [],
-      "issuesTotal": {
-        "dors": 0,
-        "examinerFindings": 0,
-        "supplementalFacts": 0,
-        "nonReportables": 0
-      },
-      "examProfileData": [],
-      "questionData": []
-    }; 
+    this.saveToJsonFile(JSON.stringify(this.jsonString), filename + '.json', this.jsonString.metaData.guid);
+    
   }
 
   saveToJsonFile(data: string, filename: string, guid: string){
@@ -542,10 +540,37 @@ let headers = {
 
     this.acetSvc.doesMeritFileExist(fileValue).subscribe(
       (r: any) => {
-        let exists = r; //these are all the IRPs for ISE. If this changes in the future, this will need updated
+        let exists = r; //true if it exists, false if not
 
-        if(exists) { //and eventually an 'overwrite' boolean or something
-          this.acetSvc.newMeritFile(fileValue).subscribe();
+        if (!exists) { //and eventually an 'overwrite' boolean or something
+          this.acetSvc.generateNewGuid().subscribe(
+            (r: any) => {
+              let guid = r; //true if it exists, false if not
+      
+              this.jsonString.metaData.guid = guid;
+              fileValue.data = JSON.stringify(this.jsonString);
+
+              this.acetSvc.newMeritFile(fileValue).subscribe();
+
+              this.jsonString = { // reset the string
+                "metaData": {
+                  "assessmentName": '',
+                  "examiner": '',
+                  "creationDate": null,
+                  "examLevel": '',
+                  "guid": ''
+                },
+                "issuesTotal": {
+                  "dors": 0,
+                  "examinerFindings": 0,
+                  "supplementalFacts": 0,
+                  "nonReportables": 0
+                },
+                "examProfileData": [],
+                "questionData": []
+              }; 
+            }
+          )
         } else {
           this.acetSvc.overwriteMeritFile(fileValue).subscribe();
         }

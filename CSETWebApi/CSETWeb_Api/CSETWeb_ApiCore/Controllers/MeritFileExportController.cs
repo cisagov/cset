@@ -4,22 +4,13 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Merit;
-using CSETWebCore.Business.Question;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Question;
-using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Aggregation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
+using System;
 using System.Linq;
-
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -58,10 +49,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult DoesMeritFileExist([FromBody] MeritFileExport jsonData)
         {
             int assessmentId = _token.AssessmentForUser();
+            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
+            string uncPathString = uncPath[0].Property_Value.ToString();
 
-            bool exists = false; //change this to test
-
-            return Ok(exists);
+            return Ok(_json.DoesFileExist(jsonData.fileName, uncPathString));
         }
 
         [HttpPost]
@@ -98,6 +89,17 @@ namespace CSETWebCore.Api.Controllers
             _json.SendFileToMerit(filename, data, uncPathString, overwrite);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/generateNewGuid")]
+        public IActionResult GenerateNewGuid()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            Guid newGuid = Guid.NewGuid();
+
+            return Ok(newGuid);
         }
     }
 }
