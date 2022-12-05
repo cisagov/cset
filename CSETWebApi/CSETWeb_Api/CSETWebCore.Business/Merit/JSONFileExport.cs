@@ -25,6 +25,13 @@ namespace CSETWebCore.Business.Merit
 
     }
 
+    public class FileExistsInfo
+    {
+        public string guid { get; set; }
+        public bool exists { get; set; }
+
+    }
+
     public class JSONFileExport:IJSONFileExport
     {
         public void SendFileToMerit(string filename, string data, string uncPath, bool overwrite)
@@ -61,11 +68,33 @@ namespace CSETWebCore.Business.Merit
         }
 
 
-        public bool DoesFileExist(string filename, string uncPath)
+        public FileExistsInfo DoesFileExist(string filename, string uncPath)
         {
-            var fullPath = Path.Combine(uncPath, filename);
+            string fullPath = Path.Combine(uncPath, filename);
+            bool exists = File.Exists(fullPath);
 
-            return File.Exists(fullPath);
+            FileExistsInfo existsInfo = new FileExistsInfo();
+            existsInfo.exists = exists;
+
+            if (exists)
+            {
+                string jsonString = File.ReadAllText(fullPath);
+                using (JsonDocument document = JsonDocument.Parse(jsonString))
+                {
+                    JsonElement root = document.RootElement;
+                    JsonElement metaData = root.GetProperty("metaData");
+                    foreach (JsonProperty metaDataProperty in metaData.EnumerateObject())
+                    {
+                        if (metaDataProperty.NameEquals("guid"))
+                        {
+                            string guidString = metaDataProperty.Value.ToString();
+                            existsInfo.guid = guidString;
+                        }
+                    }
+                }
+
+            }
+            return existsInfo;
         }
 
     }
