@@ -47,6 +47,7 @@ namespace CSETWebCore.Business.Merit
             {
                 try
                 {
+                    
                     File.WriteAllText(pathToCreate, data);
                 }
                 catch (Exception ex)
@@ -58,6 +59,15 @@ namespace CSETWebCore.Business.Merit
             
 
         }
+
+
+        public bool DoesFileExist(string filename, string uncPath)
+        {
+            var fullPath = Path.Combine(uncPath, filename);
+
+            return File.Exists(fullPath);
+        }
+
     }
 
 
