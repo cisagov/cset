@@ -482,6 +482,129 @@ namespace CSETWebCore.Business.Reports
             return maturityDomains;
         }
 
+        /// <summary>
+        /// Returns a list of answered maturity questions.  This was built for ACET ISE
+        /// but could be used by other maturity models with some work.
+        /// </summary>
+        /// <returns></returns>
+        public List<MatAnsweredQuestionDomain> GetIseAllQuestionList()
+        {
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+
+
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+
+            var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+            // get the target maturity level IDs
+            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
+
+            var questions = _context.MATURITY_QUESTIONS.Where(q =>
+                myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+            // Get all MATURITY answers for the assessment
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b };
+
+
+            // Get all subgroupings for this maturity model
+            var allGroupings = _context.MATURITY_GROUPINGS
+                .Include(x => x.Type)
+                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+            //Get All the Findings and issues with the findings. 
+
+
+            // Recursively build the grouping/question hierarchy
+            var questionGrouping = new MaturityGrouping();
+            BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
+
+            var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+            // ToDo: Refactor the following stucture of loops
+            foreach (var domain in questionGrouping.SubGroupings)
+            {
+                var newDomain = new MatAnsweredQuestionDomain()
+                {
+                    Title = domain.Title,
+                    IsDeficient = false,
+                    AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
+                };
+                foreach (var assesmentFactor in domain.SubGroupings)
+                {
+                    var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
+                    {
+                        Title = assesmentFactor.Title,
+                        IsDeficient = false,
+                        Components = new List<MaturityAnsweredQuestionsComponent>()
+                    };
+
+                    foreach (var componenet in assesmentFactor.SubGroupings)
+                    {
+                        var newComponent = new MaturityAnsweredQuestionsComponent()
+                        {
+                            Title = componenet.Title,
+                            IsDeficient = false,
+                            Questions = new List<MaturityAnsweredQuestions>()
+                        };
+
+                        foreach (var question in componenet.Questions)
+                        {
+                            if (question.Answer != null)
+                            {
+                                var newQuestion = new MaturityAnsweredQuestions()
+                                {
+                                    Title = question.DisplayNumber,
+                                    QuestionText = question.QuestionText,
+                                    MaturityLevel = GetLevelLabel(question.MaturityLevel, myMaturityLevels),
+                                    AnswerText = question.Answer,
+                                    Comment = question.Comment,
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId
+                                };
+
+                                if (question.Answer == "N")
+                                {
+                                    newDomain.IsDeficient = true;
+                                    newAssesmentFactor.IsDeficient = true;
+                                    newComponent.IsDeficient = true;
+                                }
+
+                                if (question.Comment != null)
+                                {
+                                    newQuestion.Comments = "Yes";
+                                }
+                                else
+                                {
+                                    newQuestion.Comments = "No";
+                                }
+
+                                newComponent.Questions.Add(newQuestion);
+                            }
+                        }
+                        if (newComponent.Questions.Count > 0)
+                        {
+                            newAssesmentFactor.Components.Add(newComponent);
+                        }
+                    }
+                    if (newAssesmentFactor.Components.Count > 0)
+                    {
+                        newDomain.AssessmentFactors.Add(newAssesmentFactor);
+                    }
+                }
+                if (newDomain.AssessmentFactors.Count > 0)
+                {
+                    maturityDomains.Add(newDomain);
+                }
+            }
+
+            return maturityDomains;
+        }
+
 
         /// <summary>
         /// Returns a list of domains for the assessment.
@@ -1229,12 +1352,13 @@ namespace CSETWebCore.Business.Reports
             var findings = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
-                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mqs
-                            from mq in mqs.DefaultIfEmpty()
-                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into rs
-                            from r in rs.DefaultIfEmpty()
+                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+                            from mq in mq1.DefaultIfEmpty()
+                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
+                            from r in r1.DefaultIfEmpty()
                             join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id
+                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
+                            from i in i1.DefaultIfEmpty()
                             where c.Assessment_Id == _assessmentId
                             orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
                             select new { a, b, c, mq, r, d, i.Value }).ToList();

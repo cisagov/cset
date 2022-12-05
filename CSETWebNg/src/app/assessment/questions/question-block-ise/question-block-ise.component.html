@@ -117,7 +117,7 @@
                                 </label>
         
                                 <!-- Comment bubble button -->
-                                <label class="btn form-check-label btn-iss" [matTooltip]="hasComment(q) ? 'Comments with content':'Comment'" matTooltipPosition="below"
+                                <label class="btn form-check-label btn-iss" [matTooltip]="hasComment(q) ? 'Notes with content':'Notes'" matTooltipPosition="below"
                                   [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
                                     <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
                                     <span class="cset-icons-comment fs-base"></span>
