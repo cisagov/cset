@@ -34,6 +34,7 @@ import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
 import { replace } from 'lodash';
+import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -372,13 +373,25 @@ let headers = {
   }
 
   submitToMerit(findings: any) {
-    this.submitInProgress = true;
-    this.questionResponseBuilder(findings);
-    this.iseIrpResponseBuilder();
+    // TODO: Write a check to see if a merit submission already exists based on customer criteria
+    if (1 === 1) {
+      this.dialog.open(MeritCheckComponent, {
+        disableClose: true,
+      }).afterClosed().subscribe(overrideChoice => {
+        console.log("Result from close: " + JSON.stringify(overrideChoice, null, 4));
+        if (overrideChoice == true) {
+          // TODO: Write functionality to override existing merit submission
+        }
+      }); 
+    } else {
+      this.submitInProgress = true;
+      this.questionResponseBuilder(findings);
+      this.iseIrpResponseBuilder();
+    }
   }
 
   answerTextToNumber(text: string) {
-    switch(text){
+    switch (text) {
       case 'Y':
         return 0;
       case 'N':
