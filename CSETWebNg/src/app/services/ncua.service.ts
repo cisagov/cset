@@ -427,6 +427,7 @@ let headers = {
   }
 
   questionResponseBuilder(findings) {
+    console.log('questionsRespnseBuilder')
     this.acetSvc.getIseAllQuestions().subscribe(
       (r: any) => {
         this.questions = r;
@@ -549,11 +550,14 @@ let headers = {
 
     this.acetSvc.doesMeritFileExist(fileValue).subscribe(
       (r: any) => {
-        let exists = r; //true if it exists, false if not
+        let existsInfo = r; //true if it exists, false if not
+        let exists = existsInfo.exists;
 
         if (!exists) { //and eventually an 'overwrite' boolean or something
           this.newMeritFileSteps(fileValue);
         } else {
+          this.jsonString.metaData.guid = existsInfo.guid;
+          fileValue.data = JSON.stringify(this.jsonString);
           this.dialog.open(MeritCheckComponent, {
             disableClose: true,
           }).afterClosed().subscribe(overrideChoice => {
@@ -561,6 +565,7 @@ let headers = {
               this.newMeritFileSteps(fileValue);
               console.log('New submission successful')
             } else if (overrideChoice == 'overwrite') {
+              console.log('in overwrite elseif')
               this.acetSvc.overwriteMeritFile(fileValue).subscribe(
                 (r: any) => {
                   console.log('Overwrite submission successful')
