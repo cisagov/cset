@@ -287,7 +287,7 @@ export class IseExaminationComponent implements OnInit {
    * checks if the question needs to appear
    */ 
   requiredQuestion(q: any) {
-    if (this.questionsSvc.answerDisplayLabel(10, q.answerText) == 'Unanswered' && q.maturityLevel == 'CORE+') {
+    if (this.questionsSvc.answerButtonLabel(10, q.answerText) == 'Unanswered' && q.maturityLevel == 'CORE+') {
       return false;
     }
     return true;

@@ -28,7 +28,7 @@
             </p>
             <p
                 style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
-                REPORT
+                NOTES
             </p>
         </div>
         <div class="column">
@@ -108,37 +108,6 @@
                 </table>
             </div>
 
-            <!-- <div class="page-break"></div>
-
-            <div class="d-flex flex-row" style="justify-content: space-between">
-                <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Comments (Table)</div>
-                </div>
-            </div>
-
-            <table class="table-responsive td-align-top td-padding-half-rem">
-                <tr class="report-text-blue">
-                    <td></td>
-                    <td>Question</td>
-                    <td>Response</td>
-                    <td>Comments</td>
-                </tr>
-                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                    <ng-container *ngFor="let f of d.assessmentFactors">
-                        <ng-container *ngFor="let c of f.components">
-                            <ng-container *ngFor="let q of c.questions">
-                                <tr *ngIf="q.comments === 'Yes' && this.requiredQuestion(q)">
-                                    <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-3">{{ q.questionText }}</td>
-                                    <td class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q) ? this.configSvc.answerLabels[q.answerText] : ' ' }}</td>
-                                    <td class="pr-3">{{ q.comment }}</td>
-                                </tr>
-                            </ng-container>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </table> -->
-
             <div class="page-break"></div>
 
             <div class="d-flex flex-row" style="justify-content: space-between">
@@ -158,7 +127,7 @@
                     </div>
                     <div>
                         <span class="font-weight-bold">Response: </span>
-                        <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ? this.answerDisplayLabel(q.answerText) : ' ' }}</span>
+                        <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ? questionsSvc.answerButtonLabel(10, q.answerText) : ' ' }}</span>
                     </div>
                     <div>
                         <div class="font-weight-bold">Comments: </div>
