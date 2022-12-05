@@ -263,10 +263,10 @@
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
         <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          Some reports are disabled until all statements have been answered.
+          "Submit to MERIT" and some reports are disabled until all statements have been answered.
         </span>
         <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <br>"Submit to MERIT" and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -278,7 +278,7 @@
           </span><br>
         </span>
         <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          Some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          "Submit to MERIT" and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
