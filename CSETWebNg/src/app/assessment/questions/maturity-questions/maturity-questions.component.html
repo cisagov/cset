@@ -79,7 +79,7 @@
     <p class="mb-4" *ngIf="!!groupings">
     Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, 'N')}}' response
     </p>
-    <div class="mb-4" *ngIf="this.assessSvc.assessment.maturityModel.modelId == 11">
+    <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
       CPG Answer Key
       <ul>
         <li><Strong style="color:#006000; font-size: large;">Imp</Strong>lemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.</li>
