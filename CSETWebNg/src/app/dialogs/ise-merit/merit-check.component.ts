@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -32,11 +32,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class MeritCheckComponent implements OnInit {
   
   constructor(
-    private dialog: MatDialogRef<MeritCheckComponent>,
+    private dialog: MatDialogRef<MeritCheckComponent>, @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   
-  ngOnInit() {
+  dialogTitle: string = "Notification";
+  iconClass: string = "cset-icons-bell";
+  public hasHeader: boolean;
 
+  ngOnInit() {
+    // override the default title
+    if (!!this.data.title) {
+      this.dialogTitle = this.data.title;
+    }
+
+    // override the header icon
+    if (!!this.data.iconClass) {
+      this.iconClass = this.data.iconClass;
+    }
   }
 
   submit(overrideChoice: string) {
