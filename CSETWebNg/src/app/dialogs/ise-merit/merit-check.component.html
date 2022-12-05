@@ -22,19 +22,19 @@
 -------------------------->
 <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
-    <h2 style="color: white;">Merit Override Warning</h2>
+    <h2 style="color: white;">Merit Overwrite Warning</h2>
 </div>
   
 <mat-dialog-content class="mb-2">
-    <p>WELCOME TO HELL.</p>
-
     <br>
-    <p>It looks like you already have a merit submission for this examination.
-    Do you want to resend this examination and override your last submission?</p>
-
+    <p>It looks like you already have a MERIT submission for this examination.</p>
+    <br>
+    <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+    <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>
 </mat-dialog-content>
   
 <mat-dialog-actions class="p-3 mb-0" align="end">
-    <button mat-button class="btn btn-primary" (click)="submit(false)">Cancel</button>
-    <button mat-button class="btn btn-primary" (click)="submit(true)">Override Submission</button>
+    <button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>
+    <button mat-button class="btn btn-primary" (click)="submit('overwrite')">Overwrite Submission</button>
+    <button mat-button class="btn btn-primary" (click)="submit('cancel')">Cancel</button>
 </mat-dialog-actions>

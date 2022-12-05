@@ -39,7 +39,7 @@ export class MeritCheckComponent implements OnInit {
 
   }
 
-  submit(overrideChoice: boolean) {
+  submit(overrideChoice: string) {
     this.dialog.close(overrideChoice);  
   }
 

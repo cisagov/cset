@@ -374,20 +374,20 @@ let headers = {
 
   submitToMerit(findings: any) {
     // TODO: Write a check to see if a merit submission already exists based on customer criteria
-    if (1 === 1) {
-      this.dialog.open(MeritCheckComponent, {
-        disableClose: true,
-      }).afterClosed().subscribe(overrideChoice => {
-        console.log("Result from close: " + JSON.stringify(overrideChoice, null, 4));
-        if (overrideChoice == true) {
-          // TODO: Write functionality to override existing merit submission
-        }
-      }); 
-    } else {
+    //if (1 === 1) {
+      // this.dialog.open(MeritCheckComponent, {
+      //   disableClose: true,
+      // }).afterClosed().subscribe(overrideChoice => {
+      //   console.log("Result from close: " + JSON.stringify(overrideChoice, null, 4));
+      //   if (overrideChoice == true) {
+      //     // TODO: Write functionality to override existing merit submission
+      //   }
+      // }); 
+    //} else {
       this.submitInProgress = true;
       this.questionResponseBuilder(findings);
       this.iseIrpResponseBuilder();
-    }
+    //}
   }
 
   answerTextToNumber(text: string) {
@@ -542,10 +542,6 @@ let headers = {
   }
 
   saveToJsonFile(data: string, filename: string, guid: string){
-    // let a = document.createElement('a');
-    // a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
-    // a.setAttribute('download', filename);
-    // a.click();
     const fileValue = new MeritFileExport();
     fileValue.data = data;
     fileValue.fileName = filename.replace(':', '_').replace(':', '_');
@@ -556,42 +552,64 @@ let headers = {
         let exists = r; //true if it exists, false if not
 
         if (!exists) { //and eventually an 'overwrite' boolean or something
-          this.acetSvc.generateNewGuid().subscribe(
-            (r: any) => {
-              let guid = r; //true if it exists, false if not
-      
-              this.jsonString.metaData.guid = guid;
-              fileValue.data = JSON.stringify(this.jsonString);
-
-              this.acetSvc.newMeritFile(fileValue).subscribe();
-
-              this.jsonString = { // reset the string
-                "metaData": {
-                  "assessmentName": '',
-                  "examiner": '',
-                  "creationDate": null,
-                  "examLevel": '',
-                  "guid": ''
-                },
-                "issuesTotal": {
-                  "dors": 0,
-                  "examinerFindings": 0,
-                  "supplementalFacts": 0,
-                  "nonReportables": 0
-                },
-                "examProfileData": [],
-                "questionData": []
-              }; 
-            }
-          )
+          this.newMeritFileSteps(fileValue);
         } else {
-          this.acetSvc.overwriteMeritFile(fileValue).subscribe();
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true,
+          }).afterClosed().subscribe(overrideChoice => {
+            if (overrideChoice == 'new') {
+              this.newMeritFileSteps(fileValue);
+              console.log('New submission successful')
+            } else if (overrideChoice == 'overwrite') {
+              this.acetSvc.overwriteMeritFile(fileValue).subscribe(
+                (r: any) => {
+                  console.log('Overwrite submission successful')
+                  this.jsonStringReset(); 
+                }
+              );
+            }
+          }); 
         }
 
       }
     )
 
     this.submitInProgress = false;
+  }
+
+  newMeritFileSteps (fileValue: MeritFileExport) {
+    this.acetSvc.generateNewGuid().subscribe(
+      (r: any) => {
+        let guid = r;
+
+        this.jsonString.metaData.guid = guid;
+        fileValue.data = JSON.stringify(this.jsonString);
+
+        this.acetSvc.newMeritFile(fileValue).subscribe();
+
+        this.jsonStringReset(); 
+      }
+    );
+  }
+
+  jsonStringReset () {
+    this.jsonString = { // resets the string to blank values
+      "metaData": {
+        "assessmentName": '',
+        "examiner": '',
+        "creationDate": null,
+        "examLevel": '',
+        "guid": ''
+      },
+      "issuesTotal": {
+        "dors": 0,
+        "examinerFindings": 0,
+        "supplementalFacts": 0,
+        "nonReportables": 0
+      },
+      "examProfileData": [],
+      "questionData": []
+    }; 
   }
 
 }
