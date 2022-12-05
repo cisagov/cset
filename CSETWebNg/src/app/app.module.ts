@@ -491,6 +491,7 @@ import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warni
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
+import { MeritCheckComponent } from './dialogs/ise-merit/merit-check.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
@@ -675,6 +676,7 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
         OkayComponent,
         FindingsComponent,
         IssuesComponent,
+        MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
         NullishCoalescePipe,

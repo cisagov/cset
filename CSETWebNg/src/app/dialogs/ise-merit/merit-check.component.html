@@ -1,0 +1,40 @@
+<!----------------------
+
+   Copyright 2022 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+    <h2 style="color: white;">Merit Overwrite Warning</h2>
+</div>
+  
+<mat-dialog-content class="mb-2">
+    <br>
+    <p>It looks like you already have a MERIT submission for this examination.</p>
+    <br>
+    <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+    <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>
+</mat-dialog-content>
+  
+<mat-dialog-actions class="p-3 mb-0" align="end">
+    <button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>
+    <button mat-button class="btn btn-primary" (click)="submit('overwrite')">Overwrite Submission</button>
+    <button mat-button class="btn btn-primary" (click)="submit('cancel')">Cancel</button>
+</mat-dialog-actions>
