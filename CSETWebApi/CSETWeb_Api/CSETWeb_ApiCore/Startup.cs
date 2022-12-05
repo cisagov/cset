@@ -65,6 +65,7 @@ using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
 using System.Text.Json;
 using CSETWebCore.Api.Error;
+using CSETWebCore.Business.Merit;
 
 namespace CSETWeb_ApiCore
 {
@@ -160,6 +161,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
+            services.AddTransient<IJSONFileExport, JSONFileExport>();
 
 
             services.AddSwaggerGen(c =>
