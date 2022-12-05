@@ -566,7 +566,7 @@ namespace CSETWebCore.Business.Assessment
 
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
-            dbAssessment.Assets = assessment.Assets != null ? assessment.Assets.ToString() : null;
+            dbAssessment.Assets = assessment.Assets.ToString();
             dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
 
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
