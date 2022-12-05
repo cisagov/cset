@@ -59,56 +59,61 @@
             </div>
         </div>
     </div>
-    <div class="page-break">
-        <h1 class="page-title">Answered Statements</h1>
-        <hr class="page-line">
-        <div class="paragraph">
-            <p><br>
-                This report includes all the statements within your exam level and your answers.
-                <br><br>
-                The statement set is determined by your exam level.<br>
-            </p>
-        </div>
-        <div class="page-break pb-5">
-            <div class="d-flex flex-row" style="justify-content: space-between">
-                <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Answered Statements</div>
-                </div>
+    <div *ngIf="this.loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+    <ng-template #mainContent>
+        <div class="page-break">
+            <h1 class="page-title">Answered Statements</h1>
+            <hr class="page-line">
+            <div class="paragraph">
+                <p><br>
+                    This report includes all the statements within your exam level and your answers.
+                    <br><br>
+                    The statement set is determined by your exam level.<br>
+                </p>
             </div>
-            <table class="table-responsive td-align-top td-padding-half-rem">
-                <tr class="report-text-blue">
-                    <td></td>
-                    <td></td>
-                    <td>Answer</td>
-                    <td>Exam Level</td>
-                </tr>
-                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                    <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
+            <div class="page-break pb-5">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Answered Statements</div>
+                    </div>
+                </div>
+                <table class="table-responsive td-align-top td-padding-half-rem">
+                    <tr class="report-text-blue">
+                        <td></td>
+                        <td></td>
+                        <td>Answer</td>
+                        <td>Exam Level</td>
                     </tr>
-                    <ng-container *ngFor="let f of d.assessmentFactors">
-                        <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
+                    <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                        <tr class="rkw-domain">
+                            <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
                         </tr>
-                        <ng-container *ngFor="let c of f.components">
-                            <ng-container *ngIf="this.showSubcats.get(c.title)">
-                                <tr>
-                                    <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
-                                </tr>
-                                <ng-container *ngFor="let q of c.questions">
-                                    <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)">
-                                        <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                        <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pr-3">{{ questionsSvc.answerButtonLabel(10, q.answerText) }}</td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pr-3"> </td>
-                                        <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                        <ng-container *ngFor="let f of d.assessmentFactors">
+                            <tr>
+                                <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor</td>
+                            </tr>
+                            <ng-container *ngFor="let c of f.components">
+                                <ng-container *ngIf="this.showSubcats.get(c.title)">
+                                    <tr>
+                                        <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
                                     </tr>
+                                    <ng-container *ngFor="let q of c.questions">
+                                        <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)">
+                                            <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                            <td class="pr-3" [innerHTML]="q.questionText"></td>
+                                            <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pr-3">{{ questionsSvc.answerButtonLabel(10, q.answerText) }}</td>
+                                            <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pr-3"> </td>
+                                            <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                        </tr>
+                                    </ng-container>
                                 </ng-container>
                             </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-            </table>
+                </table>
+            </div>
         </div>
-
-    </div>
+    </ng-template>
+</div>
