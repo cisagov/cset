@@ -20,24 +20,24 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
-    <h2 style="color: white;">{{dialogTitle}}</h2>
-</div>
+<div class="d-flex flex-column justify-content-center flex-11a">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+      <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+      <span>Global Configuration</span>
+    </div>
+    <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+        UNC Path: 
+        <textarea [(ngModel)]="uncPath">
+            {{ uncPath }}
+        </textarea>
   
-<mat-dialog-content class="mb-2">
-    <div *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
-        
-    </div>
-</mat-dialog-content>
+      
   
-<mat-dialog-actions class="p-3 mb-0" align="end">
-    <div *ngIf="dialogTitle == 'MERIT Warning'">
-        <button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>
-        <button mat-button class="btn btn-primary" (click)="submit('overwrite')">Overwrite Submission</button>
-        <button mat-button class="btn btn-primary" (click)="submit('cancel')">Cancel</button>
-    </div>
-    <div *ngIf="dialogTitle == 'MERIT Success' || dialogTitle == 'MERIT Error'">
-        <button class="btn btn-primary" (click)="dialog.close(true)">OK</button>
-    </div>
-</mat-dialog-actions>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="p-3 pt-0 mb-0">
+        <button class="btn btn-secondary" (click)="close()">Close</button>
+
+        <button class="m-0 mx-3 btn btn-primary" (click)="savePath()">Save Path</button>
+    </mat-dialog-actions>
+  </div>

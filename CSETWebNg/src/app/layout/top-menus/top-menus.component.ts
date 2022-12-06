@@ -33,6 +33,7 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
+import { GlobalConfigurationComponent } from '../../dialogs/global-configuration/global-configuration.component';
 import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
@@ -188,6 +189,10 @@ export class TopMenusComponent implements OnInit {
       return (this.configSvc.behaviors?.showEnableProtectedFeatures ?? true);
     }
 
+    if (item == 'reconfigure unc path') {
+      return (this.configSvc.behaviors?.showReconfigureUncPath ?? true);
+    }
+
     if (item == 'parameter editor') {
       var show = this.configSvc.behaviors?.showMenuParameterEditor ?? true;
       show = show && !this.configSvc.isMobile();
@@ -319,6 +324,14 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent);
+  }
+
+  setMeritExportPath() {
+    if (this.dialog.openDialogs[0]) {
+
+      return;
+    }
+    this.dialogRef = this.dialog.open(GlobalConfigurationComponent);
   }
 
   showKeyboardShortcuts() {
