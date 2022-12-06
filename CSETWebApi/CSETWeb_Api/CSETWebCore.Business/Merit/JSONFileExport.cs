@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.Merit
 
         public void SaveUncPath(string uncPath, CSETContext context)
         {
-            if (DoesDirectoryExist(uncPath))
+            if (!DoesDirectoryExist(uncPath))
             {
                 throw new ApplicationException("directory " + uncPath + "Does Not Exist");
             }
