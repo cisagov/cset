@@ -525,6 +525,13 @@ let headers = {
           this.jsonString.examProfileData.push(irpResponse);
         }
 
+      },
+      error => {        
+          let msg = `<br><p>Error {{error}}</p>`;
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          });
+          this.jsonStringReset();         
       }
     );
   }
@@ -590,6 +597,13 @@ let headers = {
                           disableClose: true, data: { title: "MERIT Success", messageText: msg }
                         })
                         this.jsonStringReset(); 
+                      },
+                      error => {        
+                          let msg = `<br><p>Could not overwrite the file.  {{error}}</p>`;
+                          this.dialog.open(MeritCheckComponent, {
+                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                          });
+                          this.jsonStringReset();         
                       }
                     );
                   } else if (overrideChoice == 'overwrite') {
@@ -601,6 +615,13 @@ let headers = {
                           disableClose: true, data: { title: "MERIT Success", messageText: msg }
                         })
                         this.jsonStringReset(); 
+                      },
+                      error => {        
+                          let msg = `<br><p>Could not write the file. {{error}}</p>`;
+                          this.dialog.open(MeritCheckComponent, {
+                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                          });
+                          this.jsonStringReset();         
                       }
                     );
                   }
@@ -610,6 +631,13 @@ let headers = {
             }
           )
         }
+      },
+      error => {        
+          let msg = `<br><p>The directory does not exist {{error}}</p>`;
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          });
+          this.jsonStringReset();         
       }
     )
     

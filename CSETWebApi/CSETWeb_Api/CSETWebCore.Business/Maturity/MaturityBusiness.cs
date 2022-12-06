@@ -567,6 +567,7 @@ namespace CSETWebCore.Business.Maturity
             return 0;
         }
 
+        private static object myLock = new object();
 
         /// <summary>
         /// Connects the assessment to a Maturity_Level.
@@ -577,24 +578,23 @@ namespace CSETWebCore.Business.Maturity
             // is more complex to allow for the different types of SALs
             // as well as the user's selection(s).
 
-            var result = _context.ASSESSMENT_SELECTED_LEVELS
-                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
-            if (result.Any())
-            {
-                _context.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+            lock (myLock) {
+                var result = _context.ASSESSMENT_SELECTED_LEVELS
+                    .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
+                if (result.Any())
+                {
+                    _context.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
+                    _context.SaveChanges();
+                }             
+                _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Level_Name = Constants.Constants.MaturityLevel,
+                    Standard_Specific_Sal_Level = level.ToString()
+                });
                 _context.SaveChanges();
+                _assessmentUtil.TouchAssessment(assessmentId);
             }
-
-            _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
-            {
-                Assessment_Id = assessmentId,
-                Level_Name = Constants.Constants.MaturityLevel,
-                Standard_Specific_Sal_Level = level.ToString()
-            });
-
-            _context.SaveChanges();
-
-            _assessmentUtil.TouchAssessment(assessmentId);
         }
 
 

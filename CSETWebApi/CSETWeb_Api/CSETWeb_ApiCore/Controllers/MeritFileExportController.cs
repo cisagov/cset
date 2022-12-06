@@ -48,45 +48,70 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getUncPath")]
         public IActionResult GetUncPath()
         {
-            int assessmentId = _token.AssessmentForUser();
-            string uncPathString = _json.GetUncPath(_context);
-
-            MeritFileExport uncCarrier = new MeritFileExport
+            try
             {
-                data = uncPathString
-            };
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
 
-            return Ok(uncCarrier);
+                MeritFileExport uncCarrier = new MeritFileExport
+                {
+                    data = uncPathString
+                };
+
+                return Ok(uncCarrier);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("api/saveUncPath")]
         public IActionResult SaveUncPath([FromBody] MeritFileExport uncPathCarrier)
         {
-            int assessmentId = _token.AssessmentForUser();
-            _json.SaveUncPath(uncPathCarrier.data, _context);
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                _json.SaveUncPath(uncPathCarrier.data, _context);
 
-            return Ok();
+                return Ok();
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("api/doesMeritDirectoryExist")]
         public IActionResult DoesMeritDirectoryExist()
         {
-            int assessmentId = _token.AssessmentForUser();
-            string uncPathString = _json.GetUncPath(_context);
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
 
-            return Ok(_json.DoesDirectoryExist(uncPathString));
+                return Ok(_json.DoesDirectoryExist(uncPathString));
+            }catch(Exception ex)
+            { 
+                return BadRequest(ex.Message); 
+            }
         }
 
         [HttpPost]
         [Route("api/doesMeritFileExist")]
         public IActionResult DoesMeritFileExist([FromBody] MeritFileExport jsonData)
         {
-            int assessmentId = _token.AssessmentForUser();
-            string uncPathString = _json.GetUncPath(_context);
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
 
-            return Ok(_json.DoesFileExist(jsonData.guid + ".json", uncPathString));
+                return Ok(_json.DoesFileExist(jsonData.guid + ".json", uncPathString));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -94,27 +119,33 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/newMeritFile")]
         public IActionResult NewMeritFile([FromBody] MeritFileExport jsonData)
         {
-            int assessmentId = _token.AssessmentForUser();
-
-            string uncPathString = _json.GetUncPath(_context);
-
-            string filename = jsonData.guid + ".json";
-
-            if (_json.DoesFileExist(filename, uncPathString))
+            try
             {
-                return BadRequest("File " + filename + " already exists");
+
+
+                int assessmentId = _token.AssessmentForUser();
+
+                string uncPathString = _json.GetUncPath(_context);
+
+                string filename = jsonData.guid + ".json";
+
+                if (_json.DoesFileExist(filename, uncPathString))
+                {
+                    return BadRequest("File " + filename + " already exists");
+                }
+
+                string data = jsonData.data;
+
+                /// -get new guid
+                /// -save to ASSESSMENT table
+                /// -return back to client/user
+
+                _json.SendFileToMerit(filename, data, uncPathString);
+
+                return Ok();
+            }catch(Exception ex) {
+                return BadRequest(ex.Message);
             }
-
-            string data = jsonData.data;
-
-            /// -get new guid
-            /// -save to ASSESSMENT table
-            /// -return back to client/user
-
-            _json.SendFileToMerit(filename, data, uncPathString);
-
-            return Ok();
-
             /// check for existance
             /// 
             /// if doesn't exist:

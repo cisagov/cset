@@ -28,23 +28,19 @@ namespace CSETWebCore.Business.Merit
 
     public class JSONFileExport:IJSONFileExport
     {
+        public const string MeritExportPathName = "NCUAMeritExportPath";
         public void SendFileToMerit(string filename, string data, string uncPath)
         {
+            if (!DoesDirectoryExist(uncPath))
+            {
+                throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
+            }
             var pathToCreate = Path.Combine(uncPath, filename);
-
-            try
-            {
-                File.WriteAllText(pathToCreate, data);
-            }
-            catch (Exception ex)
-            {
-
-            }
-
+            File.WriteAllText(pathToCreate, data);           
         }
 
         public bool DoesDirectoryExist(string uncPath)
-        {
+        {   
             return Directory.Exists(uncPath);
         }
 
@@ -72,14 +68,41 @@ namespace CSETWebCore.Business.Merit
 
         public string GetUncPath(CSETContext context)
         {
-            var uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            return uncPath[0].Property_Value.ToString();
+            GLOBAL_PROPERTIES uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
+            if(uncPath == null)
+            {
+                uncPath = new GLOBAL_PROPERTIES()
+                {
+                    Property = JSONFileExport.MeritExportPathName,
+                    Property_Value = "\\\\hqwinfs1\\global\\Field_Staff\\ISE"
+                };
+                context.GLOBAL_PROPERTIES.Add(uncPath);
+                
+            }
+            if (DoesDirectoryExist(uncPath.Property_Value))
+            {
+                throw new ApplicationException("directory " + uncPath.Property_Value + "Does Not Exist");
+            }
+            return uncPath.Property_Value.ToString();
         }
 
         public void SaveUncPath(string uncPath, CSETContext context)
         {
-            var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").FirstOrDefault();
-            currentUncPath.Property_Value = uncPath;
+            if (DoesDirectoryExist(uncPath))
+            {
+                throw new ApplicationException("directory " + uncPath + "Does Not Exist");
+            }
+            var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
+            if(currentUncPath == null)
+            {
+                context.GLOBAL_PROPERTIES.Add(new GLOBAL_PROPERTIES()
+                {
+                    Property = JSONFileExport.MeritExportPathName,
+                    Property_Value = uncPath
+                });
+            }
+            else
+                currentUncPath.Property_Value = uncPath;
 
             context.SaveChanges();
         }
