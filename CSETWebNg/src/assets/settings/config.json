@@ -48,6 +48,7 @@
         "homeComponentForCurrentInstallationMode": "",
         "defaultMaturityModel": "",
         "isAcetOnly": false,
+        "showExportOnReports": true,
         "showFacilityName": true,
         "showCityName": true,
         "showStateName": true,
