@@ -270,8 +270,7 @@ namespace CSETWebCore.Helpers
                 {
                     parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_UserId]));
                 }
-
-                if (token.Payload[Constants.Constants.Token_AccessKey] != null)
+                else if (token.Payload[Constants.Constants.Token_AccessKey] != null)
                 {
                     parms.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetSecret() + token.Payload[Constants.Constants.Token_AccessKey]));
                 }
@@ -279,6 +278,12 @@ namespace CSETWebCore.Helpers
 
                 var principal = handler
                     .ValidateToken(tokenString, parms, out SecurityToken validatedToken);
+            }
+            catch (Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException stss)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {stss}");
+                
+                return false;
             }
             catch (ArgumentException argExc)
             {
@@ -297,6 +302,7 @@ namespace CSETWebCore.Helpers
 
                 return false;
             }
+          
 
 
             // see if the token has expired (we aren't really concerned with expiration on local installations)
