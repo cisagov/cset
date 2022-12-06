@@ -66,6 +66,28 @@ namespace CSETWebCore.Business.Merit
             context.SaveChanges();
         }
 
+        public string GetUncPath(CSETContext context)
+        {
+            var uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
+            return uncPath[0].Property_Value.ToString();
+        }
+
+        public void SaveUncPath(string uncPath, CSETContext context)
+        {
+            try
+            {
+                var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").FirstOrDefault();
+                currentUncPath.Property_Value = uncPath;
+
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
     }
 
 

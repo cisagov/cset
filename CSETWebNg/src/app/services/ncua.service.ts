@@ -443,6 +443,7 @@ let headers = {
             let subcat = domain?.components[j];
             let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
                                  "category": subcat?.title,
+                                 "examLevel": '',
                                  "issues": 
                                     {
                                       "dors": 0,
@@ -455,6 +456,9 @@ let headers = {
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+              if (childResponses.examLevel === '') {
+                childResponses.examLevel = question.maturityLevel;
+              }
               if (k != 0) { //don't want parent questions being included with children
                 if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                   question.answerText = 'U';
@@ -469,7 +473,7 @@ let headers = {
                   }
                 }
 
-                childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
+                childResponses.children.push({"examLevel":question.maturityLevel, "title":question.title, "response": this.answerTextToNumber(question.answerText)});
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
@@ -561,7 +565,7 @@ let headers = {
             <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
             <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
 
-          fileValue.data = JSON.stringify(this.jsonString);
+          //fileValue.data = JSON.stringify(this.jsonString);
           this.dialog.open(MeritCheckComponent, {
             disableClose: true, data: { title: "MERIT Warning", messageText: msg }
 
@@ -599,7 +603,7 @@ let headers = {
 
   newMeritFileSteps (fileValue: MeritFileExport) {
     
-    fileValue.data = JSON.stringify(this.jsonString);
+    //fileValue.data = JSON.stringify(this.jsonString);
 
     this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
       let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
@@ -629,6 +633,16 @@ let headers = {
       "examProfileData": [],
       "questionData": []
     }; 
+  }
+
+  getUncPath() {
+    return this.http.get(this.configSvc.apiUrl + 'getUncPath', headers);
+  }
+
+  saveUncPath(newPath: string) {
+    const uncPathCarrier = new MeritFileExport();
+    uncPathCarrier.data = newPath;
+    return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
   }
 
 }

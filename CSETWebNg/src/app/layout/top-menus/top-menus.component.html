@@ -36,6 +36,11 @@
                 <span>Enable Protected Features</span>
             </button>
 
+            <button mat-menu-item (click)="setMeritExportPath()" *ngIf="assessSvc.isISE()">
+                <span class="cset-icons-key-shield fs-base mr-2 align-middle"></span>
+                <span>Set MERIT Export Path</span>
+            </button>
+
             <hr class="menu-divider" />
 
             <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showItemForCurrentSkin('assessment documents')"
