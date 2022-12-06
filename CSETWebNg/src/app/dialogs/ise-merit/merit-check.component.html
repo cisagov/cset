@@ -35,7 +35,7 @@
     <div *ngIf="dialogTitle == 'MERIT Warning'">
         <button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>
         <button mat-button class="btn btn-primary" (click)="submit('overwrite')">Overwrite Submission</button>
-        <button mat-button class="btn btn-primary" (click)="submit('cancel')">Cancel</button>
+        <button mat-button class="btn btn-secondary" (click)="submit('cancel')">Cancel</button>
     </div>
     <div *ngIf="dialogTitle == 'MERIT Success' || dialogTitle == 'MERIT Error'">
         <button class="btn btn-primary" (click)="dialog.close(true)">OK</button>

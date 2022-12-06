@@ -442,6 +442,7 @@ let headers = {
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
+                                 "parentNumber": this.getParentQuestionTitleNumber(subcat?.questions[0].title),
                                  "category": subcat?.title,
                                  "examLevel": '',
                                  "issues": 
@@ -473,7 +474,8 @@ let headers = {
                   }
                 }
 
-                childResponses.children.push({"examLevel":question.maturityLevel, "title":question.title, "response": this.answerTextToNumber(question.answerText)});
+                childResponses.children.push({"examLevel":question.maturityLevel, "title":question.title, 
+                                              "response": this.answerTextToNumber(question.answerText)});
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
@@ -554,7 +556,8 @@ let headers = {
     this.doesDirectoryExist().subscribe(
       (exists: boolean) => {
         if (exists === false){
-          let msg = `<br><p>The MERIT Export Path is not accessible.</p><p>Please make sure the directory exists and is viewable.</p>`;
+          let msg = `<br><p>The MERIT Export Path is not accessible.</p>
+                         <p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
                     disableClose: true, data: { title: "MERIT Error", messageText: msg }
                   })
