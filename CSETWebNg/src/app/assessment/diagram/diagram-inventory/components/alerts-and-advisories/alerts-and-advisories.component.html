@@ -15,8 +15,7 @@
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
       <th mat-sort-header="cve" style="width:200px">CVE #</th>
       <th mat-sort-header="score" style="width:200px">Score</th>
-      <th mat-sort-header="version" style="width:200px">Affected Versions</th>
-      <th mat-sort-header="serial" style="width:200px">Serial</th>
+      <th mat-sort-header="version" style="width:200px">Affected Versions / Serials</th>
       <th mat-sort-header="linkDetails" style="width:200px">Link to CVE advisory</th>
       <th mat-sort-header="linkWebsite" style="width:200px">Link to vendor website</th>
 
@@ -38,9 +37,8 @@
             </div>
           </ng-container>
         </td>
-        <td>FIX ME</td>
         <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ getCveUrl(vulnerability.cve) }}</a></td>
-        <td>FIX ME</td>
+        <td><a [href]="getVendorUrl(vulnerability.remediations)" target="_blank">{{ getVendorUrl(vulnerability.remediations) }}</a></td>
       </tr>
     </table>
   </mat-dialog-content>
