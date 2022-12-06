@@ -55,6 +55,12 @@ export class QuestionsService {
    */
   public scrollToTarget: any;
 
+  /**
+   * Contains the state of the "Auto-load Supplemental" checkbox on the
+   * Standard Questions screen.
+   */
+  public autoLoadSuppCheckboxState = false;
+
 
   /**
    * 
@@ -129,8 +135,14 @@ export class QuestionsService {
    * Analyzes the current 'auto load supplemental' preference and the maturity model
    */
   autoLoadSupplemental(modelId?: number) {
+    // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
+    }
+
+    // standards (modelid is null) - check the checkbox state
+    if (!modelId) {
+      return this.autoLoadSuppCheckboxState;
     }
 
     // CPG - auto load supplemental
