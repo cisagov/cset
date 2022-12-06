@@ -81,4 +81,8 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
   getCveUrl(cve: string) {
     return 'https://nvd.nist.gov/vuln/detail/' + cve;
   }
+
+  getVendorUrl(remediations: any[]) {
+    return remediations.find(r => !r.url.includes('cisa.gov') && !r.url.includes('nist.gov'))?.url;
+  }
 }
