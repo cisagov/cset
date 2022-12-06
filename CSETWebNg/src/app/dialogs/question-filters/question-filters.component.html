@@ -56,7 +56,7 @@
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments" class="checkbox-custom-label d-block">
-          Show {{questions}} with comments
+          Show {{questions}} with {{comments}}
         </label>
       </div>
       <div *ngIf="!isInstallation('ACET')" >
