@@ -44,13 +44,47 @@ namespace CSETWebCore.Api.Controllers
         //    return Ok();
         //}
 
+        [HttpGet]
+        [Route("api/getUncPath")]
+        public IActionResult GetUncPath()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string uncPathString = _json.GetUncPath(_context);
+
+            MeritFileExport uncCarrier = new MeritFileExport
+            {
+                data = uncPathString
+            };
+
+            return Ok(uncCarrier);
+        }
+
+        [HttpPost]
+        [Route("api/saveUncPath")]
+        public IActionResult SaveUncPath([FromBody] MeritFileExport uncPathCarrier)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _json.SaveUncPath(uncPathCarrier.data, _context);
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/doesMeritDirectoryExist")]
+        public IActionResult DoesMeritDirectoryExist()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string uncPathString = _json.GetUncPath(_context);
+
+            return Ok(_json.DoesDirectoryExist(uncPathString));
+        }
+
         [HttpPost]
         [Route("api/doesMeritFileExist")]
         public IActionResult DoesMeritFileExist([FromBody] MeritFileExport jsonData)
         {
             int assessmentId = _token.AssessmentForUser();
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
+            string uncPathString = _json.GetUncPath(_context);
 
             return Ok(_json.DoesFileExist(jsonData.guid + ".json", uncPathString));
         }
@@ -62,8 +96,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
+            string uncPathString = _json.GetUncPath(_context);
 
             string filename = jsonData.guid + ".json";
 
@@ -109,8 +142,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
+            string uncPathString = _json.GetUncPath(_context);
             string data = jsonData.data;
             string filename = jsonData.guid + ".json";
             string guid = jsonData.guid;

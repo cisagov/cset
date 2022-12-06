@@ -43,6 +43,10 @@ namespace CSETWebCore.Business.Merit
 
         }
 
+        public bool DoesDirectoryExist(string uncPath)
+        {
+            return Directory.Exists(uncPath);
+        }
 
         public bool DoesFileExist(string filename, string uncPath)
         {
@@ -62,6 +66,20 @@ namespace CSETWebCore.Business.Merit
         {
             var assessInfo = context.ASSESSMENTS.Where(x => x.Assessment_Id == assessId).FirstOrDefault();
             assessInfo.Assessment_GUID = newGuid;
+
+            context.SaveChanges();
+        }
+
+        public string GetUncPath(CSETContext context)
+        {
+            var uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
+            return uncPath[0].Property_Value.ToString();
+        }
+
+        public void SaveUncPath(string uncPath, CSETContext context)
+        {
+            var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").FirstOrDefault();
+            currentUncPath.Property_Value = uncPath;
 
             context.SaveChanges();
         }
