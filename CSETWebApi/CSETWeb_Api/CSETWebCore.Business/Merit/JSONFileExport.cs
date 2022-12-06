@@ -74,18 +74,10 @@ namespace CSETWebCore.Business.Merit
 
         public void SaveUncPath(string uncPath, CSETContext context)
         {
-            try
-            {
-                var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").FirstOrDefault();
-                currentUncPath.Property_Value = uncPath;
+            var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").FirstOrDefault();
+            currentUncPath.Property_Value = uncPath;
 
-                context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-
-            }
-
+            context.SaveChanges();
         }
 
     }
