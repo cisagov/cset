@@ -79,9 +79,11 @@ namespace CSETWebCore.Business.Merit
                 context.GLOBAL_PROPERTIES.Add(uncPath);
                 
             }
-            if (DoesDirectoryExist(uncPath.Property_Value))
+            if (!DoesDirectoryExist(uncPath.Property_Value))
             {
-                throw new ApplicationException("directory " + uncPath.Property_Value + "Does Not Exist");
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable:"+ uncPath.Property_Value); 
+                excp.Path = uncPath.Property_Value;
+                throw excp;
             }
             return uncPath.Property_Value.ToString();
         }
@@ -90,7 +92,7 @@ namespace CSETWebCore.Business.Merit
         {
             if (!DoesDirectoryExist(uncPath))
             {
-                throw new ApplicationException("directory " + uncPath + "Does Not Exist");
+                throw new ApplicationException("Directory does not exist or is unavailable:" + uncPath);
             }
             var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
             if(currentUncPath == null)

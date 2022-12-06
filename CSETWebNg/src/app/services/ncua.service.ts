@@ -527,7 +527,8 @@ let headers = {
 
       },
       error => {        
-          let msg = `<br><p>Error {{error}}</p>`;
+          console.log(error);
+          let msg = "<br><p>Error"+error+"}}</p>";
           this.dialog.open(MeritCheckComponent, {
             disableClose: true, data: { title: "MERIT Error", messageText: msg }
           });
@@ -599,7 +600,7 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                          let msg = `<br><p>Could not overwrite the file.  {{error}}</p>`;
+                          let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
                           this.dialog.open(MeritCheckComponent, {
                             disableClose: true, data: { title: "MERIT Error", messageText: msg }
                           });
@@ -617,7 +618,7 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                          let msg = `<br><p>Could not write the file. {{error}}</p>`;
+                          let msg = "<br><p>Could not write the file."+error+"</p>";
                           this.dialog.open(MeritCheckComponent, {
                             disableClose: true, data: { title: "MERIT Error", messageText: msg }
                           });
@@ -633,7 +634,8 @@ let headers = {
         }
       },
       error => {        
-          let msg = `<br><p>The directory does not exist {{error}}</p>`;
+          console.log(error);
+          let msg = "<br><p>"+error.error+"</p>";
           this.dialog.open(MeritCheckComponent, {
             disableClose: true, data: { title: "MERIT Error", messageText: msg }
           });

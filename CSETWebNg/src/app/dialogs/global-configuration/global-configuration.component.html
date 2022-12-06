@@ -25,10 +25,11 @@
       <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
       <span>Global Configuration</span>
     </div>
+    <div class="m-2" style="color:red;" >{{errorMessage}} </div>
     <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
         UNC Path: 
-        <textarea [(ngModel)]="uncPath">
-            {{ uncPath }}
+        <textarea [(ngModel)]='uncPath'>
+            
         </textarea>
   
       

@@ -35,7 +35,7 @@ import { NCUAService } from '../../services/ncua.service';
 export class GlobalConfigurationComponent implements OnInit {
 
   uncPath: string;
-
+  errorMessage: string;
   constructor(private dialog: MatDialogRef<GlobalConfigurationComponent>,
     private ncuaSvc: NCUAService) { }
 
@@ -45,7 +45,13 @@ export class GlobalConfigurationComponent implements OnInit {
   ngOnInit() {
     this.ncuaSvc.getUncPath().subscribe(
       (uncPath: any) => {
-        this.uncPath = uncPath.data;
+        this.uncPath = uncPath.data;        
+      },
+      error => {        
+        
+        var stuff: string[] = error.error.split(':');
+        this.errorMessage = stuff[0];
+        this.uncPath = stuff[1];
       }
     );
   }
