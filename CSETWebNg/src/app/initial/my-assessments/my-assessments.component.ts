@@ -135,7 +135,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
-  }
+  }  
 
   /**
    * Determines if a particular column should be included in the display.
