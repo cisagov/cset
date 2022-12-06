@@ -529,57 +529,58 @@ let headers = {
       "examiner": this.information.assessor_Name.trim(),
       "creationDate": this.information.assessment_Date,
       "examLevel": this.examLevel,
-      "guid": ''
+      "guid": this.questions.assessmentGuid
     };
 
     this.jsonString.metaData = metaDataInfo;
 
-    let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
-    let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
-                  ' ' + metaDataInfo.creationDate;
+    //let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
+    // let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
+    //               ' ' + metaDataInfo.creationDate;
 
-    this.saveToJsonFile(JSON.stringify(this.jsonString), filename + '.json', this.jsonString.metaData.guid);
+    this.saveToJsonFile(JSON.stringify(this.jsonString), this.jsonString.metaData.guid);
     
   }
 
-  saveToJsonFile(data: string, filename: string, guid: string){
+  saveToJsonFile(data: string, guid: string){
     const fileValue = new MeritFileExport();
     fileValue.data = data;
-    fileValue.fileName = filename; //.replace(':', '_').replace(':', '_');
     fileValue.guid = guid;
 
     this.acetSvc.doesMeritFileExist(fileValue).subscribe(
-      (r: any) => {
-        let existsInfo = r; //true if it exists, false if not
-        let exists = existsInfo.exists;
+      (bool: any) => {
+        let exists = bool; //true if it exists, false if not
 
         if (!exists) { //and eventually an 'overwrite' boolean or something
           this.newMeritFileSteps(fileValue);
         } else {
 
           let msg = `<br>
-          <p>It looks like you already have a MERIT submission for this examination.</p>
-          <br>
-          <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
-          <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
+            <p>It looks like you already have a MERIT submission for this examination.</p>
+            <br>
+            <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+            <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
 
-          this.jsonString.metaData.guid = existsInfo.guid;
           fileValue.data = JSON.stringify(this.jsonString);
           this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "MERIT Overwrite Warning", messageText: msg }
+            disableClose: true, data: { title: "MERIT Warning", messageText: msg }
 
           }).afterClosed().subscribe(overrideChoice => {
             if (overrideChoice == 'new') {
-              let currentTime = this.currentTimeBuilder();
-              
-              fileValue.fileName = fileValue.fileName.substring(0, fileValue.fileName.lastIndexOf('.')).trim()
-                                   + ' ' + currentTime + '.json';
-
-              this.newMeritFileSteps(fileValue);
+              fileValue.overwrite = false;
+              this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                (guidCarrier: any) => {
+                  let msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully created.</p>`;
+                  this.dialog.open(MeritCheckComponent, {
+                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                  })
+                }
+              );
             } else if (overrideChoice == 'overwrite') {
-              this.acetSvc.overwriteMeritFile(fileValue).subscribe(
-                (r: any) => {
-                  msg = `<br><p>The file '<strong>` + fileValue.fileName + `</strong>' was successfully overwritten.</p>`;
+              fileValue.overwrite = true;
+              this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                (guidCarrier: any) => {
+                  msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully overwritten.</p>`;
                   this.dialog.open(MeritCheckComponent, {
                     disableClose: true, data: { title: "MERIT Success", messageText: msg }
                   })
@@ -597,37 +598,17 @@ let headers = {
   }
 
   newMeritFileSteps (fileValue: MeritFileExport) {
-    this.acetSvc.generateNewGuid().subscribe(
-      (r: any) => {
-        let guid = r;
+    
+    fileValue.data = JSON.stringify(this.jsonString);
 
-        this.jsonString.metaData.guid = guid;
-        fileValue.data = JSON.stringify(this.jsonString);
+    this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
+      let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
+              this.dialog.open(MeritCheckComponent, {
+                disableClose: true, data: { title: "MERIT Success", messageText: msg }
+              })
+    });
 
-        this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
-          let msg = `<br><p>The file '<strong>` + fileValue.fileName + `</strong>' was successfully created.</p>`;
-                  this.dialog.open(MeritCheckComponent, {
-                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
-                  })
-        });
-
-        this.jsonStringReset(); 
-      }
-    );
-  }
-
-  currentTimeBuilder() {
-    let date = new Date();
-    let hours = date.getHours();
-    if (hours > 12) {
-      hours -= 12;
-    }
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-
-    let localTime = hours + '_' + minutes + '_' + seconds;
-
-    return localTime;
+    this.jsonStringReset(); 
   }
 
   jsonStringReset () {
@@ -653,7 +634,7 @@ let headers = {
 }
 
 export class MeritFileExport {
-  fileName: string;
+  overwrite: boolean;
   data: string;
   guid: string;
 }
