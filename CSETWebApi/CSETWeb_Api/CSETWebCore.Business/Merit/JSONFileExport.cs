@@ -43,6 +43,10 @@ namespace CSETWebCore.Business.Merit
 
         }
 
+        public bool DoesDirectoryExist(string uncPath)
+        {
+            return Directory.Exists(uncPath);
+        }
 
         public bool DoesFileExist(string filename, string uncPath)
         {

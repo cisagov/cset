@@ -550,53 +550,68 @@ let headers = {
     const fileValue = new MeritFileExport();
     fileValue.data = data;
     fileValue.guid = guid;
-
-    this.acetSvc.doesMeritFileExist(fileValue).subscribe(
-      (bool: any) => {
-        let exists = bool; //true if it exists, false if not
-
-        if (!exists) { //and eventually an 'overwrite' boolean or something
-          this.newMeritFileSteps(fileValue);
-        } else {
-
-          let msg = `<br>
-            <p>It looks like you already have a MERIT submission for this examination.</p>
-            <br>
-            <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
-            <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
-
-          //fileValue.data = JSON.stringify(this.jsonString);
-          this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "MERIT Warning", messageText: msg }
-
-          }).afterClosed().subscribe(overrideChoice => {
-            if (overrideChoice == 'new') {
-              fileValue.overwrite = false;
-              this.acetSvc.overrideMeritFile(fileValue).subscribe(
-                (guidCarrier: any) => {
-                  let msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully created.</p>`;
+    
+    this.doesDirectoryExist().subscribe(
+      (exists: boolean) => {
+        if (exists === false){
+          let msg = `<br><p>The MERIT Export Path is not accessible.</p><p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
-                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                    disableClose: true, data: { title: "MERIT Error", messageText: msg }
                   })
-                }
-              );
-            } else if (overrideChoice == 'overwrite') {
-              fileValue.overwrite = true;
-              this.acetSvc.overrideMeritFile(fileValue).subscribe(
-                (guidCarrier: any) => {
-                  msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully overwritten.</p>`;
-                  this.dialog.open(MeritCheckComponent, {
-                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
-                  })
-                  this.jsonStringReset(); 
-                }
-              );
-            }
-          }); 
         }
-
+        else if (exists === true){
+          this.acetSvc.doesMeritFileExist(fileValue).subscribe(
+            (bool: any) => {
+              let exists = bool; //true if it exists, false if not
+      
+              if (!exists) { //and eventually an 'overwrite' boolean or something
+                this.newMeritFileSteps(fileValue);
+              } else {
+      
+                let msg = `<br>
+                  <p>It looks like you already have a MERIT submission for this examination.</p>
+                  <br>
+                  <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+                  <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
+      
+                this.dialog.open(MeritCheckComponent, {
+                  disableClose: true, data: { title: "MERIT Warning", messageText: msg }
+      
+                }).afterClosed().subscribe(overrideChoice => {
+                  if (overrideChoice == 'new') {
+                    fileValue.overwrite = false;
+                    this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                      (guidCarrier: any) => {
+                        let msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully created.</p>`;
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                        })
+                        this.jsonStringReset(); 
+                      }
+                    );
+                  } else if (overrideChoice == 'overwrite') {
+                    fileValue.overwrite = true;
+                    this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                      (guidCarrier: any) => {
+                        msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully overwritten.</p>`;
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                        })
+                        this.jsonStringReset(); 
+                      }
+                    );
+                  }
+                }); 
+              }
+      
+            }
+          )
+        }
       }
     )
+    
+
+    
 
     this.submitInProgress = false;
   }
@@ -633,6 +648,10 @@ let headers = {
       "examProfileData": [],
       "questionData": []
     }; 
+  }
+
+  doesDirectoryExist() {
+    return this.http.get(this.configSvc.apiUrl + 'doesMeritDirectoryExist', headers);
   }
 
   getUncPath() {
