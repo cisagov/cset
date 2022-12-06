@@ -18,8 +18,8 @@ namespace CSETWebCore.Business.Merit.Tests
         public void SendFileToMeritTest()
         {
 
-            JSONFileExport test = new JSONFileExport();
-            test.SendFileToMerit();
+            //JSONFileExport test = new JSONFileExport();
+            //test.SendFileToMerit();
         }
         //private String GetProperty(String name)
         //{
