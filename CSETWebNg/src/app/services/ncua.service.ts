@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
@@ -33,6 +33,10 @@ import { Question } from '../models/questions.model';
 import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
+import { replace, stubString } from 'lodash';
+import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
+import * as moment from 'moment';
+import { OkayComponent } from '../dialogs/okay/okay.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -86,9 +90,15 @@ let headers = {
 
   questions: any = null;
   iseIrps: any = null;
-  information: any =null;
+  information: any = null;
   jsonString: any = {
-    "metaData": [],
+    "metaData": {
+      "assessmentName": '',
+      "examiner": '',
+      "creationDate": null,
+      "examLevel": '',
+      "guid": ''
+    },
     "issuesTotal": {
       "dors": 0,
       "examinerFindings": 0,
@@ -365,13 +375,25 @@ let headers = {
   }
 
   submitToMerit(findings: any) {
-    this.submitInProgress = true;
-    this.questionResponseBuilder(findings);
-    this.iseIrpResponseBuilder();
+    // TODO: Write a check to see if a merit submission already exists based on customer criteria
+    //if (1 === 1) {
+      // this.dialog.open(MeritCheckComponent, {
+      //   disableClose: true,
+      // }).afterClosed().subscribe(overrideChoice => {
+      //   console.log("Result from close: " + JSON.stringify(overrideChoice, null, 4));
+      //   if (overrideChoice == true) {
+      //     // TODO: Write functionality to override existing merit submission
+      //   }
+      // }); 
+    //} else {
+      this.submitInProgress = true;
+      this.questionResponseBuilder(findings);
+      this.iseIrpResponseBuilder();
+    //}
   }
 
   answerTextToNumber(text: string) {
-    switch(text){
+    switch (text) {
       case 'Y':
         return 0;
       case 'N':
@@ -410,6 +432,7 @@ let headers = {
     this.acetSvc.getIseAllQuestions().subscribe(
       (r: any) => {
         this.questions = r;
+        this.information = this.questions.information;
         this.examLevel = this.getExamLevel();
 
         // goes through domains
@@ -450,7 +473,6 @@ let headers = {
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
-                    console.log('in for '+ question.title + ' | ' + findings[m]?.finding?.type)
                     switch (findings[m]?.finding?.type) {
                       case "DOR":
                         childResponses.issues.dors++;
@@ -502,21 +524,121 @@ let headers = {
   }
 
   metaDataBuilder() { 
-    let info = this.questions?.information;
     let metaDataInfo = {
-      "assessmentName": info.assessment_Name,
-      "examiner": info.assessor_Name.trim(),
-      "creationDate": info.assessment_Date,
+      "assessmentName": this.information.assessment_Name,
+      "examiner": this.information.assessor_Name.trim(),
+      "creationDate": this.information.assessment_Date,
       "examLevel": this.examLevel,
-      "guid": 'TBD'
+      "guid": ''
     };
 
-    this.jsonString.metaData.push(metaDataInfo);
+    this.jsonString.metaData = metaDataInfo;
 
-    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json');
+    let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
+    let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
+                  ' ' + metaDataInfo.creationDate;
 
-    this.jsonString = { // reset the string
-      "metaData": [],
+    this.saveToJsonFile(JSON.stringify(this.jsonString), filename + '.json', this.jsonString.metaData.guid);
+    
+  }
+
+  saveToJsonFile(data: string, filename: string, guid: string){
+    const fileValue = new MeritFileExport();
+    fileValue.data = data;
+    fileValue.fileName = filename; //.replace(':', '_').replace(':', '_');
+    fileValue.guid = guid;
+
+    this.acetSvc.doesMeritFileExist(fileValue).subscribe(
+      (r: any) => {
+        let existsInfo = r; //true if it exists, false if not
+        let exists = existsInfo.exists;
+
+        if (!exists) { //and eventually an 'overwrite' boolean or something
+          this.newMeritFileSteps(fileValue);
+        } else {
+
+          let msg = `<br>
+          <p>It looks like you already have a MERIT submission for this examination.</p>
+          <br>
+          <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+          <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
+
+          this.jsonString.metaData.guid = existsInfo.guid;
+          fileValue.data = JSON.stringify(this.jsonString);
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Overwrite Warning", messageText: msg }
+
+          }).afterClosed().subscribe(overrideChoice => {
+            if (overrideChoice == 'new') {
+              let currentTime = this.currentTimeBuilder();
+              
+              fileValue.fileName = fileValue.fileName.substring(0, fileValue.fileName.lastIndexOf('.')).trim()
+                                   + ' ' + currentTime + '.json';
+
+              this.newMeritFileSteps(fileValue);
+            } else if (overrideChoice == 'overwrite') {
+              this.acetSvc.overwriteMeritFile(fileValue).subscribe(
+                (r: any) => {
+                  msg = `<br><p>The file '<strong>` + fileValue.fileName + `</strong>' was successfully overwritten.</p>`;
+                  this.dialog.open(MeritCheckComponent, {
+                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                  })
+                  this.jsonStringReset(); 
+                }
+              );
+            }
+          }); 
+        }
+
+      }
+    )
+
+    this.submitInProgress = false;
+  }
+
+  newMeritFileSteps (fileValue: MeritFileExport) {
+    this.acetSvc.generateNewGuid().subscribe(
+      (r: any) => {
+        let guid = r;
+
+        this.jsonString.metaData.guid = guid;
+        fileValue.data = JSON.stringify(this.jsonString);
+
+        this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
+          let msg = `<br><p>The file '<strong>` + fileValue.fileName + `</strong>' was successfully created.</p>`;
+                  this.dialog.open(MeritCheckComponent, {
+                    disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                  })
+        });
+
+        this.jsonStringReset(); 
+      }
+    );
+  }
+
+  currentTimeBuilder() {
+    let date = new Date();
+    let hours = date.getHours();
+    if (hours > 12) {
+      hours -= 12;
+    }
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    let localTime = hours + '_' + minutes + '_' + seconds;
+
+    return localTime;
+  }
+
+  jsonStringReset () {
+    this.jsonString = { // resets the string to blank values
+      "metaData": {
+        "assessmentName": '',
+        "examiner": '',
+        "creationDate": null,
+        "examLevel": '',
+        "guid": ''
+      },
       "issuesTotal": {
         "dors": 0,
         "examinerFindings": 0,
@@ -528,12 +650,10 @@ let headers = {
     }; 
   }
 
-  saveToJsonFile(text: string, filename: string){
-    let a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
-    a.setAttribute('download', filename);
-    a.click();
-    this.submitInProgress = false;
-  }
+}
 
+export class MeritFileExport {
+  fileName: string;
+  data: string;
+  guid: string;
 }
