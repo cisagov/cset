@@ -86,7 +86,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     ).subscribe((e: any) => {
       if (e.urlAfterRedirects.includes('/maturity-questions/')) {
         this.groupingId = +this.route.snapshot.params['grp'];
-        this.loadGrouping(this.groupingId);
+        this.loadGrouping(+this.groupingId);
       }
     });
 
@@ -111,7 +111,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     if (!this.groupingId) {
       this.loadQuestions();
     } else {
-      this.loadGrouping(this.groupingId);
+      this.loadGrouping(+this.groupingId);
     }
   }
 
@@ -179,7 +179,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves questions for a single grouping.
    */
-  loadGrouping(groupingId: Number) {
+  loadGrouping(groupingId: number) {
+    if (isNaN(groupingId)) {
+      return;
+    }
+    
     this.completionSvc.reset();
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
