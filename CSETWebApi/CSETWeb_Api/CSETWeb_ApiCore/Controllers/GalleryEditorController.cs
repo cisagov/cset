@@ -19,7 +19,6 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private IGalleryEditor _galleryEditor;
 
-
         // if you want to use the gallery editor, change this to true
         private bool inDev = true;
 
