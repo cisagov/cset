@@ -9,5 +9,9 @@ namespace CSETWebCore.Business.Merit
         bool DoesFileExist(string filename, string uncPath);
         public Guid GetAssessmentGuid(int assessId, CSETContext context);
         public void SetNewAssessmentGuid(int assessId, Guid newGuid, CSETContext context);
+        public string GetUncPath(CSETContext context);
+        public void SaveUncPath(string uncPath, CSETContext context);
+
+
     }
 }
