@@ -69,6 +69,16 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("api/doesMeritDirectoryExist")]
+        public IActionResult DoesMeritDirectoryExist()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string uncPathString = _json.GetUncPath(_context);
+
+            return Ok(_json.DoesDirectoryExist(uncPathString));
+        }
+
         [HttpPost]
         [Route("api/doesMeritFileExist")]
         public IActionResult DoesMeritFileExist([FromBody] MeritFileExport jsonData)
