@@ -446,41 +446,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisories()
         {
-            string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
-            List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
-
-            foreach (var filePath in filePaths) 
-            {
-                string jsonString = System.IO.File.ReadAllText(filePath);
-                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString);
-
-                var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
-                var existingVendor = vendors.Find(v => v.Name == vendor.Name);
-
-                // Use existing vendor from list if present
-                if (existingVendor != null) 
-                { 
-                    vendor = existingVendor;
-                }
-
-                var product = new CommonSecurityAdvisoryFrameworkProduct(csafObj);
-                if (!vendor.Products.Exists(p => p.Name == product.Name)) 
-                { 
-                    vendor.Products.Add(product);
-                }
-
-                if (existingVendor == null) 
-                { 
-                    vendors.Add(vendor);
-                }
-            }
-
-            vendors.Sort((a, b) => string.Compare(a.Name, b.Name, true));
-
-            foreach (var vendor in vendors) 
-            { 
-                vendor.Products.Sort((a,b) => string.Compare(a.Name, b.Name, true));
-            }
+            var vendors = _diagram.GetAlertsAndAdvisoriesVendors(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
 
             return vendors;
         }

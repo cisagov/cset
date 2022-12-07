@@ -31,11 +31,7 @@
           </span>
         </td>
         <td>
-          <ng-container *ngFor="let version of product.versions">
-            <div *ngIf="vulnerability.product_Status.known_Affected.includes(version.product_Id)">
-              {{ version.name }}
-            </div>
-          </ng-container>
+          {{ product.affectedVersions }}
         </td>
         <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ getCveUrl(vulnerability.cve) }}</a></td>
         <td><a [href]="getVendorUrl(vulnerability.remediations)" target="_blank">{{ getVendorUrl(vulnerability.remediations) }}</a></td>
