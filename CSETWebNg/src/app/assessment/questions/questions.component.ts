@@ -278,9 +278,9 @@ export class QuestionsComponent implements AfterViewChecked {
    * Stores the Supplemental auto-load setting in the service
    * for access by the child components.
    */
-  // persistAutoLoadSetting() {
-  //   this.questionsSvc.autoLoadSupplemental = this.autoLoadSupplementalInfo;
-  // }
+  persistAutoLoadSetting() {
+    this.questionsSvc.autoLoadSuppCheckboxState = this.autoLoadSupplementalInfo;
+  }
 
   /**
    * Controls the mass expansion/collapse of all subcategories on the screen.

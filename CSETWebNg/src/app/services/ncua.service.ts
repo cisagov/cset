@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
@@ -33,6 +33,10 @@ import { Question } from '../models/questions.model';
 import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
+import { replace, stubString } from 'lodash';
+import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
+import * as moment from 'moment';
+import { OkayComponent } from '../dialogs/okay/okay.component';
 
 let headers = {
     headers: new HttpHeaders()
@@ -86,9 +90,15 @@ let headers = {
 
   questions: any = null;
   iseIrps: any = null;
-  information: any =null;
+  information: any = null;
   jsonString: any = {
-    "metaData": [],
+    "metaData": {
+      "assessmentName": '',
+      "examiner": '',
+      "creationDate": null,
+      "examLevel": '',
+      "guid": ''
+    },
     "issuesTotal": {
       "dors": 0,
       "examinerFindings": 0,
@@ -365,13 +375,25 @@ let headers = {
   }
 
   submitToMerit(findings: any) {
-    this.submitInProgress = true;
-    this.questionResponseBuilder(findings);
-    this.iseIrpResponseBuilder();
+    // TODO: Write a check to see if a merit submission already exists based on customer criteria
+    //if (1 === 1) {
+      // this.dialog.open(MeritCheckComponent, {
+      //   disableClose: true,
+      // }).afterClosed().subscribe(overrideChoice => {
+      //   console.log("Result from close: " + JSON.stringify(overrideChoice, null, 4));
+      //   if (overrideChoice == true) {
+      //     // TODO: Write functionality to override existing merit submission
+      //   }
+      // }); 
+    //} else {
+      this.submitInProgress = true;
+      this.questionResponseBuilder(findings);
+      this.iseIrpResponseBuilder();
+    //}
   }
 
   answerTextToNumber(text: string) {
-    switch(text){
+    switch (text) {
       case 'Y':
         return 0;
       case 'N':
@@ -410,6 +432,7 @@ let headers = {
     this.acetSvc.getIseAllQuestions().subscribe(
       (r: any) => {
         this.questions = r;
+        this.information = this.questions.information;
         this.examLevel = this.getExamLevel();
 
         // goes through domains
@@ -419,7 +442,9 @@ let headers = {
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
+                                 "parentNumber": this.getParentQuestionTitleNumber(subcat?.questions[0].title),
                                  "category": subcat?.title,
+                                 "examLevel": '',
                                  "issues": 
                                     {
                                       "dors": 0,
@@ -432,6 +457,9 @@ let headers = {
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+              if (childResponses.examLevel === '') {
+                childResponses.examLevel = question.maturityLevel;
+              }
               if (k != 0) { //don't want parent questions being included with children
                 if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                   question.answerText = 'U';
@@ -446,11 +474,11 @@ let headers = {
                   }
                 }
 
-                childResponses.children.push({"title":question.title, "response": this.answerTextToNumber(question.answerText)});
+                childResponses.children.push({"examLevel":question.maturityLevel, "title":question.title, 
+                                              "response": this.answerTextToNumber(question.answerText)});
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
-                    console.log('in for '+ question.title + ' | ' + findings[m]?.finding?.type)
                     switch (findings[m]?.finding?.type) {
                       case "DOR":
                         childResponses.issues.dors++;
@@ -497,26 +525,153 @@ let headers = {
           this.jsonString.examProfileData.push(irpResponse);
         }
 
+      },
+      error => {        
+          console.log(error);
+          let msg = "<br><p>Error"+error+"}}</p>";
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          });
+          this.jsonStringReset();         
       }
     );
   }
 
   metaDataBuilder() { 
-    let info = this.questions?.information;
     let metaDataInfo = {
-      "assessmentName": info.assessment_Name,
-      "examiner": info.assessor_Name.trim(),
-      "creationDate": info.assessment_Date,
+      "assessmentName": this.information.assessment_Name,
+      "examiner": this.information.assessor_Name.trim(),
+      "creationDate": this.information.assessment_Date,
       "examLevel": this.examLevel,
-      "guid": 'TBD'
+      "guid": this.questions.assessmentGuid
     };
 
-    this.jsonString.metaData.push(metaDataInfo);
+    this.jsonString.metaData = metaDataInfo;
 
-    this.saveToJsonFile(JSON.stringify(this.jsonString, null, '\t'), info.assessment_Name + '.json');
+    //let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
+    // let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
+    //               ' ' + metaDataInfo.creationDate;
 
-    this.jsonString = { // reset the string
-      "metaData": [],
+    this.saveToJsonFile(JSON.stringify(this.jsonString), this.jsonString.metaData.guid);
+    
+  }
+
+  saveToJsonFile(data: string, guid: string){
+    const fileValue = new MeritFileExport();
+    fileValue.data = data;
+    fileValue.guid = guid;
+    
+    this.doesDirectoryExist().subscribe(
+      (exists: boolean) => {
+        if (exists === false){
+          let msg = `<br><p>The MERIT Export Path is not accessible.</p>
+                         <p>Please make sure the directory exists and is viewable.</p>`;
+                  this.dialog.open(MeritCheckComponent, {
+                    disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                  })
+        }
+        else if (exists === true){
+          this.acetSvc.doesMeritFileExist(fileValue).subscribe(
+            (bool: any) => {
+              let exists = bool; //true if it exists, false if not
+      
+              if (!exists) { //and eventually an 'overwrite' boolean or something
+                this.newMeritFileSteps(fileValue);
+              } else {
+      
+                let msg = `<br>
+                  <p>It looks like you already have a MERIT submission for this examination.</p>
+                  <br>
+                  <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
+                  <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
+      
+                this.dialog.open(MeritCheckComponent, {
+                  disableClose: true, data: { title: "MERIT Warning", messageText: msg }
+      
+                }).afterClosed().subscribe(overrideChoice => {
+                  if (overrideChoice == 'new') {
+                    fileValue.overwrite = false;
+                    this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                      (guidCarrier: any) => {
+                        let msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully created.</p>`;
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                        })
+                        this.jsonStringReset(); 
+                      },
+                      error => {        
+                          let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
+                          this.dialog.open(MeritCheckComponent, {
+                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                          });
+                          this.jsonStringReset();         
+                      }
+                    );
+                  } else if (overrideChoice == 'overwrite') {
+                    fileValue.overwrite = true;
+                    this.acetSvc.overrideMeritFile(fileValue).subscribe(
+                      (guidCarrier: any) => {
+                        msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully overwritten.</p>`;
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                        })
+                        this.jsonStringReset(); 
+                      },
+                      error => {        
+                          let msg = "<br><p>Could not write the file."+error+"</p>";
+                          this.dialog.open(MeritCheckComponent, {
+                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                          });
+                          this.jsonStringReset();         
+                      }
+                    );
+                  }
+                }); 
+              }
+      
+            }
+          )
+        }
+      },
+      error => {        
+          console.log(error);
+          let msg = "<br><p>"+error.error+"</p>";
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          });
+          this.jsonStringReset();         
+      }
+    )
+    
+
+    
+
+    this.submitInProgress = false;
+  }
+
+  newMeritFileSteps (fileValue: MeritFileExport) {
+    
+    //fileValue.data = JSON.stringify(this.jsonString);
+
+    this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
+      let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
+              this.dialog.open(MeritCheckComponent, {
+                disableClose: true, data: { title: "MERIT Success", messageText: msg }
+              })
+    });
+
+    this.jsonStringReset(); 
+  }
+
+  jsonStringReset () {
+    this.jsonString = { // resets the string to blank values
+      "metaData": {
+        "assessmentName": '',
+        "examiner": '',
+        "creationDate": null,
+        "examLevel": '',
+        "guid": ''
+      },
       "issuesTotal": {
         "dors": 0,
         "examinerFindings": 0,
@@ -528,12 +683,24 @@ let headers = {
     }; 
   }
 
-  saveToJsonFile(text: string, filename: string){
-    let a = document.createElement('a');
-    a.setAttribute('href', 'data:text/plain;charset=utf-u,'+encodeURIComponent(text));
-    a.setAttribute('download', filename);
-    a.click();
-    this.submitInProgress = false;
+  doesDirectoryExist() {
+    return this.http.get(this.configSvc.apiUrl + 'doesMeritDirectoryExist', headers);
   }
 
+  getUncPath() {
+    return this.http.get(this.configSvc.apiUrl + 'getUncPath', headers);
+  }
+
+  saveUncPath(newPath: string) {
+    const uncPathCarrier = new MeritFileExport();
+    uncPathCarrier.data = newPath;
+    return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
+  }
+
+}
+
+export class MeritFileExport {
+  overwrite: boolean;
+  data: string;
+  guid: string;
 }

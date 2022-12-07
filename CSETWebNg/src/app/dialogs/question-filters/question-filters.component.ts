@@ -43,6 +43,7 @@ export class QuestionFiltersComponent implements OnInit {
   question = "Question";
   questions = "questions";
   observations = "observations";
+  comments = "comments";
   answerOptions: any[];
 
   constructor(
@@ -74,6 +75,7 @@ export class QuestionFiltersComponent implements OnInit {
       this.questions = "statements";
       if (this.assessSvc.isISE()) {
         this.observations = "issues";
+        this.comments = "notes";
       }
     }
     this.refreshAnswerOptions();

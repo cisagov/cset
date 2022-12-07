@@ -491,6 +491,7 @@ import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warni
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
+import { MeritCheckComponent } from './dialogs/ise-merit/merit-check.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
@@ -522,6 +523,7 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { GlobalConfigurationComponent } from './dialogs/global-configuration/global-configuration.component';
 
 
 
@@ -676,6 +678,7 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
         OkayComponent,
         FindingsComponent,
         IssuesComponent,
+        MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
         NullishCoalescePipe,
@@ -1002,6 +1005,7 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
         CpgPracticesComponent,
         OnlineDisclaimerComponent,
         AlertsAndAdvisoriesComponent, 
+        GlobalConfigurationComponent,
     ],
     providers: [
         ConfigService,
