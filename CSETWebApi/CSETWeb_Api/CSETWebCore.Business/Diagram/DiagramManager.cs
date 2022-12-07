@@ -829,7 +829,7 @@ namespace CSETWebCore.Business.Diagram
         }
 
         /// <summary>
-        /// uploads
+        /// 
         /// </summary>
         /// <param name="csafFilesDirectory">the directory that houses all of the csaf json files</param>
         /// <returns></returns>
@@ -888,7 +888,5 @@ namespace CSETWebCore.Business.Diagram
 
             return vendors;
         }
-
-        public int 
     }
 }
