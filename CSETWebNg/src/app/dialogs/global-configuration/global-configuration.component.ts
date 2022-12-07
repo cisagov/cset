@@ -48,7 +48,6 @@ export class GlobalConfigurationComponent implements OnInit {
         this.uncPath = uncPath.data;        
       },
       error => {        
-        
         var stuff: string[] = error.error.split(':');
         this.errorMessage = stuff[0];
         this.uncPath = stuff[1];
@@ -64,10 +63,17 @@ export class GlobalConfigurationComponent implements OnInit {
   }
 
   savePath() {
-    // const container = new UncPathContainer();
-    // container.uncPath = 
-    this.ncuaSvc.saveUncPath(this.uncPath).subscribe();
-    this.close();
+    let success = false;
+    this.ncuaSvc.saveUncPath(this.uncPath).subscribe(
+      (r: any) => {
+        this.close();
+      },
+      error => {        
+        var stuff: string[] = error.error.split(':');
+        this.errorMessage = stuff[0];
+        this.uncPath = stuff[1];
+      }
+    );
   }
 
 }
