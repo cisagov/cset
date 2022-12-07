@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSETWebCore.DataLayer.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,82 +20,93 @@ namespace CSETWebCore.Business.Merit
 
     public class MeritFileExport
     {
-        public string fileName { get; set; }
+        public bool overwrite { get; set; }
         public string data { get; set; }
         public string guid { get; set; }
 
     }
 
-    public class FileExistsInfo
-    {
-        public string guid { get; set; }
-        public bool exists { get; set; }
-
-    }
-
     public class JSONFileExport:IJSONFileExport
     {
-        public void SendFileToMerit(string filename, string data, string uncPath, bool overwrite)
+        public const string MeritExportPathName = "NCUAMeritExportPath";
+        public void SendFileToMerit(string filename, string data, string uncPath)
         {
+            if (!DoesDirectoryExist(uncPath))
+            {
+                throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
+            }
             var pathToCreate = Path.Combine(uncPath, filename);
-
-            // both create or overwrite for now
-            if (overwrite)
-            {
-                try
-                {
-                    File.WriteAllText(pathToCreate, data);
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            else
-            {
-                try
-                {
-                    
-                    File.WriteAllText(pathToCreate, data);
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            
-            
-
+            File.WriteAllText(pathToCreate, data);           
         }
 
+        public bool DoesDirectoryExist(string uncPath)
+        {   
+            return Directory.Exists(uncPath);
+        }
 
-        public FileExistsInfo DoesFileExist(string filename, string uncPath)
+        public bool DoesFileExist(string filename, string uncPath)
         {
             string fullPath = Path.Combine(uncPath, filename);
-            bool exists = File.Exists(fullPath);
+            return File.Exists(fullPath);
+        }
 
-            FileExistsInfo existsInfo = new FileExistsInfo();
-            existsInfo.exists = exists;
+        public Guid GetAssessmentGuid(int assessId, CSETContext context)
+        {
+            var assessInfo = context.ASSESSMENTS.Where(x => x.Assessment_Id == assessId).FirstOrDefault();
+            var assessGuid = assessInfo.Assessment_GUID;
 
-            if (exists)
+            return assessGuid;
+        }
+
+        public void SetNewAssessmentGuid(int assessId, Guid newGuid, CSETContext context)
+        {
+            var assessInfo = context.ASSESSMENTS.Where(x => x.Assessment_Id == assessId).FirstOrDefault();
+            assessInfo.Assessment_GUID = newGuid;
+
+            context.SaveChanges();
+        }
+
+        public string GetUncPath(CSETContext context)
+        {
+            GLOBAL_PROPERTIES uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
+            if(uncPath == null)
             {
-                string jsonString = File.ReadAllText(fullPath);
-                using (JsonDocument document = JsonDocument.Parse(jsonString))
+                uncPath = new GLOBAL_PROPERTIES()
                 {
-                    JsonElement root = document.RootElement;
-                    JsonElement metaData = root.GetProperty("metaData");
-                    foreach (JsonProperty metaDataProperty in metaData.EnumerateObject())
-                    {
-                        if (metaDataProperty.NameEquals("guid"))
-                        {
-                            string guidString = metaDataProperty.Value.ToString();
-                            existsInfo.guid = guidString;
-                        }
-                    }
-                }
-
+                    Property = JSONFileExport.MeritExportPathName,
+                    Property_Value = "\\\\hqwinfs1\\global\\Field_Staff\\ISE"
+                };
+                context.GLOBAL_PROPERTIES.Add(uncPath);
+                
             }
-            return existsInfo;
+            if (!DoesDirectoryExist(uncPath.Property_Value))
+            {
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable:"+ uncPath.Property_Value); 
+                excp.Path = uncPath.Property_Value;
+                throw excp;
+            }
+            return uncPath.Property_Value.ToString();
+        }
+
+        public void SaveUncPath(string uncPath, CSETContext context)
+        {
+            if (!DoesDirectoryExist(uncPath))
+            {
+                throw new ApplicationException("Directory does not exist or is unavailable:" + uncPath);
+            }
+            var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
+            if(currentUncPath == null)
+            {
+                context.GLOBAL_PROPERTIES.Add(new GLOBAL_PROPERTIES()
+                {
+                    Property = JSONFileExport.MeritExportPathName,
+                    Property_Value = uncPath
+                });
+            }
+            else
+                currentUncPath.Property_Value = uncPath;
+
+            context.SaveChanges();
         }
 
     }

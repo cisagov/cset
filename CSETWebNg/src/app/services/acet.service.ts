@@ -167,8 +167,8 @@ export class ACETService {
     }
 
     // Sends the generated json file to MERIT
-    overwriteMeritFile(fileValue: any) {
-        return this.http.post(this.apiUrl + 'overwriteMeritFile', fileValue, headers);
+    overrideMeritFile(fileValue: any) {
+        return this.http.post(this.apiUrl + 'overrideMeritFile', fileValue, headers);
     }
 
     // Gets a new guid

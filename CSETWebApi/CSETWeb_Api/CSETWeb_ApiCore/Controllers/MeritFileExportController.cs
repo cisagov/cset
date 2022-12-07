@@ -44,62 +44,181 @@ namespace CSETWebCore.Api.Controllers
         //    return Ok();
         //}
 
+        [HttpGet]
+        [Route("api/getUncPath")]
+        public IActionResult GetUncPath()
+        {
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
+
+                MeritFileExport uncCarrier = new MeritFileExport
+                {
+                    data = uncPathString
+                };
+
+                return Ok(uncCarrier);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/saveUncPath")]
+        public IActionResult SaveUncPath([FromBody] MeritFileExport uncPathCarrier)
+        {
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                _json.SaveUncPath(uncPathCarrier.data, _context);
+
+                return Ok();
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/doesMeritDirectoryExist")]
+        public IActionResult DoesMeritDirectoryExist()
+        {
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
+
+                return Ok(_json.DoesDirectoryExist(uncPathString));
+            }catch(Exception ex)
+            { 
+                return BadRequest(ex.Message); 
+            }
+        }
+
         [HttpPost]
         [Route("api/doesMeritFileExist")]
         public IActionResult DoesMeritFileExist([FromBody] MeritFileExport jsonData)
         {
-            int assessmentId = _token.AssessmentForUser();
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
+            try
+            {
+                int assessmentId = _token.AssessmentForUser();
+                string uncPathString = _json.GetUncPath(_context);
 
-            return Ok(_json.DoesFileExist(jsonData.fileName, uncPathString));
+                return Ok(_json.DoesFileExist(jsonData.guid + ".json", uncPathString));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         [HttpPost]
         [Route("api/newMeritFile")]
         public IActionResult NewMeritFile([FromBody] MeritFileExport jsonData)
         {
-            int assessmentId = _token.AssessmentForUser();
+            try
+            {
 
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
-            string data = jsonData.data;
-            string filename = jsonData.fileName;
 
-            bool overwrite = false;
+                int assessmentId = _token.AssessmentForUser();
 
-            _json.SendFileToMerit(filename, data, uncPathString, overwrite);
+                string uncPathString = _json.GetUncPath(_context);
 
-            return Ok();
+                string filename = jsonData.guid + ".json";
+
+                if (_json.DoesFileExist(filename, uncPathString))
+                {
+                    return BadRequest("File " + filename + " already exists");
+                }
+
+                string data = jsonData.data;
+
+                /// -get new guid
+                /// -save to ASSESSMENT table
+                /// -return back to client/user
+
+                _json.SendFileToMerit(filename, data, uncPathString);
+
+                return Ok();
+            }catch(Exception ex) {
+                return BadRequest(ex.Message);
+            }
+            /// check for existance
+            /// 
+            /// if doesn't exist:
+                /// brandNewMerit
+                /// check for existance (again for safety)
+                /// if doesn't exist, write to a new file (with the original guid as the file name)
+                /// 
+
+            /// else if does exists:
+                /// prompt user if they want to duplicateMerit or overwriteMerit (or cancel)
+                    /// duplicateMerit
+                        /// generate a new guid, set the db's AssessmentGUID to the new one, 
+                        /// and write to a new file (with the new guid as the file name)
+                        /// return new guid back to client
+                    /// overwriteMerit
+                        /// overwrite file (no need to check for existance)
+                    /// cancel
+                        /// don't do anything
+
         }
 
         [HttpPost]
-        [Route("api/overwriteMeritFile")]
-        public IActionResult OverwriteMeritFile([FromBody] MeritFileExport jsonData)
+        [Route("api/overrideMeritFile")]
+        public IActionResult OverrideMeritFile([FromBody] MeritFileExport jsonData)
         {
             int assessmentId = _token.AssessmentForUser();
-            
-            var uncPath = _context.GLOBAL_PROPERTIES.Where(x => x.Property == "NCUAMeritExportPath").ToList();
-            string uncPathString = uncPath[0].Property_Value.ToString();
+
+            string uncPathString = _json.GetUncPath(_context);
             string data = jsonData.data;
-            string filename = jsonData.fileName;
+            string filename = jsonData.guid + ".json";
+            string guid = jsonData.guid;
 
-            bool overwrite = true;
+            //generate a new guid and change the AssessmentGUID in the db to the new one
+            if (jsonData.overwrite == false) 
+            {
+                Guid oldGuid = _json.GetAssessmentGuid(assessmentId, _context);
+                Guid newGuid = Guid.NewGuid();
 
-            _json.SendFileToMerit(filename, data, uncPathString, overwrite);
+                if (jsonData.data.Contains(oldGuid.ToString()))
+                {
+                    data = jsonData.data.Replace(oldGuid.ToString(), newGuid.ToString());
+                    //data = jsonData.data;
+                }
+                else
+                {
+                    return BadRequest("Could not find original GUID inside file.");
+                }
 
-            return Ok();
+                guid = newGuid.ToString();
+                filename = newGuid + ".json";
+                _json.SetNewAssessmentGuid(assessmentId, newGuid, _context);
+            }
+
+            _json.SendFileToMerit(filename, data, uncPathString);
+
+            MeritFileExport guidCarrier = new MeritFileExport
+            {
+                guid = guid
+            };
+
+
+            return Ok(guidCarrier);
         }
 
-        [HttpGet]
-        [Route("api/generateNewGuid")]
-        public IActionResult GenerateNewGuid()
-        {
-            int assessmentId = _token.AssessmentForUser();
+        //[HttpGet]
+        //[Route("api/generateNewGuid")]
+        //public IActionResult GenerateNewGuid()
+        //{
+        //    int assessmentId = _token.AssessmentForUser();
 
-            Guid newGuid = Guid.NewGuid();
+        //    Guid newGuid = Guid.NewGuid();
 
-            return Ok(newGuid);
-        }
+        //    return Ok(newGuid);
+        //}
     }
 }
