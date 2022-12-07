@@ -261,13 +261,11 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues"
-          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          Some reports are disabled until all statements have been answered.
+        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          "Submit to MERIT" and some reports are disabled until all statements have been answered.
         </span>
-        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues"
-          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          <br>"Submit to MERIT" and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -278,10 +276,8 @@
             {{ title }}
           </span><br>
         </span>
-        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues"
-          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          Some reports are disabled until all statements have been answered and all Issues have an Issue Type
-          assigned.<br><br>
+        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+          "Submit to MERIT" and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -409,6 +405,14 @@
         </button>
       </div>
 
+    <div class="mt-5">
+      <button *ngIf="!assessSvc.isISE()" tabindex="0"
+        class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+        (click)="clickExport()"
+        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+        <span>Export</span>
+      </button>
     </div>
 
     <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"

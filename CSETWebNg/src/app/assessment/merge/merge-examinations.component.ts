@@ -260,9 +260,9 @@ export class MergeExaminationsComponent implements OnInit {
     if (altText === null || altText === "") {
       return "";
     } else {
-      let tempArray = altText.split("- - End of Comment - -");
+      let tempArray = altText.split("- - End of Note - -");
       for (let i = 0; i < tempArray.length; i++) {
-        if (!tempArray[i].includes("- - End of Comment - -")) {
+        if (!tempArray[i].includes("- - End of Note - -")) {
           commentString += tempArray[i];
         }
       }
