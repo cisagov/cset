@@ -176,7 +176,6 @@ export class IseExaminationComponent implements OnInit {
               }
             }
           }
-          console.log(this.masterActionItemsMap)
         });
 
 

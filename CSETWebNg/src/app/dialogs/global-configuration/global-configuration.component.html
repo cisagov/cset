@@ -22,8 +22,8 @@
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a" style="min-width: 300px;">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-      <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
-      <span>Global Configuration</span>
+      <span class="cset-icons-cog fs-base-6 mr-3"></span>
+      <span>MERIT Export Path</span>
     </div>
     <div class="m-2" style="color:red;" >{{errorMessage}} </div>
     <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -36,9 +36,9 @@
   
     </mat-dialog-content>
 
-    <mat-dialog-actions class="p-3 pt-0 mb-0">
+    <mat-dialog-actions class="p-3 pt-0 mb-0" style="display: flex; justify-content: space-between;">
         <button class="btn btn-secondary" (click)="close()">Close</button>
 
-        <button class="m-0 mx-3 btn btn-primary" (click)="savePath()">Save Path</button>
+        <button class="btn btn-primary" (click)="savePath()">Save Path</button>
     </mat-dialog-actions>
   </div>
