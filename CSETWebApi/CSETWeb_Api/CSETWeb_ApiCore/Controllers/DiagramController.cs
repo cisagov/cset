@@ -444,11 +444,18 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/alertsandadvisories")]
         [HttpGet]
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisories()
+        public IActionResult GetAlertsAndAdvisories()
         {
-            var vendors = _diagram.GetAlertsAndAdvisoriesVendors(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
+            try
+            {
+                return Ok(_diagram.GetAlertsAndAdvisoriesVendors(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF")));
+            }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
-            return vendors;
+                return StatusCode(500);
+            }
         }
 
         /// <summary>

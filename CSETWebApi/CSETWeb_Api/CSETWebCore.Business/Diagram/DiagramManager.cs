@@ -828,6 +828,11 @@ namespace CSETWebCore.Business.Diagram
             return templates;
         }
 
+        /// <summary>
+        /// uploads
+        /// </summary>
+        /// <param name="csafFilesDirectory">the directory that houses all of the csaf json files</param>
+        /// <returns></returns>
         public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisoriesVendors(string csafFilesDirectory) 
         {
             string[] filePaths = Directory.GetFiles(csafFilesDirectory);
@@ -883,5 +888,7 @@ namespace CSETWebCore.Business.Diagram
 
             return vendors;
         }
+
+        public int 
     }
 }
