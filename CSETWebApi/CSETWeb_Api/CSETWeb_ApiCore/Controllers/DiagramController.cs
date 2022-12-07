@@ -444,45 +444,18 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/alertsandadvisories")]
         [HttpGet]
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisories()
+        public IActionResult GetAlertsAndAdvisories()
         {
-            string[] filePaths = Directory.GetFiles(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF"));
-            List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
-
-            foreach (var filePath in filePaths) 
+            try
             {
-                string jsonString = System.IO.File.ReadAllText(filePath);
-                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString);
-
-                var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
-                var existingVendor = vendors.Find(v => v.Name == vendor.Name);
-
-                // Use existing vendor from list if present
-                if (existingVendor != null) 
-                { 
-                    vendor = existingVendor;
-                }
-
-                var product = new CommonSecurityAdvisoryFrameworkProduct(csafObj);
-                if (!vendor.Products.Exists(p => p.Name == product.Name)) 
-                { 
-                    vendor.Products.Add(product);
-                }
-
-                if (existingVendor == null) 
-                { 
-                    vendors.Add(vendor);
-                }
+                return Ok(_diagram.GetAlertsAndAdvisoriesVendors(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF")));
             }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
-            vendors.Sort((a, b) => string.Compare(a.Name, b.Name, true));
-
-            foreach (var vendor in vendors) 
-            { 
-                vendor.Products.Sort((a,b) => string.Compare(a.Name, b.Name, true));
+                return StatusCode(500);
             }
-
-            return vendors;
         }
 
         /// <summary>
