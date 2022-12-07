@@ -48,8 +48,7 @@
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4"
-    *ngIf="showObservationTearouts()">
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
@@ -263,10 +262,10 @@
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
         <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          Some reports are disabled until all statements have been answered.
+          "Submit to MERIT" and some reports are disabled until all statements have been answered.
         </span>
         <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          <br>Some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <br>"Submit to MERIT" and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -278,7 +277,7 @@
           </span><br>
         </span>
         <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          Some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          "Submit to MERIT" and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -305,6 +304,10 @@
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Examiner Notes
       </button>
+      
+      <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
       <!-- Below is commented out to hide background data for now -->
       <!-- <button (click)="clickReportLink('isedata')" tabindex="0" class="btn btn-link btn-link-dark text-left"
         [disabled]="disableIseReportLinks">
@@ -365,32 +368,42 @@
     </div>
 
     <div>
-      
-    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
-      class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>
-        Minimum Viable Resilience Assessment (MVRA) - DRAFT
-      </h4>
 
-      <div>
-        <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
-          MVRA Report
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Minimum Viable Resilience Assessment (MVRA) - DRAFT
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
+            MVRA Report
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Cybersecurity Performance Goals (CPG)
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
+            CPG Report
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
+          class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+          (click)="clickExport()"
+          matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+          <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+          <span>Export</span>
         </button>
       </div>
-    </div>
-
-    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"
-      class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>
-        Cybersecurity Performance Goals (CPG)
-      </h4>
-
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
-          CPG Report
-        </button>
-      </div>
-    </div>
 
     <div class="mt-5">
       <button *ngIf="!assessSvc.isISE()" tabindex="0"
@@ -400,21 +413,17 @@
         <span class="cset-icons-export-up fs-base-2 mr-2"></span>
         <span>Export</span>
       </button>
-      <button (click)="clickReportLink('iseissues')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Examination Report
-      </button>
+    </div>
+
+    <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+      [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+
+    <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+      <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
+      <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit to
+        MERIT</button>
     </div>
 
   </div>
-
-  <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
-
-
-  <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
-    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
-    <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0" 
-      [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit to MERIT</button>
-  </div>
-
-</div>

@@ -39,6 +39,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
 
   showSubcats: Map<String, boolean> = new Map<String, boolean>();
 
+  loading: boolean = false;
+
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
@@ -49,6 +51,7 @@ export class IseAnsweredQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("Answered Statements Report - ISE");
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
@@ -76,6 +79,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
             }
           }
         }
+
+        this.loading = false;
         
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)

@@ -156,6 +156,26 @@ export class ACETService {
         return this.http.get(this.apiUrl + 'reports/acet/getIseAllQuestions', headers);
     }
 
+    // checks if json file already exists in MERIT
+    doesMeritFileExist(fileValue: any) {
+        return this.http.post(this.apiUrl + 'doesMeritFileExist', fileValue, headers);
+    }
+
+    // Sends the generated json file to MERIT
+    newMeritFile(fileValue: any) {
+        return this.http.post(this.apiUrl + 'newMeritFile', fileValue, headers);
+    }
+
+    // Sends the generated json file to MERIT
+    overrideMeritFile(fileValue: any) {
+        return this.http.post(this.apiUrl + 'overrideMeritFile', fileValue, headers);
+    }
+
+    // Gets a new guid
+    generateNewGuid() {
+        return this.http.get(this.apiUrl + 'generateNewGuid', headers);
+    }
+
     getIseSourceFiles() {
         return this.http.get(this.apiUrl + 'reports/acet/getIseSourceFiles', headers);
     }

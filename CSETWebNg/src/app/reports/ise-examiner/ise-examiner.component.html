@@ -112,7 +112,7 @@
 
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Comments</div>
+                    <div class="h2 report-text-blue">Notes</div>
                 </div>
             </div>
             <div *ngIf="this.hasComments.length > 0; else noComments">
@@ -130,7 +130,7 @@
                         <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ? questionsSvc.answerButtonLabel(10, q.answerText) : ' ' }}</span>
                     </div>
                     <div>
-                        <div class="font-weight-bold">Comments: </div>
+                        <div class="font-weight-bold">Notes: </div>
                         <span class="pr-3">{{ q.comment }}</span>
                     </div>
 

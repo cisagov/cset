@@ -21,21 +21,38 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
+@Component({
+  selector: 'app-merit-check',
+  templateUrl: './merit-check.component.html',
+})
+ 
+export class MeritCheckComponent implements OnInit {
+  
+  constructor(
+    private dialog: MatDialogRef<MeritCheckComponent>, @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  
+  dialogTitle: string = "Notification";
+  iconClass: string = "cset-icons-bell";
+  public hasHeader: boolean;
 
-export const environment = {
-  production: false,
-  appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:5001/api/',
-  docUrl: 'https://localhost:5001/Documents/',
-  analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
-  appCode: 'CSET',
-  visibleVersion: "11.5",
-  version: '12.0.0.15',
-  helpContactEmail: 'cset@cisa.dhs.gov',
-  helpContactPhone: ''
-};
+  ngOnInit() {
+    // override the default title
+    if (!!this.data.title) {
+      this.dialogTitle = this.data.title;
+    }
+
+    // override the header icon
+    if (!!this.data.iconClass) {
+      this.iconClass = this.data.iconClass;
+    }
+  }
+
+  submit(overrideChoice: string) {
+    this.dialog.close(overrideChoice);  
+  }
+
+}
