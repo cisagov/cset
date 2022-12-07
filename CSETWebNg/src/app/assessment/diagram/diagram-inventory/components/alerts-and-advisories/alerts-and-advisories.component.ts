@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Product, Vendor } from '../diagram-components.component';
+import { Comparer } from './../../../../../helpers/comparer';
 
 interface cveWarning {
   level: string;
@@ -17,6 +18,8 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
 
   product: Product;
   vendor: Vendor;
+
+  comparer: Comparer = new Comparer();
 
   constructor(
     private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>,
@@ -34,7 +37,26 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
       return;
     }
 
-    //TODO: Implement column sorting
+    //TODO: Implement column sorting for commented out columns
+    this.product.vulnerabilities.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      switch (sort.active) {
+        case "cve":
+          return this.comparer.compare(a.cve, b.cve, isAsc);
+        case "score":
+          return this.comparer.compare(a.scores[0].cvss_V3.baseScore, b.scores[0].cvss_V3.baseScore, isAsc);
+        // case "version":
+        //   return this.comparer.compare(, b.sal, isAsc);
+        // case "serial":
+        //   return this.comparer.compare(a, b, isAsc);
+        case "linkDetails":
+          return this.comparer.compare(this.getCveUrl(a.cve), this.getCveUrl(b.cve), isAsc);
+        // case "linkWebsite":
+        //   return this.comparer.compare(a, b, isAsc);
+        default:
+          return 0;
+      }
+    });
   }
 
   getCveWarning(score: number): cveWarning {
@@ -58,5 +80,9 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
 
   getCveUrl(cve: string) {
     return 'https://nvd.nist.gov/vuln/detail/' + cve;
+  }
+
+  getVendorUrl(remediations: any[]) {
+    return remediations.find(r => !r.url.includes('cisa.gov') && !r.url.includes('nist.gov'))?.url;
   }
 }

@@ -17,6 +17,8 @@ using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -824,6 +826,67 @@ namespace CSETWebCore.Business.Diagram
                 .ToArray();
 
             return templates;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="csafFilesDirectory">the directory that houses all of the csaf json files</param>
+        /// <returns></returns>
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisoriesVendors(string csafFilesDirectory) 
+        {
+            string[] filePaths = Directory.GetFiles(csafFilesDirectory);
+            List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
+
+            foreach (var filePath in filePaths)
+            {
+                string jsonString = System.IO.File.ReadAllText(filePath);
+                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString);
+
+                var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
+                var existingVendor = vendors.Find(v => v.Name.Trim() == vendor.Name.Trim());
+
+                // Use existing vendor from list if present
+                if (existingVendor != null)
+                {
+                    vendor = existingVendor;
+                }
+
+                foreach (var branch in csafObj.Product_Tree.Branches[0].Branches)
+                {
+                    // Add newly found products, else add new vulnerabilites to existing product
+                    var newProduct = new CommonSecurityAdvisoryFrameworkProduct(csafObj, branch);
+                    if (!vendor.Products.Exists(p => p.Name == newProduct.Name))
+                    {
+                        vendor.Products.Add(newProduct);
+                    }
+                    else
+                    {
+                        var existingProduct = vendor.Products.Find(p => p.Name == newProduct.Name);
+                        foreach (var vulnerability in newProduct.Vulnerabilities)
+                        {
+                            if (!existingProduct.Vulnerabilities.Exists(v => v.Cve == vulnerability.Cve))
+                            {
+                                existingProduct.Vulnerabilities.Add(vulnerability);
+                            }
+                        }
+                    }
+                }
+
+                if (existingVendor == null)
+                {
+                    vendors.Add(vendor);
+                }
+            }
+
+            vendors.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+
+            foreach (var vendor in vendors)
+            {
+                vendor.Products.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+            }
+
+            return vendors;
         }
     }
 }
