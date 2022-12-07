@@ -598,7 +598,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Throws a 401 Unauthorized HTTP exception
-        /// </summary>
+        /// </summary>F
         public void Throw401()
         {
             var resp = new HttpResponseMessage(HttpStatusCode.Unauthorized)

@@ -10,32 +10,23 @@ namespace CSETWebCore.Model.Diagram
     {
         public CommonSecurityAdvisoryFrameworkProduct() { }
 
-        public CommonSecurityAdvisoryFrameworkProduct(CommonSecurityAdvisoryFrameworkObject csafObj) 
+        public CommonSecurityAdvisoryFrameworkProduct(CommonSecurityAdvisoryFrameworkObject csafObj,CommonSecurityAdvisoryFrameworkObject.Branch branch) 
         { 
-            Name = csafObj.Product_Tree.Branches[0].Branches[0].Name;
-            Vulnerabilities = csafObj.Vulnerabilities;
-            Versions = new List<Version>();
+            Name = branch.Name;
+            Vulnerabilities = new List<CommonSecurityAdvisoryFrameworkObject.Vulnerability>();
+            AffectedVersions = branch.Branches[0].Name;
 
-            foreach (var branch in csafObj.Product_Tree.Branches[0].Branches) 
+            foreach (var vulnerability in csafObj.Vulnerabilities) 
             {
-                Versions.Add(new Version(branch.Branches[0].Name, branch.Branches[0].Product.Product_Id));
+                if (vulnerability.Product_Status.Known_Affected.Contains(branch.Branches[0].Product.Product_Id)) 
+                { 
+                    Vulnerabilities.Add(vulnerability);
+                }
             }
         }
 
         public string Name { get; set; }
         public List<CommonSecurityAdvisoryFrameworkObject.Vulnerability> Vulnerabilities { get; set; }
-        public List<Version> Versions { get; set; }
-
-        public class Version 
-        {
-            public Version(string name, string productId) 
-            {
-                Name = name;
-                Product_Id = productId;
-            }
-
-            public string Name { get; set; }
-            public string Product_Id { get; set; }
-        }
+        public string AffectedVersions { get; set; }
     }
 }
