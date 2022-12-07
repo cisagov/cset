@@ -64,16 +64,16 @@ export class QuestionBlockIseComponent implements OnInit {
 
   altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
   altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  altTextPlaceholder_ISE = "Description, explanation and/or justification for comment";
-  textForSummary = "Statement Summary (insert comments)";
+  altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
+  textForSummary = "Statement Summary (insert summary)";
   summaryCommentCopy = "";
   summaryEditedCheck = false; 
 
   contactInitials = "";
   altAnswerSegment = "";
-  convoBuffer = '\n- - End of Comment - -\n';
-  summaryConvoBuffer = '\n- - End of Summary Comment - -\n';
-  
+  convoBuffer = '\n- - End of Note - -\n';
+  summaryConvoBuffer = '\n- - End of Statement Summary - -\n';
+    
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
   finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
