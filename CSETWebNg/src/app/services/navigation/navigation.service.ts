@@ -96,10 +96,6 @@ export class NavigationService {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
-
-    this.analyticsSvc.pingAnalyticsService().subscribe(data => {
-      this.analyticsIsUp = true;
-    });
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
