@@ -55,12 +55,7 @@ export class IssuesComponent implements OnInit {
 
   // Per client request: "Just make them static for now"
   risk: string = "Transaction";
-  subRisk: string = "Information Systems & Technology Controls";
-  /*transactionSubRisks = ['Audit', 'Account out of Balance/Misstatement', 'Internal Controls', 'Information Systems & Technology Controls',
-                         'Fraud', 'Other', 'Supervisory Committee Activities', 'Full and Fair Disclosure', 'Electronic Payment & Card Services', 
-                         'Recordkeeping-Significant', 'Security Program', 'Account Verification', 'Policies & Procedures', 
-                         'Program Monitoring', 'Oversight & Reporting', 'Internal Audit & Review'];*/
-  
+  subRisk: string = "Information Systems & Technology Controls";  
   updatedActionText: string[] = [];
   ActionItemList = new Map();
 

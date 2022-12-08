@@ -205,7 +205,7 @@
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
                     <textarea appAutoSize id="summaryComment" class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                        (click)="autoResize()" (change)="storeSummaryComment(q, $event)"></textarea>
+                        (mousedown)="autoResize()" (change)="storeSummaryComment(q, $event)"></textarea>
                 </div>
             </ng-container>
         </div>

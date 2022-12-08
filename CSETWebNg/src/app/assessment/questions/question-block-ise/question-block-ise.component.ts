@@ -650,7 +650,7 @@ export class QuestionBlockIseComponent implements OnInit {
   }
 
   autoResize() {
-    let textArea = document.getElementById("summaryComment")       
+    let textArea = document.getElementById("summaryComment")
     textArea.style.overflow = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
@@ -777,8 +777,6 @@ export class QuestionBlockIseComponent implements OnInit {
     this.dialog.open(IssuesComponent, {
       data: find,
       disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
     }).afterClosed().subscribe(result => {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
