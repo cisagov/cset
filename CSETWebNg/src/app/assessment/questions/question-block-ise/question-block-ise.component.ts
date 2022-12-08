@@ -649,6 +649,13 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
+  autoResize() {
+    let textArea = document.getElementById("summaryComment")       
+    textArea.style.overflow = 'hidden';
+    textArea.style.height = '0px';
+    textArea.style.height = textArea.scrollHeight + 'px';
+  }
+
   isFinalQuestion(id: number) {
     if (this.iseExamLevel === 'SCUEP' && this.finalScuepQuestion.has(id)) {
       return true;
