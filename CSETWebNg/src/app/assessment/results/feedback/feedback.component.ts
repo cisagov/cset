@@ -69,10 +69,6 @@ export class FeedbackComponent implements OnInit {
     this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
-
-    this.analyticsSvc.pingAnalyticsService().subscribe(data => {
-      this.analyticsIsUp = true;
-    });
   }
 
   
