@@ -10,10 +10,6 @@ namespace CSETWebCore.Model.Acet
 
         public List<ACETFilterSetting> Settings { get; set; }
 
-        public bool B { get; set; }
-        public bool E { get; set; }
-        public bool Int { get; set; }
-        public bool A { get; set; }
-        public bool Inn { get; set; }
+        public int Financial_Level_Id { get; set; } 
     }
 }

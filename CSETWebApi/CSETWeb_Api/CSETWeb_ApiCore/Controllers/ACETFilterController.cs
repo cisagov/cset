@@ -107,30 +107,28 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             List<ACETFilter> filters = new List<ACETFilter>();
 
-            filters = (from a in _context.FINANCIAL_DOMAIN_FILTERS
+            filters = (from a in _context.FiltersNormalized
                        join b in _context.FINANCIAL_DOMAINS on a.DomainId equals b.DomainId
                        where a.Assessment_Id == assessmentId
                        select new ACETFilter()
                        {
                            DomainId = a.DomainId,
                            DomainName = b.Domain,
-                           B = a.B,
-                           E = a.E,
-                           Int = a.Int,
-                           A = a.A,
-                           Inn = a.Inn
+                           Financial_Level_Id = a.MaturityId                       
                        }).ToList();
 
             // create Settings according to the B, E, Int, A and Inn bits.
-            filters.ForEach(f =>
-            {
-                f.Settings = new List<ACETFilterSetting>();
-                f.Settings.Add(new ACETFilterSetting(1, f.B));
-                f.Settings.Add(new ACETFilterSetting(2, f.E));
-                f.Settings.Add(new ACETFilterSetting(3, f.Int));
-                f.Settings.Add(new ACETFilterSetting(4, f.A));
-                f.Settings.Add(new ACETFilterSetting(5, f.Inn));
-            });
+            //TODO FIX THIS
+            //filters.ForEach(f =>
+            //{
+            //    f.Settings = new List<ACETFilterSetting>();
+            //    for(int i=1; i<6; i++)
+            //    {
+            //        f.Settings.Add(new ACETFilterSetting(1, ));
+            //    }
+                
+                
+            //});
 
             return Ok(filters);
         }
