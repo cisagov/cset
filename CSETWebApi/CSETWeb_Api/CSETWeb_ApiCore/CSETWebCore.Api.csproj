@@ -98,7 +98,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\etc\build\compiler.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\etc\build\filechecker.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -8348,49 +8348,49 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\appengine-api-1.0-sdk-1.9.63.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\commons-codec-1.10.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\commons-fileupload-1.3.2.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\commons-io-2.4.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\commons-lang3-3.5.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\commons-logging-1.2.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\gae-stub-1.0.1.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\gae-stub-1.0.2.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\gson-2.7.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\httpclient-4.5.5.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\httpcore-4.4.9.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\jstl-1.2.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\mxgraph-core.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\pusher-http-java-1.0.0.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\lib\servlet-api.jar">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Diagram\src\main\webapp\WEB-INF\logging.properties">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
