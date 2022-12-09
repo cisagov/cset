@@ -79,7 +79,7 @@ export class QuestionBlockNestedComponent implements OnInit {
       this.showQuestionLevel = true;
     }
 
-    this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
+    this.showIdTag = this.configSvc.config.debug.showQuestionAndRequirementIDs;
 
     // listen for changes to the extras
     this.questionsSvc.extrasChanged$.subscribe((qe) => {

@@ -172,23 +172,6 @@ export class ConfigService {
 
     return true;
   }
-
-  /**
-   * Returns a boolean indicating if the app is configured to show
-   * question and requirement IDs for debugging purposes.
-   */
-  showQuestionAndRequirementIDs() {
-    return this.config.debug.showQuestionAndRequirementIDs ?? false;
-  }
-
-  /**
-   * Returns a boolean indicating if the app is configured to show
-   * the API build/link datetime in the CSET help about for debugging purposes.
-   * @returns
-   */
-  showBuildTime() {
-    return this.config.debug.showBuildTime ?? false;
-  }
 }
 
 export function ConfigFactory(config: ConfigService) {

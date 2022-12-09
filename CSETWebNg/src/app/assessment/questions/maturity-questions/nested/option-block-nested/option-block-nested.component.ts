@@ -49,7 +49,7 @@ export class OptionBlockNestedComponent implements OnInit {
 
 
   // temporary debug aids
-  showIdTag = this.configSvc.showQuestionAndRequirementIDs();
+  showIdTag = this.configSvc.config.debug.showQuestionAndRequirementIDs;
   showWeightTag = false;
 
   constructor(

@@ -226,7 +226,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     showCriticalService() {
-      return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
+      return this.configSvc.behaviors.showCriticalService;
     }
 
     

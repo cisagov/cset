@@ -95,7 +95,7 @@ export class QuestionBlockComponent implements OnInit {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = this.configSvc.config.debug.showQuestionAndRequirementIDs;
   }
 
   /**

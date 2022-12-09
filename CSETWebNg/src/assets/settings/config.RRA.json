@@ -1,0 +1,8 @@
+{
+    "behaviors": {
+        "showToolsMenu": false,
+        "showHelpMenu": false,
+        "showCriticalService": false,
+        "showFeedbackIcon": false
+    }
+}

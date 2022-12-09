@@ -164,7 +164,7 @@ export class QuestionBlockIseComponent implements OnInit {
       this.refreshPercentAnswered();
     });
 
-    this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = false; 
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
       let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";

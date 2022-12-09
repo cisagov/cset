@@ -101,7 +101,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshPercentAnswered();
     });
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = this.configSvc.config.debug.showQuestionAndRequirementIDs;
   }
 
   /**

@@ -60,9 +60,6 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() { 
-    if (this.configSvc.installationMode === 'RRA') {
-      
-    }
   }
   
   ngAfterViewInit() {
