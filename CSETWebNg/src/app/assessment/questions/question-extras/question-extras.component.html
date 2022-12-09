@@ -167,7 +167,7 @@
             </div>
         </div>
         <div *ngIf="myQuestion.is_Component; else detailTab">
-            <div *ngIf="extras !== null && tab && mode == 'COMPONENT'" class="detail">
+            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
                         <th>Component Type</th>
@@ -188,14 +188,14 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="extras !== null && tab && mode == 'SUPP'" class="supplemental">
+            <div *ngIf="!!extras && !!tab && mode == 'SUPP'" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
             </div>
         </div>
         <ng-template #detailTab>
-            <div *ngIf="extras !== null && tab && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
+            <div *ngIf="!!extras && !!tab && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
                 <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category:
@@ -203,15 +203,18 @@
                 <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
+                
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">Maturity Level: </span>{{tab?.levelName}}
                 </div>
+
                 <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
                 <div *ngIf="!tab?.showRequirementStandards">
-                    <span [innerHTML]="tab?.requirementsData?.text | safe: 'html'"></span>
+                    <span [innerHTML]="tab?.requirementsData?.text ? (tab.requirementsData.text | safe: 'html') : 'none'"></span>
                     <span *ngIf="showQuestionIds" class="debug-highlight">{{
                         tab?.requirementsData?.requirementID }}</span>
                 </div>
+
                 <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
                 </div>
 
@@ -219,15 +222,14 @@
                     <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak"
                         class="related-question-1"></div>
                 </div>
-
-
             </div>
-            <div *ngIf="extras !== null && tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
+
+            <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
             </div>
-            <div *ngIf="extras !== null && mode == 'SUPP'" class="supplemental">
+            <div *ngIf=" !!extras && mode == 'SUPP'" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
                 <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
                 <div
@@ -235,21 +237,21 @@
                 </div>
             </div>
         </ng-template>
-        <div *ngIf="extras !== null && mode === 'CMNT'">
+        <div *ngIf=" !!extras && mode === 'CMNT'">
             <div class="form-group">
                 <textarea autosize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
 
-        <div *ngIf="extras !== null && mode === 'FDBK'">
+        <div *ngIf=" !!extras && mode === 'FDBK'">
             <div class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>
 
-        <div *ngIf="extras !== null && mode === 'DOCS'">
+        <div *ngIf=" !!extras && mode === 'DOCS'">
             <table class="reference-table">
                 <tr>
                     <th>Artifact / Document Title</th>
@@ -301,39 +303,11 @@
                 class="display-none">
         </div>
 
-        <div *ngIf="extras !== null && tab && mode === 'REFS'">
-            <table class="reference-table" *ngIf="tab != null">
-                <tr *ngFor="let reftext of tab?.referenceTextList">
-                    <td colspan="2" [innerHTML]="reftext">
-                    </td>
-                </tr>
-                <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
-                    <td>Source Documents</td>
-                    <td>Section</td>
-                </tr>
-                <tr *ngFor="let reference of tab?.sourceDocumentsList">
-                    <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
-                        <a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.title}}</a>
-                    </td>
-                    <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
-                </tr>
-                <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
-                    <td>Additional Documents</td>
-                    <td>Section</td>
-                </tr>
-                <tr *ngFor="let reference of tab?.additionalDocumentsList">
-                    <td class="align-top"><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
-                            target="_blank">{{reference.title}}</a></td>
-                    <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
-                </tr>
-                <tr *ngIf="areNoReferenceDocumentsAvailable()">
-                    <td colspan="2">(no reference documents available)</td>
-                </tr>
-            </table>
+        <div *ngIf=" !!extras && !!tab && mode === 'REFS'">
+            <app-references-display [tab]="tab"></app-references-display>
         </div>
 
-      <div *ngIf="extras !== null && mode === 'DISC'">
+      <div *ngIf=" !!extras && mode === 'DISC'">
             <div *ngIf="!this.assessSvc.isISE()">
                 <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
                     <tr>
