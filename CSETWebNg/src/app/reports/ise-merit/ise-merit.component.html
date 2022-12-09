@@ -213,7 +213,12 @@
                                     <strong>Question: </strong> {{ finding?.question?.question_Title }}
                                 </div>
                                 <div>
-                                    <strong>Title: </strong> {{ finding?.finding?.title }}
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
+                                        [cdkCopyToClipboard]="(finding?.finding?.title == null || finding?.finding?.title == '') ? '(no Title available)' : finding?.finding?.title">
+                                        <span class="cset-icons-copy"></span>
+                                    </label>
+                                    <strong> Title: </strong> {{ finding?.finding?.title }}
                                 </div>
                                 <div>
                                     <strong>Issue Type: </strong> {{ finding?.finding?.type }}
@@ -369,7 +374,7 @@
                                         [cdkCopyToClipboard]="this.copyAllSourceFiles(finding?.question?.mat_Question_Id)">
                                         <span class="cset-icons-copy"> Copy All</span>
                                     </label>
-                                    <strong> Source Files: </strong> 
+                                    <strong> Resources: </strong> 
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
                                         <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
@@ -381,7 +386,7 @@
                                             {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Source Files available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Resources available)</span>
                                 </div>
                                 
                                 <hr class="page-line">
