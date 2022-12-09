@@ -337,14 +337,14 @@
                                     <span *ngIf="finding?.question?.supplemental_Info != ''" [innerHtml]="finding?.question?.supplemental_Info"></span>
                                     <span *ngIf="finding?.question?.supplemental_Info == ''">(no supplemental guidance available)</span>
                                     <br>
-                                    <strong> Source Files: </strong> 
+                                    <strong> Resources: </strong> 
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
                                         <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
                                             {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Source Files available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Resources available)</span>
                                 </div>
                                 
 

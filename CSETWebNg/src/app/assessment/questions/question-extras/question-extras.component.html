@@ -308,7 +308,7 @@
                     </td>
                 </tr>
                 <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
-                    <td>Source Documents</td>
+                    <td>{{ documentLabel('Source Documents') }}</td>
                     <td>Section</td>
                 </tr>
                 <tr *ngFor="let reference of tab?.sourceDocumentsList">
@@ -319,7 +319,7 @@
                     <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
                 </tr>
                 <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
-                    <td>Additional Documents</td>
+                    <td>{{ documentLabel('Additional Documents') }}</td>
                     <td>Section</td>
                 </tr>
                 <tr *ngFor="let reference of tab?.additionalDocumentsList">
