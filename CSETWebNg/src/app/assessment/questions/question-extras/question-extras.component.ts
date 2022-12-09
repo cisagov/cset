@@ -737,4 +737,18 @@ export class QuestionExtrasComponent implements OnInit {
   usesRAC() {
     return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
+
+  /**
+   * Returns the custom label if the model has one (currently only ISE), or the default if not
+   */
+  documentLabel(defaultLabel: string) {
+    if (this.assessSvc.isISE()) {
+      if(defaultLabel === 'Source Documents') {
+        return 'Resources';
+      } else if (defaultLabel === 'Additional Documents') {
+        return 'References';
+      }
+    }
+    return defaultLabel;
+  }
 }
