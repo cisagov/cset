@@ -55,7 +55,7 @@ export class QuestionBlockNestedReportComponent implements OnInit {
       this.questionList = this.questions;
     }
 
-    this.showIdTag = this.configSvc.showQuestionAndRequirementIDs();
+    this.showIdTag = this.configSvc.config.debug.showQuestionAndRequirementIDs;
   }
 
   /**

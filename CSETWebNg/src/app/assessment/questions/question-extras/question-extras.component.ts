@@ -84,12 +84,12 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
     public layoutSvc: LayoutService
-    ) {
+  ) {
   }
 
 
   ngOnInit() {
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+    this.showQuestionIds = this.configSvc.config.debug.showQuestionAndRequirementIDs;
 
     if (!!this.myOptions) {
       if (this.myOptions.eagerSupplemental) {
@@ -189,28 +189,6 @@ export class QuestionExtrasComponent implements OnInit {
     this.defaultEmptyAnswer();
     this.answer.comment = e.target.value;
     this.saveAnswer();
-  }
-
-  /**
-   *
-   * @returns
-   */
-  showDocumentsIcon(): boolean {
-
-    return true;
-  }
-
-  /**
-   *
-   */
-  showFeedbackIcon(): boolean {
-    if (this.configSvc.installationMode === 'ACET') {
-      return false;
-    }
-    if (this.configSvc.installationMode === 'RRA') {
-      return false;
-    }
-    return true;
   }
 
   /**
@@ -357,11 +335,11 @@ export class QuestionExtrasComponent implements OnInit {
     };
 
     this.dialog.open(FindingsComponent, {
-        data: find,
-        disableClose: true,
-        width: this.layoutSvc.hp ? '90%' : '600px',
-        maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-      })
+      data: find,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '600px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+    })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
@@ -390,8 +368,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     if (findingToDelete.summary === null) {
       msg = "Are you sure you want to delete this "
-      + this.observationOrIssue().toLowerCase()
-      + "?";
+        + this.observationOrIssue().toLowerCase()
+        + "?";
     }
 
 
@@ -503,7 +481,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
 
-          this.questionsSvc.broadcastExtras(this.extras);
+        this.questionsSvc.broadcastExtras(this.extras);
       }
     });
   }
@@ -676,6 +654,11 @@ export class QuestionExtrasComponent implements OnInit {
       return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
+    // FEEDBACK
+    if (mode == 'FDBK') {
+      return this.configSvc.behaviors.showFeedbackIcon;
+    }
+
     return true;
   }
 
@@ -703,7 +686,7 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
-   observationOrIssue () {
+  observationOrIssue() {
     if (this.assessSvc.isISE()) {
       return 'Issue';
     }

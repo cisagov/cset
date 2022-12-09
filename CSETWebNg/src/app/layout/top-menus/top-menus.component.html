@@ -25,7 +25,7 @@
     <div *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
             class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
-            *ngIf="configSvc.installationMode !== 'RRA'">
+            *ngIf="configSvc.behaviors.showToolsMenu">
             <span class="cset-icons-tools fs-base-4 mr-2 align-middle"></span>
             <span>Tools</span>
         </button>
@@ -96,7 +96,7 @@
 
 
     <!-- HELP (non-RRA skin) -->
-    <div class="ml-auto" *ngIf="configSvc.installationMode !== 'RRA'">
+    <div class="ml-auto" *ngIf="configSvc.behaviors.showHelpMenu">
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>

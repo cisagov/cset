@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["CSETonline"],
+    "currentConfigChain": [],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -37,6 +37,7 @@
         "showModuleContentReport": true,
         "showAssessmentDocuments": true,
         "showObservations": true,
+        "showFeedbackIcon": true,
         "showFacilitatorDropDown": true,
         "showNameDisclaimer":false,
         "showAggregation": true,
@@ -58,6 +59,8 @@
         "showCriticalService": true,
         "allowDiagram": true,
         "showPrivacyWarning": false,
+        "showToolsMenu": true,
+        "showHelpMenu": true,
         "showTrend": true,
         "showCompare": true,
         "showEnableProtectedFeatures": true

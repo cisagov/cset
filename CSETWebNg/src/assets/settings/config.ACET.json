@@ -18,6 +18,7 @@
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "showExportOnReports": false
+        "showExportOnReports": false,
+        "showFeedbackIcon": false
     }
 }
