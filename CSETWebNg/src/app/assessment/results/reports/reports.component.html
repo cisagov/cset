@@ -21,28 +21,30 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel oy-auto d-flex flex-column flex-11a">
-  <h3>Reports</h3>
+  <div *ngIf="!assessSvc.isISE()">
+    <h3>Reports</h3>
 
-  <p>
-    Thank you for completing your assessment. The reports on this page capture summaries of your results that can help
-    your organization’s cybersecurity planning and growth going forward.
-    The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
-    the current state of the assessment.
-    <button *ngIf="!assessSvc.isISE()" mat-stroked-button (click)="openSnackBar()">
-      Printing Report Instructions
-    </button>
-  </p>
+    <p>
+      Thank you for completing your assessment. The reports on this page capture summaries of your results that can help
+      your organization’s cybersecurity planning and growth going forward.
+      The assessment was last updated {{ lastModifiedTimestamp }}. Any reports run prior to that update may not reflect
+      the current state of the assessment.
+      <button mat-stroked-button (click)="openSnackBar()">
+        Printing Report Instructions
+      </button>
+    </p>
 
-  <p *ngIf="isCyberFlorida" style="margin-top: 20px;">
-    We appreciate your participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
-    cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
-    through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources
-    and enact appropriate legislation to create a more secure Sunshine State!
+    <p *ngIf="isCyberFlorida" style="margin-top: 20px;">
+      We appreciate your participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
+      cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
+      through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources
+      and enact appropriate legislation to create a more secure Sunshine State!
 
-  </p>
-  <p>
+    </p>
+    <p>
 
-  </p>
+    </p>
+  </div>
 
   <div class="alert alert-warning" *ngIf="isMobile">
     For optimal viewing experience access your reports from a desktop browser
@@ -262,10 +264,10 @@
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
         <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          "Submit to MERIT" and some reports are disabled until all statements have been answered.
+          "Submit" button and some reports are disabled until all statements have been answered.
         </span>
         <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          <br>"Submit to MERIT" and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <br>"Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -277,7 +279,7 @@
           </span><br>
         </span>
         <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          "Submit to MERIT" and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -422,8 +424,7 @@
     <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
       <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
       <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit to
-        MERIT</button>
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
     </div>
 
   </div>

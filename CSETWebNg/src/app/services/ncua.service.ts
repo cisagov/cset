@@ -29,14 +29,10 @@ import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-m
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
 import { MaturityService } from './maturity.service';
-import { Question } from '../models/questions.model';
 import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
-import { QuestionBlockComponent } from '../assessment/questions/question-block/question-block.component';
-import { replace, stubString } from 'lodash';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
-import * as moment from 'moment';
-import { OkayComponent } from '../dialogs/okay/okay.component';
+import { Answer } from '../models/questions.model';
 
 let headers = {
     headers: new HttpHeaders()
@@ -564,10 +560,10 @@ let headers = {
     this.doesDirectoryExist().subscribe(
       (exists: boolean) => {
         if (exists === false){
-          let msg = `<br><p>The MERIT Export Path is not accessible.</p>
+          let msg = `<br><p>The Submission Export Path is not accessible.</p>
                          <p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
-                    disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                    disableClose: true, data: { title: "Submission Error", messageText: msg }
                   })
         }
         else if (exists === true){
@@ -580,13 +576,13 @@ let headers = {
               } else {
       
                 let msg = `<br>
-                  <p>It looks like you already have a MERIT submission for this examination.</p>
+                  <p>This examination has been previously submitted.</p>
                   <br>
                   <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
-                  <p>Or would you like to resend this examination and <strong>overwrite</strong> your last submission?</p>`;
+                  <p>Or would you like to <strong>overwrite</strong> the previous submission?</p>`;
       
                 this.dialog.open(MeritCheckComponent, {
-                  disableClose: true, data: { title: "MERIT Warning", messageText: msg }
+                  disableClose: true, data: { title: "Submission Warning", messageText: msg }
       
                 }).afterClosed().subscribe(overrideChoice => {
                   if (overrideChoice == 'new') {
@@ -595,14 +591,14 @@ let headers = {
                       (guidCarrier: any) => {
                         let msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully created.</p>`;
                         this.dialog.open(MeritCheckComponent, {
-                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                          disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
                         this.jsonStringReset(); 
                       },
                       error => {        
                           let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
                           this.dialog.open(MeritCheckComponent, {
-                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                            disableClose: true, data: { title: "Submission Error", messageText: msg }
                           });
                           this.jsonStringReset();         
                       }
@@ -613,14 +609,14 @@ let headers = {
                       (guidCarrier: any) => {
                         msg = `<br><p>The file '<strong>` + guidCarrier.guid + `.json</strong>' was successfully overwritten.</p>`;
                         this.dialog.open(MeritCheckComponent, {
-                          disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                          disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
                         this.jsonStringReset(); 
                       },
                       error => {        
                           let msg = "<br><p>Could not write the file."+error+"</p>";
                           this.dialog.open(MeritCheckComponent, {
-                            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+                            disableClose: true, data: { title: "Submission Error", messageText: msg }
                           });
                           this.jsonStringReset();         
                       }
@@ -637,7 +633,7 @@ let headers = {
           console.log(error);
           let msg = "<br><p>"+error.error+"</p>";
           this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+            disableClose: true, data: { title: "Submission Error", messageText: msg }
           });
           this.jsonStringReset();         
       }
@@ -656,7 +652,7 @@ let headers = {
     this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
       let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
               this.dialog.open(MeritCheckComponent, {
-                disableClose: true, data: { title: "MERIT Success", messageText: msg }
+                disableClose: true, data: { title: "Submission Success", messageText: msg }
               })
     });
 
@@ -695,6 +691,12 @@ let headers = {
     const uncPathCarrier = new MeritFileExport();
     uncPathCarrier.data = newPath;
     return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
+  }
+
+  answerAllQuestionsYes() {
+    let answerList: Answer[] = [];
+
+   // for
   }
 
 }
