@@ -8,8 +8,9 @@ namespace CSETWebCore.Model.Acet
         public String DomainName { get; set; }
         public int DomainId { get; set; }
 
-        public List<ACETFilterSetting> Settings { get; set; }
+        public bool IsOn { get; set; }
 
-        public int Financial_Level_Id { get; set; } 
+        public int Financial_Level_Id { get; set; }
+        public bool GroupAllSettingsFalse { get; set; }
     }
 }

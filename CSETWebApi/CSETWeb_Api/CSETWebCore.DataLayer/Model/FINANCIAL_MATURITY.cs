@@ -16,18 +16,21 @@ namespace CSETWebCore.DataLayer.Model
     {
         public FINANCIAL_MATURITY()
         {
+            FINANCIAL_DOMAIN_FILTERS_V2 = new HashSet<FINANCIAL_DOMAIN_FILTERS_V2>();
             FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
         }
 
         [Key]
-        public int MaturityId { get; set; }
+        public int Financial_Level_Id { get; set; }
         [Required]
         [StringLength(255)]
         public string MaturityLevel { get; set; }
         [StringLength(50)]
         public string Acronym { get; set; }
 
-        [InverseProperty("Maturity")]
+        [InverseProperty("Financial_Level")]
+        public virtual ICollection<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
+        [InverseProperty("Financial_Level")]
         public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
     }
 }

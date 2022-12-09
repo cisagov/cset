@@ -35,12 +35,8 @@ import { AssessmentService } from "../../assessment.service";
 export class ACETFilter {
     domainName: string;
     domainId: number;
-    settings: ACETFilterSetting[];
-}
-
-export class ACETFilterSetting {
-    level: number;
-    value: boolean;
+    financial_level_id: number;
+    isOn: boolean;
 }
 
 const headers = {
@@ -192,7 +188,8 @@ export class AcetFilteringService {
                         this.domainFilters.push({
                             domainName: entry.domainName,
                             domainId: entry.domainId,
-                            settings: entry.settings
+                            financial_level_id: entry.financial_level_id,
+                            isOn: entry.isOn
                         });
                     }
                 }
