@@ -771,7 +771,8 @@ export class QuestionBlockIseComponent implements OnInit {
       description: null,
       actionItems: null,
       citations: null,
-      auto_Generated: 0
+      auto_Generated: 0,
+      supp_Guidance: null
     };
 
     this.dialog.open(IssuesComponent, {
@@ -827,7 +828,8 @@ export class QuestionBlockIseComponent implements OnInit {
           description: desc,
           actionItems: null,
           citations: null,
-          auto_Generated: 1
+          auto_Generated: 1,
+          supp_Guidance: null
         };
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);
