@@ -354,6 +354,7 @@ export class QuestionExtrasComponent implements OnInit {
       actionItems: null,
       citations: null,
       auto_Generated: null,
+      supp_Guidance: null
     };
 
     this.dialog.open(FindingsComponent, {
