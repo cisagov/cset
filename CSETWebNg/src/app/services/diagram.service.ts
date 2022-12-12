@@ -82,4 +82,8 @@ export class DiagramService {
   getExport(): any {
     return this.http.get(this.apiUrl + 'exportExcel', { responseType: 'blob' });
   }
+
+  getVulnerabilities() {
+    return this.http.get(this.apiUrl + 'vulnerabilities');
+  }
 }

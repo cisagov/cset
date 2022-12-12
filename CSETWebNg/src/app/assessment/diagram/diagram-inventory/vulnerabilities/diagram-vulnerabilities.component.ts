@@ -25,13 +25,37 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
+import { MatDialog } from '@angular/material/dialog';
+import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
+
+export interface Vendor {
+  name: string;
+  products: Product[];
+}
+
+export interface Product {
+  name: string;
+  vulnerabilities: Vulnerability[];
+  versions: { name: string; product_Id: string }[]
+}
+
+interface Vulnerability {
+  cve: string;
+  cwe: any;
+  notes: any[];
+  product_Status: any;
+  references: any[];
+  remediations: any[];
+  scores: any[];
+  title: string;
+}
 
 @Component({
-  selector: 'app-diagram-components',
-  templateUrl: './diagram-components.component.html',
-  styleUrls: ['./diagram-components.component.scss']
+  selector: 'app-diagram-vulnerabilities',
+  templateUrl: './diagram-vulnerabilities.component.html',
+  styleUrls: ['./diagram-vulnerabilities.component.scss']
 })
-export class DiagramComponentsComponent implements OnInit {
+export class DiagramVulnerabilitiesComponent implements OnInit {
 
   diagramComponentList: any[] = [];
 
@@ -39,22 +63,27 @@ export class DiagramComponentsComponent implements OnInit {
   componentsChange = new EventEmitter<any>();
 
   comparer: Comparer = new Comparer();
-  assetTypes: any;
   sal: any;
   criticality: any;
+  vendors: Vendor[] = [];
 
   /**
    *
    */
   constructor(
-    public diagramSvc: DiagramService
+    public diagramSvc: DiagramService,
+    private dialog: MatDialog
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.getComponents();
+    this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+      this.vendors = vendors;
+      this.getComponents();
+    })
+
   }
 
   /**
@@ -63,7 +92,21 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
+      this.diagramComponentList.forEach(component => {
+        this.updateComponentVendor(component);
+      })
       this.componentsChange.emit(this.diagramComponentList);
+    });
+  }
+
+  saveComponent(component) {
+    this.updateComponentVendor(component);
+    this.diagramSvc.saveComponent(component).subscribe();
+  }
+
+  showVulnerabilities(component) {
+    this.dialog.open(DiagramVulnerabilitiesDialogComponent, {
+      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
     });
   }
 
@@ -78,29 +121,29 @@ export class DiagramComponentsComponent implements OnInit {
       switch (sort.active) {
         case "label":
           return this.comparer.compare(a.label, b.label, isAsc);
-        case "hasUniqueQuestions":
-          return this.comparer.compareBool(a.hasUniqueQuestions, b.hasUniqueQuestions, isAsc);
-        case "sal":
-          return this.comparer.compare(a.sal, b.sal, isAsc);
-        case "criticality":
-          return this.comparer.compare(a.criticality, b.criticality, isAsc);
-        case "layer":
-          return this.comparer.compare(a.layerName, b.layerName, isAsc);
-        case "ipAddress":
-          return this.comparer.compare(a.ipAddress, b.ipAddress, isAsc);
         case "assetType":
           return this.comparer.compare(a.assetType, b.assetType, isAsc);
-        case "zone":
-          return this.comparer.compare(a.zoneLabel, b.zoneLabel, isAsc);
-        case "description":
-          return this.comparer.compare(a.description, b.description, isAsc);
-        case "hostName":
-          return this.comparer.compare(a.hostName, b.hostName, isAsc);
-        case "visible":
-          return this.comparer.compareBool(a.visible, b.visible, isAsc);
+        case "vendorName":
+          return this.comparer.compareBool(a.vendorName, b.vendorName, isAsc);
+        case "productName":
+          return this.comparer.compareBool(a.productName, b.productName, isAsc);
+        case "version":
+          return this.comparer.compareBool(a.versionName, b.versionName, isAsc);
+        case "serialNumber":
+          return this.comparer.compareBool(a.serialNumber, b.serialNumber, isAsc);
+        case "physicalLocation":
+          return this.comparer.compareBool(a.physicalLocation, b.physicalLocation, isAsc);
         default:
           return 0;
       }
     });
+  }
+
+  updateComponentVendor(component) {
+    if (!component.vendorName) {
+      return;
+    }
+
+    component.vendor = this.vendors.find(v => v.name === component.vendorName);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Product, Vendor } from '../diagram-components.component';
-import { Comparer } from './../../../../../helpers/comparer';
+import { Product, Vendor } from '../diagram-vulnerabilities.component';
+import { Comparer } from '../../../../../helpers/comparer';
 
 interface cveWarning {
   level: string;
@@ -10,11 +10,11 @@ interface cveWarning {
 }
 
 @Component({
-  selector: 'app-alerts-and-advisories',
-  templateUrl: './alerts-and-advisories.component.html',
-  styleUrls: ['./alerts-and-advisories.component.scss']
+  selector: 'app-diagram-vulnerabilities-dialog',
+  templateUrl: './diagram-vulnerabilities-dialog.component.html',
+  styleUrls: ['./diagram-vulnerabilities-dialog.component.scss']
 })
-export class AlertsAndAdvisoriesComponent implements OnInit {
+export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 
   product: Product;
   vendor: Vendor;
@@ -22,7 +22,7 @@ export class AlertsAndAdvisoriesComponent implements OnInit {
   comparer: Comparer = new Comparer();
 
   constructor(
-    private dialog: MatDialogRef<AlertsAndAdvisoriesComponent>,
+    private dialog: MatDialogRef<DiagramVulnerabilitiesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { this.product = data.product; this.vendor = data.vendor;  }
 
