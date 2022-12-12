@@ -525,7 +525,7 @@ let headers = {
     let metaDataInfo = {
       "assessmentName": this.information.assessment_Name,
       "examiner": this.information.assessor_Name.trim(),
-      "creationDate": this.information.assessment_Date,
+      "creationDate": this.information.assessment_Date_Export,
       "examLevel": this.examLevel,
       "guid": this.questions.assessmentGuid
     };
@@ -642,9 +642,8 @@ let headers = {
               this.dialog.open(MeritCheckComponent, {
                 disableClose: true, data: { title: "Submission Success", messageText: msg }
               })
+      this.jsonStringReset();
     });
-
-    this.jsonStringReset(); 
   }
 
   jsonStringReset () {
@@ -652,7 +651,7 @@ let headers = {
       "metaData": {
         "assessmentName": '',
         "examiner": '',
-        "creationDate": null,
+        "creationDate": '',
         "examLevel": '',
         "guid": ''
       },
