@@ -45,6 +45,7 @@ export interface Finding {
   citations: string;
   actionItems: string;
   auto_Generated: number;
+  supp_Guidance: string;
   // Shared fields
   importance: Importance;
   finding_Contacts: FindingContact[];

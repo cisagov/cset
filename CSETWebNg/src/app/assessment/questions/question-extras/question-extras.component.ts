@@ -354,6 +354,7 @@ export class QuestionExtrasComponent implements OnInit {
       actionItems: null,
       citations: null,
       auto_Generated: null,
+      supp_Guidance: null
     };
 
     this.dialog.open(FindingsComponent, {
@@ -713,9 +714,48 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
+   * Returns the custom label if the model has one (currently only ISE), or the default if not
+   */
+  documentLabel(defaultLabel: string) {
+    if (this.assessSvc.isISE()) {
+      if(defaultLabel === 'Source Documents') {
+        return 'Resources';
+      } else if (defaultLabel === 'Additional Documents') {
+        return 'References';
+      }
+    }
+    return defaultLabel;
+  }
+
+  /**
    * Checks if the current assessment uses the Rapid Assessment Control Set.
    */
   usesRAC() {
     return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
+
+  /**
+   * Adding this back in for now (I need the old table format)
+   * @param document 
+   * @returns 
+   */
+  documentUrl(document: CustomDocument) {
+    var link = '';
+    if (document.is_Uploaded) {
+      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
+    } else {
+      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
+    }
+    return link;
+  }
+
+  /**
+   * 
+   */
+  areNoReferenceDocumentsAvailable() {
+    return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
+      && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
+      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+  }
+
 }

@@ -304,7 +304,41 @@
         </div>
 
         <div *ngIf=" !!extras && !!tab && mode === 'REFS'">
-            <app-references-display [tab]="tab"></app-references-display>
+            <div *ngIf="assessSvc.isISE()">
+                <table class="reference-table" *ngIf="tab != null">
+                    <tr *ngFor="let reftext of tab?.referenceTextList">
+                        <td colspan="2" [innerHTML]="reftext">
+                        </td>
+                    </tr>
+                    <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
+                        <td>{{ documentLabel('Source Documents') }}</td>
+                        <td>Section</td>
+                    </tr>
+                    <tr *ngFor="let reference of tab?.sourceDocumentsList">
+                        <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
+                            <a href="{{documentUrl(reference, reference.section_Ref)}}" 
+                            rel="noopener noreferrer" target="_blank">{{reference.title}}</a>
+                        </td>
+                        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+                    </tr>
+                    <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
+                        <td>{{ documentLabel('Additional Documents') }}</td>
+                        <td>Section</td>
+                    </tr>
+                    <tr *ngFor="let reference of tab?.additionalDocumentsList">
+                        <td class="align-top">
+                            <a href="{{documentUrl(reference, reference.section_Ref)}}" 
+                            rel="noopener noreferrer" target="_blank">{{reference.title}}</a></td>
+                        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+                    </tr>
+                    <tr *ngIf="areNoReferenceDocumentsAvailable()">
+                        <td colspan="2">(no reference documents available)</td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="!assessSvc.isISE()">
+                <app-references-display [tab]="tab"></app-references-display>
+            </div>
         </div>
 
       <div *ngIf=" !!extras && mode === 'DISC'">
