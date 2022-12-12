@@ -62,7 +62,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveACETFilters([FromBody] bool value)
         {
             int assessment_id = _tokenManager.AssessmentForUser();
-           
+
             var ar = _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
             if (ar != null)
             {
@@ -107,32 +107,28 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             List<ACETFilter> filters = new List<ACETFilter>();
 
-            filters = (from a in _context.FINANCIAL_DOMAIN_FILTERS
-                       join b in _context.FINANCIAL_DOMAINS on a.DomainId equals b.DomainId
-                       where a.Assessment_Id == assessmentId
-                       select new ACETFilter()
-                       {
-                           DomainId = a.DomainId,
-                           DomainName = b.Domain,
-                           B = a.B,
-                           E = a.E,
-                           Int = a.Int,
-                           A = a.A,
-                           Inn = a.Inn
-                       }).ToList();
+            //full cross join
+            //select DomainId, financial_level_id from FINANCIAL_DOMAINS, FINANCIAL_MATURITY
+            var crossJoin = from b in _context.FINANCIAL_DOMAINS
+                            from c in _context.FINANCIAL_MATURITY                            
+                            select new { b.DomainId, c.Financial_Level_Id, b.Domain };
 
-            // create Settings according to the B, E, Int, A and Inn bits.
-            filters.ForEach(f =>
-            {
-                f.Settings = new List<ACETFilterSetting>();
-                f.Settings.Add(new ACETFilterSetting(1, f.B));
-                f.Settings.Add(new ACETFilterSetting(2, f.E));
-                f.Settings.Add(new ACETFilterSetting(3, f.Int));
-                f.Settings.Add(new ACETFilterSetting(4, f.A));
-                f.Settings.Add(new ACETFilterSetting(5, f.Inn));
-            });
+            var tmpFilters = (from c in crossJoin
+                              join a in _context.FINANCIAL_DOMAIN_FILTERS_V2 on new { c.Financial_Level_Id, c.DomainId } equals new { a.Financial_Level_Id, a.DomainId }
+                              into myFilters
+                              from subfilter in myFilters.DefaultIfEmpty()
+                              where subfilter.Assessment_Id == assessmentId
+                              select new
+                              {
+                                  DomainId = c.DomainId,
+                                  DomainName = c.Domain,
+                                  Financial_Level_Id = c.Financial_Level_Id,
+                                  IsOn = subfilter.IsOn
+                              }).ToList();
 
-            return Ok(filters);
+            var groups = tmpFilters.GroupBy(d => d.DomainId, d => d, (key, g) => new { DomainId = key, DomainName = g.First().DomainName, Tiers = g.ToList() }).ToList();
+
+            return Ok(groups);
         }
 
 
@@ -153,38 +149,24 @@ namespace CSETWebCore.Api.Controllers
             Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
             int domainId = domainIds[domainname];
 
-            var filter = _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
+            var filter = _context.FINANCIAL_DOMAIN_FILTERS_V2.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId && x.Financial_Level_Id == level).FirstOrDefault();
             if (filter == null)
             {
-                filter = new FINANCIAL_DOMAIN_FILTERS()
+                filter = new FINANCIAL_DOMAIN_FILTERS_V2()
                 {
                     Assessment_Id = assessmentId,
-                    DomainId = domainId
+                    DomainId = domainId,
+                    Financial_Level_Id = level,
+                    IsOn = value
                 };
-                _context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
+                _context.FINANCIAL_DOMAIN_FILTERS_V2.Add(filter);
             }
-
-            switch (level)
+            else
             {
-                case 1:
-                    filter.B = value;
-                    break;
-                case 2:
-                    filter.E = value;
-                    break;
-                case 3:
-                    filter.Int = value;
-                    break;
-                case 4:
-                    filter.A = value;
-                    break;
-                case 5:
-                    filter.Inn = value;
-                    break;
+                filter.IsOn = value;
             }
 
             _context.SaveChanges();
-
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return Ok();
@@ -202,41 +184,29 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            
-            Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
-            foreach (ACETFilter f in filters.Where(x => x.DomainName != null).ToList())
-            {
-                int domainId = domainIds[f.DomainName];
-                var filter = _context.FINANCIAL_DOMAIN_FILTERS.Where(x => x.DomainId == domainId && x.Assessment_Id == assessmentId).FirstOrDefault();
-                if (filter == null)
-                {
-                    filter = new FINANCIAL_DOMAIN_FILTERS()
-                    {
-                        Assessment_Id = assessmentId,
-                        DomainId = domainId
-                    };
-                    _context.FINANCIAL_DOMAIN_FILTERS.Add(filter);
-                }
 
-                foreach (var s in f.Settings)
+            Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
+            foreach (ACETFilter f in filters)
+            {
+
+                foreach (ACETDomainTiers t in f.Tiers)
                 {
-                    switch (s.Level)
+
+                    var filter = _context.FINANCIAL_DOMAIN_FILTERS_V2.Where(x => x.DomainId == f.DomainId && x.Assessment_Id == assessmentId && x.Financial_Level_Id == t.Financial_Level_Id).FirstOrDefault();
+                    if (filter == null)
                     {
-                        case 1:
-                            filter.B = s.Value;
-                            break;
-                        case 2:
-                            filter.E = s.Value;
-                            break;
-                        case 3:
-                            filter.Int = s.Value;
-                            break;
-                        case 4:
-                            filter.A = s.Value;
-                            break;
-                        case 5:
-                            filter.Inn = s.Value;
-                            break;
+                        filter = new FINANCIAL_DOMAIN_FILTERS_V2()
+                        {
+                            Assessment_Id = assessmentId,
+                            DomainId = f.DomainId,
+                            Financial_Level_Id = t.Financial_Level_Id,
+                            IsOn = t.IsOn
+                        };
+                        _context.FINANCIAL_DOMAIN_FILTERS_V2.Add(filter);
+                    }
+                    else
+                    {
+                        filter.IsOn = t.IsOn;
                     }
                 }
             }
