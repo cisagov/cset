@@ -1,0 +1,16 @@
+{
+	"1": ["MVRA Assessment", "index.htm", []],
+	"2": ["1. Intro to the MVRA Model", "intro_to_the_mvra_model.htm", []],
+	"3": ["1.1. MVRA Scope ", "mvra_scope_.htm", [1]],
+	"4": ["1.2. MVRA Objectives", "mvra_objectives.htm", [1]],
+	"5": ["2. The MVRA Assessment in CSET®", "the_mvra_assessment_in_cset_.htm", []],
+	"6": ["2.1. Assessment Prep Steps ", "assessment_prep_steps_.htm", [2]],
+	"7": ["2.2. Top Menu Bar", "top_menu_bar.htm", [2]],
+	"8": ["2.3. MVRA Quick Start Guide", "mvra_quick_start_guide.htm", [2]],
+	"9": ["2.3.1. Sharing (Exporting) an Assessment ", "sharing__exporting__an_assessment_.htm", [2,9]],
+	"10": ["2.3.2. Importing an Existing Assessment", "importing_an_existing_assessment.htm", [2,9]],
+	"11": ["2.4. MVRA Results", "mvra_results.htm", [2]],
+	"12": ["2.5. MVRA Report Example", "2_5__mvra_report_example.htm", [2]],
+	"13": ["3. Glossary", "glossary.htm", []],
+	"14": ["4. Disclaimer and Advisory", "disclaimer_and_advisory.htm", []]
+}
