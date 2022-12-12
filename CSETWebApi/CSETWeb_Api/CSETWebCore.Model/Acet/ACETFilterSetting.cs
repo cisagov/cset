@@ -5,10 +5,8 @@
         public int Level { get; set; }
         public bool Value { get; set; }
 
-        public ACETFilterSetting(int level, bool value)
+        public ACETFilterSetting()
         {
-            this.Level = level;
-            this.Value = value;
         }
     }
 }

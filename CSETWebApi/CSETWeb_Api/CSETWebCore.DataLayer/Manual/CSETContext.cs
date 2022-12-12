@@ -902,14 +902,14 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        public virtual IList<GetChildAnswersResult>Get_Children_Answers(int parentId, int assessId) {
-            IList<GetChildAnswersResult> myrval = null;
+        public virtual IList<GetChildrenAnswersResult>Get_Children_Answers(int parentId, int assessId) {
+            IList<GetChildrenAnswersResult> myrval = null;
             this.LoadStoredProc("GetChildrenAnswers")
                 .WithSqlParam("@Parent_Id", parentId)
                 .WithSqlParam("@Assess_Id", assessId)
                 .ExecuteStoredProc((handler) =>
                 {
-                    myrval = handler.ReadToList<GetChildAnswersResult>();
+                    myrval = handler.ReadToList<GetChildrenAnswersResult>();
                 });
                 
             return myrval;

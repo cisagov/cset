@@ -808,7 +808,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new[]
+            var sqlParameters = new []
             {
                 new SqlParameter
                 {
@@ -824,7 +824,7 @@ namespace CSETWebCore.DataLayer.Model
 
             return _;
         }
-        
+
         public virtual async Task<List<GetAnswerDistribMaturityResult>> GetAnswerDistribMaturityAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
