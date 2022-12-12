@@ -649,6 +649,13 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
+  autoResize() {
+    let textArea = document.getElementById("summaryComment")
+    textArea.style.overflow = 'hidden';
+    textArea.style.height = '0px';
+    textArea.style.height = textArea.scrollHeight + 'px';
+  }
+
   isFinalQuestion(id: number) {
     if (this.iseExamLevel === 'SCUEP' && this.finalScuepQuestion.has(id)) {
       return true;
@@ -764,14 +771,13 @@ export class QuestionBlockIseComponent implements OnInit {
       description: null,
       actionItems: null,
       citations: null,
-      auto_Generated: 0
+      auto_Generated: 0,
+      supp_Guidance: null
     };
 
     this.dialog.open(IssuesComponent, {
       data: find,
       disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '60vh',
-      height: this.layoutSvc.hp ? '90%' : '85vh',
     }).afterClosed().subscribe(result => {
       const answerID = find.answer_Id;
       this.findSvc.getAllDiscoveries(answerID).subscribe(
@@ -822,7 +828,8 @@ export class QuestionBlockIseComponent implements OnInit {
           description: desc,
           actionItems: null,
           citations: null,
-          auto_Generated: 1
+          auto_Generated: 1,
+          supp_Guidance: null
         };
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);

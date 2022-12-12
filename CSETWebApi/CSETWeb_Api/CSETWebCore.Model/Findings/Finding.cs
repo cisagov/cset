@@ -25,7 +25,7 @@ namespace CSETWebCore.Model.Findings
         public string Citations { get; set; }
         public string ActionItems { get; set; }
         public int Auto_Generated { get; set; }
-
+        public string Supp_Guidance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
 
         public bool IsFindingEmpty()

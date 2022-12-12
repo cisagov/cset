@@ -176,7 +176,6 @@ export class IseExaminationComponent implements OnInit {
               }
             }
           }
-          console.log(this.masterActionItemsMap)
         });
 
 
@@ -341,7 +340,7 @@ export class IseExaminationComponent implements OnInit {
     this.summaryForCopy += '\n\n';
   }
 
-  newFunc() {
+  print() {
     window.print();
   }
 

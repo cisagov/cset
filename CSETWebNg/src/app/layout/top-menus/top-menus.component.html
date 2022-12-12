@@ -36,9 +36,9 @@
                 <span>Enable Protected Features</span>
             </button>
 
-            <button mat-menu-item (click)="setMeritExportPath()" *ngIf="assessSvc.isISE()">
-                <span class="cset-icons-key-shield fs-base mr-2 align-middle"></span>
-                <span>Set MERIT Export Path</span>
+            <button mat-menu-item (click)="setMeritExportPath()" *ngIf="assessSvc.isISE() && configSvc.config.currentConfigChain.includes('development')">
+                <span class="cset-icons-cog fs-base mr-2 align-middle"></span>
+                <span>Set Submission Export Path</span>
             </button>
 
             <hr class="menu-divider" />
@@ -104,11 +104,11 @@
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
-            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
+            <a *ngIf="!configSvc.installationMode === 'ACET'" mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>CSET User Guide</span>
             </a>
-            <a mat-menu-item target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
+            <a *ngIf="!configSvc.installationMode === 'ACET'" mat-menu-item target="_blank" href="{{docUrl}}cdDocs/UserGuide.pdf">
                 <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
                 <span>CSET User Guide PDF</span>
             </a>
@@ -116,6 +116,10 @@
             <a *ngIf="isGuideVisible('ACET')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_acet/index.htm">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>ACET</span>
+            </a>
+            <a *ngIf="isGuideVisible('ISE')" mat-menu-item target="_blank" href="{{docUrl}}cdDocs_ACET/Dummy_File.pdf">
+                <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
+                <span>ISE User Guide PDF</span>
             </a>
             <a *ngIf="isGuideVisible('CIS')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cis/index.htm">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
