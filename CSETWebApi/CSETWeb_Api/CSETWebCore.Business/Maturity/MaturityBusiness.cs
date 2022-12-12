@@ -1895,14 +1895,14 @@ namespace CSETWebCore.Business.Maturity
                     join fr in _context.FINANCIAL_REQUIREMENTS on req.Requirement_Id equals fr.Requirement_Id
                     join fd in _context.FINANCIAL_DETAILS on fr.StmtNumber equals fd.StmtNumber
                     join fg in _context.FINANCIAL_GROUPS on fd.FinancialGroupId equals fg.FinancialGroupId
-                    join fm in _context.FINANCIAL_MATURITY on fg.MaturityId equals fm.MaturityId
+                    join fm in _context.FINANCIAL_MATURITY on fg.Financial_Level_Id equals fm.Financial_Level_Id
                     where req.Original_Set_Name == "ACET_V1"
-                    select new { req.Requirement_Id, fr.StmtNumber, fm.MaturityId, fm.Acronym, fm.MaturityLevel };
+                    select new { req.Requirement_Id, fr.StmtNumber, fm.Financial_Level_Id, fm.Acronym, fm.MaturityLevel };
 
             var dict = new Dictionary<int, MaturityMap>();
             foreach (var a in q)
             {
-                dict.Add(a.Requirement_Id, new MaturityMap(a.MaturityId, a.Acronym, a.MaturityLevel));
+                dict.Add(a.Requirement_Id, new MaturityMap(a.Financial_Level_Id, a.Acronym, a.MaturityLevel));
             }
 
             return dict;

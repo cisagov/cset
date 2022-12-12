@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model2",
+   "OutputPath": "Model",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -299,10 +299,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[FiltersNormalized]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[FINANCIAL_ASSESSMENT_FACTORS]",
          "ObjectType": 0
       },
@@ -324,6 +320,10 @@
       },
       {
          "Name": "[dbo].[FINANCIAL_DOMAIN_FILTERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FINANCIAL_DOMAIN_FILTERS_V2]",
          "ObjectType": 0
       },
       {
@@ -1004,6 +1004,10 @@
       },
       {
          "Name": "[dbo].[Get_Recommendations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAnswerDistribGroupings]",
          "ObjectType": 1
       },
       {

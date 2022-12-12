@@ -109,6 +109,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
         public virtual DbSet<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
+        public virtual DbSet<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
         public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
         public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
@@ -124,7 +125,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<FRAMEWORK_TIER_DEFINITIONS> FRAMEWORK_TIER_DEFINITIONS { get; set; }
         public virtual DbSet<FRAMEWORK_TIER_TYPE> FRAMEWORK_TIER_TYPE { get; set; }
         public virtual DbSet<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
-        public virtual DbSet<FiltersNormalized> FiltersNormalized { get; set; }
         public virtual DbSet<GALLERY_GROUP> GALLERY_GROUP { get; set; }
         public virtual DbSet<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
         public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
@@ -527,7 +527,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.IRP)
                     .WithMany(p => p.ASSESSMENT_IRP)
                     .HasForeignKey(d => d.IRP_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
             });
 
@@ -1411,6 +1410,19 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_FINANCIAL_DOMAINS");
             });
 
+            modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS_V2>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.DomainId, e.Financial_Level_Id })
+                    .HasName("PK_FiltersNormalized");
+
+                entity.HasComment("A collection of FiltersNormalized records");
+
+                entity.HasOne(d => d.Financial_Level)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
+                    .HasForeignKey(d => d.Financial_Level_Id)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_MATURITY");
+            });
+
             modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
             {
                 entity.HasKey(e => new { e.StmtNumber, e.FFIECBookletsMapping })
@@ -1443,9 +1455,9 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.FinComponentId)
                     .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_COMPONENTS");
 
-                entity.HasOne(d => d.Maturity)
+                entity.HasOne(d => d.Financial_Level)
                     .WithMany(p => p.FINANCIAL_GROUPS)
-                    .HasForeignKey(d => d.MaturityId)
+                    .HasForeignKey(d => d.Financial_Level_Id)
                     .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_MATURITY");
             });
 
@@ -1486,7 +1498,7 @@ namespace CSETWebCore.DataLayer.Model
             {
                 entity.HasComment("A collection of FINANCIAL_MATURITY records");
 
-                entity.Property(e => e.MaturityId).ValueGeneratedNever();
+                entity.Property(e => e.Financial_Level_Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
@@ -1616,13 +1628,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
                     .HasForeignKey(d => d.TierType)
                     .HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_FRAMEWORK_TIER_TYPE");
-            });
-
-            modelBuilder.Entity<FiltersNormalized>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.DomainId, e.MaturityId });
-
-                entity.HasComment("A collection of FiltersNormalized records");
             });
 
             modelBuilder.Entity<GALLERY_GROUP>(entity =>
