@@ -442,13 +442,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
-        [Route("api/diagram/alertsandadvisories")]
+        [Route("api/diagram/vulnerabilities")]
         [HttpGet]
-        public IActionResult GetAlertsAndAdvisories()
+        public IActionResult GetDiagramVulnerabilities()
         {
             try
             {
-                return Ok(_diagram.GetAlertsAndAdvisoriesVendors(Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF")));
+                return Ok(_diagram.GetCsafVendors(Path.Combine(_webHost.ContentRootPath, "Documents/DiagramVulnerabilities/CSAF")));
             }
             catch (Exception exc)
             {
@@ -459,13 +459,13 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// uploads new CSAF json files to Documents/AlertsAndAdvisories/CSAF to be used for network diagram alerts & advisories
+        /// uploads new CSAF json files to Documents/DiagramVulnerabilities/CSAF to be used for network diagram alerts & advisories
         /// </summary>
         /// <returns></returns>
         [CsetAuthorize]
-        [Route("api/diagram/alertsandadvisories")]
+        [Route("api/diagram/vulnerabilities")]
         [HttpPost]
-        public IActionResult UpdateAlertsAndAdvisories()
+        public IActionResult UpdateDiagramVulnerabilities()
         {
             var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
 
@@ -475,7 +475,7 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(415);
             }
 
-            string csafFilesDirectory = Path.Combine(_webHost.ContentRootPath, "Documents/AlertsAndAdvisories/CSAF");
+            string csafFilesDirectory = Path.Combine(_webHost.ContentRootPath, "Documents/DiagramVulnerabilities/CSAF");
 
             try
             {

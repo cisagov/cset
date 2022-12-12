@@ -214,7 +214,7 @@ export class FileUploadClientService {
   * POSTs an array of CSAF json files to the persist in the API
   */
   uploadCsafFiles(fileItems: Set<File>): { [key: string]: Observable<number> } {
-    const apiEndpoint = this.configSvc.apiUrl + 'diagram/alertsandadvisories';
+    const apiEndpoint = this.configSvc.apiUrl + 'diagram/vulnerabilities';
     const tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
     tmpheader.append('Authorization', localStorage.getItem('userToken'));
 

@@ -513,7 +513,6 @@ import { ZipCodeDirective } from './helpers/zip-code.directive';
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
-import { AlertsAndAdvisoriesComponent } from './assessment/diagram/diagram-inventory/components/alerts-and-advisories/alerts-and-advisories.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 import { RelatedQBlockComponent } from './reports/module-content/related-q-block/related-q-block.component';
 import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
@@ -526,6 +525,8 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
 import { GlobalConfigurationComponent } from './dialogs/global-configuration/global-configuration.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
+import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
+import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
 
 
 
@@ -1006,10 +1007,11 @@ import { ReferencesDisplayComponent } from './assessment/questions/references-di
         CpgSummaryComponent,
         CpgPracticesComponent,
         OnlineDisclaimerComponent,
-        AlertsAndAdvisoriesComponent, 
         GlobalConfigurationComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,
+        DiagramVulnerabilitiesDialogComponent,
+        DiagramVulnerabilitiesComponent
     ],
     providers: [
         ConfigService,

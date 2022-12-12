@@ -833,7 +833,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="csafFilesDirectory">the directory that houses all of the csaf json files</param>
         /// <returns></returns>
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetAlertsAndAdvisoriesVendors(string csafFilesDirectory) 
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors(string csafFilesDirectory) 
         {
             string[] filePaths = Directory.GetFiles(csafFilesDirectory);
             List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();

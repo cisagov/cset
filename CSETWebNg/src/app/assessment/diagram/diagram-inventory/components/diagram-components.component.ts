@@ -1,4 +1,3 @@
-import { identity } from 'rxjs';
 ////////////////////////////////
 //
 //   Copyright 2022 Battelle Energy Alliance, LLC
@@ -26,31 +25,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertsAndAdvisoriesComponent } from './alerts-and-advisories/alerts-and-advisories.component';
-import { AlertsAndAdvisoriesService } from '../../../../services/alerts-and-advisories.service';
-
-export interface Vendor {
-  name: string;
-  products: Product[];
-}
-
-export interface Product {
-  name: string;
-  vulnerabilities: Vulnerability[];
-  versions: { name: string; product_Id: string }[]
-}
-
-interface Vulnerability {
-  cve: string;
-  cwe: any;
-  notes: any[];
-  product_Status: any;
-  references: any[];
-  remediations: any[];
-  scores: any[];
-  title: string;
-}
 
 @Component({
   selector: 'app-diagram-components',
@@ -65,34 +39,22 @@ export class DiagramComponentsComponent implements OnInit {
   componentsChange = new EventEmitter<any>();
 
   comparer: Comparer = new Comparer();
-  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
-  vendors: Vendor[] = [];
 
   /**
    *
    */
   constructor(
-    public diagramSvc: DiagramService,
-    private dialog: MatDialog,
-    private alertsAndAdvisoriesSvc: AlertsAndAdvisoriesService
+    public diagramSvc: DiagramService
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.diagramSvc.getAllSymbols().subscribe((x: any) => {
-      this.assetTypes = x;
-    });
-
-    this.alertsAndAdvisoriesSvc.getAlertsAndAdvisories().subscribe((vendors: Vendor[]) => {
-      this.vendors = vendors;
-      this.getComponents();
-    })
-
+    this.getComponents();
   }
 
   /**
@@ -101,21 +63,7 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
-      this.diagramComponentList.forEach(component => {
-        this.updateComponentVendor(component);
-      })
       this.componentsChange.emit(this.diagramComponentList);
-    });
-  }
-
-  saveComponent(component) {
-    this.updateComponentVendor(component);
-    this.diagramSvc.saveComponent(component).subscribe();
-  }
-
-  showAlertsAndAdvisories(component) {
-    this.dialog.open(AlertsAndAdvisoriesComponent, {
-      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
     });
   }
 
@@ -150,27 +98,9 @@ export class DiagramComponentsComponent implements OnInit {
           return this.comparer.compare(a.hostName, b.hostName, isAsc);
         case "visible":
           return this.comparer.compareBool(a.visible, b.visible, isAsc);
-        case "vendorName":
-          return this.comparer.compareBool(a.vendorName, b.vendorName, isAsc);
-        case "productName":
-          return this.comparer.compareBool(a.productName, b.productName, isAsc);
-        case "version":
-          return this.comparer.compareBool(a.versionName, b.versionName, isAsc);
-        case "serialNumber":
-          return this.comparer.compareBool(a.serialNumber, b.serialNumber, isAsc);
-        case "physicalLocation":
-          return this.comparer.compareBool(a.physicalLocation, b.physicalLocation, isAsc);
         default:
           return 0;
       }
     });
-  }
-
-  updateComponentVendor(component) {
-    if (!component.vendorName) {
-      return;
-    }
-
-    component.vendor = this.vendors.find(v => v.name === component.vendorName);
   }
 }
