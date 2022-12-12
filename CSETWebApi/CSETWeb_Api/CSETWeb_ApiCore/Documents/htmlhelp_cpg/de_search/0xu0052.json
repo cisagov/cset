@@ -64,7 +64,7 @@
 	{ "s": "REPRODUCED", "p": [14, 12] },
 	{ "s": "REQUEST", "p": [14, 12, 11, 4] },
 	{ "s": "REQUESTED", "p": [13] },
-	{ "s": "REQUIRED", "p": [13, 8, 2] },
+	{ "s": "REQUIRED", "p": [8, 13, 2] },
 	{ "s": "REQUIREMENTS", "p": [8, 13, 9] },
 	{ "s": "REQUIRES", "p": [13] },
 	{ "s": "RESEARCHERS", "p": [13] },
