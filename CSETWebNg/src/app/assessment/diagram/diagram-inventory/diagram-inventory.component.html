@@ -29,7 +29,7 @@
         <i class="cset-icons-export-excel mr-2"></i>
         Export to Excel</button>
 
-      <button class="btn btn-primary" (click)="openFileBrowserForCsafUpload()"
+      <button *ngIf="showCsafUploadButton()" class="btn btn-primary" (click)="openFileBrowserForCsafUpload()"
       matTooltip="Select CSAF JSON files to upload.">
         <i class="cset-icons-import mr-2"></i>
         Update Vulnerabilities Database</button>
