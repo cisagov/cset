@@ -25,13 +25,13 @@
 </div>
 <ng-template #mainContent>
   <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="label" style="width:200px">Label</th>
+    <th mat-sort-header="label">Label</th>
     <th mat-sort-header="assetType">Asset Type</th>
     <th mat-sort-header="vendorName">Vendor Name</th>
     <th mat-sort-header="productName">Product Name</th>
-    <th mat-sort-header="version">Version Name</th>
-    <th mat-sort-header="serialNumber">Serial Number</th>
-    <th mat-sort-header="physicalLocation">Physical Location</th>
+    <th mat-sort-header="version" style="width: 10%">Version Name</th>
+    <th mat-sort-header="serialNumber" style="width: 10%">Serial Number</th>
+    <th mat-sort-header="physicalLocation" style="width: 10%">Physical Location</th>
     <th mat-sort-header="vulnerabilities">Vulnerabilities</th>
 
     <tr *ngFor="let component of diagramComponentList;">
