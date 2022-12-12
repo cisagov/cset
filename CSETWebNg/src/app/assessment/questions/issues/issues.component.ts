@@ -120,6 +120,10 @@ export class IssuesComponent implements OnInit {
             this.finding.description = this.actionItems[0]?.description;
           }
 
+          if (this.finding.supp_Guidance === null) {
+            this.finding.supp_Guidance = this.suppGuidance;
+          }
+
           this.answerID = this.finding.answer_Id;
           this.questionID = this.finding.question_Id;
 
