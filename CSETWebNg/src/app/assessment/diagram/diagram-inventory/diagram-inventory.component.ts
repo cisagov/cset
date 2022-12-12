@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
+import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
@@ -41,7 +42,8 @@ export class DiagramInventoryComponent implements OnInit {
    */
   constructor(public diagramSvc: DiagramService,
      private fileSvc: FileUploadClientService,
-     private dialog: MatDialog
+     private dialog: MatDialog,
+     private configSvc: ConfigService
     ) { }
 
   /**
@@ -78,5 +80,9 @@ export class DiagramInventoryComponent implements OnInit {
 
   fileSelect(e) {
     this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } });
+  }
+
+  showCsafUploadButton() {
+    return this.configSvc.behaviors?.showUpdateCsafVulnerabilitiesButton ?? true;
   }
 }
