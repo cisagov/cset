@@ -78,7 +78,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * Returns the Value property for the domain and level
    */
   getNgModel(level: any) {
-    var tmp = this.acetFilteringSvc.domainFilters?.find(d => d.domainName == this.domainName).tiers.find( t=>  t.financial_level_id == level.level); 
+    var tmp = this.acetFilteringSvc.domainFilters?.find(d => d.domainName == this.domainName)?.tiers.find( t=>  t.financial_Level_Id == level.level); 
     return tmp?.isOn ?? false;
   }
 
@@ -87,8 +87,8 @@ export class DomainMaturityFilterComponent implements OnInit {
    * @param level 
    * @param e event
    */
-  filterChanged(level: number, e: boolean) {
-    this.acetFilteringSvc.filterChanged(this.domainName, level, e);
+  filterChanged(level: number) {
+    this.acetFilteringSvc.filterChanged(this.domainName, level);
     this.changed.emit('');
   }
 
@@ -97,7 +97,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * @param level 
    */
   isFilterActive(level: any) {
-    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title).tiers.find( t=> t.financial_level_id == level.level);
+    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);
     if (!filterForDomain) {
       return false;
     }
