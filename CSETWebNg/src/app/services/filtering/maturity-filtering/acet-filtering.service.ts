@@ -34,7 +34,12 @@ import { AssessmentService } from "../../assessment.service";
 
 export class ACETFilter {
     domainName: string;
-    domainId: number;
+    domainId: number;    
+    tiers: ACETDomainTiers[] =[];    
+}
+
+
+export class ACETDomainTiers{
     financial_level_id: number;
     isOn: boolean;
 }
@@ -174,7 +179,7 @@ export class AcetFilteringService {
 
             this.getFilters().subscribe((x: ACETFilter[]) => {
 
-                const allSettingsFalse = x.every(f => f.isOn === false);
+                const allSettingsFalse = x.every(f =>  f.tiers.every(g=> g.isOn === false));
 
                 if (!x || x.length === 0 || allSettingsFalse) {
                     // the server has not filter pref set or they have all been set to false
@@ -185,12 +190,18 @@ export class AcetFilteringService {
                     // rebuild domainFilters from what the API gave us
                     this.domainFilters = [];
                     for (const entry of x) {
-                        this.domainFilters.push({
+                        let v:ACETFilter= {
                             domainName: entry.domainName,
                             domainId: entry.domainId,
-                            financial_level_id: entry.financial_level_id,
-                            isOn: entry.isOn
-                        });
+                            tiers: []
+                        };
+                        for(const tier of entry.tiers){
+                            v.tiers.push({
+                                financial_level_id: tier.financial_level_id,
+                                isOn: tier.isOn
+                            });                            
+                        }
+                        this.domainFilters.push();
                     }
                 }
 
@@ -258,7 +269,7 @@ export class AcetFilteringService {
             return false;
         }
 
-        return targetFilter.isOn==false;
+        return targetFilter.tiers.every(x=> x.isOn==false);
     }
 
     /**
@@ -279,7 +290,7 @@ export class AcetFilteringService {
      */
     public setQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == q.maturityLevel);
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=>t.financial_level_id == q.maturityLevel);
             if (filtersForDomain.isOn == false) {
                 return;
             } else {
@@ -296,8 +307,8 @@ export class AcetFilteringService {
      */
      public setIseQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == q.maturityLevel);
-            const filtersForDomain2 = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == 2);
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=>t.financial_level_id == q.maturityLevel);
+            const filtersForDomain2 = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=> t.financial_level_id == 2);
             if (filtersForDomain.isOn==false) {
                if(q.maturityLevel == 3 &&  filtersForDomain2.isOn == true) {
                 q.visible = true;
@@ -320,12 +331,22 @@ export class AcetFilteringService {
      * @param e
      */
     filterChanged(domainName: string, f: number, e: boolean) {
-        // set all true up to the level they hit, then all false above that
-//TODO!!!!! fix this
-        // this.domainFilter.forEach(element => {
+        // set all true up to the level they hit, then all false above that        
+        console.log(domainName);
+        // this.domainFilters.forEach(element => {
             
         // });
         //     .find(f => f.domainName == domainName).forEach(s => {
+        //         s.value = s.level <= f;
+        //     });
+        // this.saveFilters(this.domainFilters).subscribe(() => {
+        //     this.filterAcet.emit(true);
+        // });
+
+        // // set all true up to the level they hit, then all false above that
+        // this.domainFilters
+        //     .find(f => f.domainName == domainName)
+        //     .settings.forEach(s => {
         //         s.value = s.level <= f;
         //     });
         // this.saveFilters(this.domainFilters).subscribe(() => {
