@@ -174,7 +174,7 @@ export class AcetFilteringService {
 
             this.getFilters().subscribe((x: ACETFilter[]) => {
 
-                const allSettingsFalse = x.every(f => f.settings.every(g => g.value === false));
+                const allSettingsFalse = x.every(f => f.isOn === false);
 
                 if (!x || x.length === 0 || allSettingsFalse) {
                     // the server has not filter pref set or they have all been set to false
@@ -212,35 +212,35 @@ export class AcetFilteringService {
 
         const bands = this.getStairstepRequired(irp);
         const dmf = this.domainFilters;
+        console.log(this.domains);
+        // this.domains.forEach((d: ACETDomain) => {
+            
+        //     for (let i = 1; i <= 5; i++) {
+        //         settings.push({
+        //             level: i,
+        //             value: bands.includes(i)
+        //         });
+        //     }
+        //     dmf.push(
+        //         {
+        //             domainName: d.domainName,
+        //             domainId: 0,
+        //             settings: settings
+        //         });
 
-        this.domains.forEach((d: ACETDomain) => {
-            const settings: ACETFilterSetting[] = [];
-            for (let i = 1; i <= 5; i++) {
-                settings.push({
-                    level: i,
-                    value: bands.includes(i)
-                });
-            }
-            dmf.push(
-                {
-                    domainName: d.domainName,
-                    domainId: 0,
-                    settings: settings
-                });
+        //     const dFilter = this.domainFilters.find(f => f.domainName == d.domainName);
 
-            const dFilter = this.domainFilters.find(f => f.domainName == d.domainName);
-
-            let ix = 0;
-            let belowBand = true;
-            while (belowBand && ix < dFilter.settings.length) {
-                if (dFilter.settings[ix].value == false) {
-                    dFilter.settings[ix].value == true;
-                } else {
-                    belowBand = false;
-                }
-                ix++;
-            }
-        });
+        //     let ix = 0;
+        //     let belowBand = true;
+        //     while (belowBand && ix < dFilter.settings.length) {
+        //         if (dFilter.settings[ix].value == false) {
+        //             dFilter.settings[ix].value == true;
+        //         } else {
+        //             belowBand = false;
+        //         }
+        //         ix++;
+        //     }
+        // });
     }
 
     /**
@@ -258,7 +258,7 @@ export class AcetFilteringService {
             return false;
         }
 
-        return targetFilter.settings.every(s => s.value == false);
+        return targetFilter.isOn==false;
     }
 
     /**
@@ -279,8 +279,8 @@ export class AcetFilteringService {
      */
     public setQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).settings;
-            if (filtersForDomain.find(s => s.level == q.maturityLevel && s.value == false)) {
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == q.maturityLevel);
+            if (filtersForDomain.isOn == false) {
                 return;
             } else {
                 q.visible = true;
@@ -296,22 +296,18 @@ export class AcetFilteringService {
      */
      public setIseQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).settings;
-
-            if (filtersForDomain.find(s => s.level == q.maturityLevel && s.value == false)) {
-               if(q.maturityLevel == 3 && filtersForDomain.find(s => s.level == 2 && s.value == true)) {
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == q.maturityLevel);
+            const filtersForDomain2 = this.domainFilters.find(f => f.domainName == currentDomainName && f.financial_level_id == 2);
+            if (filtersForDomain.isOn==false) {
+               if(q.maturityLevel == 3 &&  filtersForDomain2.isOn == true) {
                 q.visible = true;
                } else {
                     return;
                }
             } else {
-               
-
                 q.visible = true;
             }
         } else {
-            
-
             q.visible = true;
         }
     }
@@ -325,14 +321,16 @@ export class AcetFilteringService {
      */
     filterChanged(domainName: string, f: number, e: boolean) {
         // set all true up to the level they hit, then all false above that
-        this.domainFilters
-            .find(f => f.domainName == domainName)
-            .settings.forEach(s => {
-                s.value = s.level <= f;
-            });
-        this.saveFilters(this.domainFilters).subscribe(() => {
-            this.filterAcet.emit(true);
-        });
+//TODO!!!!! fix this
+        // this.domainFilter.forEach(element => {
+            
+        // });
+        //     .find(f => f.domainName == domainName).forEach(s => {
+        //         s.value = s.level <= f;
+        //     });
+        // this.saveFilters(this.domainFilters).subscribe(() => {
+        //     this.filterAcet.emit(true);
+        // });
     }
 
     //------------------ API requests ------------------
