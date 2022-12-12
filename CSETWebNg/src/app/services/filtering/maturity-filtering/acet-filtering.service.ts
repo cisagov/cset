@@ -34,13 +34,14 @@ import { AssessmentService } from "../../assessment.service";
 
 export class ACETFilter {
     domainName: string;
-    domainId: number;    
-    tiers: ACETDomainTiers[] =[];    
+    domainId: number;
+    tiers: ACETDomainTiers[] = [];
 }
 
 
-export class ACETDomainTiers{
-    financial_level_id: number;
+export class ACETDomainTiers {
+    domainName?: string;
+    financial_Level_Id: number;
     isOn: boolean;
 }
 
@@ -71,8 +72,6 @@ export class AcetFilteringService {
         public configSvc: ConfigService,
         public assessmentSvc: AssessmentService
     ) {
-
-
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
             this.domains = domains;
         });
@@ -84,7 +83,7 @@ export class AcetFilteringService {
      */
     getStairstepRequired(irp: number): number[] {
         if (this.assessmentSvc.isISE()) {
-            switch(irp) {
+            switch (irp) {
                 case 0:
                     return [];
                 case 1:
@@ -119,7 +118,7 @@ export class AcetFilteringService {
      */
     getStairstepRecommended(irp: number): number[] {
         if (this.assessmentSvc.isISE()) {
-            switch(irp) {
+            switch (irp) {
                 case 0:
                     return [];
                 case 1:
@@ -178,8 +177,7 @@ export class AcetFilteringService {
             this.domainFilters = [];
 
             this.getFilters().subscribe((x: ACETFilter[]) => {
-
-                const allSettingsFalse = x.every(f =>  f.tiers.every(g=> g.isOn === false));
+                const allSettingsFalse = x.every(f => f.tiers.every(g => g.isOn === false));
 
                 if (!x || x.length === 0 || allSettingsFalse) {
                     // the server has not filter pref set or they have all been set to false
@@ -190,18 +188,19 @@ export class AcetFilteringService {
                     // rebuild domainFilters from what the API gave us
                     this.domainFilters = [];
                     for (const entry of x) {
-                        let v:ACETFilter= {
+                        let v: ACETFilter = {
                             domainName: entry.domainName,
                             domainId: entry.domainId,
                             tiers: []
                         };
-                        for(const tier of entry.tiers){
+
+                        for (const tier of entry.tiers) {
                             v.tiers.push({
-                                financial_level_id: tier.financial_level_id,
+                                financial_Level_Id: tier.financial_Level_Id,
                                 isOn: tier.isOn
-                            });                            
+                            });
                         }
-                        this.domainFilters.push();
+                        this.domainFilters.push(v);
                     }
                 }
 
@@ -223,35 +222,35 @@ export class AcetFilteringService {
 
         const bands = this.getStairstepRequired(irp);
         const dmf = this.domainFilters;
-        console.log(this.domains);
-        // this.domains.forEach((d: ACETDomain) => {
-            
-        //     for (let i = 1; i <= 5; i++) {
-        //         settings.push({
-        //             level: i,
-        //             value: bands.includes(i)
-        //         });
-        //     }
-        //     dmf.push(
-        //         {
-        //             domainName: d.domainName,
-        //             domainId: 0,
-        //             settings: settings
-        //         });
 
-        //     const dFilter = this.domainFilters.find(f => f.domainName == d.domainName);
+        this.domains.forEach((d: ACETDomain) => {
+            const settings: ACETDomainTiers[] = [];
+            for (let i = 1; i <= 5; i++) {
+                settings.push({
+                    financial_Level_Id: i,
+                    isOn: bands.includes(i)
+                });
+            }
+            dmf.push(
+                {
+                    domainName: d.domainName,
+                    domainId: d.domainId,
+                    tiers: settings
+                });
 
-        //     let ix = 0;
-        //     let belowBand = true;
-        //     while (belowBand && ix < dFilter.settings.length) {
-        //         if (dFilter.settings[ix].value == false) {
-        //             dFilter.settings[ix].value == true;
-        //         } else {
-        //             belowBand = false;
-        //         }
-        //         ix++;
-        //     }
-        // });
+            const dFilter = this.domainFilters.find(f => f.domainName == d.domainName);
+
+            let ix = 0;
+            let belowBand = true;
+            while (belowBand && ix < dFilter.tiers.length) {
+                if (dFilter.tiers[ix].isOn == false) {
+                    dFilter.tiers[ix].isOn == true;
+                } else {
+                    belowBand = false;
+                }
+                ix++;
+            }
+        });
     }
 
     /**
@@ -269,7 +268,7 @@ export class AcetFilteringService {
             return false;
         }
 
-        return targetFilter.tiers.every(x=> x.isOn==false);
+        return targetFilter.tiers.every(x => x.isOn == false);
     }
 
     /**
@@ -290,8 +289,8 @@ export class AcetFilteringService {
      */
     public setQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=>t.financial_level_id == q.maturityLevel);
-            if (filtersForDomain.isOn == false) {
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName)?.tiers.find(t => t.financial_Level_Id == q.maturityLevel);
+            if (filtersForDomain?.isOn == false) {
                 return;
             } else {
                 q.visible = true;
@@ -305,16 +304,16 @@ export class AcetFilteringService {
      * Indicates if the ACET question should be visible based on current
      * filtering.
      */
-     public setIseQuestionVisibility(q: Question, currentDomainName: string): boolean {
+    public setIseQuestionVisibility(q: Question, currentDomainName: string): boolean {
         if (!!this.domainFilters) {
-            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=>t.financial_level_id == q.maturityLevel);
-            const filtersForDomain2 = this.domainFilters.find(f => f.domainName == currentDomainName).tiers.find(t=> t.financial_level_id == 2);
-            if (filtersForDomain.isOn==false) {
-               if(q.maturityLevel == 3 &&  filtersForDomain2.isOn == true) {
-                q.visible = true;
-               } else {
+            const filtersForDomain = this.domainFilters.find(f => f.domainName == currentDomainName)?.tiers.find(t => t.financial_Level_Id == q.maturityLevel);
+            const filtersForDomain2 = this.domainFilters.find(f => f.domainName == currentDomainName)?.tiers.find(t => t.financial_Level_Id == 2);
+            if (filtersForDomain?.isOn == false) {
+                if (q.maturityLevel == 3 && filtersForDomain2?.isOn == true) {
+                    q.visible = true;
+                } else {
                     return;
-               }
+                }
             } else {
                 q.visible = true;
             }
@@ -323,35 +322,21 @@ export class AcetFilteringService {
         }
     }
 
-
     /**
      * Sets the new value in the service's filter map and tells the host page
      * to refresh the question list.
      * @param f
      * @param e
      */
-    filterChanged(domainName: string, f: number, e: boolean) {
-        // set all true up to the level they hit, then all false above that        
-        console.log(domainName);
-        // this.domainFilters.forEach(element => {
-            
-        // });
-        //     .find(f => f.domainName == domainName).forEach(s => {
-        //         s.value = s.level <= f;
-        //     });
-        // this.saveFilters(this.domainFilters).subscribe(() => {
-        //     this.filterAcet.emit(true);
-        // });
+    filterChanged(domainName: string, f: number) {
+        // set all true up to and including the level the user selected, then all false above that   
+        this.domainFilters.find(f => f.domainName == domainName)?.tiers.forEach(s => {
+            s.isOn = s.financial_Level_Id <= f;
+        });
 
-        // // set all true up to the level they hit, then all false above that
-        // this.domainFilters
-        //     .find(f => f.domainName == domainName)
-        //     .settings.forEach(s => {
-        //         s.value = s.level <= f;
-        //     });
-        // this.saveFilters(this.domainFilters).subscribe(() => {
-        //     this.filterAcet.emit(true);
-        // });
+        this.saveFilters(this.domainFilters).subscribe(() => {
+            this.filterAcet.emit(true);
+        });
     }
 
     //------------------ API requests ------------------

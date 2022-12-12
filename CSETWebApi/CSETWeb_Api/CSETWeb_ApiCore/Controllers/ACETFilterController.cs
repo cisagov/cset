@@ -62,7 +62,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveACETFilters([FromBody] bool value)
         {
             int assessment_id = _tokenManager.AssessmentForUser();
-           
+
             var ar = _context.INFORMATION.Where(x => x.Id == assessment_id).FirstOrDefault();
             if (ar != null)
             {
@@ -110,26 +110,25 @@ namespace CSETWebCore.Api.Controllers
             //full cross join
             //select DomainId, financial_level_id from FINANCIAL_DOMAINS, FINANCIAL_MATURITY
             var crossJoin = from b in _context.FINANCIAL_DOMAINS
-                            from c in _context.FINANCIAL_MATURITY
+                            from c in _context.FINANCIAL_MATURITY                            
                             select new { b.DomainId, c.Financial_Level_Id, b.Domain };
-
-
-
 
             var tmpFilters = (from c in crossJoin
                               join a in _context.FINANCIAL_DOMAIN_FILTERS_V2 on new { c.Financial_Level_Id, c.DomainId } equals new { a.Financial_Level_Id, a.DomainId }
                               into myFilters
                               from subfilter in myFilters.DefaultIfEmpty()
                               where subfilter.Assessment_Id == assessmentId
-                              select new {
+                              select new
+                              {
                                   DomainId = c.DomainId,
                                   DomainName = c.Domain,
                                   Financial_Level_Id = c.Financial_Level_Id,
-                                  IsOn= subfilter.IsOn
+                                  IsOn = subfilter.IsOn
                               }).ToList();
 
-           var groups = tmpFilters.GroupBy(d => d.DomainId, d=> d, (key, g) => new { DomainId = key, Tiers = g.ToList() }).ToList();
-           return Ok(groups);
+            var groups = tmpFilters.GroupBy(d => d.DomainId, d => d, (key, g) => new { DomainId = key, DomainName = g.First().DomainName, Tiers = g.ToList() }).ToList();
+
+            return Ok(groups);
         }
 
 
@@ -185,7 +184,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveACETFilters([FromBody] List<ACETFilter> filters)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            
+
             Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
             foreach (ACETFilter f in filters)
             {
