@@ -41,27 +41,27 @@ export class AnalyticsService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + "analytics/";
-    this.analyticsUrl = this.configSvc.analyticsUrl +"api/";
-    
+    this.analyticsUrl = this.configSvc.analyticsUrl + "api/";
+
   }
-  
-  getAnalytics():any {
-    return this.http.get(this.apiUrl+'getAnalytics');
+
+  getAnalytics(): any {
+    return this.http.get(this.apiUrl + 'getAnalytics');
   }
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
-      this.analyticsUrl + 'auth/signin', {username, password}, this.headers
+      this.analyticsUrl + 'auth/signin', { username, password }, this.headers
     );
   }
 
-  postAnalyticsWithoutLogin(analytics):any{
+  postAnalyticsWithoutLogin(analytics): any {
     return this.http.post(
       this.analyticsUrl + 'Analytics/postAnalyticsAnonymously', analytics, this.headers
     );
   }
 
-  postAnalyticsWithLogin(analytics, token):any{
+  postAnalyticsWithLogin(analytics, token): any {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append('Content-Type', 'application/json');
     header = header.append("Authorization", "Bearer " + token);
@@ -69,11 +69,11 @@ export class AnalyticsService {
     let params: HttpParams = new HttpParams();
 
     return this.http.post(
-      this.analyticsUrl + 'Analytics/postAnalytics', analytics, {headers: header, params}
+      this.analyticsUrl + 'Analytics/postAnalytics', analytics, { headers: header, params }
     );
   }
 
-  pingAnalyticsService():any{
-      return this.http.get(this.analyticsUrl+'ping/GetPing');
-  }
+  // pingAnalyticsService(): any {
+    // return this.http.get(this.analyticsUrl + 'ping/GetPing');
+  // }
 }

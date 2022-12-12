@@ -151,7 +151,7 @@ export class QuestionExtrasComponent implements OnInit {
   show() {
     // we already have content - don't make another server call
     if (this.tab != null) {
-      this.scrollToExtras();
+      //this.scrollToExtras();
       return;
     }
 
@@ -163,7 +163,7 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-        this.scrollToExtras()
+        //this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
@@ -509,19 +509,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   *
-   */
-  documentUrl(document: CustomDocument) {
-    var link = '';
-    if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
-    }
-    return link;
-  }
-
-  /**
    * Displays a dialog with questions that have this document attached.
    * @param document
    */
@@ -711,12 +698,6 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     return "I";
-  }
-
-  areNoReferenceDocumentsAvailable() {
-    return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
-      && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
-      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
   }
 
   /**

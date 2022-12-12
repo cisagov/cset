@@ -524,6 +524,8 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
 import { GlobalConfigurationComponent } from './dialogs/global-configuration/global-configuration.component';
+import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
+import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 
 
 
@@ -1006,6 +1008,8 @@ import { GlobalConfigurationComponent } from './dialogs/global-configuration/glo
         OnlineDisclaimerComponent,
         AlertsAndAdvisoriesComponent, 
         GlobalConfigurationComponent,
+        ReferencesTableComponent,
+        ReferencesDisplayComponent,
     ],
     providers: [
         ConfigService,
