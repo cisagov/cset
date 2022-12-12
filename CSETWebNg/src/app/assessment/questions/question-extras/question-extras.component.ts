@@ -151,7 +151,7 @@ export class QuestionExtrasComponent implements OnInit {
   show() {
     // we already have content - don't make another server call
     if (this.tab != null) {
-      this.scrollToExtras();
+      //this.scrollToExtras();
       return;
     }
 
@@ -163,7 +163,7 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-        this.scrollToExtras()
+        //this.scrollToExtras()
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
@@ -354,6 +354,7 @@ export class QuestionExtrasComponent implements OnInit {
       actionItems: null,
       citations: null,
       auto_Generated: null,
+      supp_Guidance: null
     };
 
     this.dialog.open(FindingsComponent, {
@@ -506,19 +507,6 @@ export class QuestionExtrasComponent implements OnInit {
           this.questionsSvc.broadcastExtras(this.extras);
       }
     });
-  }
-
-  /**
-   *
-   */
-  documentUrl(document: CustomDocument) {
-    var link = '';
-    if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
-    }
-    return link;
   }
 
   /**
@@ -713,12 +701,6 @@ export class QuestionExtrasComponent implements OnInit {
     return "I";
   }
 
-  areNoReferenceDocumentsAvailable() {
-    return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
-      && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
-      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
-  }
-
   /**
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
@@ -729,13 +711,6 @@ export class QuestionExtrasComponent implements OnInit {
     else {
       return 'Observation';
     }
-  }
-
-  /**
-   * Checks if the current assessment uses the Rapid Assessment Control Set.
-   */
-  usesRAC() {
-    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
 
   /**
@@ -751,4 +726,36 @@ export class QuestionExtrasComponent implements OnInit {
     }
     return defaultLabel;
   }
+
+  /**
+   * Checks if the current assessment uses the Rapid Assessment Control Set.
+   */
+  usesRAC() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
+  }
+
+  /**
+   * Adding this back in for now (I need the old table format)
+   * @param document 
+   * @returns 
+   */
+  documentUrl(document: CustomDocument) {
+    var link = '';
+    if (document.is_Uploaded) {
+      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
+    } else {
+      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
+    }
+    return link;
+  }
+
+  /**
+   * 
+   */
+  areNoReferenceDocumentsAvailable() {
+    return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
+      && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
+      && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+  }
+
 }

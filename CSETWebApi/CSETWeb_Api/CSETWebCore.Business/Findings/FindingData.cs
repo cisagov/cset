@@ -60,7 +60,8 @@ namespace CSETWebCore.Business.Findings
                     Sub_Risk = f.Sub_Risk,
                     Description = f.Description,
                     Citations = f.Citations,
-                    ActionItems = f.ActionItems
+                    ActionItems = f.ActionItems,
+                    Supp_Guidance = f.Supp_Guidance
                 };
 
                 this._dbFinding = finding;

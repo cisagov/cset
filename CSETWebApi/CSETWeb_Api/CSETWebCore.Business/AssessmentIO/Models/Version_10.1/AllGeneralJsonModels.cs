@@ -399,6 +399,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         public String Auto_Generated { get; set; }
 
+        public String Supp_Guidance { get; set; }
+
     }
 
     public class jISE_ACTIONS_FINDINGS
