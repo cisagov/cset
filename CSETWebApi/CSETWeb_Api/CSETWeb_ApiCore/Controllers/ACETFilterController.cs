@@ -121,32 +121,15 @@ namespace CSETWebCore.Api.Controllers
                               into myFilters
                               from subfilter in myFilters.DefaultIfEmpty()
                               where subfilter.Assessment_Id == assessmentId
-                              select new ACETFilter()
-                              {
+                              select new {
                                   DomainId = c.DomainId,
                                   DomainName = c.Domain,
                                   Financial_Level_Id = c.Financial_Level_Id,
                                   IsOn= subfilter.IsOn
                               }).ToList();
 
-            // create Settings according to the B, E, Int, A and Inn bits.
-            int prevDomainId = 0;
-            ACETFilter lastFilter = null;
-            bool AreAllFalse = true; 
-            foreach(var filter in tmpFilters)
-            {
-                if (filter.DomainId != prevDomainId)
-                {
-                    filters.Add(filter);
-                    lastFilter= filter;
-                    AreAllFalse = true; 
-                }
-                lastFilter.IsOn = filter.IsOn;
-                lastFilter.GroupAllSettingsFalse = AreAllFalse && lastFilter.GroupAllSettingsFalse;
-                prevDomainId = filter.DomainId;
-            }
-
-            return Ok(filters);
+           var groups = tmpFilters.GroupBy(d => d.DomainId, d=> d, (key, g) => new { DomainId = key, Tiers = g.ToList() }).ToList();
+           return Ok(groups);
         }
 
 
@@ -206,22 +189,26 @@ namespace CSETWebCore.Api.Controllers
             Dictionary<string, int> domainIds = _context.FINANCIAL_DOMAINS.ToDictionary(x => x.Domain, x => x.DomainId);
             foreach (ACETFilter f in filters)
             {
-                
-                var filter = _context.FINANCIAL_DOMAIN_FILTERS_V2.Where(x => x.DomainId == f.DomainId && x.Assessment_Id == assessmentId && x.Financial_Level_Id == f.Financial_Level_Id).FirstOrDefault();
-                if (filter == null)
-                {   
-                    filter = new FINANCIAL_DOMAIN_FILTERS_V2()
-                    {
-                        Assessment_Id = assessmentId,
-                        DomainId = f.DomainId,
-                        Financial_Level_Id = f.Financial_Level_Id,
-                        IsOn = f.IsOn
-                    };
-                    _context.FINANCIAL_DOMAIN_FILTERS_V2.Add(filter);                 
-                }
-                else
+
+                foreach (ACETDomainTiers t in f.Tiers)
                 {
-                    filter.IsOn = f.IsOn;
+
+                    var filter = _context.FINANCIAL_DOMAIN_FILTERS_V2.Where(x => x.DomainId == f.DomainId && x.Assessment_Id == assessmentId && x.Financial_Level_Id == t.Financial_Level_Id).FirstOrDefault();
+                    if (filter == null)
+                    {
+                        filter = new FINANCIAL_DOMAIN_FILTERS_V2()
+                        {
+                            Assessment_Id = assessmentId,
+                            DomainId = f.DomainId,
+                            Financial_Level_Id = t.Financial_Level_Id,
+                            IsOn = t.IsOn
+                        };
+                        _context.FINANCIAL_DOMAIN_FILTERS_V2.Add(filter);
+                    }
+                    else
+                    {
+                        filter.IsOn = t.IsOn;
+                    }
                 }
             }
 
