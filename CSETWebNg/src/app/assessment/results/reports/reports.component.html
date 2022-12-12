@@ -407,16 +407,6 @@
         </button>
       </div>
 
-    <div class="mt-5">
-      <button *ngIf="!assessSvc.isISE()" tabindex="0"
-        class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
-        (click)="clickExport()"
-        matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
-        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-        <span>Export</span>
-      </button>
-    </div>
-
     <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
       [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 
