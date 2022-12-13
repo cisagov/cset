@@ -29,6 +29,7 @@ export interface AssessmentDetail {
     createdDate?: string;
     creatorId?: number;
     assessmentDate?: string;
+    assessmentEffectiveDate?: string;
     baselineAssessmentId?: number;
     facilityName?: string;
     cityOrSiteName?: string;
