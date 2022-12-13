@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -173,7 +173,7 @@ span.de_2385B26FC8
 }
 span.de_23C19DE48C
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
@@ -222,7 +222,7 @@ span.de_45105D3361
 }
 span.de_461F34A8F1
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 }
 span.de_476D3D315E
@@ -237,7 +237,7 @@ span.de_4AF4BF9DD6
 }
 span.de_4CD179DA38
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
@@ -269,7 +269,7 @@ span.de_68B99ACC5C
 }
 span.de_6C2B69BD23
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#0000ff;
 	text-decoration:underline;
@@ -292,7 +292,7 @@ span.de_7DFD18CEFC
 }
 span.de_7ECBECEBE5
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 }
@@ -321,17 +321,15 @@ span.de_8C403700ED
 	font-family: "Arial";
 	font-size: 11pt;
 }
-span.de_96372F1890
-{
-	font-family: "Slack-Lato";
+span.de_96372F1890 {
+	font-family: "Arial";
 	font-size: 11pt;
-	color:#0066cc;
+	color: #0066cc;
 }
-span.de_98CC41B486
-{
-	font-family: "Slack-Lato";
+span.de_98CC41B486 {
+	font-family: "Arial";
 	font-size: 11pt;
-	color:#1d1c1d;
+	color: #1d1c1d;
 }
 span.de_A6255A6E85
 {
@@ -347,7 +345,7 @@ span.de_A94F92E31D
 }
 span.de_AC2A21CFAA
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#0070c0;
 }
@@ -388,7 +386,7 @@ span.de_D13D14CE0A
 }
 span.de_D8BCB2AC4C
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 }
@@ -407,7 +405,7 @@ span.de_E0D79DE1AC
 }
 span.de_E71183D815
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 13pt;
 	color:#000000;
 }
