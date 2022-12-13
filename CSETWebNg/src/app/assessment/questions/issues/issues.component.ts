@@ -91,7 +91,7 @@ export class IssuesComponent implements OnInit {
     });
 
     this.questionsSvc.getDetails(this.questionID, questionType).subscribe((details) => {
-      this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalInfo);  
+      this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);  
     });
 
 
@@ -160,6 +160,7 @@ export class IssuesComponent implements OnInit {
     text = text.replace(/&#34;/g, '\'');
     text = text.replace(/&#167;/g, '');
     text = text.replace(/&#183;/g, '');
+    text = text.replace(/&nbsp;/g, '');
     text = text.replace('ISE Reference', '');
     text = text.replace('/\s/g', ' ');
     

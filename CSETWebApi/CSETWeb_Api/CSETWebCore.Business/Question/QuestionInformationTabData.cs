@@ -490,6 +490,9 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = info.MaturityQuestion.Supplemental_Info;
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
+                tabData.SupplementalFact = info.MaturityQuestion.Supplemental_Fact;
+                tabData.SupplementalFact = FormatSupplementalInfo(tabData.SupplementalFact);
+
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
 
                 RequirementsData = tabData;

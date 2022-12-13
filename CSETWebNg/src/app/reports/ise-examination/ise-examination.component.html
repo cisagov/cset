@@ -331,11 +331,11 @@
                                 </div>
                                 <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                                     
-                                    <strong> Supplemental Guidance: </strong> 
+                                    <strong> Supplemental Fact: </strong> 
                                     
                                     <br>
-                                    <span *ngIf="finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
-                                    <span *ngIf="finding?.finding?.supp_Guidance == ''">(no supplemental guidance available)</span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance == null || finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                     <br>
                                     <strong> Resources: </strong> 
                                     <br>
