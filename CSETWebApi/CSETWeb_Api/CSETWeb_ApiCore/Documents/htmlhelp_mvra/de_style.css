@@ -26,7 +26,7 @@ div.description_on_page div.p,
  .m-pageContent__side__left div.p,
  .m-pageContent__side__left div.p a
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -34,7 +34,7 @@ font-weight:normal;
 }
 h1
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 16pt;color:#003366;
 font-style:normal;
 text-decoration:none;
@@ -45,7 +45,7 @@ padding:0;
 }
 h2
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 14pt;color:#004891;
 font-style:normal;
 text-decoration:none;
@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -111,7 +111,7 @@ span.de_2385B26FC8
 }
 span.de_2CA55B4BF3
 {
-	font-family: "Franklin Gothic Book";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 }
@@ -133,7 +133,7 @@ span.de_56F4564E24
 }
 span.de_59A3B2E3FF
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 7pt;
 	color:#000000;
 }
@@ -153,14 +153,14 @@ span.de_6D2D8B1FD4
 }
 span.de_878636B399
 {
-	font-family: "Franklin Gothic Book";
+	font-family: "Arial";
 	font-size: 9pt;
 	color:#000000;
 	font-style:italic;
 }
 span.de_9EF90F74FE
 {
-	font-family: "Franklin Gothic Book";
+	font-family: "Arial";
 	font-size: 9pt;
 	color:#000000;
 }
@@ -214,7 +214,7 @@ span.de_D66F0623DB
 }
 span.de_DCEBB12FFB
 {
-	font-family: "Franklin Gothic Book";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
