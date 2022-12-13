@@ -1292,7 +1292,9 @@ namespace CSETWebCore.Business.Reports
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
             info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
-            info.Assessment_Date_Export = assessment.Assessment_Date.ToShortDateString() + " " + assessment.Assessment_Date.ToLongTimeString();
+            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate.ToShortDateString();
+            info.Assessment_Creation_Date = assessment.Assessment_Date.ToShortDateString() + ' ' + assessment.Assessment_Date.ToLongTimeString();
+            // creationDate in the table is bugged right now, so this is my work around for now
 
             // Primary Assessor
             var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);

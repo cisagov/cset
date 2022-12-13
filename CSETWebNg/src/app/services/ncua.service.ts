@@ -90,8 +90,11 @@ let headers = {
   jsonString: any = {
     "metaData": {
       "assessmentName": '',
+      "creditUnionName": '',
+      "charter": '',
       "examiner": '',
-      "creationDate": null,
+      "effectiveDate": '',
+      "creationDate": '',
       "examLevel": '',
       "guid": ''
     },
@@ -524,8 +527,11 @@ let headers = {
   metaDataBuilder() { 
     let metaDataInfo = {
       "assessmentName": this.information.assessment_Name,
+      "creditUnionName": this.information.credit_Union_Name,
+      "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
-      "creationDate": this.information.assessment_Date_Export,
+      "effectiveDate": this.information.assessment_Effective_Date,
+      "creationDate": this.information.assessment_Creation_Date,
       "examLevel": this.examLevel,
       "guid": this.questions.assessmentGuid
     };
@@ -650,7 +656,10 @@ let headers = {
     this.jsonString = { // resets the string to blank values
       "metaData": {
         "assessmentName": '',
+        "creditUnionName": '',
+        "charter": '',
         "examiner": '',
+        "effectiveDate": '',
         "creationDate": '',
         "examLevel": '',
         "guid": ''
@@ -680,6 +689,9 @@ let headers = {
     return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
   }
 
+  /**
+   * block answer for ease of testing while in development mode, but don't have the time to make it
+   */
   answerAllQuestionsYes() {
     let answerList: Answer[] = [];
 
