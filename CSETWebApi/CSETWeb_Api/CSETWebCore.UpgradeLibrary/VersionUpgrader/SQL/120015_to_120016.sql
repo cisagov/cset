@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/13/2022 8:01:23 AM
+Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/13/2022 8:35:31 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -109,6 +109,15 @@ GO
 PRINT N'Creating primary key [PK_FiltersNormalized] on [dbo].[FINANCIAL_DOMAIN_FILTERS_V2]'
 GO
 ALTER TABLE [dbo].[FINANCIAL_DOMAIN_FILTERS_V2] ADD CONSTRAINT [PK_FiltersNormalized] PRIMARY KEY CLUSTERED ([Assessment_Id], [DomainId], [Financial_Level_Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[FINDING]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[FINDING] ADD
+[Supp_Guidance] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
