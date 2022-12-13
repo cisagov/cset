@@ -55,6 +55,8 @@ namespace CSETWebCore.DataLayer.Model
         public Guid Assessment_GUID { get; set; }
         public DateTime Assessment_Date { get; set; }
         [StringLength(100)]
+        public DateTime AssessmentEffectiveDate { get; set; }
+        [StringLength(100)]
         public string CreditUnionName { get; set; }
         [StringLength(100)]
         public string Charter { get; set; }

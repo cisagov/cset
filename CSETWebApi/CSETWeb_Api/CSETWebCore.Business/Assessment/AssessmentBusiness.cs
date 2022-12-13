@@ -66,6 +66,7 @@ namespace CSETWebCore.Business.Assessment
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
                 LastModifiedDate = nowUTC,
+                AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
                 ExecutiveSummary = defaultExecSumm
 
@@ -346,6 +347,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
                 assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
+                assessment.AssessmentEffectiveDate = _utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
 
@@ -558,6 +560,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
             dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null : assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
+            dbAssessment.AssessmentEffectiveDate = assessment.AssessmentEffectiveDate ?? DateTime.Now;
             dbAssessment.LastModifiedDate = assessment.LastModifiedDate;
 
             dbAssessment.UseDiagram = assessment.UseDiagram;
