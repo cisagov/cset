@@ -31,6 +31,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Question_Text { get; set; }
         public string Supplemental_Info { get; set; }
         [StringLength(250)]
+        public string Supplemental_Fact { get; set; }
+        [StringLength(250)]
         public string Category { get; set; }
         [StringLength(250)]
         public string Sub_Category { get; set; }
