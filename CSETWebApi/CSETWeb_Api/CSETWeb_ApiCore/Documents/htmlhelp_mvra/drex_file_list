@@ -34,7 +34,6 @@ de_search\0xu0033.json
 de_search\0xu0032.json
 de_search\0xu0031.json
 de_search\0xu0030.json
-de_search
 js\drexplain.data.index.js
 de_style.css
 css\printed.css
@@ -51,7 +50,6 @@ i\photoswipe\default-skin.png
 i\photoswipe\grabbing.cur
 i\photoswipe\grab.cur
 i\photoswipe\zoom_in.cur
-i\photoswipe
 i\blocks\tree\sprite.png
 i\blocks\interface-icons\delicious_logo.png
 i\blocks\interface-icons\digg-button.png
@@ -59,11 +57,6 @@ i\blocks\search\loading.gif
 i\blocks\interface-icons\interface-icons-sprite.png
 i\blocks\interface-icons\interface-icons-sprite-8.png
 i\null.gif
-i\blocks\tree
-i\blocks\search
-i\blocks\interface-icons
-i\blocks
-i
 disclaimer_and_advisory.htm
 glossary.htm
 drex_2_5__mvra_report_example_custom_6.png
@@ -183,6 +176,4 @@ mvra_scope_.htm
 intro_to_the_mvra_model.htm
 drex_index_custom.png
 index.htm
-css
-js
 drex_file_list
