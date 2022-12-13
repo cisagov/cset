@@ -34,7 +34,7 @@ font-weight:normal;
 }
 h1
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 16pt;color:#003366;
 font-style:normal;
 text-decoration:none;
@@ -45,7 +45,7 @@ padding:0;
 }
 h2
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 14pt;color:#004891;
 font-style:normal;
 text-decoration:none;
@@ -56,7 +56,7 @@ padding:0;
 }
 h3
 {
-font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
