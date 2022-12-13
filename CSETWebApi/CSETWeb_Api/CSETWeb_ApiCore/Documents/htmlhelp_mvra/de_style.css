@@ -56,7 +56,7 @@ padding:0;
 }
 h3
 {
-font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Arial";
+font-family:"Georgia";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -109,15 +109,11 @@ span.de_2385B26FC8
 	font-size: 12pt;
 	color:#003366;
 }
-span.de_2CA55B4BF3
+span.de_4AF4BF9DD6
 {
 	font-family: "Arial";
-	font-size: 12pt;
+	font-size: 11pt;
 	color:#000000;
-}
-span.de_403BE9223A
-{
-	font-size: 10pt;
 }
 span.de_54A6EBB3B9
 {
@@ -131,38 +127,32 @@ span.de_56F4564E24
 	font-size: 12pt;
 	color:#000000;
 }
-span.de_59A3B2E3FF
-{
-	font-family: "Arial";
-	font-size: 7pt;
-	color:#000000;
-}
 span.de_59D175D728
 {
 	font-family: "Arial";
 	font-size: 12pt;
 	color:#008aff;
 }
+span.de_5FB625965B
+{
+	font-family: "Arial";
+	font-size: 9pt;
+	color:#000000;
+}
+span.de_64DACBA413
+{
+	font-family: "Arial";
+	font-size: 7pt;
+	color:#000000;
+}
 span.de_68B99ACC5C
 {
 	font-family: "Arial";
 }
-span.de_6D2D8B1FD4
-{
-	font-size: 12pt;
-}
-span.de_878636B399
+span.de_93E702D65C
 {
 	font-family: "Arial";
-	font-size: 9pt;
-	color:#000000;
-	font-style:italic;
-}
-span.de_9EF90F74FE
-{
-	font-family: "Arial";
-	font-size: 9pt;
-	color:#000000;
+	font-size: 10pt;
 }
 span.de_AC776ED092
 {
@@ -212,21 +202,12 @@ span.de_D66F0623DB
 	font-family: "Arial";
 	font-size: 12pt;
 }
-span.de_DCEBB12FFB
+span.de_DF9ADAA253
 {
 	font-family: "Arial";
-	font-size: 11pt;
-	color:#000000;
-}
-span.de_E7E67EE494
-{
-	font-family: "Symbol";
 	font-size: 9pt;
 	color:#000000;
-}
-span.de_FA021CA4E5
-{
-	color:#3f3f3f;
+	font-style:italic;
 }
 .list-element {
 	list-style-type: none;
