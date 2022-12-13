@@ -26,7 +26,7 @@ div.description_on_page div.p,
  .m-pageContent__side__left div.p,
  .m-pageContent__side__left div.p a
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -34,7 +34,7 @@ font-weight:normal;
 }
 h1
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 16pt;color:#003366;
 font-style:normal;
 text-decoration:none;
@@ -45,7 +45,7 @@ padding:0;
 }
 h2
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 14pt;color:#004891;
 font-style:normal;
 text-decoration:none;
@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -86,68 +86,68 @@ img.de_780D01ADE8
 margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
 span.de_03F852C15D
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1c1624;
 }
 span.de_040E78C787
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1f050c;
 	font-style:italic;
 }
 span.de_042037E0D9
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1f0107;
 }
 span.de_05B6793A56
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#312f31;
 }
 span.de_0BDFE2E1AE
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#010103;
 }
 span.de_13210B4F41
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1f0308;
 }
 span.de_1376058C6C
 {
-	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Arial", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12pt;
 	color:#000000;
 }
 span.de_1522467437
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#2a2634;
 }
 span.de_1E48C4A0AA
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#008aff;
 }
 span.de_229A7A25DA
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#2f2838;
 }
 span.de_2802DF896D
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#031a3f;
 }
@@ -162,26 +162,26 @@ span.de_2B94C39861
 }
 span.de_39C5419E79
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#030108;
 }
 span.de_409D64D135
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1a1523;
 	font-style:italic;
 }
 span.de_42CF9151A4
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1a1621;
 }
 span.de_461F34A8F1
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 }
 span.de_4AF4BF9DD6
@@ -192,13 +192,13 @@ span.de_4AF4BF9DD6
 }
 span.de_4E4FB5F1B2
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#030107;
 }
 span.de_67BC475A8E
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 10pt;
 	color:#000000;
 }
@@ -208,13 +208,13 @@ span.de_6B32FB2C7E
 }
 span.de_71F5A23342
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#6462ac;
 }
 span.de_7AF1EF6DBC
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 16pt;
 	color:#003366;
 }
@@ -230,14 +230,14 @@ span.de_823826CA2C
 }
 span.de_87C8AF169F
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#0000ff;
 	text-decoration:underline;
 }
 span.de_A9B3EC092A
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#3f3d4d;
 }
@@ -253,14 +253,14 @@ span.de_BB3BCAC3E6
 }
 span.de_C40D65A6EB
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 	font-style:italic;
 }
 span.de_C85E26950A
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#3f2321;
 }
@@ -270,7 +270,7 @@ span.de_CF8D474060
 }
 span.de_D28CA8F694
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000001;
 }
@@ -282,32 +282,32 @@ span.de_D5FB47BF08
 }
 span.de_D8BCB2AC4C
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 }
 span.de_DE860B30CF
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#2a2634;
 	font-style:italic;
 }
 span.de_E4EEC83117
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1f050c;
 }
 span.de_EE9A7EA11D
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#1a1523;
 }
 span.de_F5B7A541D4
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#2d2836;
 }

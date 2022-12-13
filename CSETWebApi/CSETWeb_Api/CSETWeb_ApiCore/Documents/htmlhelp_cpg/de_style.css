@@ -26,7 +26,7 @@ div.description_on_page div.p,
  .m-pageContent__side__left div.p,
  .m-pageContent__side__left div.p a
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -34,7 +34,7 @@ font-weight:normal;
 }
 h1
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 16pt;color:#003366;
 font-style:normal;
 text-decoration:none;
@@ -45,7 +45,7 @@ padding:0;
 }
 h2
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 14pt;color:#004891;
 font-style:normal;
 text-decoration:none;
@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -250,7 +250,7 @@ span.de_E8DA75673A
 }
 span.de_F83B486F28
 {
-	font-family: "Verdana";
+	font-family: "Arial";
 	font-size: 30pt;
 	color:#0e3c79;
 }
