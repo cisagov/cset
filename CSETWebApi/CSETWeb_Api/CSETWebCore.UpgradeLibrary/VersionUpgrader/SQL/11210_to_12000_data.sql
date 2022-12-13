@@ -741,8 +741,8 @@ UPDATE [dbo].[MATURITY_GROUPINGS] SET [Title]=N'Recover', [Description]=N'', [Ty
 PRINT(N'Operation applied to 5 rows out of 5')
 
 PRINT(N'Update rows in [dbo].[SETS]')
-UPDATE [dbo].[SETS] SET [IsEncryptedModuleOpen]=1 WHERE [Set_Name] = N'FAA'
-UPDATE [dbo].[SETS] SET [IsEncryptedModuleOpen]=1 WHERE [Set_Name] = N'FAA_PED_V2'
+UPDATE [dbo].[SETS] SET [IsEncryptedModuleOpen]=0 WHERE [Set_Name] = N'FAA'
+UPDATE [dbo].[SETS] SET [IsEncryptedModuleOpen]=0 WHERE [Set_Name] = N'FAA_PED_V2'
 PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Update rows in [dbo].[MATURITY_MODELS]')

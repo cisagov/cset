@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell, session } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -232,8 +232,9 @@ function createWindow() {
 
   // Emitted when the window is going to be closed
   mainWindow.on('close', () => {
-    // Clear local storage before the window is closed
-    mainWindow.webContents.executeJavaScript("localStorage.clear();");
+    // Clear cache & local storage before the window is closed
+    session.defaultSession.clearCache();
+    session.defaultSession.clearStorageData();
   });
 
   // Customize the look of all new windows and handle different types of urls from within angular application
