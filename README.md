@@ -49,7 +49,7 @@ It is recommended that users meet the minimum system hardware and software requi
 • 6 GB free disk space
 • 4 GB of RAM
 • Microsoft Windows 10 or higher
-• Microsoft .NET Core 5.0 Runtime (included in CSET installation)
+• Microsoft .NET Core 7.0 Runtime (included in CSET installation)
 • SQL Server 2019 Express LocalDB (included in CSET installation)
 
 System Requirements Enterprise Installation
@@ -60,7 +60,7 @@ It is recommended that users meet the minimum system hardware and software requi
 • 8 GB free disk space
 • 4 GB of RAM
 • Microsoft Windows Server 2016 Edition or higher recommended
-• Microsoft .NET Core 5.0 Runtime
+• Microsoft .NET Core 7.0 Runtime
 • SQL Server 2019 or higher recommended
 • Internet Information Server (IIS) or Kestrel
 
@@ -99,7 +99,7 @@ CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB
 
 LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
 
-CSET will also install the .NET 6 and ASP.NET Core 6 runtimes in the background if they are not already installed.
+CSET will also install the .NET 7 and ASP.NET Core 7 runtimes in the background if they are not already installed.
 
 The CSET Setup Wizard will open to walk the user through the install process (Fig.5). Select &quot;Next&quot;.
 
@@ -180,7 +180,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
 
-5. The script will open the installation wizards for SQL Server Express 2019 and the .NET 6 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+5. The script will open the installation wizards for SQL Server Express 2019 and the .NET 7 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
 
 ![](img/figES2.PNG) 
 <br/>
