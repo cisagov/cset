@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -86,7 +86,7 @@ img.de_780D01ADE8
 margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
 span.de_0207A0B036
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 10pt;
 	color:#003366;
 }
@@ -99,7 +99,7 @@ span.de_135E6CA40F
 }
 span.de_1376058C6C
 {
-	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Arial", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12pt;
 	color:#000000;
 }
@@ -145,7 +145,7 @@ span.de_2385B26FC8
 }
 span.de_23C19DE48C
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
@@ -181,7 +181,7 @@ span.de_38AAE45C6C
 }
 span.de_39FEB3951F
 {
-	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Arial", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12pt;
 	color:#0000ff;
 	text-decoration:underline;
@@ -253,7 +253,7 @@ span.de_56F4564E24
 }
 span.de_59A3B2E3FF
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 7pt;
 	color:#000000;
 }
@@ -332,7 +332,7 @@ span.de_79BA47DE73
 }
 span.de_7ECBECEBE5
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#000000;
 }
@@ -368,7 +368,7 @@ span.de_8506C08EFB
 }
 span.de_8901EF7949
 {
-	font-family: "Cambria";
+	font-family: "Arial";
 	font-size: 16pt;
 	color:#365f91;
 }
@@ -435,7 +435,7 @@ span.de_B22A2C8F71
 }
 span.de_B63DF9F31A
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 7pt;
 	color:#003265;
 }
@@ -494,7 +494,7 @@ span.de_CC7DAF531E
 }
 span.de_CEB5FE758A
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 10pt;
 	color:#005287;
 }
@@ -550,7 +550,7 @@ span.de_E0D79DE1AC
 }
 span.de_E71183D815
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 13pt;
 	color:#000000;
 }
@@ -562,7 +562,7 @@ span.de_E99D19030D
 }
 span.de_EC8B4D5AF2
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 10pt;
 	color:#000000;
 }

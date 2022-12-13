@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -153,7 +153,7 @@ span.de_4AF4BF9DD6
 }
 span.de_4CD179DA38
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
