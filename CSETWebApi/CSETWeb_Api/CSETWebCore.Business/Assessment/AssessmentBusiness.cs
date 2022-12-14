@@ -134,7 +134,8 @@ namespace CSETWebCore.Business.Assessment
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
-                LastModifiedDate = nowUTC
+                LastModifiedDate = nowUTC,
+                AssessmentEffectiveDate = nowUTC
             };
 
             // Commit the new assessment
@@ -345,9 +346,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
-                assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
-                assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
-                assessment.AssessmentEffectiveDate = _utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
+                assessment.CreatedDate = result.aa.AssessmentCreatedDate; //_utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
+                assessment.LastModifiedDate = result.aa.LastModifiedDate ?? DateTime.Now; //_utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
+                assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate; //_utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
 
