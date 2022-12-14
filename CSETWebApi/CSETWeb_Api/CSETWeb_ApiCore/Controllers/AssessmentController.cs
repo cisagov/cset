@@ -64,10 +64,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="workflow"></param>
         /// <param name="galleryId"></param>
+        /// <param name="csn">Custom Set Name, an optional parameter indicating the set to use in the new assessment.</param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment/gallery")]
-        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId)
+        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
 
@@ -81,7 +82,15 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                return BadRequest("Assessment cannot be created without options");
+                // if a custom set was specified, build the 'recipe' for that custom set
+                if (csn != null)
+                {
+                    config = JsonConvert.DeserializeObject<GalleryConfig>($"{{Sets:[\"{csn}\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}}");
+                }
+                else
+                {
+                    return BadRequest("Assessment cannot be created without options");
+                }
             }
 
 

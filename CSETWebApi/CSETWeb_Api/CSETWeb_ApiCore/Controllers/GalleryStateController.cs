@@ -49,9 +49,10 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         [HttpGet]
         [Route("api/gallery/getLayoutItems")]
-        public IActionResult getLayoutItems(string Layout_Name)
+        public IActionResult GetLayoutItems(string Layout_Name)
         {
             try
             {
