@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/14/2022 12:52:14 PM
+Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/14/2022 1:41:27 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -63,6 +63,24 @@ GO
 PRINT N'Dropping [dbo].[FiltersNormalized]'
 GO
 DROP TABLE [dbo].[FiltersNormalized]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[ASSESSMENTS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[ASSESSMENTS] ADD
+[AssessmentEffectiveDate] [datetime2] NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[MATURITY_QUESTIONS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] ADD
+[Supplemental_Fact] [nvarchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
