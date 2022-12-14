@@ -31,7 +31,7 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(100)]
         public string Universal_Sub_Category { get; set; }
         public int SubCategoryId { get; set; }
-        public string Feedback { get; set; }
+        public string FeedBack { get; set; }
         public bool Is_Component { get; set; }
         [StringLength(36)]
         public Guid? Component_Guid { get; set; }
