@@ -626,8 +626,6 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<Answer_Components>(entity =>
             {
                 entity.ToView("Answer_Components");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<Answer_Components_Default>(entity =>
