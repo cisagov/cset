@@ -85,7 +85,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
         ///NOTE THIS runs the default item if there is only one item automatically
         if(this.rows.length==1 && this.rows[0].galleryItems.length==1){
-          this.assessSvc.newAssessmentGallery(this.rows[0].galleryItems[0].gallery_Item_Id);
+          this.assessSvc.newAssessmentGallery(this.rows[0].galleryItems[0]);
         }
 
         // create a plainText property for the elipsis display in case a description has HTML markup

@@ -36,7 +36,7 @@ export class NewAssessmentDialogComponent implements OnInit {
    */
   launchAssessment() {
     this.dialog.close();
-    this.assessSvc.newAssessmentGallery(this.galleryItem.gallery_Item_Id);
+    this.assessSvc.newAssessmentGallery(this.galleryItem);
   }
 
   /**
