@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/13/2022 8:35:31 AM
+Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/14/2022 12:52:14 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -133,6 +133,18 @@ FROM            dbo.FINANCIAL_GROUPS INNER JOIN
                          dbo.FINANCIAL_MATURITY ON dbo.FINANCIAL_GROUPS.Financial_Level_Id = dbo.FINANCIAL_MATURITY.Financial_Level_Id INNER JOIN
                          dbo.FINANCIAL_ASSESSMENT_FACTORS ON dbo.FINANCIAL_GROUPS.AssessmentFactorId = dbo.FINANCIAL_ASSESSMENT_FACTORS.AssessmentFactorId INNER JOIN
                          dbo.FINANCIAL_COMPONENTS ON dbo.FINANCIAL_GROUPS.FinComponentId = dbo.FINANCIAL_COMPONENTS.FinComponentId
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[Answer_Components]'
+GO
+ALTER VIEW [dbo].[Answer_Components]
+AS
+SELECT a.Answer_Id, a.Assessment_Id, a.Mark_For_Review, a.Comment, a.Alternate_Justification, a.Is_Requirement, a.Question_Or_Requirement_Id, a.Question_Number, a.Answer_Text, a.Component_Guid, a.Is_Component, a.Is_Framework, 
+                  a.Reviewed, a.FeedBack, q.Simple_Question AS QuestionText
+FROM     dbo.ANSWER AS a INNER JOIN
+                  dbo.NEW_QUESTION AS q ON q.Question_Id = a.Question_Or_Requirement_Id
+WHERE  (a.Is_Requirement = 0) AND (a.Is_Component = 1)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
