@@ -120,6 +120,21 @@ namespace CSETWebCore.Api.Controllers
 
                 feedbackQuestions.AddRange(q2);
 
+                // component questions
+                var q3 = from a in _context.Answer_Components
+                         where a.Assessment_Id == assessmentId
+                         && !string.IsNullOrWhiteSpace(a.FeedBack)
+                         select new FeedbackQuestion()
+                         {
+                             AnswerID = a.Answer_Id,
+                             Feedback = a.FeedBack,
+                             Mode = null,
+                             QuestionID = a.Question_Or_Requirement_Id,
+                             QuestionText = a.QuestionText
+                         };
+
+                feedbackQuestions.AddRange(q3);
+
                 bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
                 && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
 
