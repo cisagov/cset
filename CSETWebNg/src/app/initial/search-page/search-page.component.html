@@ -18,7 +18,7 @@
           </div>
           <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.item.gallery_Item_Id!=hoverIndex">
               <button  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-              <button  class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.item.gallery_Item_Id)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
+              <button  class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.item)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
           </div>
         </div>
       </ng-template>
