@@ -101,6 +101,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Int32 AssessmentCreatorId { get; set; }
 
         public DateTime LastAccessedDate { get; set; }
+        
+        public DateTime AssessmentEffectiveDate { get; set; }
 
         [MaxLength(50)]
         public String Alias { get; set; }
