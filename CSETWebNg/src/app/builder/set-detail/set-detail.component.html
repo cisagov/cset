@@ -68,16 +68,6 @@
         <textarea appAutoSize maxlength="800" id="description" name="description" class="form-control" type="text"
           [(ngModel)]="setDetail.description" (change)="update($event)"></textarea>
       </div>
-
-      <div class="form-group">
-        <label for="industry">Category</label>
-        <select class="form-control" id="category" name="category" [(ngModel)]="setDetail.setCategory"
-          (change)="update($event)">
-          <option value="0">--Select Category--</option>
-          <option *ngFor="let category of setDetail.categoryList" [value]="category.id">{{category.categoryName}}
-          </option>
-        </select>
-      </div>
     </form>
 
 

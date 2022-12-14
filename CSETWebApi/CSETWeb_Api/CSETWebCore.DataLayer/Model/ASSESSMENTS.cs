@@ -75,6 +75,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
+        public DateTime? AssessmentEffectiveDate { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
