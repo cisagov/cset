@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// <param name="board"></param>
         private void IncludeCustomSets(GalleryBoardData board)
         {
-            var customSets = _context.SETS.Where(s => s.Is_Custom && !s.Is_Deprecated).ToList();
+            var customSets = _context.SETS.Where(s => s.Is_Custom && (s.Is_Displayed ?? true) && !s.Is_Deprecated).ToList();
 
             if (customSets.Count >= 0)
             {
