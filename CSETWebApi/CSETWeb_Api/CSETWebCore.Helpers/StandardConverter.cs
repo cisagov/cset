@@ -40,18 +40,17 @@ namespace CSETWebCore.Helpers
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
-            var db = new CSETContext();
             try
             {
                 var documentImporter = new DocumentImporter(_context);
                 var set = result.Result;
 
-                var existingSet = db.SETS.FirstOrDefault(s => s.Set_Name == setname);
+                var existingSet = _context.SETS.FirstOrDefault(s => s.Set_Name == setname);
                 if (existingSet != null)
                 {
                     result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
                 }
-                category = db.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
+                category = _context.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
                 if (category == null)
                 {
@@ -138,7 +137,7 @@ namespace CSETWebCore.Helpers
                 result.LogError("Module could not be added.");
             }
 
-            db.SaveChanges();
+            _context.SaveChanges();
 
             return result;
         }
