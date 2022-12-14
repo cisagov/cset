@@ -175,7 +175,7 @@ namespace CSETWebCore.Business.Question
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
-                    Feedback = dbQ.Feedback,
+                    Feedback = dbQ.FeedBack,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty
                 };
 
@@ -259,7 +259,7 @@ namespace CSETWebCore.Business.Question
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
-                    Feedback = dbQ.Feedback
+                    Feedback = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);

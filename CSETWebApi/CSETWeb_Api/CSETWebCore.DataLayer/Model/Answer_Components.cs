@@ -29,5 +29,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool Reviewed { get; set; }
         [StringLength(2048)]
         public string FeedBack { get; set; }
+        public string QuestionText { get; set; }
     }
 }

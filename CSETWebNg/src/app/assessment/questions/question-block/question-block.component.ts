@@ -296,6 +296,8 @@ export class QuestionBlockComponent implements OnInit {
         componentGuid: q.componentGuid
       };
 
+      this.completionSvc.setAnswer(q.questionId, q.answer);
+
       subCatAnswers.answers.push(answer);
     });
 
