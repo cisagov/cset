@@ -122,66 +122,71 @@
                     your assessments.
                 </div>
 
-                <div>
-                    <label>
-                        If you have an Access Key, enter it here and click Login
-                    </label>
-                    <div class="input-group">
-                        <input class="form-control mr-2" [(ngModel)]="loginAccessKey" (keyup.enter)="loginWithAccessKey()"
-                            placeholder="Enter Access Key">
-                        <button (click)="loginWithAccessKey()"
-                            class="input-group-append btn btn-primary mt-0">Login</button>
+                <div class="mb-3 d-flex flex-row">
+                    <div class="mr-3 container">
+                        <label>
+                            If you have used CSET Online before and already have an Access Key, enter it here and click Login.
+                        </label>
+                            <div class="input-group mb-2">
+                                <input class="form-control mr-2" [(ngModel)]="loginAccessKey"
+                                (keyup.enter)="loginWithAccessKey()" placeholder="Enter Access Key">
+                            <button (click)="loginWithAccessKey()"
+                                class="input-group-append btn btn-primary mt-0">Login</button>
+                        </div>
+                        <div *ngIf="loginAccessKeyFailed" class="alert alert-danger">
+                            Login failed. Check your key and try again.
+                        </div>
                     </div>
-                    <div *ngIf="loginAccessKeyFailed" class="alert alert-danger">
-                        Login failed. Check your key and try again.
+
+                    <div class="container">
+                        <label class="mr-3">
+                            If it is your first time using CSET Online, click this button to generate a new Access Key.
+                        </label>
+
+                        <div class="d-flex flex-row">
+                            <button class="btn btn-primary" (click)="generateKey()">Create Access Key</button>
+                            
+                            <div class="spinner-container" *ngIf="isGenerating">
+                                <div style="max-width: 30px; max-height: 30px;"></div>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="isKeyGenerated" class="mt-3 alert alert-success mb-3">
+                            <p style="font-size: 1.3rem">
+                                Your Access Key is <strong>{{generatedKey}}</strong>
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                    [cdkCopyToClipboard]="generatedKey">
+                                    <span class="cset-icons-copy"></span>
+                                </label>
+                            </p>
+                            <p>
+                                You must retain this Access Key in order to access any assessments you create.
+                                Treat this key like a password. Anyone you share it with will have access to the
+                                assessments
+                                created with this Access Key. <strong>If you lose this Access Key you will lose
+                                    access to any assessments you create with it.</strong>
+                            </p>
+                            <p>
+                                <button class="btn btn-primary" (click)="loginWithAccessKey()">Enter CSET</button>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <hr class="my-3">
 
-                <div class="mb-3">
-                    <label class="mr-3">
-                        To generate an Access Key, click here
-                    </label>
-
-                    <button class="btn btn-primary" (click)="generateKey()">Create Access Key</button>
-
-
-                    <div class="spinner-container" *ngIf="isGenerating">
-                        <div style="max-width: 30px; max-height: 30px;"></div>
-                    </div>
-
-                    <div *ngIf="isKeyGenerated" class="mt-3 alert alert-success mb-3">
-                        <p style="font-size: 1.3rem">
-                            Your Access Key is <strong>{{generatedKey}}</strong>
-                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                [cdkCopyToClipboard]="generatedKey">
-                                <span class="cset-icons-copy"></span>
-                            </label>
-                        </p>
-                        <p>
-                            You must retain this Access Key in order to access any assessments you create.
-                            Treat this key like a password. Anyone you share it with will have access to the assessments
-                            created with this Access Key. <strong>If you lose this Access Key you will lose
-                                access to any assessments you create with it.</strong>
-                        </p>
-                        <p>
-                            <button class="btn btn-primary" (click)="loginWithAccessKey()">Enter CSET</button>
-                        </p>
-                    </div>
-                </div>
-
                 <div class="pii-disclaimer">
                     <p>
-                        Attention: Do not enter any personal or sensitive information into CSET Online.
+                        <strong>Attention:</strong> Do not enter any personal or sensitive information into CSET Online.
                     </p>
                     <p>
                         This includes information about a natural person or entity that is readily identifiable to that
                         specific individual/entity. Personal information includes such things as company names,
                         individual names, addresses, emails and phone numbers.
                     </p>
-                    <p>
+                    <p class="red-text">
                         If you choose to provide personal or sensitive information in any field within CSET Online,
                         that information will be stored in CSET and will be publicly disclosed.
                     </p>
@@ -195,11 +200,11 @@
 
                 <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
                 <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                href="https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
+                    href="https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
                 <div class="row">
-                  <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
-                  <a class="mr-2" (click)="showDisclaimer()">Disclaimer</a>
+                    <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                        href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
+                    <a class="mr-2" (click)="showDisclaimer()">Disclaimer</a>
                 </div>
             </div>
         </div>
