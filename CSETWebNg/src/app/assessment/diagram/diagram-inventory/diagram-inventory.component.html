@@ -24,16 +24,26 @@
   <h5>Component Inventory</h5>
 
   <div *ngIf="componentsExist">
-    <div class="d-flex justify-content-start mb-3 mt-4">
+    <div class="d-flex justify-content-between mb-3 mt-4">
       <button class="btn btn-primary" (click)="getExport()">
         <i class="cset-icons-export-excel mr-2"></i>
         Export to Excel</button>
+
+      <button *ngIf="showCsafUploadButton()" class="btn btn-primary" (click)="openFileBrowserForCsafUpload()"
+      matTooltip="Select CSAF JSON files to upload.">
+        <i class="cset-icons-import mr-2"></i>
+        Update Vulnerabilities Database</button>
+        <input id="csafUpload" type="file" accept=".json" multiple (change)="fileSelect($event)"
+        class="display-none">
     </div>
-    <div class="row stretch mb-3">
+    <div class="row mb-3">
       <div class="col-12">
         <mat-tab-group style="overflow: auto">
+          <mat-tab label="Vulnerabilities">
+            <app-diagram-vulnerabilities (componentsChange)="onChange($event)"></app-diagram-vulnerabilities>
+          </mat-tab>
           <mat-tab label="Components">
-            <app-diagram-components (change)="onChange($event)"></app-diagram-components>
+            <app-diagram-components (componentsChange)="onChange($event)"></app-diagram-components>
           </mat-tab>
           <mat-tab label="Zones">
             <zones></zones>
@@ -59,13 +69,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .stretch {
-    position: absolute;
-    left: 2rem;
-    right: 2rem;
-    max-width: max-content;
-    padding-bottom: 2rem;
-  }
-</style>

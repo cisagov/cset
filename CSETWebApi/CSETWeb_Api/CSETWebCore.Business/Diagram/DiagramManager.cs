@@ -17,12 +17,16 @@ using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace CSETWebCore.Business.Diagram
 {
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
+        static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(DiagramManager));
 
         //private IHttpContextAccessor _httpContext;
 
@@ -636,6 +640,11 @@ namespace CSETWebCore.Business.Diagram
                         item.Criticality = vertice.Criticality;
                         item.Description = vertice.Description;
                         item.HostName = vertice.HostName;
+                        item.PhysicalLocation = vertice.PhysicalLocation;
+                        item.VendorName = vertice.VendorName;
+                        item.ProductName = vertice.ProductName;
+                        item.VersionName = vertice.VersionName;
+                        item.SerialNumber = vertice.SerialNumber;
                         diagramXml.root.Items[i] = (object)item;
                     }
                 }
@@ -645,6 +654,7 @@ namespace CSETWebCore.Business.Diagram
             catch (Exception ex)
             {
                 var message = ex.Message;
+                _logger.Error(message);
             }
             finally
             {
@@ -817,6 +827,65 @@ namespace CSETWebCore.Business.Diagram
                 .ToArray();
 
             return templates;
+        }
+
+        /// <summary>
+        /// Gets all of the vendors from the uploaded CSAF_FILE records in the DB.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors() 
+        {
+            List<CSAF_FILE> csafList = _context.CSAF_FILE.ToList();
+            List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
+
+            foreach (var csaf in csafList)
+            {
+                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data));
+
+                var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
+                var existingVendor = vendors.Find(v => v.Name.Trim() == vendor.Name.Trim());
+
+                // Use existing vendor from list if present
+                if (existingVendor != null)
+                {
+                    vendor = existingVendor;
+                }
+
+                foreach (var branch in csafObj.Product_Tree.Branches[0].Branches)
+                {
+                    // Add newly found products, else add new vulnerabilites to existing product
+                    var newProduct = new CommonSecurityAdvisoryFrameworkProduct(csafObj, branch);
+                    if (!vendor.Products.Exists(p => p.Name == newProduct.Name))
+                    {
+                        vendor.Products.Add(newProduct);
+                    }
+                    else
+                    {
+                        var existingProduct = vendor.Products.Find(p => p.Name == newProduct.Name);
+                        foreach (var vulnerability in newProduct.Vulnerabilities)
+                        {
+                            if (!existingProduct.Vulnerabilities.Exists(v => v.Cve == vulnerability.Cve))
+                            {
+                                existingProduct.Vulnerabilities.Add(vulnerability);
+                            }
+                        }
+                    }
+                }
+
+                if (existingVendor == null)
+                {
+                    vendors.Add(vendor);
+                }
+            }
+
+            vendors.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+
+            foreach (var vendor in vendors)
+            {
+                vendor.Products.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+            }
+
+            return vendors;
         }
     }
 }

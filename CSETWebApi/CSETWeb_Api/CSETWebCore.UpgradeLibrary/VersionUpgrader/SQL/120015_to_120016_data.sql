@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/13/2022 8:08:08 AM
+Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/15/2022 9:01:52 AM
 
 */
 		
@@ -19073,7 +19073,8 @@ DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 5045
 DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 5047
 DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 5055
 DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 6098
-PRINT(N'Operation applied to 24 rows out of 24')
+DELETE FROM [dbo].[GEN_FILE] WHERE [Gen_File_Id] = 6107
+PRINT(N'Operation applied to 25 rows out of 25')
 
 PRINT(N'Update row in [dbo].[SETS]')
 UPDATE [dbo].[SETS] SET [Full_Name]=N'DHS 401 ICS System Evaluation and Analysis Course Question Set', [Short_Name]=N'DHS 401', [Standard_ToolTip]=N'Evaluation questions used in the DHS 401 ICS System Evaluation and Analysis Course' WHERE [Set_Name] = N'Course_401'

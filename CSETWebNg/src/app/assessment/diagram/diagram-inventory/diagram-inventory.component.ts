@@ -23,7 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
+import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
+import { FileUploadClientService } from '../../../services/file-client.service';
+import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -34,24 +38,28 @@ export class DiagramInventoryComponent implements OnInit {
   componentsExist: boolean = true;
 
   /**
-   * 
+   *
    */
-  constructor(public diagramSvc: DiagramService) { }
+  constructor(public diagramSvc: DiagramService,
+     private fileSvc: FileUploadClientService,
+     private dialog: MatDialog,
+     private configSvc: ConfigService
+    ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() { }
 
   /**
-   * 
+   *
    */
   onChange(list: any) {
     this.componentsExist = list.length > 0;
   }
 
   /**
-   * 
+   *
    */
   getExport() {
     this.diagramSvc.getExport().subscribe(data => {
@@ -60,5 +68,21 @@ export class DiagramInventoryComponent implements OnInit {
       error => {
         console.log('Error downloading file');
       });
+  }
+
+  /**
+   * Programmatically clicks the corresponding file upload element.
+   */
+  openFileBrowserForCsafUpload() {
+    const element: HTMLElement = document.getElementById('csafUpload') as HTMLElement;
+    element.click();
+  }
+
+  fileSelect(e) {
+    this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } });
+  }
+
+  showCsafUploadButton() {
+    return this.configSvc.behaviors?.showUpdateCsafVulnerabilitiesButton ?? true;
   }
 }
