@@ -1289,10 +1289,9 @@ namespace CSETWebCore.Business.Reports
             });
             var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
-
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
             info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
-            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate.ToShortDateString();
+            info.Assessment_Effective_Date = DateTime.Parse(assessment.AssessmentEffectiveDate.ToString()).ToShortDateString().ToString();
             info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToShortDateString() + ' ' + assessment.AssessmentCreatedDate.ToLongTimeString();
 
             // Primary Assessor
