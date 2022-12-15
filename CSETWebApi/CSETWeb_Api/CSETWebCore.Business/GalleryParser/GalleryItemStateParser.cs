@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.GalleryParser
         {
             var customSets = _context.SETS.Where(s => s.Is_Custom && (s.Is_Displayed ?? true) && !s.Is_Deprecated).ToList();
 
-            if (customSets.Count >= 0)
+            if (customSets.Count > 0)
             {
                 var customGroup = new GalleryGroup();
                 customGroup.Group_Id = 999;
