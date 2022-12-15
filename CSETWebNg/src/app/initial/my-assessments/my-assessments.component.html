@@ -53,7 +53,7 @@
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
                             </label>
 
-                            <label *ngIf="configSvc.installationMode === 'ACET' && !this.ncuaSvc.switchStatus" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                            <label *ngIf="configSvc.installationMode === 'ACET'" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
                                 <span class="cset-icons-export-excel fs-base mr-2"></span>
                                 <label for="importFile" class="m-0">Export All to Excel</label>

@@ -234,7 +234,7 @@
                                         <span class="pr-3">{{ q.title }}</span>
                                     </div>
                                     <div>
-                                        <span class="font-weight-bold">Question Text: </span>
+                                        <span class="font-weight-bold">Statement Text: </span>
                                         <span class="pr-3">{{ q.questionText }}</span>
                                     </div>
                                     <div>
@@ -331,11 +331,11 @@
                                 </div>
                                 <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
                                     
-                                    <strong> Supplemental Guidance: </strong> 
+                                    <strong> Supplemental Fact: </strong> 
                                     
                                     <br>
-                                    <span *ngIf="finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
-                                    <span *ngIf="finding?.finding?.supp_Guidance == ''">(no supplemental guidance available)</span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance == null || finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                     <br>
                                     <strong> Resources: </strong> 
                                     <br>

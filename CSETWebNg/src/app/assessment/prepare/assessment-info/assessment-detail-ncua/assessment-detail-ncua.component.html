@@ -103,8 +103,8 @@
                 <mat-datepicker #picker></mat-datepicker>
             </div>
             <div class="form-group col-md-6">
-                <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>
-                <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessmentEffectiveDate"
+                <label class="mb-1" for="effectiveDate">Assessment Effective Date</label>                                       
+                <input matInput MatDatepickerInput class="form-control" id="effectiveDate" name="effectiveDate" [(ngModel)]="assessment.assessmentEffectiveDate"
                     [matDatepicker]="effectiveDatePicker" (focus)="effectiveDatePicker.open()" (blur)="update($event)" (click)="effectiveDatePicker.open()" tabindex="0">
                 <mat-datepicker #effectiveDatePicker></mat-datepicker>
             </div>

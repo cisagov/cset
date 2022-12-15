@@ -13,6 +13,7 @@ namespace CSETWebCore.Model.Assessment
         public int? CreatorId { get; set; }
         public string CreatorName { get; set; }
         public DateTime? AssessmentDate { get; set; }
+        public DateTime? AssessmentEffectiveDate { get; set; }
         public string FacilityName { get; set; }
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
