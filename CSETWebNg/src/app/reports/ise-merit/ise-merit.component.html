@@ -361,13 +361,13 @@
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 
                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard" 
                                         [cdkCopyToClipboard]="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != '' ?
-                                            cleanText(finding?.finding?.supp_Guidance) : '(no Supplemental Guidance available)'">
+                                            cleanText(finding?.finding?.supp_Guidance) : '(no Supplemental Fact available)'">
                                         <span class="cset-icons-copy"></span>
                                     </label>
-                                    <strong> Supplemental Guidance: </strong> 
+                                    <strong> Supplemental Fact: </strong> 
                                     <br>
                                     <span *ngIf="finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
-                                    <span *ngIf="finding?.finding?.supp_Guidance == ''">(no Supplemental Guidance available)</span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
 
                                     <br>
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; 

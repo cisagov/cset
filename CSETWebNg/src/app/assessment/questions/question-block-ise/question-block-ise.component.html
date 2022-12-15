@@ -109,7 +109,7 @@
                                 <label *ngFor="let option of answerOptions">
                                     <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label"
                                       [class]="questionsSvc.answerOptionCss(maturityModelId, option)" [class.answer-selected]="q.answer === option"
-                                      [matTooltip]="this.displayTooltip(maturityModelId, option)">
+                                      [matTooltip]="this.displayTooltip(maturityModelId, option)" [disabled]="option === 'N' && autoGenerateInProgress">
                                         <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
                                           (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                             {{ questionsSvc.answerButtonLabel(maturityModelId, option) }}
@@ -204,8 +204,8 @@
                         
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
-                    <textarea appAutoSize id="summaryComment" class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                        (mousedown)="autoResize()" (change)="storeSummaryComment(q, $event)"></textarea>
+                    <textarea appAutoSize id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                        (mousedown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, $event)"></textarea>
                 </div>
             </ng-container>
         </div>

@@ -5,6 +5,7 @@
         public int RequirementID { get; set; }
         public string Text { get; set; }
         public string SupplementalInfo { get; set; }
+        public string SupplementalFact { get; set; }
         public string ExaminationApproach { get; set; }
 
         public string Set_Name { get; set; }

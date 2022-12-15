@@ -59,7 +59,9 @@ namespace CSETWebCore.Business.Reports
             public string Credit_Union_Name { get; set; }
             public string Charter { get; set; }
             public long Assets { get; set; }
-            public string Assessment_Date_Export { get; set; }
+            public string Assessment_Effective_Date { get; set; }
+            public string Assessment_Creation_Date { get; set; }
+
 
             // Maturity Properties
             public string QuestionsAlias { get; set; }
