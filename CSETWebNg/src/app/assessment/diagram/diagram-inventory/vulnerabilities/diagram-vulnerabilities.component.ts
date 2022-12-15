@@ -44,7 +44,6 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   comparer: Comparer = new Comparer();
   sal: any;
   criticality: any;
-  vendors: Vendor[] = [];
 
   /**
    *
@@ -61,12 +60,10 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     // Only hit the api if the service does not yet have the vendors array populated.
     if (this.diagramSvc.csafVendors.length === 0) {
       this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
-        this.diagramSvc.csafVendors = vendors
-        this.vendors = this.diagramSvc.csafVendors;
+        this.diagramSvc.csafVendors = vendors;
         this.getComponents();
-      })
+      });
     } else {
-      this.vendors = this.diagramSvc.csafVendors;
       this.getComponents()
     }
   }
@@ -129,6 +126,10 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       return;
     }
 
-    component.vendor = this.vendors.find(v => v.name === component.vendorName);
+    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName);
+  }
+
+  getVendors() {
+    return this.diagramSvc.csafVendors;
   }
 }
