@@ -15,6 +15,7 @@ namespace CSETWebCore.Model.Diagram
             Name = branch.Name;
             Vulnerabilities = new List<CommonSecurityAdvisoryFrameworkObject.Vulnerability>();
             AffectedVersions = branch.Branches[0].Name;
+            AdvisoryUrl = csafObj.Document.References.Find(r => r.Category.ToLower() == "self")?.Url ?? csafObj.Document.References[0].Url;
 
             foreach (var vulnerability in csafObj.Vulnerabilities) 
             {
@@ -26,6 +27,7 @@ namespace CSETWebCore.Model.Diagram
         }
 
         public string Name { get; set; }
+        public string AdvisoryUrl { get; set; }
         public List<CommonSecurityAdvisoryFrameworkObject.Vulnerability> Vulnerabilities { get; set; }
         public string AffectedVersions { get; set; }
     }
