@@ -1,0 +1,45 @@
+<div class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-exclamation-triangle fs-base-6 mr-3"></span>
+    <span>Common Vulnerabilities and Exposures (CVE)</span>
+  </div>
+
+  <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
+    <div class="disclaimer-blurb">
+      Disclaimer: The following affects this Vendor and Product, but might not affect your exact device based on Version or Serial Number.
+    </div>
+
+    <p><span class="font-weight-bold">Vendor:</span> {{ vendor.name }}</p>
+    <p><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
+
+    <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
+      <th mat-sort-header="cve" style="width:200px">CVE #</th>
+      <th mat-sort-header="score" style="width:200px">Score</th>
+      <th mat-sort-header="version" style="width:200px">Affected Versions / Serials</th>
+      <th mat-sort-header="linkDetails" style="width:200px">CISA Advisory Link</th>
+      <th mat-sort-header="linkWebsite" style="width:200px">Vendor Link</th>
+
+      <tr *ngFor="let vulnerability of product.vulnerabilities">
+        <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ vulnerability.cve }}</a></td>
+        <td>
+          <a [href]="getFirstOrgUrl(vulnerability)" class="cve-score" target="_blank"
+          [ngStyle]="{
+             'backgroundColor': getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).color,
+             'color': getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).level === 'CRITICAL' ? '#a9a9a9' : 'black'
+            }">
+            {{ vulnerability.scores[0].cvss_V3.baseScore }} {{ getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).level }}
+          </a>
+        </td>
+        <td>
+          {{ product.affectedVersions }}
+        </td>
+        <td><a [href]="product.advisoryUrl" target="_blank">{{ product.advisoryUrl }}</a></td>
+        <td><a [href]="getVendorUrl(vulnerability.remediations)" target="_blank">{{ getVendorUrl(vulnerability.remediations) }}</a></td>
+      </tr>
+    </table>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-end flex-00a">
+    <button class="btn btn-secondary" (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>

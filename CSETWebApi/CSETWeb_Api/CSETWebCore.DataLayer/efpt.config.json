@@ -207,6 +207,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CSAF_FILE]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CSET_VERSION]",
          "ObjectType": 0
       },
@@ -652,6 +656,10 @@
       },
       {
          "Name": "[dbo].[QUESTION_GROUP_TYPE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[RapidAssessmentControls]",
          "ObjectType": 0
       },
       {

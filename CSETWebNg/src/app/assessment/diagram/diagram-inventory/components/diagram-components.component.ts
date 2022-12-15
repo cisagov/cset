@@ -33,13 +33,12 @@ import { Comparer } from '../../../../helpers/comparer';
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  diagramComponentList: any;
+  diagramComponentList: any[] = [];
 
   @Output()
-  change = new EventEmitter<any>();
+  componentsChange = new EventEmitter<any>();
 
   comparer: Comparer = new Comparer();
-  displayedColumns = ['tag', 'hasUniqueQuestions', 'sal', 'criticality', 'layerC', 'ipAddress', 'assetType', 'zone', 'subnetName', 'description', 'hostName', 'visibleC'];
   assetTypes: any;
   sal: any;
   criticality: any;
@@ -47,15 +46,14 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    *
    */
-  constructor(public diagramSvc: DiagramService) { }
+  constructor(
+    public diagramSvc: DiagramService
+  ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.diagramSvc.getAllSymbols().subscribe((x: any) => {
-      this.assetTypes = x;
-    });
     this.getComponents();
   }
 
@@ -65,14 +63,13 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
-      this.change.emit(this.diagramComponentList);
+      this.componentsChange.emit(this.diagramComponentList);
     });
   }
 
   sortData(sort: Sort) {
 
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 

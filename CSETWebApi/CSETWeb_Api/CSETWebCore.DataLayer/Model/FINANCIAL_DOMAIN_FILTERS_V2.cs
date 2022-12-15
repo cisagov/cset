@@ -21,6 +21,9 @@ namespace CSETWebCore.DataLayer.Model
         public int Financial_Level_Id { get; set; }
         public bool IsOn { get; set; }
 
+        [ForeignKey("DomainId")]
+        [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
+        public virtual FINANCIAL_DOMAINS Domain { get; set; }
         [ForeignKey("Financial_Level_Id")]
         [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
         public virtual FINANCIAL_MATURITY Financial_Level { get; set; }

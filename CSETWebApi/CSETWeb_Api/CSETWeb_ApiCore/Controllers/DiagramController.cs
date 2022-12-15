@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Xml;
 using CSETWebCore.Business.Authorization;
@@ -19,9 +18,14 @@ using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Model.Diagram;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http.Extensions;
+using CSETWebCore.Helpers;
+using CSETWebCore.Model.Document;
+using DocumentFormat.OpenXml.Office2021.DocumentTasks;
+using System.ComponentModel.Design;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -35,6 +39,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHttpContextAccessor _http;
         private readonly IDataHandling _dataHandling;
         private readonly IACETDashboardBusiness _acet;
+        private readonly IWebHostEnvironment _webHost;
 
         private CSETContext _context;
 
@@ -42,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
 
         public DiagramController(IDiagramManager diagram, ITokenManager token, 
             IAssessmentBusiness assessment, IDataHandling dataHandling, IMaturityBusiness maturity, 
-            IHttpContextAccessor http, IACETDashboardBusiness acet, CSETContext context)
+            IHttpContextAccessor http, IACETDashboardBusiness acet, IWebHostEnvironment webHost, CSETContext context)
         {
             _diagram = diagram;
             _token = token;
@@ -51,6 +56,7 @@ namespace CSETWebCore.Api.Controllers
             _maturity = maturity;
             _http = http;
             _acet = acet;
+            _webHost = webHost;
             _context = context;
             _object = new object();
         }
@@ -81,7 +87,15 @@ namespace CSETWebCore.Api.Controllers
                 }
 
             }
+        }
 
+        [CsetAuthorize]
+        [Route("api/diagram/saveComponent")]
+        [HttpPost]
+        public void SaveDiagram([FromBody] mxGraphModelRootObject component)
+        {
+            int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            _diagram.SaveComponent(component, (int)assessmentId);
         }
 
         [CsetAuthorize]
@@ -93,7 +107,6 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             DecodeDiagram(req);
             return PerformAnalysis(req, assessmentId ?? 0);
-
         }
 
         private void DecodeDiagram(DiagramRequest req)
@@ -425,6 +438,108 @@ namespace CSETWebCore.Api.Controllers
 
             var templates = _diagram.GetDiagramTemplates();
             return templates;
+        }
+
+        /// <summary>
+        /// Get all availabes alerts & advisories from the stored CSAF json files.
+        /// Vendor is the top level class that houses products, which then holds vulnerabilites.
+        /// </summary>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities")]
+        [HttpGet]
+        public IActionResult GetDiagramVulnerabilities()
+        {
+            try
+            {
+                return Ok(_diagram.GetCsafVendors());
+            }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// uploads new CSAF json files to Documents/DiagramVulnerabilities/CSAF to be used for network diagram alerts & advisories
+        /// </summary>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities")]
+        [HttpPost]
+        public async System.Threading.Tasks.Task<IActionResult> UpdateDiagramVulnerabilities()
+        {
+            var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
+
+            if (multipartBoundary == null)
+            {
+                // unsupported media type
+                return StatusCode(415);
+            }
+
+            try
+            {
+                FileUploadStream fileUploader = new FileUploadStream();
+                Dictionary<string, string> formValues = new Dictionary<string, string>();
+                formValues.Add("fileItem", null);
+
+                FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(HttpContext.Request.HttpContext, formValues);
+                foreach (var file in streamResult.FileResultList)
+                {
+                    if (!file.FileName.EndsWith(".json"))
+                    {
+                        return StatusCode(415);
+                    }
+
+                    if (!(file.FileSize > 0))
+                    {
+                        return BadRequest("JSON file cannot be empty.");
+                    }
+
+                    // Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
+                    JsonSerializerSettings settings = new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Error };
+                    try 
+                    { 
+                        // This line will throw an error if the uploaded json does not follow the CSAF format.
+                        JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(file.FileBytes), settings);
+                    }
+                    catch (Exception e) 
+                    {
+                        return BadRequest(e.Message);
+                    }
+
+                    var csafFile = _context.CSAF_FILE.FirstOrDefault(csafFile => csafFile.File_Name.ToLower() == file.FileName.ToLower());
+
+                    if (csafFile == null)
+                    {
+                        csafFile = new CSAF_FILE
+                        {
+                            File_Name = file.FileName,
+                            Data = file.FileBytes,
+                            File_Size = file.FileSize,
+                            Upload_Date = DateTime.Now,
+                        };
+
+                        _context.CSAF_FILE.Add(csafFile);
+                    }
+                    else
+                    {
+                        csafFile.Data = file.FileBytes;
+                        csafFile.File_Size = file.FileSize;
+                        csafFile.Upload_Date = DateTime.Now;
+                    }
+
+                    _context.SaveChanges();
+                }
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
+            return Ok("CSAF file upload success.");
         }
 
         /// <summary>

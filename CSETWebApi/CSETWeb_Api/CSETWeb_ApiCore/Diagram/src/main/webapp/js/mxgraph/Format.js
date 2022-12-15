@@ -2440,10 +2440,22 @@ diagramElementProperties = function () {
                 attributeName: 'HasUniqueQuestions',
                 type: 'checkbox'
             }, {
+                fieldLabel: 'Version Name',
+                attributeName: 'VersionName',
+                type: 'input'
+            }, {
+                fieldLabel: 'Serial Number',
+                attributeName: 'SerialNumber',
+                type: 'input'
+            }, {
+                fieldLabel: 'Physical Location',
+                attributeName: 'PhysicalLocation',
+                type: 'input'
+            }, {
                 fieldLabel: 'Description',
                 attributeName: 'Description',
                 type: 'textarea'
-            }
+            },
         ],
         zoneProperties: [
             {

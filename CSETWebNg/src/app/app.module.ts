@@ -525,6 +525,8 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
 import { GlobalConfigurationComponent } from './dialogs/global-configuration/global-configuration.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
+import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
+import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
 
 
 
@@ -1008,6 +1010,8 @@ import { ReferencesDisplayComponent } from './assessment/questions/references-di
         GlobalConfigurationComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,
+        DiagramVulnerabilitiesDialogComponent,
+        DiagramVulnerabilitiesComponent
     ],
     providers: [
         ConfigService,
