@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Product, Vendor } from '../diagram-vulnerabilities.component';
 import { Comparer } from '../../../../../helpers/comparer';
+import { Vulnerability } from '../diagram-vulnerabilities.component'
 
 interface cveWarning {
   level: string;
@@ -38,21 +39,19 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
     }
 
     //TODO: Implement column sorting for commented out columns
-    this.product.vulnerabilities.sort((a, b) => {
+    this.product.vulnerabilities.sort((a: Vulnerability, b: Vulnerability) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "cve":
           return this.comparer.compare(a.cve, b.cve, isAsc);
         case "score":
           return this.comparer.compare(a.scores[0].cvss_V3.baseScore, b.scores[0].cvss_V3.baseScore, isAsc);
-        // case "version":
-        //   return this.comparer.compare(, b.sal, isAsc);
-        // case "serial":
-        //   return this.comparer.compare(a, b, isAsc);
+        case "version":
+          return this.comparer.compare(this.product.affectedVersions, this.product.affectedVersions, isAsc);
         case "linkDetails":
           return this.comparer.compare(this.getCveUrl(a.cve), this.getCveUrl(b.cve), isAsc);
-        // case "linkWebsite":
-        //   return this.comparer.compare(a, b, isAsc);
+        case "linkWebsite":
+          return this.comparer.compare(this.getVendorUrl(a.remediations), this.getVendorUrl(b.remediations), isAsc);
         default:
           return 0;
       }
@@ -84,5 +83,9 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 
   getVendorUrl(remediations: any[]) {
     return remediations.find(r => !r.url.includes('cisa.gov') && !r.url.includes('nist.gov'))?.url;
+  }
+
+  getFirstOrgUrl(vulnerability) {
+    return vulnerability.references.find(r => r.summary.includes('first.org')).url
   }
 }

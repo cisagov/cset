@@ -36,10 +36,12 @@ export interface Vendor {
 export interface Product {
   name: string;
   vulnerabilities: Vulnerability[];
+  advisoryUrl: string;
   versions: { name: string; product_Id: string }[]
+  affectedVersions: string;
 }
 
-interface Vulnerability {
+export interface Vulnerability {
   cve: string;
   cwe: any;
   notes: any[];

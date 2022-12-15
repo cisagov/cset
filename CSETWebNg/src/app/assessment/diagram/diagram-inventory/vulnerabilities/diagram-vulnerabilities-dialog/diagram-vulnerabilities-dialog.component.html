@@ -16,24 +16,24 @@
       <th mat-sort-header="cve" style="width:200px">CVE #</th>
       <th mat-sort-header="score" style="width:200px">Score</th>
       <th mat-sort-header="version" style="width:200px">Affected Versions / Serials</th>
-      <th mat-sort-header="linkDetails" style="width:200px">Link to CVE advisory</th>
-      <th mat-sort-header="linkWebsite" style="width:200px">Link to vendor website</th>
+      <th mat-sort-header="linkDetails" style="width:200px">CISA Advisory Link</th>
+      <th mat-sort-header="linkWebsite" style="width:200px">Vendor Link</th>
 
       <tr *ngFor="let vulnerability of product.vulnerabilities">
-        <td>{{ vulnerability.cve }}</td>
+        <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ vulnerability.cve }}</a></td>
         <td>
-          <span class="cve-score"
+          <a [href]="getFirstOrgUrl(vulnerability)" class="cve-score" target="_blank"
           [ngStyle]="{
              'backgroundColor': getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).color,
              'color': getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).level === 'CRITICAL' ? '#a9a9a9' : 'black'
             }">
             {{ vulnerability.scores[0].cvss_V3.baseScore }} {{ getCveWarning(vulnerability.scores[0].cvss_V3.baseScore).level }}
-          </span>
+          </a>
         </td>
         <td>
           {{ product.affectedVersions }}
         </td>
-        <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ getCveUrl(vulnerability.cve) }}</a></td>
+        <td><a [href]="product.advisoryUrl" target="_blank">{{ product.advisoryUrl }}</a></td>
         <td><a [href]="getVendorUrl(vulnerability.remediations)" target="_blank">{{ getVendorUrl(vulnerability.remediations) }}</a></td>
       </tr>
     </table>
