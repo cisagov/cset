@@ -1,5 +1,3 @@
-USE CSETWeb;
-
 --This is the transaction that will transfer all comments, documents, and feedback to parent question
 BEGIN TRAN;
 
