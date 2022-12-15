@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -829,19 +830,17 @@ namespace CSETWebCore.Business.Diagram
         }
 
         /// <summary>
-        /// 
+        /// Gets all of the vendors from the uploaded CSAF_FILE records in the DB.
         /// </summary>
-        /// <param name="csafFilesDirectory">the directory that houses all of the csaf json files</param>
         /// <returns></returns>
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors(string csafFilesDirectory) 
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors() 
         {
-            string[] filePaths = Directory.GetFiles(csafFilesDirectory);
+            List<CSAF_FILE> csafList = _context.CSAF_FILE.ToList();
             List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
 
-            foreach (var filePath in filePaths)
+            foreach (var csaf in csafList)
             {
-                string jsonString = System.IO.File.ReadAllText(filePath);
-                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(jsonString);
+                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data));
 
                 var vendor = new CommonSecurityAdvisoryFrameworkVendor(csafObj);
                 var existingVendor = vendors.Find(v => v.Name.Trim() == vendor.Name.Trim());

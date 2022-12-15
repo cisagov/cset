@@ -22,6 +22,10 @@ using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http.Extensions;
+using CSETWebCore.Helpers;
+using CSETWebCore.Model.Document;
+using DocumentFormat.OpenXml.Office2021.DocumentTasks;
+using System.ComponentModel.Design;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -448,7 +452,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                return Ok(_diagram.GetCsafVendors(Path.Combine(_webHost.ContentRootPath, "Documents/DiagramVulnerabilities/CSAF")));
+                return Ok(_diagram.GetCsafVendors());
             }
             catch (Exception exc)
             {
@@ -465,7 +469,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/vulnerabilities")]
         [HttpPost]
-        public IActionResult UpdateDiagramVulnerabilities()
+        public async System.Threading.Tasks.Task<IActionResult> UpdateDiagramVulnerabilities()
         {
             var multipartBoundary = HttpRequestMultipartExtensions.GetMultipartBoundary(Request);
 
@@ -475,48 +479,64 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(415);
             }
 
-            string csafFilesDirectory = Path.Combine(_webHost.ContentRootPath, "Documents/DiagramVulnerabilities/CSAF");
-
             try
             {
-                var formFiles = HttpContext.Request.Form.Files;
+                FileUploadStream fileUploader = new FileUploadStream();
+                Dictionary<string, string> formValues = new Dictionary<string, string>();
+                formValues.Add("fileItem", null);
 
-                foreach (FormFile file in formFiles)
+                FileUploadStreamResult streamResult = await fileUploader.ProcessUploadStream(HttpContext.Request.HttpContext, formValues);
+                foreach (var file in streamResult.FileResultList)
                 {
                     if (!file.FileName.EndsWith(".json"))
                     {
                         return StatusCode(415);
                     }
 
-                    // Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        byte[] bytes = ms.ToArray();
-                        JsonSerializerSettings settings = new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Error };
-                        // This line will throw an error if the uploaded json does not follow the CSAF format.
-                        JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(bytes), settings);
-                    }
-
-                    if (file.Length > 0)
-                    {
-                        string filePath = Path.Combine(csafFilesDirectory, file.FileName);
-
-                        // Existing json files with the same name are overwritten.
-                        using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            file.CopyTo(fileStream);
-                        }
-                    }
-                    else 
+                    if (!(file.FileSize > 0))
                     {
                         return BadRequest("JSON file cannot be empty.");
                     }
+
+                    // Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
+                    JsonSerializerSettings settings = new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Error };
+                    try 
+                    { 
+                        // This line will throw an error if the uploaded json does not follow the CSAF format.
+                        JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(file.FileBytes), settings);
+                    }
+                    catch (Exception e) 
+                    {
+                        return BadRequest(e.Message);
+                    }
+
+                    var csafFile = _context.CSAF_FILE.FirstOrDefault(csafFile => csafFile.File_Name.ToLower() == file.FileName.ToLower());
+
+                    if (csafFile == null)
+                    {
+                        csafFile = new CSAF_FILE
+                        {
+                            File_Name = file.FileName,
+                            Data = file.FileBytes,
+                            File_Size = file.FileSize,
+                            Upload_Date = DateTime.Now,
+                        };
+
+                        _context.CSAF_FILE.Add(csafFile);
+                    }
+                    else
+                    {
+                        csafFile.Data = file.FileBytes;
+                        csafFile.File_Size = file.FileSize;
+                        csafFile.Upload_Date = DateTime.Now;
+                    }
+
+                    _context.SaveChanges();
                 }
             }
             catch(Exception e)
             {
-                return BadRequest(e);
+                return StatusCode(500, e.Message);
             }
 
             return Ok("CSAF file upload success.");

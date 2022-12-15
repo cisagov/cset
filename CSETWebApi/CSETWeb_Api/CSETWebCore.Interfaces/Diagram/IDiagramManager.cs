@@ -35,6 +35,6 @@ namespace CSETWebCore.Interfaces
         void SaveDiagramXml(int assessmentId, mxGraphModel diagramXml);
         string SetImage(int Component_Symbol_Id, string style);
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
-        IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors(string csafFilesDirectory);
+        IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();
     }
 }
