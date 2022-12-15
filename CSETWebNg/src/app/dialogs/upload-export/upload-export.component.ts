@@ -101,8 +101,6 @@ export class UploadExportComponent implements OnInit {
 
     if (this.data.isCsafUpload) {
       this.progress = this.fileSvc.uploadCsafFiles(this.files);
-      // Reset the vendors array to hit the api again for updated list.
-      this.diagramSvc.csafVendors = [];
     } else {
       this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
     }
