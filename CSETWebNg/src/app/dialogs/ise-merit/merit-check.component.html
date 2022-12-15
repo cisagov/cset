@@ -32,12 +32,12 @@
 </mat-dialog-content>
   
 <mat-dialog-actions class="p-3 mb-0" align="end">
-    <div *ngIf="dialogTitle == 'MERIT Warning'">
+    <div *ngIf="dialogTitle == 'Submission Warning'">
         <button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>
         <button mat-button class="btn btn-primary" (click)="submit('overwrite')">Overwrite Submission</button>
         <button mat-button class="btn btn-secondary" (click)="submit('cancel')">Cancel</button>
     </div>
-    <div *ngIf="dialogTitle == 'MERIT Success' || dialogTitle == 'MERIT Error'">
+    <div *ngIf="dialogTitle == 'Submission Success' || dialogTitle == 'Submission Error'">
         <button class="btn btn-primary" (click)="dialog.close(true)">OK</button>
     </div>
 </mat-dialog-actions>

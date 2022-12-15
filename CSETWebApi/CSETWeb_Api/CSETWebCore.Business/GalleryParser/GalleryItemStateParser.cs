@@ -21,11 +21,14 @@ namespace CSETWebCore.Business.GalleryParser
         private IStandardsBusiness _standardsBusiness;
         private IQuestionRequirementManager _questionRequirementMananger;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public GalleryState(CSETContext context, IMaturityBusiness maturityBusiness
             , IStandardsBusiness standardsBusiness
             , IQuestionRequirementManager questionRequirementManager)
         {
-
             _context = context;
             _maturity_business = maturityBusiness;
             _standardsBusiness = standardsBusiness;
@@ -66,14 +69,43 @@ namespace CSETWebCore.Business.GalleryParser
 
                 if ((bool)item.i.Is_Visible)
                 {
-                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i,galleryGroup.Group_Id));
+                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i, galleryGroup.Group_Id));
                 }
             }
+
+            IncludeCustomSets(rvalue);
 
             return rvalue;
         }
 
-      
 
+        /// <summary>
+        /// Build a "Custom" row at the top of the structure on the fly
+        /// if any custom sets exist.
+        /// </summary>
+        /// <param name="board"></param>
+        private void IncludeCustomSets(GalleryBoardData board)
+        {
+            var customSets = _context.SETS.Where(s => s.Is_Custom && (s.Is_Displayed ?? true) && !s.Is_Deprecated).ToList();
+
+            if (customSets.Count >= 0)
+            {
+                var customGroup = new GalleryGroup();
+                customGroup.Group_Id = 999;
+                customGroup.Group_Title = "Custom";
+                board.Rows.Insert(0, customGroup);
+
+                foreach (var s in customSets)
+                {
+                    var customSet = new GalleryItem
+                    {
+                        Title = s.Full_Name,
+                        Description = s.Standard_ToolTip,
+                        Custom_Set_Name = s.Set_Name
+                    };
+                    customGroup.GalleryItems.Add(customSet);
+                }
+            }
+        }
     }
 }

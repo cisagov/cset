@@ -120,13 +120,17 @@ export class AssessmentService {
   }
 
   /**
-   *
-   * @param workflow
-   * @param galleryId
-   * @returns
+   * If a custom set name is found on the gallery item, include it in the query string.
+   * Custom set gallery items are built on the fly and don't have a gallery ID.
    */
-  createNewAssessmentGallery(workflow: string, galleryId: number) {
-    return this.http.get(this.apiUrl + 'createassessment/gallery?workflow=' + workflow + '&galleryId=' + galleryId, headers)
+  createNewAssessmentGallery(workflow: string, galleryItem: any) {
+    let queryString: string = 'workflow=' + workflow + '&galleryId=' + galleryItem.gallery_Item_Id;
+
+    if (!!galleryItem.custom_Set_Name) {
+      queryString += '&csn=' + galleryItem.custom_Set_Name
+    }
+
+    return this.http.get(this.apiUrl + 'createassessment/gallery?' + queryString, headers)
   }
 
   /**
@@ -356,7 +360,7 @@ export class AssessmentService {
       );
   }
 
-  newAssessmentGallery(gallery_item_id: number) {
+  newAssessmentGallery(galleryItem: any) {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -369,7 +373,7 @@ export class AssessmentService {
         workflow = 'BASE';
     }
 
-    this.createNewAssessmentGallery(workflow, gallery_item_id)
+    this.createNewAssessmentGallery(workflow, galleryItem)
       .toPromise()
       .then(
         (response: any) => {
