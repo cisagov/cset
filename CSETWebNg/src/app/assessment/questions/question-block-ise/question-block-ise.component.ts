@@ -647,8 +647,8 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
-  autoResize(i: number) {
-    let textArea = document.getElementById("summaryComment"+i)
+  autoResize(id: number) {
+    let textArea = document.getElementById("summaryComment" + id);
     textArea.style.overflow = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
