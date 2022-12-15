@@ -659,6 +659,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[RapidAssessmentControls]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[RECENT_FILES]",
          "ObjectType": 0
       },

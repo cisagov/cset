@@ -17,6 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public FINANCIAL_DOMAINS()
         {
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
+            FINANCIAL_DOMAIN_FILTERS_V2 = new HashSet<FINANCIAL_DOMAIN_FILTERS_V2>();
             FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
             FINANCIAL_HOURS_COMPONENT = new HashSet<FINANCIAL_HOURS_COMPONENT>();
         }
@@ -31,6 +32,8 @@ namespace CSETWebCore.DataLayer.Model
 
         [InverseProperty("Domain")]
         public virtual ICollection<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
+        [InverseProperty("Domain")]
+        public virtual ICollection<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
         [InverseProperty("Domain")]
         public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
         [InverseProperty("Domain")]
