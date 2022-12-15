@@ -27,30 +27,7 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
-
-export interface Vendor {
-  name: string;
-  products: Product[];
-}
-
-export interface Product {
-  name: string;
-  vulnerabilities: Vulnerability[];
-  advisoryUrl: string;
-  versions: { name: string; product_Id: string }[]
-  affectedVersions: string;
-}
-
-export interface Vulnerability {
-  cve: string;
-  cwe: any;
-  notes: any[];
-  product_Status: any;
-  references: any[];
-  remediations: any[];
-  scores: any[];
-  title: string;
-}
+import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -67,7 +44,6 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   comparer: Comparer = new Comparer();
   sal: any;
   criticality: any;
-  vendors: Vendor[] = [];
 
   /**
    *
@@ -81,11 +57,15 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
-      this.vendors = vendors;
-      this.getComponents();
-    })
-
+    // Only hit the api if the service does not yet have the vendors array populated.
+    if (this.diagramSvc.csafVendors.length === 0) {
+      this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+        this.diagramSvc.csafVendors = vendors;
+        this.getComponents();
+      });
+    } else {
+      this.getComponents()
+    }
   }
 
   /**
@@ -146,6 +126,10 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       return;
     }
 
-    component.vendor = this.vendors.find(v => v.name === component.vendorName);
+    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName);
+  }
+
+  getVendors() {
+    return this.diagramSvc.csafVendors;
   }
 }

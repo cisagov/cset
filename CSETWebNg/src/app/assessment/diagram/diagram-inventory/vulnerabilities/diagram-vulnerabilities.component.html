@@ -40,7 +40,7 @@
       <td>
         <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
           <option [ngValue]="null">-- Select Vendor --</option>
-          <option *ngFor="let vendor of vendors" [value]="vendor.name">{{ vendor.name }}</option>
+          <option *ngFor="let vendor of getVendors()" [value]="vendor.name">{{ vendor.name }}</option>
         </select>
       </td>
       <td>
