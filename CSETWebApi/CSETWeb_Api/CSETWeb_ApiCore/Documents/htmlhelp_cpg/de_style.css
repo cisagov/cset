@@ -26,7 +26,7 @@ div.description_on_page div.p,
  .m-pageContent__side__left div.p,
  .m-pageContent__side__left div.p a
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -34,7 +34,7 @@ font-weight:normal;
 }
 h1
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 16pt;color:#003366;
 font-style:normal;
 text-decoration:none;
@@ -45,7 +45,7 @@ padding:0;
 }
 h2
 {
-font-family:"Calibri";
+font-family:"Arial";
 font-size: 14pt;color:#004891;
 font-style:normal;
 text-decoration:none;
@@ -56,7 +56,7 @@ padding:0;
 }
 h3
 {
-font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -128,6 +128,12 @@ span.de_2385B26FC8
 	font-size: 12pt;
 	color:#003366;
 }
+span.de_2562AE2FEA
+{
+	font-family: "Arial";
+	font-size: 30pt;
+	color:#0e3c79;
+}
 span.de_344E087466
 {
 	font-family: "Arial";
@@ -165,10 +171,6 @@ span.de_59D175D728
 span.de_68B99ACC5C
 {
 	font-family: "Arial";
-}
-span.de_6D2D8B1FD4
-{
-	font-size: 12pt;
 }
 span.de_70A2D626BA
 {
@@ -247,16 +249,6 @@ span.de_E8DA75673A
 	font-family: "Arial";
 	font-size: 24pt;
 	color:#005287;
-}
-span.de_F83B486F28
-{
-	font-family: "Verdana";
-	font-size: 30pt;
-	color:#0e3c79;
-}
-span.de_FA021CA4E5
-{
-	color:#3f3f3f;
 }
 .list-element {
 	list-style-type: none;

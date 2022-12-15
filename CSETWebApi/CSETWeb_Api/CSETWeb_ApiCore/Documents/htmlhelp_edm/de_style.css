@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 11pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 11pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -147,7 +147,7 @@ span.de_477A69E6CE
 }
 span.de_4CD179DA38
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#000000;
 }
@@ -159,7 +159,7 @@ span.de_5FB625965B
 }
 span.de_610B9F1368
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#0070c0;
 }
@@ -184,7 +184,7 @@ span.de_67B4B21911
 }
 span.de_6C2B69BD23
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#0000ff;
 	text-decoration:underline;
@@ -228,7 +228,7 @@ span.de_B9F55B79DA
 }
 span.de_BC300238AB
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 11pt;
 	color:#44546a;
 }
@@ -254,7 +254,7 @@ span.de_EAC77E742C
 }
 span.de_EC8B4D5AF2
 {
-	font-family: "Times New Roman";
+	font-family: "Arial";
 	font-size: 10pt;
 	color:#000000;
 }

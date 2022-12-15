@@ -408,7 +408,7 @@ namespace CSETWebCore.Business.Question
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
                     Is_Requirement = dbQ.Is_Requirement,
-                    Feedback = dbQ.Feedback
+                    Feedback = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);
@@ -486,7 +486,7 @@ namespace CSETWebCore.Business.Question
                     Is_Component = dbQ.Is_Component,
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
                     Is_Requirement = dbQ.Is_Requirement,
-                    Feedback = dbQ.Feedback
+                    Feedback = dbQ.FeedBack
                 };
 
                 sc.Questions.Add(qa);

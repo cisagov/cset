@@ -53,6 +53,11 @@ namespace CSETWebCore.Business.GalleryParser
         public string Description { get; set; }
         public object Title { get; set; }
         public int Parent_Id { get; private set; }
+
+        /// <summary>
+        /// This is populated for custom set cards built on the fly 
+        /// </summary>
+        public string Custom_Set_Name { get; set; }
     }
 
 }

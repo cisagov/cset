@@ -67,7 +67,7 @@ padding:0;
 }
 span.code
 {
-font-family:"Courier New";
+font-family:"Consolas";
 font-size: 12pt;color:#000000;
 font-style:normal;
 text-decoration:none;
@@ -75,7 +75,7 @@ font-weight:normal;
 }
 span.quote
 {
-font-family:"Georgia";
+font-family:"Arial";
 font-size: 12pt;color:#000000;
 font-style:italic;
 text-decoration:none;
@@ -86,7 +86,7 @@ img.de_780D01ADE8
 margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;}
 span.de_0727CC8C74
 {
-	font-family: "Calibri";
+	font-family: "Arial";
 	font-size: 12pt;
 	color:#404040;
 }
@@ -191,7 +191,7 @@ span.de_9D7720D3AA
 }
 span.de_B3B422A842
 {
-	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "Arial", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color:#005287;
 }
 span.de_B77F06D483
