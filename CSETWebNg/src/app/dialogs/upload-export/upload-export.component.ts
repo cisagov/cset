@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { DiagramService } from './../../services/diagram.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -50,6 +51,7 @@ export class UploadExportComponent implements OnInit {
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
     private importSvc: ImportAssessmentService,
     private fileSvc: FileUploadClientService,
+    private diagramSvc: DiagramService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -98,7 +100,7 @@ export class UploadExportComponent implements OnInit {
     // start the upload and save the progress map
 
     if (this.data.isCsafUpload) {
-      this.progress = this.fileSvc.uploadCsafFiles(this.files)
+      this.progress = this.fileSvc.uploadCsafFiles(this.files);
     } else {
       this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
     }
