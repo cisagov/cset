@@ -632,9 +632,7 @@ export class QuestionBlockIseComponent implements OnInit {
       if (question.questionId === parentId) {
         // uses a local copy of the comment to avoid using API call
         if (this.summaryCommentCopy !== "") {
-          console.log('in get summary: ' + this.summaryCommentCopy)
           comment = this.summaryCommentCopy;
-          console.log('comment: ' + comment)
           return comment;
         }
         if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true){
@@ -649,8 +647,8 @@ export class QuestionBlockIseComponent implements OnInit {
     return comment;
   }
 
-  autoResize() {
-    let textArea = document.getElementById("summaryComment")
+  autoResize(i: number) {
+    let textArea = document.getElementById("summaryComment"+i)
     textArea.style.overflow = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
