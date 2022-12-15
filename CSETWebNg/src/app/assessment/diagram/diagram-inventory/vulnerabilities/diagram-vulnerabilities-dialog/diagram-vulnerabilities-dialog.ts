@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { Product, Vendor } from '../diagram-vulnerabilities.component';
+import { Product, Vendor, Vulnerability } from '../../../../../models/diagram-vulnerabilities.model';
 import { Comparer } from '../../../../../helpers/comparer';
-import { Vulnerability } from '../diagram-vulnerabilities.component'
 
 interface cveWarning {
   level: string;
