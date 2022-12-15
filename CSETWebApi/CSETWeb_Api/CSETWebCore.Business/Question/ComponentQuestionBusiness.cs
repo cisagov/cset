@@ -13,7 +13,6 @@ namespace CSETWebCore.Business.Question
 {
     public class ComponentQuestionBusiness
     {
-
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly ITokenManager _tokenManager;
@@ -23,6 +22,8 @@ namespace CSETWebCore.Business.Question
         /// 
         /// </summary>
         public List<SubCategoryAnswersPlus> SubCatAnswers;
+
+        List<FullAnswer> Answers;
 
         /// <summary>
         /// 
@@ -65,6 +66,15 @@ namespace CSETWebCore.Business.Question
                 var component2 = TinyMapper.Map<Answer_Components_Default, Answer_Components_Base>(component1);
                 list2.Add(component2);
             }
+
+            // Get all answers for the assessment
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+
+            //this.questions = query.Distinct().ToList();
+            this.Answers = answers.ToList();
 
             AddResponse(resp, list2, "Component Defaults");
             BuildOverridesOnly(resp);
@@ -179,6 +189,13 @@ namespace CSETWebCore.Business.Question
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty
                 };
 
+                FullAnswer answer = this.Answers.Where(x => x.a.Question_Or_Requirement_Id == qa.QuestionId).FirstOrDefault();
+                if (answer != null)
+                {
+                    TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                    TinyMapper.Map(answer.b, qa);
+                }
+
                 sc.Questions.Add(qa);
             }
 
@@ -261,6 +278,13 @@ namespace CSETWebCore.Business.Question
                     ComponentGuid = dbQ.Component_Guid ?? Guid.Empty,
                     Feedback = dbQ.FeedBack
                 };
+
+                FullAnswer answer = this.Answers.Where(x => x.a.Question_Or_Requirement_Id == qa.QuestionId).FirstOrDefault();
+                if (answer != null)
+                {
+                    TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
+                    TinyMapper.Map(answer.b, qa);
+                }
 
                 sc.Questions.Add(qa);
             }

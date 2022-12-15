@@ -46,6 +46,10 @@ export class DiagramService {
     return this.http.get(this.apiUrl + 'symbols/get');
   }
 
+  saveComponent(component) {
+    return this.http.post(this.apiUrl + 'saveComponent', component, headers)
+  }
+
   getAllSymbols() {
     return this.http.get(this.apiUrl + 'symbols/getAll');
   }
@@ -77,5 +81,9 @@ export class DiagramService {
 
   getExport(): any {
     return this.http.get(this.apiUrl + 'exportExcel', { responseType: 'blob' });
+  }
+
+  getVulnerabilities() {
+    return this.http.get(this.apiUrl + 'vulnerabilities');
   }
 }

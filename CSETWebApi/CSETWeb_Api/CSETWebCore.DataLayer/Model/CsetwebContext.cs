@@ -78,6 +78,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
         public virtual DbSet<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
         public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
+        public virtual DbSet<CSAF_FILE> CSAF_FILE { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
@@ -212,6 +213,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
         public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
         public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
+        public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
         public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
         public virtual DbSet<SECTOR> SECTOR { get; set; }
         public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
@@ -1414,6 +1416,12 @@ namespace CSETWebCore.DataLayer.Model
                     .HasName("PK_FiltersNormalized");
 
                 entity.HasComment("A collection of FiltersNormalized records");
+
+                entity.HasOne(d => d.Domain)
+                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
+                    .HasForeignKey(d => d.DomainId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_DOMAINS");
 
                 entity.HasOne(d => d.Financial_Level)
                     .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
