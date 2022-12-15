@@ -126,15 +126,15 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
         case "assetType":
           return this.comparer.compare(a.assetType, b.assetType, isAsc);
         case "vendorName":
-          return this.comparer.compareBool(a.vendorName, b.vendorName, isAsc);
+          return this.comparer.compare(a.vendorName, b.vendorName, isAsc);
         case "productName":
-          return this.comparer.compareBool(a.productName, b.productName, isAsc);
+          return this.comparer.compare(a.productName, b.productName, isAsc);
         case "version":
-          return this.comparer.compareBool(a.versionName, b.versionName, isAsc);
+          return this.comparer.compare(a.versionName, b.versionName, isAsc);
         case "serialNumber":
-          return this.comparer.compareBool(a.serialNumber, b.serialNumber, isAsc);
+          return this.comparer.compare(a.serialNumber, b.serialNumber, isAsc);
         case "physicalLocation":
-          return this.comparer.compareBool(a.physicalLocation, b.physicalLocation, isAsc);
+          return this.comparer.compare(a.physicalLocation, b.physicalLocation, isAsc);
         default:
           return 0;
       }
