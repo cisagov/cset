@@ -11,6 +11,9 @@ namespace CSETWebCore.Model.Diagram
 {
     public class CommonSecurityAdvisoryFrameworkObject
     {
+
+        public CommonSecurityAdvisoryFrameworkObject() { }
+
         public DocumentClass Document { get; set; }
         public ProductTree Product_Tree { get; set; }
         public List<Vulnerability> Vulnerabilities { get; set; }

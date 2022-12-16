@@ -87,4 +87,8 @@ export class DiagramService {
   getVulnerabilities() {
     return this.http.get(this.apiUrl + 'vulnerabilities');
   }
+
+  saveCsafVendor(vendor: Vendor) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/saveVendor', vendor, headers);
+  }
 }

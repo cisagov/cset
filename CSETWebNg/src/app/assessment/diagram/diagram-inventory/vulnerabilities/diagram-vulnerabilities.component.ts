@@ -83,13 +83,17 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(e, component) {
-    console.log(e.target.value);
-    if (e.target.value === '1: addNewVendor') {
-      this.addNewVendor(component);
-    } else {
-      this.updateComponentVendor(component);
-      this.diagramSvc.saveComponent(component).subscribe();
+    if (e.target.type === 'select-one') {
+      if (e.target.value === '1: addNewVendor') {
+        this.addNewVendor(component);
+      } else if (e.target.value === '1: addNewProduct') {
+        this.addNewProduct(component);
+      } else {
+        this.updateComponentVendor(component);
+      }
     }
+    console.log(component);
+    this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
@@ -129,6 +133,10 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
 
   updateComponentVendor(component) {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
+
+    if (!!component.vendor && !component.vendor.products.some(p => p.name === component.productName)) {
+      component.productName = null;
+    }
   }
 
   getVendors() {
@@ -138,6 +146,23 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   addNewVendor(component) {
     this.dialog.open(AddNewVendorProductDialogComponent, {
       data: { isAddingVendor: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe(() => {
+      this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+        this.diagramSvc.csafVendors.push(vendor);
+        this.updateComponentVendor(component);
+      });
+    });
+  }
+
+  addNewProduct(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingProduct: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe(() => {
+
     });
   }
 }
