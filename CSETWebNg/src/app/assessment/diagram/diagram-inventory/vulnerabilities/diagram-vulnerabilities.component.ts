@@ -28,6 +28,7 @@ import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
+import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -81,9 +82,14 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  saveComponent(component) {
-    this.updateComponentVendor(component);
-    this.diagramSvc.saveComponent(component).subscribe();
+  saveComponent(e, component) {
+    console.log(e.target.value);
+    if (e.target.value === '1: addNewVendor') {
+      this.addNewVendor(component);
+    } else {
+      this.updateComponentVendor(component);
+      this.diagramSvc.saveComponent(component).subscribe();
+    }
   }
 
   showVulnerabilities(component) {
@@ -122,14 +128,16 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   updateComponentVendor(component) {
-    if (!component.vendorName) {
-      return;
-    }
-
-    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName);
+    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
   }
 
   getVendors() {
     return this.diagramSvc.csafVendors;
+  }
+
+  addNewVendor(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingVendor: true, currentComponent: component }
+    });
   }
 }
