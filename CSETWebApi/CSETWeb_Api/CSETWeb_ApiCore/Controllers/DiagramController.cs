@@ -543,6 +543,28 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        /// Saves a new vendor / updates a vendor that was added manually by the user.
+        /// </summary>
+        /// <param name="vendor">New vendor to persist</param>
+        /// <returns></returns>
+        ///  [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities/saveVendor")]
+        [HttpPost]
+        public IActionResult SaveCsafVendor([FromBody] CommonSecurityAdvisoryFrameworkVendor vendor) 
+        {
+            var currentVendors = _diagram.GetCsafVendors();
+
+            var existingVendor = currentVendors.FirstOrDefault(v => v.Name == vendor.Name);
+
+            if (existingVendor != null) 
+            { 
+                
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons
         /// in the browser.
         /// </summary>

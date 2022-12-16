@@ -72,7 +72,11 @@ export class AddNewVendorProductDialogComponent implements OnInit {
       return false;
     }
 
-    if (this.isAddingVendor && !!this.diagramSvc.csafVendors.find(v => v.name.toLowerCase() === this.newName.toLowerCase())) {
+    if (this.isAddingVendor && this.diagramSvc.csafVendors.some(v => v.name.toLowerCase() === this.newName.toLowerCase())) {
+      return false;
+    }
+
+    if (this.isAddingProduct && this.currentComponent.vendor.products.some(p => p.name.toLowerCase() === this.newName.toLowerCase())) {
       return false;
     }
 
