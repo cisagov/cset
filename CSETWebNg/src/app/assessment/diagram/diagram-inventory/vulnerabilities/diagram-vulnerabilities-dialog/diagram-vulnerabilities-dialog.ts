@@ -29,7 +29,7 @@ export class DiagramVulnerabilitiesDialogComponent implements OnInit {
   ngOnInit(): void { }
 
   close() {
-    return this.dialog.close();
+    this.dialog.close();
   }
 
   sortData(sort: Sort) {
