@@ -500,10 +500,11 @@ namespace CSETWebCore.Api.Controllers
 
                     // Verfiy the json is a valid CommonSecurityAdvisoryFrameworkObject.
                     JsonSerializerSettings settings = new JsonSerializerSettings() { MissingMemberHandling = MissingMemberHandling.Error };
+                    CommonSecurityAdvisoryFrameworkObject csafObj;
                     try 
                     { 
                         // This line will throw an error if the uploaded json does not follow the CSAF format.
-                        JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(file.FileBytes), settings);
+                        csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(file.FileBytes), settings);
                     }
                     catch (Exception e) 
                     {
@@ -547,21 +548,21 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="vendor">New vendor to persist</param>
         /// <returns></returns>
-        ///  [CsetAuthorize]
+        [CsetAuthorize]
         [Route("api/diagram/vulnerabilities/saveVendor")]
         [HttpPost]
         public IActionResult SaveCsafVendor([FromBody] CommonSecurityAdvisoryFrameworkVendor vendor) 
         {
-            var currentVendors = _diagram.GetCsafVendors();
-
-            var existingVendor = currentVendors.FirstOrDefault(v => v.Name == vendor.Name);
-
-            if (existingVendor != null) 
-            { 
-                
+            try
+            {
+                return Ok(_diagram.SaveCsafVendor(vendor));
             }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
 
-            return Ok();
+                return StatusCode(500);
+            }
         }
 
         /// <summary>

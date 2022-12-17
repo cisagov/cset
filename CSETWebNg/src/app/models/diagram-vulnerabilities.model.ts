@@ -22,12 +22,23 @@
 //
 ////////////////////////////////
 
-export interface Vendor {
+export class Vendor {
+  constructor(name: string) {
+    this.name = name;
+    this.products = [];
+  }
+
   name: string;
   products: Product[];
 }
 
-export interface Product {
+export class Product {
+  constructor(name: string) {
+    this.name = name;
+    this.vulnerabilities = [];
+    this.versions = [];
+  }
+
   name: string;
   vulnerabilities: Vulnerability[];
   advisoryUrl: string;
@@ -35,7 +46,7 @@ export interface Product {
   affectedVersions: string;
 }
 
-export interface Vulnerability {
+export class Vulnerability {
   cve: string;
   cwe: any;
   notes: any[];

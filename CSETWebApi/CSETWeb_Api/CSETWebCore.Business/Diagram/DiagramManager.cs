@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System.Text;
+using DocumentFormat.OpenXml.Bibliography;
+using static CSETWebCore.Model.Diagram.CommonSecurityAdvisoryFrameworkObject;
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -851,6 +853,11 @@ namespace CSETWebCore.Business.Diagram
                     vendor = existingVendor;
                 }
 
+                if (csafObj.Product_Tree.Branches[0].Branches == null)
+                {
+                    csafObj.Product_Tree.Branches[0].Branches = new List<Branch>();
+                }
+                    
                 foreach (var branch in csafObj.Product_Tree.Branches[0].Branches)
                 {
                     // Add newly found products, else add new vulnerabilites to existing product
@@ -886,6 +893,74 @@ namespace CSETWebCore.Business.Diagram
             }
 
             return vendors;
+        }
+
+        /// <summary>
+        /// Adds a new / modifies an existing CSAF vendor and persists it to the database.
+        /// Currently, users can only manually add vendors and products (not vulnerabilities);
+        /// </summary>
+        /// <param name="vendor"></param>
+        /// <returns>The newly added / edited vendor</returns>
+        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor) 
+        {
+            var currentVendors = GetCsafVendors();
+
+            var existingVendor = currentVendors.FirstOrDefault(v => v.Name == vendor.Name);
+
+            if (existingVendor != null)
+            {
+                var allCsafs = _context.CSAF_FILE.ToList();
+
+                var dbCsafFile = allCsafs.FirstOrDefault(
+                    csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
+                    .Product_Tree.Branches[0].Name == existingVendor.Name
+                    );
+
+                var csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(dbCsafFile.Data));
+
+                foreach (var product in vendor.Products)
+                {
+                    var existingProduct = existingVendor.Products.Find(p => p.Name == product.Name);
+                    if (existingProduct == null)
+                    {
+                        existingVendor.Products.Add(product);
+
+                        if (csafObj.Product_Tree.Branches[0].Branches == null)
+                        {
+                            csafObj.Product_Tree.Branches[0].Branches = new List<Branch>();
+                        }
+
+                        csafObj.Product_Tree.Branches[0].Branches.Add(new Branch { Name = product.Name });
+                    }
+                }
+
+                existingVendor.Products.Sort((a, b) => string.Compare(a.Name, b.Name, true));
+
+                dbCsafFile.Data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(csafObj));
+
+                _context.SaveChanges();
+
+                return existingVendor;
+            }
+            else
+            {
+                CommonSecurityAdvisoryFrameworkObject newCsafObj = new CommonSecurityAdvisoryFrameworkObject(vendor);
+
+                var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(newCsafObj));
+
+                CSAF_FILE csafFile = new CSAF_FILE
+                {
+                    File_Name = vendor.Name + "-CUSTOM.json",
+                    Data = bytes,
+                    File_Size = bytes.LongLength,
+                    Upload_Date = DateTime.Now,
+                };
+
+                _context.CSAF_FILE.Add(csafFile);
+                _context.SaveChanges();
+
+                return vendor;
+            }
         }
     }
 }

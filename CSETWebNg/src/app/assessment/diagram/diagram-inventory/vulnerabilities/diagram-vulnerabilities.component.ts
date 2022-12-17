@@ -76,7 +76,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
       this.diagramComponentList.forEach(component => {
-        this.updateComponentVendor(component);
+        this.updateComponentVendorAndProduct(component);
       })
       this.componentsChange.emit(this.diagramComponentList);
     });
@@ -89,7 +89,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       } else if (e.target.value === '1: addNewProduct') {
         this.addNewProduct(component);
       } else {
-        this.updateComponentVendor(component);
+        this.updateComponentVendorAndProduct(component);
       }
     }
     console.log(component);
@@ -98,7 +98,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
 
   showVulnerabilities(component) {
     this.dialog.open(DiagramVulnerabilitiesDialogComponent, {
-      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
+      data: { product: component.product, vendor: component.vendor }
     });
   }
 
@@ -131,12 +131,25 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  updateComponentVendor(component) {
+  updateComponentVendorAndProduct(component) {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
+    component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
 
-    if (!!component.vendor && !component.vendor.products.some(p => p.name === component.productName)) {
+    if (!component.product) {
       component.productName = null;
     }
+  }
+
+  isShowVulnerabilitiesButtonDisabled(component) {
+    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+      return true;
+    }
+
+    if (component.vendor?.products.find(p => p.name === component.productName)?.vulnerabilities.length === 0) {
+      return true;
+    }
+
+    return false;
   }
 
   getVendors() {
@@ -148,11 +161,12 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       data: { isAddingVendor: true, currentComponent: component }
     })
     .afterClosed()
-    .subscribe(() => {
-      this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-        this.diagramSvc.csafVendors.push(vendor);
-        this.updateComponentVendor(component);
-      });
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          this.diagramSvc.csafVendors.unshift(vendor);
+        });
+      }
     });
   }
 
@@ -161,8 +175,12 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       data: { isAddingProduct: true, currentComponent: component }
     })
     .afterClosed()
-    .subscribe(() => {
-
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          this.diagramSvc.csafVendors.unshift(vendor);
+        });
+      }
     });
   }
 }
