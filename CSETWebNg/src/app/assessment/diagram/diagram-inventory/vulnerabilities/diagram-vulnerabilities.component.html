@@ -57,10 +57,10 @@
       <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent($event, component)" /></td>
       <td>
         <div
-          matTooltip="Select a vendor and product to view the vulnerabilities associated with this network component"
-          [matTooltipDisabled]="component.productName">
-          <button class="btn" (click)="showVulnerabilities(component)" [disabled]="!component.productName || !component.vendorName"
-            matTooltip="View the vulnerabilities associated with this network component.">
+          matTooltip="There are no vulnerabilities associated with the current vendor and product"
+          [matTooltipDisabled]="!isShowVulnerabilitiesButtonDisabled(component)">
+          <button class="btn" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
+            matTooltip="View the vulnerabilities associated with this network component">
             <span class="icon-link-button-text-dark" style="color: #1a53ff">Vulnerabilities</span>
           </button>
         </div>

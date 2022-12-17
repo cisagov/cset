@@ -24,6 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DiagramService } from '../../../../../services/diagram.service';
+import { Vendor, Product } from './../../../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-add-new-vendor-product-dialog',
@@ -41,9 +42,9 @@ export class AddNewVendorProductDialogComponent implements OnInit {
     private diagramSvc: DiagramService,
     private dialog: MatDialogRef<AddNewVendorProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-    ) { 
-      this.isAddingVendor = data.isAddingVendor ?? false; 
-      this.isAddingProduct = data.isAddingProduct ?? false; 
+    ) {
+      this.isAddingVendor = data.isAddingVendor ?? false;
+      this.isAddingProduct = data.isAddingProduct ?? false;
       this.currentComponent = data.currentComponent;
     }
 
@@ -51,20 +52,31 @@ export class AddNewVendorProductDialogComponent implements OnInit {
   }
 
   cancel() {
-    this.currentComponent.vendorName = this.currentComponent.vendor?.name ?? null;
-    this.dialog.close();
+    if (this.isAddingVendor) {
+      this.currentComponent.vendorName =  this.currentComponent.vendor?.name ?? null;
+    }
+
+    if (this.isAddingProduct) {
+      this.currentComponent.productName = this.currentComponent.product?.name ?? null;
+    }
+
+    this.dialog.close(false);
   }
 
   save() {
     if (this.isAddingVendor) {
       this.currentComponent.vendorName = this.newName;
+      this.currentComponent.vendor = new Vendor(this.newName);
     }
 
     if (this.isAddingProduct) {
       this.currentComponent.productName = this.newName;
+      const newProduct = new Product(this.newName);
+      this.currentComponent.product = newProduct;
+      this.currentComponent.vendor.products.unshift(newProduct);
     }
 
-    this.dialog.close();
+    this.dialog.close(true);
   }
 
   isNewNameValid() {
