@@ -38,27 +38,29 @@
       <td>{{component.label}}</td>
       <td>{{component.assetType}}</td>
       <td>
-        <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent(component)">
+        <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent($event, component)">
           <option [ngValue]="null">-- Select Vendor --</option>
-          <option *ngFor="let vendor of getVendors()" [value]="vendor.name">{{ vendor.name }}</option>
+          <option [ngValue]="'addNewVendor'" style="color:#1a53ff">Add New Vendor</option>
+          <option *ngFor="let vendor of getVendors()" [ngValue]="vendor.name">{{ vendor.name }}</option>
         </select>
       </td>
       <td>
-        <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName"
-          (change)="saveComponent(component)">
+        <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName || component.vendorName === 'addNewVendor'"
+          (change)="saveComponent($event, component)">
           <option [ngValue]="null">-- Select Product --</option>
-          <option *ngFor="let product of component.vendor?.products" [value]="product.name">{{ product.name }}</option>
+          <option [ngValue]="'addNewProduct'" style="color:#1a53ff">Add New Product</option>
+          <option *ngFor="let product of component.vendor?.products" [ngValue]="product.name">{{ product.name }}</option>
         </select>
       </td>
-      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent($event, component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent($event, component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent($event, component)" /></td>
       <td>
         <div
-          matTooltip="Select a vendor and product to view the vulnerabilities associated with this network component"
-          [matTooltipDisabled]="component.productName">
-          <button class="btn" (click)="showVulnerabilities(component)" [disabled]="!component.productName"
-            matTooltip="View the vulnerabilities associated with this network component.">
+          matTooltip="There are no vulnerabilities associated with the current vendor and product"
+          [matTooltipDisabled]="!isShowVulnerabilitiesButtonDisabled(component)">
+          <button class="btn" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
+            matTooltip="View the vulnerabilities associated with this network component">
             <span class="icon-link-button-text-dark" style="color: #1a53ff">Vulnerabilities</span>
           </button>
         </div>

@@ -80,14 +80,16 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   fileSelect(e) {
-    this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } })
-    .afterClosed()
-    .subscribe(() => {
-      // Get the updated list of vendors after upload.
-      this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
-        this.diagramSvc.csafVendors = vendors;
+    if (e.target.files.length > 0) {
+      this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } })
+      .afterClosed()
+      .subscribe(() => {
+        // Get the updated list of vendors after upload.
+        this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+          this.diagramSvc.csafVendors = vendors;
+        });
       });
-    });
+    }
   }
 
   showCsafUploadButton() {
