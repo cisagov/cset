@@ -42,7 +42,6 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   constructor(public diagramSvc: DiagramService,
-     private fileSvc: FileUploadClientService,
      private dialog: MatDialog,
      private configSvc: ConfigService
     ) { }
@@ -93,6 +92,10 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   showCsafUploadButton() {
-    return this.configSvc.behaviors?.showUpdateCsafVulnerabilitiesButton ?? true;
+    return this.configSvc.behaviors?.showUpdateDiagramCsafVulnerabilitiesButton;
+  }
+
+  showVulnerabilitiesTab() {
+    return this.configSvc.behaviors?.showVulnerabilitiesDiagramInventoryTab;
   }
 }
