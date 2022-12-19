@@ -92,7 +92,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
         this.updateComponentVendorAndProduct(component);
       }
     }
-    console.log(component);
+    
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
