@@ -57,7 +57,7 @@
       <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent($event, component)" /></td>
       <td>
         <div
-          matTooltip="There are no vulnerabilities associated with the current vendor and product"
+          matTooltip="There are no vulnerabilities identified with this vendor and product in the current local database"
           [matTooltipDisabled]="!isShowVulnerabilitiesButtonDisabled(component)">
           <button class="btn" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
             matTooltip="View the vulnerabilities associated with this network component">
