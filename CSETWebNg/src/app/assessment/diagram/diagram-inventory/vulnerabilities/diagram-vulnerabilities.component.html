@@ -41,7 +41,7 @@
         <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent($event, component)">
           <option [ngValue]="null">-- Select Vendor --</option>
           <option [ngValue]="'addNewVendor'" style="color:#1a53ff">Add New Vendor</option>
-          <option *ngFor="let vendor of getVendors()" [value]="vendor.name">{{ vendor.name }}</option>
+          <option *ngFor="let vendor of getVendors()" [ngValue]="vendor.name">{{ vendor.name }}</option>
         </select>
       </td>
       <td>
@@ -49,7 +49,7 @@
           (change)="saveComponent($event, component)">
           <option [ngValue]="null">-- Select Product --</option>
           <option [ngValue]="'addNewProduct'" style="color:#1a53ff">Add New Product</option>
-          <option *ngFor="let product of component.vendor?.products" [value]="product.name">{{ product.name }}</option>
+          <option *ngFor="let product of component.vendor?.products" [ngValue]="product.name">{{ product.name }}</option>
         </select>
       </td>
       <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent($event, component)" /></td>
