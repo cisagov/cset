@@ -83,7 +83,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(e, component) {
-    if (e.target.type === 'select-one') {
+    if (!!e && e.target.type === 'select-one') {
       if (e.target.value === '1: addNewVendor') {
         this.addNewVendor(component);
       } else if (e.target.value === '1: addNewProduct') {
@@ -165,6 +165,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       if (save) {
         this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
           this.diagramSvc.csafVendors.unshift(vendor);
+          this.saveComponent(null, component);
         });
       }
     });
@@ -178,7 +179,9 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     .subscribe((save) => {
       if (save) {
         this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          this.diagramSvc.csafVendors.unshift(vendor);
+          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+          this.diagramSvc.csafVendors[index] = vendor;
+          this.saveComponent(null, component);
         });
       }
     });
