@@ -869,6 +869,7 @@ namespace CSETWebCore.Business.Diagram
                     else
                     {
                         var existingProduct = vendor.Products.Find(p => p.Name == newProduct.Name);
+                        existingProduct.AffectedVersions += ", " + branch.Branches?[0].Name;
                         foreach (var vulnerability in newProduct.Vulnerabilities)
                         {
                             if (!existingProduct.Vulnerabilities.Exists(v => v.Cve == vulnerability.Cve))
