@@ -28,6 +28,7 @@ import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
+import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -75,20 +76,29 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
       this.diagramComponentList.forEach(component => {
-        this.updateComponentVendor(component);
+        this.updateComponentVendorAndProduct(component);
       })
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
 
-  saveComponent(component) {
-    this.updateComponentVendor(component);
+  saveComponent(e, component) {
+    if (!!e && e.target.type === 'select-one') {
+      if (e.target.value === '1: addNewVendor') {
+        this.addNewVendor(component);
+      } else if (e.target.value === '1: addNewProduct') {
+        this.addNewProduct(component);
+      } else {
+        this.updateComponentVendorAndProduct(component);
+      }
+    }
+    
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
     this.dialog.open(DiagramVulnerabilitiesDialogComponent, {
-      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
+      data: { product: component.product, vendor: component.vendor }
     });
   }
 
@@ -121,15 +131,59 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  updateComponentVendor(component) {
-    if (!component.vendorName) {
-      return;
+  updateComponentVendorAndProduct(component) {
+    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
+    component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
+
+    if (!component.product) {
+      component.productName = null;
+    }
+  }
+
+  isShowVulnerabilitiesButtonDisabled(component) {
+    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+      return true;
     }
 
-    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName);
+    if (component.vendor?.products.find(p => p.name === component.productName)?.vulnerabilities.length === 0) {
+      return true;
+    }
+
+    return false;
   }
 
   getVendors() {
     return this.diagramSvc.csafVendors;
+  }
+
+  addNewVendor(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingVendor: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          this.diagramSvc.csafVendors.unshift(vendor);
+          this.saveComponent(null, component);
+        });
+      }
+    });
+  }
+
+  addNewProduct(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingProduct: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+          this.diagramSvc.csafVendors[index] = vendor;
+          this.saveComponent(null, component);
+        });
+      }
+    });
   }
 }

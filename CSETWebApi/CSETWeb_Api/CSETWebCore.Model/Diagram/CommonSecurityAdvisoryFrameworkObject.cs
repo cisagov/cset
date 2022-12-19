@@ -11,6 +11,19 @@ namespace CSETWebCore.Model.Diagram
 {
     public class CommonSecurityAdvisoryFrameworkObject
     {
+
+        public CommonSecurityAdvisoryFrameworkObject() { }
+
+        public CommonSecurityAdvisoryFrameworkObject(CommonSecurityAdvisoryFrameworkVendor vendor) 
+        {
+            Product_Tree = new ProductTree();
+            Product_Tree.Branches = new List<Branch> { new Branch { Name = vendor.Name } };
+            foreach (var product in vendor.Products) 
+            { 
+                Product_Tree.Branches[0].Branches.Add(new Branch { Name = product.Name });
+            }
+        }
+
         public DocumentClass Document { get; set; }
         public ProductTree Product_Tree { get; set; }
         public List<Vulnerability> Vulnerabilities { get; set; }
