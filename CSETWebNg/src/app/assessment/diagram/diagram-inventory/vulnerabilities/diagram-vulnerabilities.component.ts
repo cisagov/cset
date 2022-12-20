@@ -29,6 +29,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
 import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -46,12 +49,18 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   sal: any;
   criticality: any;
 
+  formControl = new FormControl('');
+  vendorOptions: Vendor[] = [];
+  filteredOptions: Observable<Vendor[]>;
+
+  loading: boolean = false;
+
   /**
    *
    */
   constructor(
     public diagramSvc: DiagramService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   /**
@@ -62,11 +71,49 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (this.diagramSvc.csafVendors.length === 0) {
       this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
         this.diagramSvc.csafVendors = vendors;
+        console.log(this.diagramSvc.csafVendors);
         this.getComponents();
+        this.vendorOptions = this.diagramSvc.csafVendors;
+        this.filteredOptions = this.formControl.valueChanges.pipe(
+          startWith(''), map(value => {
+            let val = "";
+            if (typeof value === 'string') {
+               val = value;
+            }
+            const name = val;
+            return name ? this.filter(name as string) : this.vendorOptions.slice();
+          }),
+        );
       });
     } else {
+      this.vendorOptions = this.diagramSvc.csafVendors;
       this.getComponents()
+      console.log(this.diagramSvc.csafVendors);
+      this.filteredOptions = this.formControl.valueChanges.pipe(
+        startWith(''), map(value => {
+          let val = "";
+          if (typeof value === 'string') {
+             val = value;
+          }
+          const name = val;
+          return name ? this.filter(name as string) : this.vendorOptions.slice();
+        }),
+      );
     }
+
+  }
+
+  displayOptions (vendor: Vendor): string {
+    return vendor?.name ? vendor.name : '';
+  }
+
+  filter (name: string): Vendor[] {
+    const filterValue = name.toLowerCase();
+    return this.vendorOptions.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  logComponent(component: any) {
+    console.log(component);
   }
 
   /**
@@ -83,16 +130,12 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(e, component) {
-    if (!!e && e.target.type === 'select-one') {
-      if (e.target.value === '1: addNewVendor') {
-        this.addNewVendor(component);
-      } else if (e.target.value === '1: addNewProduct') {
-        this.addNewProduct(component);
-      } else {
-        this.updateComponentVendorAndProduct(component);
-      }
+    if (e.target.value === '1: addNewProduct') {
+      this.addNewProduct(component);
+    } else {
+      this.updateComponentVendorAndProduct(component);
     }
-    
+
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
