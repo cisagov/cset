@@ -24,7 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-
+import { Vendor } from '../models/diagram-vulnerabilities.model';
 
 const headers = {
   headers: new HttpHeaders()
@@ -36,6 +36,7 @@ const headers = {
 export class DiagramService {
   apiUrl: string;
   id: number;
+  csafVendors: Vendor[] = [];
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'diagram/';
@@ -85,5 +86,9 @@ export class DiagramService {
 
   getVulnerabilities() {
     return this.http.get(this.apiUrl + 'vulnerabilities');
+  }
+
+  saveCsafVendor(vendor: Vendor) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/saveVendor', vendor, headers);
   }
 }

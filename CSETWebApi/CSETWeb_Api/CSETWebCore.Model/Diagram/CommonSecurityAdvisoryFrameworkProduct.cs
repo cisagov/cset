@@ -14,14 +14,17 @@ namespace CSETWebCore.Model.Diagram
         { 
             Name = branch.Name;
             Vulnerabilities = new List<CommonSecurityAdvisoryFrameworkObject.Vulnerability>();
-            AffectedVersions = branch.Branches[0].Name;
-            AdvisoryUrl = csafObj.Document.References.Find(r => r.Category.ToLower() == "self")?.Url ?? csafObj.Document.References[0].Url;
+            AffectedVersions = branch.Branches?[0].Name;
+            AdvisoryUrl = csafObj.Document?.References?.Find(r => r.Category.ToLower() == "self")?.Url ?? csafObj.Document?.References[0]?.Url;
 
-            foreach (var vulnerability in csafObj.Vulnerabilities) 
-            {
-                if (vulnerability.Product_Status.Known_Affected.Contains(branch.Branches[0].Product.Product_Id)) 
-                { 
-                    Vulnerabilities.Add(vulnerability);
+            if (csafObj.Vulnerabilities != null) 
+            { 
+                foreach (var vulnerability in csafObj.Vulnerabilities) 
+                {
+                    if (vulnerability.Product_Status.Known_Affected.Contains(branch.Branches?[0].Product?.Product_Id)) 
+                    { 
+                        Vulnerabilities.Add(vulnerability);
+                    }
                 }
             }
         }

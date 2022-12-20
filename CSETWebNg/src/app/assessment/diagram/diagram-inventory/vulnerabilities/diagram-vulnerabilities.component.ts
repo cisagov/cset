@@ -27,30 +27,8 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
-
-export interface Vendor {
-  name: string;
-  products: Product[];
-}
-
-export interface Product {
-  name: string;
-  vulnerabilities: Vulnerability[];
-  advisoryUrl: string;
-  versions: { name: string; product_Id: string }[]
-  affectedVersions: string;
-}
-
-export interface Vulnerability {
-  cve: string;
-  cwe: any;
-  notes: any[];
-  product_Status: any;
-  references: any[];
-  remediations: any[];
-  scores: any[];
-  title: string;
-}
+import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
+import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -67,7 +45,6 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   comparer: Comparer = new Comparer();
   sal: any;
   criticality: any;
-  vendors: Vendor[] = [];
 
   /**
    *
@@ -81,11 +58,15 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
-      this.vendors = vendors;
-      this.getComponents();
-    })
-
+    // Only hit the api if the service does not yet have the vendors array populated.
+    if (this.diagramSvc.csafVendors.length === 0) {
+      this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+        this.diagramSvc.csafVendors = vendors;
+        this.getComponents();
+      });
+    } else {
+      this.getComponents()
+    }
   }
 
   /**
@@ -95,20 +76,29 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
       this.diagramComponentList.forEach(component => {
-        this.updateComponentVendor(component);
+        this.updateComponentVendorAndProduct(component);
       })
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
 
-  saveComponent(component) {
-    this.updateComponentVendor(component);
+  saveComponent(e, component) {
+    if (!!e && e.target.type === 'select-one') {
+      if (e.target.value === '1: addNewVendor') {
+        this.addNewVendor(component);
+      } else if (e.target.value === '1: addNewProduct') {
+        this.addNewProduct(component);
+      } else {
+        this.updateComponentVendorAndProduct(component);
+      }
+    }
+    
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
     this.dialog.open(DiagramVulnerabilitiesDialogComponent, {
-      data: { product: component.vendor.products.find(p => p.name === component.productName), vendor: component.vendor }
+      data: { product: component.product, vendor: component.vendor }
     });
   }
 
@@ -126,26 +116,74 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
         case "assetType":
           return this.comparer.compare(a.assetType, b.assetType, isAsc);
         case "vendorName":
-          return this.comparer.compareBool(a.vendorName, b.vendorName, isAsc);
+          return this.comparer.compare(a.vendorName, b.vendorName, isAsc);
         case "productName":
-          return this.comparer.compareBool(a.productName, b.productName, isAsc);
+          return this.comparer.compare(a.productName, b.productName, isAsc);
         case "version":
-          return this.comparer.compareBool(a.versionName, b.versionName, isAsc);
+          return this.comparer.compare(a.versionName, b.versionName, isAsc);
         case "serialNumber":
-          return this.comparer.compareBool(a.serialNumber, b.serialNumber, isAsc);
+          return this.comparer.compare(a.serialNumber, b.serialNumber, isAsc);
         case "physicalLocation":
-          return this.comparer.compareBool(a.physicalLocation, b.physicalLocation, isAsc);
+          return this.comparer.compare(a.physicalLocation, b.physicalLocation, isAsc);
         default:
           return 0;
       }
     });
   }
 
-  updateComponentVendor(component) {
-    if (!component.vendorName) {
-      return;
+  updateComponentVendorAndProduct(component) {
+    component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
+    component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
+
+    if (!component.product) {
+      component.productName = null;
+    }
+  }
+
+  isShowVulnerabilitiesButtonDisabled(component) {
+    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+      return true;
     }
 
-    component.vendor = this.vendors.find(v => v.name === component.vendorName);
+    if (component.vendor?.products.find(p => p.name === component.productName)?.vulnerabilities.length === 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  getVendors() {
+    return this.diagramSvc.csafVendors;
+  }
+
+  addNewVendor(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingVendor: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          this.diagramSvc.csafVendors.unshift(vendor);
+          this.saveComponent(null, component);
+        });
+      }
+    });
+  }
+
+  addNewProduct(component) {
+    this.dialog.open(AddNewVendorProductDialogComponent, {
+      data: { isAddingProduct: true, currentComponent: component }
+    })
+    .afterClosed()
+    .subscribe((save) => {
+      if (save) {
+        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+          this.diagramSvc.csafVendors[index] = vendor;
+          this.saveComponent(null, component);
+        });
+      }
+    });
   }
 }

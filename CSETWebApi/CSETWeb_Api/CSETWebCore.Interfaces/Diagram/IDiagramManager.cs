@@ -36,5 +36,6 @@ namespace CSETWebCore.Interfaces
         string SetImage(int Component_Symbol_Id, string style);
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
         IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();
+        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor);
     }
 }
