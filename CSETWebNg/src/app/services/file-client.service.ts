@@ -25,7 +25,7 @@ import { AuthenticationService } from './authentication.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaders, HttpParams, HttpEventType, HttpResponseBase } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 
 
 /* Naming NOTE
@@ -41,6 +41,11 @@ export class FileUploadClientService {
   downloadUrl: String;
   token: String;
   exportUrl: string;
+
+  continueUpload: boolean = true;
+
+  private obs: Subscription = new Subscription();
+
 
   constructor(private http: HttpClient, private configSvc: ConfigService,
     private authSvc: AuthenticationService) {
@@ -220,51 +225,65 @@ export class FileUploadClientService {
 
     // this will be the our resulting map
     const status = {};
+    //setTimeout(() => {
 
-    fileItems.forEach((fileItem: File) => {
-      // create a new multipart-form for every file
-      const formData: FormData = new FormData();
-      formData.append('fileItem', fileItem, fileItem.name);
+      fileItems.forEach((fileItem: File) => {
+        // if (this.continueUpload) {
+          // create a new multipart-form for every file
+          const formData: FormData = new FormData();
+          formData.append('fileItem', fileItem, fileItem.name);
 
-      // create a http-post request and pass the form
-      // tell it to report the upload progress
-      const req = new HttpRequest('POST', apiEndpoint, formData,
-        {
-          headers: tmpheader,
-          reportProgress: true,
-          responseType: 'text'
-        }
-      );
+          // create a http-post request and pass the form
+          // tell it to report the upload progress
+          const req = new HttpRequest('POST', apiEndpoint, formData,
+            {
+              headers: tmpheader,
+              reportProgress: true,
+              responseType: 'text'
+            }
+          );
 
-      // create a new progress-subject for every file
-      const progress = new Subject<number>();
+          // create a new progress-subject for every file
+          const progress = new Subject<number>();
 
-      // Save every progress-observable in a map of all observables
-      status[fileItem.name] = {
-        progress: progress.asObservable()
-      };
+          // Save every progress-observable in a map of all observables
+          status[fileItem.name] = {
+            progress: progress.asObservable()
+          };
 
-      // send the http-request and subscribe for progress-updates
-      this.http.request(req).subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          // calculate the progress percentage
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          // pass the percentage into the progress-stream
-          progress.next(percentDone);
-        } else if (event instanceof HttpResponseBase) {
-          if (event.status != 200) { //MAYBE: Make this >= 400
-            let errObj = {
-              message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
-              : "Some files failed to import. Ensure the JSON is properly formatted.",
-            };
-            progress.error(errObj);
+          if (this.continueUpload) {
+            console.log(this.continueUpload)
+            // send the http-request and subscribe for progress-updates
+              this.http.request(req).subscribe(event => {
+            
+                if (event.type === HttpEventType.UploadProgress) {
+
+                  // calculate the progress percentage
+                  const percentDone = Math.round(100 * event.loaded / event.total);
+                  // pass the percentage into the progress-stream
+                  progress.next(percentDone);
+
+                } else if (event instanceof HttpResponseBase) {
+                  if (event.status != 200) { //MAYBE: Make this >= 400
+                    let errObj = {
+                      message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
+                      : "Some files failed to import. Ensure the JSON is properly formatted.",
+                    };
+                    progress.error(errObj);
+                  }
+                  
+                  // Close the progress-stream if we get an answer form the API
+                  // The upload is complete
+                  else {
+                    progress.complete();
+                    console.log("complete")
+                  }
+                }
+              });
           }
-          // Close the progress-stream if we get an answer form the API
-          // The upload is complete
-          else progress.complete();
-        }
-      });
-    });
+        });
+    //}, 5000)
+
 
     return status;
   }
