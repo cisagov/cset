@@ -28,6 +28,7 @@ import { saveAs } from "file-saver";
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Vendor } from '../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -41,7 +42,6 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   constructor(public diagramSvc: DiagramService,
-     private fileSvc: FileUploadClientService,
      private dialog: MatDialog,
      private configSvc: ConfigService
     ) { }
@@ -79,10 +79,23 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   fileSelect(e) {
-    this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } });
+    if (e.target.files.length > 0) {
+      this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } })
+      .afterClosed()
+      .subscribe(() => {
+        // Get the updated list of vendors after upload.
+        this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+          this.diagramSvc.csafVendors = vendors;
+        });
+      });
+    }
   }
 
   showCsafUploadButton() {
-    return this.configSvc.behaviors?.showUpdateCsafVulnerabilitiesButton ?? true;
+    return this.configSvc.behaviors?.showUpdateDiagramCsafVulnerabilitiesButton;
+  }
+
+  showVulnerabilitiesTab() {
+    return this.configSvc.behaviors?.showVulnerabilitiesDiagramInventoryTab;
   }
 }

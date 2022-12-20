@@ -39,7 +39,8 @@
     <div class="row mb-3">
       <div class="col-12">
         <mat-tab-group style="overflow: auto">
-          <mat-tab label="Vulnerabilities">
+          <mat-tab *ngIf="showVulnerabilitiesTab()"
+          label="Vulnerabilities">
             <app-diagram-vulnerabilities (componentsChange)="onChange($event)"></app-diagram-vulnerabilities>
           </mat-tab>
           <mat-tab label="Components">
