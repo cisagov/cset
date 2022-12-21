@@ -49,9 +49,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   sal: any;
   criticality: any;
 
-  formControl = new FormControl('');
-  vendorOptions: Vendor[] = [];
-  filteredOptions: Observable<Vendor[]>;
+  filteredOptions: Vendor[];
 
   loading: boolean = false;
 
@@ -71,49 +69,21 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (this.diagramSvc.csafVendors.length === 0) {
       this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
         this.diagramSvc.csafVendors = vendors;
-        console.log(this.diagramSvc.csafVendors);
         this.getComponents();
-        this.vendorOptions = this.diagramSvc.csafVendors;
-        this.filteredOptions = this.formControl.valueChanges.pipe(
-          startWith(''), map(value => {
-            let val = "";
-            if (typeof value === 'string') {
-               val = value;
-            }
-            const name = val;
-            return name ? this.filter(name as string) : this.vendorOptions.slice();
-          }),
-        );
       });
     } else {
-      this.vendorOptions = this.diagramSvc.csafVendors;
       this.getComponents()
-      console.log(this.diagramSvc.csafVendors);
-      this.filteredOptions = this.formControl.valueChanges.pipe(
-        startWith(''), map(value => {
-          let val = "";
-          if (typeof value === 'string') {
-             val = value;
-          }
-          const name = val;
-          return name ? this.filter(name as string) : this.vendorOptions.slice();
-        }),
-      );
     }
-
   }
 
-  displayOptions (vendor: Vendor): string {
-    return vendor?.name ? vendor.name : '';
-  }
-
-  filter (name: string): Vendor[] {
+  filter(value: string) {
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
     const filterValue = name.toLowerCase();
-    return this.vendorOptions.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-
-  logComponent(component: any) {
-    console.log(component);
+    this.filteredOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   /**
@@ -177,6 +147,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   updateComponentVendorAndProduct(component) {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
     component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
+
 
     if (!component.product) {
       component.productName = null;
