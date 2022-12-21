@@ -84,6 +84,12 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     const name = val;
     const filterValue = name.toLowerCase();
     this.filteredOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
+    
+    // If no matching vendors are found, give option to add a new one
+    if (this.filteredOptions.length === 0) {
+      let noMatchingVendors = new Vendor("-- Add New Vendor --");
+      this.filteredOptions = [noMatchingVendors];
+    }
   }
 
   /**
@@ -100,13 +106,17 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(e, component) {
-    if (e.target.value === '1: addNewProduct') {
-      this.addNewProduct(component);
-    } else {
-      this.updateComponentVendorAndProduct(component);
-    }
+    if (e != null) {
+      if (e.target.value === '-- Add New Vendor --') {
+        this.addNewVendor(component);
+      } else if (e.target.value === '1: addNewProduct') {
+        this.addNewProduct(component);
+      } else {
+        this.updateComponentVendorAndProduct(component);
+      }
 
-    this.diagramSvc.saveComponent(component).subscribe();
+      this.diagramSvc.saveComponent(component).subscribe();
+    }
   }
 
   showVulnerabilities(component) {
@@ -180,6 +190,8 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
         this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
           this.diagramSvc.csafVendors.unshift(vendor);
           this.saveComponent(null, component);
+
+          return component.vendorName;
         });
       }
     });
