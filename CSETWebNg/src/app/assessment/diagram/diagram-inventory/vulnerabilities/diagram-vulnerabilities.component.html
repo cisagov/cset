@@ -37,19 +37,16 @@
     <tr *ngFor="let component of diagramComponentList;">
       <td>{{component.label}}</td>
       <td>{{component.assetType}}</td>
-
-      {{ component.vendorName }}
-
       <td>
-        <input type="text" class="form-control" [(ngModel)]="component.vendorName"
-        [formControl]="formControl" [matAutocomplete]="auto" (blur)="saveComponent($event, component)">
+        <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filter($event)"
+        [matAutocomplete]="auto" (blur)="saveComponent($event, component)">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+          <mat-option *ngFor="let option of filteredOptions" [value]="option.name">
             {{ option.name }}
           </mat-option>
         </mat-autocomplete>
       </td>
-      
+
       <!--<td>
         <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent($event, component)">
           <option [ngValue]="null">-- Select Vendor --</option>
