@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.CSETWeb    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWeb120015    -  This database will be modified
 
 to synchronize it with:
 
