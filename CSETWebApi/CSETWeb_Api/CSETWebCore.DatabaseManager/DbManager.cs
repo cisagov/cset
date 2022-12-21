@@ -169,7 +169,7 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="oldConnectionString">Connection string for older version of sql server</param>
         /// <param name="newConnectionString">Connection string for current version of sql server</param>
-        private void CopyDBAcrossServers(string oldConnectionString, string newConnectionString)
+        public void CopyDBAcrossServers(string oldConnectionString, string newConnectionString)
         {
             //get the file paths
             InitialDbInfo dbInfo = new InitialDbInfo(oldConnectionString, DatabaseCode);
@@ -184,8 +184,8 @@ namespace CSETWebCore.DatabaseManager
                 string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
                 //copy the files over
-                File.Copy(dbInfo.MDF, newMDF, true);
-                File.Copy(dbInfo.LDF, newLDF, true);
+                DoTheCopy(dbInfo.MDF, newMDF);
+                DoTheCopy(dbInfo.LDF, newLDF);
 
                 //create and attach new 
                 ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", newConnectionString);
@@ -202,11 +202,29 @@ namespace CSETWebCore.DatabaseManager
 
         }
 
+        //this method will check to see if the files are already in place and if they
+        //exist it will rename them first..  
+        //if the rename fails it will throw an 
+        private void DoTheCopy(string source, string destination)
+        {
+            if(File.Exists(destination))
+            {
+                int i = 0;
+                while(File.Exists(destination +i)) { 
+                    i++;
+                }
+
+                File.Move(destination,destination+i);
+            }
+            File.Copy(source,destination, false);
+        }
+
         /// <summary>
         /// Copies existing mdf and ldf files attached on localdb 2019 server to newer version appdata folder and reattaches (preparing for upgrade)
+        /// This is only public for testing
         /// </summary>
         /// <param name="connectionString">Connection string for the current version of sql server</param>
-        private void CopyDBWithinServer(string connectionString)
+        public void CopyDBWithinServer(string connectionString)
         {
             //get the file paths
             InitialDbInfo dbInfo = new InitialDbInfo(connectionString, DatabaseCode);
@@ -221,8 +239,8 @@ namespace CSETWebCore.DatabaseManager
                 string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
                 //copy the files over
-                File.Copy(dbInfo.MDF, newMDF, true);
-                File.Copy(dbInfo.LDF, newLDF, true);
+                DoTheCopy(dbInfo.MDF, newMDF);
+                DoTheCopy(dbInfo.LDF, newLDF);
 
                 //create and attach new 
                 ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", connectionString);
@@ -239,7 +257,7 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="destDBFile">The new location to copy the mdf file to</param>
         /// <param name="destLogFile">The new location to copy the ldf file to</param>
-        private void CopyDBFromInstallationSource(string destDBFile, string destLogFile)
+        public void CopyDBFromInstallationSource(string destDBFile, string destLogFile)
         {
             string websitedataDir = "Data";
             string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
@@ -249,8 +267,13 @@ namespace CSETWebCore.DatabaseManager
             log.Info("Copying clean database file from " + sourcePath + " to " + destDBFile);
             try
             {
-                File.Copy(sourcePath, destDBFile, true);
-                File.Copy(sourceLogPath, destLogFile, true);
+                DoTheCopy(sourcePath, destDBFile);
+                DoTheCopy(sourceLogPath, destLogFile);
+            }
+            catch(IOException ioe)
+            {
+                log.Error(ioe.Message);
+                throw ioe;
             }
             catch (Exception e)
             {
@@ -277,12 +300,24 @@ namespace CSETWebCore.DatabaseManager
                 CurrentMasterConnectionString);
         }
 
+        public void AttachTest(string dbname, string destDBFile, string destLogFile)
+        {
+            ExecuteNonQuery(
+              "IF NOT EXISTS(SELECT name \n" +
+              "FROM master..sysdatabases \n" +
+              "where name ='" + dbname + "') \n" +
+                  "CREATE DATABASE " + dbname +
+                  " ON(FILENAME = '" + destDBFile + "'),  " +
+                  " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
+              CurrentMasterConnectionString);
+        }
+
         private static string EscapeString(string value)
         {
             return value.Replace("'", "''");
         }
 
-        private void ForceCloseAndDetach(string masterConnectionString, string dbName)
+        public void ForceCloseAndDetach(string masterConnectionString, string dbName)
         {
             using (SqlConnection conn = new SqlConnection(masterConnectionString))
             {
