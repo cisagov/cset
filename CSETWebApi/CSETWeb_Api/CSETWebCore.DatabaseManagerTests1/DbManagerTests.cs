@@ -39,8 +39,8 @@ namespace CSETWebCore.DatabaseManager.Tests
             string appCode = "CSET";
             DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
-            string mdf = @"C:\Users\HANSBK\CSETWebTest.mdf";
-            string ldf = @"C:\Users\HANSBK\CSETWebTest_log.ldf";
+            string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
+            string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
             manager.CopyDBFromInstallationSource(mdf,ldf);
             manager.CopyDBFromInstallationSource(mdf, ldf);
             manager.CopyDBFromInstallationSource(mdf, ldf);
@@ -92,8 +92,8 @@ namespace CSETWebCore.DatabaseManager.Tests
         {
             string clientCode = "DHS";
             string appCode = "CSET";
-            string mdf = @"C:\Users\HANSBK\CSETWebTest.mdf";
-            string ldf = @"C:\Users\HANSBK\CSETWebTest_log.ldf";
+            string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
+            string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
 
             DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
