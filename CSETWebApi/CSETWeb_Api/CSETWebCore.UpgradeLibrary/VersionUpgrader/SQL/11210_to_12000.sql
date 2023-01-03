@@ -1354,7 +1354,8 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 PRINT N'Dropping [dbo].[ParametersNeedingFixed]'
 GO
-DROP TABLE [dbo].[ParametersNeedingFixed]
+IF OBJECT_ID(N'[dbo].[ParametersNeedingFixed]', N'U') IS NOT NULL     
+	DROP TABLE [dbo].[ParametersNeedingFixed]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
