@@ -60,7 +60,9 @@
         "showPrivacyWarning": false,
         "showTrend": true,
         "showCompare": true,
-        "showEnableProtectedFeatures": true
+        "showEnableProtectedFeatures": true,
+        "showUpdateDiagramCsafVulnerabilitiesButton": false,
+        "showVulnerabilitiesDiagramInventoryTab": false
     },
     "answersDefault": [
         {

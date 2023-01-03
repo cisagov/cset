@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/15/2022 8:46:22 AM
+Script created by SQL Compare version 14.7.8.21163 from Red Gate Software Ltd at 12/19/2022 2:16:05 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -192,6 +192,24 @@ BEGIN
 	join Answer_Requirements a on r.requirement_id = a.Question_Or_Requirement_Id 
 where a.assessment_id = @assessment_id and f.assessment_id = @assessment_id and f.IsOn = 1
 END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[CSAF_FILE]'
+GO
+CREATE TABLE [dbo].[CSAF_FILE]
+(
+[File_Name] [nvarchar] (250) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Data] [varbinary] (max) NULL,
+[File_Size] [float] NULL,
+[Upload_Date] [datetime] NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_CSAF_FILE] on [dbo].[CSAF_FILE]'
+GO
+ALTER TABLE [dbo].[CSAF_FILE] ADD CONSTRAINT [PK_CSAF_FILE] PRIMARY KEY CLUSTERED ([File_Name])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

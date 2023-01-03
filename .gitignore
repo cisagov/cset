@@ -57,3 +57,5 @@ CSETWebApi/NCUA-EXAMINER-TOOL
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Properties/PublishProfiles/FolderProfile.pubxml.user
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Properties/PublishProfiles/FolderProfile.pubxml
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/.config/dotnet-tools.json
+/CSETWebApi/CSETWeb_Api/CSETWebCore.DatabaseManagerTests1/Data/CSETWeb.mdf
+/CSETWebApi/CSETWeb_Api/CSETWebCore.DatabaseManagerTests1/Data/CSETWeb_log.ldf
