@@ -32,7 +32,8 @@ import { Vendor } from '../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-diagram-inventory',
-  templateUrl: './diagram-inventory.component.html'
+  templateUrl: './diagram-inventory.component.html',
+  styleUrls: ['./diagram-inventory.component.scss']
 })
 export class DiagramInventoryComponent implements OnInit {
 
