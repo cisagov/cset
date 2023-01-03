@@ -27,11 +27,8 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
-import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
+import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
 import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -49,7 +46,8 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   sal: any;
   criticality: any;
 
-  filteredOptions: Vendor[];
+  filteredVendorOptions: Vendor[];
+  filteredProductOptions: Product[];
 
   loading: boolean = false;
 
@@ -76,20 +74,46 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     }
   }
 
-  filter(value: string) {
+  filterVendors(value: string) {
+    console.log(value);
     let val = "";
     if (typeof value === 'string') {
       val = value;
     }
     const name = val;
     const filterValue = name.toLowerCase();
-    this.filteredOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
-    
+    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
+
     // If no matching vendors are found, give option to add a new one
-    if (this.filteredOptions.length === 0) {
+    if (this.filteredVendorOptions.length === 0) {
       let noMatchingVendors = new Vendor("-- Add New Vendor --");
-      this.filteredOptions = [noMatchingVendors];
+      this.filteredVendorOptions = [noMatchingVendors];
     }
+  }
+
+  filterProducts(value: string, products: Product[]) {
+    console.log(value);
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
+    const filterValue = name.toLowerCase();
+    this.filteredProductOptions = products?.filter(option => option.name.toLowerCase().includes(filterValue)) ?? [];
+
+    // If no matching products are found, give option to add a new one
+    if (this.filteredProductOptions.length === 0) {
+      let noMatchingProducts = new Product("-- Add New Product --");
+      this.filteredProductOptions = [noMatchingProducts];
+    }
+  }
+
+  clearVendorFilterOptions() {
+    this.filteredVendorOptions = [];
+  }
+
+  clearProductFilterOptions() {
+    this.filteredProductOptions = [];
   }
 
   /**
@@ -109,12 +133,13 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (e != null) {
       if (e.target.value === '-- Add New Vendor --') {
         this.addNewVendor(component);
-      } else if (e.target.value === '1: addNewProduct') {
+      } else if (e.target.value === '-- Add New Product --') {
         this.addNewProduct(component);
       } else {
         this.updateComponentVendorAndProduct(component);
       }
 
+      console.log(component);
       this.diagramSvc.saveComponent(component).subscribe();
     }
   }
