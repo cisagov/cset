@@ -2058,10 +2058,8 @@ INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [S
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (17632, N'RA_2', 22, N'Does any of your supply chain risk management documentation (from SR-02-00-03) discuss the risk associated with acquisition of critical network or system components?', N'L', 0, NULL, 55, N'RAC', NULL, 7515)
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (17633, N'RA_2', 24, N'Do you have a managed interface to which any external networks must connect when accessing your network? (ex. VPN appliance)', N'L', 0, NULL, 47, N'RAC', NULL, 915)
 INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (17634, N'RA_2', 25, N'Are these requirements documented in any contractual agreements?', N'L', 0, NULL, 44, N'RAC', NULL, 626)
-INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000001, N'SET.20221011.125505', 1, N'Test Question', N'L', 0, NULL, NULL, N'SET.20221011.125505', NULL, 43)
-INSERT INTO [dbo].[NEW_QUESTION] ([Question_Id], [Std_Ref], [Std_Ref_Number], [Simple_Question], [Universal_Sal_Level], [Weight], [Question_Group_Id], [Question_Group_Number], [Original_Set_Name], [Ranking], [Heading_Pair_Id]) VALUES (1000002, N'SET.20221011.125505', 2, N'New Question 1', N'L', 0, NULL, NULL, N'SET.20221011.125505', NULL, 43)
 SET IDENTITY_INSERT [dbo].[NEW_QUESTION] OFF
-PRINT(N'Operation applied to 19 rows out of 19')
+PRINT(N'Operation applied to 17 rows out of 17')
 
 PRINT(N'Add rows to [dbo].[REQUIREMENT_LEVELS]')
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (31550, N'H', N'NST', NULL)

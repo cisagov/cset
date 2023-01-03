@@ -32,7 +32,8 @@ import { Vendor } from '../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-diagram-inventory',
-  templateUrl: './diagram-inventory.component.html'
+  templateUrl: './diagram-inventory.component.html',
+  styleUrls: ['./diagram-inventory.component.scss']
 })
 export class DiagramInventoryComponent implements OnInit {
 
@@ -42,7 +43,6 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   constructor(public diagramSvc: DiagramService,
-     private fileSvc: FileUploadClientService,
      private dialog: MatDialog,
      private configSvc: ConfigService
     ) { }
@@ -93,6 +93,10 @@ export class DiagramInventoryComponent implements OnInit {
   }
 
   showCsafUploadButton() {
-    return this.configSvc.behaviors?.showUpdateCsafVulnerabilitiesButton ?? true;
+    return this.configSvc.behaviors?.showUpdateDiagramCsafVulnerabilitiesButton;
+  }
+
+  showVulnerabilitiesTab() {
+    return this.configSvc.behaviors?.showVulnerabilitiesDiagramInventoryTab;
   }
 }

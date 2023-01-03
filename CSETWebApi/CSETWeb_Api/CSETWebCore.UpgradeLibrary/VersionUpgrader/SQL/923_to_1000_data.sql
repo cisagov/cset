@@ -194,9 +194,6 @@ DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = 'VH' AND [
 DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = 'VH' AND [New_Question_Set_Id] = 23824
 PRINT(N'Operation applied to 51 rows out of 51')
 
-PRINT(N'Delete row from [dbo].[REQUIREMENT_QUESTIONS]')
-DELETE FROM [dbo].[REQUIREMENT_QUESTIONS] WHERE [Question_Id] = 1000001 AND [Requirement_Id] = 29770
-
 PRINT(N'Delete rows from [dbo].[NEW_QUESTION_SETS]')
 DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 13667
 DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 13689
