@@ -225,65 +225,67 @@ export class FileUploadClientService {
 
     // this will be the our resulting map
     const status = {};
-    //setTimeout(() => {
 
-      fileItems.forEach((fileItem: File) => {
-        // if (this.continueUpload) {
-          // create a new multipart-form for every file
-          const formData: FormData = new FormData();
-          formData.append('fileItem', fileItem, fileItem.name);
+    for (let fileItem of fileItems) {
+      if(!this.continueUpload) {
+        fileItems = null;
+        break;
+      }
 
-          // create a http-post request and pass the form
-          // tell it to report the upload progress
-          const req = new HttpRequest('POST', apiEndpoint, formData,
-            {
-              headers: tmpheader,
-              reportProgress: true,
-              responseType: 'text'
-            }
-          );
+      // create a new multipart-form for every file
+      const formData: FormData = new FormData();
+      formData.append('fileItem', fileItem, fileItem.name);
 
-          // create a new progress-subject for every file
-          const progress = new Subject<number>();
+      // create a http-post request and pass the form
+      // tell it to report the upload progress
+      const req = new HttpRequest('POST', apiEndpoint, formData,
+        {
+          headers: tmpheader,
+          reportProgress: true,
+          responseType: 'text'
+        }
+      );
 
-          // Save every progress-observable in a map of all observables
-          status[fileItem.name] = {
-            progress: progress.asObservable()
-          };
+      // create a new progress-subject for every file
+      const progress = new Subject<number>();
 
-          if (this.continueUpload) {
-            console.log(this.continueUpload)
-            // send the http-request and subscribe for progress-updates
-              this.http.request(req).subscribe(event => {
-            
-                if (event.type === HttpEventType.UploadProgress) {
+      // Save every progress-observable in a map of all observables
+      status[fileItem.name] = {
+        progress: progress.asObservable()
+      };
 
-                  // calculate the progress percentage
-                  const percentDone = Math.round(100 * event.loaded / event.total);
-                  // pass the percentage into the progress-stream
-                  progress.next(percentDone);
+      // send the http-request and subscribe for progress-updates
+      this.http.request(req).subscribe(event => {
+        if(!this.continueUpload) {
+          fileItems = null;
+          progress.isStopped = true;
+          return status;
+        }
+    
+        if (event.type === HttpEventType.UploadProgress) {
 
-                } else if (event instanceof HttpResponseBase) {
-                  if (event.status != 200) { //MAYBE: Make this >= 400
-                    let errObj = {
-                      message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
-                      : "Some files failed to import. Ensure the JSON is properly formatted.",
-                    };
-                    progress.error(errObj);
-                  }
-                  
-                  // Close the progress-stream if we get an answer form the API
-                  // The upload is complete
-                  else {
-                    progress.complete();
-                    console.log("complete")
-                  }
-                }
-              });
+          // calculate the progress percentage
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          // pass the percentage into the progress-stream
+          progress.next(percentDone);
+
+        } else if (event instanceof HttpResponseBase) {
+          if (event.status != 200) { //MAYBE: Make this >= 400
+            let errObj = {
+              message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
+              : "Some files failed to import. Ensure the JSON is properly formatted.",
+            };
+            progress.error(errObj);
           }
-        });
-    //}, 5000)
-
+          
+          // Close the progress-stream if we get an answer form the API
+          // The upload is complete
+          else {
+            progress.complete();
+          }
+        }
+      });
+    };
 
     return status;
   }
