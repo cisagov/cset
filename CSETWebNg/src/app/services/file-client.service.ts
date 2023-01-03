@@ -25,7 +25,7 @@ import { AuthenticationService } from './authentication.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaders, HttpParams, HttpEventType, HttpResponseBase } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 
 
 /* Naming NOTE
@@ -41,6 +41,11 @@ export class FileUploadClientService {
   downloadUrl: String;
   token: String;
   exportUrl: string;
+
+  continueUpload: boolean = true;
+
+  private obs: Subscription = new Subscription();
+
 
   constructor(private http: HttpClient, private configSvc: ConfigService,
     private authSvc: AuthenticationService) {
@@ -221,7 +226,12 @@ export class FileUploadClientService {
     // this will be the our resulting map
     const status = {};
 
-    fileItems.forEach((fileItem: File) => {
+    for (let fileItem of fileItems) {
+      if(!this.continueUpload) {
+        fileItems = null;
+        break;
+      }
+
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
       formData.append('fileItem', fileItem, fileItem.name);
@@ -246,11 +256,19 @@ export class FileUploadClientService {
 
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
+        if(!this.continueUpload) {
+          fileItems = null;
+          progress.isStopped = true;
+          return status;
+        }
+    
         if (event.type === HttpEventType.UploadProgress) {
+
           // calculate the progress percentage
           const percentDone = Math.round(100 * event.loaded / event.total);
           // pass the percentage into the progress-stream
           progress.next(percentDone);
+
         } else if (event instanceof HttpResponseBase) {
           if (event.status != 200) { //MAYBE: Make this >= 400
             let errObj = {
@@ -259,12 +277,15 @@ export class FileUploadClientService {
             };
             progress.error(errObj);
           }
+          
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
-          else progress.complete();
+          else {
+            progress.complete();
+          }
         }
       });
-    });
+    };
 
     return status;
   }
