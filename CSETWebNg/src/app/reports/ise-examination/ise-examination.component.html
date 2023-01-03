@@ -339,12 +339,12 @@
                                     <br>
                                     <strong> Resources: </strong> 
                                     <br>
-                                    <span *ngIf="sourceFilesMap.has(finding?.question?.mat_Question_Id)">
-                                        <div *ngFor="let file of sourceFilesMap.get(finding?.question?.mat_Question_Id)">
+                                    <span *ngIf="sourceFilesMap.has(finding?.finding?.finding_Id)">
+                                        <div *ngFor="let file of sourceFilesMap.get(finding?.finding?.finding_Id)">
                                             {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(finding?.question?.mat_Question_Id)">(no Resources available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(finding?.finding?.finding_Id)">(no Resources available)</span>
                                 </div>
                                 
 

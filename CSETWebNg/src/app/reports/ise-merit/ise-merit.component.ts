@@ -147,15 +147,15 @@ export class IseMeritComponent implements OnInit {
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if(!this.sourceFilesMap.has(finding.question.mat_Question_Id)){
+                      if(!this.sourceFilesMap.has(finding.finding.finding_Id)){
               
-                        this.sourceFilesMap.set(finding.question.mat_Question_Id, [sourceDocList[i]]);
+                        this.sourceFilesMap.set(finding.finding.finding_Id, [sourceDocList[i]]);
                       } else {
-                        let tempFileArray = this.sourceFilesMap.get(finding.question.mat_Question_Id);
+                        let tempFileArray = this.sourceFilesMap.get(finding.finding.finding_Id);
         
                         tempFileArray.push(sourceDocList[i]);
         
-                        this.sourceFilesMap.set(finding.question.mat_Question_Id, tempFileArray);
+                        this.sourceFilesMap.set(finding.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
