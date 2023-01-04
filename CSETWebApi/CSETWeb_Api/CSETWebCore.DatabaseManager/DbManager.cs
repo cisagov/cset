@@ -72,7 +72,7 @@ namespace CSETWebCore.DatabaseManager
                     }
                     else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
                     {
-                        UpgradeLocaldb2019(destDBFile, destLogFile, localDb2012Info);
+                        UpgradeLocaldb2019(destDBFile, destLogFile, localDb2019Info);
                     }
                 }
                 else
