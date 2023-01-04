@@ -133,7 +133,7 @@ namespace CSETWebCore.DatabaseManager
             // Create the new version folder in local app data folder
             Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
-            CopyDBWithinServer(CurrentMasterConnectionString);
+            CopyDBWithinServer(localDb2019Info);
 
             try
             {
@@ -162,7 +162,7 @@ namespace CSETWebCore.DatabaseManager
             log.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
 
             KillProcess();
-            CopyDBAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
+            CopyDBAcrossServers(localDb2012Info);
 
             try
             {
@@ -203,12 +203,8 @@ namespace CSETWebCore.DatabaseManager
         /// Copies database mdf and ldf files from older sql server version, places them in user local app data folder,
         /// and attaches them in the newer version of sql server.
         /// </summary>
-        /// <param name="oldConnectionString">Connection string for older version of sql server</param>
-        /// <param name="newConnectionString">Connection string for current version of sql server</param>
-        public void CopyDBAcrossServers(string oldConnectionString, string newConnectionString)
+        public void CopyDBAcrossServers(InitialDbInfo localDb2012Info)
         {
-            //get the file paths
-            InitialDbInfo dbInfo = new InitialDbInfo(oldConnectionString, DatabaseCode);
             try
             {
                 //force close on the source database and detach source db                
@@ -220,16 +216,16 @@ namespace CSETWebCore.DatabaseManager
                 string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
                 //copy the files over
-                DoTheCopy(dbInfo.MDF, newMDF);
-                DoTheCopy(dbInfo.LDF, newLDF);
+                DoTheCopy(localDb2012Info.MDF, newMDF);
+                DoTheCopy(localDb2012Info.LDF, newLDF);
 
                 //create and attach new 
-                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", newConnectionString);
+                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentMasterConnectionString);
             }
             finally
             {
                 //reattach the original
-                ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + dbInfo.MDF + "', @FILENAME2 = '" + dbInfo.LDF + "'", oldConnectionString);
+                ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + localDb2012Info.MDF + "', @FILENAME2 = '" + localDb2012Info.LDF + "'", OldMasterConnectionString);
             }
 
         }
@@ -256,10 +252,8 @@ namespace CSETWebCore.DatabaseManager
         /// This is only public for testing
         /// </summary>
         /// <param name="connectionString">Connection string for the current version of sql server</param>
-        public void CopyDBWithinServer(string connectionString)
+        public void CopyDBWithinServer(InitialDbInfo dbInfo)
         {
-            //get the file paths
-            InitialDbInfo dbInfo = new InitialDbInfo(connectionString, DatabaseCode);
             //force close on the source database and detach source db                
             ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
 
@@ -273,7 +267,7 @@ namespace CSETWebCore.DatabaseManager
             DoTheCopy(dbInfo.LDF, newLDF);
 
             //create and attach new 
-            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", connectionString);
+            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentDatabaseConnectionString);
         }
 
         /// <summary>
@@ -425,8 +419,8 @@ namespace CSETWebCore.DatabaseManager
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
-        public string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
-        public string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
+        public static string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
+        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
         public string DatabaseCode 
         {
             get 
