@@ -87,7 +87,7 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (Exception e)
             {
-                DatabaseSetupException dbSetupException = new DatabaseSetupException("A fatal error occurred during the database setup process.", e);
+                DatabaseSetupException dbSetupException = new DatabaseSetupException("A fatal error occurred during the database setup process: " + e.Message, e);
                 log.Error(dbSetupException.Message);
                 throw dbSetupException;
             }
@@ -139,7 +139,7 @@ namespace CSETWebCore.DatabaseManager
             {
                 upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
             }
-            catch (Exception e)
+            catch (DatabaseUpgradeException e)
             {
                 log.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
@@ -168,7 +168,7 @@ namespace CSETWebCore.DatabaseManager
             {
                 upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
             }
-            catch (Exception e)
+            catch (DatabaseUpgradeException e)
             {
                 log.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
@@ -194,7 +194,6 @@ namespace CSETWebCore.DatabaseManager
                 else
                 {
                     DatabaseSetupException dbSetupException = new DatabaseSetupException($"{ApplicationCode} database is not functioning. No { DatabaseCode } database found after setup.");
-                    log.Error(dbSetupException.Message);
                     throw dbSetupException;
                 }
             }
@@ -226,10 +225,6 @@ namespace CSETWebCore.DatabaseManager
 
                 //create and attach new 
                 ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", newConnectionString);
-            }
-            catch (Exception e)
-            {
-                log.Error(e.Message);
             }
             finally
             {
@@ -265,28 +260,20 @@ namespace CSETWebCore.DatabaseManager
         {
             //get the file paths
             InitialDbInfo dbInfo = new InitialDbInfo(connectionString, DatabaseCode);
-            try
-            {
-                //force close on the source database and detach source db                
-                ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+            //force close on the source database and detach source db                
+            ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
 
-                // Creating new paths for mdf and ldf files
-                string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string newMDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
-                string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
+            // Creating new paths for mdf and ldf files
+            string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string newMDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
+            string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
-                //copy the files over
-                DoTheCopy(dbInfo.MDF, newMDF);
-                DoTheCopy(dbInfo.LDF, newLDF);
+            //copy the files over
+            DoTheCopy(dbInfo.MDF, newMDF);
+            DoTheCopy(dbInfo.LDF, newLDF);
 
-                //create and attach new 
-                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", connectionString);
-
-            }
-            catch (Exception e)
-            {
-                log.Error(e.Message);
-            }
+            //create and attach new 
+            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", connectionString);
         }
 
         /// <summary>
@@ -302,20 +289,8 @@ namespace CSETWebCore.DatabaseManager
             string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
 
             log.Info("Copying clean database file from " + sourcePath + " to " + destDBFile);
-            try
-            {
-                DoTheCopy(sourcePath, destDBFile);
-                DoTheCopy(sourceLogPath, destLogFile);
-            }
-            catch(IOException ioe)
-            {
-                log.Error(ioe.Message);
-                throw ioe;
-            }
-            catch (Exception e)
-            {
-                log.Info(e.Message);
-            }
+            DoTheCopy(sourcePath, destDBFile);
+            DoTheCopy(sourceLogPath, destLogFile);
         }
 
         /// <summary>
@@ -365,51 +340,38 @@ namespace CSETWebCore.DatabaseManager
 
         private static void ForceClose(SqlConnection conn, string dbName)
         {
-            try
-            {
-                string cmdForceClose =
-                    "Use Master; \n"
-                    + "DECLARE @SQL varchar(max) \n"
-                    + "Declare @id int  \n"
-                    + "select @id = DB_ID('" + EscapeString(dbName) + "') from Master..SysProcesses \n"
-                    + "if (@id is not null)  \n"
-                    + "begin \n"
-                    + "	SELECT @SQL = COALESCE(@SQL,'') + 'Kill ' + Convert(varchar, SPId) + ';' \n"
-                    + "	FROM MASTER..SysProcesses \n"
-                    + "	WHERE DBId = DB_ID('" + EscapeString(dbName) + "') AND SPId <> @@SPId \n"
-                    + "--print @sql \n"
-                    + "	EXEC(@SQL) \n"
-                    + "EXEC sp_detach_db  @dbname = N'" + dbName + "'"
-                    + "end  \n";
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = cmdForceClose;
-                cmd.ExecuteNonQuery();
-            }
-            catch (SqlException sqle)
-            {
-                log.Error(sqle.Message);
-            }
+            string cmdForceClose =
+                "Use Master; \n"
+                + "DECLARE @SQL varchar(max) \n"
+                + "Declare @id int  \n"
+                + "select @id = DB_ID('" + EscapeString(dbName) + "') from Master..SysProcesses \n"
+                + "if (@id is not null)  \n"
+                + "begin \n"
+                + "	SELECT @SQL = COALESCE(@SQL,'') + 'Kill ' + Convert(varchar, SPId) + ';' \n"
+                + "	FROM MASTER..SysProcesses \n"
+                + "	WHERE DBId = DB_ID('" + EscapeString(dbName) + "') AND SPId <> @@SPId \n"
+                + "--print @sql \n"
+                + "	EXEC(@SQL) \n"
+                + "EXEC sp_detach_db  @dbname = N'" + dbName + "'"
+                + "end  \n";
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = cmdForceClose;
+            cmd.ExecuteNonQuery();
+            
         }
 
         // Kill processes if duplicate process running under another version (used to use CSETTrayApp).    
         private void KillProcess()
         {
-            try
+            foreach (Process proc in Process.GetProcessesByName("CSETTrayApp"))
             {
-                foreach (Process proc in Process.GetProcessesByName("CSETTrayApp"))
-                {
-                    proc.Kill();
-                }
-
-                foreach (Process process in Process.GetProcessesByName("iisexpress"))
-                {
-                    process.Kill();
-                }
+                proc.Kill();
             }
-            catch (Exception ex)
+
+            foreach (Process process in Process.GetProcessesByName("iisexpress"))
             {
-                log.Error(ex.Message);
+                process.Kill();
             }
         }
 
@@ -452,19 +414,12 @@ namespace CSETWebCore.DatabaseManager
 
         private void ExecuteNonQuery(string sql, string connectionString)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = sql;
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (SqlException sqle)
-            {
-                log.Error(sqle.Message);
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
             }
         }
         public Version NewVersion { get; }
