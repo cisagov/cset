@@ -60,96 +60,22 @@ namespace CSETWebCore.DatabaseManager
                     // No previous version of application found on LocalDB 2012
                     if (!localDb2012Info.Exists)
                     {
-                        log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 default instance...");
-                        log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
-
-                        AttachCleanDatabase(destDBFile, destLogFile);
-
-                        // Verify that the database exists now
-                        using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
-                        {
-                            if (DatabaseExists(conn))
-                            {
-                                log.Info($"New {ApplicationCode} database is functioning");
-                            }
-                            else
-                            {
-                                log.Error("Database is not functioning");
-                            }
-                        }
+                        CleanInstallNoUpgrades(destDBFile, destLogFile);
                     }
                     // Another version of application prior to 11.0.0.0 installed, copying and upgrading Database
                     else
                     {
-                        log.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database file and attempting upgrade... ");
-
-                        KillProcess();
-                        CopyDBAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
-
-                        try
-                        {
-                            upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
-                        }
-                        catch (Exception e)
-                        {
-                            log.Error(e.Message);
-                            // Attach clean database here if something goes wrong with database upgrade
-                            ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
-                            AttachCleanDatabase(destDBFile, destLogFile);
-                        }
-
-                        // Verify that the database has been copied over and exists now
-                        using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
-                        {
-                            if (DatabaseExists(conn))
-                            {
-                                log.Info($"Copied {ApplicationCode} database is functioning");
-                            }
-                            else
-                            {
-                                log.Error("Database is not functioning after copy attempt");
-                            }
-                        }
+                        UpgradeLocalDb2012To2019(destDBFile, destLogFile, localDb2012Info);
                     }
                 }
                 else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
                 {
-                    log.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database file and attempting upgrade...");
-
-                    // Create the new version folder in local app data folder
-                    Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
-
-                    CopyDBWithinServer(CurrentMasterConnectionString);
-
-                    try
-                    {
-                        upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
-                    }
-                    catch (Exception e)
-                    {
-                        log.Error(e.Message);
-                        // Attach clean database here if something goes wrong with database upgrade
-                        ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
-                        AttachCleanDatabase(destDBFile, destLogFile);
-                    }
-
-                    // Verify that the database has been copied over and exists now
-                    using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
-                    {
-                        if (DatabaseExists(conn))
-                        {
-                            log.Info($"Copied {ApplicationCode} database is functioning");
-                        }
-                        else
-                        {
-                            log.Error("Database is not functioning after copy attempt");
-                        }
-                    }
+                    UpgradeLocaldb2019(destDBFile, destLogFile, localDb2012Info);
                 }
             }
             else
             {
-                log.Info($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
+                log.Error($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
             }
         }
 
@@ -161,6 +87,101 @@ namespace CSETWebCore.DatabaseManager
             log.Info("Deleting and recreating localDB MSSQLLocalDB default instance..");
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
             process.WaitForExit(10000); // wait up to 10 seconds 
+        }
+
+        /// <summary>
+        /// Perform a clean attach of master versioned database.
+        /// </summary>
+        /// <param name="destDBFile"></param>
+        /// <param name="destLogFile"></param>
+        private void CleanInstallNoUpgrades(string destDBFile, string destLogFile) 
+        {
+            log.Info($"No previous {ApplicationCode} database found on LocalDB 2012 and 2019 default instances...");
+            log.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
+
+            AttachCleanDatabase(destDBFile, destLogFile);
+
+            // Verify that the database exists now
+            VerifyApplicationDatabaseFunctioning();
+        }
+
+
+        /// <summary>
+        /// Perform upgrade on a copy of existing application db found on localDb 2019.
+        /// </summary>
+        /// <param name="destDBFile"></param>
+        /// <param name="destLogFile"></param>
+        /// <param name="localDb2019Info"></param>
+        private void UpgradeLocaldb2019(string destDBFile, string destLogFile, InitialDbInfo localDb2019Info)
+        {
+            log.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database file and attempting upgrade...");
+
+            // Create the new version folder in local app data folder
+            Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
+
+            CopyDBWithinServer(CurrentMasterConnectionString);
+
+            try
+            {
+                upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+                // Attach clean database here if something goes wrong with database upgrade
+                ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                AttachCleanDatabase(destDBFile, destLogFile);
+            }
+
+            // Verify that the database has been copied over and exists now
+            VerifyApplicationDatabaseFunctioning();
+        }
+
+        /// <summary>
+        /// Most complex case; make a copy of localDb 2012 db, attach copy to localDb2019 instance, and attempt upgrade.
+        /// </summary>
+        /// <param name="destDBFile"></param>
+        /// <param name="destLogFile"></param>
+        /// <param name="localDb2012Info"></param>
+        private void UpgradeLocalDb2012To2019(string destDBFile, string destLogFile, InitialDbInfo localDb2012Info) 
+        {
+            log.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
+
+            KillProcess();
+            CopyDBAcrossServers(OldMasterConnectionString, CurrentMasterConnectionString);
+
+            try
+            {
+                upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+                // Attach clean database here if something goes wrong with database upgrade
+                ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+                AttachCleanDatabase(destDBFile, destLogFile);
+            }
+
+            // Verify that the database has been copied over and exists now
+            VerifyApplicationDatabaseFunctioning();
+        }
+
+        /// <summary>
+        /// Wrapper for DatabaseExists function to include logging.
+        /// </summary>
+        private void VerifyApplicationDatabaseFunctioning() 
+        {
+            using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+            {
+                if (DatabaseExists(conn))
+                {
+                    log.Info($"Copied {ApplicationCode} database is functioning.");
+                }
+                else
+                {
+                    log.Error($"{ApplicationCode} database is not functioning.");
+                }
+            }
         }
 
         /// <summary>
