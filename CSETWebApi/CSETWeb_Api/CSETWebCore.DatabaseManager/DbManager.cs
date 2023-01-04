@@ -41,41 +41,50 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         public void SetupDb()
         {
-            if (IsLocalDB2019Installed())
+            try
             {
-                InitialDbInfo localDb2019Info = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
-                InitialDbInfo localDb2012Info = new InitialDbInfo(OldMasterConnectionString, DatabaseCode);
-                string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
-                string destLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
-
-                if (!localDb2019Info.Exists)
+                if (IsLocalDB2019Installed())
                 {
-                    log.Info($"No previous {ApplicationCode} database found on LocalDB 2019 default instance...");
+                    InitialDbInfo localDb2019Info = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2012Info = new InitialDbInfo(OldMasterConnectionString, DatabaseCode);
+                    string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
+                    string destLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
-                    // Create the new version folder in local app data folder
-                    Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
-                    // ResolveLocalDBVersion();
-
-                    // No previous version of application found on LocalDB 2012
-                    if (!localDb2012Info.Exists)
+                    if (!localDb2019Info.Exists)
                     {
-                        CleanInstallNoUpgrades(destDBFile, destLogFile);
+                        log.Info($"No previous {ApplicationCode} database found on LocalDB 2019 default instance...");
+
+                        // Create the new version folder in local app data folder
+                        Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
+                        // ResolveLocalDBVersion();
+
+                        // No previous version of application found on LocalDB 2012
+                        if (!localDb2012Info.Exists)
+                        {
+                            CleanInstallNoUpgrades(destDBFile, destLogFile);
+                        }
+                        // Another version of application prior to 11.0.0.0 installed, copying and upgrading Database
+                        else
+                        {
+                            UpgradeLocalDb2012To2019(destDBFile, destLogFile, localDb2012Info);
+                        }
                     }
-                    // Another version of application prior to 11.0.0.0 installed, copying and upgrading Database
-                    else
+                    else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
                     {
-                        UpgradeLocalDb2012To2019(destDBFile, destLogFile, localDb2012Info);
+                        UpgradeLocaldb2019(destDBFile, destLogFile, localDb2012Info);
                     }
                 }
-                else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
+                else
                 {
-                    UpgradeLocaldb2019(destDBFile, destLogFile, localDb2012Info);
+                    log.Error($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
                 }
             }
-            else
+            catch (Exception e)
             {
-                log.Error($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
+                DatabaseSetupException dbSetupException = new DatabaseSetupException("A fatal error occurred during the database setup process.", e);
+                log.Error(dbSetupException.Message);
+                throw dbSetupException;
             }
         }
 
@@ -404,20 +413,13 @@ namespace CSETWebCore.DatabaseManager
         /// <returns>True if database with provided DatabaseCode exists on given connection; false otherwise</returns>
         private bool DatabaseExists(SqlConnection conn)
         {
-            try
-            {
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT name \n" +
-                "FROM master..sysdatabases \n" +
-                "where name ='" + DatabaseCode + "'";
-                SqlDataReader reader = cmd.ExecuteReader();
-                return (reader.HasRows);
-            }
-            catch
-            {
-                return false;
-            }
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT name \n" +
+            "FROM master..sysdatabases \n" +
+            "where name ='" + DatabaseCode + "'";
+            SqlDataReader reader = cmd.ExecuteReader();
+            return reader.HasRows;
         }
 
 
