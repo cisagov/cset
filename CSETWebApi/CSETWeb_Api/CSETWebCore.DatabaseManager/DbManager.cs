@@ -80,6 +80,11 @@ namespace CSETWebCore.DatabaseManager
                     log.Error($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
                 }
             }
+            catch (DatabaseSetupException e) 
+            {
+                log.Error(e.Message);
+                throw;
+            }
             catch (Exception e)
             {
                 DatabaseSetupException dbSetupException = new DatabaseSetupException("A fatal error occurred during the database setup process.", e);
@@ -188,7 +193,9 @@ namespace CSETWebCore.DatabaseManager
                 }
                 else
                 {
-                    log.Error($"{ApplicationCode} database is not functioning.");
+                    DatabaseSetupException dbSetupException = new DatabaseSetupException($"{ApplicationCode} database is not functioning. No { DatabaseCode } database found after setup.");
+                    log.Error(dbSetupException.Message);
+                    throw dbSetupException;
                 }
             }
         }
