@@ -10,7 +10,8 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 const masterConfig = require('./dist/assets/settings/config.json');
 
-let installationMode = masterConfig.installationMode || 'CSET';
+// We can only use one value in the config chain in this script until we figure out an equivalent to fetch for electron
+let installationMode = masterConfig.currentConfigChain[0] || 'CSET';
 
 const subConfig = require(`./dist/assets/settings/config.${installationMode}.json`);
 
