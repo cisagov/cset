@@ -173,7 +173,7 @@
             "buttonLabel": "Scoped",
             "buttonCss": "btn-alt",
             "answerLabel": "Scoped",
-            "buttonTooltip": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome."
+            "buttonTooltip": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal."
         },
         {
             "code": "N",
