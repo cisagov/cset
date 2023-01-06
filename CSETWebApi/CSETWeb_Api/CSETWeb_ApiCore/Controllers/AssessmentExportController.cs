@@ -61,5 +61,15 @@ namespace CSETWebCore.Api.Controllers
 
             return File(result, "application/octet-stream", filename);
         }
+
+        [HttpPost]
+        [Route("api/assessment/makeDirectory")]
+        public IActionResult MakeDirectory([FromBody] string creatorName)
+        {
+            System.IO.Directory.CreateDirectory("C:\\\\Users\\mattr\\Downloads\\ExportAllTest");
+            
+            return Ok();
+        }
+
     }
 }
