@@ -76,7 +76,7 @@ $serverescaped = $server.replace("\", "\\")
 
 # Making sure connection string and ports are correct in config files
 (Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\mssqllocaldb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
-(Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
+(Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port": "5000"', '"port": "5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
