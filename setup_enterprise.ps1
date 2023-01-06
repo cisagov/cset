@@ -75,7 +75,7 @@ While ($sqlConnectionSucceeded -ne $true) {
 $serverescaped = $server.replace("\", "\\")
 
 # Making sure connection string and ports are correct in config files
-(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\MSSQLLocalDb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
+(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\mssqllocaldb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
