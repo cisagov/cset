@@ -65,7 +65,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             string appCode = "Test";
             DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
             
-            manager.ForceCloseAndDetach(manager.CurrentMasterConnectionString, "TestWeb");
+            manager.ForceCloseAndDetach(DbManager.CurrentMasterConnectionString, "TestWeb");
             manager.AttachTest("TestWeb", testdb, testlog);
             VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
             manager.SetupDb();

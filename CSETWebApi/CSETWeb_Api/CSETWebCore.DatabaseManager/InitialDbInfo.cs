@@ -53,8 +53,15 @@ namespace CSETWebCore.DatabaseManager
                 }
 
             }
-            catch
+            catch (SqlException)
             {
+                // We are only concerned here if SQL LocalDb 2019 (uses CurrentMasterConnectionString) is not accessible
+                // (2012 might not be installed, and that's ok--just assume the db does not exist)
+                if (connectionString.Equals(DbManager.CurrentMasterConnectionString))
+                {
+                    throw;
+                }
+
                 Exists = false;
             }
         }
