@@ -27,7 +27,7 @@ Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 Start-Process urlrewrite2.exe -Wait
 
 # Install dotnet 6 hosting bundle 
-Start-Process dotnet-hosting-6.0.2-win.exe -Wait
+Start-Process dotnet-hosting-7.0.1-win.exe -Wait
 
 # Update enviornment path to ensure sqlcmd works after installing SQL server
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
@@ -45,8 +45,8 @@ Copy-Item -Path CSETUI\* -Destination C:\inetpub\wwwroot\CSETUI -Recurse -Force
 
 # Copy database files to user directory
 New-Item -ItemType directory -Path C:\CSETDatabase -Force
-Copy-Item -Path database\CSETWeb11200.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
-Copy-Item -Path database\CSETWeb11200_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
+Copy-Item -Path database\CSETWeb120017.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
+Copy-Item -Path database\CSETWeb120017_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
 
 $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
