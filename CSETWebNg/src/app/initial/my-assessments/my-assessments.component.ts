@@ -38,13 +38,14 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { concatMap, map } from "rxjs/operators";
+import { concatMap, delay, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import * as moment from "moment";
+import { forEach } from "lodash";
 
 
 interface UserAssessment {
@@ -85,10 +86,13 @@ export class MyAssessmentsComponent implements OnInit {
   exportExtension: string;
   importExtensions: string;
 
+  exportCount: number = 0;
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   prepForMerge: boolean = false;
+
+  timer = ms => new Promise(res => setTimeout(res, ms));
 
   constructor(
     public configSvc: ConfigService,
@@ -277,17 +281,19 @@ export class MyAssessmentsComponent implements OnInit {
 
   clickDownloadLink(ment_id: number) {
     // get short-term JWT from API
+    console.log('assessment id: ' + ment_id)
     this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
       const url =
         this.fileSvc.exportUrl + "?token=" + response.token;
 
       //if electron
       window.location.href = url;
-
+      this.exportCount++;
       //if browser
       //window.open(url, "_blank");
     });
   }
+
   /**
    *
    * @param event
@@ -340,4 +346,27 @@ export class MyAssessmentsComponent implements OnInit {
     return localTime;
   }
 
+  exportAllAssessments() {
+    this.authSvc.makeDirectory(this.sortedAssessments[0].creatorName).subscribe((result: any) => {
+      console.log(this.sortedAssessments)
+      
+      // let assessId = this.sortedAssessments[this.exportCount].assessmentId;
+      //this.clickDownloadLink(assessId);
+      // for (let i = 0; i < this.sortedAssessments.length; i++) {
+      //   let a = document.getElementById('assess-' + i + '-export');
+      //   a.click();
+      // }
+      this.load();
+      this.exportCount = 0;
+    });
+  }
+
+
+  async load () { // We need to wrap the loop into an async function for this to work
+    for (let i = 0; i < this.sortedAssessments.length; i++) {
+      let a = document.getElementById('assess-' + i + '-export');
+      a.click();
+      await this.timer(500); // then the created Promise can be awaited
+    }
+  }
 }
