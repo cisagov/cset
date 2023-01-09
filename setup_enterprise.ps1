@@ -24,10 +24,10 @@ Start-Process SQL2019-SSEI-Expr.exe -Wait
 Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 
 # Install URL Rewrite module for IIS
-Start-Process urlrewrite2.exe -Wait
+Start-Process rewrite_amd64_en-US.msi -Wait
 
 # Install dotnet 6 hosting bundle 
-Start-Process dotnet-hosting-6.0.2-win.exe -Wait
+Start-Process dotnet-hosting-7.0.1-win.exe -Wait
 
 # Update enviornment path to ensure sqlcmd works after installing SQL server
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
@@ -45,8 +45,8 @@ Copy-Item -Path CSETUI\* -Destination C:\inetpub\wwwroot\CSETUI -Recurse -Force
 
 # Copy database files to user directory
 New-Item -ItemType directory -Path C:\CSETDatabase -Force
-Copy-Item -Path database\CSETWeb11200.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
-Copy-Item -Path database\CSETWeb11200_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
+Copy-Item -Path database\CSETWeb120017.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
+Copy-Item -Path database\CSETWeb120017_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
 
 $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
@@ -75,8 +75,8 @@ While ($sqlConnectionSucceeded -ne $true) {
 $serverescaped = $server.replace("\", "\\")
 
 # Making sure connection string and ports are correct in config files
-(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\MSSQLLocalDb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
-(Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port":"5000"', '"port":"5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
+(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\mssqllocaldb", $serverescaped) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
+(Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port": "5000"', '"port": "5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
 sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"

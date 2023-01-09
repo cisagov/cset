@@ -86,6 +86,14 @@ export class UploadExportComponent implements OnInit {
 
   closeDialog() {
     this.dialog.close();
+    this.fileSvc.continueUpload = true;
+  }
+
+  cancelUpload() {
+    this.fileSvc.continueUpload = false;
+    this.canBeClosed = true;
+    this.dialog.disableClose = false;
+    this.statusText = "Import process canceled. Further importing has ceased."
   }
 
   progressDialog() {
@@ -122,8 +130,13 @@ export class UploadExportComponent implements OnInit {
     this.canBeClosed = false;
     this.dialog.disableClose = true;
 
-    // Hide the cancel-button
-    this.showCancelButton = false;
+    // Show cancel button if CSAF upload
+    if (this.data.isCsafUpload) {
+      this.showCancelButton = true;
+    } else {
+      this.showCancelButton = false;
+    }
+
     // When all progress-observables are completed...
     let count = 0
     allProgressObservables.forEach(element => {
