@@ -116,9 +116,9 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(component) {
-    if (!this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
+    if (!!component.vendorName && !this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
       this.addNewVendor(component);
-    } else if (!component.vendor?.products.find(product => product.name === component.productName)) {
+    } else if (!!component.productName && !component.vendor?.products.find(product => product.name === component.productName)) {
       this.addNewProduct(component);
     } else {
       this.updateComponentVendorAndProduct(component);
@@ -165,14 +165,13 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
     component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
 
-
     if (!component.product) {
       component.productName = null;
     }
   }
 
   isShowVulnerabilitiesButtonDisabled(component) {
-    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+    if (!component.vendor || !component.product) {
       return true;
     }
 
@@ -191,7 +190,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (!component.vendorName) {
       return;
     }
-    console.log('Adding new vendor!');
+
     component.vendor = new Vendor(component.vendorName);
     this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
       this.diagramSvc.csafVendors.unshift(vendor);
@@ -202,7 +201,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (!component.productName) {
       return;
     }
-    console.log('Adding new product!')
+
     const newProduct = new Product(component.productName);
     component.product = newProduct;
     component.vendor.products.unshift(newProduct);
