@@ -53,6 +53,23 @@
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
                             </label>
 
+                            <!-- making an Export All button for auto test -->
+                            <!-- <label *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                                matTooltip="Export all assessments to an external directory.">
+                                <span class="mr-2 fs-base cset-icons-export-up"></span>
+                                <label for="importFile" class="m-0">Export All</label>
+                                <input tabindex="0" class="display-none" id="exportAll" (change)="exportAllAssessments()">
+                            </label> -->
+
+                            <button *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" tabindex="0"
+                                class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                                (click)="exportAllAssessments()"
+                                matTooltip="Export a copy of all assessments to another location."
+                                [disabled]="exportAllInProgress">
+                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                                <span class="icon-link-button-text-dark">Export All</span>
+                            </button>
+
                             <label *ngIf="configSvc.installationMode === 'ACET'" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
                                 <span class="cset-icons-export-excel fs-base mr-2"></span>
@@ -197,7 +214,7 @@
                         </button>
                     </td>
                     <td>
-                        <button tabindex="0"
+                        <button tabindex="0" id="assess-{{i}}-export"
                             class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                             (click)="clickDownloadLink(assessment.assessmentId)"
                             matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
