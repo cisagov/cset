@@ -420,7 +420,7 @@ namespace CSETWebCore.DatabaseManager
         public string ClientCode { get; }
         public string ApplicationCode { get; }
         public static string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=20;MultipleActiveResultSets=True;";
-        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=20;MultipleActiveResultSets=True;";
+        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
         public string DatabaseCode 
         {
             get 
