@@ -25,7 +25,7 @@ namespace CSETWebCore.DatabaseManager.Tests
         {   
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.0.0.16"),clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.0.17"),clientCode, appCode);
             //TODO finish this.
             //manager.CopyDBAcrossServers();
         }
@@ -37,7 +37,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.0.17"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
             string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
             string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
@@ -63,14 +63,14 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "Test";
             string appCode = "Test";
-            DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.0.17"), clientCode, appCode);
             
             manager.ForceCloseAndDetach(manager.CurrentMasterConnectionString, "TestWeb");
             manager.AttachTest("TestWeb", testdb, testlog);
             VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
             manager.SetupDb();
 
-            upgrader.UpgradeOnly(new Version("12.0.0.16"), "data source=(localdb)\\mssqllocaldb;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
+            upgrader.UpgradeOnly(new Version("12.0.0.17"), "data source=(localdb)\\mssqllocaldb;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
             
             
         }
@@ -83,7 +83,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.0.17"), clientCode, appCode);
             manager.SetupDb();
         }
 
@@ -95,7 +95,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
             string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
 
-            DbManager manager = new DbManager(new Version("12.0.0.16"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.0.17"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
             string conString = "Server=(localdb)\\mssqllocaldb;Integrated Security=true;AttachDbFileName=" + mdf;
             using (SqlConnection conn = new SqlConnection(conString))
