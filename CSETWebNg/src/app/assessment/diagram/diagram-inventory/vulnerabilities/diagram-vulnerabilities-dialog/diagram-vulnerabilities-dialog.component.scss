@@ -11,3 +11,11 @@ div.disclaimer-blurb {
   padding: 8px;
   font-weight: bold;
 }
+
+table {
+  table-layout: fixed;
+}
+
+td, th {
+  word-wrap: break-word;
+}
