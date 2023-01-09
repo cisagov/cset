@@ -75,37 +75,23 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   filterVendors(value: string) {
-    console.log(value);
     let val = "";
     if (typeof value === 'string') {
       val = value;
     }
     const name = val;
     const filterValue = name.toLowerCase();
-    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
-
-    // If no matching vendors are found, give option to add a new one
-    if (this.filteredVendorOptions.length === 0) {
-      let noMatchingVendors = new Vendor("-- Add New Vendor --");
-      this.filteredVendorOptions = [noMatchingVendors];
-    }
+    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name?.toLowerCase().includes(filterValue));
   }
 
   filterProducts(value: string, products: Product[]) {
-    console.log(value);
     let val = "";
     if (typeof value === 'string') {
       val = value;
     }
     const name = val;
     const filterValue = name.toLowerCase();
-    this.filteredProductOptions = products?.filter(option => option.name.toLowerCase().includes(filterValue)) ?? [];
-
-    // If no matching products are found, give option to add a new one
-    if (this.filteredProductOptions.length === 0) {
-      let noMatchingProducts = new Product("-- Add New Product --");
-      this.filteredProductOptions = [noMatchingProducts];
-    }
+    this.filteredProductOptions = products?.filter(option => option.name?.toLowerCase().includes(filterValue)) ?? [];
   }
 
   clearVendorFilterOptions() {
@@ -129,19 +115,15 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  saveComponent(e, component) {
-    if (e != null) {
-      if (e.target.value === '-- Add New Vendor --') {
-        this.addNewVendor(component);
-      } else if (e.target.value === '-- Add New Product --') {
-        this.addNewProduct(component);
-      } else {
-        this.updateComponentVendorAndProduct(component);
-      }
-
-      console.log(component);
-      this.diagramSvc.saveComponent(component).subscribe();
+  saveComponent(component) {
+    if (!this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
+      this.addNewVendor(component);
+    } else if (!component.vendor?.products.find(product => product.name === component.productName)) {
+      this.addNewProduct(component);
+    } else {
+      this.updateComponentVendorAndProduct(component);
     }
+    this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
@@ -206,35 +188,27 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   addNewVendor(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingVendor: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          this.diagramSvc.csafVendors.unshift(vendor);
-          this.saveComponent(null, component);
-
-          return component.vendorName;
-        });
-      }
+    if (!component.vendorName) {
+      return;
+    }
+    console.log('Adding new vendor!');
+    component.vendor = new Vendor(component.vendorName);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      this.diagramSvc.csafVendors.unshift(vendor);
     });
   }
 
   addNewProduct(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingProduct: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
-          this.diagramSvc.csafVendors[index] = vendor;
-          this.saveComponent(null, component);
-        });
-      }
+    if (!component.productName) {
+      return;
+    }
+    console.log('Adding new product!')
+    const newProduct = new Product(component.productName);
+    component.product = newProduct;
+    component.vendor.products.unshift(newProduct);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+      this.diagramSvc.csafVendors[index] = vendor;
     });
   }
 }
