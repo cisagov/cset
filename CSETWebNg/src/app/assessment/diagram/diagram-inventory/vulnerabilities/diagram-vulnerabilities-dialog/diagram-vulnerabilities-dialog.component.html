@@ -35,11 +35,11 @@
     <p><span class="font-weight-bold">Product:</span> {{ product.name }}</p>
 
     <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-      <th mat-sort-header="cve" style="width:200px">CVE #</th>
-      <th mat-sort-header="score" style="width:200px">Score</th>
-      <th mat-sort-header="version" style="width:200px">Affected Versions / Serials</th>
-      <th mat-sort-header="linkDetails" style="width:200px">CISA Advisory Link</th>
-      <th mat-sort-header="linkWebsite" style="width:200px">Vendor Link</th>
+      <th mat-sort-header="cve">CVE #</th>
+      <th mat-sort-header="score" style="width: 15%">Score</th>
+      <th mat-sort-header="version">Affected Versions / Serials</th>
+      <th mat-sort-header="linkDetails">CISA Advisory Link</th>
+      <th mat-sort-header="linkWebsite">Vendor Link</th>
 
       <tr *ngFor="let vulnerability of product.vulnerabilities">
         <td><a [href]="getCveUrl(vulnerability.cve)" target="_blank">{{ vulnerability.cve }}</a></td>
