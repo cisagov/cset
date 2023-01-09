@@ -387,7 +387,7 @@ function launchAPI(exeDir, fileName, port, window) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
       log.error(error);
       if (error.stack.includes('DatabaseManager.DatabaseSetupException')) {
-        dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem setting up the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + stdout);
+        dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + stdout);
       }
     }
   })
