@@ -86,11 +86,11 @@ export class MyAssessmentsComponent implements OnInit {
   exportExtension: string;
   importExtensions: string;
 
-  exportCount: number = 0;
-
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   prepForMerge: boolean = false;
+
+  exportAllInProgress: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
 
@@ -281,14 +281,13 @@ export class MyAssessmentsComponent implements OnInit {
 
   clickDownloadLink(ment_id: number) {
     // get short-term JWT from API
-    console.log('assessment id: ' + ment_id)
     this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
       const url =
         this.fileSvc.exportUrl + "?token=" + response.token;
 
       //if electron
       window.location.href = url;
-      this.exportCount++;
+
       //if browser
       //window.open(url, "_blank");
     });
@@ -347,26 +346,18 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   exportAllAssessments() {
-    this.authSvc.makeDirectory(this.sortedAssessments[0].creatorName).subscribe((result: any) => {
-      console.log(this.sortedAssessments)
-      
-      // let assessId = this.sortedAssessments[this.exportCount].assessmentId;
-      //this.clickDownloadLink(assessId);
-      // for (let i = 0; i < this.sortedAssessments.length; i++) {
-      //   let a = document.getElementById('assess-' + i + '-export');
-      //   a.click();
-      // }
-      this.load();
-      this.exportCount = 0;
-    });
+    this.exportAllInProgress = true;
+    this.exportAllLoop();
   }
 
 
-  async load () { // We need to wrap the loop into an async function for this to work
+  async exportAllLoop () { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
       a.click();
-      await this.timer(500); // then the created Promise can be awaited
+      await this.timer(750); // prevents api calls from canceling each other
     }
+
+    this.exportAllInProgress = false;
   }
 }
