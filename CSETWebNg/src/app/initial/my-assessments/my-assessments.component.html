@@ -61,7 +61,7 @@
                                 <input tabindex="0" class="display-none" id="exportAll" (change)="exportAllAssessments()">
                             </label> -->
 
-                            <button *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" tabindex="0"
+                            <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()"
                                 matTooltip="Export a copy of all assessments to another location."

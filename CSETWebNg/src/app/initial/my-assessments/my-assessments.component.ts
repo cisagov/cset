@@ -355,7 +355,7 @@ export class MyAssessmentsComponent implements OnInit {
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
       a.click();
-      await this.timer(750); // prevents api calls from canceling each other
+      await this.timer(1500); // prevents api calls from canceling each other
     }
 
     this.exportAllInProgress = false;
