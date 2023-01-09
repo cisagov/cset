@@ -64,7 +64,8 @@
                             <button *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()"
-                                matTooltip="Export a copy of all assessments to another location.">
+                                matTooltip="Export a copy of all assessments to another location."
+                                [disabled]="exportAllInProgress">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">Export All</span>
                             </button>

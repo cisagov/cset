@@ -262,10 +262,6 @@ export class AuthenticationService {
         return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
     }
 
-    makeDirectory(creatorName: string) {
-        return this.http.post(this.configSvc.apiUrl + 'assessment/makeDirectory', creatorName, headers);
-    }
-
     changePassword(data: ChangePassword) {
         return this.http.post(this.configSvc.apiUrl + 'ResetPassword/ChangePassword', JSON.stringify(data), { 'headers': headers.headers, params: headers.params, responseType: 'text' });
     }
