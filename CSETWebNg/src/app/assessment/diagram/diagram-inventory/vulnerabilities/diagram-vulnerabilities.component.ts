@@ -27,7 +27,7 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
-import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
+import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
 import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
 
 @Component({
@@ -46,12 +46,17 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   sal: any;
   criticality: any;
 
+  filteredVendorOptions: Vendor[];
+  filteredProductOptions: Product[];
+
+  loading: boolean = false;
+
   /**
    *
    */
   constructor(
     public diagramSvc: DiagramService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   /**
@@ -69,6 +74,48 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     }
   }
 
+  filterVendors(value: string) {
+    console.log(value);
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
+    const filterValue = name.toLowerCase();
+    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
+
+    // If no matching vendors are found, give option to add a new one
+    if (this.filteredVendorOptions.length === 0) {
+      let noMatchingVendors = new Vendor("-- Add New Vendor --");
+      this.filteredVendorOptions = [noMatchingVendors];
+    }
+  }
+
+  filterProducts(value: string, products: Product[]) {
+    console.log(value);
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
+    const filterValue = name.toLowerCase();
+    this.filteredProductOptions = products?.filter(option => option.name.toLowerCase().includes(filterValue)) ?? [];
+
+    // If no matching products are found, give option to add a new one
+    if (this.filteredProductOptions.length === 0) {
+      let noMatchingProducts = new Product("-- Add New Product --");
+      this.filteredProductOptions = [noMatchingProducts];
+    }
+  }
+
+  clearVendorFilterOptions() {
+    this.filteredVendorOptions = [];
+  }
+
+  clearProductFilterOptions() {
+    this.filteredProductOptions = [];
+  }
+
   /**
    *
    */
@@ -83,17 +130,18 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   saveComponent(e, component) {
-    if (!!e && e.target.type === 'select-one') {
-      if (e.target.value === '1: addNewVendor') {
+    if (e != null) {
+      if (e.target.value === '-- Add New Vendor --') {
         this.addNewVendor(component);
-      } else if (e.target.value === '1: addNewProduct') {
+      } else if (e.target.value === '-- Add New Product --') {
         this.addNewProduct(component);
       } else {
         this.updateComponentVendorAndProduct(component);
       }
+
+      console.log(component);
+      this.diagramSvc.saveComponent(component).subscribe();
     }
-    
-    this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
@@ -135,6 +183,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
     component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
 
+
     if (!component.product) {
       component.productName = null;
     }
@@ -166,6 +215,8 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
         this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
           this.diagramSvc.csafVendors.unshift(vendor);
           this.saveComponent(null, component);
+
+          return component.vendorName;
         });
       }
     });

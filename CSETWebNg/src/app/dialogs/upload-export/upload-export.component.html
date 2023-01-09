@@ -23,9 +23,10 @@
 <input type="file" #file style="display: none" (change)="onFilesAdded()" />
 <div class="upload-export d-flex flex-column flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">CSET File Import</div>
+  <h4 style="position: sticky; top: 0; padding-top: 15px; padding-left: 15px;" class="mb-2 c-primary">Uploading Files</h4>
   <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-00a">
     <div class="pr-3">
-      <h4 class="mb-2 c-primary">Uploading Files</h4>
+      
       <mat-list class="pt-0">
         <mat-list-item class="p-0" *ngFor="let file of files">
           <label mat-line class="fs-base-5">{{file.name}}</label>
@@ -33,15 +34,19 @@
           <i *ngIf="progress[file.name].progress.source.hasError" class="fa-solid fa-xmark ml-1" style="color: red"></i>
         </mat-list-item>
       </mat-list>
-      <label class="mt-2">{{statusText}}</label>
     </div>
-
-    <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
-        <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
-        <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
-        <button class="btn btn-primary" *ngIf="canBeClosed" (click)="closeDialog()">Close</button>
-      </mat-dialog-actions>
   </mat-dialog-content>
+  <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
+    <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
+  
+    <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
+      <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+      <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
+      <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
+              [disabled]="canBeClosed">Cancel</button>
+      <button class="btn btn-primary" *ngIf="canBeClosed" (click)="closeDialog()">Close</button>
+    </mat-dialog-actions>
+  </div>
 </div>
 
 

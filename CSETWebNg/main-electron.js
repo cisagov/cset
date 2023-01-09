@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem, shell, session } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
@@ -10,7 +10,8 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 const masterConfig = require('./dist/assets/settings/config.json');
 
-let installationMode = masterConfig.installationMode || 'CSET';
+// We can only use one value in the config chain in this script until we figure out an equivalent to fetch for electron
+let installationMode = masterConfig.currentConfigChain[0] || 'CSET';
 
 const subConfig = require(`./dist/assets/settings/config.${installationMode}.json`);
 
@@ -18,8 +19,27 @@ const subConfig = require(`./dist/assets/settings/config.${installationMode}.jso
 // Any properties in subconfig will overwrite those in masterConfig
 const config = {...masterConfig, ...subConfig};
 
-let mainWindow = null;
+let clientCode;
+let appCode;
+switch(installationMode) {
+  case 'ACET':
+    clientCode = 'NCUA';
+    appCode = 'ACET';
+    break;
+  case 'TSA':
+    clientCode = 'TSA';
+    appCode = 'CSET-TSA';
+    break;
+  case 'CF':
+    clientCode = 'CF';
+    appCode = 'CF';
+    break;
+  default:
+    clientCode = 'DHS';
+    appCode = 'CSET';
+}
 
+let mainWindow = null;
 
 // preventing a second instance of Electron from spinning up
 if (!gotTheLock) {
@@ -185,14 +205,14 @@ function createWindow() {
     let apiUrl = config.api.url;
     assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
       log.info('API launching on port', assignedApiPort);
-      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort);
+      launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort, mainWindow);
       return assignedApiPort;
     }).then(assignedApiPort => {
       // Keep attempting to connect to API, every 2 seconds, then load application
       retryApiConnection(120, 2000, assignedApiPort, error => {
         if (error) {
           log.error(error);
-          app.quit();
+          mainWindow.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
         } else {
            // Load the index.html of the app
            mainWindow.loadURL(
@@ -343,25 +363,6 @@ process.on('uncaughtException', error => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
-  let clientCode;
-  let appCode;
-  switch(installationMode) {
-    case 'ACET':
-      clientCode = 'NCUA';
-      appCode = 'ACET';
-      break;
-    case 'TSA':
-      clientCode = 'TSA';
-      appCode = 'CSET-TSA';
-      break;
-    case 'CF':
-      clientCode = 'CF';
-      appCode = 'CF';
-      break;
-    default:
-      clientCode = 'DHS';
-      appCode = 'CSET';
-  }
   log.transports.file.resolvePath = () => path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appCode}/${appCode}_electron.log`);
   log.catchErrors();
 
@@ -377,13 +378,18 @@ app.on('window-all-closed', () => {
   }
 });
 
-function launchAPI(exeDir, fileName, port) {
+function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   let args = ['--urls', config.api.protocol + '://' + config.api.url + ':' + port]
-  child(exe, args, options, (error, data) => {
-    log.error(error);
-    log.info(data.toString());
+  child(exe, args, options, (error, stdout) => {
+    if (error) {
+      window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
+      log.error(error);
+      if (error.stack.includes('DatabaseManager.DatabaseSetupException')) {
+        dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + stdout);
+      }
+    }
   })
 }
 
