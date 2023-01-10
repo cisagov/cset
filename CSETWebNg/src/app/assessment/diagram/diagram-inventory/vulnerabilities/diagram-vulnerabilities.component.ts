@@ -28,7 +28,6 @@ import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
-import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
