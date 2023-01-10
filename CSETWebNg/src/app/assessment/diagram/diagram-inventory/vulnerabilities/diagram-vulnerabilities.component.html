@@ -39,7 +39,7 @@
       <td>{{component.assetType}}</td>
       <td>
         <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filterVendors($event)"
-        [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent($event, component)">
+        [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent(component)">
         <mat-autocomplete #autoVendor="matAutocomplete">
           <mat-option *ngFor="let option of filteredVendorOptions" [value]="option.name">
             {{ option.name }}
@@ -49,16 +49,16 @@
       <td>
         <input class="form-control" [(ngModel)]="component.productName" (ngModelChange)="filterProducts($event, component.vendor?.products)"
         [disabled]="!component.vendorName" (click)="filterProducts(component.productName, component.vendor?.products)"
-        [matAutocomplete]="autoProduct" (blur)="saveComponent($event, component)">
+        [matAutocomplete]="autoProduct" (blur)="saveComponent(component)">
         <mat-autocomplete #autoProduct="matAutocomplete">
           <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
             {{ product.name }}
           </mat-option>
         </mat-autocomplete>
       </td>
-      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent($event, component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent($event, component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent($event, component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
       <td>
         <div
           matTooltip="There are no vulnerabilities identified with this vendor and product in the current local database"
