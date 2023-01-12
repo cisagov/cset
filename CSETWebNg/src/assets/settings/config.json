@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["CSET"],
+    "currentConfigChain": ["TSA"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -24,7 +24,8 @@
     "debug": {
         "showBuildTime": false,
         "showQuestionAndRequirementIDs": false,
-        "canDeleteCustomModules": true
+        "canDeleteCustomModules": true,
+        "showExportAllButton": true
     },
 
     "galleryLayout": "CSET",
@@ -158,25 +159,29 @@
             "code": "Y",
             "buttonLabel": "Imp",
             "buttonCss": "btn-yes",
-            "answerLabel": "Implemented"
+            "answerLabel": "Implemented",
+            "buttonTooltip": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome."
         },
         {
             "code": "I",
             "buttonLabel": "Prog",
             "buttonCss": "btn-na",
-            "answerLabel": "In Progress"
+            "answerLabel": "In Progress",
+            "buttonTooltip": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome."
         },
         {
             "code": "S",
             "buttonLabel": "Scoped",
             "buttonCss": "btn-alt",
-            "answerLabel": "Scoped"
+            "answerLabel": "Scoped",
+            "buttonTooltip": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal."
         },
         {
             "code": "N",
             "buttonLabel": "Not",
             "buttonCss": "btn-no",
-            "answerLabel": "Not Started"
+            "answerLabel": "Not Started",
+            "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
         }
     ]
 }

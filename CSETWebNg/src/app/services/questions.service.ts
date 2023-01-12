@@ -377,6 +377,18 @@ export class QuestionsService {
   }
 
   /**
+   * Finds the button definition and returns its tooltip, if defined.
+   * If a tooltip is not defined, the button label is returned.
+   */
+  answerButtonTooltip(modelId: Number, answerCode: string): string {
+    var t = this.findAnsDefinition(modelId, answerCode);
+      if (!!t.buttonTooltip) {
+        return t.buttonTooltip;
+      }
+      return t.buttonLabel;
+  }
+
+  /**
    * Finds the button definition and returns its full label (tooltip)
    */
   answerDisplayLabel(modelId: Number, answerCode: string) {

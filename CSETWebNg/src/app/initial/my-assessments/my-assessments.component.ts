@@ -38,13 +38,14 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { concatMap, map } from "rxjs/operators";
+import { concatMap, delay, map } from "rxjs/operators";
 import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import * as moment from "moment";
+import { forEach } from "lodash";
 
 
 interface UserAssessment {
@@ -85,10 +86,13 @@ export class MyAssessmentsComponent implements OnInit {
   exportExtension: string;
   importExtensions: string;
 
-
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
   prepForMerge: boolean = false;
+
+  exportAllInProgress: boolean = false;
+
+  timer = ms => new Promise(res => setTimeout(res, ms));
 
   constructor(
     public configSvc: ConfigService,
@@ -288,6 +292,7 @@ export class MyAssessmentsComponent implements OnInit {
       //window.open(url, "_blank");
     });
   }
+
   /**
    *
    * @param event
@@ -340,4 +345,19 @@ export class MyAssessmentsComponent implements OnInit {
     return localTime;
   }
 
+  exportAllAssessments() {
+    this.exportAllInProgress = true;
+    this.exportAllLoop();
+  }
+
+
+  async exportAllLoop () { // allows for multiple api calls
+    for (let i = 0; i < this.sortedAssessments.length; i++) {
+      let a = document.getElementById('assess-' + i + '-export');
+      a.click();
+      await this.timer(1500); // prevents api calls from canceling each other
+    }
+
+    this.exportAllInProgress = false;
+  }
 }
