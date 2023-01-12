@@ -38,23 +38,27 @@
       <td>{{component.label}}</td>
       <td>{{component.assetType}}</td>
       <td>
-        <select class="form-control" [(ngModel)]="component.vendorName" (change)="saveComponent($event, component)">
-          <option [ngValue]="null">-- Select Vendor --</option>
-          <option [ngValue]="'addNewVendor'" style="color:#1a53ff">Add New Vendor</option>
-          <option *ngFor="let vendor of getVendors()" [ngValue]="vendor.name">{{ vendor.name }}</option>
-        </select>
+        <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filterVendors($event)"
+        [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent(component)">
+        <mat-autocomplete #autoVendor="matAutocomplete">
+          <mat-option *ngFor="let option of filteredVendorOptions" [value]="option.name">
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
       </td>
       <td>
-        <select class="form-control" [(ngModel)]="component.productName" [disabled]="!component.vendorName || component.vendorName === 'addNewVendor'"
-          (change)="saveComponent($event, component)">
-          <option [ngValue]="null">-- Select Product --</option>
-          <option [ngValue]="'addNewProduct'" style="color:#1a53ff">Add New Product</option>
-          <option *ngFor="let product of component.vendor?.products" [ngValue]="product.name">{{ product.name }}</option>
-        </select>
+        <input class="form-control" [(ngModel)]="component.productName" (ngModelChange)="filterProducts($event, component.vendor?.products)"
+        [disabled]="!component.vendorName" (click)="filterProducts(component.productName, component.vendor?.products)"
+        [matAutocomplete]="autoProduct" (blur)="saveComponent(component)">
+        <mat-autocomplete #autoProduct="matAutocomplete">
+          <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
+            {{ product.name }}
+          </mat-option>
+        </mat-autocomplete>
       </td>
-      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent($event, component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent($event, component)" /></td>
-      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent($event, component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.versionName" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.serialNumber" (blur)="saveComponent(component)" /></td>
+      <td><input class="form-control" [(ngModel)]="component.physicalLocation" (blur)="saveComponent(component)" /></td>
       <td>
         <div
           matTooltip="There are no vulnerabilities identified with this vendor and product in the current local database"

@@ -27,8 +27,7 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
-import { Vendor } from '../../../../models/diagram-vulnerabilities.model';
-import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
+import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -46,12 +45,17 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   sal: any;
   criticality: any;
 
+  filteredVendorOptions: Vendor[];
+  filteredProductOptions: Product[];
+
+  loading: boolean = false;
+
   /**
    *
    */
   constructor(
     public diagramSvc: DiagramService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   /**
@@ -69,6 +73,34 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     }
   }
 
+  filterVendors(value: string) {
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
+    const filterValue = name.toLowerCase();
+    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name?.toLowerCase().includes(filterValue));
+  }
+
+  filterProducts(value: string, products: Product[]) {
+    let val = "";
+    if (typeof value === 'string') {
+      val = value;
+    }
+    const name = val;
+    const filterValue = name.toLowerCase();
+    this.filteredProductOptions = products?.filter(option => option.name?.toLowerCase().includes(filterValue)) ?? [];
+  }
+
+  clearVendorFilterOptions() {
+    this.filteredVendorOptions = [];
+  }
+
+  clearProductFilterOptions() {
+    this.filteredProductOptions = [];
+  }
+
   /**
    *
    */
@@ -82,17 +114,14 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  saveComponent(e, component) {
-    if (!!e && e.target.type === 'select-one') {
-      if (e.target.value === '1: addNewVendor') {
-        this.addNewVendor(component);
-      } else if (e.target.value === '1: addNewProduct') {
-        this.addNewProduct(component);
-      } else {
-        this.updateComponentVendorAndProduct(component);
-      }
+  saveComponent(component) {
+    if (!!component.vendorName && !this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
+      this.addNewVendor(component);
+    } else if (!!component.productName && !component.vendor?.products.find(product => product.name === component.productName)) {
+      this.addNewProduct(component);
+    } else {
+      this.updateComponentVendorAndProduct(component);
     }
-    
     this.diagramSvc.saveComponent(component).subscribe();
   }
 
@@ -141,7 +170,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   isShowVulnerabilitiesButtonDisabled(component) {
-    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+    if (!component.vendor || !component.product) {
       return true;
     }
 
@@ -157,33 +186,27 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   addNewVendor(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingVendor: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          this.diagramSvc.csafVendors.unshift(vendor);
-          this.saveComponent(null, component);
-        });
-      }
+    if (!component.vendorName) {
+      return;
+    }
+
+    component.vendor = new Vendor(component.vendorName);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      this.diagramSvc.csafVendors.unshift(vendor);
     });
   }
 
   addNewProduct(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingProduct: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
-          this.diagramSvc.csafVendors[index] = vendor;
-          this.saveComponent(null, component);
-        });
-      }
+    if (!component.productName) {
+      return;
+    }
+
+    const newProduct = new Product(component.productName);
+    component.product = newProduct;
+    component.vendor.products.unshift(newProduct);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+      this.diagramSvc.csafVendors[index] = vendor;
     });
   }
 }

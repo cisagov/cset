@@ -174,6 +174,13 @@ export class ConfigService {
   }
 
   /**
+   * Determines if the Export All button should display or not
+   */
+  showExportAllButton() {
+    return this.config.debug.showExportAllButton ?? false;
+  }
+
+  /**
    * Returns a boolean indicating if the app is configured to show
    * question and requirement IDs for debugging purposes.
    */
