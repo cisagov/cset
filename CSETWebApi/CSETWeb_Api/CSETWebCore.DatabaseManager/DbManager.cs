@@ -197,6 +197,7 @@ namespace CSETWebCore.DatabaseManager
             finally
             {
                 //reattach the original
+                log.Error("attempting to reattach the old database on 2012");
                 ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + dbInfo.MDF + "', @FILENAME2 = '" + dbInfo.LDF + "'", oldConnectionString);
             }
 
@@ -207,16 +208,23 @@ namespace CSETWebCore.DatabaseManager
         //if the rename fails it will throw an 
         private void DoTheCopy(string source, string destination)
         {
-            if(File.Exists(destination))
+            try
             {
-                int i = 0;
-                while(File.Exists(destination +i)) { 
-                    i++;
-                }
+                if (File.Exists(destination))
+                {
+                    int i = 0;
+                    while (File.Exists(destination + i))
+                    {
+                        i++;
+                    }
 
-                File.Move(destination,destination+i);
+                    File.Move(destination, destination + i);
+                }
+                File.Copy(source, destination, false);
+            }catch(IOException ioe)
+            {
+                throw new ApplicationException("My Custom message",ioe);
             }
-            File.Copy(source,destination, false);
         }
 
         /// <summary>
@@ -433,7 +441,7 @@ namespace CSETWebCore.DatabaseManager
                 }
             }
             catch (SqlException sqle)
-            {
+            {   
                 log.Error(sqle.Message);
             }
         }
