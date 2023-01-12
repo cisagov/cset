@@ -5,3 +5,12 @@ table{
 th, td {
   word-wrap: break-word;
 }
+
+mat-icon.delete-button {
+  visibility: hidden;
+}
+
+mat-option:hover mat-icon.delete-button {
+  visibility: visible;
+  color: red;
+}

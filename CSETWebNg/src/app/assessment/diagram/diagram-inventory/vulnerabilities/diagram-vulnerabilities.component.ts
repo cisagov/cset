@@ -209,4 +209,8 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       this.diagramSvc.csafVendors[index] = vendor;
     });
   }
+
+  deleteVendor(vendorName: string) {
+    this.diagramSvc.deleteCsafVendor(vendorName).subscribe();
+  }
 }

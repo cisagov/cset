@@ -37,5 +37,6 @@ namespace CSETWebCore.Interfaces
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
         IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();
         public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor);
+        public void DeleteCsafVendor(string vendorName);
     }
 }
