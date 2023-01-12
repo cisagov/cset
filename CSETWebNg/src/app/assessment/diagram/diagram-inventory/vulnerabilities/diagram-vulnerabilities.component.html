@@ -43,6 +43,10 @@
         <mat-autocomplete #autoVendor="matAutocomplete">
           <mat-option *ngFor="let option of filteredVendorOptions" [value]="option.name">
             {{ option.name }}
+            <button class="btn bgc-trans m-0 ml-1 p-0" style="text-align: right"
+             mat-icon-button aria-label="Delete Vendor" (click)="deleteVendor(option.name)">
+              <mat-icon matTooltip="Delete Vendor" class="delete-button">close</mat-icon>
+            </button>
           </mat-option>
         </mat-autocomplete>
       </td>

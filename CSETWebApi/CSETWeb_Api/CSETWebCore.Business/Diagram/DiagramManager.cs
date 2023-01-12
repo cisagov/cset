@@ -963,5 +963,13 @@ namespace CSETWebCore.Business.Diagram
                 return vendor;
             }
         }
+
+        public void DeleteCsafVendor(string vendorName) 
+        {
+            _context.CSAF_FILE.RemoveRange(_context.CSAF_FILE.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
+                    .Product_Tree.Branches[0].Name == vendorName));
+
+            _context.SaveChanges();
+        }
     }
 }
