@@ -966,8 +966,11 @@ namespace CSETWebCore.Business.Diagram
 
         public void DeleteCsafVendor(string vendorName) 
         {
-            _context.CSAF_FILE.RemoveRange(_context.CSAF_FILE.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
-                    .Product_Tree.Branches[0].Name == vendorName));
+            var allCsafs = _context.CSAF_FILE.ToList();
+            var csafFilesToRemove = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
+                    .Product_Tree.Branches[0].Name == vendorName);
+
+            _context.CSAF_FILE.RemoveRange(csafFilesToRemove);
 
             _context.SaveChanges();
         }

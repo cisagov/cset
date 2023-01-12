@@ -117,7 +117,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   saveComponent(component) {
     if (!!component.vendorName && !this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
       this.addNewVendor(component);
-    } else if (!!component.productName && !component.vendor?.products.find(product => product.name === component.productName)) {
+    } else if (!!component.productName && !!component.vendor && !component.vendor.products.find(product => product.name === component.productName)) {
       this.addNewProduct(component);
     } else {
       this.updateComponentVendorAndProduct(component);
@@ -211,6 +211,18 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   deleteVendor(vendorName: string) {
-    this.diagramSvc.deleteCsafVendor(vendorName).subscribe();
+    this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
+      let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
+      if (removeIndex > -1) {
+        this.diagramSvc.csafVendors.splice(removeIndex, 1);
+      }
+
+      this.diagramComponentList.forEach(component => {
+        if (component.vendorName === vendorName) {
+          component.vendorName = null;
+          this.saveComponent(component);
+        }
+      });
+    });
   }
 }
