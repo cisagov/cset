@@ -167,6 +167,10 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     if (!component.product) {
       component.productName = null;
     }
+
+    if (!component.vendor) {
+      component.vendorName = null;
+    }
   }
 
   isShowVulnerabilitiesButtonDisabled(component) {
