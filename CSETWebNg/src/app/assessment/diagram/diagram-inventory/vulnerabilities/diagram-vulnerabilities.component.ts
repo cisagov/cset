@@ -28,6 +28,7 @@ import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
+import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -215,18 +216,25 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   deleteVendor(vendorName: string) {
-    this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
-      let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
-      if (removeIndex > -1) {
-        this.diagramSvc.csafVendors.splice(removeIndex, 1);
-      }
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete \"${vendorName}\" from the vendor list?`;
 
-      this.diagramComponentList.forEach(component => {
-        if (component.vendorName === vendorName) {
-          component.vendorName = null;
-          this.saveComponent(component);
-        }
-      });
+    dialogRef.afterClosed().subscribe(deleteConfirmed => {
+      if (deleteConfirmed) {
+        this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
+          let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
+          if (removeIndex > -1) {
+            this.diagramSvc.csafVendors.splice(removeIndex, 1);
+          }
+
+          this.diagramComponentList.forEach(component => {
+            if (component.vendorName === vendorName) {
+              component.vendorName = null;
+              this.saveComponent(component);
+            }
+          });
+        });
+      }
     });
   }
 }
