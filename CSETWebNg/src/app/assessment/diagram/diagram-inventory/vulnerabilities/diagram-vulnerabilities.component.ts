@@ -237,4 +237,27 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
       }
     });
   }
+
+  deleteProduct(productName: string) {
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete \"${productName}\" from the product list?`;
+
+    dialogRef.afterClosed().subscribe(deleteConfirmed => {
+      if (deleteConfirmed) {
+        // this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
+        //   let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
+        //   if (removeIndex > -1) {
+        //     this.diagramSvc.csafVendors.splice(removeIndex, 1);
+        //   }
+
+        //   this.diagramComponentList.forEach(component => {
+        //     if (component.vendorName === vendorName) {
+        //       component.vendorName = null;
+        //       this.saveComponent(component);
+        //     }
+        //   });
+        // });
+      }
+    });
+  }
 }

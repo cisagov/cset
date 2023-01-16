@@ -41,14 +41,14 @@
         <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filterVendors($event)"
         [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent(component)">
         <mat-autocomplete #autoVendor="matAutocomplete">
-          <mat-option *ngFor="let option of filteredVendorOptions" [value]="option.name">
+          <mat-option *ngFor="let vendor of filteredVendorOptions" [value]="vendor.name">
             <div class="d-flex justify-content-between">
               <span>
-                {{ option.name }}
+                {{ vendor.name }}
               </span>
               <button class="btn bgc-trans ml-3 mt-1 p-0"
-               mat-icon-button aria-label="Delete Vendor" (click)="deleteVendor(option.name)">
-                <mat-icon matTooltip="Delete Vendor" class="delete-button">close</mat-icon>
+               mat-icon-button aria-label="Delete Vendor" (click)="deleteVendor(vendor.name)">
+                <mat-icon matTooltip="Delete Vendor" matTooltipPosition="right" class="delete-button">close</mat-icon>
               </button>
             </div>
           </mat-option>
@@ -60,7 +60,15 @@
         [matAutocomplete]="autoProduct" (blur)="saveComponent(component)">
         <mat-autocomplete #autoProduct="matAutocomplete">
           <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
-            {{ product.name }}
+            <div class="d-flex justify-content-between">
+              <span>
+                {{ product.name }}
+              </span>
+              <button class="btn bgc-trans ml-3 mt-1 p-0"
+               mat-icon-button aria-label="Delete Vendor" (click)="deleteProduct(product.name)">
+                <mat-icon matTooltip="Delete Product" matTooltipPosition="right" class="delete-button">close</mat-icon>
+              </button>
+            </div>
           </mat-option>
         </mat-autocomplete>
       </td>
