@@ -25,7 +25,7 @@
         "showBuildTime": false,
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true,
-        "showExportAllButton": true
+        "showExportAllButton": false
     },
 
     "galleryLayout": "CSET",
