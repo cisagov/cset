@@ -355,5 +355,9 @@ export class MaturityFilteringService {
     if (g.subGroupings.length > 0 && g.subGroupings.every(sg => !sg.visible)) {
       g.visible = false;
     }
+
+    if(g.subGroupings.length == 0 && g.questions.length == 0){
+      g.visible = false;
+    }
   }
 }
