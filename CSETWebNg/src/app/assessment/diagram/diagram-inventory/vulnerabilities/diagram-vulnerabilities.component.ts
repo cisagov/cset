@@ -244,19 +244,19 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        // this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
-        //   let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
-        //   if (removeIndex > -1) {
-        //     this.diagramSvc.csafVendors.splice(removeIndex, 1);
-        //   }
+        this.diagramSvc.deleteCsafProduct(productName).subscribe(() => {
+          let vendorsWithProduct: Vendor[] = this.diagramSvc.csafVendors.filter(vendor => vendor.products.find(product => product.name === productName));
+          vendorsWithProduct.forEach(vendor => {
+            vendor.products.splice(vendor.products.findIndex(product => product.name === productName), 1);
+          });
 
-        //   this.diagramComponentList.forEach(component => {
-        //     if (component.vendorName === vendorName) {
-        //       component.vendorName = null;
-        //       this.saveComponent(component);
-        //     }
-        //   });
-        // });
+          this.diagramComponentList.forEach(component => {
+            if (component.productName === productName) {
+              component.productName = null;
+              this.saveComponent(component);
+            }
+          });
+        });
       }
     });
   }
