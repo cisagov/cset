@@ -65,7 +65,7 @@
                 {{ product.name }}
               </span>
               <button class="btn bgc-trans ml-3 mt-1 p-0"
-               mat-icon-button aria-label="Delete Vendor" (click)="deleteProduct(product.name)">
+               mat-icon-button aria-label="Delete Product" (click)="deleteProduct(component.vendorName, product.name)">
                 <mat-icon matTooltip="Delete Product" matTooltipPosition="right" class="delete-button">close</mat-icon>
               </button>
             </div>

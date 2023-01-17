@@ -975,9 +975,21 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
         }
 
-        public void DeleteCsafProduct(string productName) 
+        public void DeleteCsafProduct(string vendorName, string productName) 
         {
-            throw new NotImplementedException();
+            var allCsafs = _context.CSAF_FILE.ToList();
+            var csafFilesWithTargetVendor = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
+                    .Product_Tree.Branches[0].Name == vendorName);
+
+            foreach (CSAF_FILE csafFile in csafFilesWithTargetVendor) 
+            {
+                CommonSecurityAdvisoryFrameworkObject csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csafFile.Data));
+                csafObj.Product_Tree.Branches[0].Branches.RemoveAll(branch => branch.Name == productName);
+
+                csafFile.Data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(csafObj));
+            }
+
+            _context.SaveChanges();
         }
     }
 }
