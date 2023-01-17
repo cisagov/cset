@@ -1,4 +1,10 @@
-﻿using Newtonsoft.Json;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;

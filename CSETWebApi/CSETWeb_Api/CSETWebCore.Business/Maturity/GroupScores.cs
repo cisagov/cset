@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Business.Maturity
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Business.Maturity
 {
     public class GroupScores
     {
