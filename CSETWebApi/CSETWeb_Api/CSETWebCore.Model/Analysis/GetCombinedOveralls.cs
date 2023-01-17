@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Analysis
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Analysis
 {
     public class GetCombinedOveralls
     {

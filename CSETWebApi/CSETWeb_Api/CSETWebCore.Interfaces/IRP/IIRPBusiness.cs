@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Acet;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Model.Acet;
 
 namespace CSETWebCore.Interfaces.IRP
 {
