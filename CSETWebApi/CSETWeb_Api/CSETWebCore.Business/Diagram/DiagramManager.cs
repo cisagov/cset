@@ -974,5 +974,10 @@ namespace CSETWebCore.Business.Diagram
 
             _context.SaveChanges();
         }
+
+        public void DeleteCsafProduct(string productName) 
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -590,6 +590,29 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        /// Deletes given product from CSAF files.
+        /// </summary>
+        /// <param name="productName">Name of the product to be deleted</param>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities/deleteProduct")]
+        [HttpPost]
+        public IActionResult DeleteCsafProduct([FromQuery] string productName)
+        {
+            try
+            {
+                _diagram.DeleteCsafProduct(productName);
+                return Ok();
+            }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons
         /// in the browser.
         /// </summary>
