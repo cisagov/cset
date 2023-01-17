@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Interfaces.Sal
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Interfaces.Sal
 {
     public interface ISalBusiness
     {

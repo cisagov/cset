@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Assessment;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Business.Demographic
 {
