@@ -96,7 +96,7 @@ export class DiagramService {
     return this.http.post(this.apiUrl + 'vulnerabilities/deleteVendor?vendorName=' + vendorName, '');
   }
 
-  deleteCsafProduct(productName: string) {
-    return this.http.post(this.apiUrl + 'vulnerabilities/deleteProduct?productName=' + productName, '');
+  deleteCsafProduct(vendorName: string, productName: string) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/deleteProduct?vendorName=' + vendorName + '&productName=' + productName, '');
   }
 }

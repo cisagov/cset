@@ -597,11 +597,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/vulnerabilities/deleteProduct")]
         [HttpPost]
-        public IActionResult DeleteCsafProduct([FromQuery] string productName)
+        public IActionResult DeleteCsafProduct([FromQuery] string vendorName, [FromQuery] string productName)
         {
             try
             {
-                _diagram.DeleteCsafProduct(productName);
+                _diagram.DeleteCsafProduct(vendorName, productName);
                 return Ok();
             }
             catch (Exception exc)

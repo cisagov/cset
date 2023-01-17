@@ -238,13 +238,13 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  deleteProduct(productName: string) {
+  deleteProduct(vendorName: string , productName: string) {
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete \"${productName}\" from the product list?`;
 
     dialogRef.afterClosed().subscribe(deleteConfirmed => {
       if (deleteConfirmed) {
-        this.diagramSvc.deleteCsafProduct(productName).subscribe(() => {
+        this.diagramSvc.deleteCsafProduct(vendorName, productName).subscribe(() => {
           let vendorsWithProduct: Vendor[] = this.diagramSvc.csafVendors.filter(vendor => vendor.products.find(product => product.name === productName));
           vendorsWithProduct.forEach(vendor => {
             vendor.products.splice(vendor.products.findIndex(product => product.name === productName), 1);

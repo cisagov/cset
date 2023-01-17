@@ -38,6 +38,6 @@ namespace CSETWebCore.Interfaces
         IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();
         public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor);
         public void DeleteCsafVendor(string vendorName);
-        public void DeleteCsafProduct(string productName);
+        public void DeleteCsafProduct(string vendorName, string productName);
     }
 }
