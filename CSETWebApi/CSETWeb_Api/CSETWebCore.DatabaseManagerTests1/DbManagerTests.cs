@@ -58,8 +58,8 @@ namespace CSETWebCore.DatabaseManager.Tests
         {
             //create a copy of the CSET 9.0 database as CSETWeb
             //detach the csetweb database what evers it 
-            string testdb = "TestWeb.mdf";
-            string testlog = "TestWeb_log.ldf";
+            string testdb = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName, "data", "TestWeb.mdf");
+            string testlog = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName, "data", "TestWeb_log.ldf");
             File.Copy("data\\CSETWeb90.mdf", Path.Combine("data", testdb),true);
             File.Copy("data\\CSETWeb90_log.ldf", Path.Combine("data", testlog),true);
 
