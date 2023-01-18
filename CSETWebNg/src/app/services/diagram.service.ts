@@ -91,4 +91,12 @@ export class DiagramService {
   saveCsafVendor(vendor: Vendor) {
     return this.http.post(this.apiUrl + 'vulnerabilities/saveVendor', vendor, headers);
   }
+
+  deleteCsafVendor(vendorName: string) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/deleteVendor?vendorName=' + vendorName, '');
+  }
+
+  deleteCsafProduct(vendorName: string, productName: string) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/deleteProduct?vendorName=' + vendorName + '&productName=' + productName, '');
+  }
 }
