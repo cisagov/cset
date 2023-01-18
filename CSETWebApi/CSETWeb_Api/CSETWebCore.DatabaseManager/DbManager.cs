@@ -273,7 +273,7 @@ namespace CSETWebCore.DatabaseManager
             DoTheCopy(dbInfo.LDF, newLDF);
 
             //create and attach new 
-            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentDatabaseConnectionString);
+            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentMasterConnectionString);
         }
 
         /// <summary>
