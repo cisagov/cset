@@ -152,4 +152,8 @@ export class QuestionFiltersComponent implements OnInit {
   isInstallation(mode: string) {
     return this.configSvc.installationMode == mode;
   }
+
+  usesMaturityModel(model: string) {
+    return this.assessSvc.usesMaturityModel(model);
+  }
 }
