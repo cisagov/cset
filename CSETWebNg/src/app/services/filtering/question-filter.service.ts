@@ -37,7 +37,7 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR'];
 
 
   /**
@@ -53,7 +53,7 @@ export class QuestionFilterService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -260,6 +260,10 @@ export class QuestionFilterService {
             }
 
             if (this.showFilters.includes('D') && q.hasDiscovery) {
+              q.visible = true;
+            }
+
+            if (this.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
               q.visible = true;
             }
           });
