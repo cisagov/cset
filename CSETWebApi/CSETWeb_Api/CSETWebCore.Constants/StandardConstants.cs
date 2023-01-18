@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Constants
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Constants
 {
     public class StandardConstants
     {

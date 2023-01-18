@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Collections.Generic;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 

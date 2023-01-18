@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Interfaces.ResourceLibrary
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Interfaces.ResourceLibrary
 {
     public interface IFlowDocManager
     {

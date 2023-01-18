@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -41,8 +41,16 @@
         <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filterVendors($event)"
         [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent(component)">
         <mat-autocomplete #autoVendor="matAutocomplete">
-          <mat-option *ngFor="let option of filteredVendorOptions" [value]="option.name">
-            {{ option.name }}
+          <mat-option *ngFor="let vendor of filteredVendorOptions" [value]="vendor.name">
+            <div class="d-flex justify-content-between">
+              <span>
+                {{ vendor.name }}
+              </span>
+              <button class="btn bgc-trans ml-3 mt-1 p-0"
+               mat-icon-button aria-label="Delete Vendor" (click)="deleteVendor(vendor.name)">
+                <mat-icon matTooltip="Delete Vendor" matTooltipPosition="right" class="delete-button">close</mat-icon>
+              </button>
+            </div>
           </mat-option>
         </mat-autocomplete>
       </td>
@@ -52,7 +60,15 @@
         [matAutocomplete]="autoProduct" (blur)="saveComponent(component)">
         <mat-autocomplete #autoProduct="matAutocomplete">
           <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
-            {{ product.name }}
+            <div class="d-flex justify-content-between">
+              <span>
+                {{ product.name }}
+              </span>
+              <button class="btn bgc-trans ml-3 mt-1 p-0"
+               mat-icon-button aria-label="Delete Product" (click)="deleteProduct(component.vendorName, product.name)">
+                <mat-icon matTooltip="Delete Product" matTooltipPosition="right" class="delete-button">close</mat-icon>
+              </button>
+            </div>
           </mat-option>
         </mat-autocomplete>
       </td>

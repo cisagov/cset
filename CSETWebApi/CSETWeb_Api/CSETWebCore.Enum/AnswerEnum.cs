@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Enum.EnumHelper;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Enum.EnumHelper;
 namespace CSETWebCore.Enum
 {
     public enum AnswerEnum
