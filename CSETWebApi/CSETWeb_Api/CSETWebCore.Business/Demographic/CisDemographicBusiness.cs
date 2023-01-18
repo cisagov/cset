@@ -1,4 +1,10 @@
-﻿using CSETWebCore.DataLayer.Model;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using CSETWebCore.Model.Assessment;

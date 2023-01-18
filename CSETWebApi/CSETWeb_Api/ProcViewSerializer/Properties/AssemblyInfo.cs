@@ -1,4 +1,10 @@
-﻿using System.Reflection;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

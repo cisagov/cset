@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using CSETWebCore.DataLayer.Model;
@@ -37,5 +43,7 @@ namespace CSETWebCore.Interfaces
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
         IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();
         public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor);
+        public void DeleteCsafVendor(string vendorName);
+        public void DeleteCsafProduct(string vendorName, string productName);
     }
 }

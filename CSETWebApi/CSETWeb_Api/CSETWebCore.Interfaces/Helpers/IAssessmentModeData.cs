@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Enum;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Enum;
 
 namespace CSETWebCore.Interfaces.Helpers
 {

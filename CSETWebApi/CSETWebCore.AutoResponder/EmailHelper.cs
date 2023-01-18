@@ -35,8 +35,8 @@ namespace CSETWebCore.AutoResponder
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
-            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
+            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail").Value,
+            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
 
             message.IsBodyHtml = true;
 
@@ -55,8 +55,8 @@ namespace CSETWebCore.AutoResponder
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Email").Value,
-            emailConfig.FirstOrDefault(x => x.Key == "Email:Sender Display Name").Value);
+            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail").Value,
+            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
 
             message.IsBodyHtml = true;
             message.Attachments.Add(new Attachment(attachmentPath));
@@ -84,16 +84,16 @@ namespace CSETWebCore.AutoResponder
             SmtpClient client = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Host = emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Host").Value,
-                Port = int.Parse(emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Port").Value),
+                Host = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpHost").Value,
+                Port = int.Parse(emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpPort").Value),
                 UseDefaultCredentials = false
             };
 
-            bool.TryParse(emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP SSL").Value, out bool ssl);
+            bool.TryParse(emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpSsl").Value, out bool ssl);
             client.EnableSsl = ssl;
 
-            var smtpUsername = emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Username").Value;
-            var smtpPassword = emailConfig.FirstOrDefault(x => x.Key == "Email:SMTP Password").Value;
+            var smtpUsername = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpUsername").Value;
+            var smtpPassword = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpPassword").Value;
             if (smtpUsername != null)
             {
                 client.Credentials = new NetworkCredential(smtpUsername, smtpPassword);

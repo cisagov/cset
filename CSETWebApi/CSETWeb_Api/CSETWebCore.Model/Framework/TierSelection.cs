@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Framework
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Framework
 {
     public class TierSelection
     {
