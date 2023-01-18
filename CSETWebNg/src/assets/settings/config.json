@@ -62,8 +62,8 @@
         "showTrend": true,
         "showCompare": true,
         "showEnableProtectedFeatures": true,
-        "showUpdateDiagramCsafVulnerabilitiesButton": true,
-        "showVulnerabilitiesDiagramInventoryTab": true
+        "showUpdateDiagramCsafVulnerabilitiesButton": false,
+        "showVulnerabilitiesDiagramInventoryTab": false
     },
     "answersDefault": [
         {
