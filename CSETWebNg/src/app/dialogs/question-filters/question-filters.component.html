@@ -50,7 +50,7 @@
       <div *ngIf="usesMaturityModel('VADR')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FR')" id="cbShowFreeResponse" name="cbShowFreeResponse" (click)="updateFilters($event, 'FR')">
         <label for="cbShowFreeResponse" class="checkbox-custom-label d-block">
-          Show answered free response
+          Show answered Open Ended {{questions}}
         </label>
       </div>
       <div>
