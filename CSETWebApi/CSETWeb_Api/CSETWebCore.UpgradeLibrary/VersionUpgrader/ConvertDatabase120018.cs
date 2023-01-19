@@ -25,6 +25,7 @@ namespace UpgradeLibrary.Upgrade
             try
             {
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120017_to_120018.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120017_to_120018_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
