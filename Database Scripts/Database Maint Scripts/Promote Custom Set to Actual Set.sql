@@ -9,7 +9,7 @@ declare @oldName varchar(150), @newName varchar(150)
 Set @oldName = 'SET.20210831.165809'
 set @newName = 'FAA_PED_V2'
 ​
-update new_question set original_set_name = @newName where original_set_name = @oldName
+update new_question set original_set_name = @newName, std_ref = @newName where original_set_name = @oldName
 update new_requirement set original_set_name = @newName where original_set_name = @oldName
 update dbo.[sets] set set_name = @newName where set_name = @oldName
 update dbo.[sets] set Is_Custom=0 where set_name = @newName
