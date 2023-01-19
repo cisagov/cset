@@ -66,7 +66,8 @@ namespace CSETWebCore.DatabaseManager
                         // ResolveLocalDBVersion();
 
                         // No previous version of application found on LocalDB 2012
-                        if (!localDb2012Info.Exists)
+                        // NCUA wants to ignore older versions that use LocalDB 2012
+                        if (ClientCode.Equals("NCUA") || !localDb2012Info.Exists)
                         {
                             CleanInstallNoUpgrades(destDBFile, destLogFile);
                         }
