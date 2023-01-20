@@ -41,6 +41,7 @@ export class ConfigService {
   configUrl: string;
   assetsUrl: string;
   settingsUrl: string;
+  analyticsUrl: string;
   config: any;
 
   behaviors: any;
@@ -109,6 +110,7 @@ export class ConfigService {
         config.api.apiIdentifier +
         "/";
     }
+    this.analyticsUrl = config.analyticsUrl;
     this.appUrl = appProtocol + config.app.appUrl + appPort;
     this.docUrl =
       apiProtocol +

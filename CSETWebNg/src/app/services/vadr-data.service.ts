@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import { CmmcStyleService } from './cmmc-style.service';
 import { ConfigService } from './config.service';
 
+
 const headers = {
   headers: new HttpHeaders()
     .set('Content-Type', 'application/json'),
@@ -37,8 +38,9 @@ const headers = {
 })
 export class VadrDataService {
   apiUrl: string;
-  constructor(public cmmcSvc: CmmcStyleService, private http: HttpClient, private configSvc: ConfigService) {
+  constructor(public cmmcSvc:CmmcStyleService,private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'reports';
+
   }
 
   response: any;
@@ -56,9 +58,9 @@ export class VadrDataService {
 
   public getReport(reportId: string) {
     return this.http.get(this.apiUrl + '/' + reportId);
-  }
+}
 
-  public getVADRDetail() {
+  public getVADRDetail(){
     return this.http.get(this.apiUrl + '/vadrdetail')
   }
 
