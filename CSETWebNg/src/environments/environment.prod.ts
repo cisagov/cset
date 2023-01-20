@@ -25,6 +25,7 @@ export const environment = {
   production: true,
   appUrl: '',
   apiUrl: '',
+  analyticsUrl: '',
   docUrl: '',
   appCode: 'CSET',
   visibleVersion: '11.5',

@@ -21,50 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CmmcStyleService } from './cmmc-style.service';
-import { ConfigService } from './config.service';
+import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
-
-const headers = {
-  headers: new HttpHeaders()
-    .set('Content-Type', 'application/json'),
-  params: new HttpParams()
-};
-
-@Injectable({
-  providedIn: 'root'
+@Component({
+  selector: 'app-analytics-compare',
+  templateUrl: './analytics-compare.component.html'
 })
-export class VadrDataService {
-  apiUrl: string;
-  constructor(public cmmcSvc:CmmcStyleService,private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'reports';
+export class AnalyticsCompareComponent implements OnInit {
 
+  constructor(
+    public navSvc: NavigationService
+  ) { }
+
+  ngOnInit(): void {
   }
 
-  response: any;
-  pageInitialized = false;
-  referenceTable: any;
-
-  cmmcModel: any;
-  statsByLevel: any;
-  statsByDomain: any;
-  statsByDomainAtUnderTarget: any;
-  stackBarChartData: any;
-  complianceLevelAcheivedData: any;
-  gridColumnCount = 10
-  gridColumns = new Array(this.gridColumnCount);
-
-  public getReport(reportId: string) {
-    return this.http.get(this.apiUrl + '/' + reportId);
-}
-
-  public getVADRDetail(){
-    return this.http.get(this.apiUrl + '/vadrdetail')
-  }
-
-  public getVADRQuestions() {
-    return this.http.get(this.apiUrl + '/vadrquestions')
-  }
 }

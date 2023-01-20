@@ -249,6 +249,9 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsService } from './services/analytics.service';
+import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -498,6 +501,7 @@ import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.co
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
@@ -747,6 +751,8 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         CompareBestworstComponent,
         ComponentOverrideComponent,
         ExcelExportComponent,
+        AnalyticsComponent,
+        DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
@@ -979,6 +985,7 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
+        AnalyticsCompareComponent,
         AssessmentDetailCfComponent,
         LoginCfComponent,
         MvraGapsComponent,
@@ -1049,6 +1056,7 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ACETService,
         ResourceLibraryService,
         DiagramService,
+        AnalyticsService,
         AggregationService,
         ChartService,
         ChartColors,
@@ -1093,6 +1101,7 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ExcelExportComponent,
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
+        DataloginComponent,
         AwwaStandardComponent,
         SectorHelpComponent
     ]

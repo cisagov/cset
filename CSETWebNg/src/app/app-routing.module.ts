@@ -81,6 +81,8 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationGuard } from './guards/aggregation.guard';
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
+import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
@@ -182,6 +184,7 @@ import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/
 import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
@@ -268,6 +271,7 @@ const appRoutes: Routes = [
       },
       { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
       { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
+      { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
       { path: 'importModule', component: ImportComponent },
@@ -431,6 +435,8 @@ const appRoutes: Routes = [
 
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
+              { path: 'analytics-compare', component: AnalyticsCompareComponent },
+              { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
               { path: 'section-scoring', component: SectionScoringComponent },

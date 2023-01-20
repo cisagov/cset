@@ -15,6 +15,7 @@
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents"
     },
+    "analyticsUrl": "https://cset-analytics.dev.inltesting.xyz/",
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
