@@ -121,7 +121,7 @@ export class TsaAnalyticsComponent implements OnInit {
           this.maturityModelName = this.assessment.maturityModel.modelName;
           this.maturityModelId = this.assessment.maturityModel.modelId;
           this.tsaAnalyticSvc
-            .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
+            .maturityDashboardByCategory(this.assessment.maturityModel.modelId)
             .subscribe((x) => {
               this.setupChartMaturity(x);
 
@@ -316,7 +316,7 @@ export class TsaAnalyticsComponent implements OnInit {
     // update maturity graph
     if (this.assessment.useMaturity) {
       this.tsaAnalyticSvc
-        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+        .maturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
         .subscribe((x) => {
           this.setupChartMaturity(x);
 
@@ -394,7 +394,7 @@ export class TsaAnalyticsComponent implements OnInit {
     // update maturity graph
     if (this.assessment.useMaturity) {
       this.tsaAnalyticSvc
-        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+        .maturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
         .subscribe((x) => {
           this.setupChartMaturity(x);
 
