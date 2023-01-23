@@ -1,0 +1,74 @@
+/*
+Run this script on:
+
+(localdb)\MSSQLLocalDB.CSETWeb120018    -  This database will be modified
+
+to synchronize it with:
+
+(localdb)\MSSQLLocalDB.CSETWeb120019
+
+You are recommended to back up your database before running this script
+
+Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 1/23/2023 11:51:37 AM
+
+*/
+		
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS, NOCOUNT ON
+GO
+SET DATEFORMAT YMD
+GO
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL Serializable
+GO
+BEGIN TRANSACTION
+
+PRINT(N'Drop constraints from [dbo].[GALLERY_ROWS]')
+ALTER TABLE [dbo].[GALLERY_ROWS] NOCHECK CONSTRAINT [FK_GALLERY_ROWS_GALLERY_GROUP]
+ALTER TABLE [dbo].[GALLERY_ROWS] NOCHECK CONSTRAINT [FK_GALLERY_ROWS_GALLERY_LAYOUT]
+
+PRINT(N'Drop constraints from [dbo].[GALLERY_GROUP_DETAILS]')
+ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] NOCHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP]
+ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] NOCHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM]
+
+PRINT(N'Delete row from [dbo].[GALLERY_ROWS]')
+DELETE FROM [dbo].[GALLERY_ROWS] WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 11
+
+PRINT(N'Update rows in [dbo].[GALLERY_ROWS]')
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=13 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 0
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=6 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 1
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=2 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 2
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=5 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 4
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=3 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 5
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=4 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 6
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=11 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 7
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=14 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 8
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=15 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 9
+UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=30 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 10
+PRINT(N'Operation applied to 10 rows out of 10')
+
+PRINT(N'Update rows in [dbo].[GALLERY_GROUP_DETAILS]')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=2 WHERE [Group_Detail_Id] = 2
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 3
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 6
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=1 WHERE [Group_Detail_Id] = 73
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=5 WHERE [Group_Detail_Id] = 111
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=6 WHERE [Group_Detail_Id] = 118
+PRINT(N'Operation applied to 6 rows out of 6')
+
+PRINT(N'Add row to [dbo].[GALLERY_GROUP_DETAILS]')
+SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] ON
+INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Gallery_Item_Id], [Click_Count]) VALUES (4176, 2, 0, 117, 0)
+SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
+
+PRINT(N'Add constraints to [dbo].[GALLERY_ROWS]')
+ALTER TABLE [dbo].[GALLERY_ROWS] WITH CHECK CHECK CONSTRAINT [FK_GALLERY_ROWS_GALLERY_GROUP]
+ALTER TABLE [dbo].[GALLERY_ROWS] WITH CHECK CHECK CONSTRAINT [FK_GALLERY_ROWS_GALLERY_LAYOUT]
+
+PRINT(N'Add constraints to [dbo].[GALLERY_GROUP_DETAILS]')
+ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] WITH CHECK CHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP]
+ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] WITH CHECK CHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM]
+COMMIT TRANSACTION
+GO
