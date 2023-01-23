@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using Microsoft.Data.SqlClient;
 using System.IO;
 namespace UpgradeLibrary.Upgrade
@@ -21,7 +27,6 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120015_to_120016.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120015_to_120016_MigrateDomainFilters.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120015_to_120016_data.sql"), conn);
-                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "120015_to_120016_data2.sql"), conn);
 
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }

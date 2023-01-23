@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Interfaces.FileRepository;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;

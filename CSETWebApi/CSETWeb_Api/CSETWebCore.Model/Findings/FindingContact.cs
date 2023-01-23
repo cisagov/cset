@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Findings
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Findings
 {
     public class FindingContact
     {

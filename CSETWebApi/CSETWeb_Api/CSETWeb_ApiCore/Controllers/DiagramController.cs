@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -26,6 +32,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Model.Document;
 using DocumentFormat.OpenXml.Office2021.DocumentTasks;
 using System.ComponentModel.Design;
+using System.Numerics;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -556,6 +563,52 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 return Ok(_diagram.SaveCsafVendor(vendor));
+            }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Deletes all CSAF files than contain a given vendor (this assumes each CSAF file only contains a single vendor).
+        /// </summary>
+        /// <param name="vendorName">Name of the vendor to be deleted</param>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities/deleteVendor")]
+        [HttpPost]
+        public IActionResult DeleteCsafVendor([FromQuery] string vendorName) 
+        {
+            try
+            {
+                _diagram.DeleteCsafVendor(vendorName);
+                return Ok();
+            }
+            catch (Exception exc)
+            {
+                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+
+                return StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Deletes given product from CSAF files.
+        /// </summary>
+        /// <param name="productName">Name of the product to be deleted</param>
+        /// <returns></returns>
+        [CsetAuthorize]
+        [Route("api/diagram/vulnerabilities/deleteProduct")]
+        [HttpPost]
+        public IActionResult DeleteCsafProduct([FromQuery] string vendorName, [FromQuery] string productName)
+        {
+            try
+            {
+                _diagram.DeleteCsafProduct(vendorName, productName);
+                return Ok();
             }
             catch (Exception exc)
             {

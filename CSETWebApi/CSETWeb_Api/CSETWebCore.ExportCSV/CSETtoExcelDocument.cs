@@ -1,4 +1,10 @@
-﻿using FastMember;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using FastMember;
 using System;
 using System.Collections.Generic;
 using System.Data;

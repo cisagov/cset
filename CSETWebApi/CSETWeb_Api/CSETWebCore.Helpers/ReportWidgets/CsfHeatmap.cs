@@ -1,4 +1,10 @@
-﻿using System.Linq;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Linq;
 using System.Xml.Linq;
 
 namespace CSETWebCore.Helpers.ReportWidgets

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,6 @@ export class ConfigService {
   configUrl: string;
   assetsUrl: string;
   settingsUrl: string;
-  analyticsUrl: string;
   config: any;
 
   behaviors: any;
@@ -110,7 +109,6 @@ export class ConfigService {
         config.api.apiIdentifier +
         "/";
     }
-    this.analyticsUrl = config.analyticsUrl;
     this.appUrl = appProtocol + config.app.appUrl + appPort;
     this.docUrl =
       apiProtocol +
