@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Interfaces.Question
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Interfaces.Question
 {
     public interface IParameterContainer
     {

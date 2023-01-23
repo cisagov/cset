@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
@@ -60,7 +66,8 @@ namespace CSETWebCore.DatabaseManager
                         // ResolveLocalDBVersion();
 
                         // No previous version of application found on LocalDB 2012
-                        if (!localDb2012Info.Exists)
+                        // NCUA wants to ignore older versions that use LocalDB 2012
+                        if (ClientCode.Equals("NCUA") || !localDb2012Info.Exists)
                         {
                             CleanInstallNoUpgrades(destDBFile, destLogFile);
                         }
@@ -275,7 +282,7 @@ namespace CSETWebCore.DatabaseManager
             DoTheCopy(dbInfo.LDF, newLDF);
 
             //create and attach new 
-            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentDatabaseConnectionString);
+            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentMasterConnectionString);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -90,5 +90,13 @@ export class DiagramService {
 
   saveCsafVendor(vendor: Vendor) {
     return this.http.post(this.apiUrl + 'vulnerabilities/saveVendor', vendor, headers);
+  }
+
+  deleteCsafVendor(vendorName: string) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/deleteVendor?vendorName=' + vendorName, '');
+  }
+
+  deleteCsafProduct(vendorName: string, productName: string) {
+    return this.http.post(this.apiUrl + 'vulnerabilities/deleteProduct?vendorName=' + vendorName + '&productName=' + productName, '');
   }
 }

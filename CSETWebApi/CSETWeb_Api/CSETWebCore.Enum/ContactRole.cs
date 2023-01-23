@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Enum
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Enum
 {
     public enum ContactRole
     {
