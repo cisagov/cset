@@ -30,7 +30,6 @@ import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { AnalyticsService } from '../../../services/analytics.service';
 
 
 @Component({
@@ -49,7 +48,7 @@ export class FeedbackComponent implements OnInit {
   feedbackEmailBody: string;
   initialized = false;
   docUrl: string;
-  analyticsIsUp: boolean; 
+
 
   constructor(
     private assessSvc: AssessmentService,
@@ -57,7 +56,6 @@ export class FeedbackComponent implements OnInit {
     private route: ActivatedRoute,
     private analysisSvc: AnalysisService,
     public navSvc: NavigationService,
-    public analyticsSvc: AnalyticsService, 
     private configSvc: ConfigService
   ) { }
 

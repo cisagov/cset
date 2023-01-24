@@ -27,7 +27,6 @@ import { EventEmitter, Injectable, Output, Directive } from "@angular/core";
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { ConfigService } from '../config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AnalyticsService } from '../analytics.service';
 import { MaturityService } from '../maturity.service';
 import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
@@ -77,7 +76,6 @@ export class NavigationService {
   acetSelected = false;
   diagramSelected = true;
 
-  analyticsIsUp = false;
   cisSubnodes = null;
 
 
@@ -90,7 +88,6 @@ export class NavigationService {
     private configSvc: ConfigService,
     private router: Router,
     private http: HttpClient,
-    private analyticsSvc: AnalyticsService,
     private maturitySvc: MaturityService,
     private pageVisibliltySvc: PageVisibilityService,
     private navTreeSvc: NavTreeService
@@ -108,8 +105,6 @@ export class NavigationService {
     this.navTreeSvc.magic = (Math.random() * 1e5).toFixed(0);
     return this.navTreeSvc.magic;
   }
-
-
 
   /**
    *
@@ -129,8 +124,6 @@ export class NavigationService {
     localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
-
-
 
   /**
    *

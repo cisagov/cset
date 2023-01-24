@@ -32,7 +32,6 @@ export const environment = {
   appUrl: 'http://localhost:4200/',
   apiUrl: 'https://localhost:5001/api/',
   docUrl: 'https://localhost:5001/Documents/',
-  analyticsUrl: "https://cset-analytics.dev.inltesting.xyz/",
   appCode: 'CSET',
   visibleVersion: "11.5",
   version: '12.0.0.19',
