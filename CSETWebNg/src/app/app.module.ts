@@ -249,9 +249,6 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
-import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { AnalyticsService } from './services/analytics.service';
-import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -751,8 +748,6 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         CompareBestworstComponent,
         ComponentOverrideComponent,
         ExcelExportComponent,
-        AnalyticsComponent,
-        DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
@@ -1056,7 +1051,6 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ACETService,
         ResourceLibraryService,
         DiagramService,
-        AnalyticsService,
         AggregationService,
         ChartService,
         ChartColors,
@@ -1101,7 +1095,6 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ExcelExportComponent,
         MergeQuestionDetailComponent,
         SelectAssessmentsComponent,
-        DataloginComponent,
         AwwaStandardComponent,
         SectorHelpComponent
     ]
