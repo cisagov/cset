@@ -48,7 +48,7 @@ export class FeedbackComponent implements OnInit {
   feedbackEmailBody: string;
   initialized = false;
   docUrl: string;
-  analyticsIsUp: boolean; 
+
 
   constructor(
     private assessSvc: AssessmentService,

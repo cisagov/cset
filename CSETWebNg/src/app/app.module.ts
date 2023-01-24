@@ -498,6 +498,7 @@ import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.co
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
+import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
@@ -979,6 +980,7 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
+        AnalyticsCompareComponent,
         AssessmentDetailCfComponent,
         LoginCfComponent,
         MvraGapsComponent,

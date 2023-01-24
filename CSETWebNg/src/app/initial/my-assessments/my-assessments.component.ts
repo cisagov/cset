@@ -81,8 +81,8 @@ export class MyAssessmentsComponent implements OnInit {
 
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
-  isTSA: boolean = false;
-  isCSET: boolean = false;
+  isTSA:boolean =false;
+  isCSET:boolean =false;
   exportExtension: string;
   importExtensions: string;
 
@@ -107,7 +107,7 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
-    private tsaanalyticSvc: TsaAnalyticsService,
+    private tsaanalyticSvc :TsaAnalyticsService,
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService
   ) { }
@@ -125,10 +125,10 @@ export class MyAssessmentsComponent implements OnInit {
         this.ncuaSvc.reset();
         break;
       case 'TSA':
-        this.isTSA = true;
+        this.isTSA=true;
         break;
       default:
-        this.isCSET = true;
+        this.isCSET=true;
     }
 
     if (localStorage.getItem("returnPath")) {
@@ -139,7 +139,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
-  }
+  }  
 
   /**
    * Determines if a particular column should be included in the display.
@@ -152,7 +152,7 @@ export class MyAssessmentsComponent implements OnInit {
         return false;
       }
 
-      return !this.ncuaSvc.switchStatus;
+      return !this.ncuaSvc.switchStatus;      
     }
 
     if (column == 'analytics') {
@@ -179,10 +179,10 @@ export class MyAssessmentsComponent implements OnInit {
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
               let type = '';
-              if (item.useDiagram) type += ', Diagram';
-              if (item.useMaturity) type += ', ' + item.selectedMaturityModel;
-              if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
-              if (type.length > 0) type = type.substring(2);
+              if(item.useDiagram) type += ', Diagram';
+              if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
+              if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
+              if(type.length > 0) type = type.substring(2);
               item.type = type;
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
@@ -193,16 +193,16 @@ export class MyAssessmentsComponent implements OnInit {
             });
             this.sortedAssessments = assessments;
           },
-            error => {
-              console.log(
-                "Unable to get Assessments for " +
-                this.authSvc.email() +
-                ": " +
-                (<Error>error).message
-              );
-            }
-          )
-        ))).subscribe();
+          error => {
+            console.log(
+              "Unable to get Assessments for " +
+              this.authSvc.email() +
+              ": " +
+              (<Error>error).message
+            );
+          }
+        )
+    ))).subscribe();
   }
 
   hasPath(rpath: string) {
@@ -351,7 +351,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
 
-  async exportAllLoop() { // allows for multiple api calls
+  async exportAllLoop () { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
       a.click();

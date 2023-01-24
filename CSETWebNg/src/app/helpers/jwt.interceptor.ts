@@ -29,11 +29,8 @@ import { Router } from '../../../node_modules/@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  public analyticsUrl: string;
 
-  constructor(private router: Router) {
-    this.analyticsUrl = 'https://cset-analytics.dev.inltesting.xyz/';
-  }
+  constructor(private router: Router) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -45,43 +42,41 @@ export class JwtInterceptor implements HttpInterceptor {
       localStorage.getItem('userToken').length > 1
     ) {
       request.headers.append('Content-Type', 'application/json');
-      if(!request.url.includes(this.analyticsUrl)){
-        request = request.clone({
-          setHeaders: {
-            Authorization: localStorage.getItem('userToken')
-          }
-        });
-      }
+      request = request.clone({
+        setHeaders: {
+          Authorization: localStorage.getItem('userToken')
+        }
+      });
     }
 
     return next.handle(request)
       .pipe(
         catchError((event: any, caught: Observable<any>) => {
 
-        if (event instanceof HttpErrorResponse) {
-          const e = <HttpErrorResponse>event;
+          if (event instanceof HttpErrorResponse) {
+            const e = <HttpErrorResponse>event;
 
-           // continue if this is a "business exception"
-           if (e.status !== 500 && e.status !== 401) {
-             throw event;
-           }
+            // continue if this is a "business exception"
+            if (e.status !== 500 && e.status !== 401) {
+              throw event;
+            }
 
 
-          if (e.status === 401) {
-            console.log('Error 401! Ejecting to login page!');
+            if (e.status === 401) {
+              console.log('Error 401! Ejecting to login page!');
+            }
+
+            if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
+              console.log('JWT Invalid. logging out.');
+            }
+
+            const userToken = localStorage.getItem('userToken')
+            localStorage.clear();
+            this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
+
+            return of({});
           }
-
-          if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
-            console.log('JWT Invalid. logging out.');
-          }
-
-          const userToken = localStorage.getItem('userToken')
-          localStorage.clear();
-          this.router.navigate(['/home/login/eject'], { queryParams: { token: userToken } });
-
-          return of({});
-        }
-      })
-    );
+        })
+      );
   }
 }
