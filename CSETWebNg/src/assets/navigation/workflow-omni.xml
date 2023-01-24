@@ -249,6 +249,8 @@
 
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
 
+        <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" condition="ORIGIN:CF" /-->
+
         <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:CSET" />
 
         <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />

@@ -109,6 +109,7 @@ export class ConfigService {
         config.api.apiIdentifier +
         "/";
     }
+
     this.appUrl = appProtocol + config.app.appUrl + appPort;
     this.docUrl =
       apiProtocol +

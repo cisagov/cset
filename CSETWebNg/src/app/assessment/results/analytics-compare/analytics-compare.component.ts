@@ -21,14 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-export const environment = {
-  production: true,
-  appUrl: '',
-  apiUrl: '',
-  docUrl: '',
-  appCode: 'CSET',
-  visibleVersion: '11.5',
-  version: '12.0.0.19',
-  helpContactEmail: '',
-  helpContactPhone: ''
-};
+import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../../services/navigation/navigation.service';
+
+@Component({
+  selector: 'app-analytics-compare',
+  templateUrl: './analytics-compare.component.html'
+})
+export class AnalyticsCompareComponent implements OnInit {
+
+  constructor(
+    public navSvc: NavigationService
+  ) { }
+
+  ngOnInit(): void {
+  }
+
+}

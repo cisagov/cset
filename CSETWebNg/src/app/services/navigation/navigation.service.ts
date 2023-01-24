@@ -76,7 +76,6 @@ export class NavigationService {
   acetSelected = false;
   diagramSelected = true;
 
-  analyticsIsUp = false;
   cisSubnodes = null;
 
 
@@ -107,8 +106,6 @@ export class NavigationService {
     return this.navTreeSvc.magic;
   }
 
-
-
   /**
    *
    */
@@ -127,8 +124,6 @@ export class NavigationService {
     localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
-
-
 
   /**
    *
