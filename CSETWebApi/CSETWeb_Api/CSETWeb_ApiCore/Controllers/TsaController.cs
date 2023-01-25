@@ -158,6 +158,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// Adds or removes the TSA standard to the assessment.  
         /// Because this method is exclusive to a TSA installation, it cannot be used
@@ -187,6 +188,8 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
+
+
         [HttpPost]
         [Route("api/tsa/standard")]
         public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
@@ -194,6 +197,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
+
+
         [HttpGet]
         [Route("api/tsa/getModelsName")]
         public List <TSAModelNames>  getModelsName()
