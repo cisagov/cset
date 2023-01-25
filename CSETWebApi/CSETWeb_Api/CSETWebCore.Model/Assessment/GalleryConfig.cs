@@ -25,6 +25,11 @@ namespace CSETWebCore.Model.Assessment
         public string SALLevel { get; set; }
 
         /// <summary>
+        /// Multiple screens can be hidden
+        /// </summary>
+        public List<string> HiddenScreens { get; set; }
+
+        /// <summary>
         /// Indicates the starting application mode, 
         /// e.g., Requirements or Questions.  
         /// 
