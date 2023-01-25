@@ -78,10 +78,6 @@ namespace CSETWebCore.Business.Assessment
 
             };
 
-            if (newAssessment.Workflow == "TSA")
-            {
-                SetDefaultTsaStuff(newAssessment);
-            }
 
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
@@ -109,19 +105,10 @@ namespace CSETWebCore.Business.Assessment
 
 
             string defaultSal = "Low";
-            if (newAssessment.Workflow == "TSA")
-            {
-                defaultSal = SalBusiness.DefaultSalTsa;
-            }
             _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
 
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
-
-            if (newAssessment.Workflow == "TSA")
-            {
-                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
-            }
 
 
             CreateIrpHeaders(assessment_id);
@@ -691,15 +678,6 @@ namespace CSETWebCore.Business.Assessment
             }
 
             _context.SaveChanges();
-        }
-
-
-        /// <summary>
-        /// Default a few things
-        /// </summary>
-        private void SetDefaultTsaStuff(AssessmentDetail assessment)
-        {
-            assessment.UseStandard = true;
         }
 
 
