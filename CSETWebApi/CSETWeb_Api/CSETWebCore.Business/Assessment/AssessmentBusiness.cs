@@ -387,6 +387,13 @@ namespace CSETWebCore.Business.Assessment
 
                 SetAssessmentTypeInfo(assessment);
 
+
+                var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (ss != null && ss.Hidden_Screens != null)
+                {
+                    assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                }
+
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
