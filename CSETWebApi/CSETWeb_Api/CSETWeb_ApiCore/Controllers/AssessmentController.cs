@@ -144,6 +144,13 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
+            // Hidden Screens
+            if (config.HiddenScreens != null && ss != null)
+            {
+                ss.Hidden_Screens = String.Join(",", config.HiddenScreens);
+            }
+
+
             _context.SaveChanges();
 
 
