@@ -120,7 +120,6 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-
             // Application Mode.  Including "only" will restrict the mode on the questions page.
             var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment.Id).FirstOrDefault();
             if (config.QuestionMode != null && ss != null)
@@ -138,12 +137,12 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-
             // SAL 
             if (config.SALLevel != null && ss != null)
             {
                 ss.Selected_Sal_Level = config.SALLevel;
             }
+
 
             _context.SaveChanges();
 
