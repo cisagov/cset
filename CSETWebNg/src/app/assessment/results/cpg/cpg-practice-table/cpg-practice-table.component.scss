@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 .cpg-domain-bar {
-    background-color: #6BA443; 
     color: white; 
     text-align: center; 
     font-weight: bold; 
@@ -31,6 +30,7 @@ SOFTWARE.
     text-transform: uppercase;
     margin-bottom: 2rem;
     padding: 1rem;
+    border-top: 1px solid #ccc !important;
 }
 
 .cpg-table {
@@ -39,7 +39,6 @@ SOFTWARE.
 }
 
 .cpg-table th {
-    background-color: #1A3667; 
     color: white; 
     padding: 1rem .5rem;
     border-right: 1px solid white;
@@ -47,15 +46,15 @@ SOFTWARE.
 }
 
 .cpg-table th:first-child {
-    border-left: 1px solid #1a3667;
+    border-left: 1px solid #ccc;
 }
 
 .cpg-table th:last-child {
-    border-right: 1px solid #1a3667;
+    border-right: 1px solid #ccc;
 }
 
 .cpg-table td {
-    border: 1px solid #1a3667;
+    border: 1px solid #ccc;
     padding: 1rem .5rem;
     font-size: .8rem;
     vertical-align: top;

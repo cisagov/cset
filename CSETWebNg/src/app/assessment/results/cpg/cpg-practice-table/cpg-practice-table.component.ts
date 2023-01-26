@@ -48,6 +48,33 @@ export class CpgPracticeTableComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
       this.model = resp.Model;
+      console.log(this.model);
     });
+  }
+
+  /**
+   * Returns the color for the CSF function of the group.
+   * This is specific to the CPG groupings.
+   */
+  csfFunctionColor(groupId: string): string {
+    switch (groupId) {
+      case '200':
+        // identify
+        return '#45A7DD';
+      case '201':
+        // protect
+        return '#855196';
+      case '202':
+        // detect
+        return '#F99F14';
+      case '203':
+        // respond
+        return '#ED3643';
+      case '204':
+        // recover
+        return '#36B649';
+      default:
+        return '#6BA443';
+    }
   }
 }
