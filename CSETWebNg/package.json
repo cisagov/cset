@@ -49,7 +49,7 @@
     "@types/offscreencanvas": "^2019.6.4",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "ajv-keywords": "^5.1.0",
-    "angular2-hotkeys": "^2.2.0",
+    "angular2-hotkeys": "^13.1.0",
     "ansi-styles": "^6.1.1",
     "array.prototype.fill": "^1.0.2",
     "bootstrap": "^4.6.0",
