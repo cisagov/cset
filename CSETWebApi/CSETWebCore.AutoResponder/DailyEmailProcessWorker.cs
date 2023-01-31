@@ -1,4 +1,6 @@
 ﻿using CSETWebCore.DataLayer.Model;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -50,8 +52,11 @@ namespace CSETWebCore.AutoResponder
                     {
                         case 0:
                             //first email sent it and 
-                            _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
-                            UpdateRecords(user);
+                            if (ProcessUserAssessments(user.PrimaryEmail))
+                            {
+                                _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
+                                UpdateRecords(user);
+                            }
                             break;
                         case 1:
                             //look to see if it has been a week since the last send date
@@ -81,12 +86,70 @@ namespace CSETWebCore.AutoResponder
             DateTime lastSent;
             if (emailHistory.TryGetValue(user.UserId, out lastSent))
             {
-                if (AtleastAWeekHasPassed(lastSent, weekCheck))
+                if (ProcessUserAssessments(user.PrimaryEmail))
                 {
-                    _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
-                    UpdateRecords(user);
+                    if (AtleastAWeekHasPassed(lastSent, weekCheck))
+                    {
+                        _emailHelper.SendFollowUp(user.PrimaryEmail, user.FirstName, user.LastName);
+                        UpdateRecords(user);
+                    }
                 }
             }
+
+        }
+
+        /// <summary>
+        /// NOTE THAT: this is overly conservative if the user complete any 1 assessment we 
+        /// say that is good enough and don't remind them again. 
+        /// </summary>
+        /// <param name="userPrimaryEmail"></param>
+        /// <returns></returns>
+        private bool ProcessUserAssessments(string userPrimaryEmail)
+        {
+            
+            
+            var assessment_ids = (from a in _context.ASSESSMENT_CONTACTS
+                                where a.PrimaryEmail == userPrimaryEmail
+                                select a.Assessment_Id).ToList();
+            
+            foreach(var assessment_id in assessment_ids)
+            {   
+                _context.Database.ExecuteSql($"exec FillAll {assessment_id}");
+                if (percentComplete(assessment_id))
+                    return false;
+            }
+            return true;
+        }
+
+
+        private bool percentComplete(int assessmentId)
+        {
+            var list = from a in _context.ANSWER
+                       where a.Assessment_Id == assessmentId
+                       group a by a.Answer_Text into answer_group
+                       select new
+                        {
+                            answer_text = answer_group.Key,
+                            answer_count = answer_group.Count()
+                        };
+
+            //go through the list and if the answer percentage is greater than 95
+            //the assessment is complete
+            int total = 0; 
+            foreach(var item in list)
+            {
+                total += item.answer_count;
+            }
+            var unanswer = list.Where(a => a.answer_text == "U").FirstOrDefault();
+            if (unanswer == null)
+                return false;
+            else
+            {
+                int unanswer_count = unanswer.answer_count;
+                double percent = (double) unanswer_count / (double) total;
+                return (percent <= .05);
+            }
+
 
         }
 
