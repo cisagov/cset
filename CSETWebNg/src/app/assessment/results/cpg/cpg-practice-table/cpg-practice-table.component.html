@@ -21,13 +21,13 @@
   SOFTWARE. 
 -------------------------->
 <div *ngFor="let d of model.Domain">
-    <div class="cpg-domain-bar page-break">
-        {{d.title}} ({{d.titlePrefix}})
+    <div class="cpg-domain-bar page-break" [style.background-color]="csfFunctionColor(d.groupingid)">
+        {{d.title}}
     </div>
 
     <table *ngFor="let q of d.Question" class="cpg-table">
         <tr>
-            <th style="width: 45%">
+            <th style="width: 45%" [style.background-color]="csfFunctionColor(d.groupingid)">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row">
                         <div class="mr-2 font-weight-bold">
@@ -41,10 +41,10 @@
                     </div>
                 </div>
             </th>
-            <th style="width: 25%">
+            <th style="width: 25%" [style.background-color]="csfFunctionColor(d.groupingid)">
                 CURRENT ASSESSMENT
             </th>
-            <th style="width: 30%">
+            <th style="width: 30%" [style.background-color]="csfFunctionColor(d.groupingid)">
                 NOTES
             </th>
         </tr>

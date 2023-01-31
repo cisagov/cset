@@ -78,10 +78,6 @@ namespace CSETWebCore.Business.Assessment
 
             };
 
-            if (newAssessment.Workflow == "TSA")
-            {
-                SetDefaultTsaStuff(newAssessment);
-            }
 
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
@@ -109,19 +105,10 @@ namespace CSETWebCore.Business.Assessment
 
 
             string defaultSal = "Low";
-            if (newAssessment.Workflow == "TSA")
-            {
-                defaultSal = SalBusiness.DefaultSalTsa;
-            }
             _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
 
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
-
-            if (newAssessment.Workflow == "TSA")
-            {
-                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
-            }
 
 
             CreateIrpHeaders(assessment_id);
@@ -399,6 +386,13 @@ namespace CSETWebCore.Business.Assessment
                 }
 
                 SetAssessmentTypeInfo(assessment);
+
+
+                var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (ss != null && ss.Hidden_Screens != null)
+                {
+                    assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                }
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
@@ -691,15 +685,6 @@ namespace CSETWebCore.Business.Assessment
             }
 
             _context.SaveChanges();
-        }
-
-
-        /// <summary>
-        /// Default a few things
-        /// </summary>
-        private void SetDefaultTsaStuff(AssessmentDetail assessment)
-        {
-            assessment.UseStandard = true;
         }
 
 
