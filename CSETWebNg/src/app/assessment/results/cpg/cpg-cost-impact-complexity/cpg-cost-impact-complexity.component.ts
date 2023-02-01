@@ -53,6 +53,6 @@ export class CpgCostImpactComplexityComponent implements OnInit {
   }
 
   lowMedHigh(val: string) {
-    return "lmh " + val.toLocaleLowerCase();
+    return "lmh " + (!!val ? val.toLocaleLowerCase() : 'low');
   }
 }

@@ -54,11 +54,11 @@ export class ColorService {
     '#000080'
   ];
 
-  used : Map<String, String>;
+  used: Map<String, String>;
   usedIndex = 0;
 
 
-  constructor() { 
+  constructor() {
     this.reset();
   }
 
@@ -87,5 +87,27 @@ export class ColorService {
       this.usedIndex = 0;
     }
     return color;
+  }
+
+  /**
+   * Returns a standard HTML color string for the 
+   * specified function.  This will promote consistency
+   * anywhere CSF colors are displayed in CSET.
+   */
+  nistCsfFuncColor(func: string) {
+    switch (func) {
+      case 'ID':
+        return '#355C9B';
+      case 'PR':
+        return '#784390';
+      case 'DE':
+        return '#F7E24E';
+      case 'RS':
+        return '#D93A34';
+      case 'RC':
+        return '#4CA056';
+      default:
+        return '#FFFFFF';
+    }
   }
 }
