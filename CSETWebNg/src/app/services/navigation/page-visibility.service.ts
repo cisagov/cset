@@ -64,7 +64,7 @@ export class PageVisibilityService {
 
     // if the assessment wants to hide the page
     const pageId = page.attributes['id']?.value;
-    if (!!pageId && this.assessSvc.assessment.hiddenScreens?.includes(pageId.toLowerCase())) {
+    if (!!pageId && this.assessSvc.assessment?.hiddenScreens?.includes(pageId.toLowerCase())) {
       return false;
     }
 
