@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 import { MaturityService } from '../../../../services/maturity.service';
 
@@ -39,7 +40,8 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   constructor(
-    public cpgSvc: CpgService
+    public cpgSvc: CpgService,
+    public colorSvc: ColorService
   ) { }
 
   /**
@@ -48,31 +50,52 @@ export class CpgPracticeTableComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
       this.model = resp.Model;
+
+      // domain groups with a single question need to have that question 
+      // converted to an array.
+      this.model.Domain.forEach(d => {
+        if (!(d.Question instanceof Array)) {
+          const questions = [].concat(d.Question);
+          console.log(questions);
+          d.Question = JSON.parse(JSON.stringify(questions));
+        }
+      });
+
       console.log(this.model);
     });
   }
 
   /**
-   * Returns the color for the CSF function of the group.
-   * This is specific to the CPG groupings.
+   * White text for all except DETECT (yellow)
    */
-  csfFunctionColor(groupId: string): string {
+  textColor(groupId): string {
+    if (groupId == '202') {
+      return '#000';
+    }
+    return '#fff';
+  }
+
+  /**
+   * Returns the color for the CSF function of the group.
+   * This is specific to CPG grouping IDs.
+   */
+  backgroundColor(groupId: string): string {
     switch (groupId) {
       case '200':
         // identify
-        return '#45A7DD';
+        return this.colorSvc.nistCsfFuncColor('ID');
       case '201':
         // protect
-        return '#855196';
+        return this.colorSvc.nistCsfFuncColor('PR');
       case '202':
         // detect
-        return '#F99F14';
+        return this.colorSvc.nistCsfFuncColor('DE');
       case '203':
         // respond
-        return '#ED3643';
+        return this.colorSvc.nistCsfFuncColor('RS');
       case '204':
         // recover
-        return '#36B649';
+        return this.colorSvc.nistCsfFuncColor('RC');
       default:
         return '#6BA443';
     }
