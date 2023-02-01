@@ -54,9 +54,19 @@ export class ModuleContentLaunchComponent implements OnInit {
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
       this.standards = x.filter(s => s.isDisplayed);
+      this.standards.sort((a, b) => { 
+        if (a.fullName < b.fullName) { return -1; } 
+        if (a.fullName > b.fullName) { return 1; }
+        return 0; 
+      });
     });
 
     this.models = AssessmentService.allMaturityModels;
+    this.models?.sort((a, b) => {
+      if (a.modelTitle < b.modelTitle) { return -1; } 
+      if (a.modelTitle > b.modelTitle) { return 1; }
+      return 0; 
+      });
   }
 
   /**
