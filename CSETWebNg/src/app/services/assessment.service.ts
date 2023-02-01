@@ -187,10 +187,17 @@ export class AssessmentService {
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
 
+    // clean out properties that may contain HTML before posting.
+    // The API WAF may reject to prevent XSS.  
+    // These properties are not user updatable.
+    const payload = JSON.parse(JSON.stringify(assessment));
+    payload.maturityModel = null;
+    payload.typeDescription = null;
+
     return this.http
       .post(
         this.apiUrl + 'assessmentdetail',
-        JSON.stringify(assessment),
+        JSON.stringify(payload),
         headers
       )
       .subscribe();
