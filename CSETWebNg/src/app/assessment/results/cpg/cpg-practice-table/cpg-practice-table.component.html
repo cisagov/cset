@@ -20,14 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *ngFor="let d of model.Domain">
-    <div class="cpg-domain-bar page-break" [style.background-color]="csfFunctionColor(d.groupingid)">
+<div *ngFor="let d of model?.Domain">
+    <div class="cpg-domain-bar page-break" 
+        [style.color]="textColor(d.groupingid)"
+        [style.background-color]="backgroundColor(d.groupingid)">
         {{d.title}}
     </div>
 
     <table *ngFor="let q of d.Question" class="cpg-table">
         <tr>
-            <th style="width: 45%" [style.background-color]="csfFunctionColor(d.groupingid)">
+            <th style="width: 45%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row">
                         <div class="mr-2 font-weight-bold">
@@ -41,10 +43,10 @@
                     </div>
                 </div>
             </th>
-            <th style="width: 25%" [style.background-color]="csfFunctionColor(d.groupingid)">
+            <th style="width: 25%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
                 CURRENT ASSESSMENT
             </th>
-            <th style="width: 30%" [style.background-color]="csfFunctionColor(d.groupingid)">
+            <th style="width: 30%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
                 NOTES
             </th>
         </tr>
