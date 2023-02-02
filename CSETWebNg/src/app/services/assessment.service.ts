@@ -124,7 +124,7 @@ export class AssessmentService {
    * Custom set gallery items are built on the fly and don't have a gallery ID.
    */
   createNewAssessmentGallery(workflow: string, galleryItem: any) {
-    let queryString: string = 'workflow=' + workflow + '&galleryId=' + galleryItem.gallery_Item_Id;
+    let queryString: string = 'workflow=' + workflow + '&galleryGuid=' + galleryItem.gallery_Item_Guid;
 
     if (!!galleryItem.custom_Set_Name) {
       queryString += '&csn=' + galleryItem.custom_Set_Name
