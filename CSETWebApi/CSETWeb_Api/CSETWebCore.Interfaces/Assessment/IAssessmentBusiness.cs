@@ -14,7 +14,7 @@ namespace CSETWebCore.Interfaces.Assessment
 {
     public interface IAssessmentBusiness
     {
-        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow);
+        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid);
         AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey);
