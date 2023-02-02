@@ -15,7 +15,7 @@ namespace CSETWebCore.Model.Gallery
         {
         }
 
-        public int Gallery_Item_Id { get; set; }
+        public int Gallery_Item_Guid { get; set; }
         public string Icon_File_Name_Small { get; set; }
         public string Icon_File_Name_Large { get; set; }
         //public Configuration_Setup { get; set; }

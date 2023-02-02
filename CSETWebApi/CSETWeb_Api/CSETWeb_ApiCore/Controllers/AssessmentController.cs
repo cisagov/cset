@@ -59,8 +59,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/createassessment")]
         public IActionResult CreateAssessment([FromQuery] string workflow)
         {
+            Guid galleryGuid = Guid.Empty;
             var currentUserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow));
+            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid));
         }
 
 
@@ -74,14 +75,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment/gallery")]
-        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId, [FromQuery] string csn = null)
+        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] Guid galleryGuid, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
 
 
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
-            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == galleryId);
+            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == galleryGuid);
             if (galleryItem != null)
             {
                 config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
@@ -101,7 +102,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             // create new empty assessment
-            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
+            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid);
 
 
             // build a list of Sets to be selected
