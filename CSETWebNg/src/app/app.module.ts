@@ -255,12 +255,12 @@ import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-m
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
-import { DetailComponent } from './reports/detail/detail.component';
+import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { EvalAgainstComponent } from './reports/eval-against/eval-against.component';
-import { ExecutiveComponent } from './reports/executive/executive.component';
+import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
-import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
 import { ReportService } from './services/report.service';
 import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
@@ -752,12 +752,12 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
-        DetailComponent,
+        SiteDetailComponent,
         DiscoveryTearoutsComponent,
         EvalAgainstComponent,
-        ExecutiveComponent,
+        ExecutiveSummaryComponent,
         SecurityplanComponent,
-        SitesummaryComponent,
+        SiteSummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
         Assessment2InfoComponent,

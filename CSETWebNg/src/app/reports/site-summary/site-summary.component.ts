@@ -30,15 +30,15 @@ import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
 import { MaturityService } from '../../services/maturity.service';
-import { QuestionsService } from './../../services/questions.service';
+import { QuestionsService } from '../../services/questions.service';
 import  Chart  from 'chart.js/auto';
 
 @Component({
-  selector: 'sitesummary',
-  templateUrl: './sitesummary.component.html',
+  selector: 'site-summary',
+  templateUrl: './site-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SitesummaryComponent implements OnInit, AfterViewChecked {
+export class SiteSummaryComponent implements OnInit, AfterViewChecked {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
@@ -125,7 +125,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+      this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
@@ -155,7 +155,7 @@ export class SitesummaryComponent implements OnInit, AfterViewChecked {
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+        this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 100);
     });
 
