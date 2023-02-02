@@ -445,6 +445,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.AssessmentCreatorId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ASSESSMENTS_USERS");
+
+                entity.HasOne(d => d.GalleryItemGu)
+                    .WithMany(p => p.ASSESSMENTS)
+                    .HasForeignKey(d => d.GalleryItemGuid)
+                    .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
             });
 
             modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
@@ -1644,10 +1649,13 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
             {
-                entity.HasOne(d => d.Gallery_Item)
+                entity.HasKey(e => e.Group_Detail_Id)
+                    .HasName("PK_GALLERY_GROUP_DETAILS_1");
+
+                entity.HasOne(d => d.Gallery_Item_Gu)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
-                    .HasForeignKey(d => d.Gallery_Item_Id)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasForeignKey(d => d.Gallery_Item_Guid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
 
                 entity.HasOne(d => d.Group)
@@ -1658,6 +1666,8 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<GALLERY_ITEM>(entity =>
             {
+                entity.Property(e => e.Gallery_Item_Guid).ValueGeneratedNever();
+
                 entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
