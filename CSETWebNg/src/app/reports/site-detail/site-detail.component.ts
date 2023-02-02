@@ -24,7 +24,7 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
-import { QuestionsService } from './../../services/questions.service';
+import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
@@ -33,11 +33,11 @@ import { ACETService } from '../../services/acet.service';
 import  Chart  from 'chart.js/auto';
 
 @Component({
-  selector: 'detail',
-  templateUrl: './detail.component.html',
+  selector: 'site-detail',
+  templateUrl: './site-detail.component.html',
   styleUrls: ['../reports.scss']
 })
-export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
   response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
@@ -121,7 +121,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+      this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
 
@@ -145,7 +145,7 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+        this.chartComponentSummary = <any>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 100);
     });
 

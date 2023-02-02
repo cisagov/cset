@@ -32,11 +32,11 @@ import { ConfigService } from '../../services/config.service';
 
 
 @Component({
-  selector: 'executive',
-  templateUrl: './executive.component.html',
+  selector: 'executive-summary',
+  templateUrl: './executive-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class ExecutiveComponent implements OnInit {
+export class ExecutiveSummaryComponent implements OnInit {
   response: any;
 
   chartPercentCompliance: Chart;
@@ -85,7 +85,7 @@ export class ExecutiveComponent implements OnInit {
 
     // Standards Summary (pie or stacked bar)
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+      this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
     });
 
     // Standards By Category
@@ -99,7 +99,7 @@ export class ExecutiveComponent implements OnInit {
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+        this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 0);
     });
 

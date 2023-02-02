@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
     }
     // Standards Summary
     this.analysisSvc.getStandardsSummary().subscribe(resp => {
-      this.stdsSummChart = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', resp);
+      this.stdsSummChart = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', resp);
     });
 
     if(this.compSummChart){
@@ -110,7 +110,7 @@ export class DashboardComponent implements OnInit {
       this.compSummInitialized = true;
       if (this.componentCount > 0) {
         setTimeout(() => {
-          this.compSummChart = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', resp);
+          this.compSummChart = <Chart>this.analysisSvc.buildComponentsSummary('canvasComponentSummary', resp);
         }, 10);
       }
     });
