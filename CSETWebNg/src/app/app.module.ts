@@ -257,7 +257,7 @@ import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
-import { EvalAgainstComponent } from './reports/eval-against/eval-against.component';
+import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
@@ -754,7 +754,7 @@ import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-in
         ReportTestComponent,
         SiteDetailComponent,
         DiscoveryTearoutsComponent,
-        EvalAgainstComponent,
+        EvalAgainstStandardsComponent,
         ExecutiveSummaryComponent,
         SecurityplanComponent,
         SiteSummaryComponent,

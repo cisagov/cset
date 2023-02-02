@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 /**
  * This is an attempt to consolidate the big graph display.
@@ -33,11 +33,15 @@ import { Component, OnInit } from '@angular/core';
  * to work in the future.
  */
 @Component({
-  selector: 'rapp-eval-against',
-  templateUrl: './eval-against.component.html',
-  styleUrls: ['./eval-against.component.scss']
+  selector: 'app-eval-against-standards',
+  templateUrl: './eval-against-standards.component.html',
+  styleUrls: ['../reports.scss']
 })
-export class EvalAgainstComponent implements OnInit {
+export class EvalAgainstStandardsComponent implements OnInit {
+
+  @Input('results')
+  responseResultsByCategory: any;
+
 
   constructor() {
   }

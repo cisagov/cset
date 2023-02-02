@@ -37,7 +37,7 @@
 
     <div class="cover-page-bottom">
       <app-logo-for-reports></app-logo-for-reports>
-     <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div>{{response?.information.assessment_Name}}</div>
         <div>
           {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
@@ -82,166 +82,130 @@
     </p>
   </div>
 
-  <div class="page-break">
-    <h1>
-      Evaluation Against Selected Standards and Question Sets
-    </h1>
-    <div style="max-width: calc(100% - 4em); margin: 0 auto">
-      <div style="display: flex; flex-direction: row; align-items: flex-end;justify-content: space-between;;">
-        <div>
-          <div
-            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
-            STANDARD OR QUESTION SET
-          </div>
-          <div
-            style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-            <div *ngFor="let s of responseResultsByCategory?.dataSets"
-              style="display: flex; flex-direction: row; align-items: center;">
-              <div
-                [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
-              </div>
-              {{s.label}}
-            </div>
-          </div>
-        </div>
-        <div style="padding: 1em 0 1em 1em;">
-          <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-            <div>STANDARDS SUMMARY</div>
-            <div>
-              <canvas id="canvasStandardSummary"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-        <canvas id="canvasStandardResultsByCategory"></canvas>
-      </div>
-    </div>
-  </div>
+  <app-eval-against-standards [results]="responseResultsByCategory"></app-eval-against-standards>
 
 
   <div *ngIf="!usesRAC()" class="page-break">
     <h1>
-        Security Assurance Level (SAL)
+      Security Assurance Level (SAL)
     </h1>
 
     <div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
-        <div class="sal-label">CALCULATED LEVEL</div>
-        <div class="sal-value">
-            {{response?.salTable.osv}}
-        </div>
+      <div class="sal-label">CALCULATED LEVEL</div>
+      <div class="sal-value">
+        {{response?.salTable.osv}}
+      </div>
     </div>
 
     <table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
-        <tr>
-            <th style="width: 25%"></th>
-            <th style="width: 25%">Confidentiality</th>
-            <th style="width: 25%">Integrity</th>
-            <th style="width: 25%">Availability</th>
-        </tr>
-        <tr>
-            <td>Overall Values</td>
-            <td>{{response?.salTable.q_CV}}</td>
-            <td>{{response?.salTable.q_IV}}</td>
-            <td>{{response?.salTable.q_AV}}</td>
-        </tr>
+      <tr>
+        <th style="width: 25%"></th>
+        <th style="width: 25%">Confidentiality</th>
+        <th style="width: 25%">Integrity</th>
+        <th style="width: 25%">Availability</th>
+      </tr>
+      <tr>
+        <td>Overall Values</td>
+        <td>{{response?.salTable.q_CV}}</td>
+        <td>{{response?.salTable.q_IV}}</td>
+        <td>{{response?.salTable.q_AV}}</td>
+      </tr>
     </table>
 
 
     <div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
-        <p>
-            <b>Calculated General Security Assurance Levels (SAL)</b>
-        </p>
-        <table class="cset-table" style="table-layout: fixed">
-            <tr>
-                <th style="width: 33%"></th>
-                <th style="width: 33%">Onsite</th>
-                <th style="width: 33%">Offsite</th>
-            </tr>
-            <tr>
-                <td>Physical Injury</td>
-                <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
-                <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
-            </tr>
-            <tr>
-                <td>Hospital Injury</td>
-                <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
-                <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
-            </tr>
-            <tr>
-                <td>Death</td>
-                <td>{{response?.genSalTable.on_Site_Death}}</td>
-                <td>{{response?.genSalTable.off_Site_Death}}</td>
-            </tr>
-            <tr>
-                <td>Capital Assets</td>
-                <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
-                <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
-            </tr>
-            <tr>
-                <td>Economic Impact</td>
-                <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
-                <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
-            </tr>
-            <tr>
-                <td>Environmental Impact</td>
-                <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
-                <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
-            </tr>
-        </table>
+      <p>
+        <b>Calculated General Security Assurance Levels (SAL)</b>
+      </p>
+      <table class="cset-table" style="table-layout: fixed">
+        <tr>
+          <th style="width: 33%"></th>
+          <th style="width: 33%">Onsite</th>
+          <th style="width: 33%">Offsite</th>
+        </tr>
+        <tr>
+          <td>Physical Injury</td>
+          <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
+          <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
+        </tr>
+        <tr>
+          <td>Hospital Injury</td>
+          <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
+          <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
+        </tr>
+        <tr>
+          <td>Death</td>
+          <td>{{response?.genSalTable.on_Site_Death}}</td>
+          <td>{{response?.genSalTable.off_Site_Death}}</td>
+        </tr>
+        <tr>
+          <td>Capital Assets</td>
+          <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
+          <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
+        </tr>
+        <tr>
+          <td>Economic Impact</td>
+          <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
+          <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
+        </tr>
+        <tr>
+          <td>Environmental Impact</td>
+          <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
+          <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
+        </tr>
+      </table>
     </div>
 
 
     <div *ngIf="response?.salTable.lastSalDeterminationType === 'NIST'">
-        <h2>
-            FIPS 199 Security Assurance Level Guidance
-        </h2>
+      <h2>
+        FIPS 199 Security Assurance Level Guidance
+      </h2>
 
-        <p>
-            <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
-        </p>
+      <p>
+        <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
+      </p>
 
-        <table class="cset-table">
-            <tr>
-                <th></th>
-                <th>Confidentiality</th>
-                <th>Integrity</th>
-                <th>Availability</th>
-            </tr>
-            <tr>
-                <td>Adjusted For System Questions</td>
-                <td>{{response?.nistSalTable?.q_CV}}</td>
-                <td>{{response?.nistSalTable?.q_IV}}</td>
-                <td>{{response?.nistSalTable?.q_AV}}</td>
-            </tr>
-            <tr>
-                <td>Information Type</td>
-                <td>{{response?.nistSalTable?.iT_CV}}</td>
-                <td>{{response?.nistSalTable?.iT_IV}}</td>
-                <td>{{response?.nistSalTable?.iT_AV}}</td>
-            </tr>
-        </table>
+      <table class="cset-table">
+        <tr>
+          <th></th>
+          <th>Confidentiality</th>
+          <th>Integrity</th>
+          <th>Availability</th>
+        </tr>
+        <tr>
+          <td>Adjusted For System Questions</td>
+          <td>{{response?.nistSalTable?.q_CV}}</td>
+          <td>{{response?.nistSalTable?.q_IV}}</td>
+          <td>{{response?.nistSalTable?.q_AV}}</td>
+        </tr>
+        <tr>
+          <td>Information Type</td>
+          <td>{{response?.nistSalTable?.iT_CV}}</td>
+          <td>{{response?.nistSalTable?.iT_IV}}</td>
+          <td>{{response?.nistSalTable?.iT_AV}}</td>
+        </tr>
+      </table>
 
 
-        <table class="cset-table">
-            <tr>
-                <th>Type</th>
-                <th>Special Factors</th>
-            </tr>
-            <tr>
-                <td>Confidentiality</td>
-                <td>{{nistSalC}}</td>
-            </tr>
-            <tr>
-                <td>Integrity</td>
-                <td>{{nistSalI}}</td>
-            </tr>
-            <tr>
-                <td>Availability</td>
-                <td>{{nistSalA}}</td>
-            </tr>
-        </table>
+      <table class="cset-table">
+        <tr>
+          <th>Type</th>
+          <th>Special Factors</th>
+        </tr>
+        <tr>
+          <td>Confidentiality</td>
+          <td>{{nistSalC}}</td>
+        </tr>
+        <tr>
+          <td>Integrity</td>
+          <td>{{nistSalI}}</td>
+        </tr>
+        <tr>
+          <td>Availability</td>
+          <td>{{nistSalA}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 
