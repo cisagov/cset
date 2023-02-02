@@ -28,7 +28,7 @@ export const environment = {
   docUrl: '',
   appCode: 'CSET',
   visibleVersion: '11.5',
-  version: '12.0.1.2',
+  version: '12.0.1.3',
   helpContactEmail: '',
   helpContactPhone: ''
 };
