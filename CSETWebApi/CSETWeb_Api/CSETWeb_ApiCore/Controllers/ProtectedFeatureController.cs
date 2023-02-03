@@ -12,6 +12,7 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -73,15 +74,22 @@ namespace CSETWebCore.Api.Controllers
                    
 
         /// <summary>
-        /// Marks the FAA set as 'unlocked.'
+        /// Marks the FAA set as 'unlocked.' Marks the corresponding gallery card as 'visible'.
         /// </summary>
         private void AddNewlyEnabledModules()
         {
-            var sets2 = _context.SETS.Where(s=> s.IsEncryptedModule);
+            var sets2 = _context.SETS.Where(s => s.IsEncryptedModule);
             foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;
             }
+
+            var gallItems = _context.GALLERY_ITEM.Where(g => g.Gallery_Item_Id == 68 || g.Gallery_Item_Id == 69);
+            foreach (GALLERY_ITEM gall in gallItems)
+            {
+                gall.Is_Visible = true;
+            }
+            
             _context.SaveChanges();
         }
     }
