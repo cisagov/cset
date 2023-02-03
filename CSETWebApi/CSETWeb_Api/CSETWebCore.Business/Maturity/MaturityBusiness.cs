@@ -54,16 +54,14 @@ namespace CSETWebCore.Business.Maturity
         {
             var q = from amm in _context.AVAILABLE_MATURITY_MODELS
                     from mm in _context.MATURITY_MODELS
-                    from a in _context.ASSESSMENTS
                     where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                    join gi in _context.GALLERY_ITEM on a.GalleryItemGuid equals gi.Gallery_Item_Guid
                     select new Model.Maturity.MaturityModel()
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
                         ModelTitle = mm.Model_Title,
                         QuestionsAlias = mm.Questions_Alias,
-                        ModelDescription = gi.Description
+                        ModelDescription = mm.Model_Description
                     };
             var myModel = q.FirstOrDefault();
 
@@ -458,8 +456,7 @@ namespace CSETWebCore.Business.Maturity
                              ModelId = a.Maturity_Model_Id,
                              ModelName = a.Model_Name,
                              QuestionsAlias = a.Questions_Alias,
-                             // Leaving description blank for now. Model Description is being removed in favor of gallery card description.
-                             ModelDescription = "",
+                             ModelDescription = a.Model_Description,
                              ModelTitle = a.Model_Title
                          };
             foreach (var m in result.ToList())

@@ -68,12 +68,12 @@ namespace CSETWebCore.Api.Controllers
                             join n in _context.GALLERY_GROUP
                                 on g.Group_Id equals n.Group_Id
                             join i in _context.GALLERY_ITEM
-                                on g.Gallery_Item_Guid equals i.Gallery_Item_Guid
+                                on g.Gallery_Item_Id equals i.Gallery_Item_Id
                             where r.Layout_Name == Layout_Name
                                 && r.Group_Id == g.Group_Id
                                 && g.Group_Id == n.Group_Id
-                                && g.Gallery_Item_Guid == i.Gallery_Item_Guid
-                            orderby g.Group_Id, g.Gallery_Item_Guid ascending
+                                && g.Gallery_Item_Id == i.Gallery_Item_Id
+                            orderby g.Group_Id, g.Gallery_Item_Id ascending
                             select new GalleryItem(i,n.Group_Id) //START HERE - FIX "CSETWebCore.Model.NewFolder" to be Gallery related
                             {
                             };

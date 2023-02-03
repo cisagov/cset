@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.GalleryParser
             var data = from r in _context.GALLERY_ROWS
                        join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
                        join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
-                       join i in _context.GALLERY_ITEM on d.Gallery_Item_Guid equals i.Gallery_Item_Guid
+                       join i in _context.GALLERY_ITEM on d.Gallery_Item_Id equals i.Gallery_Item_Id
                        where r.Layout_Name == layout_name
                        orderby r.Row_Index, d.Column_Index
                        select new { r, g, d, i };

@@ -48,7 +48,7 @@ namespace CSETWebCore.Business.GalleryParser.Tests
                 null);
             foreach(var i in gallery.GetUnused("CF"))
             {
-                Console.WriteLine(i.Gallery_Item_Guid);
+                Console.WriteLine(i.Gallery_Item_Id);
             }
         }
     }
