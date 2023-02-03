@@ -12,32 +12,29 @@ namespace CSETWebCore.DataLayer.Model
     {
         public GALLERY_ITEM()
         {
-            ASSESSMENTS = new HashSet<ASSESSMENTS>();
             GALLERY_GROUP_DETAILS = new HashSet<GALLERY_GROUP_DETAILS>();
         }
 
+        [Key]
+        public int Gallery_Item_Id { get; set; }
         [StringLength(100)]
         public string Icon_File_Name_Small { get; set; }
         [StringLength(100)]
         public string Icon_File_Name_Large { get; set; }
         [Required]
         public string Configuration_Setup { get; set; }
+        public string Configuration_Setup_Client { get; set; }
         [Required]
         [StringLength(2000)]
         public string Description { get; set; }
-        public string Configuration_Setup_Client { get; set; }
         [StringLength(200)]
         public string Title { get; set; }
-        [Required]
-        public bool? Is_Visible { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreationDate { get; set; }
-        [Key]
-        public Guid Gallery_Item_Guid { get; set; }
+        [Required]
+        public bool? Is_Visible { get; set; }
 
-        [InverseProperty("GalleryItemGu")]
-        public virtual ICollection<ASSESSMENTS> ASSESSMENTS { get; set; }
-        [InverseProperty("Gallery_Item_Gu")]
+        [InverseProperty("Gallery_Item")]
         public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
     }
 }

@@ -193,7 +193,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            dbDemog.cyberRiskService = demographics.cyberRiskService;
+            dbDemog.CyberRiskService = demographics.cyberRiskService;
 
             _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();
