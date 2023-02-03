@@ -42,7 +42,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// </summary>
         /// <param name="item_to_clone"></param>
         /// <returns></returns>
-        public void CloneGalleryItem(Guid item_to_clone, int group_Id)
+        public void CloneGalleryItem(int item_to_clone, int group_Id)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.GalleryParser
             TinyMapper.Bind<GALLERY_ITEM, GALLERY_ITEM>(
                 config =>
                 {
-                    config.Ignore(source => source.Gallery_Item_Guid);
+                    config.Ignore(source => source.Gallery_Item_Id);
                 }
             );
 
@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.GalleryParser
                 }
             );
 
-            var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == item_to_clone).FirstOrDefault();
+            var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item_to_clone).FirstOrDefault();
 
             if (oldItem == null) { return; }
 
@@ -76,7 +76,7 @@ namespace CSETWebCore.Business.GalleryParser
             _context.SaveChanges();
 
             // Setup for adding to GALLERY_GROUP_DETAILS table
-            var detailList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid == item_to_clone && x.Group_Id == group_Id).ToList();
+            var detailList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == item_to_clone && x.Group_Id == group_Id).ToList();
 
             if (detailList.Count == 0) { return; }
 
@@ -87,7 +87,7 @@ namespace CSETWebCore.Business.GalleryParser
             {
                 Group_Id = newDetail.Group_Id,
                 Column_Index = maxColumn + 1,
-                Gallery_Item_Guid = newDetail.Gallery_Item_Guid,
+                Gallery_Item_Id = newDetail.Gallery_Item_Id,
                 Click_Count = newDetail.Click_Count
             };
 
@@ -133,7 +133,7 @@ namespace CSETWebCore.Business.GalleryParser
             foreach(var item in _context.GALLERY_GROUP_DETAILS.Where(x=>x.Group_Id == oldGroup.Group_Id))
             {
                 //make a copy and add it to the new group
-                var newItem = new GALLERY_GROUP_DETAILS() { Group_Id = newGroup.Group_Id, Column_Index = item.Column_Index, Gallery_Item_Guid = item.Gallery_Item_Guid };                
+                var newItem = new GALLERY_GROUP_DETAILS() { Group_Id = newGroup.Group_Id, Column_Index = item.Column_Index, Gallery_Item_Id = item.Gallery_Item_Id };                
                 newGroup.GALLERY_GROUP_DETAILS.Add(newItem);
             }
             _context.SaveChanges();
@@ -167,7 +167,7 @@ namespace CSETWebCore.Business.GalleryParser
             _context.SaveChanges();
 
             // Setup for adding to GALLERY_GROUP_DETAILS table            
-            var galleryId = newItem.Gallery_Item_Guid;
+            var galleryId = newItem.Gallery_Item_Id;
 
             //var columnMax = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == groupId).Max(x => x.Column_Index);
 
@@ -175,7 +175,7 @@ namespace CSETWebCore.Business.GalleryParser
             {
                 Group_Id = group_id,
                 Column_Index = columnId,
-                Gallery_Item_Guid = galleryId,
+                Gallery_Item_Id = galleryId,
                 Click_Count = 0
             };
 
@@ -224,13 +224,13 @@ namespace CSETWebCore.Business.GalleryParser
                           select g.Group_Id;
 
             var galleryId = from g in _context.GALLERY_ITEM.AsEnumerable()
-                            select g.Gallery_Item_Guid;
+                            select g.Gallery_Item_Id;
 
             GALLERY_GROUP_DETAILS newDetailsRow = new GALLERY_GROUP_DETAILS()
             {
                 Group_Id = groupId.Single(),
                 Column_Index = columnId,
-                Gallery_Item_Guid = galleryId.Last(),
+                Gallery_Item_Id = galleryId.Last(),
                 Click_Count = 0
             };
 
@@ -240,9 +240,9 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
 
-        public void DeleteGalleryItem(Guid id, int group_id)
+        public void DeleteGalleryItem(int id, int group_id)
         {
-            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid == id && x.Group_Id == group_id).FirstOrDefault();
+            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == id && x.Group_Id == group_id).FirstOrDefault();
             if (item != null)
             {
                 _context.GALLERY_GROUP_DETAILS.Remove(item);
@@ -261,14 +261,14 @@ namespace CSETWebCore.Business.GalleryParser
         public GalleryItem[] GetUnused(string layout_Name)
         {
             var queryExcept = (from i in _context.GALLERY_ITEM
-                               join d in _context.GALLERY_GROUP_DETAILS on i.Gallery_Item_Guid equals d.Gallery_Item_Guid
+                               join d in _context.GALLERY_GROUP_DETAILS on i.Gallery_Item_Id equals d.Gallery_Item_Id
                                join g in _context.GALLERY_GROUP on d.Group_Id equals g.Group_Id
                                join r in _context.GALLERY_ROWS on g.Group_Id equals r.Group_Id
                                where r.Layout_Name == layout_Name
-                               select new GalleryItem() { Gallery_Item_Guid = i.Gallery_Item_Guid, Title = i.Title, Description = i.Description }).Distinct().ToList();
+                               select new GalleryItem() { Gallery_Item_Id = i.Gallery_Item_Id, Title = i.Title, Description = i.Description }).Distinct().ToList();
 
             var query = (from i in _context.GALLERY_ITEM
-                         select new GalleryItem() { Gallery_Item_Guid = i.Gallery_Item_Guid, Title = i.Title, Description = i.Description }).ToList();
+                         select new GalleryItem() { Gallery_Item_Id = i.Gallery_Item_Id, Title = i.Title, Description = i.Description }).ToList();
                        
                         
             return query.Except(queryExcept.ToList(), new GalleryItemComparer()).ToArray();
@@ -289,7 +289,7 @@ namespace CSETWebCore.Business.GalleryParser
     {
         public bool Equals(GalleryItem x, GalleryItem y)
         {
-            if (x.Gallery_Item_Guid == y.Gallery_Item_Guid)
+            if (x.Gallery_Item_Id == y.Gallery_Item_Id)
                 return true;
 
             return false;
@@ -297,7 +297,7 @@ namespace CSETWebCore.Business.GalleryParser
 
         public int GetHashCode(GalleryItem obj)
         {
-            return obj.Gallery_Item_Guid.GetHashCode();
+            return obj.Gallery_Item_Id.GetHashCode();
         }
     }
 }

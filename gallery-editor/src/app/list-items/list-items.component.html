@@ -3,13 +3,13 @@
 </div>
 
 <div [class.item]="!isRoot" #parentItem  id="g{{listTest.group_Id}}">	
-	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Guid}}">
+	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
             <fa-icon [icon]="faArrows" class="handle"></fa-icon>
             <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 			
 			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete a Group</button>			
 			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
-			<button *ngIf="listTest.gallery_Item_Guid" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
-			<button *ngIf="listTest.gallery_Item_Guid" (click)="cloneGalleryItem(listTest)">Clone Item</button> 			
+			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
+			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 			
 			<button (click)="toggleItem()">Add New</button>
 			
 			<div *ngIf="showNewItemFields">			
@@ -28,7 +28,7 @@
 					<input style="width: 400px;" type="text" #boxAddDescription>
 				</span>
 				<button *ngIf="listTest.group_Id" (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
-				<button *ngIf="listTest.gallery_Item_Guid" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, listTest)">Add Item to Group</button>
+				<button *ngIf="listTest.gallery_Item_Id" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, listTest)">Add Item to Group</button>
 			</div>
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">
@@ -49,7 +49,7 @@
 			<div *ngFor="let item of group?.galleryItems">
 				<fa-icon [icon]="faArrows" class=" handle item"></fa-icon>
 				<span>{{ item.title }} 
-					 <button (click)="deleteGalleryItem(item.gallery_Item_Guid)">Delete an Item</button>
+					 <button (click)="deleteGalleryItem(item.gallery_Item_Id)">Delete an Item</button>
 					 <button (click)="cloneGalleryItem(item, group.group_Id)">Clone Item</button> 
 				</span>
 			</div>
