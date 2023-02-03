@@ -30,7 +30,7 @@
         #swiper
     >
         <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
-            <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card" (mouseover)="onHover(c.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+            <div [attr.id]="'c'+c.gallery_Item_Id" class="card gallery-card" (mouseover)="onHover(c.gallery_Item_Id)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Id)">
                 <div class="card-image-parent">
                     <img class="card-image-child" [src]="getImageSrc(c.icon_File_Name_Small)">
                 </div>
@@ -38,7 +38,7 @@
                     <h6 class="card-title" ellipsis [ellipsis-content]="c.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                     <p class="card-text" ellipsis [ellipsis-content]="c.plainText" style="max-height:80px; min-height:80px;"></p>
                 </div>
-                <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.gallery_Item_Guid!=hoverIndex">
+                <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.gallery_Item_Id!=hoverIndex">
                     <button matTooltip="View Detail" class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
                     <button matTooltip="Create Assessment" class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
                 </div>

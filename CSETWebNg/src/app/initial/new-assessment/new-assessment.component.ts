@@ -101,8 +101,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
-      (resp: any) => {
-        console.log(resp);   
+      (resp: any) => {        
         this.galleryData = resp;
         this.rows = this.galleryData.rows;
         this.testRow = this.rows[1];
@@ -115,7 +114,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         // create a plainText property for the elipsis display in case a description has HTML markup
         const dom = document.createElement("div");
         this.rows.forEach(row => {
-          row.galleryItems.forEach(item => {     
+          row.galleryItems.forEach(item => {            
             dom.innerHTML = item.description;
             item.plainText = dom.innerText;
           });
