@@ -54,10 +54,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
 
   pageInitialized = false;
 
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
 
   // Charts for Components
   componentCount = 0;
@@ -98,19 +94,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
-        // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
-        if (!!v) {
-          this.nistSalC = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
-        if (!!v) {
-          this.nistSalI = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
-        if (!!v) {
-          this.nistSalA = v.justification;
-        }
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );

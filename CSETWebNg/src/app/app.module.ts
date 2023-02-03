@@ -525,6 +525,7 @@ import { ReferencesDisplayComponent } from './assessment/questions/references-di
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
 import { AnalysisNetworkComponentsComponent } from './reports/analysis-network-components/analysis-network-components.component';
+import { SalSectionComponent } from './reports/sal-section/sal-section.component';
 
 
 
@@ -1008,7 +1009,8 @@ import { AnalysisNetworkComponentsComponent } from './reports/analysis-network-c
         ReferencesDisplayComponent,
         DiagramVulnerabilitiesDialogComponent,
         DiagramVulnerabilitiesComponent,
-        AnalysisNetworkComponentsComponent
+        AnalysisNetworkComponentsComponent,
+        SalSectionComponent
     ],
     providers: [
         ConfigService,
