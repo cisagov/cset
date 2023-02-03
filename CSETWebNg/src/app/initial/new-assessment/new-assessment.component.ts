@@ -87,9 +87,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   };
 
-  galleryData: any;
-  rows: any;
-  testRow: any;
   show: boolean = false;
 
   constructor(public dialog: MatDialog,
@@ -100,27 +97,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
-      (resp: any) => {        
-        this.galleryData = resp;
-        this.rows = this.galleryData.rows;
-        this.testRow = this.rows[1];
-
-        ///NOTE THIS runs the default item if there is only one item automatically
-        if(this.rows.length==1 && this.rows[0].galleryItems.length==1){
-          this.assessSvc.newAssessmentGallery(this.rows[0].galleryItems[0]);
-        }
-
-        // create a plainText property for the elipsis display in case a description has HTML markup
-        const dom = document.createElement("div");
-        this.rows.forEach(row => {
-          row.galleryItems.forEach(item => {            
-            dom.innerHTML = item.description;
-            item.plainText = dom.innerText;
-          });
-        });
-      }
-    );
+    this.gallerySvc.refreshCards();
 
     this.checkNavigation();
   }
@@ -200,4 +177,5 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       data: data
     });
   }
+
 }
