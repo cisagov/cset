@@ -12,6 +12,7 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -81,6 +82,8 @@ namespace CSETWebCore.Api.Controllers
             foreach (SETS sts in sets2)
             {
                 sts.IsEncryptedModuleOpen = true;
+                GALLERY_ITEM gallItem = _context.GALLERY_ITEM.Where(g => g.Title == sts.Full_Name).FirstOrDefault();
+                gallItem.Is_Visible = true;
             }
             _context.SaveChanges();
         }
