@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 2/2/2023 4:28:17 PM
+Script created by SQL Data Compare version 14.7.8.21163 from Red Gate Software Ltd at 2/3/2023 3:48:05 PM
 
 */
 		
@@ -490,10 +490,11 @@ UPDATE [dbo].[SETS] SET [Standard_ToolTip]=N'<p>This assessment covers recommend
 <li>addresses Defense-In-Depth as a recommended approach for securing rail communications and control systems,</li>
 <li>defines security zone classifications, and</li>
 <li>defines a minimum set of security controls for the most critical zones: the “SAFETY CRITICAL SECURITY ZONE (SCSZ)” and the “FIRE, LIFE-SAFETY SECURITY ZONE (FLSZ).”</li></ul></p>' WHERE [Set_Name] = N'APTA_Rail_V1'
+UPDATE [dbo].[SETS] SET [Standard_ToolTip]=N'A security check up and cybersecurity recommendations for securing portable electronic devices for commercial airline carriers.' WHERE [Set_Name] = N'FAA_PED_V2'
 UPDATE [dbo].[SETS] SET [Standard_ToolTip]=N'These guidelines are applicable to operational natural gas and hazardous liquid transmission pipeline systems, natural gas distribution pipeline systems, and liquefied natural gas facility operators. Additionally, they apply to operational pipeline systems that transport materials categorized as toxic inhalation hazards (TIH). TIH materials are gases or liquids that are known or presumed on the basis of tests to be so toxic to humans as to pose a health hazard in the event of a release during transportation.
 
 This standard includes the replacement of section 5 (Criticality).' WHERE [Set_Name] = N'TSA2018'
-PRINT(N'Operation applied to 2 rows out of 4')
+PRINT(N'Operation applied to 3 rows out of 3')
 
 PRINT(N'Update rows in [dbo].[MATURITY_GROUPINGS]')
 UPDATE [dbo].[MATURITY_GROUPINGS] SET [Title]=N'Identify' WHERE [Grouping_Id] = 200
@@ -509,6 +510,7 @@ UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'<p>This assessment covers recomm
 <li>defines security zone classifications, and</li>
 <li>defines a minimum set of security controls for the most critical zones: the “SAFETY CRITICAL SECURITY ZONE (SCSZ)” and the “FIRE, LIFE-SAFETY SECURITY ZONE (FLSZ).”</li></ul></p>' WHERE [Gallery_Item_Id] = 29
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'A Network Architecture and Diagram Based assessment.  This assessment requires that you build or import an assessment into CSET and creates a question set specifically tailored to your network configuration.' WHERE [Gallery_Item_Id] = 54
+UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'A security check up and cybersecurity recommendations for securing portable electronic devices for commercial airline carriers.' WHERE [Gallery_Item_Id] = 69
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'These guidelines are applicable to operational natural gas and hazardous liquid transmission pipeline systems, natural gas distribution pipeline systems, and liquefied natural gas facility operators. Additionally, they apply to operational pipeline systems that transport materials categorized as toxic inhalation hazards (TIH). TIH materials are gases or liquids that are known or presumed on the basis of tests to be so toxic to humans as to pose a health hazard in the event of a release during transportation.
 
 This standard includes the replacement of section 5 (Criticality).' WHERE [Gallery_Item_Id] = 90
@@ -520,7 +522,7 @@ UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'RRA.png', [Icon_File_Na
 <li>addresses Defense-In-Depth as a recommended approach for securing rail communications and control systems,</li>
 <li>defines security zone classifications, and</li>
 <li>defines a minimum set of security controls for the most critical zones: the “SAFETY CRITICAL SECURITY ZONE (SCSZ)” and the “FIRE, LIFE-SAFETY SECURITY ZONE (FLSZ).”</li></ul></p>', [Title]=N'Defining a Basic Security Zone Architecture for Rail Transit and Protecting Critical Zones', [CreationDate]='2023-01-26 13:21:58.443' WHERE [Gallery_Item_Id] = 1132
-PRINT(N'Operation applied to 6 rows out of 6')
+PRINT(N'Operation applied to 7 rows out of 7')
 
 PRINT(N'Add rows to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group]) VALUES (11, 9880, N'Protect')
@@ -570,7 +572,7 @@ SET IDENTITY_INSERT [dbo].[GALLERY_GROUP] OFF
 
 PRINT(N'Add row to [dbo].[GALLERY_ITEM]')
 SET IDENTITY_INSERT [dbo].[GALLERY_ITEM] ON
-INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Id], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES (1130, N'VADR.png', N'VADR.png', N'{Sets:["TSA2018"],SALLevel:"Low",QuestionMode:"Questions",Model:{ModelName:"VADR"},HiddenScreens:["sal"]}', N'The basic VADR maturity model enables participants to perform assessments virtually. Virtual assessments include the same elements that make up a traditional VADR: Architecture Design Review, System Configuration and Log Review, as well as Network Traffic Analysis.', NULL, N'Basic TSA Validated Architecture Design Reviews (VADR)', 1, '2023-01-26 12:22:20.143')
+INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Id], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES (1130, N'VADR.png', N'VADR.png', N'{Model:{ModelName:"VADR"}}', N'The basic VADR maturity model enables participants to perform assessments virtually. Virtual assessments include the same elements that make up a traditional VADR: Architecture Design Review, System Configuration and Log Review, as well as Network Traffic Analysis.', NULL, N'Basic TSA Validated Architecture Design Reviews (VADR)', 1, '2023-01-26 12:22:20.143')
 SET IDENTITY_INSERT [dbo].[GALLERY_ITEM] OFF
 
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
