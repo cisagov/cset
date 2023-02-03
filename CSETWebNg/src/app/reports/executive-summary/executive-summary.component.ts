@@ -74,6 +74,7 @@ export class ExecutiveSummaryComponent implements OnInit {
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {
         this.response = r;
+        console.log(r);
       },
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );

@@ -82,7 +82,10 @@
     </p>
   </div>
 
-  <app-eval-against-standards [results]="responseResultsByCategory"></app-eval-against-standards>
+
+  <div class="page-break" *ngIf="response?.information.useStandard">
+    <app-eval-against-standards [results]="responseResultsByCategory"></app-eval-against-standards>
+  </div>
 
 
   <div *ngIf="!usesRAC()" class="page-break">
@@ -210,37 +213,11 @@
   </div>
 
 
-
   <!-- Analysis of Network Components -->
-  <div class="page-break" *ngIf="componentCount > 0">
-    <h1>
-      Analysis of Network Components
-    </h1>
-
-    <div class="d-flex flex-row align-items-center">
-      <div style="padding: 1rem;">
-        <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-          <div>COMBINED COMPONENT SUMMARY</div>
-          <div>
-            <canvas id="canvasComponentSummary"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div style="padding: 1rem;">
-        <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
-          diagram is <span class="warnInput">{{ warningCount }}</span>.
-        </p>
-        <p> See the Site Summary report Findings and
-          Recommendations from Basic Network Analysis for details.
-        </p>
-      </div>
-    </div>
-
-    <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-      <canvas id="canvasComponentTypes"></canvas>
-    </div>
+  <div class="page-break" *ngIf="response?.information.useDiagram">
+    <app-analysis-network-components></app-analysis-network-components>
   </div>
+
 
 
   <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
