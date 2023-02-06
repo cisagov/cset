@@ -1617,6 +1617,10 @@ PRINT(N'Operation applied to 1173 rows out of 1173')
 
 PRINT(N'Add rows to [dbo].[NEW_QUESTION_SETS]')
 SET IDENTITY_INSERT [dbo].[NEW_QUESTION_SETS] ON
+DELETE FROM NEW_QUESTION_SETS WHERE Question_Id >= 1000000 AND Set_Name = N'CSC_V8'
+DELETE FROM NEW_QUESTION WHERE Question_Id >= 1000000 AND (Std_Ref = N'CSC_V8' OR Std_Ref = N'SET.20220316.141623')
+DELETE FROM NEW_REQUIREMENT WHERE Original_Set_Name = N'SET.20220304.160252' OR Original_Set_Name = N'SET.20220316.141623' OR Original_Set_Name = N'SET.20220317.134357' OR Original_Set_Name = N'SET.20220323.151606' OR Original_Set_Name = N'SET.20220414.113656'
+
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53329, N'CSC_V8', 17401)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53330, N'CSC_V8', 17402)
 INSERT INTO [dbo].[NEW_QUESTION_SETS] ([New_Question_Set_Id], [Set_Name], [Question_Id]) VALUES (53333, N'CSC_V8', 17403)
@@ -1813,8 +1817,15 @@ SET IDENTITY_INSERT [dbo].[NEW_QUESTION_SETS] OFF
 PRINT(N'Operation applied to 192 rows out of 192')
 
 PRINT(N'Add rows to [dbo].[MATURITY_REFERENCE_TEXT]')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[MATURITY_REFERENCE_TEXT] WHERE Mat_Question_Id = 6018)
+BEGIN
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (6018, 1, NULL)
+END
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[MATURITY_REFERENCE_TEXT] WHERE Mat_Question_Id = 6019)
+BEGIN
 INSERT INTO [dbo].[MATURITY_REFERENCE_TEXT] ([Mat_Question_Id], [Sequence], [Reference_Text]) VALUES (6019, 1, NULL)
+END
 PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add constraints to [dbo].[MATURITY_REFERENCE_TEXT]')
