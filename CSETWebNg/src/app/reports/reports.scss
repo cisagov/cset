@@ -1,24 +1,24 @@
-/* 
+/*
 
-  Copyright 2023 Battelle Energy Alliance, LLC  
+  Copyright 2023 Battelle Energy Alliance, LLC
 
-Permission is hereby granted, free of charge, to any person obtaining a copy 
-of this software and associated documentation files (the "Software"), to deal 
-in the Software without restriction, including without limitation the rights 
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom the Software is 
-furnished to do so, subject to the following conditions: 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
-copies or substantial portions of the Software. 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-SOFTWARE. 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 */
 @import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -35,6 +35,15 @@ body {
 .report-body {
   max-width: 800px;
   margin: 0 auto 0 auto;
+}
+
+.report-title {
+  margin-left: 25px;
+  text-align: center;
+  font-family: Verdana;
+  font-size: 40px;
+  letter-spacing: 12px;
+  color: #0f3c7a;
 }
 
 .report-body-edm {
@@ -1036,7 +1045,7 @@ body,
 }
 
 .levelOne {
-  /* width: calc(var(--arrow-width) * calc( 1 + calc(var(--row-growth-rate) * 
+  /* width: calc(var(--arrow-width) * calc( 1 + calc(var(--row-growth-rate) *
   0))); */
   width: calc(var(--arrow-width) * var(--arrow-base-width-ratio))
 }
@@ -1460,13 +1469,13 @@ h1.pageHeader {
 //   background-color: rgb(160,183, 61);
 // }
 // .score-yellow {
-//   background-color: rgb(255, 199, 50);  
+//   background-color: rgb(255, 199, 50);
 // }
 // .score-red {
 //   background-color: rgb(239,67,35);
 // }
 
-//EDM CHART COMPONENETS 
+//EDM CHART COMPONENETS
 .triple-bar-chart {
   display: flex;
   flex-basis: 100%;
@@ -1815,7 +1824,7 @@ div.spinner-size-50 {
 .cpg-header {
   font-weight: bold;
   font-size: 1.05rem;
-} 
+}
 
 
 
