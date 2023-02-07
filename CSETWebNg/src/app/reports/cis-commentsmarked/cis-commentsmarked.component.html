@@ -25,7 +25,7 @@
   <div class="flex-container">
       <div class="column">
           <p
-              style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+              class="report-title">
               COMMENTS REVIEW REPORT CISA CIS
           </p>
       </div>
@@ -70,7 +70,7 @@
               <tr>
                   <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                   <td class="deficiencies-list-comment"
-                      [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>                  
+                      [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>
                   <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                       src="assets/images/icons/MarkedFlag.png">
               </td>
@@ -109,7 +109,7 @@
               <tr>
                   <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
                   <td class="deficiencies-list-comment"
-                      [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>                  
+                      [innerHTML]="reportSvc.scrubGlossaryMarkup(s.mat.question_Text)"></td>
                   <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                       src="assets/images/icons/MarkedFlag.png"></td>
               </tr>

@@ -1,43 +1,35 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2023 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <head>
 </head>
 <div class="report-body mb-5">
     <div class="flex-container">
         <div class="column">
-            <p style="margin-left: 25px; text-align: center">
-                <span style="
-        font-family: Verdana;
-        font-size: 40px;
-        letter-spacing: 36px;
-        color: #0f3c7a;
-        font-weight: 100;
-        ">EXECUTIVE</span><br /><span style="
-        font-family: Verdana;
-        font-size: 40px;
-        letter-spacing: 36px;
-        color: #0f3c7a;
-        ">SUMMARY</span>
+            <p class="report-title">
+              EXECUTIVE
+            </p>
+            <p class="report-title">
+              SUMMARY
             </p>
         </div>
         <div class="column">
@@ -74,7 +66,7 @@
             Site Information
         </h1>
         <hr class="page-line">
-        
+
         <table class="table-site-info">
             <tr>
                 <td>Assessment Name:</td>
@@ -122,9 +114,9 @@
                         style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
                         {{ domain.levelDisplay }}</div>
             </div>
-            
+
         </div>
-        
+
         <div *ngFor="let factor of domain.graphdata; index as i">
             <div class="row">
                 <div class="col-8 my-auto">
@@ -135,7 +127,7 @@
                         style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
                         {{ factor.levelDisplay }}</div>
                 </div>
-                
+
             </div>
 
             <div *ngFor="let comp of factor.sections; index as i">
@@ -190,7 +182,7 @@
         <div class="chart-column">
             <p style="text-align: center; color: #1274d2;">Target Percentage Achieved</p>
         </div>
-    
+
     </div>
     <div class="cover-page-bottom mb-4" style="text-indent: 24px">
         <div class="chart-column">
@@ -209,6 +201,6 @@
                     <p style="text-align: center; padding-bottom: 24px"><b>{{isNaNValuevalue(domainData.targetPercentageAchieved)}}%</b></p>
             </div>
         </div>
-            
+
     </div>
 </div>
