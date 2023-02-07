@@ -21,51 +21,63 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { AnalysisService } from '../../services/analysis.service';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
-/**
- * This is an attempt to consolidate the big graph display.
- * It is used on both the Executive and the Site Summary reports.
- * I haven't gotten it to work yet.  Including it in the page
- * makes Angular navigate to the root.
- *
- * So for now it is being checked in, in case it can be made
- * to work in the future.
- */
 @Component({
-  selector: 'app-eval-against-standards',
-  templateUrl: './eval-against-standards.component.html',
+  selector: 'app-standards-compliance',
+  templateUrl: './standards-compliance.component.html',
   styleUrls: ['../reports.scss']
 })
-export class EvalAgainstStandardsComponent implements OnInit {
+export class StandardsComplianceComponent implements OnInit, AfterViewChecked {
 
-  @Input('results')
-  responseResultsByCategory: any;
+  pageInitialized = false;
+  chart1: Chart;
+  complianceGraphs: any[] = [];
+  numberOfStandards = -1;
 
-  chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: any;
-
-
+  /**
+   * 
+   */
   constructor(
     public analysisSvc: ReportAnalysisService
-  ) {
+  ) { }
+
+  /**
+   * 
+   */
+  ngOnInit(): void {
+    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
+
+      // Set up arrays for green bar graphs
+      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
+      if (!!x.dataSets) {
+        x.dataSets.forEach(element => {
+          this.complianceGraphs.push(element);
+        });
+      }
+    });
   }
 
-  ngOnInit() {
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+  /**
+   * 
+   */
+  ngAfterViewChecked() {
+    if (this.pageInitialized) {
+      return;
+    }
+
+    // There's probably a better way to do this ... we have to wait until the
+    // complianceGraphs array has been built so that the template can bind to it.
+    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
+      this.pageInitialized = true;
+    }
+
+    // at this point the template should know how big the complianceGraphs array is
+    let cg = 0;
+    this.complianceGraphs.forEach(x => {
+      this.chart1 = <Chart>this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
     });
-
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = <Chart>this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-    });
-
   }
 }

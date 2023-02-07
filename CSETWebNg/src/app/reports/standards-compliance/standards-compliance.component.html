@@ -21,28 +21,9 @@
   SOFTWARE.
 -------------------------->
 <h1>
-    Analysis of Network Components
+    Standards Compliance
 </h1>
-
-<div class="d-flex flex-row align-items-center mb-5">
-    <div>
-        <h2>Combined Component Summary</h2>
-        <div>
-            <canvas id="canvasComponentSummary"></canvas>
-        </div>
-    </div>
-
-    <div class="pl-3">
-        <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
-            diagram is <span class="warnInput">{{ warningCount }}</span>.
-        </p>
-        <p> See the section "Findings and
-            Recommendations from Basic Network Analysis" for details.
-        </p>
-    </div>
-</div>
-
-<h2>Answer Distribution by Component Type</h2>
-<div>
-    <canvas id="canvasComponentTypes"></canvas>
+<div *ngFor="let graph of complianceGraphs; index as i">
+    <h2 style="text-align: center">{{graph.label}}</h2>
+    <canvas id="complianceGraph{{i}}"></canvas>
 </div>

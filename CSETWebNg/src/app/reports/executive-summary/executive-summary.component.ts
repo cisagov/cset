@@ -41,7 +41,7 @@ export class ExecutiveSummaryComponent implements OnInit {
 
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: Chart;
+  //canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
 
@@ -83,18 +83,6 @@ export class ExecutiveSummaryComponent implements OnInit {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
     });
 
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-    });
 
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
