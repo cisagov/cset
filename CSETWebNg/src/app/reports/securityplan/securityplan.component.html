@@ -577,7 +577,6 @@
                 3.2 Security Assurance Level (SAL)
             </h2>
 
-            <!-- SAL -->
             <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
 
 
@@ -637,7 +636,7 @@
                 </tr>
                 <tr *ngFor="let inventoryItem of zoneList">
                     <td>{{inventoryItem.diagram_Component_Type}}</td>
-                    <td>{{inventoryItem.label}}</td>
+                    <td [innerHTML]="inventoryItem.label"></td>
                 </tr>
             </table>
         </div>

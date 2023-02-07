@@ -136,7 +136,7 @@
     </div>
 
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
             Standards Compliance
         </h1>
@@ -208,7 +208,6 @@
             Security Assurance Level (SAL)
         </h1>
 
-        <!-- SAL -->
         <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
     </div>
 
@@ -419,7 +418,7 @@
 
 
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
             Ranked Subject Areas
         </h1>
@@ -439,7 +438,7 @@
 
 
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
             Summary Of Ranked Questions
         </h1>
@@ -471,80 +470,19 @@
 
 
     <div class="page-break">
-        <h1>
-            Question Comments
-        </h1>
-
-        <table *ngFor="let c of response?.questionsWithComments" class="cset-table-3">
-            <tr>
-                <th colspan="3">
-                    {{c.categoryAndNumber}}
-                    <i *ngIf="c.MarkedForReview === 'True'" class="cset-icons-browse"
-                        style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
-                </th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="c.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, c.answer)}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Comment:</td>
-                <td colspan="2">{{c.comment}}</td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.questionsWithComments.length === 0" class="cset-table-3">
-            There are no questions with comments to display.
-        </div>
+        <app-question-comments [data]="response"></app-question-comments>
     </div>
 
 
 
     <div class="page-break">
-        <h1>
-            Alternate Justification Comments
-        </h1>
-
-        <table *ngFor="let t of response?.questionsWithAltJust" class="cset-table-3">
-            <tr>
-                <th colspan="3">{{t.categoryAndNumber}}</th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="t.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, t.answer)}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Alternate Justification:</td>
-                <td colspan="2">{{t.alternateJustification}}</td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.questionsWithAltJust.length === 0" class="cset-table-3">
-            There are no questions with alternate justifications to display.
-        </div>
+        <app-alt-justification-comments [data]="this.response"></app-alt-justification-comments>
     </div>
 
 
 
     <div class="page-break">
-        <h1>
-            Questions Marked For Review
-        </h1>
-
-        <table *ngIf="response?.questionsMarkedForReview.length > 0" class="cset-table-3">
-            <tr *ngFor="let mfr of response?.questionsMarkedForReview">
-                <td class="tint2" style="width: 20%">{{mfr.categoryAndNumber}}</td>
-                <td [innerHTML]="mfr.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, mfr.answer)}}</td>
-            </tr>
-        </table>
-
-
-        <div *ngIf="response?.questionsMarkedForReview.length === 0" class="cset-table-3">
-            There are no questions marked for review.
-        </div>
+        <app-questions-marked-for-review [data]="response"></app-questions-marked-for-review>
     </div>
 
 

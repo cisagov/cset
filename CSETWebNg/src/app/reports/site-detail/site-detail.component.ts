@@ -145,6 +145,7 @@ export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
     });
+    
 
     // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {

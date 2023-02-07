@@ -526,6 +526,9 @@ import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diag
 import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
 import { AnalysisNetworkComponentsComponent } from './reports/analysis-network-components/analysis-network-components.component';
 import { SalSectionComponent } from './reports/sal-section/sal-section.component';
+import { AltJustificationCommentsComponent } from './reports/alt-justification-comments/alt-justification-comments.component';
+import { QuestionCommentsComponent } from './reports/question-comments/question-comments.component';
+import { QuestionsMarkedForReviewComponent } from './reports/questions-marked-for-review/questions-marked-for-review.component';
 
 
 
@@ -1010,7 +1013,10 @@ import { SalSectionComponent } from './reports/sal-section/sal-section.component
         DiagramVulnerabilitiesDialogComponent,
         DiagramVulnerabilitiesComponent,
         AnalysisNetworkComponentsComponent,
-        SalSectionComponent
+        SalSectionComponent,
+        AltJustificationCommentsComponent,
+        QuestionCommentsComponent,
+        QuestionsMarkedForReviewComponent
     ],
     providers: [
         ConfigService,
