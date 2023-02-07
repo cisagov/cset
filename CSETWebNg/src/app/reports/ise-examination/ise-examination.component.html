@@ -1,33 +1,33 @@
-<!---------------------- 
-   Copyright 2023 Battelle Energy Alliance, LLC  
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+<!----------------------
+   Copyright 2023 Battelle Energy Alliance, LLC
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div class="report-body mb-5">
     <div id="ExamReport">
         <div class="flex-container">
             <div class="column">
                 <p
-                    style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                    class="report-title">
                     EXAMINATION
                 </p>
                 <p
-                    style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+                    class="report-title">
                     REPORT
                 </p>
             </div>
@@ -55,7 +55,7 @@
                         date:'dd-MMM-yyyy'}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
+                    <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below"
                         (click)="print()">Print to PDF
                     </button>
                 </div>
@@ -74,7 +74,7 @@
                             <div class="h2 report-text-blue">Demographics</div>
                         </div>
                     </div>
-                    
+
                     <table class="table-site-info">
                         <tr>
                             <td>Assessment Name:</td>
@@ -114,7 +114,7 @@
 
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
-                        <span class="h2 report-text-blue">Results of Review</span> 
+                        <span class="h2 report-text-blue">Results of Review</span>
                     </div>
                 </div>
                 <p>
@@ -142,7 +142,7 @@
                         </div>
                         <br>
                     </div>
-                    
+
                     <div *ngIf="this.nonReportablesTotal > 0">
                         {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length, 'Non-reportable') }}
                         <div *ngFor="let issue of this.nonReportables" style="padding-left: 30px">
@@ -272,10 +272,10 @@
                                 <div>
                                     <strong>Issue Type: </strong> {{ finding?.finding?.type }}
                                 </div>
-                                    
+
                                 <strong>Description: </strong><br>
                                 {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
-                                
+
                                 <br>
                                 <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
 
@@ -291,7 +291,7 @@
                                     </div>
                                     <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id) && finding?.finding?.auto_Generated == 1">
                                         <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(finding?.finding?.finding_Id); let i = index">
-                                            <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">    
+                                            <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
                                                 {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
                                             </div>
                                             <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && finding?.finding?.actionItems == null">
@@ -311,10 +311,10 @@
                                     <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
                                         <div *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
                                             {{ (this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
-                                                || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '') ? 
+                                                || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '') ?
                                                 ' ' : this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation + ', ' }}{{ finding?.finding?.citations }}
                                         </div>
-                                        <div *ngIf="(finding?.finding?.citations == null || finding?.finding?.citations == '') 
+                                        <div *ngIf="(finding?.finding?.citations == null || finding?.finding?.citations == '')
                                                     && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != null
                                                     && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != ''">
                                             {{ this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation }}
@@ -330,14 +330,14 @@
                                     </div>
                                 </div>
                                 <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
-                                    
-                                    <strong> Supplemental Fact: </strong> 
-                                    
+
+                                    <strong> Supplemental Fact: </strong>
+
                                     <br>
                                     <span *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
                                     <span *ngIf="finding?.finding?.supp_Guidance == null || finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                     <br>
-                                    <strong> Resources: </strong> 
+                                    <strong> Resources: </strong>
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(finding?.finding?.finding_Id)">
                                         <div *ngFor="let file of sourceFilesMap.get(finding?.finding?.finding_Id)">
@@ -346,7 +346,7 @@
                                     </span>
                                     <span *ngIf="!sourceFilesMap.has(finding?.finding?.finding_Id)">(no Resources available)</span>
                                 </div>
-                                
+
 
                                 <hr class="page-line">
                             </div>
@@ -356,7 +356,7 @@
                         No Issues were noted.
                     </div>
                 </div>
-                
+
 
             </div>
 
@@ -368,11 +368,11 @@
                     line-height: 150%;
                 ">
 
-                <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below" 
+                <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below"
                     (click)="print()">Print to PDF
                 </button>
             </div>
         </ng-template>
     </div>
-    
+
 </div>
