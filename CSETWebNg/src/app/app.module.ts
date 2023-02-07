@@ -529,6 +529,7 @@ import { SalSectionComponent } from './reports/sal-section/sal-section.component
 import { AltJustificationCommentsComponent } from './reports/alt-justification-comments/alt-justification-comments.component';
 import { QuestionCommentsComponent } from './reports/question-comments/question-comments.component';
 import { QuestionsMarkedForReviewComponent } from './reports/questions-marked-for-review/questions-marked-for-review.component';
+import { StandardsComplianceComponent } from './reports/standards-compliance/standards-compliance.component';
 
 
 
@@ -1016,7 +1017,8 @@ import { QuestionsMarkedForReviewComponent } from './reports/questions-marked-fo
         SalSectionComponent,
         AltJustificationCommentsComponent,
         QuestionCommentsComponent,
-        QuestionsMarkedForReviewComponent
+        QuestionsMarkedForReviewComponent,
+        StandardsComplianceComponent
     ],
     providers: [
         ConfigService,

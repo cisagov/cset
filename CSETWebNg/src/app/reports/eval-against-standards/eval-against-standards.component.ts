@@ -22,6 +22,9 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { AnalysisService } from '../../services/analysis.service';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
+import  Chart  from 'chart.js/auto';
 
 /**
  * This is an attempt to consolidate the big graph display.
@@ -42,10 +45,27 @@ export class EvalAgainstStandardsComponent implements OnInit {
   @Input('results')
   responseResultsByCategory: any;
 
+  chartStandardsSummary: Chart;
+  canvasStandardResultsByCategory: any;
 
-  constructor() {
+
+  constructor(
+    public analysisSvc: ReportAnalysisService
+  ) {
   }
 
   ngOnInit() {
+    this.analysisSvc.getStandardsSummary().subscribe(x => {
+      this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+    });
+
+    // Standards By Category
+    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
+      this.responseResultsByCategory = x;
+
+      // Standard Or Question Set (multi-bar graph)
+      this.canvasStandardResultsByCategory = <Chart>this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
+    });
+
   }
 }

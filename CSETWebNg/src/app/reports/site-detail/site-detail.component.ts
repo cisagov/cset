@@ -30,25 +30,20 @@ import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'site-detail',
   templateUrl: './site-detail.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class SiteDetailComponent implements OnInit, AfterViewInit {
   response: any = null;
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
   chartRankedSubjectAreas: Chart;
 
-  numberOfStandards = -1;
-
-  chart1: Chart;
-  complianceGraphs: any[] = [];
   networkDiagramImage: SafeHtml;
 
   pageInitialized = false;
@@ -107,23 +102,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     });
 
 
-    // create an array of discreet datasets for the green bar graphs
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-
-      // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
-      if (!!x.dataSets) {
-        x.dataSets.forEach(element => {
-          this.complianceGraphs.push(element);
-        });
-      }
-    });
-
-
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
@@ -143,13 +121,17 @@ export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChec
 
     // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+      setTimeout(() => {
+        this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+      }, 100);
     });
-    
+
 
     // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      setTimeout(() => {
+        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      }, 100);
     });
 
 
@@ -201,29 +183,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit, AfterViewChec
   ngAfterViewInit() {
 
   }
-
-
-  /**
-   *
-   */
-  ngAfterViewChecked() {
-    if (this.pageInitialized) {
-      return;
-    }
-
-    // There's probably a better way to do this ... we have to wait until the
-    // complianceGraphs array has been built so that the template can bind to it.
-    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
-      this.pageInitialized = true;
-    }
-
-    // at this point the template should know how big the complianceGraphs array is
-    let cg = 0;
-    this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
-    });
-  }
-
 
   processAcetAdminData() {
     /// the data type Barry used to load data for this screen would be really, really hard

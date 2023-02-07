@@ -24,26 +24,25 @@
     Analysis of Network Components
 </h1>
 
-<div class="d-flex flex-row align-items-center">
-    <div style="padding: 1rem;">
-        <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-            <div>COMBINED COMPONENT SUMMARY</div>
-            <div>
-                <canvas id="canvasComponentSummary"></canvas>
-            </div>
+<div class="d-flex flex-row align-items-center mb-5">
+    <div>
+        <h2>Combined Component Summary</h2>
+        <div>
+            <canvas id="canvasComponentSummary"></canvas>
         </div>
     </div>
 
-    <div style="padding: 1rem;">
+    <div class="pl-3">
         <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
             diagram is <span class="warnInput">{{ warningCount }}</span>.
         </p>
-        <p> See the Site Summary report Findings and
-            Recommendations from Basic Network Analysis for details.
+        <p> See the section "Findings and
+            Recommendations from Basic Network Analysis" for details.
         </p>
     </div>
 </div>
 
-<div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+<h2>Answer Distribution by Component Type</h2>
+<div>
     <canvas id="canvasComponentTypes"></canvas>
 </div>

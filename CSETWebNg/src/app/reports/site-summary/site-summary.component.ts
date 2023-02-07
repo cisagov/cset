@@ -31,25 +31,20 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'site-summary',
   templateUrl: './site-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SiteSummaryComponent implements OnInit, AfterViewChecked {
+export class SiteSummaryComponent implements OnInit {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
-  canvasStandardResultsByCategory: Chart;
   response: any;
   responseResultsByCategory: any;
 
-
-  chart1: Chart;
-  numberOfStandards = -1;
-  complianceGraphs: any[] = [];
   networkDiagramImage: SafeHtml;
 
   pageInitialized = false;
@@ -59,6 +54,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
   componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
+  chartComponentCompliance: Chart;
   networkRecommendations = [];
   canvasComponentCompliance: Chart;
   warnings: any;
@@ -112,26 +108,11 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
     });
 
 
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-
-      // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
-      if (!!x.dataSets) {
-        x.dataSets.forEach(element => {
-          this.complianceGraphs.push(element);
-        });
-      }
-    });
-
-
     // Ranked Subject Areas
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      setTimeout(() => {
+        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      }, 100);
     });
 
 
@@ -154,7 +135,9 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
 
     // Component Compliance by Subject Area
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+      setTimeout(() => {
+        this.chartComponentCompliance = this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
+      }, 0);
     });
 
 
@@ -198,27 +181,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewChecked {
         console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
-  }
-
-  /**
-   *
-   */
-  ngAfterViewChecked() {
-    if (this.pageInitialized) {
-      return;
-    }
-
-    // There's probably a better way to do this ... we have to wait until the
-    // complianceGraphs array has been built so that the template can bind to it.
-    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
-      this.pageInitialized = true;
-    }
-
-    // at this point the template should know how big the complianceGraphs array is
-    let cg = 0;
-    this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
-    });
   }
 
 
