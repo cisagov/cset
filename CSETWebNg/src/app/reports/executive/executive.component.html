@@ -1,0 +1,365 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+  <div class="flex-container">
+    <div class="column">
+      <p
+        style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 40px; letter-spacing: 36px; Color: #0f3c7a;">
+        EXECUTIVE SUMMARY
+      </p>
+    </div>
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
+
+    <div class="cover-page-bottom">
+      <app-logo-for-reports></app-logo-for-reports>
+     <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div>{{response?.information.assessment_Name}}</div>
+        <div>
+          {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
+        </div>
+        <div>
+          {{response?.information.assessor_Name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-break">
+
+    <div class="disclaimer-blurb mt-4">
+      This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S.
+      Government
+      nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability
+      or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product,
+      or
+      process disclosed in this publication, or represents that its use by such third party would not infringe privately
+      owned rights.
+    </div>
+
+    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
+      <div>SUMMARY PERCENT COMPLIANCE</div>
+      <div>
+        <canvas id="canvasCompliance"></canvas>
+      </div>
+    </div>
+
+    <h1 *ngIf="response?.information.assessment_Description">
+      High-Level Assessment Description
+    </h1>
+    <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
+    </p>
+
+    <h1>
+      Executive Summary
+    </h1>
+    <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.executive_Summary)">
+    </p>
+  </div>
+
+  <div class="page-break">
+    <h1>
+      Evaluation Against Selected Standards and Question Sets
+    </h1>
+    <div style="max-width: calc(100% - 4em); margin: 0 auto">
+      <div style="display: flex; flex-direction: row; align-items: flex-end;justify-content: space-between;;">
+        <div>
+          <div
+            style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
+            STANDARD OR QUESTION SET
+          </div>
+          <div
+            style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
+            <div *ngFor="let s of responseResultsByCategory?.dataSets"
+              style="display: flex; flex-direction: row; align-items: center;">
+              <div
+                [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
+              </div>
+              {{s.label}}
+            </div>
+          </div>
+        </div>
+        <div style="padding: 1em 0 1em 1em;">
+          <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+            <div>STANDARDS SUMMARY</div>
+            <div>
+              <canvas id="canvasStandardSummary"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
+        <canvas id="canvasStandardResultsByCategory"></canvas>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="!usesRAC()" class="page-break">
+    <h1>
+        Security Assurance Level (SAL)
+    </h1>
+
+    <div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
+        <div class="sal-label">CALCULATED LEVEL</div>
+        <div class="sal-value">
+            {{response?.salTable.osv}}
+        </div>
+    </div>
+
+    <table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
+        <tr>
+            <th style="width: 25%"></th>
+            <th style="width: 25%">Confidentiality</th>
+            <th style="width: 25%">Integrity</th>
+            <th style="width: 25%">Availability</th>
+        </tr>
+        <tr>
+            <td>Overall Values</td>
+            <td>{{response?.salTable.q_CV}}</td>
+            <td>{{response?.salTable.q_IV}}</td>
+            <td>{{response?.salTable.q_AV}}</td>
+        </tr>
+    </table>
+
+
+    <div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
+        <p>
+            <b>Calculated General Security Assurance Levels (SAL)</b>
+        </p>
+        <table class="cset-table" style="table-layout: fixed">
+            <tr>
+                <th style="width: 33%"></th>
+                <th style="width: 33%">Onsite</th>
+                <th style="width: 33%">Offsite</th>
+            </tr>
+            <tr>
+                <td>Physical Injury</td>
+                <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
+                <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
+            </tr>
+            <tr>
+                <td>Hospital Injury</td>
+                <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
+                <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
+            </tr>
+            <tr>
+                <td>Death</td>
+                <td>{{response?.genSalTable.on_Site_Death}}</td>
+                <td>{{response?.genSalTable.off_Site_Death}}</td>
+            </tr>
+            <tr>
+                <td>Capital Assets</td>
+                <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
+                <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
+            </tr>
+            <tr>
+                <td>Economic Impact</td>
+                <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
+                <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
+            </tr>
+            <tr>
+                <td>Environmental Impact</td>
+                <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
+                <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div *ngIf="response?.salTable.lastSalDeterminationType === 'NIST'">
+        <h2>
+            FIPS 199 Security Assurance Level Guidance
+        </h2>
+
+        <p>
+            <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
+        </p>
+
+        <table class="cset-table">
+            <tr>
+                <th></th>
+                <th>Confidentiality</th>
+                <th>Integrity</th>
+                <th>Availability</th>
+            </tr>
+            <tr>
+                <td>Adjusted For System Questions</td>
+                <td>{{response?.nistSalTable?.q_CV}}</td>
+                <td>{{response?.nistSalTable?.q_IV}}</td>
+                <td>{{response?.nistSalTable?.q_AV}}</td>
+            </tr>
+            <tr>
+                <td>Information Type</td>
+                <td>{{response?.nistSalTable?.iT_CV}}</td>
+                <td>{{response?.nistSalTable?.iT_IV}}</td>
+                <td>{{response?.nistSalTable?.iT_AV}}</td>
+            </tr>
+        </table>
+
+
+        <table class="cset-table">
+            <tr>
+                <th>Type</th>
+                <th>Special Factors</th>
+            </tr>
+            <tr>
+                <td>Confidentiality</td>
+                <td>{{nistSalC}}</td>
+            </tr>
+            <tr>
+                <td>Integrity</td>
+                <td>{{nistSalI}}</td>
+            </tr>
+            <tr>
+                <td>Availability</td>
+                <td>{{nistSalA}}</td>
+            </tr>
+        </table>
+    </div>
+  </div>
+
+
+
+  <!-- Analysis of Network Components -->
+  <div class="page-break" *ngIf="componentCount > 0">
+    <h1>
+      Analysis of Network Components
+    </h1>
+
+    <div class="d-flex flex-row align-items-center">
+      <div style="padding: 1rem;">
+        <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
+          <div>COMBINED COMPONENT SUMMARY</div>
+          <div>
+            <canvas id="canvasComponentSummary"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 1rem;">
+        <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
+          diagram is <span class="warnInput">{{ warningCount }}</span>.
+        </p>
+        <p> See the Site Summary report Findings and
+          Recommendations from Basic Network Analysis for details.
+        </p>
+      </div>
+    </div>
+
+    <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
+      <canvas id="canvasComponentTypes"></canvas>
+    </div>
+  </div>
+
+
+  <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
+    <div class="mt-3 mb-3">
+      <h1>Inherent Risk Profile</h1>
+      <div class="ml-3 mr-3 form">
+        <table class="label-value">
+          <tr>
+            <td>Calculated Overall Risk Level:</td>
+            <td>{{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}</td>
+          </tr>
+          <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+            <td>
+              The overall IRP score is overridden to:
+            </td>
+            <td>
+              {{ acetSvc.interpretRiskLevel(acetDashboard?.Override) }}
+            </td>
+          </tr>
+          <tr *ngIf="!!acetDashboard?.Override && acetDashboard?.Override != '' && acetDashboard?.Override !== 0">
+            <td>
+              Override Reason:
+            </td>
+            <td>
+              {{ acetDashboard?.OverrideReason }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-3 mb-3" *ngIf="reportSvc.isInstallation('ACET')">
+      <h1>Cybersecurity Maturity</h1>
+      <table class="cset-table">
+        <tr>
+          <th width="50%" class="table-head">Domain</th>
+          <th width="50%" class="table-head">Maturity Level</th>
+        </tr>
+        <tr *ngFor="let domain of acetDashboard?.domains; let i = index">
+          <td>Domain {{ i + 1 }}: {{ domain.name }}</td>
+          <td class="text-center">
+            <div class="alert mb-0" [ngClass]="acetSvc.maturityClasses(domain.Maturity)">
+              {{ domain.maturity }}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="page-break">
+    <h1>
+      Areas of Concern Top Subjects and Questions
+    </h1>
+
+    <p>
+      The top subject areas and questions identify those areas where attention will either provide the most immediate
+      impact or
+      protect against the greatest vulnerabilities.
+    </p>
+
+    <div>
+      <h3>
+        Top Categories of Concern
+      </h3>
+      <table class="concern-list">
+        <tr *ngFor="let topCat of response?.top5Categories; index as i">
+          <td>{{i + 1}}</td>
+          <td>{{topCat.question_Group_Heading}}</td>
+        </tr>
+      </table>
+
+
+      <h3>
+        Top Questions of Concern
+      </h3>
+      <table class="concern-list">
+        <tr *ngFor="let topQ of response?.top5Questions; index as i">
+          <td>{{i + 1}}</td>
+          <td [innerHTML]="topQ.question"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
