@@ -74,10 +74,14 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
         public DateTime? AssessmentEffectiveDate { get; set; }
+        public Guid? GalleryItemGuid { get; set; }
 
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
+        [ForeignKey("GalleryItemGuid")]
+        [InverseProperty("ASSESSMENTS")]
+        public virtual GALLERY_ITEM GalleryItemGu { get; set; }
         [InverseProperty("Assessment")]
         public virtual CIS_CSI_ORGANIZATION_DEMOGRAPHICS CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]

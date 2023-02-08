@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using System.Collections.Generic;
+using System;
 
 namespace CSETWebCore.Business.GalleryParser
 {
@@ -42,7 +43,7 @@ namespace CSETWebCore.Business.GalleryParser
 
         public GalleryItem(GALLERY_ITEM i, int group_id)
         {
-            this.Gallery_Item_Id = i.Gallery_Item_Id;
+            this.Gallery_Item_Guid = i.Gallery_Item_Guid;
             this.Icon_File_Name_Small = i.Icon_File_Name_Small;
             this.Icon_File_Name_Large = i.Icon_File_Name_Large;
             this.Configuration_Setup_Client = i.Configuration_Setup_Client;
@@ -51,7 +52,7 @@ namespace CSETWebCore.Business.GalleryParser
             this.Parent_Id = group_id;
         }
 
-        public int Gallery_Item_Id { get; set; }
+        public Guid? Gallery_Item_Guid { get; set; }
         public string Icon_File_Name_Small { get; set; }
         public string Icon_File_Name_Large { get; set; }
         public string Configuration_Setup { get; set; }

@@ -12,14 +12,14 @@ namespace CSETWebCore.DataLayer.Model
     {
         public int Group_Id { get; set; }
         public int Column_Index { get; set; }
-        public int? Gallery_Item_Id { get; set; }
         public int Click_Count { get; set; }
         [Key]
         public int Group_Detail_Id { get; set; }
+        public Guid Gallery_Item_Guid { get; set; }
 
-        [ForeignKey("Gallery_Item_Id")]
+        [ForeignKey("Gallery_Item_Guid")]
         [InverseProperty("GALLERY_GROUP_DETAILS")]
-        public virtual GALLERY_ITEM Gallery_Item { get; set; }
+        public virtual GALLERY_ITEM Gallery_Item_Gu { get; set; }
         [ForeignKey("Group_Id")]
         [InverseProperty("GALLERY_GROUP_DETAILS")]
         public virtual GALLERY_GROUP Group { get; set; }
