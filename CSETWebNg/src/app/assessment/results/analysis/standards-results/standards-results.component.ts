@@ -37,11 +37,11 @@ import { LayoutService } from '../../../../services/layout.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsResultsComponent implements OnInit {
-  
+
   chart: Chart;
   dataRows: { title: string; failed: number; total: number; percent: number; }[];
   dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
-  
+
   initialized = false;
 
   constructor(
@@ -95,6 +95,11 @@ export class StandardsResultsComponent implements OnInit {
         scales: {
           x: {
             beginAtZero: true
+          },
+          y: {
+            ticks: {
+              autoSkip: false
+            }
           }
         }
       }

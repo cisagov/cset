@@ -24,46 +24,36 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
-import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
 import { ACETService } from '../../services/acet.service';
-import  Chart  from 'chart.js/auto';
+import { MaturityService } from '../../services/maturity.service';
+import { QuestionsService } from '../../services/questions.service';
+import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'detail',
-  templateUrl: './detail.component.html',
+  selector: 'site-summary',
+  templateUrl: './site-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
-  response: any = null;
-  chartPercentCompliance: Chart;
+export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: Chart;
+  chartPercentCompliance: Chart;
+  response: any;
   responseResultsByCategory: any;
-  chartRankedSubjectAreas: Chart;
 
-  numberOfStandards = -1;
-
-  chart1: Chart;
-  complianceGraphs: any[] = [];
   networkDiagramImage: SafeHtml;
 
   pageInitialized = false;
 
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
 
   // Charts for Components
   componentCount = 0;
   chartComponentSummary: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
-  canvasComponentCompliance: Chart;
   warnings: any;
 
   // ACET data
@@ -76,6 +66,9 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
   interviewTotal: number;
   reviewedStatementTotal: number;
 
+  isCmmc: boolean = false;
+
+
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -84,68 +77,27 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
     public configSvc: ConfigService,
     private titleService: Title,
     public acetSvc: ACETService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private maturitySvc: MaturityService,
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Detail Report - CSET");
-
-    this.reportSvc.getReport('detail').subscribe(
+    this.titleService.setTitle("Site Summary Report - CSET");
+    this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
+    this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
-
-        // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
-        if (!!v) {
-          this.nistSalC = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
-        if (!!v) {
-          this.nistSalI = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
-        if (!!v) {
-          this.nistSalA = v.justification;
-        }
       },
-      error => console.log('Detail report load Error: ' + (<Error>error).message)
+      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );
 
     // Populate charts
-
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-
-    // create an array of discreet datasets for the green bar graphs
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-
-      // Set up arrays for green bar graphs
-      this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;
-      if (!!x.dataSets) {
-        x.dataSets.forEach(element => {
-          this.complianceGraphs.push(element);
-        });
-      }
-    });
 
 
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
       setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
+        this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 100);
     });
 
@@ -156,17 +108,6 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       }, 100);
-    });
-
-
-    // Component Compliance by Subject Area
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
-    });
-
-    // Ranked Subject Areas
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
     });
 
 
@@ -213,34 +154,11 @@ export class DetailComponent implements OnInit, AfterViewInit, AfterViewChecked 
   }
 
   /**
-   *
+   * 
    */
   ngAfterViewInit() {
-
+    
   }
-
-
-  /**
-   *
-   */
-  ngAfterViewChecked() {
-    if (this.pageInitialized) {
-      return;
-    }
-
-    // There's probably a better way to do this ... we have to wait until the
-    // complianceGraphs array has been built so that the template can bind to it.
-    if (this.complianceGraphs.length === this.numberOfStandards && this.numberOfStandards >= 0) {
-      this.pageInitialized = true;
-    }
-
-    // at this point the template should know how big the complianceGraphs array is
-    let cg = 0;
-    this.complianceGraphs.forEach(x => {
-      this.chart1 = this.analysisSvc.buildRankedCategoriesChart("complianceGraph" + cg++, x);
-    });
-  }
-
 
   processAcetAdminData() {
     /// the data type Barry used to load data for this screen would be really, really hard

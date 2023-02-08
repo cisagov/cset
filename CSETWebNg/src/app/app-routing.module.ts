@@ -90,15 +90,15 @@ import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-m
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
-import { DetailComponent } from './reports/detail/detail.component';
+import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
-import { ExecutiveComponent } from './reports/executive/executive.component';
+import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
-import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -453,11 +453,11 @@ const appRoutes: Routes = [
   // reports routing
   {
     path: 'report', component: LayoutBlankComponent, children: [
-      { path: 'detail', component: DetailComponent },
+      { path: 'detail', component: SiteDetailComponent },
       { path: 'discoveries', component: DiscoveryTearoutsComponent },
-      { path: 'executive', component: ExecutiveComponent },
+      { path: 'executive', component: ExecutiveSummaryComponent },
       { path: 'securityplan', component: SecurityplanComponent },
-      { path: 'sitesummary', component: SitesummaryComponent },
+      { path: 'sitesummary', component: SiteSummaryComponent },
       { path: 'trendreport', component: TrendReportComponent },
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },

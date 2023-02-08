@@ -20,7 +20,8 @@ namespace CSETWebCore.Business.Reports
         public string ApplicationMode { get; set; }
         public List<usp_GetOverallRankedCategoriesPage_Result> top5Categories;
 
-        public INFORMATION information { get; set; }
+        public INFORMATION information { get; set; }      
+
         public OverallSALTable salTable { get; set; }
         public GenSALTable genSalTable { get; set; }
         public SourceFiles sourceFiles { get; set; }
@@ -54,6 +55,10 @@ namespace CSETWebCore.Business.Reports
             public string Real_Property_Unique_Id { get; set; }
             public string Executive_Summary { get; set; }
             public string Assessment_Description { get; set; }
+
+            public bool UseMaturity { get; set; }
+            public bool UseStandard { get; set; }
+            public bool UseDiagram { get; set; }
 
             // ACET properties
             public string Credit_Union_Name { get; set; }

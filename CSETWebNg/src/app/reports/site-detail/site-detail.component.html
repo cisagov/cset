@@ -24,8 +24,7 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 SITE DETAIL REPORT
             </p>
         </div>
@@ -36,7 +35,7 @@
         </div>
 
         <div class="cover-page-bottom">
-          <app-logo-for-reports></app-logo-for-reports>
+            <app-logo-for-reports></app-logo-for-reports>
             <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
                 <div>{{response?.information.assessment_Name}}</div>
                 <div>
@@ -55,7 +54,7 @@
     </div>
 
     <div class="page-break">
-       <app-report-advisory></app-report-advisory>
+        <app-report-advisory></app-report-advisory>
     </div>
 
 
@@ -114,12 +113,7 @@
 
 
     <div class="page-break">
-        <div class="cset-container" style="width: 500px; margin: 3rem auto 2em auto; display: block;">
-            <div>SUMMARY PERCENT COMPLIANCE</div>
-            <div>
-                <canvas id="canvasCompliance"></canvas>
-            </div>
-        </div>
+        <app-overall-compliance></app-overall-compliance>
 
         <h1 *ngIf="response?.information.assessment_Description">High-Level Assessment Description</h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
@@ -131,63 +125,18 @@
     </div>
 
 
-    <div class="page-break">
-        <h1>
-            Evaluation Against Selected Standards and Question Sets
-        </h1>
-
-        <div style="max-width: calc(100% - 4em); margin: 0 auto">
-            <div style="display: flex; flex-direction: row; align-items: flex-end;justify-content: space-between;;">
-                <div>
-                    <div
-                        style="text-align: center; border: 2px solid #000; border-top-left-radius: 1.2em; border-top-right-radius: 1.2em; background-color: #0A5278; padding: 1em; color: #fff; box-shadow: 5px 0px 5px #0004;">
-                        STANDARD OR QUESTION SET
-                    </div>
-                    <div
-                        style="border: 2px solid #000; border-top: none; border-bottom: none; padding: 1em; box-shadow: 5px 0px 5px #0004;">
-                        <div *ngFor="let s of responseResultsByCategory?.dataSets"
-                            style="display: flex; flex-direction: row; align-items: center;">
-                            <div
-                                [ngStyle]="{ 'width': '1.2em', 'height': '1.2em', 'margin': '4px 10px 4px 0', 'box-shadow': 'inset 0 0 0 1000px ' + s.backgroundColor }">
-                            </div>
-                            {{s.label}}
-                        </div>
-                    </div>
-                </div>
-                <div style="padding: 1em 0 1em 1em;">
-                    <div class="cset-container"
-                        style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-                        <div>STANDARDS SUMMARY</div>
-                        <p class="p-3">This graph shows the overall answer percentages for each individual answer type.</p>
-                        <div>
-                            <canvas id="canvasStandardSummary"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; border-top-left-radius: 0; box-shadow: 5px 5px 5px #0004;">
-                <canvas id="canvasStandardResultsByCategory"></canvas>
-            </div>
-        </div>
+    <div class="page-break" *ngIf="response?.information.useStandard">
+        <app-eval-against-standards></app-eval-against-standards>
     </div>
 
 
-    <div class="page-break">
-        <h1>
-            Standards Compliance
-        </h1>
-
-        <div *ngFor="let graph of complianceGraphs; index as i" style="height: 250px;">
-            <h2 style="text-align: center">{{graph.label}}</h2>
-            <canvas id="complianceGraph{{i}}">
-            </canvas>
-        </div>
+    <div class="page-break" *ngIf="response?.information.useStandard">
+        <app-standards-compliance></app-standards-compliance>
     </div>
 
 
     <!--Network Diagram-->
-    <div class="page-break" *ngIf="componentCount > 0">
+    <div class="page-break" *ngIf="response?.information.useDiagram">
         <h1>Network Diagram</h1>
         <div style="display: table; height: 8in">
             <div style="padding: 50% 0; height: 0">
@@ -199,51 +148,20 @@
     </div>
 
 
-    <!--Analysis of Network Components-->
-    <div class="page-break" *ngIf="componentCount > 0">
-        <h1>
-            Analysis of Network Components
-        </h1>
-
-        <div class="d-flex flex-row align-items-center">
-            <div style="padding: 1rem;">
-                <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-                    <div>COMBINED COMPONENT SUMMARY</div>
-                    <div>
-                        <canvas id="canvasComponentSummary"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div style="padding: 1rem;">
-                <p>The number of identified warnings and recommendations in the basic analysis of the user-defined
-                    system diagram is <span class="warnInput">{{ warnings?.length }}</span>.
-                </p>
-                <p> See the Findings and Recommendations from Basic Network Analysis for details.
-                </p>
-            </div>
-        </div>
-
-        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="canvasComponentTypes"></canvas>
-        </div>
+    <!-- Analysis of Network Components -->
+    <div class="page-break" *ngIf="response?.information.useDiagram">
+        <app-analysis-network-components></app-analysis-network-components>
     </div>
 
 
     <!--Component Compliance by Subject Area-->
-    <div class="page-break" *ngIf="componentCount > 0">
-        <h1>
-            Component Compliance by Subject Area
-        </h1>
-        <div style="border: 2px solid #000; padding: 1em; border-radius: 1.2em; box-shadow: 5px 5px 5px #0004;">
-            <canvas id="canvasComponentCompliance">{{canvasComponentCompliance}}</canvas>
-        </div>
+    <div class="page-break" *ngIf="response?.information.useDiagram">
+        <app-component-compliance></app-component-compliance>
     </div>
 
 
-
     <!--Findings and Recommendations From Basic Network Analysis-->
-    <div class="page-break" *ngIf="componentCount > 0">
+    <div class="page-break" *ngIf="response?.information.useDiagram">
         <h1>Findings and Recommendations From Basic Network Analysis</h1>
 
         <table class="table" *ngIf="!!warnings && warnings.length > 0">
@@ -268,123 +186,7 @@
             Security Assurance Level (SAL)
         </h1>
 
-        <div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
-            <div class="sal-label">CALCULATED LEVEL</div>
-            <div class="sal-value">
-                {{response?.salTable.osv}}
-            </div>
-        </div>
-
-        <table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
-            <tr>
-                <th style="width: 25%"></th>
-                <th style="width: 25%">Confidentiality</th>
-                <th style="width: 25%">Integrity</th>
-                <th style="width: 25%">Availability</th>
-            </tr>
-            <tr>
-                <td>Overall Values</td>
-                <td>{{response?.salTable.q_CV}}</td>
-                <td>{{response?.salTable.q_IV}}</td>
-                <td>{{response?.salTable.q_AV}}</td>
-            </tr>
-        </table>
-
-
-        <div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
-            <p>
-                <b>Calculated General Security Assurance Levels (SAL)</b>
-            </p>
-            <table class="cset-table" style="table-layout: fixed">
-                <tr>
-                    <th style="width: 33%"></th>
-                    <th style="width: 33%">Onsite</th>
-                    <th style="width: 33%">Offsite</th>
-                </tr>
-                <tr>
-                    <td>Physical Injury</td>
-                    <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
-                    <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
-                </tr>
-                <tr>
-                    <td>Hospital Injury</td>
-                    <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
-                    <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
-                </tr>
-                <tr>
-                    <td>Death</td>
-                    <td>{{response?.genSalTable.on_Site_Death}}</td>
-                    <td>{{response?.genSalTable.off_Site_Death}}</td>
-                </tr>
-                <tr>
-                    <td>Capital Assets</td>
-                    <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
-                    <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
-                </tr>
-                <tr>
-                    <td>Economic Impact</td>
-                    <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
-                    <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
-                </tr>
-                <tr>
-                    <td>Environmental Impact</td>
-                    <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
-                    <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div *ngIf="response?.salTable.lastSalDeterminationType === 'NIST'">
-            <h2>
-                FIPS 199 Security Assurance Level Guidance
-            </h2>
-
-            <p>
-                <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
-            </p>
-
-            <table class="cset-table">
-                <tr>
-                    <th></th>
-                    <th>Confidentiality</th>
-                    <th>Integrity</th>
-                    <th>Availability</th>
-                </tr>
-                <tr>
-                    <td>Adjusted For System Questions</td>
-                    <td>{{response?.nistSalTable?.q_CV}}</td>
-                    <td>{{response?.nistSalTable?.q_IV}}</td>
-                    <td>{{response?.nistSalTable?.q_AV}}</td>
-                </tr>
-                <tr>
-                    <td>Information Type</td>
-                    <td>{{response?.nistSalTable?.iT_CV}}</td>
-                    <td>{{response?.nistSalTable?.iT_IV}}</td>
-                    <td>{{response?.nistSalTable?.iT_AV}}</td>
-                </tr>
-            </table>
-
-
-            <table class="cset-table">
-                <tr>
-                    <th>Type</th>
-                    <th>Special Factors</th>
-                </tr>
-                <tr>
-                    <td>Confidentiality</td>
-                    <td>{{nistSalC}}</td>
-                </tr>
-                <tr>
-                    <td>Integrity</td>
-                    <td>{{nistSalI}}</td>
-                </tr>
-                <tr>
-                    <td>Availability</td>
-                    <td>{{nistSalA}}</td>
-                </tr>
-            </table>
-        </div>
+        <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
     </div>
 
 
@@ -536,8 +338,8 @@
                 </div>
                 <div
                     *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
-                    Overall Risk Level has been overriden to <span
-                        class="blue-text font-weight-bold">{{ acetSvc.interpretRiskLevel(acetDashboard?.override) }}</span>
+                    Overall Risk Level has been overriden to <span class="blue-text font-weight-bold">{{
+                        acetSvc.interpretRiskLevel(acetDashboard?.override) }}</span>
                     <div>Override Reason:
                         <em>
                             {{ acetDashboard?.overrideReason }}
@@ -592,29 +394,12 @@
     </div>
 
 
-
-
-    <div class="page-break">
-        <h1>
-            Ranked Subject Areas
-        </h1>
-
-        <p>
-            This chart shows subject areas needing the most attention.  Each bar represents the labeled subject area’s
-            weighted contribution
-            so that the combined total always equals 100%.  The weighted contribution includes the importance of both
-            the
-            question and the subject area, as well as the percentage of missed questions in that subject area.
-        </p>
-        <canvas id="canvasRankedSubjectAreas">
-        </canvas>
+    <div class="page-break" *ngIf="response?.information.useStandard">
+        <app-ranked-subject-areas></app-ranked-subject-areas>
     </div>
 
 
-
-
-
-    <div class="page-break">
+    <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
             Summary Of Ranked Questions
         </h1>
@@ -646,80 +431,19 @@
 
 
     <div class="page-break">
-        <h1>
-            Question Comments
-        </h1>
-
-        <table *ngFor="let c of response?.questionsWithComments" class="cset-table-3">
-            <tr>
-                <th colspan="3">
-                    {{c.categoryAndNumber}}
-                    <i *ngIf="c.MarkedForReview === 'True'" class="cset-icons-browse"
-                        style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
-                </th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="c.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, c.answer)}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Comment:</td>
-                <td colspan="2">{{c.comment}}</td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.questionsWithComments.length === 0" class="cset-table-3">
-            There are no questions with comments to display.
-        </div>
+        <app-question-comments [data]="response"></app-question-comments>
     </div>
 
 
 
     <div class="page-break">
-        <h1>
-            Alternate Justification Comments
-        </h1>
-
-        <table *ngFor="let t of response?.questionsWithAltJust" class="cset-table-3">
-            <tr>
-                <th colspan="3">{{t.categoryAndNumber}}</th>
-            </tr>
-            <tr>
-                <td class="tint2" style="width: 10%">Question:</td>
-                <td class="tint2" [innerHTML]="t.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, t.answer)}}</td>
-            </tr>
-            <tr>
-                <td class="tint2">Alternate Justification:</td>
-                <td colspan="2">{{t.alternateJustification}}</td>
-            </tr>
-        </table>
-
-        <div *ngIf="response?.questionsWithAltJust.length === 0" class="cset-table-3">
-            There are no questions with alternate justifications to display.
-        </div>
+        <app-alt-justification-comments [data]="this.response"></app-alt-justification-comments>
     </div>
 
 
 
     <div class="page-break">
-        <h1>
-            Questions Marked For Review
-        </h1>
-
-        <table *ngIf="response?.questionsMarkedForReview.length > 0" class="cset-table-3">
-            <tr *ngFor="let mfr of response?.questionsMarkedForReview">
-                <td class="tint2" style="width: 20%">{{mfr.categoryAndNumber}}</td>
-                <td [innerHTML]="mfr.question"></td>
-                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, mfr.answer)}}</td>
-            </tr>
-        </table>
-
-
-        <div *ngIf="response?.questionsMarkedForReview.length === 0" class="cset-table-3">
-            There are no questions marked for review.
-        </div>
+        <app-questions-marked-for-review [data]="response"></app-questions-marked-for-review>
     </div>
 
 
