@@ -63,11 +63,13 @@ namespace CSETWebCore.Api.Controllers
             }
 
             data.ControlList = _report.GetControls(data.ApplicationMode);
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.Zones = _report.GetDiagramZones();
             return Ok(data);
         }
@@ -81,9 +83,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
+            data.nistTypes = _report.GetNistInfoTypes();
+            data.nistSalTable = _report.GetNistSals();
+
             data.top5Categories = _report.GetTop5Categories();
             data.top5Questions = _report.GetTop5Questions();
             return Ok(data);
@@ -399,11 +405,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.FinancialQuestionsTable = _report.GetFinancialQuestions();
@@ -422,11 +430,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
