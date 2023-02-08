@@ -97,9 +97,9 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
 
 
     // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
+    // this.analysisSvc.getStandardsSummary().subscribe(x => {
+    //   this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+    // });
 
 
     // Component Summary
@@ -123,14 +123,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
     this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
       setTimeout(() => {
         this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
-      }, 100);
-    });
-
-
-    // Ranked Subject Areas
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      setTimeout(() => {
-        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
       }, 100);
     });
 
@@ -181,7 +173,14 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
    *
    */
   ngAfterViewInit() {
-
+    // Ranked Subject Areas
+    this.chartRankedSubjectAreas = null;
+    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
+      console.log(x);
+      setTimeout(() => {
+        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      }, 100);
+    });
   }
 
   processAcetAdminData() {
