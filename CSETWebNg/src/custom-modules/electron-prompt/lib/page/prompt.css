@@ -1,8 +1,8 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Roboto", sans-serif;
     line-height: 1.5em;
     color: #333;
-    background-color: #fff;
+    background-color: #fafafa;
 }
 
 #container {
@@ -53,29 +53,66 @@ select#data {
 
 #buttons > button,
 #buttons > input[type=submit] {
-    border-radius: 2px;
-    border: 0;
-    margin: 0 0 0 .5em;
-    font-size: .8em;
-    line-height: 1em;
-    padding: .6em 1em
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  margin: 2px;
+  border: 1px solid;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-button:active {
-  transform: scale(0.98);
-  /* Scaling button to 0.98 to its original size */
-  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-  /* Lowering the shadow */
+
+#ok:active, #ok:active:hover {
+  color: #fff;
+  background-color: #0062cc;
+  border-color: #005cbf;
+}
+
+#ok:active:focus {
+  box-shadow: 0 0 0 0.2rem #268fff80;
 }
 
 #ok {
-    background-color: #3879D9;
-    color: white;
+  color: #f2f2f2;
+  background-color: #367190;
+  border-color: #367190;
+  height: fit-content;
+}
+
+#ok:hover {
+  background-color: #052637;
+  border-color: #367190;
+  color: #ffffff;
 }
 
 #cancel {
-    background-color: #DDD;
-    color: black;
+  background-color: #d9d9d9;
+  border-color: #6c757d;
+  border: 1px solid;
+  color: #262626;
+  height: fit-content;
+}
+
+#cancel:active , #cancel:active:hover {
+  color: #fff;
+  background-color: #545b62;
+  border-color: #4e555b;
+}
+
+#cancel:active:focus {
+  box-shadow: 0 0 0 0.2rem #828a9180;
+}
+
+#cancel:hover {
+  background-color: #367190;
+  border-color: #367190;
+  color: #ffffff;
+  fill: #ffffff;
 }
 
 #no-text-found {
