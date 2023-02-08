@@ -80,6 +80,7 @@ function createWindow() {
         new MenuItem({
           type: 'normal',
           label: 'Print',
+          accelerator: 'Ctrl+P',
           click: () => {
             BrowserWindow.getFocusedWindow().webContents.print();
           }
