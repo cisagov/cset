@@ -32,6 +32,9 @@ import Chart from 'chart.js/auto';
 })
 export class AnalysisNetworkComponentsComponent implements OnInit {
 
+  loading1 = true;
+  loading2 = true;
+
   // Charts for Components
   componentCount = 0;
   chartComponentSummary: Chart;
@@ -49,6 +52,7 @@ export class AnalysisNetworkComponentsComponent implements OnInit {
   ngOnInit(): void {
     // Component Summary
     this.analysisSvc.getComponentSummary().subscribe(x => {
+      this.loading1 = false;
       setTimeout(() => {
         this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
       }, 0);
@@ -61,6 +65,7 @@ export class AnalysisNetworkComponentsComponent implements OnInit {
     }
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
+      this.loading2 = false;
       this.componentCount = x.labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);

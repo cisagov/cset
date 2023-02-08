@@ -530,6 +530,9 @@ import { AltJustificationCommentsComponent } from './reports/alt-justification-c
 import { QuestionCommentsComponent } from './reports/question-comments/question-comments.component';
 import { QuestionsMarkedForReviewComponent } from './reports/questions-marked-for-review/questions-marked-for-review.component';
 import { StandardsComplianceComponent } from './reports/standards-compliance/standards-compliance.component';
+import { ComponentComplianceComponent } from './reports/component-compliance/component-compliance.component';
+import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
+import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
 
 
 
@@ -1018,7 +1021,10 @@ import { StandardsComplianceComponent } from './reports/standards-compliance/sta
         AltJustificationCommentsComponent,
         QuestionCommentsComponent,
         QuestionsMarkedForReviewComponent,
-        StandardsComplianceComponent
+        StandardsComplianceComponent,
+        ComponentComplianceComponent,
+        OverallComplianceComponent,
+        RankedSubjectAreasComponent
     ],
     providers: [
         ConfigService,

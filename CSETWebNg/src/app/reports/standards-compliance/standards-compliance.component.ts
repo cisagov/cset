@@ -32,6 +32,8 @@ import Chart from 'chart.js/auto';
 })
 export class StandardsComplianceComponent implements OnInit, AfterViewChecked {
 
+  loading = true;
+
   pageInitialized = false;
   chart1: Chart;
   complianceGraphs: any[] = [];
@@ -49,6 +51,7 @@ export class StandardsComplianceComponent implements OnInit, AfterViewChecked {
    */
   ngOnInit(): void {
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
+      this.loading = false;
 
       // Set up arrays for green bar graphs
       this.numberOfStandards = !!x.dataSets ? x.dataSets.length : 0;

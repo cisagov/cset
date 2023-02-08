@@ -271,7 +271,7 @@ export class ReportAnalysisService {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#a00',
+            backgroundColor: '#DC3545',
             borderColor: [],
             borderWidth: 0
           }
@@ -361,6 +361,7 @@ export class ReportAnalysisService {
       },
       options: {
         indexAxis: 'y',
+        maintainAspectRatio: false,
         plugins: {
           title: {
             display: false,

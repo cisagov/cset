@@ -78,24 +78,12 @@ export class ExecutiveSummaryComponent implements OnInit {
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
 
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-
-    // Component Summary
-    this.analysisSvc.getComponentSummary().subscribe(x => {
-      setTimeout(() => {
-        this.chartComponentSummary = <Chart>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
-    });
-
 
     this.tempChart = Chart.getChart('canvasComponentTypes');
     if(this.tempChart){
       this.tempChart.destroy();
     }
+    
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.labels.length;
