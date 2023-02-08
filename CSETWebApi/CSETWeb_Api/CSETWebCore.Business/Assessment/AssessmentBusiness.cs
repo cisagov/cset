@@ -55,7 +55,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow)
+        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
@@ -74,8 +74,8 @@ namespace CSETWebCore.Business.Assessment
                 LastModifiedDate = nowUTC,
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
-                ExecutiveSummary = defaultExecSumm
-
+                ExecutiveSummary = defaultExecSumm,
+                GalleryItemGuid = galleryGuid
             };
 
 
@@ -329,6 +329,7 @@ namespace CSETWebCore.Business.Assessment
             if (result != null)
             {
                 assessment.Id = result.aa.Assessment_Id;
+                assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
                 assessment.AssessmentDate = result.aa.Assessment_Date;
                 assessment.FacilityName = result.ii.Facility_Name;
@@ -558,6 +559,7 @@ namespace CSETWebCore.Business.Assessment
             }
 
             dbAssessment.Assessment_Id = assessmentId;
+            dbAssessment.GalleryItemGuid = assessment.GalleryItemGuid;
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
             dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null : assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
@@ -754,11 +756,24 @@ namespace CSETWebCore.Business.Assessment
                                 || (assessment.UseDiagram && assessment.UseStandard)
                                 || (assessment.UseMaturity && assessment.UseStandard);
 
+            // Grab the Gallery Card Item Description to use elsewhere in the assessment.
+            // This replaces the old Maturity_Model_Description & Set tooltips
+            string galleryCardDescription = "";
+            var query = from g in _context.GALLERY_ITEM
+                        where g.Gallery_Item_Guid == assessment.GalleryItemGuid
+                        select g;
+
+            var result = query.ToList().FirstOrDefault();
+
+            if (result != null) {
+                galleryCardDescription = result.Description;
+            }
+
             if (assessment.UseMaturity)
             {
                 // Use shorter names on assessments with multiple types.
                 assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
-                assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
+                assessment.TypeDescription = galleryCardDescription;
             }
 
             if (assessment.UseStandard)
@@ -767,7 +782,7 @@ namespace CSETWebCore.Business.Assessment
                 {
                     // Use shorter names on assessments with multiple types.
                     assessment.TypeTitle += ", " + (multipleTypes ? standard.ShortName : standard.FullName);
-                    assessment.TypeDescription = standard.Description;
+                    assessment.TypeDescription = galleryCardDescription;
                 });
             }
 
@@ -798,7 +813,7 @@ namespace CSETWebCore.Business.Assessment
             foreach (string setName in setNames)
             {
                 var set = allSets.Find(set => set.Set_Name == setName);
-                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name, Description = set.Standard_ToolTip });
+                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name });
             }
             return processedSets;
         }
@@ -807,7 +822,6 @@ namespace CSETWebCore.Business.Assessment
         {
             public string FullName { get; set; }
             public string ShortName { get; set; }
-            public string Description { get; set; }
         }
 
     }
