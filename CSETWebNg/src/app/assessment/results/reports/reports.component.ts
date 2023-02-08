@@ -321,7 +321,7 @@ export class PrintSnackComponent implements OnInit {
     ngOnInit() {
       const isRunningInElectron = (localStorage.getItem('isRunningInElectron') === 'true');
       if (isRunningInElectron) {
-        this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\".'
+        this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P).'
       } else {
         this.printInstructions = 'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.'
       }
