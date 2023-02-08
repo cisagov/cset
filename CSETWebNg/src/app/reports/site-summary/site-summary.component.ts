@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
@@ -38,7 +38,7 @@ import Chart from 'chart.js/auto';
   templateUrl: './site-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SiteSummaryComponent implements OnInit {
+export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
   chartRankedSubjectAreas: Chart;
   chartPercentCompliance: Chart;
@@ -99,20 +99,6 @@ export class SiteSummaryComponent implements OnInit {
     // Summary Percent Compliance
     this.analysisSvc.getDashboard().subscribe(x => {
       this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-
-    // Ranked Subject Areas
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      setTimeout(() => {
-        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
-      }, 100);
     });
 
 
@@ -183,6 +169,18 @@ export class SiteSummaryComponent implements OnInit {
       });
   }
 
+  /**
+   * 
+   */
+  ngAfterViewInit() {
+    // Ranked Subject Areas
+    this.chartRankedSubjectAreas = null;
+    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
+      setTimeout(() => {
+        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
+      }, 100);
+    });
+  }
 
   processAcetAdminData() {
     /// the data type Barry used to load data for this screen would be really, really hard

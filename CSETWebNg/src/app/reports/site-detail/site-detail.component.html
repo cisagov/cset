@@ -168,7 +168,7 @@
             Component Compliance by Subject Area
         </h1>
         <div style="padding: 1em;">
-            <canvas id="canvasComponentCompliance">{{canvasComponentCompliance}}</canvas>
+            <canvas id="canvasComponentCompliance"></canvas>
         </div>
     </div>
 
@@ -422,7 +422,7 @@
             the
             question and the subject area, as well as the percentage of missed questions in that subject area.
         </p>
-        <canvas id="canvasRankedSubjectAreas">
+        <canvas *ngIf="!!chartRankedSubjectAreas" id="canvasRankedSubjectAreas">
         </canvas>
     </div>
 
