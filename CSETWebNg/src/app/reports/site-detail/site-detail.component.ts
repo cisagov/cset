@@ -39,10 +39,8 @@ import Chart from 'chart.js/auto';
 })
 export class SiteDetailComponent implements OnInit, AfterViewInit {
   response: any = null;
-  chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
   responseResultsByCategory: any;
-  chartRankedSubjectAreas: Chart;
 
   networkDiagramImage: SafeHtml;
 
@@ -51,10 +49,9 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
 
   // Charts for Components
   componentCount = 0;
-  chartComponentSummary: Chart;
+  chartPercentCompliance: Chart;
   chartComponentsTypes: Chart;
   networkRecommendations = [];
-  canvasComponentCompliance: Chart;
   warnings: any;
 
   // ACET data
@@ -90,39 +87,12 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
 
     // Populate charts
 
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-
-    // Standards Summary (pie or stacked bar)
-    // this.analysisSvc.getStandardsSummary().subscribe(x => {
-    //   this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    // });
-
-
-    // Component Summary
-    this.analysisSvc.getComponentSummary().subscribe(x => {
-      setTimeout(() => {
-        this.chartComponentSummary = <any>this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 100);
-    });
-
 
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.labels.length;
       setTimeout(() => {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
-      }, 100);
-    });
-
-
-    // Component Compliance by Subject Area
-    this.analysisSvc.getComponentsResultsByCategory().subscribe(x => {
-      setTimeout(() => {
-        this.analysisSvc.buildComponentsResultsByCategory('canvasComponentCompliance', x);
       }, 100);
     });
 
@@ -173,14 +143,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
    *
    */
   ngAfterViewInit() {
-    // Ranked Subject Areas
-    this.chartRankedSubjectAreas = null;
-    this.analysisSvc.getOverallRankedCategories().subscribe(x => {
-      console.log(x);
-      setTimeout(() => {
-        this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
-      }, 100);
-    });
   }
 
   processAcetAdminData() {

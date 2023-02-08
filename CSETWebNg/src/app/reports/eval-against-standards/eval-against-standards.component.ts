@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { AnalysisService } from '../../services/analysis.service';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 /**
  * This is an attempt to consolidate the big graph display.
@@ -42,30 +42,40 @@ import  Chart  from 'chart.js/auto';
 })
 export class EvalAgainstStandardsComponent implements OnInit {
 
-  @Input('results')
-  responseResultsByCategory: any;
-
   chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: any;
+  canvasStandardResultsByCategory: Chart;
+
+  loading1 = true;
+  loading2 = true;
 
 
+  /**
+   * 
+   */
   constructor(
     public analysisSvc: ReportAnalysisService
   ) {
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = <any>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+      this.loading1 = false;
+
+      setTimeout(() => {
+        this.chartStandardsSummary = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
+      }, 0);
     });
 
     // Standards By Category
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
+      this.loading2 = false;
 
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = <Chart>this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
+      setTimeout(() => {
+        this.canvasStandardResultsByCategory = <Chart>this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
+      }, 0);
     });
-
   }
 }

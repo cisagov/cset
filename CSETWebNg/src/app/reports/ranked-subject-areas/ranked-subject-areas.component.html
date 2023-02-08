@@ -21,16 +21,15 @@
   SOFTWARE.
 -------------------------->
 <h1>
-    Standards Compliance
+    Ranked Subject Areas
 </h1>
-<div *ngIf="loading">
-    <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-</div>
-<ng-container *ngIf="!loading">
-    <div *ngFor="let graph of complianceGraphs; index as i">
-        <h2 style="text-align: center">{{graph.label}}</h2>
-        <canvas id="complianceGraph{{i}}"></canvas>
-    </div>
-</ng-container>
+
+<p>
+    This chart shows subject areas needing the most attention.  Each bar represents the labeled subject area’s
+    weighted contribution
+    so that the combined total always equals 100%.  The weighted contribution includes the importance of both
+    the
+    question and the subject area, as well as the percentage of missed questions in that subject area.
+</p>
+
+<canvas id="canvasRankedSubjectAreas"></canvas>

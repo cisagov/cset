@@ -27,7 +27,12 @@
 <div class="d-flex flex-row align-items-center mb-5">
     <div>
         <h2>Combined Component Summary</h2>
-        <div>
+        <div *ngIf="loading1">
+            <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+            </div>
+        </div>
+        <div *ngIf="!loading1">
             <canvas id="canvasComponentSummary"></canvas>
         </div>
     </div>
@@ -43,6 +48,11 @@
 </div>
 
 <h2>Answer Distribution by Component Type</h2>
-<div>
+<div *ngIf="loading2">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+</div>
+<div *ngIf="!loading2">
     <canvas id="canvasComponentTypes"></canvas>
 </div>

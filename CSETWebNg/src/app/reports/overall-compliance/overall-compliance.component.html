@@ -20,17 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h1>
-    Standards Compliance
-</h1>
-<div *ngIf="loading">
-    <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+<h1>Summary Percent Compliance</h1>
+<div>
+    <div *ngIf="loading">
+        <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
+    <div *ngIf="!loading">
+        <canvas id="canvasCompliance" style></canvas>
     </div>
 </div>
-<ng-container *ngIf="!loading">
-    <div *ngFor="let graph of complianceGraphs; index as i">
-        <h2 style="text-align: center">{{graph.label}}</h2>
-        <canvas id="complianceGraph{{i}}"></canvas>
-    </div>
-</ng-container>

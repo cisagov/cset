@@ -26,7 +26,12 @@
 
 <div>
   <h2>Standards Summary</h2>
-  <div style="max-width: 20rem" class="ml-auto mr-auto">
+  <div *ngIf="loading1">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+</div>
+  <div *ngIf="!loading1" style="max-width: 20rem" class="ml-auto mr-auto">
     <canvas id="canvasStandardSummary"></canvas>
   </div>
 </div>
@@ -36,6 +41,11 @@
   Standard or Question Set
 </h2>
 
-<div>
+<div *ngIf="loading2">
+  <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+<div *ngIf="!loading2">
   <canvas id="canvasStandardResultsByCategory"></canvas>
 </div>
