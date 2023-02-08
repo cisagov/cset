@@ -239,7 +239,6 @@ namespace CSETWebCore.DatabaseManager
 
         //this method will check to see if the files are already in place and if they
         //exist it will rename them first..  
-        //if the rename fails it will throw an 
         private void DoTheCopy(string source, string destination)
         {
             if (File.Exists(destination))
