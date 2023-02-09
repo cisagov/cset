@@ -55,15 +55,17 @@ namespace CSETWebCore.Business.Maturity
             var q = from amm in _context.AVAILABLE_MATURITY_MODELS
                     from mm in _context.MATURITY_MODELS
                     from a in _context.ASSESSMENTS
+                    join gii in _context.GALLERY_ITEM on a.GalleryItemGuid equals gii.Gallery_Item_Guid into gig
+                    from gi in gig.DefaultIfEmpty()
                     where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
-                    join gi in _context.GALLERY_ITEM on a.GalleryItemGuid equals gi.Gallery_Item_Guid
+
                     select new Model.Maturity.MaturityModel()
                     {
                         ModelId = mm.Maturity_Model_Id,
                         ModelName = mm.Model_Name,
                         ModelTitle = mm.Model_Title,
                         QuestionsAlias = mm.Questions_Alias,
-                        ModelDescription = gi.Description
+                        ModelDescription = (gi != null) ? gi.Description : string.Empty
                     };
             var myModel = q.FirstOrDefault();
 
