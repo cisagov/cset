@@ -8,6 +8,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// </summary>
         /// <param name="item_to_clone"></param>
         /// <returns></returns>
-        public void CloneGalleryItem(int item_to_clone, int group_Id)
+        public void CloneGalleryItem(int item_to_clone, int group_Id, bool new_Id)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
@@ -63,17 +64,24 @@ namespace CSETWebCore.Business.GalleryParser
                 }
             );
 
-            var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item_to_clone).FirstOrDefault();
+            var newGallItemId = item_to_clone;
 
-            if (oldItem == null) { return; }
+            if (new_Id == true)
+            {
+                var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item_to_clone).FirstOrDefault();
 
-            var newItem = TinyMapper.Map<GALLERY_ITEM>(oldItem);
-            newItem.CreationDate = DateTime.Now;
-            newItem.Is_Visible = true;
-            newItem.Configuration_Setup = "";
+                if (oldItem == null) { return; }
 
-            _context.GALLERY_ITEM.Add(newItem);
-            _context.SaveChanges();
+                var newItem = TinyMapper.Map<GALLERY_ITEM>(oldItem);
+                newItem.CreationDate = DateTime.Now;
+                newItem.Is_Visible = true;
+                //newItem.Configuration_Setup = "";
+
+                _context.GALLERY_ITEM.Add(newItem);
+                _context.SaveChanges();
+
+                newGallItemId = newItem.Gallery_Item_Id;
+            }
 
             // Setup for adding to GALLERY_GROUP_DETAILS table
             var detailList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Id == item_to_clone && x.Group_Id == group_Id).ToList();
@@ -87,7 +95,7 @@ namespace CSETWebCore.Business.GalleryParser
             {
                 Group_Id = newDetail.Group_Id,
                 Column_Index = maxColumn + 1,
-                Gallery_Item_Id = newDetail.Gallery_Item_Id,
+                Gallery_Item_Id = newGallItemId,
                 Click_Count = newDetail.Click_Count
             };
 
@@ -147,7 +155,7 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
         //
-        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, int group_id, int columnId)
+        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string newConfigSetup, int group_id, int columnId)
         {
             // Setup for adding to GALLERY_ITEM table
             GALLERY_ITEM newItem = new GALLERY_ITEM()
@@ -155,7 +163,7 @@ namespace CSETWebCore.Business.GalleryParser
                 //Gallery_Item_Id = newGallery_Item_Id,
                 Icon_File_Name_Small = newIcon_File_Name_Small,
                 Icon_File_Name_Large = newIcon_File_Name_Large,
-                Configuration_Setup = "",
+                Configuration_Setup = newConfigSetup,
                 Configuration_Setup_Client = null,
                 Description = newDescription,
                 Title = newTitle,

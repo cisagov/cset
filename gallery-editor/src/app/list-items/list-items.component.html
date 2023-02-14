@@ -5,30 +5,58 @@
 <div [class.item]="!isRoot" #parentItem  id="g{{listTest.group_Id}}">	
 	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
             <fa-icon [icon]="faArrows" class="handle"></fa-icon>
-            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 			
-			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete a Group</button>			
+            <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 	
+
+			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete Group</button>			
 			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
-			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete an Item</button>
-			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest)">Clone Item</button> 			
+
+			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete Item</button>
+			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest, false)">Clone Dependent Item</button> 	
+			<button *ngIf="listTest.gallery_Item_Id" (click)="toggleExpandOptions()">Expand Options</button>
+			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest, true)">Clone Independent Item</button> 	
+		
 			<button (click)="toggleItem()">Add New</button>
+
+			<div *ngIf="expandOptions && listTest.gallery_Item_Id" style="padding-left: 30px">
+				Icon file name (small): <input style="width: 400px;" type="text" #boxIconSmall value="{{listTest.icon_File_Name_Small}}">
+				<br>Icon file name (large): <input style="width: 400px;" type="text" #boxIconLarge value="{{listTest.icon_File_Name_Large}}">
+				<br>Configuration setup: <input style="width: 400px;" type="text" #boxConfigSetup value="{{listTest.configuration_Setup}}">
+				<br>Description: <input style="width: 400px;" type="text" #boxDescription value="{{listTest.description}}">
+				<br>Visible: <input type="checkbox" (change)="toggleVisibility()" [checked]="listTest.is_Visible == true">
+
+				<br><br><button (click)="updateGalleryItem(listTest.gallery_Item_Id, boxIconSmall.value, boxIconLarge.value, boxConfigSetup.value, 
+					boxDescription.value, box.value, visibleCheck(listTest.is_Visible))">Update</button>
+				<br><br>
+			</div>
 			
 			<div *ngIf="showNewItemFields">			
 				<div  [hidden]="listTest.group_Id==undefined">
 					Add (if adding a Group, an item must be added along with the Group so it shows up in this list):
 					<br> 
-					<span style="padding-left: 15px">Group
+					<span style="padding-left: 15px">Group: 
 						<input style="width: 400px;" type="text" #boxAddGroup>
 					</span>
 				</div>
-				<span style="padding-left: 15px">Item Name
+				<div style="padding-left: 15px">Item Title: 
 					<input style="width: 400px;" type="text" #boxAddItem>
-				</span>
-				<br>
-				<span style="padding-left: 15px">Item Description
+				</div>
+				<div style="padding-left: 15px">Item Description: 
 					<input style="width: 400px;" type="text" #boxAddDescription>
-				</span>
-				<button *ngIf="listTest.group_Id" (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value)">Add New Group with New Item</button>
-				<button *ngIf="listTest.gallery_Item_Id" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, listTest)">Add Item to Group</button>
+				</div>
+				<div style="padding-left: 15px">Icon File Name (small): 
+					<input style="width: 400px;" type="text" #boxAddIconFileSmall>
+				</div>
+				<div style="padding-left: 15px">Icon File Name (large): 
+					<input style="width: 400px;" type="text" #boxAddIconFileLarge>
+				</div>
+				<div style="padding-left: 15px">Configuration Setup: 
+					<input style="width: 400px;" type="text" #boxAddConfigSetup>
+				</div>
+				
+				<button *ngIf="listTest.group_Id" (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value, 
+					boxAddIconFileSmall.value, boxAddIconFileLarge.value, boxAddConfigSetup.value)">Add New Group with New Item</button>
+				<button *ngIf="listTest.gallery_Item_Id" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, 
+					boxAddIconFileSmall.value, boxAddIconFileLarge.value, boxAddConfigSetup.value, listTest)">Add Item to Group</button>
 			</div>
         </div>
 	<div *ngIf="listTest.children" id="{{listTest.group_Id}}" class="handle" [sortablejs]="listTest.children" [sortablejsOptions]="options">

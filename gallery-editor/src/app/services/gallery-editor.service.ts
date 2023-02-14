@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ListTest, MoveItem, UpdateItem } from '../list-items/listtest.model';
+import { GalleryItem, ListTest, MoveItem, UpdateItem } from '../list-items/listtest.model';
 
 const headers = {
   headers: new HttpHeaders()
@@ -39,18 +39,31 @@ export class GalleryEditorService {
     moveItem.Layout_Name = this.layoutName;
     return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
-  UpdateGalleryGroupName(Group_Id: any, value: string) {
+  updateGalleryGroupName(group_Id: any, value: string) {
     let newUpdateItem = new UpdateItem();
-    newUpdateItem.Group_Id = Group_Id;
+    newUpdateItem.Group_Id = group_Id;
     newUpdateItem.IsGroup = true;
     newUpdateItem.Value = value;
-    return  this.http.post("http://localhost:5000/api/galleryEdit/updateItem", newUpdateItem, headers);
+    return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
   }
-  UpdateGalleryItem(Group_Id: any, value: string) {
+  updateGalleryItemName(item_Id: any, value: string) {
     let newUpdateItem = new UpdateItem();
-    newUpdateItem.Group_Id = Group_Id;
+    newUpdateItem.Group_Id = item_Id;
     newUpdateItem.IsGroup = false;
     newUpdateItem.Value = value;
+    return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
+  }
+  updateGalleryItem(Gallery_Item_Id: number, Icon_File_Name_Small: string, Icon_File_Name_Large: string, Configuration_Setup: string, Description: string, Title: string, Is_Visible: boolean) {
+    let newUpdateItem = new GalleryItem();
+    newUpdateItem.gallery_Item_Id = Gallery_Item_Id;
+    newUpdateItem.icon_File_Name_Small = Icon_File_Name_Small;
+    newUpdateItem.icon_File_Name_Large = Icon_File_Name_Large;
+    newUpdateItem.configuration_Setup = Configuration_Setup;
+    newUpdateItem.description = Description;
+    newUpdateItem.configuration_Setup_Client = undefined;
+    newUpdateItem.title = Title;
+    newUpdateItem.is_Visible = Is_Visible;
+   
     return  this.http.post("http://localhost:5000/api/galleryEdit/updateItem",  newUpdateItem, headers);
   }
 
@@ -87,11 +100,12 @@ export class GalleryEditorService {
     return  this.http.get("http://localhost:5000/api/gallery/getlayouts");
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, newId: boolean) {
     return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
         Item_To_Clone: item.gallery_Item_Id,
-        Group_Id: item.parent_Id        
+        Group_Id: item.parent_Id,
+        New_Id: newId    
       }
     });
   }
@@ -106,24 +120,30 @@ export class GalleryEditorService {
     });
   }
 
-  addGalleryItem(description: string, title: string, parent_Id:number, columnId: number) {    
+  addGalleryItem(description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string, parent_Id:number, columnId: number) {    
     return  this.http.get("http://localhost:5000/api/gallery/addItem",  {
       params: {
         newDescription: description,
         newTitle: title,
+        newIconSmall: iconSmall,
+        newIconLarge: iconLarge,
+        newConfigSetup: configSetup,
         group_Id: parent_Id,
         columnId: columnId
       }
     });
   }
 
-  addGalleryGroup(group: string, description: string, title: string, columnId: number) {
+  addGalleryGroup(group: string, description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string, columnId: number) {
     return this.http.get("http://localhost:5000/api/gallery/addGroup",  {
       params: {
         group: group,
         layout: this.layoutName,
         newDescription: description,
         newTitle: title,
+        newIconSmall: iconSmall,
+        newIconLarge: iconLarge,
+        newConfigSetup: configSetup,
         columnId: columnId
       }
     });
