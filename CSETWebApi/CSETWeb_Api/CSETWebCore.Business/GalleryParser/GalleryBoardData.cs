@@ -45,10 +45,12 @@ namespace CSETWebCore.Business.GalleryParser
             this.Gallery_Item_Id = i.Gallery_Item_Id;
             this.Icon_File_Name_Small = i.Icon_File_Name_Small;
             this.Icon_File_Name_Large = i.Icon_File_Name_Large;
+            this.Configuration_Setup = i.Configuration_Setup;
             this.Configuration_Setup_Client = i.Configuration_Setup_Client;
             this.Description = i.Description;
             this.Title = i.Title;
             this.Parent_Id = group_id;
+            this.Is_Visible = i.Is_Visible;
         }
 
         public int Gallery_Item_Id { get; set; }
@@ -59,6 +61,7 @@ namespace CSETWebCore.Business.GalleryParser
         public string Description { get; set; }
         public object Title { get; set; }
         public int Parent_Id { get; private set; }
+        public bool? Is_Visible { get; set; }
 
         /// <summary>
         /// This is populated for custom set cards built on the fly 

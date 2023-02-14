@@ -5,6 +5,12 @@ export class ListTest {
     gallery_Item_Id?: number; 
     group_Id?:number;    
     isUnused?: boolean = false;
+    icon_File_Name_Small?: string;
+    icon_File_Name_Large?: string;
+    configuration_Setup?: string;
+    configuration_Setup_Client?: string;
+    description?: string;
+    is_Visible?: boolean;
 }
 
 export class GalleryItem {

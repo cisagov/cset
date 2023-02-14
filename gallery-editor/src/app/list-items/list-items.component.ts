@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, NgModule } from '@angular/core';
 import { Options } from 'sortablejs';
 import { GalleryItem, ListTest, MoveItem } from './listtest.model'
 import { faArrows } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,7 @@ import { isNgTemplate } from '@angular/compiler';
   templateUrl: './list-items.component.html',
   styleUrls: ['./list-items.component.css']
 })
+
 export class ListItemsComponent implements OnInit {
   @Input() listTest!: ListTest;
   @Input() unusedList: ListTest[];
@@ -24,13 +25,15 @@ export class ListItemsComponent implements OnInit {
     handle: '.handle'
   };
   showNewItemFields:boolean = false;
+  expandOptions: boolean = false;
+  changeVisibility: boolean = false;
 
   constructor(private svcGalleryEditor: GalleryEditorService ){   
     this.unusedList = [];
     this.options = {
       group: 'test',
       onUpdate: (event: any) => {
-
+        console.log(event)
 
         console.log('updated');
         let v = this.listTest.children;
@@ -97,14 +100,25 @@ export class ListItemsComponent implements OnInit {
     this.showNewItemFields = !this.showNewItemFields;
   }
 
-
+  updateGalleryGroupName(updateItem: any, value: string) {
+    this.svcGalleryEditor.updateGalleryGroupName(updateItem.group_Id, value).subscribe();
+  }
+  
+  updateGalleryItem (id: number, iconSmall: string, iconLarge: string, configSetup: string, description: string, title: string, visible?: boolean) {
+    if(visible == undefined) {
+      visible = false;
+    }
+    this.svcGalleryEditor.updateGalleryItem(id, iconSmall, iconLarge, configSetup, description, title, visible).subscribe();
+  }
+  
+  
   open(item:any, value:string){
     console.log(item);
     if(item.group_Id!==undefined){
-      this.svcGalleryEditor.UpdateGalleryGroupName(item.group_Id, value).subscribe();      
+      this.svcGalleryEditor.updateGalleryGroupName(item.group_Id, value).subscribe();      
     }
     if(item.gallery_Item_Id!==undefined){
-      this.svcGalleryEditor.UpdateGalleryItem(item.gallery_Item_Id, value).subscribe();      
+      this.svcGalleryEditor.updateGalleryItemName(item.gallery_Item_Id, value).subscribe();      
     }
   }
 
@@ -134,9 +148,9 @@ export class ListItemsComponent implements OnInit {
     );
   }
 
-  addGalleryGroup(group: string, description: string, title: string) {
+  addGalleryGroup(group: string, description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string) {
     let firstColumnId = 0;
-    this.svcGalleryEditor.addGalleryGroup(group,description, title, firstColumnId).subscribe(
+    this.svcGalleryEditor.addGalleryGroup(group,description, title, iconSmall, iconLarge, configSetup, firstColumnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
         //console.log(this.responseAdd);
@@ -148,7 +162,7 @@ export class ListItemsComponent implements OnInit {
     );
   }
 
-  addGalleryItem(description: string, title: string, item: any) {
+  addGalleryItem(description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string, item: any) {
     let columnId = 0;
     let tmpItemsList = this.svcGalleryEditor.allItems();
     for (let i = 0; i < tmpItemsList.length; i++) {
@@ -158,7 +172,7 @@ export class ListItemsComponent implements OnInit {
       }
     }
     console.log(item);
-    this.svcGalleryEditor.addGalleryItem(description, title, item.parent_Id, columnId).subscribe(
+    this.svcGalleryEditor.addGalleryItem(description, title, iconSmall, iconLarge, configSetup, item.parent_Id, columnId).subscribe(
       (r: any) => {
         this.responseAdd = r;
         this.updateItems();
@@ -167,9 +181,9 @@ export class ListItemsComponent implements OnInit {
     );
   }
 
-  cloneGalleryItem(item: any) {
+  cloneGalleryItem(item: any, newId: boolean) {
     
-    this.svcGalleryEditor.cloneGalleryItem(item).subscribe(
+    this.svcGalleryEditor.cloneGalleryItem(item, newId).subscribe(
       (r: any) => {
         this.updateItems();
       },
@@ -196,6 +210,21 @@ export class ListItemsComponent implements OnInit {
     //   },
     //   error => console.log('Gallery Layout error ' + (<Error>error).message)
     // );
+  }
+
+  toggleExpandOptions() {
+    this.expandOptions = !this.expandOptions;
+  }
+
+  toggleVisibility() {
+    this.changeVisibility = !this.changeVisibility;
+  }
+
+  visibleCheck(visible?: boolean) {
+    if (this.changeVisibility) {
+      visible = !visible;
+    }
+    return visible;
   }
 
 
