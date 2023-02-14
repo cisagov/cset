@@ -121,68 +121,105 @@
         </div>
 
         <div class="col-3">
-            <div class="bgc-tsa-primary p-3">
-                <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
-                    class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
-                    <div *ngIf="incorrect">
-                        <div class="alert alert-danger">Incorrect Username or Password</div>
-                    </div>
-                    <label for="email" style="color: #fff">
-                        Enter your email address and password to login.
-                    </label>
-                    <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
-                        #email="ngModel" required email focusOnInit="true" tabindex="0" />
-                    <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is
-                        required</div>
-                    <input type="password" tabindex="0" class="form-control mt-2" name="password" placeholder="Password"
-                        [(ngModel)]="model.password" #password="ngModel" required />
-                    <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is
-                        required</div>
-                    <div class="mt-2 d-flex justify-content-between flex-00a">
-                        <div class="d-flex flex-nowrap flex-00a mt-3">
-                            <button type="submit" [disabled]="loading" class="btn btn-secondary"
-                                tabindex="0">Login</button>
-                            <div class="spinner-container" *ngIf="loading">
-                                <div style="max-width: 30px; max-height: 30px;"></div>
+            <div class="d-none d-xl-block">
+                <div class="bgc-tsa-primary p-3">
+                    <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+                        class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
+                        <div *ngIf="incorrect">
+                            <div class="alert alert-danger">Incorrect Username or Password</div>
+                        </div>
+                        <label for="email" style="color: #fff">
+                            Enter your email address and password to login.
+                        </label>
+                        <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+                            #email="ngModel" required email focusOnInit="true" tabindex="0" />
+                        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is
+                            required</div>
+                        <input type="password" tabindex="0" class="form-control mt-2" name="password" placeholder="Password"
+                            [(ngModel)]="model.password" #password="ngModel" required />
+                        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is
+                            required</div>
+                        <div class="mt-2 d-flex justify-content-between flex-00a">
+                            <div class="d-flex flex-nowrap flex-00a mt-3">
+                                <button type="submit" [disabled]="loading" class="btn btn-secondary"
+                                    tabindex="0">Login</button>
+                                <div class="spinner-container" *ngIf="loading">
+                                    <div style="max-width: 30px; max-height: 30px;"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column flex-00a mt-3">
+                                <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
+                                    Password</a>
+                                <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
+                                    tabindex="0">New User Account</a>
                             </div>
                         </div>
-                        <div class="d-flex flex-column flex-00a mt-3">
-                            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
-                                Password</a>
-                            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
-                                tabindex="0">Register New User Account</a>
-                        </div>
-                    </div>
-                </form>
-
-                <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="mr-4 ml-4 p-3 c-white bgc-validation">
-                  An error was encountered while running CSET-TSA.
-                </div>
-
-                <!-- If we reach the login page while running in electron, we can assume there was an error getting
-                the standalone status from the API; prompt for exiting the application -->
-                <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-                  <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
-                    <div class="d-flex flex-nowrap">
-                      <button type="submit" class="btn btn-primary btn-lg">Exit</button>
-                    </div>
-                  </form>
+                    </form>
                 </div>
             </div>
+            <div *ngIf="mode !== 'SIGNUP'" class="d-xl-none">
+                <a class="btn btn-primary" data-toggle="collapse" href="#loginCollapse">Login</a>
+                <div class="collapse" id="loginCollapse">
+                    <div class="card card-body" style="width: 240px;">
+                        <div class="bgc-tsa-primary p-3">
+                            <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+                                class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
+                                <div *ngIf="incorrect">
+                                    <div class="alert alert-danger">Incorrect Username or Password</div>
+                                </div>
+                                <label for="email" style="color: #fff">
+                                    Enter your email address and password to login.
+                                </label>
+                                <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+                                    #email="ngModel" required email focusOnInit="true" tabindex="0" />
+                                <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is
+                                    required</div>
+                                <input type="password" tabindex="0" class="form-control mt-2" name="password" placeholder="Password"
+                                    [(ngModel)]="model.password" #password="ngModel" required />
+                                <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is
+                                    required</div>
+                                <div class="mt-2 d-flex justify-content-between flex-00a">
+                                    <div class="d-flex flex-nowrap flex-00a mt-3">
+                                        <button type="submit" [disabled]="loading" class="btn btn-secondary"
+                                            tabindex="0">Login</button>
+                                        <div class="spinner-container" *ngIf="loading">
+                                            <div style="max-width: 30px; max-height: 30px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
+                                Password</a><br>
+                            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
+                                tabindex="0">New User</a>
+                        </div>
+                        <div class="text-center">
+                            <img src="assets/images/TSA/tsa_insignia_rgb.jpg" class="mt-5" style="width: 175px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="mr-4 ml-4 p-3 c-white bgc-validation">
+                An error was encountered while running CSET-TSA.
+            </div>
 
-            <div class="text-center">
+            <!-- If we reach the login page while running in electron, we can assume there was an error getting
+            the standalone status from the API; prompt for exiting the application -->
+            <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+              <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+                <div class="d-flex flex-nowrap">
+                  <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+                </div>
+              </form>
+            </div>
+        
+            <div class="text-center d-none d-xl-block">
                 <img src="assets/images/TSA/tsa_insignia_rgb.jpg" class="mt-5" style="width: 175px;">
             </div>
 
         </div>
-
-
-
     </div>
-
-
-
-
 
 
     <!-- Footer -->
