@@ -121,7 +121,7 @@
         </div>
 
         <div class="col-3">
-            <div class="d-none d-lg-block">
+            <div class="d-none d-xl-block">
                 <div class="bgc-tsa-primary p-3">
                     <form *ngIf="mode === 'LOGIN' && !isRunningInElectron" name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
                         class="d-flex flex-column justify-content-between flex-00a pt-5 pb-3">
@@ -157,7 +157,7 @@
                     </form>
                 </div>
             </div>
-            <div *ngIf="mode !== 'SIGNUP'" class="d-lg-none">
+            <div *ngIf="mode !== 'SIGNUP'" class="d-xl-none">
                 <a class="btn btn-primary" data-toggle="collapse" href="#loginCollapse">Login</a>
                 <div class="collapse" id="loginCollapse">
                     <div class="card card-body" style="width: 240px;">
@@ -214,7 +214,7 @@
               </form>
             </div>
         
-            <div class="text-center d-none d-lg-block">
+            <div class="text-center d-none d-xl-block">
                 <img src="assets/images/TSA/tsa_insignia_rgb.jpg" class="mt-5" style="width: 175px;">
             </div>
 
