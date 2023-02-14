@@ -1,4 +1,4 @@
-﻿/*
+/*
 Run this script on a V12.0.1.3 DB to convert al ltables using Gallery_Item_Id to use Gallery_Item_Guid
 
 You are recommended to back up your database before running this script.
