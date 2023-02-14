@@ -3,7 +3,6 @@ Run this script on a V12.0.1.3 DB to convert al ltables using Gallery_Item_Id to
 
 You are recommended to back up your database before running this script.
 
-
 */
 SET NUMERIC_ROUNDABORT OFF
 GO
@@ -395,6 +394,8 @@ GO
 PRINT N'Altering [dbo].[GALLERY_ITEM]'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DELETE FROM GALLERY_ITEM WHERE Gallery_Item_Guid IS NULL
 GO
 ALTER TABLE [dbo].[GALLERY_ITEM] ALTER COLUMN [Gallery_Item_Guid] [uniqueidentifier] NOT NULL
 GO
