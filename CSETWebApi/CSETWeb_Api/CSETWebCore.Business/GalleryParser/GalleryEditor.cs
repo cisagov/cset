@@ -8,6 +8,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// </summary>
         /// <param name="item_to_clone"></param>
         /// <returns></returns>
-        public void CloneGalleryItem(Guid item_to_clone, int group_Id)
+        public void CloneGalleryItem(Guid item_to_clone, int group_Id, bool new_Id)
         {
             //determine if it is an item or a parent (node vs leaf)
             //for leaf nodes create a new Gallery_item and copy everything into it.
@@ -63,17 +64,26 @@ namespace CSETWebCore.Business.GalleryParser
                 }
             );
 
-            var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == item_to_clone).FirstOrDefault();
+            Guid newGallItemGuid = item_to_clone;
 
-            if (oldItem == null) { return; }
+            if (new_Id == true)
+            {
+                var oldItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == newGallItemGuid).FirstOrDefault();
 
-            var newItem = TinyMapper.Map<GALLERY_ITEM>(oldItem);
-            newItem.CreationDate = DateTime.Now;
-            newItem.Is_Visible = true;
-            newItem.Configuration_Setup = "";
+                if (oldItem == null) { return; }
 
-            _context.GALLERY_ITEM.Add(newItem);
-            _context.SaveChanges();
+                Guid newGuid = Guid.NewGuid();
+
+                var newItem = TinyMapper.Map<GALLERY_ITEM>(oldItem);
+                newItem.CreationDate = DateTime.Now;
+                newItem.Is_Visible = true;
+                newItem.Gallery_Item_Guid = newGuid;
+
+                _context.GALLERY_ITEM.Add(newItem);
+                _context.SaveChanges();
+
+                newGallItemGuid = newItem.Gallery_Item_Guid;
+            }
 
             // Setup for adding to GALLERY_GROUP_DETAILS table
             var detailList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid == item_to_clone && x.Group_Id == group_Id).ToList();
@@ -87,7 +97,7 @@ namespace CSETWebCore.Business.GalleryParser
             {
                 Group_Id = newDetail.Group_Id,
                 Column_Index = maxColumn + 1,
-                Gallery_Item_Guid = newDetail.Gallery_Item_Guid,
+                Gallery_Item_Guid = newGallItemGuid,
                 Click_Count = newDetail.Click_Count
             };
 
@@ -147,20 +157,20 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
         //
-        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, int group_id, int columnId)
+        public void AddGalleryItem(string newIcon_File_Name_Small, string newIcon_File_Name_Large, string newDescription, string newTitle, string newConfigSetup, int group_id, int columnId)
         {
             // Setup for adding to GALLERY_ITEM table
             GALLERY_ITEM newItem = new GALLERY_ITEM()
             {
-                //Gallery_Item_Id = newGallery_Item_Id,
                 Icon_File_Name_Small = newIcon_File_Name_Small,
                 Icon_File_Name_Large = newIcon_File_Name_Large,
-                Configuration_Setup = "",
+                Configuration_Setup = newConfigSetup,
                 Configuration_Setup_Client = null,
                 Description = newDescription,
                 Title = newTitle,
                 CreationDate = DateTime.Now,
-                Is_Visible = true
+                Is_Visible = true,
+                Gallery_Item_Guid = Guid.NewGuid()
             };
 
             _context.GALLERY_ITEM.Add(newItem);
@@ -240,9 +250,9 @@ namespace CSETWebCore.Business.GalleryParser
         }
 
 
-        public void DeleteGalleryItem(Guid id, int group_id)
+        public void DeleteGalleryItem(Guid galleryItemGuid, int group_id)
         {
-            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid == id && x.Group_Id == group_id).FirstOrDefault();
+            var item = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid == galleryItemGuid && x.Group_Id == group_id).FirstOrDefault();
             if (item != null)
             {
                 _context.GALLERY_GROUP_DETAILS.Remove(item);
@@ -265,10 +275,28 @@ namespace CSETWebCore.Business.GalleryParser
                                join g in _context.GALLERY_GROUP on d.Group_Id equals g.Group_Id
                                join r in _context.GALLERY_ROWS on g.Group_Id equals r.Group_Id
                                where r.Layout_Name == layout_Name
-                               select new GalleryItem() { Gallery_Item_Guid = i.Gallery_Item_Guid, Title = i.Title, Description = i.Description }).Distinct().ToList();
+                               select new GalleryItem() { 
+                                   Gallery_Item_Guid = i.Gallery_Item_Guid
+                                   , Title = i.Title
+                                   , Description = i.Description
+                                   , Configuration_Setup = i.Configuration_Setup
+                                   , Configuration_Setup_Client = i.Configuration_Setup_Client
+                                   , Icon_File_Name_Large = i.Icon_File_Name_Large
+                                   , Icon_File_Name_Small = i.Icon_File_Name_Small
+                                   , Is_Visible = i.Is_Visible
+                               }).Distinct().ToList();
 
             var query = (from i in _context.GALLERY_ITEM
-                         select new GalleryItem() { Gallery_Item_Guid = i.Gallery_Item_Guid, Title = i.Title, Description = i.Description }).ToList();
+                         select new GalleryItem() {
+                             Gallery_Item_Guid = i.Gallery_Item_Guid
+                             , Title = i.Title
+                             , Description = i.Description
+                             , Configuration_Setup = i.Configuration_Setup
+                             , Configuration_Setup_Client = i.Configuration_Setup_Client
+                             , Icon_File_Name_Large = i.Icon_File_Name_Large
+                             , Icon_File_Name_Small = i.Icon_File_Name_Small
+                             , Is_Visible = i.Is_Visible
+                         }).ToList();
                        
                         
             return query.Except(queryExcept.ToList(), new GalleryItemComparer()).ToArray();
