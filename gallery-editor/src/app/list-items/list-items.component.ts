@@ -78,7 +78,7 @@ export class ListItemsComponent implements OnInit {
         
         let v = this.unusedList[event.oldIndex];
         
-        item.gallery_Item_Id = v.gallery_Item_Id;
+        item.gallery_Item_Guid = v.gallery_Item_Guid;
         this.svcGalleryEditor.updatePositionOfItem(item).subscribe();
       },
       onRemove: (event: any) => {        
@@ -104,11 +104,11 @@ export class ListItemsComponent implements OnInit {
     this.svcGalleryEditor.updateGalleryGroupName(updateItem.group_Id, value).subscribe();
   }
   
-  updateGalleryItem (id: number, iconSmall: string, iconLarge: string, configSetup: string, description: string, title: string, visible?: boolean) {
+  updateGalleryItem (guid: string, iconSmall: string, iconLarge: string, configSetup: string, description: string, title: string, visible?: boolean) {
     if(visible == undefined) {
       visible = false;
     }
-    this.svcGalleryEditor.updateGalleryItem(id, iconSmall, iconLarge, configSetup, description, title, visible).subscribe();
+    this.svcGalleryEditor.updateGalleryItem(guid, iconSmall, iconLarge, configSetup, description, title, visible).subscribe();
   }
   
   
@@ -117,17 +117,17 @@ export class ListItemsComponent implements OnInit {
     if(item.group_Id!==undefined){
       this.svcGalleryEditor.updateGalleryGroupName(item.group_Id, value).subscribe();      
     }
-    if(item.gallery_Item_Id!==undefined){
-      this.svcGalleryEditor.updateGalleryItemName(item.gallery_Item_Id, value).subscribe();      
+    if(item.gallery_Item_Guid!==undefined){
+      this.svcGalleryEditor.updateGalleryItemName(item.gallery_Item_Guid, value).subscribe();      
     }
   }
 
  
 
-  deleteGalleryItem(id: any) {
+  deleteGalleryItem(item: any) {
     console.log("deleting item");
-    console.log(id);
-    this.svcGalleryEditor.deleteGalleryItem(id).subscribe(
+    console.log(item);
+    this.svcGalleryEditor.deleteGalleryItem(item).subscribe(
       (r: any) => {
         // this.response = r;
         console.log(this.response);

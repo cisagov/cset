@@ -32,7 +32,7 @@ switch(installationMode) {
     break;
   case 'CF':
     clientCode = 'CF';
-    appCode = 'CF';
+    appCode = 'CSET-CF';
     break;
   default:
     clientCode = 'DHS';
@@ -63,7 +63,7 @@ function createWindow() {
     height: 800,
     webPreferences: { nodeIntegration: true, webSecurity: false },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: installationMode.toUpperCase()
+    title: appCode
   });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
@@ -80,6 +80,7 @@ function createWindow() {
         new MenuItem({
           type: 'normal',
           label: 'Print',
+          accelerator: 'Ctrl+P',
           click: () => {
             BrowserWindow.getFocusedWindow().webContents.print();
           }

@@ -61,7 +61,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     slidesPerView: 1,
     spaceBetween: 7,
     slidesPerGroup: 1,
-    //loop:true, 
+    //loop:true,
     navigation: true,
     breakpoints: {
       200: {

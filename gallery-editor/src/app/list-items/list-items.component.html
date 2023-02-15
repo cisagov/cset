@@ -3,28 +3,28 @@
 </div>
 
 <div [class.item]="!isRoot" #parentItem  id="g{{listTest.group_Id}}">	
-	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Id}}">
+	<div *ngIf="!isRoot" id="{{listTest.gallery_Item_Guid}}">
             <fa-icon [icon]="faArrows" class="handle"></fa-icon>
             <input style="width: 500px;" type="text" #box (keyup.enter)="open(listTest,box.value)" value="{{listTest.title}}"> 	
 
 			<button *ngIf="listTest.group_Id"  (click)="deleteGalleryGroup(listTest)">Delete Group</button>			
 			<button *ngIf="listTest.group_Id" (click)="cloneGalleryGroup(listTest)">Clone Group</button>
 
-			<button *ngIf="listTest.gallery_Item_Id" (click)="deleteGalleryItem(listTest)">Delete Item</button>
-			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest, false)">Clone Dependent Item</button> 	
-			<button *ngIf="listTest.gallery_Item_Id" (click)="toggleExpandOptions()">Expand Options</button>
-			<button *ngIf="listTest.gallery_Item_Id" (click)="cloneGalleryItem(listTest, true)">Clone Independent Item</button> 	
+			<button *ngIf="listTest.gallery_Item_Guid" (click)="deleteGalleryItem(listTest)">Delete Item</button>
+			<button *ngIf="listTest.gallery_Item_Guid" (click)="cloneGalleryItem(listTest, false)">Clone Dependent Item</button> 	
+			<button *ngIf="listTest.gallery_Item_Guid" (click)="toggleExpandOptions()">Expand Options</button>
+			<button *ngIf="listTest.gallery_Item_Guid" (click)="cloneGalleryItem(listTest, true)">Clone Independent Item</button> 	
 		
 			<button (click)="toggleItem()">Add New</button>
 
-			<div *ngIf="expandOptions && listTest.gallery_Item_Id" style="padding-left: 30px">
+			<div *ngIf="expandOptions && listTest.gallery_Item_Guid" style="padding-left: 30px">
 				Icon file name (small): <input style="width: 400px;" type="text" #boxIconSmall value="{{listTest.icon_File_Name_Small}}">
 				<br>Icon file name (large): <input style="width: 400px;" type="text" #boxIconLarge value="{{listTest.icon_File_Name_Large}}">
 				<br>Configuration setup: <input style="width: 400px;" type="text" #boxConfigSetup value="{{listTest.configuration_Setup}}">
 				<br>Description: <input style="width: 400px;" type="text" #boxDescription value="{{listTest.description}}">
 				<br>Visible: <input type="checkbox" (change)="toggleVisibility()" [checked]="listTest.is_Visible == true">
-
-				<br><br><button (click)="updateGalleryItem(listTest.gallery_Item_Id, boxIconSmall.value, boxIconLarge.value, boxConfigSetup.value, 
+				<br>group detail id: {{listTest.group_Detail_Id}}
+				<br><br><button (click)="updateGalleryItem(listTest.gallery_Item_Guid, boxIconSmall.value, boxIconLarge.value, boxConfigSetup.value, 
 					boxDescription.value, box.value, visibleCheck(listTest.is_Visible))">Update</button>
 				<br><br>
 			</div>
@@ -55,7 +55,7 @@
 				
 				<button *ngIf="listTest.group_Id" (click)="addGalleryGroup(boxAddGroup.value, boxAddDescription.value, boxAddItem.value, 
 					boxAddIconFileSmall.value, boxAddIconFileLarge.value, boxAddConfigSetup.value)">Add New Group with New Item</button>
-				<button *ngIf="listTest.gallery_Item_Id" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, 
+				<button *ngIf="listTest.gallery_Item_Guid" (click)="addGalleryItem(boxAddDescription.value, boxAddItem.value, 
 					boxAddIconFileSmall.value, boxAddIconFileLarge.value, boxAddConfigSetup.value, listTest)">Add Item to Group</button>
 			</div>
         </div>
@@ -77,7 +77,7 @@
 			<div *ngFor="let item of group?.galleryItems">
 				<fa-icon [icon]="faArrows" class=" handle item"></fa-icon>
 				<span>{{ item.title }} 
-					 <button (click)="deleteGalleryItem(item.gallery_Item_Id)">Delete an Item</button>
+					 <button (click)="deleteGalleryItem(item.gallery_Item_Guid)">Delete an Item</button>
 					 <button (click)="cloneGalleryItem(item, group.group_Id)">Clone Item</button> 
 				</span>
 			</div>

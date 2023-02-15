@@ -19,33 +19,33 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<!-- Keep this markup updated, and then copy it to the Executive and Site Summary templates -->
+-------------------------->
+<h1>
+  Evaluation Against Selected Standards and Question Sets
+</h1>
 
-
-
-<div style="max-width: calc(100% - 4em); margin: 0 auto">
-    <div class="d-flex align-items-end">
-        <div>            
-            <div class="eval-against-standard-label">
-                STANDARD OR QUESTION SET
-            </div>
-            <div class="eval-against-standard">
-                <canvas></canvas>
-            </div>
-        </div>
-        <div style="padding: 1em 0 1em 1em;">
-            <div class="cset-container" style="border-bottom-left-radius: .5em; border-bottom-right-radius: .5em;">
-                <div>STANDARDS SUMMARY</div>
-                <div>
-                    <canvas></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="eval-against-graph-text">
-        This is where the graph goes
-        <canvas></canvas>
+<div>
+  <h2>Standards Summary</h2>
+  <div *ngIf="loading1">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
 </div>
+  <div *ngIf="!loading1" style="max-width: 20rem" class="ml-auto mr-auto">
+    <canvas id="canvasStandardSummary"></canvas>
+  </div>
+</div>
 
+
+<h2>
+  Standard or Question Set
+</h2>
+
+<div *ngIf="loading2">
+  <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+<div *ngIf="!loading2">
+  <canvas id="canvasStandardResultsByCategory"></canvas>
+</div>

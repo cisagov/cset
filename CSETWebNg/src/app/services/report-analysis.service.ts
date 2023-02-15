@@ -114,7 +114,7 @@ export class ReportAnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
@@ -142,6 +142,7 @@ export class ReportAnalysisService {
   *
   */
   buildStandardResultsByCategoryChart(canvasId: string, x: any) {
+
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
@@ -154,8 +155,6 @@ export class ReportAnalysisService {
       },
       options: {
         indexAxis: 'y',
-        maintainAspectRatio: true,
-        aspectRatio: 0,
         plugins: {
           title: {
             display: false,
@@ -165,13 +164,14 @@ export class ReportAnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },
           legend: {
-            display: false
+            display: true,
+            position: 'top'
           }
         },
         scales: {
@@ -180,6 +180,11 @@ export class ReportAnalysisService {
             ticks: {
               //@ts-ignore
               beginAtZero: true
+            }
+          },
+          y: {
+            ticks: {
+              autoSkip: false
             }
           }
         }
@@ -205,9 +210,9 @@ export class ReportAnalysisService {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#090',
+            backgroundColor: '#00aa00',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ]
       },
@@ -215,8 +220,6 @@ export class ReportAnalysisService {
       options: {
         indexAxis: 'y',
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 0,
         plugins: {
           title: {
             display: false,
@@ -226,7 +229,7 @@ export class ReportAnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
@@ -239,6 +242,11 @@ export class ReportAnalysisService {
           x: {
             max: 100,
             beginAtZero: true
+          },
+          y: {
+            ticks: {
+              autoSkip: false
+            }
           }
         }
       }
@@ -263,9 +271,9 @@ export class ReportAnalysisService {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#a00',
+            backgroundColor: '#DC3545',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
@@ -280,7 +288,7 @@ export class ReportAnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
@@ -293,6 +301,11 @@ export class ReportAnalysisService {
           x: {
             max: 100,
             beginAtZero: true
+          },
+          y: {
+            ticks: {
+              autoSkip: false
+            }
           }
         }
       }
@@ -342,12 +355,13 @@ export class ReportAnalysisService {
             data: x.overallBars.data.map(n => parseFloat(n.toFixed())),
             backgroundColor: '#0A5278',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
       options: {
         indexAxis: 'y',
+        maintainAspectRatio: false,
         plugins: {
           title: {
             display: false,
@@ -356,8 +370,8 @@ export class ReportAnalysisService {
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+              label: function (context) {
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               }
             }
@@ -448,11 +462,11 @@ export class ReportAnalysisService {
         options: {
           indexAxis: 'y',
           plugins: {
-            legend: { display: true },
+            legend: { display: true, position: 'bottom' },
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
@@ -485,9 +499,9 @@ export class ReportAnalysisService {
           {
             label: '',
             data: x.data,
-            backgroundColor: '#0a0',
+            backgroundColor: '#00aa00',
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 0
           }
         ],
       },
@@ -497,7 +511,7 @@ export class ReportAnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
@@ -514,6 +528,11 @@ export class ReportAnalysisService {
         scales: {
           x: {
             beginAtZero: true
+          },
+          y: {
+            ticks: {
+              autoSkip: false
+            }
           }
         }
       }

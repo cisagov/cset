@@ -21,27 +21,48 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ReportAnalysisService } from '../../services/report-analysis.service';
 
-/**
- * This is an attempt to consolidate the big graph display.
- * It is used on both the Executive and the Site Summary reports.
- * I haven't gotten it to work yet.  Including it in the page
- * makes Angular navigate to the root.
- *
- * So for now it is being checked in, in case it can be made
- * to work in the future.
- */
 @Component({
-  selector: 'rapp-eval-against',
-  templateUrl: './eval-against.component.html',
-  styleUrls: ['./eval-against.component.scss']
+  selector: 'app-sal-section',
+  templateUrl: './sal-section.component.html',
+  styleUrls: ['../reports.scss']
 })
-export class EvalAgainstComponent implements OnInit {
+export class SalSectionComponent implements OnInit {
 
-  constructor() {
-  }
+  @Input()
+  response: any;
 
-  ngOnInit() {
+  // FIPS SAL answers
+  nistSalC = '';
+  nistSalI = '';
+  nistSalA = '';
+
+  /**
+   * 
+   * @param analysisSvc 
+   */
+  constructor(
+    public analysisSvc: ReportAnalysisService
+  ) { }
+
+  /**
+   * 
+   */
+  ngOnInit(): void {
+    // Break out any CIA special factors now - can't do a find in the template
+    let v: any = this.response.nistTypes.find(x => x.ciA_Type === 'Confidentiality');
+    if (!!v) {
+      this.nistSalC = v.justification;
+    }
+    v = this.response.nistTypes.find(x => x.ciA_Type === 'Integrity');
+    if (!!v) {
+      this.nistSalI = v.justification;
+    }
+    v = this.response.nistTypes.find(x => x.ciA_Type === 'Availability');
+    if (!!v) {
+      this.nistSalA = v.justification;
+    }
   }
 }

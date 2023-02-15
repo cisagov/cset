@@ -1321,6 +1321,10 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+            info.UseStandard = assessment.UseStandard;
+            info.UseMaturity = assessment.UseMaturity;
+            info.UseDiagram = assessment.UseDiagram;
+
             // ACET properties
             info.Credit_Union_Name = assessment.CreditUnionName;
             info.Charter = assessment.Charter;
