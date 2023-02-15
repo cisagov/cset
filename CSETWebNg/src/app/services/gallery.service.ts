@@ -86,7 +86,7 @@ export class GalleryService {
   /**
    * Posts the current selected tier to the server.
    */
-  postSelections(galleryItemId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemId, headers);
+  postSelections(galleryItemGuid: number) {
+    return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemGuid, headers);
   }
 }

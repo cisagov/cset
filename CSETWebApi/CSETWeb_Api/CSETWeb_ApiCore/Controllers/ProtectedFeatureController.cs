@@ -83,14 +83,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 sts.IsEncryptedModuleOpen = true;
             }
-
+/*
             var gallItems = _context.GALLERY_ITEM.Where(g => g.Gallery_Item_Id == 68 || g.Gallery_Item_Id == 69);
             foreach (GALLERY_ITEM gall in gallItems)
             {
                 gall.Is_Visible = true;
             }
             
-            _context.SaveChanges();
+*/          _context.SaveChanges();
         }
     }
 }

@@ -32,16 +32,16 @@ import { ConfigService } from '../../services/config.service';
 
 
 @Component({
-  selector: 'executive',
-  templateUrl: './executive.component.html',
+  selector: 'executive-summary',
+  templateUrl: './executive-summary.component.html',
   styleUrls: ['../reports.scss']
 })
-export class ExecutiveComponent implements OnInit {
+export class ExecutiveSummaryComponent implements OnInit {
   response: any;
 
   chartPercentCompliance: Chart;
   chartStandardsSummary: Chart;
-  canvasStandardResultsByCategory: Chart;
+  //canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
 
 
@@ -78,36 +78,12 @@ export class ExecutiveComponent implements OnInit {
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
 
-    // Summary Percent Compliance
-    this.analysisSvc.getDashboard().subscribe(x => {
-      this.chartPercentCompliance = this.analysisSvc.buildPercentComplianceChart('canvasCompliance', x);
-    });
-
-    // Standards Summary (pie or stacked bar)
-    this.analysisSvc.getStandardsSummary().subscribe(x => {
-      this.chartStandardsSummary = this.analysisSvc.buildStandardsSummary('canvasStandardSummary', x);
-    });
-
-    // Standards By Category
-    this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
-      this.responseResultsByCategory = x;
-
-      // Standard Or Question Set (multi-bar graph)
-      this.canvasStandardResultsByCategory = this.analysisSvc.buildStandardResultsByCategoryChart('canvasStandardResultsByCategory', x);
-    });
-
-    // Component Summary
-    this.analysisSvc.getComponentSummary().subscribe(x => {
-      setTimeout(() => {
-        this.chartComponentSummary = this.analysisSvc.buildComponentSummary('canvasComponentSummary', x);
-      }, 0);
-    });
-
 
     this.tempChart = Chart.getChart('canvasComponentTypes');
     if(this.tempChart){
       this.tempChart.destroy();
     }
+    
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.labels.length;

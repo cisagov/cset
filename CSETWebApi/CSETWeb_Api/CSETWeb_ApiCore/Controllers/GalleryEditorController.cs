@@ -48,15 +48,16 @@ namespace CSETWebCore.Api.Controllers
                 if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
 
                     //find the new group and insert it
-                    //renumber both groups                    
-                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == moveItem.gallery_Item_Id).FirstOrDefault();
+                    //renumber both groups
+
+                    Guid guid = Guid.Parse(moveItem.gallery_Item_Guid);
+                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == guid).FirstOrDefault();
                     if (dbItem != null)
                     {
-                        
                         var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
                         var newGroupItem = new GALLERY_GROUP_DETAILS()
                         {
-                            Gallery_Item_Id = moveItem.gallery_Item_Id,
+                            Gallery_Item_Guid = guid,
                             Column_Index = int.Parse(moveItem.newIndex),
                             Group_Id = int.Parse(moveItem.toId)
                         };
@@ -166,7 +167,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(int Item_To_Clone, int Group_Id, bool New_Id)
+        public IActionResult CloneItem(String Item_To_Clone, int Group_Id, bool New_Id)
         {
             if (!inDev)
             {
@@ -174,7 +175,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.CloneGalleryItem(Item_To_Clone, Group_Id, New_Id);
+                Guid Item_To_Clone_Guid= Guid.Parse(Item_To_Clone);
+                _galleryEditor.CloneGalleryItem(Item_To_Clone_Guid, Group_Id, New_Id);
                 return Ok();
             }
             catch (Exception e)
@@ -229,7 +231,6 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 _galleryEditor.AddGalleryItem(newIconSmall, newIconLarge, newDescription, newTitle, newConfigSetup, group_Id, columnId);
-                //_galleryEditor.AddGalleryDetail(columnId);
                 return Ok();
             }
             catch (Exception e)
@@ -271,7 +272,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryItem")]
-        public IActionResult DeleteItem(int id, int group_id)
+        public IActionResult DeleteItem(string galleryItemGuid, int group_id)
         {
             if (!inDev)
             {
@@ -279,7 +280,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryItem(id, group_id);
+                Guid guid = Guid.Parse(galleryItemGuid);
+                _galleryEditor.DeleteGalleryItem(guid, group_id);
                 return Ok();
             }
             catch (Exception e)
@@ -351,7 +353,8 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item.Group_Id).FirstOrDefault();
+                    Guid guid = Guid.Parse(item.Gallery_Item_Guid);
+                    var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == guid).FirstOrDefault();
                     if (galleryItem == null) return BadRequest();
 
                     galleryItem.Title = item.Value;
@@ -378,7 +381,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 
-                var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item.Gallery_Item_Id).FirstOrDefault();
+                var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == item.Gallery_Item_Guid).FirstOrDefault();
                 if (galleryItem == null) return BadRequest();
 
                 galleryItem.Title = item.Title;
@@ -433,14 +436,14 @@ namespace CSETWebCore.Api.Controllers
         public string toId { get;set; }
         public string oldIndex { get; set; }
         public string newIndex { get; set; }
-        public int gallery_Item_Id { get; set; }
+        public string gallery_Item_Guid { get; set; }
     }
 
     public class UpdateItem
     {
         public bool IsGroup { get; set; }
-        public int Group_Id { get; set; }
-
+        public int? Group_Id { get; set; }
+        public string? Gallery_Item_Guid { get; set; }
         public string Value { get; set; }
     }
 #endif

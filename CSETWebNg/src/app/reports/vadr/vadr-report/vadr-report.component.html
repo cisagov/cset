@@ -25,11 +25,11 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 30px; letter-spacing: 11px; Color: #0f3c7a;">
+                class="report-title">
                 Validated Architecture Design Review
             </p>
             <p
-                style="margin-left: 25px; text-align: center; font-family: Verdana; font-size: 26px; letter-spacing: 6px; Color: #0f3c7a;">
+                class="report-title" style="font-size: 36px">
                 (VADR) REPORT
             </p>
         </div>
@@ -182,7 +182,7 @@
                 <th>Practice</th>
                 <th>References</th>
             </tr>
-            <tr *ngFor="let ref of questionReferenceTable" 
+            <tr *ngFor="let ref of questionReferenceTable"
                 [class.shaded-red]="ref.parent_Question_Id == null && ref.answer.answer_Text !== 'Y' && ref.answer.answer_Text !== 'A'">
                 <td>{{ref.question_Title}}</td>
                 <td [innerHTML]="ref.question_Text"></td>

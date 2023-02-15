@@ -39,23 +39,23 @@ export class GalleryEditorService {
     moveItem.Layout_Name = this.layoutName;
     return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
   }
-  updateGalleryGroupName(group_Id: any, value: string) {
+  updateGalleryGroupName(group_Id: number, value: string) {
     let newUpdateItem = new UpdateItem();
     newUpdateItem.Group_Id = group_Id;
     newUpdateItem.IsGroup = true;
     newUpdateItem.Value = value;
     return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
   }
-  updateGalleryItemName(item_Id: any, value: string) {
+  updateGalleryItemName(item_Guid: string, value: string) {
     let newUpdateItem = new UpdateItem();
-    newUpdateItem.Group_Id = item_Id;
     newUpdateItem.IsGroup = false;
+    newUpdateItem.Gallery_Item_Guid = item_Guid;
     newUpdateItem.Value = value;
     return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
   }
-  updateGalleryItem(Gallery_Item_Id: number, Icon_File_Name_Small: string, Icon_File_Name_Large: string, Configuration_Setup: string, Description: string, Title: string, Is_Visible: boolean) {
+  updateGalleryItem(Gallery_Item_Guid: string, Icon_File_Name_Small: string, Icon_File_Name_Large: string, Configuration_Setup: string, Description: string, Title: string, Is_Visible: boolean) {
     let newUpdateItem = new GalleryItem();
-    newUpdateItem.gallery_Item_Id = Gallery_Item_Id;
+    newUpdateItem.gallery_Item_Guid = Gallery_Item_Guid;
     newUpdateItem.icon_File_Name_Small = Icon_File_Name_Small;
     newUpdateItem.icon_File_Name_Large = Icon_File_Name_Large;
     newUpdateItem.configuration_Setup = Configuration_Setup;
@@ -101,9 +101,10 @@ export class GalleryEditorService {
   }
 
   cloneGalleryItem(item: any, newId: boolean) {
+    console.log('made it inside api call, guid:' + item.gallery_Item_Guid)
     return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
       params: {
-        Item_To_Clone: item.gallery_Item_Id,
+        Item_To_Clone: item.gallery_Item_Guid,
         Group_Id: item.parent_Id,
         New_Id: newId    
       }
@@ -150,9 +151,10 @@ export class GalleryEditorService {
   }
 
   deleteGalleryItem(item: any) {
+    console.log(item)
     return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
       params: {
-        id: item.gallery_Item_Id,
+        galleryItemGuid: item.gallery_Item_Guid,
         group_id: item.parent_Id
       }
     });
