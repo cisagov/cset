@@ -223,8 +223,13 @@
                         </button>
                     </td>
                     <td *ngIf="showColumn('analytics')">
-                      <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                      <a routerLinkActive="active" style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)"
+                            matTooltip="View the analytics for this assessment.">
+                            <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
+                            <span class="icon-link-button-text-dark">Analytics</span>
+                        </button>
                     </td>
                 </tr>
             </table>
