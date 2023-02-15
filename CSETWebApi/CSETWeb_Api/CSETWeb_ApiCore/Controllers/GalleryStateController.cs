@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
                                 && g.Group_Id == n.Group_Id
                                 && g.Gallery_Item_Guid == i.Gallery_Item_Guid
                             orderby g.Group_Id, g.Gallery_Item_Guid ascending
-                            select new GalleryItem(i,n.Group_Id) //START HERE - FIX "CSETWebCore.Model.NewFolder" to be Gallery related
+                            select new GalleryItem(i,n.Group_Id)
                             {
                             };
 
