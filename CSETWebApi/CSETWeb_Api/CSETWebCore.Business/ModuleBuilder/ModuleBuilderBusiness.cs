@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.ModuleBuilder;
@@ -24,10 +25,12 @@ namespace CSETWebCore.Business.ModuleBuilder
     {
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
-        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question)
+        private GalleryEditor _gallery;
+        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question, GalleryEditor gallery)
         {
             _context = context;
             _question = question;
+            _gallery = gallery;
         }
 
 
@@ -322,6 +325,13 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Is_Custom = set.IsCustom,
                     Is_Displayed = set.IsDisplayed
                 };
+
+                var gallItem = new GALLERY_ITEM()
+                {
+                    Icon_File_Name_Small = "",
+                    Icon_File_Name_Large = "",
+                    Configuration_Setup
+                }
 
                 _context.SETS.Add(dbSet);
             }
