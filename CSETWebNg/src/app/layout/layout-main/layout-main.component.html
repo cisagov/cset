@@ -30,7 +30,8 @@
 
       <!-- Navbar -->
       <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
-        *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+        *ngIf="layoutSvc.isNavHeaderShown(this.router.url)"  >
+        <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
         <span
           [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
@@ -61,7 +62,7 @@
 
     <!-- Footer -->
     <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters sticky-footer"
-      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
+      *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <ngb-panel id="footerPanel">
         <ng-template ngbPanelTitle>
           <button id="footerExpanderButton" class="cset-footer-expand-button"

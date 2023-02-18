@@ -30,6 +30,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { LayoutService } from '../../services/layout.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 
 
@@ -53,6 +54,7 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    public layoutSvc: LayoutService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
