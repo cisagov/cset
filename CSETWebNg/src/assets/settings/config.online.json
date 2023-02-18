@@ -1,0 +1,33 @@
+{
+    "isRunningAnonymous": true,
+    "galleryLayout": "ONLINE",
+    "behaviors": {
+        "defaultTitle":"CSET-Online",
+        "showModuleBuilder": false,
+        "showModuleImport": false,
+        "showAggregation": false,
+        "showAnalytics": true,
+        "showFacilitatorDropDown": false,
+        "showAnalyticsAtTheEnd": true,
+        "showAnalyticsColumnOnLanding": true,
+        "showAssessmentDocuments": false,
+        "showObservations": false,
+        "showNameDisclaimer":true,
+        "showMenuParameterEditor": true,
+        "splashPageHTML": "dist/assets/splash.html",
+        "homeComponentForCurrentInstallationMode": "",
+        "defaultMaturityModel": "",
+        "isAcetOnly": false,
+        "showFacilityName": false,
+        "showCityName": false,
+        "showStateName": false,
+        "showContacts": false,
+        "showOrganizationName": false,
+        "showBusinessAgencyName": false,
+        "showCriticalService": false,
+        "showPrivacyWarning": true,
+        "showTrend": false,
+        "showCompare": false,
+        "showEnableProtectedFeatures": false
+    }
+}

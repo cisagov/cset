@@ -194,6 +194,7 @@ import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.componen
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -238,6 +239,7 @@ const appRoutes: Routes = [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'login-ak', component: LoginAccessKeyComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'reset-pass', component: ResetPassComponent },
       {
