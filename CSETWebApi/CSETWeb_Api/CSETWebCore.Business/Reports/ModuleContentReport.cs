@@ -22,10 +22,10 @@ namespace CSETWebCore.Business.Reports
     {
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
-        private GalleryEditor _gallery;
+        private readonly IGalleryEditor _gallery;
 
 
-        public ModuleContentReport(CSETContext context, IQuestionRequirementManager question, GalleryEditor gallery)
+        public ModuleContentReport(CSETContext context, IQuestionRequirementManager question, IGalleryEditor gallery)
         {
             _context = context;
             _question = question;

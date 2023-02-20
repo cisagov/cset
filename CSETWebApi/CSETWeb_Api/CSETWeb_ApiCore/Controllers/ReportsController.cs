@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
@@ -33,10 +34,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IGalleryEditor _galleryEditor;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
-            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _context = context;
             _report = report;
@@ -46,6 +48,7 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement = questionRequirement;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+            _galleryEditor = galleryEditor;
         }
 
         [HttpGet]
@@ -620,7 +623,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/modulecontent")]
         public IActionResult ModuleContentReport([FromQuery] string set)
         {
-            var report = new ModuleContentReport(_context, _questionRequirement);
+            var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
             var resp = report.GetResponse(set);
             return Ok(resp);
         }

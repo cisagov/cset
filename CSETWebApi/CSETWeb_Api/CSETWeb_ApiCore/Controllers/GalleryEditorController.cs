@@ -44,96 +44,97 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
-                if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
 
-                    //find the new group and insert it
-                    //renumber both groups
+                //_context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
+                //if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
 
-                    Guid guid = Guid.Parse(moveItem.gallery_Item_Guid);
-                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == guid).FirstOrDefault();
-                    if (dbItem != null)
-                    {
-                        var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
-                        var newGroupItem = new GALLERY_GROUP_DETAILS()
-                        {
-                            Gallery_Item_Guid = guid,
-                            Column_Index = int.Parse(moveItem.newIndex),
-                            Group_Id = int.Parse(moveItem.toId)
-                        };
-                        _context.GALLERY_GROUP_DETAILS.Add(newGroupItem);
-                        detailsNewList.Insert(int.Parse(moveItem.newIndex), newGroupItem);
-                        RenumberGroup(detailsNewList);
-                        
-                        _context.SaveChanges();
-                    }
-                    
+                //    //find the new group and insert it
+                //    //renumber both groups
 
-                }
-                else if (String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
-                {
+                //    Guid guid = Guid.Parse(moveItem.gallery_Item_Guid);
+                //    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == guid).FirstOrDefault();
+                //    if (dbItem != null)
+                //    {
+                //        var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
+                //        var newGroupItem = new GALLERY_GROUP_DETAILS()
+                //        {
+                //            Gallery_Item_Guid = guid,
+                //            Column_Index = int.Parse(moveItem.newIndex),
+                //            Group_Id = int.Parse(moveItem.toId)
+                //        };
+                //        _context.GALLERY_GROUP_DETAILS.Add(newGroupItem);
+                //        detailsNewList.Insert(int.Parse(moveItem.newIndex), newGroupItem);
+                //        RenumberGroup(detailsNewList);
 
-                    
+                //        _context.SaveChanges();
+                //    }
 
-                    //we are changing position of the rows. 
-                    //move the item from the old index to the new index and then 
-                    //update the indexes of everything below them.
-                    var rows = (from r in _context.GALLERY_ROWS
-                               where r.Layout_Name == moveItem.Layout_Name
-                               orderby r.Row_Index
-                               select r).ToList();
-                    _context.GALLERY_ROWS.RemoveRange(rows);
-                    _context.SaveChanges();
-                    //question can I violate the primary key before I save? 
-                    //if so then remove the old one and insert it at the new position.
-                    //iterate through all the items and just reassign the row_index. 
-                    var itemToMove = rows[int.Parse(moveItem.oldIndex)];
-                    rows.Remove(itemToMove);
-                    if (int.Parse(moveItem.oldIndex) < int.Parse(moveItem.newIndex))
-                    {
-                        //we are moving it down. so the new index needs to be -1
-                        //(I took out the -1 from "int.Parse(moveItem.newIndex)-1"
-                        //because it was putting the row 1 group above what the target was)
-                        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    }
-                    else if(int.Parse(moveItem.oldIndex) > int.Parse(moveItem.newIndex))
-                    {
-                        //we are moving it up. so the new index is unchanged
-                        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    }
-                    
-                    RenumberGroup(rows);
-                    _context.GALLERY_ROWS.AddRange(rows);
-                    _context.SaveChanges();
-                }
-                else if(moveItem.fromId == moveItem.toId)
-                {
-                    //the items is moved in the same group 
-                    //find the group and move it
-                    //get the group
-                    var detailsList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r=> r.Column_Index).ToList();
-                    var itemToMove = detailsList[int.Parse(moveItem.oldIndex)];
-                    detailsList.Remove(itemToMove);
-                    detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    RenumberGroup(detailsList);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    //find the old group and remove it
-                    //find the new group and insert it
-                    //renumber both groups
-                    var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
-                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];                    
-                    detailsOldList.Remove(itemToMove);
-                    RenumberGroup(detailsOldList);                    
-                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();                    
-                    detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    RenumberGroup(detailsNewList);
-                    itemToMove.Group_Id = int.Parse(moveItem.toId);
-                    _context.SaveChanges();
-                }
 
+                //}
+                //else if (String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
+                //{
+
+
+
+                //    //we are changing position of the rows. 
+                //    //move the item from the old index to the new index and then 
+                //    //update the indexes of everything below them.
+                //    var rows = (from r in _context.GALLERY_ROWS
+                //               where r.Layout_Name == moveItem.Layout_Name
+                //               orderby r.Row_Index
+                //               select r).ToList();
+                //    _context.GALLERY_ROWS.RemoveRange(rows);
+                //    _context.SaveChanges();
+                //    //question can I violate the primary key before I save? 
+                //    //if so then remove the old one and insert it at the new position.
+                //    //iterate through all the items and just reassign the row_index. 
+                //    var itemToMove = rows[int.Parse(moveItem.oldIndex)];
+                //    rows.Remove(itemToMove);
+                //    if (int.Parse(moveItem.oldIndex) < int.Parse(moveItem.newIndex))
+                //    {
+                //        //we are moving it down. so the new index needs to be -1
+                //        //(I took out the -1 from "int.Parse(moveItem.newIndex)-1"
+                //        //because it was putting the row 1 group above what the target was)
+                //        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                //    }
+                //    else if(int.Parse(moveItem.oldIndex) > int.Parse(moveItem.newIndex))
+                //    {
+                //        //we are moving it up. so the new index is unchanged
+                //        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                //    }
+
+                //    RenumberGroup(rows);
+                //    _context.GALLERY_ROWS.AddRange(rows);
+                //    _context.SaveChanges();
+                //}
+                //else if(moveItem.fromId == moveItem.toId)
+                //{
+                //    //the items is moved in the same group 
+                //    //find the group and move it
+                //    //get the group
+                //    var detailsList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r=> r.Column_Index).ToList();
+                //    var itemToMove = detailsList[int.Parse(moveItem.oldIndex)];
+                //    detailsList.Remove(itemToMove);
+                //    detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                //    RenumberGroup(detailsList);
+                //    _context.SaveChanges();
+                //}
+                //else
+                //{
+                //    //find the old group and remove it
+                //    //find the new group and insert it
+                //    //renumber both groups
+                //    var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
+                //    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];                    
+                //    detailsOldList.Remove(itemToMove);
+                //    RenumberGroup(detailsOldList);                    
+                //    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();                    
+                //    detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
+                //    RenumberGroup(detailsNewList);
+                //    itemToMove.Group_Id = int.Parse(moveItem.toId);
+                //    _context.SaveChanges();
+                //}
+                _galleryEditor.UpdatePosition(moveItem);
                 return Ok();
             }
             catch (Exception e)
@@ -142,23 +143,23 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-        private void RenumberGroup(List<GALLERY_GROUP_DETAILS> detailsList)
-        {
-            int i = 0;
-            foreach (var item in detailsList)
-            {
-                item.Column_Index = i++;
-            }
-        }
+        //private void RenumberGroup(List<GALLERY_GROUP_DETAILS> detailsList)
+        //{
+        //    int i = 0;
+        //    foreach (var item in detailsList)
+        //    {
+        //        item.Column_Index = i++;
+        //    }
+        //}
 
-        private void RenumberGroup(List<GALLERY_ROWS> rows)
-        {
-            int i = 0; 
-            foreach(var row in rows)
-            {
-                row.Row_Index = i++;
-            }
-        }
+        //private void RenumberGroup(List<GALLERY_ROWS> rows)
+        //{
+        //    int i = 0; 
+        //    foreach(var row in rows)
+        //    {
+        //        row.Row_Index = i++;
+        //    }
+        //}
 
         /// <summary>
         /// Clones the specified item
@@ -429,22 +430,15 @@ namespace CSETWebCore.Api.Controllers
 
     }
 
-    public class MoveItem
-    {
-        public string Layout_Name { get; set; }
-        public string fromId { get; set; }
-        public string toId { get;set; }
-        public string oldIndex { get; set; }
-        public string newIndex { get; set; }
-        public string gallery_Item_Guid { get; set; }
-    }
+    //public class MoveItem
+    //{
+    //    public string Layout_Name { get; set; }
+    //    public string fromId { get; set; }
+    //    public string toId { get;set; }
+    //    public string oldIndex { get; set; }
+    //    public string newIndex { get; set; }
+    //    public string gallery_Item_Guid { get; set; }
+    //}
 
-    public class UpdateItem
-    {
-        public bool IsGroup { get; set; }
-        public int? Group_Id { get; set; }
-        public string? Gallery_Item_Guid { get; set; }
-        public string Value { get; set; }
-    }
 #endif
 }
