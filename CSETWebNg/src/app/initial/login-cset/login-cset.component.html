@@ -79,9 +79,6 @@
         <div *ngIf="passwordExpired">
           <div class="alert alert-danger">Password is expired. Click 'Reset Password'</div>
         </div>
-        <label for="email">
-          Enter your email address and password to login.
-        </label>
         <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
           #email="ngModel" required email focusOnInit="true" />
         <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
@@ -97,8 +94,7 @@
           </div>
           <div class="d-flex flex-column flex-00a">
             <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset Password</a>
-            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register
-              New User Account</a>
+            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register New User Account</a>
           </div>
         </div>
       </form>
