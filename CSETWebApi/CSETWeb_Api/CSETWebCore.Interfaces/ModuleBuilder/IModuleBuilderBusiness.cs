@@ -24,7 +24,7 @@ namespace CSETWebCore.Interfaces.ModuleBuilder
         void DeleteCopyToSet(string setName);
         SetDetail CloneSet(string setName);
         BasicResponse DeleteSet(string setName);
-        string SaveSetDetail(SetDetail set);
+        string SaveSetDetail(SetDetail setDetail);
         string GenerateNewSetName();
         QuestionListResponse GetQuestionsForSet(string setName);
         List<int> GetMyQuestionsUsedByOtherSets(string setName);

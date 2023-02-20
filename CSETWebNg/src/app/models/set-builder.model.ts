@@ -122,3 +122,8 @@ export interface ReferenceDoc {
     informationalMessages: string[];
     errorMessages: string[];
   }
+
+  export class SetGalleryDetails {
+    setDetails: string;
+    layout: string;
+  }

@@ -17,6 +17,7 @@ using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.ModuleBuilder
@@ -25,12 +26,12 @@ namespace CSETWebCore.Business.ModuleBuilder
     {
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
-        private GalleryEditor _gallery;
-        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question, GalleryEditor gallery)
+        private readonly IGalleryEditor _galleryEditor;
+        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question, IGalleryEditor galleryEditor)
         {
             _context = context;
             _question = question;
-            _gallery = gallery;
+            _galleryEditor = galleryEditor;
         }
 
 
@@ -326,14 +327,48 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Is_Displayed = set.IsDisplayed
                 };
 
-                var gallItem = new GALLERY_ITEM()
+                _context.SETS.Add(dbSet);
+
+                string configSetup = "{{Sets:[" + set.SetName + "],SALLevel:\"Low\",QuestionMode:\"Questions\"}}";
+                //var gallItem = new GALLERY_ITEM()
+                //{
+                //    Icon_File_Name_Small = "",
+                //    Icon_File_Name_Large = "",
+                //    Configuration_Setup = configSetup,
+                //    Configuration_Setup_Client = null,
+                //    Description = set.Description,
+                //    Title = set.FullName,
+                //    Is_Visible = true,
+                //    CreationDate = DateTime.Now,
+                //    Gallery_Item_Guid = Guid.NewGuid()
+                //};
+
+                var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
+                int colIndex = 0;
+                if (custom != null)
                 {
-                    Icon_File_Name_Small = "",
-                    Icon_File_Name_Large = "",
-                    Configuration_Setup
+                    var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+                    
+                    if(colIndexList != null)
+                    {
+                        colIndex = colIndexList.Count - 1; // -1 to make the index start at 0
+                    }
+                }
+                else
+                {
+                    //var temp = _context.GALLERY_ROWS.Where(x => x.Group_Id == custom.Group_Id).ToList();
+                    var layouts = _context.GALLERY_LAYOUT.ToList();
+                    foreach (GALLERY_LAYOUT layoutName in layouts)
+                    {
+                        _galleryEditor.AddCustomGalleryGroup("Custom", layoutName.Layout_Name);
+
+                    }
+
                 }
 
-                _context.SETS.Add(dbSet);
+                var description = set.Description == null ? "" : set.Description;
+                _galleryEditor.AddGalleryItem("", "", description, set.FullName, configSetup, custom.Group_Id, colIndex);
+
             }
             else
             {
@@ -345,6 +380,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbSet.Is_Displayed = set.IsDisplayed;
 
                 _context.SETS.Update(dbSet);
+
+                //_galleryEditor.UpdateItem(gallItem);
             }
 
             _context.SaveChanges();

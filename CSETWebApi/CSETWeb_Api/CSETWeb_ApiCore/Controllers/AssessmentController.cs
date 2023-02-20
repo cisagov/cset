@@ -21,6 +21,7 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -35,11 +36,12 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IGalleryEditor _galleryEditor;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness)
+            IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
@@ -48,6 +50,7 @@ namespace CSETWebCore.Api.Controllers
             _standards = standards;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+            _galleryEditor = galleryEditor;
         }
 
         /// <summary>
@@ -93,6 +96,7 @@ namespace CSETWebCore.Api.Controllers
                 if (csn != null)
                 {
                     config = JsonConvert.DeserializeObject<GalleryConfig>($"{{Sets:[\"{csn}\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}}");
+                    //_galleryEditor.AddGalleryItem(null, null, )
                 }
                 else
                 {

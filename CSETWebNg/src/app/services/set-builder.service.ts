@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc, SetGalleryDetails } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -158,6 +158,10 @@ export class SetBuilderService {
      *
      */
     updateSetDetails(set: SetDetail) {
+        // let setDetailsWithGalleryLayout = new SetGalleryDetails();
+        // setDetailsWithGalleryLayout.setDetails = JSON.stringify(set);
+        // setDetailsWithGalleryLayout.layout = this.configSvc.galleryLayout;
+
         return this.http
             .post(
                 this.apiUrl + 'builder/UpdateSetDetail',
