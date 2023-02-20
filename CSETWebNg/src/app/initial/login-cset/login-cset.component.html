@@ -21,48 +21,88 @@
   SOFTWARE.
 -------------------------->
 <div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-10a w-100">
+  <div class="p-0 d-flex flex-column flex-10a w-100">
 
-      <!-- CSET Logo and Name -->
-      <div class="m-4 d-flex justify-content-start flex-00a">
-        <app-logo-cset logoHeight="50"></app-logo-cset>
-      </div>
+    <!-- CSET Logo and Name -->
+    <div *ngIf="!configSvc.isRunningAnonymous" class="m-4 d-flex justify-content-start flex-00a">
+      <app-logo-cset logoHeight="50"></app-logo-cset>
+    </div>
 
-      <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">
-        <div *ngIf="mode === 'LOCAL'">
-          CSET is running locally. No login is required.
-        </div>
-        <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-          An error was encountered while running CSET.
-        </div>
-        <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
-          Enter your email address and password to login.
-        </div>
-        <div *ngIf="mode === 'SIGNUP'">
-          Enter your name and email address to register a new CSET account.
-        </div>
-      </div>
+    <div *ngIf="configSvc.isRunningAnonymous" class="ml-4 my-4 d-flex align-items-end flex-00a flex-nowrap">
+      <app-logo-cset logoHeight="50"></app-logo-cset>
+      <span class="align-bottom ml-3 font-italic" style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
+    </div>
 
+    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">
       <div *ngIf="mode === 'LOCAL'">
-        <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-          <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
-            <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+        CSET is running locally. No login is required.
+      </div>
+      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+        An error was encountered while running CSET.
+      </div>
+      <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
+        Enter your email address and password to login.
+      </div>
+      <div *ngIf="mode === 'SIGNUP'">
+        Enter your name and email address to register a new CSET account.
+      </div>
+    </div>
+
+    <div *ngIf="mode === 'LOCAL'">
+      <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
+        <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
+          <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+          <div class="spinner-container" *ngIf="loading">
+            <div style="max-width: 30px; max-height: 30px;"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- If we reach the login page while running in electron, we can assume there was an error getting
+      the standalone status from the API; prompt for exiting the application -->
+    <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+        <div class="d-flex flex-nowrap">
+          <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-4 d-flex flex-column justify-content-between flex-00a"
+      *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
+      <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
+        class="d-flex flex-column justify-content-center flex-00a">
+        <div *ngIf="incorrect">
+          <div class="alert alert-danger">Incorrect Username or Password</div>
+        </div>
+        <div *ngIf="passwordExpired">
+          <div class="alert alert-danger">Password is expired. Click 'Reset Password'</div>
+        </div>
+        <label for="email">
+          Enter your email address and password to login.
+        </label>
+        <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
+          #email="ngModel" required email focusOnInit="true" />
+        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+        <input type="password" class="form-control mt-2" name="password" placeholder="Password"
+          [(ngModel)]="model.password" #password="ngModel" required />
+        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+        <div class="mt-2 d-flex justify-content-between flex-00a">
+          <div class="d-flex flex-nowrap flex-00a">
+            <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
             <div class="spinner-container" *ngIf="loading">
               <div style="max-width: 30px; max-height: 30px;"></div>
             </div>
           </div>
-        </form>
-      </div>
-
-      <!-- If we reach the login page while running in electron, we can assume there was an error getting
-      the standalone status from the API; prompt for exiting the application -->
-      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-        <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
-          <div class="d-flex flex-nowrap">
-            <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+          <div class="d-flex flex-column flex-00a">
+            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset Password</a>
+            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register
+              New User Account</a>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
+    </div>
 
       <div class="m-4 d-flex flex-column justify-content-between flex-00a"
         *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
@@ -95,25 +135,25 @@
           </div>
         </form>
       </div>
-
-      <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
-        <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
-      </div>
-
-      <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
-        <p class="c-gray-600 mb-4 w-100">
-          <app-cset-origin></app-cset-origin>
-        </p>
-
-        <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-
-        <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
-          Internet Explorer has been detected as your current browser.
-          Some functionality of CSET is not fully supported by Internet Explorer.
-          Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
-          your experience.
-        </div>
-      </div>
-
+      
+    <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+      <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
     </div>
+
+    <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+      <p class="c-gray-600 mb-4 w-100">
+        <app-cset-origin></app-cset-origin>
+      </p>
+
+      <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
+
+      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+        Internet Explorer has been detected as your current browser.
+        Some functionality of CSET is not fully supported by Internet Explorer.
+        Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+        your experience.
+      </div>
+    </div>
+
   </div>
+</div>

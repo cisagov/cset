@@ -20,192 +20,103 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-10a w-100">
+<div class="p-0 d-flex flex-column justify-content-start flex-11a">
+    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
 
-        <div class="mx-auto col-lg-8 col-md-8 col-sm-10">
+        <!-- Logo and Name -->
+        <div *ngIf="skin == 'CSET'"
+            class="my-4 d-flex align-items-end flex-00a flex-nowrap">
+            <app-logo-cset logoHeight="60"></app-logo-cset>
+            <span class="align-bottom ml-3 font-italic"
+                style="font-size: 37px; margin-bottom: -.5rem; color: #666">Online</span>
+        </div>
 
-            <!-- CSET Logo and Name -->
-            <div class="my-4 d-flex justify-content-start flex-00a flex-nowrap">
-                <app-logo-cset logoHeight="50"></app-logo-cset>
-                <span class="align-middle ml-3 font-italic"
-                    style="font-size: 37px; margin-top: 8px; color: #666">Online</span>
+        <div *ngIf="skin == 'TSA'" class="d-flex align-items-end flex-00a">
+            <app-logo-tsa mode="white" logoHeight="60"></app-logo-tsa>
+            <span class="align-bottom ml-3 font-italic"
+                style="font-size: 30px; margin-top: 8px; color: #666">Online</span>
+        </div>
+
+
+        <div class="anonymous-panel">
+            <div class="p-3 my-3 c-white bgc-primary">
+                <em>{{ title1[skin] }}</em> is anonymous. Your email address is not associated with your asessments
+                in any way. To use <em>{{ title1[skin] }}</em> you will need
+                to generate an Access Key that you will use in the future to access
+                your assessments.
             </div>
 
-            <div *ngIf="pageMode == 'EMAIL-PASSWORD'">
-                <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="p-3 c-white">
-                    <div *ngIf="mode === 'LOCAL'">
-                        CSET is running locally. No login is required.
+            <div class="mb-3 d-flex flex-row">
+                <div class="mr-3 container">
+                    <label>
+                        If you have used <em>{{ title1[skin] }}</em> before and already have an Access Key, enter it here and
+                        click Login.
+                    </label>
+                    <div class="input-group mb-2">
+                        <input class="form-control mr-2" [(ngModel)]="loginAccessKey" (keyup.enter)="login()"
+                            placeholder="Enter Access Key">
+                        <button (click)="login()" class="input-group-append btn btn-primary mt-0">Login</button>
                     </div>
-                    <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-                        An error was encountered while running CSET.
-                    </div>
-                    <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
-                        Enter your email address and password to login.
-                    </div>
-                    <div *ngIf="mode === 'SIGNUP'">
-                        Enter your name and email address to register a new CSET account.
+                    <div *ngIf="loginAccessKeyFailed" class="alert alert-danger">
+                        Login failed. Check your key and try again.
                     </div>
                 </div>
 
-                <div *ngIf="mode === 'LOCAL'">
-                    <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-                        <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
-                            <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
-                            <div class="spinner-container" *ngIf="loading">
-                                <div style="max-width: 30px; max-height: 30px;"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <div class="container">
+                    <label class="mr-3">
+                        If it is your first time using <em>{{ title1[skin] }}</em> click this button to generate a new Access
+                        Key.
+                    </label>
 
-                <!-- If we reach the login page while running in electron, we can assume there was an error getting
-              the standalone status from the API; prompt for exiting the application -->
-                <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-                    <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
-                        <div class="d-flex flex-nowrap">
-                            <button type="submit" class="btn btn-primary btn-lg">Exit</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-flex flex-row">
+                        <button class="btn btn-primary" (click)="generateKey()">Create Access Key</button>
 
-                <div class="my-4 d-flex flex-column justify-content-between flex-00a"
-                    *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
-                    <form name="form" (ngSubmit)="email.valid && f.form.valid && loginEmailPassword()" #f="ngForm"
-                        novalidate class="d-flex flex-column justify-content-center flex-00a">
-                        <div *ngIf="incorrectEmailOrPassword">
-                            <div class="alert alert-danger">Incorrect Username or Password</div>
-                        </div>
-                        <div *ngIf="passwordExpired">
-                            <div class="alert alert-danger">Password is expired. Click 'Reset Password'</div>
-                        </div>
-                        <label for="email">
-                            Enter your email address and password to login.
-                        </label>
-                        <input type="email" class="form-control" name="email" placeholder="Email"
-                            [(ngModel)]="model.email" #email="ngModel" required email focusOnInit="true" />
-                        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address
-                            is
-                            required</div>
-                        <input type="password" class="form-control mt-2" name="password" placeholder="Password"
-                            [(ngModel)]="model.password" #password="ngModel" required />
-                        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is
-                            required</div>
-                        <div class="mt-2 d-flex justify-content-between flex-00a">
-                            <div class="d-flex flex-nowrap flex-00a">
-                                <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
-                                <div class="spinner-container" *ngIf="loading">
-                                    <div style="max-width: 30px; max-height: 30px;"></div>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column flex-00a">
-                                <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset
-                                    Password</a>
-                                <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
-                                    tabindex="0">Register New User Account</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
-                    <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
-                </div>
-            </div>
-
-
-            <div class="mt-5 anonymous-panel" *ngIf="pageMode == 'ACCESS-KEY'">
-                <div class="p-3 my-3 c-white bgc-primary">
-                    CSET Online is anonymous. Your email address is not associated with your asessments
-                    in any way. To use CSET Online, you will need
-                    to generate an Access Key that you will use in the future to access
-                    your assessments.
-                </div>
-
-                <div class="mb-3 d-flex flex-row">
-                    <div class="mr-3 container">
-                        <label>
-                            If you have used CSET Online before and already have an Access Key, enter it here and click Login.
-                        </label>
-                            <div class="input-group mb-2">
-                                <input class="form-control mr-2" [(ngModel)]="loginAccessKey"
-                                (keyup.enter)="loginWithAccessKey()" placeholder="Enter Access Key">
-                            <button (click)="loginWithAccessKey()"
-                                class="input-group-append btn btn-primary mt-0">Login</button>
-                        </div>
-                        <div *ngIf="loginAccessKeyFailed" class="alert alert-danger">
-                            Login failed. Check your key and try again.
+                        <div class="spinner-container" *ngIf="isGenerating">
+                            <div style="max-width: 30px; max-height: 30px;"></div>
                         </div>
                     </div>
 
-                    <div class="container">
-                        <label class="mr-3">
-                            If it is your first time using CSET Online, click this button to generate a new Access Key.
-                        </label>
 
-                        <div class="d-flex flex-row">
-                            <button class="btn btn-primary" (click)="generateKey()">Create Access Key</button>
-                            
-                            <div class="spinner-container" *ngIf="isGenerating">
-                                <div style="max-width: 30px; max-height: 30px;"></div>
-                            </div>
-                        </div>
-
-
-                        <div *ngIf="isKeyGenerated" class="mt-3 alert alert-success mb-3">
-                            <p style="font-size: 1.3rem">
-                                Your Access Key is <strong>{{generatedKey}}</strong>
-                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                    <div *ngIf="isKeyGenerated" class="mt-3 alert alert-success mb-3">
+                        <p style="font-size: 1.3rem">
+                            Your Access Key is <strong>{{generatedKey}}</strong>
+                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                    [cdkCopyToClipboard]="generatedKey">
-                                    <span class="cset-icons-copy"></span>
-                                </label>
-                            </p>
-                            <p>
-                                You must retain this Access Key in order to access any assessments you create.
-                                Treat this key like a password. Anyone you share it with will have access to the
-                                assessments
-                                created with this Access Key. <strong>If you lose this Access Key you will lose
-                                    access to any assessments you create with it.</strong>
-                            </p>
-                            <p>
-                                <button class="btn btn-primary" (click)="loginWithAccessKey()">Enter CSET</button>
-                            </p>
-                        </div>
+                                [cdkCopyToClipboard]="generatedKey">
+                                <span class="cset-icons-copy"></span>
+                            </label>
+                        </p>
+                        <p>
+                            You must retain this Access Key in order to access any assessments you create.
+                            Treat this key like a password. Anyone you share it with will have access to the
+                            assessments
+                            created with this Access Key. <strong>If you lose this Access Key you will lose
+                                access to any assessments you create with it.</strong>
+                        </p>
+                        <p>
+                            <button class="btn btn-primary" (click)="login()">Enter {{ title2[skin]
+                                }}</button>
+                        </p>
                     </div>
-                </div>
-
-                <hr class="my-3">
-
-                <div class="pii-disclaimer">
-                    <p>
-                        <strong>Attention:</strong> Do not enter any personal or sensitive information into CSET Online.
-                    </p>
-                    <p>
-                        This includes information about a natural person or entity that is readily identifiable to that
-                        specific individual/entity. Personal information includes such things as company names,
-                        individual names, addresses, emails and phone numbers.
-                    </p>
-                    <p class="red-text">
-                        If you choose to provide personal or sensitive information in any field within CSET Online,
-                        that information will be stored in CSET and will be publicly disclosed.
-                    </p>
                 </div>
             </div>
 
-            <div class="mt-4 mb-4 d-flex flex-column justify-content-start align-items-center flex-11a">
-                <p class="c-gray-600 mb-4 w-100">
-                    <app-cset-origin></app-cset-origin>
-                </p>
+            <hr class="my-3">
 
-                <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-                <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
-                <div class="row">
-                    <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                        href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
-                    <a class="mr-2" (click)="showDisclaimer()">Disclaimer</a>
-                </div>
+            <div class="pii-disclaimer">
+                <p>
+                    <strong>Attention:</strong> Do not enter any personal or sensitive information into <em>{{ title1[skin]
+                    }}</em>.
+                </p>
+                <p>
+                    This includes information about a natural person or entity that is readily identifiable to that
+                    specific individual/entity. Personal information includes such things as company names,
+                    individual names, addresses, emails and phone numbers.
+                </p>
+                <p class="red-text">
+                    If you choose to provide personal or sensitive information in any field within <em>{{ title1[skin] }}</em>,
+                    that information will be stored in <em>{{ title2[skin] }}</em> and will be publicly disclosed.
+                </p>
             </div>
         </div>
     </div>

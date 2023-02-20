@@ -62,6 +62,18 @@ export class AssessmentInfo2TsaComponent implements OnInit {
   }
 
   /**
+   * Anonymous access mode does not show contacts.  Otherwise
+   * defer to the skin's behavior.
+   */
+  showContacts() {
+    if (this.configSvc.config.isRunningAnonymous ?? false) {
+      return false;
+    }
+
+    return this.configSvc.behaviors?.showContacts ?? true;
+  }
+
+  /**
    *
    */
   contactsUpdated() {

@@ -31,6 +31,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'app-cf-layout-main',
@@ -51,6 +52,7 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
+    public layoutSvc: LayoutService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
