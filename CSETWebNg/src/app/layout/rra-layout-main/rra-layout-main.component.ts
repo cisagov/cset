@@ -30,6 +30,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
@@ -45,13 +46,13 @@ export class RraLayoutMainComponent implements OnInit, AfterViewInit {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
-  isFooterVisible: boolean = false;
 
   @ViewChild('acc') accordion: NgbAccordion;
 
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
+    public layoutSvc: LayoutService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
