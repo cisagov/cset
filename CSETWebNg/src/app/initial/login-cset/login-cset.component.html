@@ -28,9 +28,9 @@
       <app-logo-cset logoHeight="50"></app-logo-cset>
     </div>
 
-    <div *ngIf="configSvc.isRunningAnonymous" class="my-4 d-flex justify-content-start flex-00a flex-nowrap">
+    <div *ngIf="configSvc.isRunningAnonymous" class="ml-4 my-4 d-flex align-items-end flex-00a flex-nowrap">
       <app-logo-cset logoHeight="50"></app-logo-cset>
-      <span class="align-middle ml-3 font-italic" style="font-size: 37px; margin-top: 8px; color: #666">Online</span>
+      <span class="align-bottom ml-3 font-italic" style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>
 
     <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">

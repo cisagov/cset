@@ -114,7 +114,7 @@ export class LoginCsetComponent implements OnInit {
                 this.router.navigate(['/assessment', this.assessmentId])
               );
           } else if (this.configSvc.isRunningAnonymous) {
-            this.router.navigate(['/home', 'login-ak'], {
+            this.router.navigate(['/home', 'login-access'], {
               queryParamsHandling: 'preserve'
             });
           } else {

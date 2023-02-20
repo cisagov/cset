@@ -239,7 +239,7 @@ const appRoutes: Routes = [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'login-ak', component: LoginAccessKeyComponent },
+      { path: 'login-access', component: LoginAccessKeyComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'reset-pass', component: ResetPassComponent },
       {
