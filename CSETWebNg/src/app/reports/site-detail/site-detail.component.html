@@ -429,6 +429,12 @@
     </div>
 
 
+    
+    <div class="page-break" *ngIf="response?.information.useDiagram">
+        <app-component-question-list [data]="response?.componentQuestions"></app-component-question-list>
+    </div>
+
+
 
     <div class="page-break">
         <app-question-comments [data]="response"></app-question-comments>
