@@ -58,7 +58,7 @@ export class LoginCsetComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private configSvc: ConfigService,
+    public  configSvc: ConfigService,
     private authenticationService: AuthenticationService,
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
@@ -113,6 +113,10 @@ export class LoginCsetComponent implements OnInit {
               .then(() =>
                 this.router.navigate(['/assessment', this.assessmentId])
               );
+          } else if (this.configSvc.isRunningAnonymous) {
+            this.router.navigate(['/home', 'login-access'], {
+              queryParamsHandling: 'preserve'
+            });
           } else {
             this.router.navigate(['/home'], {
               queryParamsHandling: 'preserve'

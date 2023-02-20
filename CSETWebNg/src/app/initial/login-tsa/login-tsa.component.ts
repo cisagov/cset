@@ -31,6 +31,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
+import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
@@ -60,8 +61,9 @@ export class LoginTsaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router: Router,
-    private configSvc: ConfigService,
-    private authenticationService: AuthenticationService,
+    public configSvc: ConfigService,
+    public layoutSvc: LayoutService,
+    private authSvc: AuthenticationService,
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog
@@ -73,7 +75,7 @@ export class LoginTsaComponent implements OnInit {
   ngOnInit(): void {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.isRunningInElectron = this.configSvc.isRunningInElectron;
-    if (this.authenticationService.isLocal) {
+    if (this.authSvc.isLocal) {
       this.mode = 'LOCAL';
       this.continueStandAlone();
     } else {
@@ -108,9 +110,9 @@ export class LoginTsaComponent implements OnInit {
   /**
    * Logs the user into the system.
    */
-   login() {
+  login() {
     this.loading = true;
-    this.authenticationService
+    this.authSvc
       .login(this.model.email, this.model.password)
       .subscribe(
         data => {
@@ -120,6 +122,10 @@ export class LoginTsaComponent implements OnInit {
               .then(() =>
                 this.router.navigate(['/assessment', this.assessmentId, 'info-tsa'])
               );
+          } else if (this.configSvc.isRunningAnonymous) {
+            this.router.navigate(['/home', 'login-access'], {
+              queryParamsHandling: 'preserve'
+            });
           } else {
             this.router.navigate(['/home'], {
               queryParamsHandling: 'preserve'
