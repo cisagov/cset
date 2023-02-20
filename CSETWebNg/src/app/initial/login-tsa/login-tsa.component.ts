@@ -123,7 +123,7 @@ export class LoginTsaComponent implements OnInit {
                 this.router.navigate(['/assessment', this.assessmentId, 'info-tsa'])
               );
           } else if (this.configSvc.isRunningAnonymous) {
-            this.router.navigate(['/home', 'login-ak'], {
+            this.router.navigate(['/home', 'login-access'], {
               queryParamsHandling: 'preserve'
             });
           } else {

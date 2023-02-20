@@ -25,16 +25,16 @@
 
         <!-- Logo and Name -->
         <div *ngIf="skin == 'CSET'"
-            class="my-4 d-flex justify-content-start flex-00a flex-nowrap">
+            class="my-4 d-flex align-items-end flex-00a flex-nowrap">
             <app-logo-cset logoHeight="60"></app-logo-cset>
-            <span class="align-middle ml-3 font-italic"
-                style="font-size: 37px; margin-top: 8px; color: #666">Online</span>
+            <span class="align-bottom ml-3 font-italic"
+                style="font-size: 37px; margin-bottom: -.5rem; color: #666">Online</span>
         </div>
 
-        <div *ngIf="skin == 'TSA'" class="d-flex justify-content-start flex-00a">
+        <div *ngIf="skin == 'TSA'" class="d-flex align-items-end flex-00a">
             <app-logo-tsa mode="white" logoHeight="60"></app-logo-tsa>
-            <span class="align-middle ml-3 font-italic"
-                style="font-size: 37px; margin-top: 8px; color: #666">Online</span>
+            <span class="align-bottom ml-3 font-italic"
+                style="font-size: 30px; margin-top: 8px; color: #666">Online</span>
         </div>
 
 

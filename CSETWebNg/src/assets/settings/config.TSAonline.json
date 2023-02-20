@@ -2,7 +2,7 @@
     "isRunningAnonymous": true,
     "galleryLayout": "ONLINE",
     "behaviors": {
-        "defaultTitle":"CSET-Online",
+        "defaultTitle":"CSET TSA-Online",
         "showModuleBuilder": false,
         "showModuleImport": false,
         "showAggregation": false,

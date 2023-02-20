@@ -39,14 +39,14 @@ export class LayoutService {
 
   routesWithHiddenHeader = [
     '/home/login',
-    '/home/login-ak',
+    '/home/login-access',
     '/home/reset-pass',
     '/home/privacy-warning'
   ];
 
   routesWithHiddenFooter = [
     '/home/login', 
-    '/home/login-ak',
+    '/home/login-access',
     '/home/reset-pass'
   ];
 
