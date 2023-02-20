@@ -25,6 +25,7 @@ namespace UpgradeLibrary.Upgrade
             try
             {
                 RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12013_to_12014_AddGalleryItemGuids.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12013_to_12014_Data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
