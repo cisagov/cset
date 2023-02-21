@@ -79,7 +79,12 @@ namespace CSETWebCore.Business.GalleryParser
                 }
             }
 
-            IncludeCustomSets(rvalue);
+            /* The below "IncludeCustomSets(rvalue)" is commented out because we migrated from "on the fly" building 
+             * to making a new GALLERY_ITEM and GALLERY_GROUP_DETAILS, like normal sets/models, when the custom set is made.
+             * 
+             * I don't feel safe taking this out until we know the new way is solid.
+             */
+            //IncludeCustomSets(rvalue);
 
             return rvalue;
         }
