@@ -10,12 +10,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using J2N.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.ModuleBuilder
@@ -24,10 +27,12 @@ namespace CSETWebCore.Business.ModuleBuilder
     {
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
-        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question)
+        private readonly IGalleryEditor _galleryEditor;
+        public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question, IGalleryEditor galleryEditor)
         {
             _context = context;
             _question = question;
+            _galleryEditor = galleryEditor;
         }
 
 
@@ -282,9 +287,17 @@ namespace CSETWebCore.Business.ModuleBuilder
             _context.SaveChanges();
 
 
-            // This should cascade delete everything else
+            // This should cascade delete everything else (except the Gallery card stuff)
             _context.SETS.Remove(dbSet);
-            _context.SaveChanges();
+
+            // Now to remove the Gallery Item and card. This gets the guid for the item / card
+            var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(setName)).FirstOrDefault();
+            var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
+
+            // This removes any cards with the same Gallery_Item_Guid from view, but the GALLERY_ITEM still exists
+            // because the Assessment still exists, and the Assessment's guid can't be left hanging
+            _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
+            _context.SaveChanges();            
 
             return resp;
         }
@@ -307,6 +320,12 @@ namespace CSETWebCore.Business.ModuleBuilder
                 set.ShortName = "";
             }
 
+            string gallDescription = set.Description;
+
+            if (string.IsNullOrEmpty(set.Description))
+            {
+                gallDescription = "";
+            }
 
             // Add or update the SETS record
             var dbSet = _context.SETS.Where(x => x.Set_Name == set.SetName).FirstOrDefault();
@@ -324,9 +343,27 @@ namespace CSETWebCore.Business.ModuleBuilder
                 };
 
                 _context.SETS.Add(dbSet);
+
+                string configSetup = "{Sets:[\"" + set.SetName + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
+
+                var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
+                int colIndex = 0;
+                if (custom != null)
+                {
+                    var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+                    
+                    if(colIndexList != null)
+                    {
+                        colIndex = colIndexList.Count;
+                    }
+                }
+
+                _galleryEditor.AddGalleryItem("", "", gallDescription, set.FullName, configSetup, custom.Group_Id, colIndex);
+
             }
             else
             {
+                var originalSet = dbSet;
                 dbSet.Full_Name = set.FullName;
                 dbSet.Short_Name = set.ShortName;
                 dbSet.Standard_ToolTip = set.Description;
@@ -334,7 +371,15 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbSet.Is_Custom = set.IsCustom;
                 dbSet.Is_Displayed = set.IsDisplayed;
 
+                var gallItem = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(originalSet.Set_Name)).FirstOrDefault();
+
+                gallItem.Description = gallDescription;
+                gallItem.Title = dbSet.Full_Name;
+
                 _context.SETS.Update(dbSet);
+                _context.SaveChanges();
+
+                _context.GALLERY_ITEM.Update(gallItem);
             }
 
             _context.SaveChanges();
