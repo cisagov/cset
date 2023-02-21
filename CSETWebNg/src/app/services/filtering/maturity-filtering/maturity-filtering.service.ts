@@ -58,7 +58,7 @@ export class MaturityFilteringService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+', 'FR'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
@@ -77,7 +77,7 @@ export class MaturityFilteringService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'FR'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -88,7 +88,7 @@ export class MaturityFilteringService {
   /**
    * Valid 'answer'-type filter values
    */
-  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U'];
+  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U', 'FI', 'LI', 'PI', 'NI'];
 
 
 

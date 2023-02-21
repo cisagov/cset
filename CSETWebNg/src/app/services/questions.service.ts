@@ -354,6 +354,11 @@ export class QuestionsService {
       answers: this.configSvc.config.answersCPG
     });
 
+    this.answerButtonDefs.push({
+      modelId: 12,
+      answers: this.configSvc.config.answersC2M2
+    });
+
     // ACET labels are only used in the ACET skin
     this.answerButtonDefs.push({
       skin: 'ACET',
@@ -400,7 +405,6 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(modelId: Number, answerCode: string) {
-
     // first look for a skin-specific label set
     let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
       && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
