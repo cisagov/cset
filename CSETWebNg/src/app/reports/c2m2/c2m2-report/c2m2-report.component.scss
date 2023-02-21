@@ -1,0 +1,100 @@
+/*
+
+  Copyright 2023 Battelle Energy Alliance, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+$c2m2-heading-blue: rgb(44, 122, 186);
+
+h1, h2, h3, h4 {
+  color: $c2m2-heading-blue;
+  font-weight: 400;
+}
+
+.c2m2-report-background {
+  background-color: rgb(247, 247, 247);
+  height: 100%;
+  width: 100%;
+}
+
+.side-toc h1 {
+  color: rgb(71, 73, 76);
+}
+
+.report-body {
+  position: relative;
+  left: 8rem;
+}
+
+.cover-sheet-image {
+  max-width:100%;
+  max-height:100%;
+}
+
+.caption {
+  text-align: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .side-toc {
+      display: none;
+  }
+}
+
+@media print {
+  .side-toc {
+      display: none;
+  }
+
+  .c2m2-report-background {
+    background-color: transparent;
+  }
+}
+
+.side-toc {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  border-right: solid 1px #262626;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  height: 100vh;
+  padding: 0.75rem;
+  overflow-y: auto;
+  width: 20vw;
+  min-width: 250px;
+  z-index: 100;
+}
+
+.side-toc a {
+  word-break: break-word;
+  text-decoration: none;
+  color: rgb(71, 73, 76);
+}
+
+.side-toc div {
+  margin: 10px;
+}
+
+a:hover {
+  cursor :pointer;
+  text-decoration: underline !important;
+}
