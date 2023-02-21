@@ -98,11 +98,13 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.gallerySvc.refreshCards();
-
     this.checkNavigation();
+
   }
   ngAfterViewInit(): void {
     this.checkNavigation();
+    console.log(this.gallerySvc.rows)
+
   }
 
   checkNavigation() {

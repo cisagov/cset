@@ -18,6 +18,7 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using J2N.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.ModuleBuilder
@@ -286,9 +287,30 @@ namespace CSETWebCore.Business.ModuleBuilder
             _context.SaveChanges();
 
 
-            // This should cascade delete everything else
+            // This should cascade delete everything else (except the Gallery card stuff)
             _context.SETS.Remove(dbSet);
+
+            // Now to remove the Gallery Item and card. This gets the guid for the item / card
+            var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(setName)).FirstOrDefault();
+            var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
+
+            
+
+            //var assessmentsAffected = _context.ASSESSMENTS.Where(x => x.GalleryItemGuid == cardInfo.Gallery_Item_Guid).ToList();
+
+            //foreach(ASSESSMENTS assessment in assessmentsAffected)
+            //{
+            //    assessment.
+            //}
+
+            // This removes both the Item
+            _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
             _context.SaveChanges();
+
+            //_context.GALLERY_ITEM.Remove(cardInfo);
+            //_context.SaveChanges();
+
+            
 
             return resp;
         }
@@ -311,6 +333,12 @@ namespace CSETWebCore.Business.ModuleBuilder
                 set.ShortName = "";
             }
 
+            string gallDescription = set.Description;
+
+            if (string.IsNullOrEmpty(set.Description))
+            {
+                gallDescription = "";
+            }
 
             // Add or update the SETS record
             var dbSet = _context.SETS.Where(x => x.Set_Name == set.SetName).FirstOrDefault();
@@ -329,19 +357,7 @@ namespace CSETWebCore.Business.ModuleBuilder
 
                 _context.SETS.Add(dbSet);
 
-                string configSetup = "{{Sets:[" + set.SetName + "],SALLevel:\"Low\",QuestionMode:\"Questions\"}}";
-                //var gallItem = new GALLERY_ITEM()
-                //{
-                //    Icon_File_Name_Small = "",
-                //    Icon_File_Name_Large = "",
-                //    Configuration_Setup = configSetup,
-                //    Configuration_Setup_Client = null,
-                //    Description = set.Description,
-                //    Title = set.FullName,
-                //    Is_Visible = true,
-                //    CreationDate = DateTime.Now,
-                //    Gallery_Item_Guid = Guid.NewGuid()
-                //};
+                string configSetup = "{Sets:[\"" + set.SetName + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
 
                 var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
                 int colIndex = 0;
@@ -351,27 +367,27 @@ namespace CSETWebCore.Business.ModuleBuilder
                     
                     if(colIndexList != null)
                     {
-                        colIndex = colIndexList.Count - 1; // -1 to make the index start at 0
+                        colIndex = colIndexList.Count;
                     }
                 }
-                else
-                {
-                    //var temp = _context.GALLERY_ROWS.Where(x => x.Group_Id == custom.Group_Id).ToList();
-                    var layouts = _context.GALLERY_LAYOUT.ToList();
-                    foreach (GALLERY_LAYOUT layoutName in layouts)
-                    {
-                        _galleryEditor.AddCustomGalleryGroup("Custom", layoutName.Layout_Name);
+                //else
+                //{
+                //    //var temp = _context.GALLERY_ROWS.Where(x => x.Group_Id == custom.Group_Id).ToList();
+                //    var layouts = _context.GALLERY_LAYOUT.ToList();
+                //    foreach (GALLERY_LAYOUT layoutName in layouts)
+                //    {
+                //        _galleryEditor.AddCustomGalleryGroup("Custom", layoutName.Layout_Name);
 
-                    }
+                //    }
 
-                }
+                //}
 
-                var description = set.Description == null ? "" : set.Description;
-                _galleryEditor.AddGalleryItem("", "", description, set.FullName, configSetup, custom.Group_Id, colIndex);
+                _galleryEditor.AddGalleryItem("", "", gallDescription, set.FullName, configSetup, custom.Group_Id, colIndex);
 
             }
             else
             {
+                var originalSet = dbSet;
                 dbSet.Full_Name = set.FullName;
                 dbSet.Short_Name = set.ShortName;
                 dbSet.Standard_ToolTip = set.Description;
@@ -379,9 +395,20 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbSet.Is_Custom = set.IsCustom;
                 dbSet.Is_Displayed = set.IsDisplayed;
 
-                _context.SETS.Update(dbSet);
+                var gallItem = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(originalSet.Set_Name)).FirstOrDefault();
 
-                //_galleryEditor.UpdateItem(gallItem);
+                //if (string.IsNullOrEmpty(dbSet.Standard_ToolTip))
+                //{
+                //    gallDescription = "";
+                //}
+
+                gallItem.Description = gallDescription;
+                gallItem.Title = dbSet.Full_Name;
+
+                _context.SETS.Update(dbSet);
+                _context.SaveChanges();
+
+                _context.GALLERY_ITEM.Update(gallItem);
             }
 
             _context.SaveChanges();
