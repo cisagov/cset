@@ -534,6 +534,15 @@ import { ComponentComplianceComponent } from './reports/component-compliance/com
 import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
 import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
 import { ComponentQuestionListComponent } from './reports/component-question-list/component-question-list.component';
+import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
+import { C2m2CoverSheetComponent } from './reports/c2m2/c2m2-report/c2m2-cover-sheet/c2m2-cover-sheet.component';
+import { C2m2IntroductionComponent } from './reports/c2m2/c2m2-report/c2m2-introduction/c2m2-introduction.component';
+import { C2m2ModelArchitectureComponent } from './reports/c2m2/c2m2-report/c2m2-model-architecture/c2m2-model-architecture.component';
+import { C2m2SummaryResultsComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-summary-results.component';
+import { C2m2DetailedResultsComponent } from './reports/c2m2/c2m2-report/c2m2-detailed-results/c2m2-detailed-results.component';
+import { C2m2UsingSelfEvaluationResultsComponent } from './reports/c2m2/c2m2-report/c2m2-using-self-evaluation-results/c2m2-using-self-evaluation-results.component';
+import { C2m2SelfEvaluationNotesComponent } from './reports/c2m2/c2m2-report/c2m2-self-evaluation-notes/c2m2-self-evaluation-notes.component';
+import { C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent } from './reports/c2m2/c2m2-report/c2m2-list-of-partially-implemented-and-not-implemented-practices/c2m2-list-of-partially-implemented-and-not-implemented-practices.component';
 
 
 
@@ -1026,7 +1035,16 @@ import { ComponentQuestionListComponent } from './reports/component-question-lis
         ComponentComplianceComponent,
         OverallComplianceComponent,
         RankedSubjectAreasComponent,
-        ComponentQuestionListComponent
+        ComponentQuestionListComponent,
+        C2m2ReportComponent,
+        C2m2CoverSheetComponent,
+        C2m2IntroductionComponent,
+        C2m2ModelArchitectureComponent,
+        C2m2SummaryResultsComponent,
+        C2m2DetailedResultsComponent,
+        C2m2UsingSelfEvaluationResultsComponent,
+        C2m2SelfEvaluationNotesComponent,
+        C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent
     ],
     providers: [
         ConfigService,
