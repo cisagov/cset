@@ -32,6 +32,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
+import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    public layoutSvc: LayoutService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,

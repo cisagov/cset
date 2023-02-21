@@ -191,7 +191,6 @@
   
       <!-- Body -->
       <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-        <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
         <div class="p-0 d-flex col-xl-12 bgc-gray-50">
           <router-outlet></router-outlet>
         </div>
@@ -199,7 +198,7 @@
   
       <!-- Footer -->
       <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"
-        *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
+        *ngIf="layoutSvc.isFooterShown(router.url)">
         <ngb-panel id="footerPanel">
           <ng-template ngbPanelTitle>
             <button id="footerExpanderButton" class="cset-footer-expand-button"

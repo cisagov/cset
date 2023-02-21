@@ -21,28 +21,30 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Input, OnInit } from '@angular/core';
+import { QuestionsService } from '../../services/questions.service';
 
-import { LogoTsaComponent } from './logo-tsa.component';
+@Component({
+  selector: 'app-component-question-list',
+  templateUrl: './component-question-list.component.html',
+  styleUrls: ['../reports.scss']
+})
+export class ComponentQuestionListComponent implements OnInit {
 
-describe('LogoTsaComponent', () => {
-  let component: LogoTsaComponent;
-  let fixture: ComponentFixture<LogoTsaComponent>;
+  @Input()
+  data: any[];
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ LogoTsaComponent ]
-    })
-    .compileComponents();
-  });
+  /**
+   * 
+   */
+  constructor(
+    public questionsSvc: QuestionsService
+  ) { }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LogoTsaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  /**
+   * 
+   */
+  ngOnInit(): void {
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+}

@@ -20,164 +20,167 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<!-- <div class="d-flex flex-11a"> -->
-    <div class="p-0 d-flex flex-column justify-content-start flex-11a">
-        <!-- <p>{{this.authSvc.userToken()}}</p> -->
-        <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+<div class="p-0 d-flex flex-column justify-content-start flex-11a">
+    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
 
-            <div *ngIf="browserIsIE" class="alert alert-danger text-left">
-                Internet Explorer has been detected as your current browser.
-                Some functionality of CSET is not fully supported by Internet Explorer.
-                Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
-                your experience.
-            </div>
+        <div *ngIf="browserIsIE" class="alert alert-danger text-left">
+            Internet Explorer has been detected as your current browser.
+            Some functionality of CSET is not fully supported by Internet Explorer.
+            Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+            your experience.
+        </div>
 
-            <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
-                <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
-                <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
-                    <div class="d-flex justify-content-between flex-00a">
-                        <div class="d-flex flex-row">
-                            <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
-                                class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
-                                <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">Import</label>
-                                <input type="file" tabindex="0" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
-                            </label>
-                            <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
-                                <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">Import</label>
-                                <input type="file" tabindex="0" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
-                            </label>
+        <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
+            <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">My Assessments</h3>
+            <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
+                <div class="d-flex justify-content-between flex-00a">
+                    <div class="d-flex flex-row">
+                        <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
+                            class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
+                            matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                            <span class="mr-2 fs-base cset-icons-import"></span>
+                            <label for="importFile" class="m-0">Import</label>
+                            <input type="file" tabindex="0" class="display-none" id="importFile" multiple
+                                accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
+                        </label>
+                        <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+                            class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                            matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                            <span class="mr-2 fs-base cset-icons-import"></span>
+                            <label for="importFile" class="m-0">Import</label>
+                            <input type="file" tabindex="0" class="display-none" id="importFile" multiple
+                                accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
+                        </label>
 
-                            <!-- making an Export All button for auto test -->
-                            <!-- <label *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                        <!-- making an Export All button for auto test -->
+                        <!-- <label *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Export all assessments to an external directory.">
                                 <span class="mr-2 fs-base cset-icons-export-up"></span>
                                 <label for="importFile" class="m-0">Export All</label>
                                 <input tabindex="0" class="display-none" id="exportAll" (change)="exportAllAssessments()">
                             </label> -->
 
-                            <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
-                                class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                                (click)="exportAllAssessments()"
-                                matTooltip="Export a copy of all assessments to another location."
-                                [disabled]="exportAllInProgress">
-                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Export All</span>
-                            </button>
+                        <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
+                            class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
+                            (click)="exportAllAssessments()"
+                            matTooltip="Export a copy of all assessments to another location."
+                            [disabled]="exportAllInProgress">
+                            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                            <span class="icon-link-button-text-dark">Export All</span>
+                        </button>
 
-                            <label *ngIf="configSvc.installationMode === 'ACET'" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
-                                <span class="cset-icons-export-excel fs-base mr-2"></span>
-                                <label for="importFile" class="m-0">Export All to Excel</label>
-                            </label>
+                        <label *ngIf="configSvc.installationMode === 'ACET'"
+                            class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                            matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
+                            <span class="cset-icons-export-excel fs-base mr-2"></span>
+                            <label for="importFile" class="m-0">Export All to Excel</label>
+                        </label>
 
-                            <label *ngIf="this.ncuaSvc.switchStatus" class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
-                                <span class="fs-base mr-2"></span>
-                                <label for="mergeExamination" class="m-0">Merge Examinations</label>
-                            </label>
-                        </div>
-                    </div>
-                    <div *ngIf="unsupportedImportFile"
-                        class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
-                        <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
-                        <div class="p-2 d-flex flex-column justify-content-center flex-01a">
-                            <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                                imported for enterprise installations.</span>
-                            <span class="fs-base-1"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
-                                    target="_blank" tabindex="0" rel="noopener noreferrer">For more information, see the
-                                    import section
-                                    of the user
-                                    guide</a></span>
-                        </div>
+                        <label *ngIf="this.ncuaSvc.switchStatus"
+                            class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                            matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
+                            <span class="fs-base mr-2"></span>
+                            <label for="mergeExamination" class="m-0">Merge Examinations</label>
+                        </label>
                     </div>
                 </div>
-            </ng-container>
-            <ng-template #noAssessmentsElseBlock>
-                <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to {{appCode}}</h2>
-                <p>To get started, select from one of the options below:</p>
-                <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
-                    <div class="flex-row d-flex flex-00a">
-                        <div class="d-flex flex-wrap justify-content-between flex-11a">
-                            <button
-                                class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                (click)="clickNewAssessmentButton()" matTooltip="Select an assessment type and begin a new assessment.">
-                                <span *ngIf="configSvc.installationMode !=='ACET'"
-                                    class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
-                                <span *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="mr-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
-                                <span class="landing-button-text landing-button-text-sm">Start a New Assessment</span>
-                            </button>
-                            <!-- <hr class="landing my-4"> -->
-                            <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
-                                class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
-                                <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                                <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
-                                    Import an Existing Assessment
-                                </label>
-                                <input type="file" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
-                            </label>
-                            <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                                class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
-                                <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                                <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
-                                    Import an Existing Assessment
-                                </label>
-                                <input type="file" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
-                            </label>
-                        </div>
-                    </div>
-                    <div *ngIf="unsupportedImportFile"
-                        class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-                        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-                        <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
-                            <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                                imported for enterprise installations.</span>
-                            <span class="fs-base-1 mt-2"><a
-                                    href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
-                                    rel="noopener noreferrer">For
-                                    more information, see the import section of the user guide</a></span>
-                        </div>
+                <div *ngIf="unsupportedImportFile"
+                    class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
+                    <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
+                    <div class="p-2 d-flex flex-column justify-content-center flex-01a">
+                        <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
+                            imported for enterprise installations.</span>
+                        <span class="fs-base-1"><a href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm"
+                                target="_blank" tabindex="0" rel="noopener noreferrer">For more information, see the
+                                import section
+                                of the user
+                                guide</a></span>
                     </div>
                 </div>
-                <p class="mt-3 fst-italic">
-                    <app-cset-origin *ngIf="configSvc.installationMode !=='ACET'"></app-cset-origin>
-                    <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
-                </p>
-            </ng-template>
-        </div>
-
-        <div *ngIf="sortedAssessments == null">
-            <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-                <div class="spinner-size-50"></div>
             </div>
-        </div>
+        </ng-container>
+        <ng-template #noAssessmentsElseBlock>
+            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to {{appCode}}</h2>
+            <p>To get started, select from one of the options below:</p>
+            <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
+                <div class="flex-row d-flex flex-00a">
+                    <div class="d-flex flex-wrap justify-content-between flex-11a">
+                        <button
+                            class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            (click)="clickNewAssessmentButton()"
+                            matTooltip="Select an assessment type and begin a new assessment.">
+                            <span *ngIf="configSvc.installationMode !=='ACET'"
+                                class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
+                            <span *ngIf="configSvc.installationMode === 'ACET'"
+                                class="mr-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
+                            <span class="landing-button-text landing-button-text-sm">Start a New Assessment</span>
+                        </button>
+                        <!-- <hr class="landing my-4"> -->
+                        <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
+                            class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                            <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
+                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                                Import an Existing Assessment
+                            </label>
+                            <input type="file" class="display-none" id="importFile" multiple
+                                accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
+                        </label>
+                        <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+                            class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                            matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                            <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
+                            <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                                Import an Existing Assessment
+                            </label>
+                            <input type="file" class="display-none" id="importFile" multiple
+                                accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="unsupportedImportFile"
+                    class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+                    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+                    <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
+                        <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
+                            imported for enterprise installations.</span>
+                        <span class="fs-base-1 mt-2"><a
+                                href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
+                                rel="noopener noreferrer">For
+                                more information, see the import section of the user guide</a></span>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-3 fst-italic">
+                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET'"></app-cset-origin>
+                <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
+            </p>
+        </ng-template>
+    </div>
 
-        <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
-            <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
+    <div *ngIf="sortedAssessments == null">
+        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+            <div class="spinner-size-50"></div>
+        </div>
+    </div>
+
+    <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
+        <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
 
             <!-- table for larger layouts -->
-            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
-                class="assessment-summary" style="overflow-x:auto">
+            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
                 <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
                 <th *ngIf="isTSA" style="width: 5%;">Source</th>
                 <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
                 <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
-                <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor" style="width:15%;">Primary Assessor</th>
+                <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
+                    style="width:15%;">Primary Assessor</th>
                 <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
                 <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                 <th aria-label="export assessment" style="width:5%;"></th>
                 <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
-                <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
+                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
                             class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
@@ -185,25 +188,31 @@
                             {{assessment.assessmentName}}
                         </button>
                     </td>
-                    <td *ngIf="isTSA">{{isTSA && (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ? 'CSET' : 'TSA' }}</td>
+                    <td *ngIf="isTSA">{{isTSA &&
+                        (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ? 'CSET' :
+                        'TSA' }}</td>
                     <td>{{assessment.type}}</td>
                     <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
-                    <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) | date:'medium'}}</td>
-                    <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">{{assessment.creatorName}}</td>
+                    <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) |
+                        date:'medium'}}</td>
+                    <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">{{assessment.creatorName}}
+                    </td>
                     <td>
-                      <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
-                        <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                          {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} {{this.assessment.selectedMaturityModel == 'ISE' ? 'Statement(s) ' : 'Question(s) '}} Completed
-                        </span>
-                        <ng-template #blankAssessment>
-                          Blank Assessment
-                        </ng-template>
-                        <br>
-                      </div>
-                      <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                        <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
+                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                                {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
+                                {{this.assessment.selectedMaturityModel == 'ISE' ? 'Statement(s) ' : 'Question(s) '}}
+                                Completed
+                            </span>
+                            <ng-template #blankAssessment>
+                                Blank Assessment
+                            </ng-template>
+                            <br>
+                        </div>
+                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
                             matTooltip="This assessment contains answers that require further review.">Needs
                             Review
-                      </span>
+                        </span>
                     </td>
                     <td>
                         <button tabindex="0"
@@ -223,19 +232,24 @@
                         </button>
                     </td>
                     <td *ngIf="showColumn('analytics')">
-                      <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                      <a routerLinkActive="active" style="color: #215283;" (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)">Analytics</a>
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="this.tsaanalyticSvc.loadAssessment(assessment.assessmentId)"
+                            matTooltip="View the analytics for this assessment.">
+                            <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
+                            <span class="icon-link-button-text-dark">Analytics</span>
+                        </button>
                     </td>
                 </tr>
             </table>
 
             <!-- table for handset portrait -->
-            <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
-                class="assessment-summary" style="overflow-x:auto">
+            <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
                 <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
                 <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
                 <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
-                <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
+                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
                             class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
@@ -245,13 +259,11 @@
                     </td>
                     <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
                     <td class="text-nowrap pl-1">
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                             (click)="removeAssessment(assessment, i)" matTooltip="Permanently remove this assessment.">
                             <span class="cset-icons-trash-x fs-base-2"></span>
                         </button>
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                             (click)="clickDownloadLink(assessment.assessmentId)"
                             matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
                             <span class="cset-icons-export-up fs-base-2"></span>
@@ -259,16 +271,17 @@
                     </td>
                 </tr>
             </table>
-            </ng-container>
+        </ng-container>
 
-            <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation" aria-label="assessments" matSort (matSortChange)="sortData($event)"
-            class="assessment-summary" style="overflow-x:auto">
+        <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation"
+            aria-label="assessments" matSort (matSortChange)="sortData($event)" class="assessment-summary"
+            style="overflow-x:auto">
             <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
             <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
             <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
             <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
             <th aria-label="merge assessment" style="width:5%;"></th>
-            <tr *ngFor="let assessment of sortedAssessments;  let i = index" >
+            <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                 <td>
                     <button tabindex="0"
                         class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
@@ -279,24 +292,26 @@
                 <td>{{assessment.type}}</td>
                 <td>{{assessment.lastModifiedDate | date:'medium'}}</td>
                 <td>
-                  <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
-                    <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                      {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}} Statement(s) Completed
-                    </span>
-                    <ng-template #blankAssessment>
-                      Blank Assessment
-                    </ng-template>
-                    <br>
-                  </div>
-                  <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                    <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
+                        <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                            {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
+                            Statement(s) Completed
+                        </span>
+                        <ng-template #blankAssessment>
+                            Blank Assessment
+                        </ng-template>
+                        <br>
+                    </div>
+                    <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
                         matTooltip="This assessment contains answers that require further review.">Needs
                         Review
-                  </span>
+                    </span>
                 </td>
                 <td>
                     <div *ngIf="assessment.type === 'ISE'">
-                        <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}" class="checkbox-custom mt-1"
-                            (change)="this.ncuaSvc.modifyMergeList(assessment, $event)" [checked]="">
+                        <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}"
+                            class="checkbox-custom mt-1" (change)="this.ncuaSvc.modifyMergeList(assessment, $event)"
+                            [checked]="">
                         <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
                             Merge
                         </label>
@@ -304,11 +319,9 @@
                 </td>
             </tr>
         </table>
-        <button *ngIf="this.ncuaSvc.prepForMerge"
-            (click)="this.proceedToMerge()"
+        <button *ngIf="this.ncuaSvc.prepForMerge" (click)="this.proceedToMerge()"
             [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10"
-            class="btn btn-primary"
-            matTooltip="Merge checked examinations"
+            class="btn btn-primary" matTooltip="Merge checked examinations"
             style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">Start Merge</button>
 
         <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">

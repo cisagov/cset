@@ -63,6 +63,8 @@ export class AuthenticationService {
     private initialized = false;
     private parser = new JwtParser();
 
+    isAuthenticated = false;
+
     constructor(
         private http: HttpClient,
         private router: Router,
@@ -192,14 +194,26 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     this.storeUserData(user);
 
+                    this.isAuthenticated = true;
+
                     return user;
                 }));
     }
 
 
     logout() {
+        this.isAuthenticated = false;
         this.router.navigate(['/home/logout'], { queryParamsHandling: "preserve" });
     }
+
+    /**
+     * TODO:  This is not working correctly - the local storage stuff
+     * hangs around even if we are sitting on the login page again
+     */
+    // isAuthenticated() {
+    //     const uid = localStorage.getItem('userId');
+    //     return !!uid;
+    // }
 
 
     /**
