@@ -543,6 +543,7 @@ import { C2m2DetailedResultsComponent } from './reports/c2m2/c2m2-report/c2m2-de
 import { C2m2UsingSelfEvaluationResultsComponent } from './reports/c2m2/c2m2-report/c2m2-using-self-evaluation-results/c2m2-using-self-evaluation-results.component';
 import { C2m2SelfEvaluationNotesComponent } from './reports/c2m2/c2m2-report/c2m2-self-evaluation-notes/c2m2-self-evaluation-notes.component';
 import { C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent } from './reports/c2m2/c2m2-report/c2m2-list-of-partially-implemented-and-not-implemented-practices/c2m2-list-of-partially-implemented-and-not-implemented-practices.component';
+import { C2m2SideTocComponent } from './reports/c2m2/c2m2-report/c2m2-side-toc/c2m2-side-toc.component';
 
 
 
@@ -1044,7 +1045,8 @@ import { C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent } fro
         C2m2DetailedResultsComponent,
         C2m2UsingSelfEvaluationResultsComponent,
         C2m2SelfEvaluationNotesComponent,
-        C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent
+        C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent,
+        C2m2SideTocComponent
     ],
     providers: [
         ConfigService,

@@ -195,6 +195,7 @@ import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
+import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -205,13 +206,13 @@ switch (installationMode) {
   case 'ACET':
     homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
     break;
-  case 'TSA':
-    homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
-    break;
-  case 'RRA':
-    homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
-    break;
-  case 'CF':
+    case 'TSA':
+      homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
+      break;
+      case 'RRA':
+        homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+        break;
+        case 'CF':
     homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
@@ -313,11 +314,11 @@ const appRoutes: Routes = [
         path:'tsa-analytics',
         component:TsaAnalyticsComponent
       },
-      { path: 'resource-library', 
+      { path: 'resource-library',
         component: ResourceLibraryComponent },
       {
         path: 'examination-merge',
-        component: MergeExaminationsComponent 
+        component: MergeExaminationsComponent
       },
 
       {
@@ -500,6 +501,7 @@ const appRoutes: Routes = [
       { path: 'cpgReport', component: CpgReportComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
+      { path: 'c2m2Report', component: C2m2ReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
