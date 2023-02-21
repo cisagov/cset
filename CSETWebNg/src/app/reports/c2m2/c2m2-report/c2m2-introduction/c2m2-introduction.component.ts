@@ -30,9 +30,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class C2m2IntroductionComponent implements OnInit {
 
+  scope: string;
+  date: string;
+  additionalNotes: string;
+  reportGeneratedDate: Date;
+
   constructor() { }
 
   ngOnInit(): void {
+    // TODO: set values for scope, date, and additionalNotes here...
+    this.reportGeneratedDate = new Date();
   }
 
 }
