@@ -31,7 +31,7 @@ h1, h2, h3, h4 {
 .c2m2-report-background {
   background-color: rgb(247, 247, 247);
   height: 100%;
-  width: 100%
+  width: 100%;
 }
 
 .side-toc h1 {
@@ -61,6 +61,10 @@ h1, h2, h3, h4 {
 @media print {
   .side-toc {
       display: none;
+  }
+
+  .c2m2-report-background {
+    background-color: transparent;
   }
 }
 
