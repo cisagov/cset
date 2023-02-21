@@ -28,6 +28,12 @@ h1, h2, h3, h4 {
   font-weight: 400;
 }
 
+.c2m2-report-background {
+  background-color: rgb(247, 247, 247);
+  height: 100%;
+  width: 100%
+}
+
 .side-toc h1 {
   color: rgb(71, 73, 76);
 }
@@ -40,6 +46,10 @@ h1, h2, h3, h4 {
 .cover-sheet-image {
   max-width:100%;
   max-height:100%;
+}
+
+.caption {
+  text-align: center;
 }
 
 @media only screen and (max-width: 900px) {
@@ -57,7 +67,7 @@ h1, h2, h3, h4 {
 .side-toc {
   background-color: #f0f0f0;
   box-sizing: border-box;
-  border-right: solid 1px #3a3a3a;
+  border-right: solid 1px #262626;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   position: fixed;
   left: 0;
@@ -81,6 +91,6 @@ h1, h2, h3, h4 {
 }
 
 a:hover {
-  cursor:pointer;
-  text-decoration: underline;
+  cursor :pointer;
+  text-decoration: underline !important;
 }
