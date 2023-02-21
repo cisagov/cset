@@ -135,8 +135,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * in the database as some model-specific behavior.
    */
   showLevelIndicator(q): boolean {
-    // CPG does not have levels - don't show it
-    if (q.maturityModelId == 11) {
+    // CPG (11) does not have levels - don't show the indicator
+    if ([11].indexOf(q.maturityModelId) >= 0) {
       return false;
     }
 
