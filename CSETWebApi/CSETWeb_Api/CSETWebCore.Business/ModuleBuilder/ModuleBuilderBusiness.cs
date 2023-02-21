@@ -294,23 +294,10 @@ namespace CSETWebCore.Business.ModuleBuilder
             var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(setName)).FirstOrDefault();
             var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
 
-            
-
-            //var assessmentsAffected = _context.ASSESSMENTS.Where(x => x.GalleryItemGuid == cardInfo.Gallery_Item_Guid).ToList();
-
-            //foreach(ASSESSMENTS assessment in assessmentsAffected)
-            //{
-            //    assessment.
-            //}
-
-            // This removes both the Item
+            // This removes any cards with the same Gallery_Item_Guid from view, but the GALLERY_ITEM still exists
+            // because the Assessment still exists, and the Assessment's guid can't be left hanging
             _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
-            _context.SaveChanges();
-
-            //_context.GALLERY_ITEM.Remove(cardInfo);
-            //_context.SaveChanges();
-
-            
+            _context.SaveChanges();            
 
             return resp;
         }
@@ -370,17 +357,6 @@ namespace CSETWebCore.Business.ModuleBuilder
                         colIndex = colIndexList.Count;
                     }
                 }
-                //else
-                //{
-                //    //var temp = _context.GALLERY_ROWS.Where(x => x.Group_Id == custom.Group_Id).ToList();
-                //    var layouts = _context.GALLERY_LAYOUT.ToList();
-                //    foreach (GALLERY_LAYOUT layoutName in layouts)
-                //    {
-                //        _galleryEditor.AddCustomGalleryGroup("Custom", layoutName.Layout_Name);
-
-                //    }
-
-                //}
 
                 _galleryEditor.AddGalleryItem("", "", gallDescription, set.FullName, configSetup, custom.Group_Id, colIndex);
 
@@ -396,11 +372,6 @@ namespace CSETWebCore.Business.ModuleBuilder
                 dbSet.Is_Displayed = set.IsDisplayed;
 
                 var gallItem = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(originalSet.Set_Name)).FirstOrDefault();
-
-                //if (string.IsNullOrEmpty(dbSet.Standard_ToolTip))
-                //{
-                //    gallDescription = "";
-                //}
 
                 gallItem.Description = gallDescription;
                 gallItem.Title = dbSet.Full_Name;
