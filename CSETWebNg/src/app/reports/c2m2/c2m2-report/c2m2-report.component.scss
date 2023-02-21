@@ -73,6 +73,7 @@ h1, h2, h3, h4 {
 .side-toc a {
   word-break: break-word;
   text-decoration: none;
+  color: rgb(71, 73, 76);
 }
 
 .side-toc div {
@@ -81,4 +82,5 @@ h1, h2, h3, h4 {
 
 a:hover {
   cursor:pointer;
+  text-decoration: underline;
 }
