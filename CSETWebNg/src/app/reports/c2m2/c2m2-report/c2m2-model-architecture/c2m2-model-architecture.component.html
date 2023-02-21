@@ -1,0 +1,121 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<h1>2. Model Architecture</h1>
+<p>
+  The model is organized into 10 domains. Each domain is a logical grouping of cybersecurity practices. The practices
+  within a domain are grouped by objective—target achievements that support the domain. Within each objective, the
+  practices are ordered by maturity indicator levels (MILs).
+</p>
+<p>
+  The following sections include additional information about the domains and the MILs.
+</p>
+
+<h2>2.1 Domains, Objectives, and Practices</h2>
+<p>
+  The C2M2 includes 356 cybersecurity practices, which are grouped into 10 domains. These practices represent the
+  activities an organization can perform to establish and mature capability in the domain. For example, the Asset, Change,
+  and Configuration Management domain is a group of practices that an organization can perform to establish and mature
+  asset management, change management, and configuration management capabilities.
+</p>
+<p>
+  The practices within each domain are organized into objectives, which represent achievements that support the domain.
+  For example, the Asset, Change, and Configuration Management domain comprises five objectives:
+</p>
+<ol class="mb-3">
+  <li>Manage IT and OT Asset Inventory</li>
+  <li>Manage Information Asset Inventory</li>
+  <li>Manage IT and OT Asset Configurations</li>
+  <li>Manage Changes to IT and OT Assets</li>
+  <li>Management Activities for the ASSET domain</li>
+</ol>
+<p>
+  Each of the objectives in a domain comprises a set of practices, which are ordered by MIL. Figure 1 summarizes the
+  elements of each domain.
+</p>
+
+<div class="d-flex justify-content-center mt-4 mb-4">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 875 574" font-size="16" role="img"
+    style="display: block; max-width: 100%; max-height: 100%; width: 650px;">
+    <title id="MIL_DefinitionTitle">Model Architecture</title>
+    <desc id="MIL_DefinitionDesc">Figure 1: Model and Domain Elements. A graphic representation of the Model, Domain and
+      Objective hierarchy and associated Maturity Indicator Levels. Model contains 10 domains. Each domain contains
+      Approach Objectives, one or more, unique to each domain. Approach Objectives are supported by a progression of
+      practices that are unique to the domain. Each domain contains a Management Objective and this is similar in each
+      domain. Each Management Objective is supported by a progression of practices that are similar in each domain and
+      describe institutionalization activities.</desc>
+    <path fill="none" stroke="#737373" stroke-width="4"
+      d="M366 440v99a16 16 0 0016 16h32 M366 440v32a16 16 0 0016 16h32 M190 105v300a16 16 0 0016 16h32 M366 172v166a16 16 0 0016 16h32 M366 172v99a16 16 0 0016 16h32 M366 172v32a16 16 0 0016 16h32 M190 105v32a16 16 0 0016 16h32 M64 38v32a16 16 0 0016 16h32">
+    </path>
+    <g fill="#FFF" font-weight="bold" text-anchor="middle">
+      <g transform="translate(64 25)">
+        <rect x="-64" y="-25" width="128" height="38" fill="#292929" rx="4"></rect><text>Model</text>
+      </g>
+      <g transform="translate(190 92)">
+        <rect x="-78" y="-25" width="156" height="38" fill="#4d4d4d" rx="4"></rect><text>Domain</text>
+      </g>
+      <g transform="translate(366 159)">
+        <rect id="a" x="-128" y="-25" width="256" height="38" fill="#666666" rx="4"></rect><text>Approach
+          Objectives</text>
+      </g>
+      <g transform="translate(522 226)">
+        <rect id="b" x="-108" y="-25" width="216" height="38" fill="#8c8c8c" rx="4"></rect><text>Practices at MIL1</text>
+      </g>
+      <g transform="translate(522 293)">
+        <use href="#b"></use><text>Practices at MIL2</text>
+      </g>
+      <g transform="translate(522 360)">
+        <use href="#b"></use><text>Practices at MIL3</text>
+      </g>
+      <g transform="translate(366 427)">
+        <use href="#a"></use><text>Management Objectives</text>
+      </g>
+      <g transform="translate(522 494)">
+        <use href="#b"></use><text>Practices at MIL2</text>
+      </g>
+      <g transform="translate(522 561)">
+        <use href="#b"></use><text>Practices at MIL3</text>
+      </g>
+    </g>
+    <g fill="currentColor"><text x="294" y="89">Model contains 10 domains</text><text transform="translate(518 149)">
+        (one or more per domain)
+        <tspan x="0" dy="19">Unique to each domain</tspan>
+      </text><text transform="translate(654 264)">
+        Approach objectives are
+        <tspan x="0" dy="19">supported by a progression of</tspan>
+        <tspan x="0" dy="19">practices that are unique to</tspan>
+        <tspan x="0" dy="19">the domain</tspan>
+      </text><text transform="translate(518 417)">
+        (one per domain)
+        <tspan x="0" dy="19">Similar in each domain</tspan>
+      </text><text transform="translate(654 489)">
+        Each management objective
+        <tspan x="0" dy="19">is supported by a progression</tspan>
+        <tspan x="0" dy="19">of practices that are similar in</tspan>
+        <tspan x="0" dy="19">each domain and describe</tspan>
+        <tspan x="0" dy="19">institutionalization activities</tspan>
+      </text></g>
+  </svg>
+</div>
+<span class="caption" style="margin: 4px 0px 0px; color: rgb(44, 122, 186); display: block;">
+  Figure 1: Model and Domain Elements
+</span>
