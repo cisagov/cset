@@ -21,3 +21,64 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+$c2m2-heading-blue: rgb(44, 122, 186);
+
+h1, h2, h3, h4 {
+  color: $c2m2-heading-blue;
+  font-weight: 400;
+}
+
+.side-toc h1 {
+  color: rgb(71, 73, 76);
+}
+
+.report-body {
+  position: relative;
+  left: 8rem;
+}
+
+.cover-sheet-image {
+  max-width:100%;
+  max-height:100%;
+}
+
+@media only screen and (max-width: 900px) {
+  .side-toc {
+      display: none;
+  }
+}
+
+@media print {
+  .side-toc {
+      display: none;
+  }
+}
+
+.side-toc {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  border-right: solid 1px #3a3a3a;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  height: 100vh;
+  padding: 0.75rem;
+  overflow-y: auto;
+  width: 20vw;
+  min-width: 250px;
+  z-index: 100;
+}
+
+.side-toc a {
+  word-break: break-word;
+  text-decoration: none;
+}
+
+.side-toc div {
+  margin: 10px;
+}
+
+a:hover {
+  cursor:pointer;
+}

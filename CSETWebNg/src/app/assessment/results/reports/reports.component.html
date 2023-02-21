@@ -306,7 +306,7 @@
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Examiner Notes
       </button>
-      
+
       <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
@@ -393,6 +393,19 @@
         <div>
           <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
             CPG Report
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!!assessSvc.assessment && (assessSvc.usesMaturityModel('C2M2') || assessSvc.usesStandard('C2M2_V11')) && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Cybersecurity Capability Maturity Model (C2M2)
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('c2m2Report')" class="btn btn-link btn-link-dark text-left">
+            C2M2 Report
           </button>
         </div>
       </div>
