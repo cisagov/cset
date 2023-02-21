@@ -37,7 +37,7 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
 
   /**
@@ -53,7 +53,7 @@ export class QuestionFilterService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -65,7 +65,7 @@ export class QuestionFilterService {
    * Valid 'answer'-type filter values.  Defaulted to these (for standards)
    * but overrideable by a maturity model.
    */
-  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'I', 'U'];
+  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'I', 'U', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * Consuming pages can set a model ID 

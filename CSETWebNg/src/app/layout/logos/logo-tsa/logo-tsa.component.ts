@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-logo-tsa',
@@ -30,9 +30,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoTsaComponent implements OnInit {
 
+  /**
+   * 'white' is used for a colored logo against a white background
+   */
+  @Input()
+  mode: string;
+
+
+  @Input()
+  logoHeight = 28;
+
+  //logoWidth: number;
+
+  color1: string;
+  color2: string;
+
+
+  /**
+   * 
+   */
   constructor() { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
+    //this.logoWidth = this.logoHeight * 4.28;
+
+    if (this.mode == 'white') {
+      this.color1 = 'fill-primary';
+      this.color2 = 'fill-white';
+    } else {
+      this.color1 = 'fill-white';
+      this.color2 = 'fill-primary';
+    }
   }
 
 }

@@ -68,17 +68,11 @@
     <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
       Above Target Level</div>
 
-    <div *ngIf="!groupings" class="w-100">
-      <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-
-
-    <!-- top level -->
+    
     <p class="mb-4" *ngIf="!!groupings">
     Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, 'N')}}' response
     </p>
+
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
       CPG Answer Key
       <ul>
@@ -88,6 +82,13 @@
         <li><Strong style="color:#990000; font-size: large;">Not</Strong> Implemented - An organization has no immediate plans to implement the recommended actions for a goal.</li>
       </ul>
     </div>    
+
+    <div *ngIf="!groupings" class="w-100">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
     <ng-template [ngIf]="!!groupings">
       <div *ngFor="let g of groupings" class="w-100">
         <app-grouping-block [grouping]="g"></app-grouping-block>
