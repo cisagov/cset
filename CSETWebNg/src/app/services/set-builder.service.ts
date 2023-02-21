@@ -158,10 +158,6 @@ export class SetBuilderService {
      *
      */
     updateSetDetails(set: SetDetail) {
-        // let setDetailsWithGalleryLayout = new SetGalleryDetails();
-        // setDetailsWithGalleryLayout.setDetails = JSON.stringify(set);
-        // setDetailsWithGalleryLayout.layout = this.configSvc.galleryLayout;
-
         return this.http
             .post(
                 this.apiUrl + 'builder/UpdateSetDetail',
