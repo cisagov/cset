@@ -206,13 +206,13 @@ switch (installationMode) {
   case 'ACET':
     homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
     break;
-    case 'TSA':
-      homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
-      break;
-      case 'RRA':
-        homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
-        break;
-        case 'CF':
+  case 'TSA':
+    homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
+    break;
+  case 'RRA':
+    homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
+    break;
+  case 'CF':
     homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
     break;
   default:
