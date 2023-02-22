@@ -25,7 +25,13 @@ $c2m2-heading-blue: rgb(44, 122, 186);
 
 h1, h2, h3, h4 {
   color: $c2m2-heading-blue;
-  font-weight: 400;
+  font-weight: 400 !important;
+}
+
+h4 {
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: bold !important;
 }
 
 .c2m2-report-background {
@@ -48,8 +54,28 @@ h1, h2, h3, h4 {
   max-height:100%;
 }
 
+.table-header {
+  text-align: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.grid-table {
+  display: inline-grid;
+}
+
+.table-block {
+  margin: 0px;
+  border: 1px solid rgb(179, 179, 179);
+  padding: 2px;
+  overflow-wrap: break-word;
+}
+
 .caption {
   text-align: center;
+}
+
+ol, ul {
+  margin-bottom: 1rem !important;
 }
 
 @media only screen and (max-width: 900px) {
