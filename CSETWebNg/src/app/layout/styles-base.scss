@@ -161,6 +161,15 @@ $alt-hover-color: #805300;
 $iss-color: #242424;
 $iss-hover-color: #000000;
 
+$c2m2-fi-color: #265B94;
+$c2m2-fi-hover-color: #1e4976;
+$c2m2-li-color: #90A5C7;
+$c2m2-li-hover-color: #6280b0;
+$c2m2-pi-color: #F5DA8C;
+$c2m2-pi-hover-color: #efc345;
+$c2m2-ni-color: #DCA237;
+$c2m2-ni-hover-color: #bb8521;
+
 $spacer: 18px;
 
 *:not(font) {
@@ -780,6 +789,74 @@ table.td-align-top td {
   background-color: $alt-color;
   color: $active-text-color;
 }
+
+
+/* C2M2 custom styles */
+.btn-c2m2-fi {
+  background-color: $white;
+  border-color: $c2m2-fi-color;
+  color: $c2m2-fi-color;
+}
+
+.btn-c2m2-fi.answer-selected,
+.btn-c2m2-fi:hover {
+  background-color: $c2m2-fi-color;
+  color: $active-text-color;
+}
+
+.btn-c2m2-fi.answer-selected:hover {
+  background-color: $c2m2-fi-hover-color;
+}
+
+.btn-c2m2-li {
+  background-color: $white;
+  border-color: $c2m2-li-color;
+  color: #5977AB;
+}
+
+.btn-c2m2-li.answer-selected,
+.btn-c2m2-li:hover {
+  background-color: $c2m2-li-color;
+  color: $black;
+}
+
+.btn-c2m2-li.answer-selected:hover {
+  background-color: $c2m2-li-hover-color;
+}
+
+.btn-c2m2-pi {
+  background-color: $white;
+  border-color: $c2m2-pi-color;
+  color: #986C1B;
+}
+
+.btn-c2m2-pi.answer-selected,
+.btn-c2m2-pi:hover {
+  background-color: $c2m2-pi-color;
+  color: $black;
+}
+
+.btn-c2m2-pi.answer-selected:hover {
+  background-color: $c2m2-pi-hover-color;
+}
+
+.btn-c2m2-ni {
+  background-color: $white;
+  border-color: $c2m2-ni-color;
+  color: #986C1B;
+}
+
+.btn-c2m2-ni.answer-selected,
+.btn-c2m2-ni:hover {
+  background-color: $c2m2-ni-color;
+  color: $black;
+}
+
+.btn-c2m2-ni.answer-selected:hover {
+  background-color: $c2m2-ni-hover-color;
+}
+
+
 
 .btn-mfr {
   background-color: $primary-50;
