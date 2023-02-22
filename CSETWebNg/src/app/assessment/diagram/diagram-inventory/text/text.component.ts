@@ -27,7 +27,7 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'text',
+  selector: 'diagram-text',
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss']
 })
