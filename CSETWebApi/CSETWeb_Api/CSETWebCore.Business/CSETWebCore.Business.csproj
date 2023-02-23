@@ -9,6 +9,7 @@
     <None Remove="App_Data\assessmentInviteTemplate_CF.html" />
     <None Remove="App_Data\assessmentInviteTemplate_CSET.html" />
     <None Remove="App_Data\assessmentInviteTemplate_RRA.html" />
+    <None Remove="App_Data\assessmentInviteTemplate_TSA.html" />
     <None Remove="App_Data\EmailFooter.html" />
     <None Remove="App_Data\EmailFooter_ACET.html" />
     <None Remove="App_Data\EmailFooter_CF.html" />
@@ -18,13 +19,16 @@
     <None Remove="App_Data\invitedPasswordCreationTemplate_CSET_CF.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_CSET.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_RRA.html" />
+    <None Remove="App_Data\invitedPasswordCreationTemplate_TSA.html" />
     <None Remove="App_Data\passwordCreationTemplate_ACET.html" />
     <None Remove="App_Data\passwordCreationTemplate_CF.html" />
     <None Remove="App_Data\passwordCreationTemplate_CSET_CF.html" />
     <None Remove="App_Data\passwordCreationTemplate_CSET.html" />
+    <None Remove="App_Data\passwordCreationTemplate_TSA.html" />
     <None Remove="App_Data\passwordResetTemplate_ACET.html" />
     <None Remove="App_Data\passwordResetTemplate_CF.html" />
     <None Remove="App_Data\passwordResetTemplate_CSET.html" />
+    <None Remove="App_Data\passwordResetTemplate_TSA.html" />
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
     <None Remove="Dashboard\" />
   </ItemGroup>
@@ -35,6 +39,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_TSA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -57,6 +64,9 @@
     <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_TSA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -72,6 +82,9 @@
     <EmbeddedResource Include="App_Data\passwordCreationTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordCreationTemplate_TSA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="App_Data\passwordCreationTemplate_CSET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -80,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\passwordResetTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\passwordResetTemplate_TSA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\passwordResetTemplate_CSET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
