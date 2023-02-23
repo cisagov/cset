@@ -75,8 +75,6 @@ export class QuestionTextComponent implements OnInit {
           displayWord = p[1];
         }
 
-        const entry = this.glossarySvc.glossaryEntries.find(x => x.term.toLowerCase() == term.toLowerCase());
-
         // append text before the glossary term
         const span = this.renderer.createElement('span');
         span.innerHTML = leadingText;
@@ -85,18 +83,31 @@ export class QuestionTextComponent implements OnInit {
           span
         );
 
-        // create and append a GlossaryTerm component 
-        let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
-        let ref = factory.create(this.injector);
-        ref.instance.term = entry.term;
-        ref.instance.definition = !!entry ? entry.definition : displayWord;
-        ref.instance.displayWord = displayWord;
+        // look for glossary entry
+        const entry = this.glossarySvc.glossaryEntries.find(x => x.term.toLowerCase() == term.toLowerCase());
 
-        ref.changeDetectorRef.detectChanges();
-        this.renderer.appendChild(
-          this.para.nativeElement,
-          ref.location.nativeElement
-        );
+        // gracefully handle a term that is not a glossary entry
+        if (entry == null) {
+          const span = this.renderer.createElement('span');
+          span.innerHTML = displayWord;
+          this.renderer.appendChild(
+            this.para.nativeElement,
+            span
+          );
+        } else {
+          // create and append a GlossaryTerm component 
+          let factory = this.resolver.resolveComponentFactory(GlossaryTermComponent);
+          let ref = factory.create(this.injector);
+          ref.instance.term = entry.term;
+          ref.instance.definition = !!entry ? entry.definition : displayWord;
+          ref.instance.displayWord = displayWord;
+
+          ref.changeDetectorRef.detectChanges();
+          this.renderer.appendChild(
+            this.para.nativeElement,
+            ref.location.nativeElement
+          );
+        }
       } else {
         // no starter bracket, just dump the text
         const span = this.renderer.createElement('span');
