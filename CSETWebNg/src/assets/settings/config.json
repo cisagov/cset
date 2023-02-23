@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["CSETOnline"],
+    "currentConfigChain": ["CSETonline"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -181,6 +181,36 @@
             "buttonCss": "btn-no",
             "answerLabel": "Not Started",
             "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
+        }
+    ],
+    "answersC2M2": [
+        {
+            "code": "FI",
+            "buttonLabel": "FI",
+            "buttonCss": "btn-c2m2-fi",
+            "answerLabel": "Fully Implemented (FI)",
+            "buttonTooltip": "Fully Implemented - Complete"
+        },
+        {
+            "code": "LI",
+            "buttonLabel": "LI",
+            "buttonCss": "btn-c2m2-li",
+            "answerLabel": "Largely Implemented (LI)",
+            "buttonTooltip": "Largely Implemented - Complete, but with a recognized opportunity for improvement"
+        },
+        {
+            "code": "PI",
+            "buttonLabel": "PI",
+            "buttonCss": "btn-c2m2-pi",
+            "answerLabel": "Partially Implemented (PI)",
+            "buttonTooltip": "Partially Implemented - Incomplete; there are multiple opportunities for improvement"
+        },
+        {
+            "code": "NI",
+            "buttonLabel": "NI",
+            "buttonCss": "btn-c2m2-ni",
+            "answerLabel": "Not Implemented (NI)",
+            "buttonTooltip": "Not Implemented - Absent; the practice is not performed by the organization"
         }
     ]
 }
