@@ -13,22 +13,58 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System;
 using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Helpers
 {
     public class ResourceHelper : IResourceHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetEmbeddedResource(string resourceName)
         {
             return GetEmbeddedResource(resourceName, Assembly.GetCallingAssembly());
         }
 
+        /// <summary>
+        /// Embeds the scope into the resource name template.
+        /// If the desired scope is not supported, falls back to use "CSET" 
+        /// as the scope.
+        /// </summary>
+        public string GetEmbeddedResource(string resourceName, string scope)
+        {
+            // try 5 times, though 2 is enough for a simple fallback
+            for (var i = 0; i < 5; i++)
+            {
+                try
+                {
+                    var formattedResourceName = resourceName.Replace("{{scope}}", scope);
+                    var rsx = GetEmbeddedResource(formattedResourceName, Assembly.GetCallingAssembly());
+                    return rsx;
+                }
+                catch (Exception exc)
+                {
+                    // fallback to "CSET" and try again
+                    scope = "CSET";
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] GetEmbeddedResourceAsBytes(string resourceName)
         {
             return GetEmbeddedResourceAsBytes(resourceName, Assembly.GetCallingAssembly());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string GetEmbeddedResource(string resourceName, Assembly assembly)
         {
             resourceName = FormatResourceName(assembly, resourceName);
@@ -49,6 +85,9 @@ namespace CSETWebCore.Helpers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] GetEmbeddedResourceAsBytes(string resourceName, Assembly assembly)
         {
             using (Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
@@ -60,6 +99,9 @@ namespace CSETWebCore.Helpers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FormatResourceName(Assembly assembly, string resourceName)
         {
             return assembly.GetName().Name + "." + resourceName.Replace(" ", "_").Replace("\\", ".").Replace("/", ".");
