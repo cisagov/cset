@@ -33,17 +33,13 @@ export class C2m2DonutComponent implements OnInit {
 
 
   @Input() questionDistribution: any;
-  data: any[];
-  view: any[] = [700, 400];
+  totalQuestionsCount: number;
 
-  // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
+  data: any[];
+  view: any[] = [300, 300];
 
   colorScheme = {
-    domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237']
+    domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
   };
 
   constructor() {
@@ -52,37 +48,31 @@ export class C2m2DonutComponent implements OnInit {
   ngOnInit(): void {
     this.data = [
       {
-        "name": "Fully Implemented",
-        "value": this.questionDistribution.fi
+        name: "Fully Implemented",
+        value: this.questionDistribution.fi
       },
       {
-        "name": "Largely Implemented",
-        "value": this.questionDistribution.li
+        name: "Largely Implemented",
+        value: this.questionDistribution.li
       },
       {
-        "name": "Partially Implemented",
-        "value": this.questionDistribution.pi
+        name: "Partially Implemented",
+        value: this.questionDistribution.pi
       },
       {
-        "name": "Not Implemented",
-        "value": this.questionDistribution.ni
+        name: "Not Implemented",
+        value: this.questionDistribution.ni
       },
       {
-        "name": "Unanswered",
-        "value": this.questionDistribution.u
+        name: "Unanswered",
+        value: this.questionDistribution.u
       },
     ]
+
+    this.totalQuestionsCount = this.data.map(x => x.value).reduce((a, b) => a + b);
   }
 
-  onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  labelFormatting(name) {
+    return this.data.find(x => x.data.name == name)?.value;
   }
 }
