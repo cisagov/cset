@@ -33,7 +33,7 @@ export class CpgDomainSummaryTableComponent implements OnInit {
   data: any[];
 
   @Input()
-  isReport: boolean = false;
+  inReport: boolean = false;
 
   constructor() { }
 
