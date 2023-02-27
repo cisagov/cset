@@ -47,6 +47,7 @@ export class C2m2DonutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.questionDistribution)
     this.data = [
       {
         name: "Fully Implemented",

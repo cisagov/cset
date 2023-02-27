@@ -28,4 +28,58 @@
   further detail regarding self-evaluation results.
 </p>
 
-<app-c2m2-donut [questionDistribution]="questionDistributionTest"></app-c2m2-donut>
+<div *ngFor="let domain of donutData">
+  <h1>4.{{domain.sequence}} Domain: {{domain.title}}</h1>
+  <p>
+    {{domain.description}}
+  </p>
+  
+  <!-- <app-c2m2-donut-row [donutRowData]="domain.objectives"></app-c2m2-donut-row> -->
+  <!-- <div *ngFor="let objective of domain.objectives">
+      <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
+  </div> -->
+    
+    <span class="grid-table" style="padding: 2px; border-width: 1px; margin-bottom: -1px;
+    border-color: transparent; text-align: center; grid-area: 1 / 1 / 1 / 1;">
+      <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
+    </span>
+</div>
+
+
+<div class="d-flex justify-content-center mb-3">
+  <div class="grid-table"
+    tabindex="-1" style="line-height: 1;">
+    <div class="table-block" style="padding: 2px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; 
+      border-color: transparent; text-align: center; grid-area: 1 / 1 / span 1 / span 1;">
+      <span class="tableHeader" style="font-weight: bold; display: block;">Response</span></div>
+    <div class="table-header table-block"
+      style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
+      <span class="table-header" style="font-weight: bold; display: block;">Implementation Description</span></div>
+    <div class="table-block"
+      style="background-color: rgb(0, 92, 153); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 2 / 1 / span 1 / span 1;">
+      <span style="color: rgb(255, 255, 255); display: block;">Fully Implemented (FI)</span></div>
+    <div class="table-block"
+      style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
+      <span style="display: block;">Complete</span></div>
+    <div class="table-block"
+      style="background-color: rgb(139, 166, 202); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 3 / 1 / span 1 / span 1;">
+      <span style="color: rgb(0, 0, 0); display: block;">Largely Implemented (LI)</span></div>
+    <div class="table-block"
+      style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
+      <span style="display: block;">Complete, but with a recognized opportunity for improvement</span></div>
+    <div class="table-block"
+      style="background-color: rgb(250, 217, 128); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 4 / 1 / span 1 / span 1;">
+      <span style="color: rgb(0, 0, 0); display: block;">Partially Implemented (PI)</span></div>
+    <div class="table-block"
+      style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
+      <span style="display: block;">Incomplete; there are multiple opportunities for improvement</span></div>
+    <div class="table-block"
+      style="background-color: rgb(230, 159, 0); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 5 / 1 / span 1 / span 1;">
+      <span style="color: rgb(0, 0, 0); display: block;">Not Implemented (NI)</span></div>
+    <div class="table-block"
+      style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
+      <span style="display: block;">Absent; the practice is not performed by the organization</span></div>
+  </div>
+</div>
+
+

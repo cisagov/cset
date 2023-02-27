@@ -21,31 +21,42 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { ReportService } from '../../../services/report.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-report',
-  templateUrl: './c2m2-report.component.html',
-  styleUrls: ['./c2m2-report.component.scss', '../../reports.scss']
+  selector: 'app-c2m2-donut-row',
+  templateUrl: './c2m2-donut-row.component.html',
+  styleUrls: ['./c2m2-donut-row.component.scss']
 })
-export class C2m2ReportComponent implements OnInit {
+export class C2m2DonutRowComponent implements OnInit {
 
-  constructor(
-    public reportSvc: ReportService
-  ) { }
 
-  donutData: any[] = [];
-  loaded: boolean = false;
 
-  ngOnInit(): void {
-    this.reportSvc.getC2M2Donuts().subscribe(
-      (data: any) => {
-        this.donutData = data;
-        console.log(this.donutData)
-        this.loaded = true;
-      }
-    );
+  @Input() donutRowData: any;
+  //totalQuestionsCount: number;
+
+  data: any[];
+  //view: any[] = [300, 300];
+
+  // colorScheme = {
+  //   //domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
+  //   domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
+  // };
+
+  constructor() {
   }
 
+  ngOnInit(): void {
+    // for (let objective of this.donutRowData){
+    //   this.data.push(objective);
+    // }
+    
+    // console.log('donutRowData (after parse)')
+    // console.log(this.data)
+    //this.totalQuestionsCount = this.data.map(x => x.value).reduce((a, b) => a + b);
+  }
+
+  // labelFormatting(name) {
+  //   return this.data.find(x => x.data.name == name)?.value;
+  // }
 }
