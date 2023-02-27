@@ -43,7 +43,7 @@ export class C2m2DonutComponent implements OnInit {
   isDoughnut: boolean = false;
 
   colorScheme = {
-    domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237']
+    domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
   };
 
   constructor() {
