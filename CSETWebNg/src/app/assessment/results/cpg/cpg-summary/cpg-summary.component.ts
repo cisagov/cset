@@ -22,6 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../../../services/config.service';
+import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
   selector: 'app-cpg-summary',
@@ -30,9 +32,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CpgSummaryComponent implements OnInit {
 
-  constructor() { }
+  answerDistribByDomain: any[];
 
+  constructor(
+    public cpgSvc: CpgService,
+    public configSvc: ConfigService
+  ) { }
+
+  /**
+   * 
+   */
   ngOnInit(): void {
-  }
+    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
+      resp.forEach(r => {
+        r.series.forEach(element => {
+          if (element.name == 'U') {
+            element.name = 'Unanswered';
+          } else {
+            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
+          }
+        });
+      });
 
+      this.answerDistribByDomain = resp;
+    });
+  }
 }
