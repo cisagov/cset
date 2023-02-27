@@ -21,40 +21,30 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../../../services/config.service';
-import { CpgService } from '../../../../services/cpg.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cpg-summary',
-  templateUrl: './cpg-summary.component.html',
-  styleUrls: ['./cpg-summary.component.scss']
+  selector: 'app-cpg-domain-summary-table',
+  templateUrl: './cpg-domain-summary-table.component.html'
 })
-export class CpgSummaryComponent implements OnInit {
+export class CpgDomainSummaryTableComponent implements OnInit {
 
-  answerDistribByDomain: any[];
+  @Input()
+  data: any[];
 
-  constructor(
-    public cpgSvc: CpgService,
-    public configSvc: ConfigService
-  ) { }
+  @Input()
+  inReport: boolean = false;
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
   /**
    * 
    */
-  ngOnInit(): void {
-    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-      resp.forEach(r => {
-        r.series.forEach(element => {
-          if (element.name == 'U') {
-            element.name = 'Unanswered';
-          } else {
-            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
-          }
-        });
-      });
-
-      this.answerDistribByDomain = resp;
-    });
+  formatPercent(x: any, index: number) {
+    const pct = Number.parseFloat(x.series[index].value);
+    return pct.toFixed(2) + '%';
   }
 }
