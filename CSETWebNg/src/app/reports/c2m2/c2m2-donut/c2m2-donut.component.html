@@ -21,18 +21,18 @@
   SOFTWARE.
 -------------------------->
 <div style="position: relative">
-  <ngx-charts-pie-chart
+  <ngx-charts-pie-chart #pieChart
   [view]="view"
   [scheme]="colorScheme"
   [results]="data"
   [gradient]="false"
   [doughnut]="true"
-  [labels]="true"
+  [labels]="false"
   [animations]="false"
-  [arcWidth]="0.6"
+  [arcWidth]="0.65"
   [labelFormatting]="labelFormatting">
   </ngx-charts-pie-chart>
-  <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; left: 103px; top: 114px">
-    <text x="15" y="15" style="font: 11px sans-serif;">{{ totalQuestionsCount }}</text>
+  <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 52px" [style.left]="totalQuestionsCount > 9 ? '40px' : '44px'">
+    <text x="15" y="15" style="font: 12px sans-serif;">{{ totalQuestionsCount }}</text>
   </svg>
 </div>
