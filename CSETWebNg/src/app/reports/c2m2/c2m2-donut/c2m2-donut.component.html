@@ -20,12 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ngx-charts-advanced-pie-chart
+<ngx-charts-pie-chart
   [view]="view"
   [scheme]="colorScheme"
   [results]="data"
-  [gradient]="gradient"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)">
-</ngx-charts-advanced-pie-chart>
+  [gradient]="false"
+  [doughnut]="true"
+  [labels]="true"
+  [animations]="true"
+  [arcWidth]="0.6"
+  [labelFormatting]="labelFormatting">
+</ngx-charts-pie-chart>
