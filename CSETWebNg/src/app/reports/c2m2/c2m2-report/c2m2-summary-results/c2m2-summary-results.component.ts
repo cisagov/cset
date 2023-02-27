@@ -21,7 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ReportService } from '../../../../services/report.service';
 
 @Component({
   selector: 'app-c2m2-summary-results',
@@ -30,9 +31,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class C2m2SummaryResultsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public reportSvc: ReportService
+  ) { }
+
+  @Input()
+  donutData: any;
 
   ngOnInit(): void {
+    console.log(this.donutData)
   }
+
+  
 
 }
