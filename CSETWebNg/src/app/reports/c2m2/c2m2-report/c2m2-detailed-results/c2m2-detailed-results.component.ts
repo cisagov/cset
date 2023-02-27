@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-detailed-results',
@@ -32,8 +32,23 @@ export class C2m2DetailedResultsComponent implements OnInit {
 
   constructor() { }
 
+  @Input() donutData: any[] = [];
+
+  questionDistribution: any[] = [];
+  tableIndex: number = 1;
+
   ngOnInit(): void {
+    for (let i = 0; i < this.donutData.length; i++) {
+      let objectives = this.donutData[i].objectives;
+      for (let j = 0; j < objectives.length; j++) {
+        this.questionDistribution.push(objectives[j]);
+      }
+    }
+    console.log('parsed info from donutData:')
+    console.log(this.donutData)
   }
+
+
 
   questionDistributionTest = {"title":"Manage IT and OT Asset Configurations","fi":2,"li":3,"pi":4,"ni":1,"u":5}
 

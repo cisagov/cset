@@ -35,15 +35,17 @@ export class C2m2ReportComponent implements OnInit {
     public reportSvc: ReportService
   ) { }
 
-  donutData: any;
+  donutData: any[] = [];
+  loaded: boolean = false;
 
   ngOnInit(): void {
     this.reportSvc.getC2M2Donuts().subscribe(
       (data: any) => {
         this.donutData = data;
+        console.log(this.donutData)
+        this.loaded = true;
       }
     );
-    //console.log(donutData)
   }
 
 }

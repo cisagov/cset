@@ -39,7 +39,7 @@ export class C2m2SummaryResultsComponent implements OnInit {
   donutData: any;
 
   ngOnInit(): void {
-    console.log(this.donutData)
+    //console.log(this.donutData)
   }
 
   
