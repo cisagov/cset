@@ -21,22 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-donut',
   templateUrl: './c2m2-donut.component.html',
   styleUrls: ['./c2m2-donut.component.scss']
 })
-export class C2m2DonutComponent implements OnInit {
+export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
 
-
+  @ViewChild('pieChart') pieChart;
   @Input() questionDistribution: any;
   totalQuestionsCount: number;
 
   data: any[];
-  view: any[] = [300, 300];
+  view: any[] = [125, 125];
 
   colorScheme = {
     //domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
@@ -74,7 +74,67 @@ export class C2m2DonutComponent implements OnInit {
     this.totalQuestionsCount = this.data.map(x => x.value).reduce((a, b) => a + b);
   }
 
+  ngAfterViewInit() {
+    this.drawOnPieChart();
+  }
+
   labelFormatting(name) {
     return this.data.find(x => x.data.name == name)?.value;
+  }
+
+  // This places the answer counts inside the pie chart itself
+  private drawOnPieChart() {
+    // get the ngx chart element
+    console.log(this.pieChart);
+    let node = this.pieChart.chartElement.nativeElement;
+    let svg;
+    for (let i = 0; i < 5; i++) {
+      if (i === 3) {
+        // this is the pie chart svg
+        svg = node.childNodes[0];
+      }
+      // at the end of this loop, the node should contain all slices in its children node
+      node = node.childNodes[0];
+    }
+    // get all the slices
+    const slices: HTMLCollection = node.children;
+    let minX = 0;
+    let maxX = 0;
+
+    for (let i = 0; i < slices.length; i++) {
+      const bbox = (<any>slices.item(i)).getBBox();
+      minX = Math.round((bbox.x < minX ? bbox.x : minX) * 10) / 10;
+      maxX = Math.round((bbox.x + bbox.width > maxX ? bbox.x + bbox.width : maxX) * 10) / 10;
+    }
+
+    for (let i = 0; i < slices.length; i++) {
+      const value = this.data[i].value;
+      let startingValue = 0;
+      for (let j = 0; j < i; j++) {
+        startingValue += (this.data[j].value / this.totalQuestionsCount * 100);
+      }
+      const text = this.generateText(value, maxX - minX, startingValue);
+      svg.append(text);
+    }
+  }
+
+  private generateText(value: number, diagonal: number, startingValue: number) {
+    // create text element
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    const r = Math.round(diagonal / 2.5);
+    // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
+    const angle = ((startingValue * 2 + (value / this.totalQuestionsCount * 100)) / 100 - 0.5) * Math.PI;
+    const x = r * Math.cos(angle);
+    const y = r * Math.sin(angle) + 5;
+
+    text.setAttribute('x', '' + x);
+    text.setAttribute('y', '' + y);
+    text.setAttribute('fill', 'black');
+    text.textContent = value != 0 ? value.toString() : '';
+    text.setAttribute('style', 'font: 12px sans-serif;')
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('pointer-events', 'none');
+    return text;
   }
 }
