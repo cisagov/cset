@@ -126,6 +126,10 @@ export class ReportService {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
 
+    getC2M2Donuts() {
+        return this.http.get(this.configSvc.apiUrl + 'c2m2/donutheatmap');
+    }
+
     /**
      * Split paragraphs into divs
      */
