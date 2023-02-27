@@ -35,6 +35,6 @@ export class C2m2DetailedResultsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  questionDistributionTest = {"title":"Manage IT and OT Asset Configurations","fi":2,"li":3,"pi":4,"ni":1,"u":5}
+  questionDistributionTest = {"title":"Manage IT and OT Asset Configurations","fi":4,"li":3,"pi":2,"ni":2,"u":1}
 
 }
