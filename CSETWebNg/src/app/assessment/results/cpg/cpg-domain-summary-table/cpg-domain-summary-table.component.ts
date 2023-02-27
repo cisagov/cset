@@ -32,6 +32,9 @@ export class CpgDomainSummaryTableComponent implements OnInit {
   @Input()
   data: any[];
 
+  @Input()
+  isReport: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
