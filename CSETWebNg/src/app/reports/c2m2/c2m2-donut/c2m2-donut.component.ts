@@ -36,7 +36,7 @@ export class C2m2DonutComponent implements OnInit {
   totalQuestionsCount: number;
 
   data: any[];
-  view: any[] = [300, 300];
+  view: any[] = [250, 250];
 
   colorScheme = {
     domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
