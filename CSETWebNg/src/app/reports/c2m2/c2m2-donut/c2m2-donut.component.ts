@@ -36,7 +36,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   totalQuestionsCount: number;
 
   data: any[];
-  view: any[] = [125, 125];
+  view: any[] = [100, 100];
 
   colorScheme = {
     // Dark mode scheme?
@@ -76,10 +76,6 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.drawOnPieChart();
-   // setTimeout(() => {
-      this.pieChart.margin = [0, 0, 0, 0];
-      this.pieChart.update();
-    //}, 0)
   }
 
   // This places the answer counts inside the pie chart itself
@@ -87,6 +83,9 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     // get the ngx chart element
     let node = this.pieChart.chartElement.nativeElement;
     let svg;
+
+    // set the margins of the pie chart to be a bit more compact
+    this.pieChart.margins = [10, 10, 10, 10];
     for (let i = 0; i < 5; i++) {
       if (i === 3) {
         // this is the pie chart svg
@@ -128,7 +127,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-    const r = Math.round(diagonal / 3);
+    const r = Math.round(diagonal / 2.2);
     // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
     const angle = ((startingValue * 2 + (value / this.totalQuestionsCount * 100)) / 100 - 0.5) * Math.PI;
     const x = r * Math.cos(angle);
