@@ -21,30 +21,38 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { ReportService } from '../../../services/report.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-report',
-  templateUrl: './c2m2-report.component.html',
-  styleUrls: ['./c2m2-report.component.scss', '../../reports.scss']
+  selector: 'app-c2m2-domain-mil-bar-chart',
+  templateUrl: './c2m2-domain-mil-bar-chart.component.html'
 })
-export class C2m2ReportComponent implements OnInit {
+export class C2m2DomainMilBarChartComponent implements OnInit {
 
-  constructor(
-    public reportSvc: ReportService
-  ) { }
+  @Input() domainData: any[];
 
-  donutData: any[] = [];
-  loaded: boolean = false;
+  view: any[] = [600, 700];
+  data: any[] = [];
+
+  colorScheme = {
+    domain: ['#807C7C']
+  };
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.reportSvc.getC2M2Donuts().subscribe(
-      (data: any) => {
-        this.donutData = data;
-        this.loaded = true;
-      }
-    );
+    this.domainData.forEach(domain => {
+      this.data.push(
+        {
+          name: domain.shortTitle,
+          value: domain.milAchieved
+        }
+      );
+    });
+  }
+
+  xAxisTickFormatting(label) {
+    return `MIL${label}`
   }
 
 }

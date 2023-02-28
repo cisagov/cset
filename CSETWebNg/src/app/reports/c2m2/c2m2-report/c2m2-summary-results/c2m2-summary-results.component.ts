@@ -35,13 +35,7 @@ export class C2m2SummaryResultsComponent implements OnInit {
     public reportSvc: ReportService
   ) { }
 
-  @Input()
-  donutData: any;
+  @Input() donutData: any[];
 
-  ngOnInit(): void {
-    //console.log(this.donutData)
-  }
-
-  
-
+  ngOnInit(): void {}
 }
