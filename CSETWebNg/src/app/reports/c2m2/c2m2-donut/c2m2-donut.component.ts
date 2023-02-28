@@ -85,7 +85,6 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   // This places the answer counts inside the pie chart itself
   private drawOnPieChart() {
     // get the ngx chart element
-    console.log(this.pieChart);
     let node = this.pieChart.chartElement.nativeElement;
     let svg;
     for (let i = 0; i < 5; i++) {
@@ -132,7 +131,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     text.setAttribute('y', '' + y);
     text.setAttribute('fill', 'black');
     text.textContent = value != 0 ? value.toString() : '';
-    text.setAttribute('style', 'font: 12px sans-serif;')
+    text.setAttribute('style', 'font-size: 12px')
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('pointer-events', 'none');
     return text;
