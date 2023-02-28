@@ -29,7 +29,7 @@
 </p>
 
 <div *ngFor="let domain of donutData">
-  <h1>4.{{domain.sequence}} Domain: {{domain.title}}</h1>
+  <h1>4.{{domain.sequence}} Domain: {{domain.title}} ({{domain.shortTitle}})</h1>
   <p>
     {{domain.description}}
   </p>
@@ -51,7 +51,7 @@
       <span style="font-size: 0.75em;">Unanswered (U)</span>
      
       <div style="font-size: 0.75em; font-weight: bold; margin-left: auto; margin-right: 4px;">
-        <div>{{takeOffDomainTag(domain.title)}}</div>
+        <div>{{domain.title}}</div>
       </div>
     </div>
 
