@@ -107,16 +107,23 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < slices.length; i++) {
       const value = this.data[i].value;
+      let color = 'black';
+      // sets white text only for the FI slice
+      if(this.data[i].name == "Fully Implemented"){
+        color = 'white';
+      }
+
       let startingValue = 0;
       for (let j = 0; j < i; j++) {
         startingValue += (this.data[j].value / this.totalQuestionsCount * 100);
       }
-      const text = this.generateText(value, maxX - minX, startingValue);
+      
+      const text = this.generateText(value, maxX - minX, startingValue, color);
       svg.append(text);
     }
   }
 
-  private generateText(value: number, diagonal: number, startingValue: number) {
+  private generateText(value: number, diagonal: number, startingValue: number, color: string) {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
@@ -128,7 +135,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
     text.setAttribute('x', '' + x);
     text.setAttribute('y', '' + y);
-    text.setAttribute('fill', 'black');
+    text.setAttribute('fill', color);
     text.textContent = value != 0 ? value.toString() : '';
     text.setAttribute('style', 'font-size: 12px')
     text.setAttribute('text-anchor', 'middle');
