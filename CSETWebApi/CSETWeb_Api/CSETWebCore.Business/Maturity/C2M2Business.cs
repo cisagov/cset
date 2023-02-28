@@ -7,6 +7,7 @@
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.C2M2.Charts;
 using CSETWebCore.Model.Cis;
+using DocumentFormat.OpenXml.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace CSETWebCore.Business.Maturity
 {
     public class C2M2Business
     {
+
+        #region donuts and heatmaps
+
         /// <summary>
         /// Create the data structure that will populate the 
         /// donut charts for each Objective and the Practice 
@@ -99,11 +103,16 @@ namespace CSETWebCore.Business.Maturity
                 }
 
                 // Now that the Domain rollups are populated, determine its achieved MIL level
+                bool precedingMilAchieved = true;
                 d.DomainMilRollup.ForEach(x => 
                 { 
-                    if (x.LI + x.PI + x.NI + x.U == 0 && x.FI > 0)
+                    if (precedingMilAchieved && (x.PI + x.NI + x.U == 0) && (x.FI + x.LI > 0))
                     {
                         d.MilAchieved = x.Level;
+                    }
+                    else
+                    {
+                        precedingMilAchieved = false;                        
                     }
                 });
             }
@@ -113,7 +122,7 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
+        /// Create an empty rollup object for each MIL level 1-3.  
         /// </summary>
         /// <param name="d"></param>
         private void InitializeDomainMilRollups(Domain d)
@@ -143,6 +152,11 @@ namespace CSETWebCore.Business.Maturity
                 Answer = q.AnswerText
             };
         }
+
+        #endregion
+
+
+        #region question tables
 
 
         /// <summary>
@@ -226,5 +240,8 @@ namespace CSETWebCore.Business.Maturity
 
             return sb.ToString();
         }
+
+        #endregion
+
     }
 }
