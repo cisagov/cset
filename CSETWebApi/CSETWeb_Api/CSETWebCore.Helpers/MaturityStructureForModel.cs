@@ -169,6 +169,7 @@ namespace CSETWebCore.Helpers
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
                         AnswerText = answer?.Answer_Text,
+                        Comment = answer?.Comment,
                         Options = GetOptions(myQ.Mat_Question_Id)
                     };
 
@@ -222,6 +223,7 @@ namespace CSETWebCore.Helpers
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
+                    Comment = answer.Comment,
                     Options = GetOptions(myQ.Mat_Question_Id)
                 };
 
