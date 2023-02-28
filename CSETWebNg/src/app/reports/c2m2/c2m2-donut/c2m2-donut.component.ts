@@ -39,7 +39,8 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   view: any[] = [125, 125];
 
   colorScheme = {
-    //domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
+    // Dark mode scheme?
+    // domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
     domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
   };
 
@@ -75,10 +76,6 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.drawOnPieChart();
-  }
-
-  labelFormatting(name) {
-    return this.data.find(x => x.data.name == name)?.value;
   }
 
   // This places the answer counts inside the pie chart itself

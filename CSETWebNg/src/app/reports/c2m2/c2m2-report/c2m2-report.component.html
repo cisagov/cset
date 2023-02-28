@@ -23,7 +23,7 @@
 <div class="c2m2-report-background">
   <app-c2m2-side-toc></app-c2m2-side-toc>
 
-  <div class="report-body pb-5 pt-5">
+  <div *ngIf="loaded" class="report-body pb-5 pt-5">
 
     <div class="d-flex justify-content-center">
       <app-c2m2-cover-sheet></app-c2m2-cover-sheet>
@@ -38,10 +38,10 @@
     </div>
 
     <div class="page-break" id="toc-summary-results">
-      <app-c2m2-summary-results></app-c2m2-summary-results>
+      <app-c2m2-summary-results [donutData]="donutData"></app-c2m2-summary-results>
     </div>
 
-    <div *ngIf="loaded" class="page-break" id="toc-detailed-results">
+    <div class="page-break" id="toc-detailed-results">
       <app-c2m2-detailed-results [donutData]="donutData"></app-c2m2-detailed-results>
     </div>
 

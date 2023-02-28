@@ -33,7 +33,7 @@
   <p>
     {{domain.description}}
   </p>
-  
+
   <div style="border: 1px solid rgb(179, 179, 179);">
     <div class="d-flex" style="padding: 4px; align-items: center;">
       <div>
@@ -48,7 +48,7 @@
         <span style="display: block; background-color: #AAAAAA; height: 15px; width: 15px; margin: 4px;"></span>
       </div>
       <span style="font-size: 0.75em;">Unanswered (U)</span>
-     
+
       <div style="font-size: 0.75em; font-weight: bold; margin-left: auto; margin-right: 4px;">
         <div>{{takeOffDomainTag(domain.title)}}</div>
       </div>
@@ -65,18 +65,14 @@
       <span style="font-size: 0.75em;">Not Implemented (NI)</span>
     </div>
     <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
-    text-align: center; align-items: top;">
-    
+      text-align: center; align-items: top;">
+
       <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
-        
         <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
         <p style="font-size: 0.75em;">{{objective.title}}</p>
       </div>
     </div>
-
   </div>
-  <!-- <app-c2m2-donut-row [donutRowData]="domain.objectives"></app-c2m2-donut-row> -->
-  
 </div>
 
 
