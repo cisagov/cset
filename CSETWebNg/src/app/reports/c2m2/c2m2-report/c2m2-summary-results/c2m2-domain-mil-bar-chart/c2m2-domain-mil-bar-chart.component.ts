@@ -25,7 +25,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-domain-mil-bar-chart',
-  templateUrl: './c2m2-domain-mil-bar-chart.component.html'
+  templateUrl: './c2m2-domain-mil-bar-chart.component.html',
+  styleUrls: ['./c2m2-domain-mil-bar-chart.component.scss']
 })
 export class C2m2DomainMilBarChartComponent implements OnInit {
 

@@ -27,6 +27,7 @@
   [gradient]="false"
   [noBarWhenZero]="false"
   [roundEdges]="false"
+  [barPadding]="28"
   [xAxis]="true"
   [yAxis]="true"
   [legend]="false"
@@ -39,7 +40,7 @@
   <ng-template #tooltipTemplate let-model="model">
     <div>
       {{ model.name }}<br>
-      MIL{{ model.value }}
+      MIL{{ model.value }} Achieved
     </div>
   </ng-template>
 </ngx-charts-bar-horizontal>
