@@ -20,18 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div style="position: relative; margin: -10px; max-width: min-content; padding: 0px">
-  <ngx-charts-pie-chart #pieChart
+<ngx-charts-bar-horizontal
   [view]="view"
   [scheme]="colorScheme"
   [results]="data"
   [gradient]="false"
-  [doughnut]="true"
-  [labels]="false"
-  [animations]="false"
-  [arcWidth]="0.65">
-  </ngx-charts-pie-chart>
-  <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 52px" [style.left]="totalQuestionsCount > 9 ? '41px' : '44px'">
-    <text x="15" y="15" style="font-size: 12px;">{{ totalQuestionsCount }}</text>
-  </svg>
-</div>
+  [noBarWhenZero]="false"
+  [roundEdges]="false"
+  [barPadding]="28"
+  [xAxis]="true"
+  [yAxis]="true"
+  [legend]="false"
+  [xScaleMin]="0"
+  [xScaleMax]="3"
+  [xAxisTicks]="[0, 1, 2, 3]"
+  [xAxisTickFormatting]="xAxisTickFormatting"
+  [showXAxisLabel]="true"
+  [showYAxisLabel]="true">
+  <ng-template #tooltipTemplate let-model="model">
+    <div>
+      {{ model.name }}<br>
+      MIL{{ model.value }} Achieved
+    </div>
+  </ng-template>
+</ngx-charts-bar-horizontal>

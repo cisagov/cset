@@ -42,7 +42,6 @@ export class C2m2ReportComponent implements OnInit {
     this.reportSvc.getC2M2Donuts().subscribe(
       (data: any) => {
         this.donutData = data;
-        console.log(this.donutData)
         this.loaded = true;
       }
     );

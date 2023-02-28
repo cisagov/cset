@@ -39,7 +39,8 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   view: any[] = [125, 125];
 
   colorScheme = {
-    //domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
+    // Dark mode scheme?
+    // domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
     domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
   };
 
@@ -79,10 +80,6 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
       this.pieChart.margin = [0, 0, 0, 0];
       this.pieChart.update();
     //}, 0)
-  }
-
-  labelFormatting(name) {
-    return this.data.find(x => x.data.name == name)?.value;
   }
 
   // This places the answer counts inside the pie chart itself
@@ -131,7 +128,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-    const r = Math.round(diagonal / 2.5);
+    const r = Math.round(diagonal / 3);
     // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
     const angle = ((startingValue * 2 + (value / this.totalQuestionsCount * 100)) / 100 - 0.5) * Math.PI;
     const x = r * Math.cos(angle);

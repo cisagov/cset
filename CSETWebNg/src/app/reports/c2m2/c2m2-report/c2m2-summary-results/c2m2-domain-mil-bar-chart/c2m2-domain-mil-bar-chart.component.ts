@@ -21,36 +21,39 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-detailed-results',
-  templateUrl: './c2m2-detailed-results.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+  selector: 'app-c2m2-domain-mil-bar-chart',
+  templateUrl: './c2m2-domain-mil-bar-chart.component.html',
+  styleUrls: ['./c2m2-domain-mil-bar-chart.component.scss']
 })
-export class C2m2DetailedResultsComponent implements OnInit {
+export class C2m2DomainMilBarChartComponent implements OnInit {
+
+  @Input() domainData: any[];
+
+  view: any[] = [600, 700];
+  data: any[] = [];
+
+  colorScheme = {
+    domain: ['#807C7C']
+  };
 
   constructor() { }
 
-  @Input() donutData: any[] = [];
-
-  questionDistribution: any[] = [];
-  tableIndex: number = 1;
-
   ngOnInit(): void {
-    for (let i = 0; i < this.donutData.length; i++) {
-      let objectives = this.donutData[i].objectives;
-      for (let j = 0; j < objectives.length; j++) {
-        this.questionDistribution.push(objectives[j]);
-      }
-    }
+    this.domainData.forEach(domain => {
+      this.data.push(
+        {
+          name: domain.shortTitle,
+          value: domain.milAchieved
+        }
+      );
+    });
   }
 
-  takeOffDomainTag(title: string) {
-    let indexOfOpenParen = title.indexOf('(');
-    if(indexOfOpenParen == -1) {
-      return title;
-    }
-    return title.slice(0, indexOfOpenParen).trim();
+  xAxisTickFormatting(label) {
+    return `MIL${label}`
   }
+
 }
