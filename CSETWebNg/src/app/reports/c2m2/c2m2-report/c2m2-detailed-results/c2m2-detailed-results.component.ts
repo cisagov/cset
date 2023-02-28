@@ -46,13 +46,4 @@ export class C2m2DetailedResultsComponent implements OnInit {
     }
   }
 
-  // This crops the domain shorthand off of the title if it exists. If not, the title is returned
-  takeOffDomainTag(title: string) {
-    let indexOfOpenParen = title.indexOf('(');
-    if(indexOfOpenParen == -1) {
-      return title;
-    }
-    return title.slice(0, indexOfOpenParen).trim();
-  }
-
 }
