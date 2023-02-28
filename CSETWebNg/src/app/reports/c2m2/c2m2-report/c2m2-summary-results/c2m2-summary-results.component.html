@@ -37,7 +37,31 @@
   Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
 </p>
 
-<!-- TODO: Insert Figure 3 here -->
+<!-- <div style="display: inline-grid; -webkit-box-pack: center; justify-content: center;"> -->
+<!-- <div class="d-flex" style="border: 1px solid rgb(179, 179, 179);">
+  <div *ngFor="let domain of donutData">
+    {{domain.shortTitle}}
+  </div>
+</div> -->
+<div style="max-width: 1200px; margin-left: -100px;">
+  <!-- goes to a new MIL row -->
+  <div *ngFor="let dataRow of milData; let i = index">
+    <div class="d-flex" style="border: 1px solid rgb(179, 179, 179); justify-items: space-evenly; ">
+
+      <!--supplies donut with current MIL level info for each domain -->
+      <div *ngFor="let data of dataRow; let j = index"> 
+        <div *ngIf="i == 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
+          {{donutData[j].shortTitle}}
+        </div>
+        <div style="max-width: 100px;max-height: 100px;">
+          <app-c2m2-donut style="border: 1px solid rgb(179, 179, 179);" [questionDistribution]="data"></app-c2m2-donut>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- </div> -->
 
 <h1>3.3 Implementation of Management Activities across Domains</h1>
 <p>

@@ -75,6 +75,10 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.drawOnPieChart();
+   // setTimeout(() => {
+      this.pieChart.margin = [0, 0, 0, 0];
+      this.pieChart.update();
+    //}, 0)
   }
 
   labelFormatting(name) {
