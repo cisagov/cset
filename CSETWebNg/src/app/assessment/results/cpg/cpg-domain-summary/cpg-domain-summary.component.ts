@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { CpgService } from '../../../../services/cpg.service';
 
@@ -32,32 +32,19 @@ import { CpgService } from '../../../../services/cpg.service';
 })
 export class CpgDomainSummaryComponent implements OnInit {
 
+  @Input()
   answerDistribByDomain = [];
+  
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
 
-  constructor(
-    private cpgSvc: CpgService,
-    private configSvc: ConfigService
-  ) { }
+
+  constructor() { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-      resp.forEach(r => {
-        r.series.forEach(element => {
-          if (element.name == 'U') {
-            element.name = 'Unanswered';
-          } else {
-            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
-          }
-        });
-      });
-
-      this.answerDistribByDomain = resp;
-    });
   }
 
   /**
