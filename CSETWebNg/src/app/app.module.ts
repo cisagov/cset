@@ -546,6 +546,7 @@ import { C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent } fro
 import { C2m2SideTocComponent } from './reports/c2m2/c2m2-report/c2m2-side-toc/c2m2-side-toc.component';
 import { C2m2DonutComponent } from './reports/c2m2/c2m2-donut/c2m2-donut.component';
 import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
+import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 
 
 
@@ -1050,7 +1051,8 @@ import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-dom
         C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent,
         C2m2SideTocComponent,
         C2m2DonutComponent,
-        CpgDomainSummaryTableComponent
+        CpgDomainSummaryTableComponent,
+        C2m2DomainMilBarChartComponent
     ],
     providers: [
         ConfigService,
