@@ -34,6 +34,7 @@
     {{domain.description}}
   </p>
   
+  <!-- start of the donut box -->
   <div style="border: 1px solid rgb(179, 179, 179);">
     <div class="d-flex" style="padding: 4px; align-items: center;">
       <div>
@@ -69,14 +70,14 @@
     
       <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
         
+        <!-- supplying the donuts with question info -->
         <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
         <p style="font-size: 0.75em;">{{objective.title}}</p>
       </div>
     </div>
 
   </div>
-  <!-- <app-c2m2-donut-row [donutRowData]="domain.objectives"></app-c2m2-donut-row> -->
-  
+
 </div>
 
 

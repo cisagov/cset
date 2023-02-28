@@ -44,10 +44,9 @@ export class C2m2DetailedResultsComponent implements OnInit {
         this.questionDistribution.push(objectives[j]);
       }
     }
-    // console.log('parsed info from donutData:')
-    // console.log(this.donutData)
   }
 
+  // This crops the domain shorthand off of the title if it exists. If not, the title is returned
   takeOffDomainTag(title: string) {
     let indexOfOpenParen = title.indexOf('(');
     if(indexOfOpenParen == -1) {
@@ -55,9 +54,5 @@ export class C2m2DetailedResultsComponent implements OnInit {
     }
     return title.slice(0, indexOfOpenParen).trim();
   }
-
-
-
-  questionDistributionTest = {"title":"Manage IT and OT Asset Configurations","fi":2,"li":3,"pi":4,"ni":1,"u":5}
 
 }
