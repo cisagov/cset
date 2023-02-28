@@ -65,7 +65,7 @@
         <div *ngIf="j == 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 1.6rem; align-items: center;">
           MIL{{milNumberFlip(i)}}
         </div>
-        <div *ngIf="j > 0" style="max-width: 100px;max-height: 100px;">
+        <div *ngIf="j > 0" style="border: 1px solid rgb(179, 179, 179); padding: 0">
           <app-c2m2-donut style="border: 1px solid rgb(179, 179, 179);" [questionDistribution]="data"></app-c2m2-donut>
         </div>
       </div>
