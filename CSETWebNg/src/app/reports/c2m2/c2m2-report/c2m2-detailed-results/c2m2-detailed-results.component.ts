@@ -44,8 +44,16 @@ export class C2m2DetailedResultsComponent implements OnInit {
         this.questionDistribution.push(objectives[j]);
       }
     }
-    console.log('parsed info from donutData:')
-    console.log(this.donutData)
+    // console.log('parsed info from donutData:')
+    // console.log(this.donutData)
+  }
+
+  takeOffDomainTag(title: string) {
+    let indexOfOpenParen = title.indexOf('(');
+    if(indexOfOpenParen == -1) {
+      return title;
+    }
+    return title.slice(0, indexOfOpenParen).trim();
   }
 
 
