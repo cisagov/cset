@@ -104,17 +104,29 @@ namespace CSETWebCore.Business.Maturity
 
                 // Now that the Domain rollups are populated, determine its achieved MIL level
                 bool precedingMilAchieved = true;
-                d.DomainMilRollup.ForEach(x => 
-                { 
-                    if (precedingMilAchieved && (x.PI + x.NI + x.U == 0) && (x.FI + x.LI > 0))
+                for (int i = 0; i < d.DomainMilRollup.Count(); i++) 
+                {
+                    var r = d.DomainMilRollup[i];
+
+                    // add the previous MIL level's totals to this one
+                    if (i > 0)
                     {
-                        d.MilAchieved = x.Level;
+                        r.FI += d.DomainMilRollup[i - 1].FI;
+                        r.LI += d.DomainMilRollup[i - 1].LI;
+                        r.PI += d.DomainMilRollup[i - 1].PI;
+                        r.NI += d.DomainMilRollup[i - 1].NI;
+                        r.U += d.DomainMilRollup[i - 1].U;
+                    }
+
+                    if (precedingMilAchieved && (r.PI + r.NI + r.U == 0) && (r.FI + r.LI > 0))
+                    {
+                        d.MilAchieved = r.Level;
                     }
                     else
                     {
                         precedingMilAchieved = false;                        
                     }
-                });
+                }
             }
 
             return response;
@@ -145,7 +157,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private HeatmapPractice CreatePractice(Model.Cis.Question q)
         {
-            var shortNumber = q.DisplayNumber.Contains('-') ? q.DisplayNumber.Split('-')[1] : q.DisplayNumber;
+            var shortNumber = q.DisplayNumber.Contains('-') ? q.DisplayNumber.Split('-').Last() : q.DisplayNumber;
             return new HeatmapPractice()
             {
                 Number = shortNumber,
@@ -231,7 +243,7 @@ namespace CSETWebCore.Business.Maturity
 
                     if (c.Contains('|'))
                     {
-                        c = c.Split('|')[1];
+                        c = c.Split('|').Last();
                     }
                 }
 
