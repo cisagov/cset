@@ -20,21 +20,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column flex-11a">
-    <h3 class="d-flex flex-column flex-00a">Performance Summary</h3>
-    <p>
-        This chart shows the answer distribution for each of the Security Practice categories.
-    </p>
-    
-    <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" class="mb-5"></app-cpg-domain-summary>
-
-    <h4>
-        Chart Detail
-    </h4>
-    
-    <p>This table indicates the answer distribution percentages for each category as indicated in the chart above.</p>
-
-    <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
-    
-    <app-nav-back-next [page]="'cpg-summary-page'"></app-nav-back-next>
+<div class="w-100 d-block">
+    <table [ngClass]="inReport ? 'table' : 'cset-table'">
+        <tr>
+            <th class="text-left align-top">Category</th>
+            <th class="text-right align-top">Implemented</th>
+            <th class="text-right align-top">In Progress</th>
+            <th class="text-right align-top">Scoped</th>
+            <th class="text-right align-top">Not Started</th>
+            <th class="text-right align-top">Unanswered</th>
+        </tr>
+        <tr *ngFor="let func of data">
+            <td>{{func.name}}</td>
+            <td class="text-right">{{formatPercent(func, 0)}}</td>
+            <td class="text-right">{{formatPercent(func, 1)}}</td>
+            <td class="text-right">{{formatPercent(func, 2)}}</td>
+            <td class="text-right">{{formatPercent(func, 3)}}</td>
+            <td class="text-right">{{formatPercent(func, 4)}}</td>
+        </tr>
+    </table>
 </div>

@@ -24,39 +24,27 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-donut-row',
-  templateUrl: './c2m2-donut-row.component.html',
-  styleUrls: ['./c2m2-donut-row.component.scss']
+  selector: 'app-cpg-domain-summary-table',
+  templateUrl: './cpg-domain-summary-table.component.html'
 })
-export class C2m2DonutRowComponent implements OnInit {
+export class CpgDomainSummaryTableComponent implements OnInit {
 
-
-
-  @Input() donutRowData: any;
-  //totalQuestionsCount: number;
-
+  @Input()
   data: any[];
-  //view: any[] = [300, 300];
 
-  // colorScheme = {
-  //   //domain: ['#005c99', '#8ba6ca', '#fad980', '#e69f00', '#cccccc']
-  //   domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#AAAAAA']
-  // };
+  @Input()
+  inReport: boolean = false;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
-    // for (let objective of this.donutRowData){
-    //   this.data.push(objective);
-    // }
-    
-    // console.log('donutRowData (after parse)')
-    // console.log(this.data)
-    //this.totalQuestionsCount = this.data.map(x => x.value).reduce((a, b) => a + b);
   }
 
-  // labelFormatting(name) {
-  //   return this.data.find(x => x.data.name == name)?.value;
-  // }
+  /**
+   * 
+   */
+  formatPercent(x: any, index: number) {
+    const pct = Number.parseFloat(x.series[index].value);
+    return pct.toFixed(2) + '%';
+  }
 }

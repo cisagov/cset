@@ -24,6 +24,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ConfigService } from '../../../services/config.service';
+import { CpgService } from '../../../services/cpg.service';
 import { RraDataService } from '../../../services/rra-data.service';
 
 @Component({
@@ -39,13 +41,17 @@ export class CpgReportComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
 
+  answerDistribByDomain: any;
+
   /**
    * 
    */
   constructor(
     public rraDataSvc: RraDataService,
     public titleSvc: Title,
-    private assessSvc: AssessmentService
+    private assessSvc: AssessmentService,
+    public cpgSvc: CpgService,
+    public configSvc: ConfigService
   ) { }
 
   /**
@@ -58,6 +64,20 @@ export class CpgReportComponent implements OnInit {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
       this.assessorName = assessmentDetail.creatorName;
+    });
+
+    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
+      resp.forEach(r => {
+        r.series.forEach(element => {
+          if (element.name == 'U') {
+            element.name = 'Unanswered';
+          } else {
+            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
+          }
+        });
+      });
+
+      this.answerDistribByDomain = resp;
     });
   }
 }
