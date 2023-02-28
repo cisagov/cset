@@ -117,7 +117,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-    const r = Math.round(diagonal / 2.5);
+    const r = Math.round(diagonal / 3);
     // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
     const angle = ((startingValue * 2 + (value / this.totalQuestionsCount * 100)) / 100 - 0.5) * Math.PI;
     const x = r * Math.cos(angle);
