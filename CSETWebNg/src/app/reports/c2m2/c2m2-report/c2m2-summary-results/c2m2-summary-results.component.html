@@ -54,13 +54,18 @@
   <!-- goes to a new MIL row -->
   <div *ngFor="let dataRow of milData; let i = index">
     <div class="d-flex" style="justify-items: space-evenly; ">
-
+      <!-- <div style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
+        {{dataRow[i].milName.[]}}
+      </div> -->
       <!--supplies donut with current MIL level info for each domain -->
       <div *ngFor="let data of dataRow; let j = index"> 
-        <div *ngIf="i == 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
-          {{donutData[j].shortTitle}}
+        <div *ngIf="i == 0 && j > 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
+          {{donutData[j-1].shortTitle}}
         </div>
-        <div style="max-width: 100px;max-height: 100px;">
+        <div *ngIf="j == 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 1.6rem; align-items: center;">
+          MIL{{milNumberFlip(i)}}
+        </div>
+        <div *ngIf="j > 0" style="max-width: 100px;max-height: 100px;">
           <app-c2m2-donut style="border: 1px solid rgb(179, 179, 179);" [questionDistribution]="data"></app-c2m2-donut>
         </div>
       </div>

@@ -48,22 +48,43 @@ export class C2m2SummaryResultsComponent implements OnInit {
     let mil2 = [];
     let mil1 = [];
 
-    for (let i = 0; i < this.donutData.length; i++) {
-      //let shortTitle = this.donutData[i].shortTitle;
-      let milRollup = this.donutData[i].domainMilRollup;
+    for (let i = 0; i < this.donutData.length+1; i++) {
+      if(i==0) {
+        let mil3Name = this.donutData[0].domainMilRollup[2].milName.replace('-','');
+        let mil2Name = this.donutData[0].domainMilRollup[1].milName.replace('-','');
+        let mil1Name = this.donutData[0].domainMilRollup[0].milName.replace('-','');
+        mil3.push(mil3Name);
+        mil2.push(mil2Name);
+        mil1.push(mil1Name);
+      } else {
+        let milRollup = this.donutData[i-1].domainMilRollup;
+        mil3.push(milRollup[2]);
+        mil2.push(milRollup[1]);
+        mil1.push(milRollup[0]);
+      }
 
       //shortTitles.push(shortTitle);
-      mil3.push(milRollup[2]);
-      mil2.push(milRollup[1]);
-      mil1.push(milRollup[0]);
+      
     }
 
     //this.milData.push(shortTitles);
     this.milData.push(mil3);
     this.milData.push(mil2);
     this.milData.push(mil1);
+
+    console.log(this.milData)
   }
 
-  
+  milNumberFlip(mil: number) {
+    switch(mil){
+      case 0:
+        return 3;
+      case 1:
+        return 2;
+      case 2:
+        return 1;
+    }
+    
+  }
 
 }
