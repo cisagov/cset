@@ -41,8 +41,8 @@
       <app-c2m2-summary-results></app-c2m2-summary-results>
     </div>
 
-    <div class="page-break" id="toc-detailed-results">
-      <app-c2m2-detailed-results></app-c2m2-detailed-results>
+    <div *ngIf="loaded" class="page-break" id="toc-detailed-results">
+      <app-c2m2-detailed-results [donutData]="donutData"></app-c2m2-detailed-results>
     </div>
 
     <div class="page-break" id="toc-using-results">

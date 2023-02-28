@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
   selector: 'app-c2m2-report',
@@ -30,9 +31,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class C2m2ReportComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public reportSvc: ReportService
+  ) { }
+
+  donutData: any[] = [];
+  loaded: boolean = false;
 
   ngOnInit(): void {
+    this.reportSvc.getC2M2Donuts().subscribe(
+      (data: any) => {
+        this.donutData = data;
+        console.log(this.donutData)
+        this.loaded = true;
+      }
+    );
   }
 
 }
