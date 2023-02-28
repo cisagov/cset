@@ -46,4 +46,11 @@ export class C2m2DetailedResultsComponent implements OnInit {
     }
   }
 
+  takeOffDomainTag(title: string) {
+    let indexOfOpenParen = title.indexOf('(');
+    if(indexOfOpenParen == -1) {
+      return title;
+    }
+    return title.slice(0, indexOfOpenParen).trim();
+  }
 }
