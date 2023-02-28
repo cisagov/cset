@@ -33,11 +33,14 @@ namespace CSETWebCore.Business.Maturity
                 var d = new Domain()
                 {
                     Title = domain.Title,
+                    ShortTitle = domain.Abbreviation,
                     Sequence = ++sequence,
                     Description = domain.Description
                 };
 
                 response.Add(d);
+
+                InitializeDomainMilRollups(d);
 
                 foreach (Grouping objective in domain.Groupings)
                 {
@@ -70,11 +73,59 @@ namespace CSETWebCore.Business.Maturity
                         }
 
                         milRow.Practices.Add(CreatePractice(q));
+
+
+                        // add the answer to the rollup counts
+                        var rollup = d.DomainMilRollup.First(x => x.MilName == q.MaturityLevelName);
+                        switch (q.AnswerText)
+                        {
+                            case "FI":
+                                rollup.FI++;
+                                break;
+                            case "LI":
+                                rollup.LI++;
+                                break;
+                            case "PI":
+                                rollup.PI++;
+                                break;
+                            case "NI":
+                                rollup.NI++;
+                                break;
+                            default:
+                                rollup.U++;
+                                break;
+                        }
                     }
                 }
+
+                // Now that the Domain rollups are populated, determine its achieved MIL level
+                d.DomainMilRollup.ForEach(x => 
+                { 
+                    if (x.LI + x.PI + x.NI + x.U == 0 && x.FI > 0)
+                    {
+                        d.MilAchieved = x.Level;
+                    }
+                });
             }
 
             return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="d"></param>
+        private void InitializeDomainMilRollups(Domain d)
+        {
+            for (var i = 1; i <= 3; i++)
+            {
+                d.DomainMilRollup.Add(new MilRollup()
+                {
+                    Level = i,
+                    MilName = $"MIL-{i}"
+                });
+            }
         }
 
 
@@ -128,8 +179,9 @@ namespace CSETWebCore.Business.Maturity
                         var p = new Model.C2M2.Tables.Practice()
                         {
                             Title = practice.DisplayNumber,
-                            AnswerText = practice.AnswerText,
                             QuestionText = DeGlossary(practice.QuestionText),
+                            AnswerText = practice.AnswerText,
+                            Comment = practice.Comment,
                             Mil = practice.MaturityLevelName
                         };
 

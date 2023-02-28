@@ -22,7 +22,7 @@ namespace CSETWebCore.Model.C2M2.Tables
     /// </summary>
     public class Objective
     {
-        public string Title { set; get; }
+        public string Title { get; set; }
         public List<Practice> Practices { get; set; } = new List<Practice>();
     }
 
@@ -32,11 +32,12 @@ namespace CSETWebCore.Model.C2M2.Tables
     /// </summary>
     public class Practice
     {
-        public string Title { set; get; }
-        public string QuestionText { set; get; }
-        public string AnswerText { set; get; }
+        public string Title { get; set; }
+        public string QuestionText { get; set; }
+        public string AnswerText { get; set; }
+        public string Comment { get; set; }
 
-        public string Mil { set; get; }
+        public string Mil { get; set; }
     }
 
 }

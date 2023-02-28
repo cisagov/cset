@@ -47,7 +47,6 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.questionDistribution)
     this.data = [
       {
         name: "Fully Implemented",
