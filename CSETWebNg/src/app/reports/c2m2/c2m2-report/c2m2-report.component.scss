@@ -124,3 +124,19 @@ a:hover {
   cursor :pointer;
   text-decoration: underline !important;
 }
+
+
+.heatmap {
+  border-collapse: collapse;
+}
+
+.heatmap-mil-column {
+  padding-right: 10px;
+}
+
+.heatmap-answer-column {
+  border: 1px solid gray;
+  padding: 3px;
+  color: white;
+  text-align: center;
+}
