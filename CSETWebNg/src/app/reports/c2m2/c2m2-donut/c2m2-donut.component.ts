@@ -36,7 +36,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   totalQuestionsCount: number;
 
   data: any[];
-  view: any[] = [125, 125];
+  view: any[] = [100, 100];
 
   colorScheme = {
     // Dark mode scheme?
@@ -83,6 +83,9 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     // get the ngx chart element
     let node = this.pieChart.chartElement.nativeElement;
     let svg;
+
+    // set the margins of the pie chart to be a bit more compact
+    this.pieChart.margins = [10, 10, 10, 10];
     for (let i = 0; i < 5; i++) {
       if (i === 3) {
         // this is the pie chart svg
@@ -104,20 +107,27 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < slices.length; i++) {
       const value = this.data[i].value;
+      let color = 'black';
+      // sets white text only for the FI slice
+      if(this.data[i].name == "Fully Implemented"){
+        color = 'white';
+      }
+
       let startingValue = 0;
       for (let j = 0; j < i; j++) {
         startingValue += (this.data[j].value / this.totalQuestionsCount * 100);
       }
-      const text = this.generateText(value, maxX - minX, startingValue);
+      
+      const text = this.generateText(value, maxX - minX, startingValue, color);
       svg.append(text);
     }
   }
 
-  private generateText(value: number, diagonal: number, startingValue: number) {
+  private generateText(value: number, diagonal: number, startingValue: number, color: string) {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-    const r = Math.round(diagonal / 2.5);
+    const r = Math.round(diagonal / 2.3);
     // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
     const angle = ((startingValue * 2 + (value / this.totalQuestionsCount * 100)) / 100 - 0.5) * Math.PI;
     const x = r * Math.cos(angle);
@@ -125,7 +135,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
 
     text.setAttribute('x', '' + x);
     text.setAttribute('y', '' + y);
-    text.setAttribute('fill', 'black');
+    text.setAttribute('fill', color);
     text.textContent = value != 0 ? value.toString() : '';
     text.setAttribute('style', 'font-size: 12px')
     text.setAttribute('text-anchor', 'middle');

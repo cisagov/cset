@@ -35,7 +35,7 @@
       <td class="centered" width="15%">{{ practice.title }}</td>
       <td width="70">{{ practice.questionText }}</td>
       <td class="centered" width="10%" [ngStyle]="{'background-color': getAnswerColor(practice.answerText)}">
-        {{ practice.answerText !== null ? 'practice.answerText' : 'U' }}
+        {{ practice.answerText !== null ? practice.answerText : 'U' }}
       </td>
     </tr>
   </table>

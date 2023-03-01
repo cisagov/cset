@@ -31,11 +31,57 @@ import { ReportService } from '../../../../services/report.service';
 })
 export class C2m2SummaryResultsComponent implements OnInit {
 
+  @Input() donutData: any[];
+
+  milData: any[] = [];
+
   constructor(
     public reportSvc: ReportService
   ) { }
 
-  @Input() donutData: any[];
+  ngOnInit(): void {
+    let mil3 = [];
+    let mil2 = [];
+    let mil1 = [];
+    let milsAchieved = [];
 
-  ngOnInit(): void {}
+    for (let i = 0; i < this.donutData.length+1; i++) {
+      if(i==0) {
+        let mil3Name = this.donutData[0].domainMilRollup[2].milName.replace('-','');
+        let mil2Name = this.donutData[0].domainMilRollup[1].milName.replace('-','');
+        let mil1Name = this.donutData[0].domainMilRollup[0].milName.replace('-','');
+        mil3.push(mil3Name);
+        mil2.push(mil2Name);
+        mil1.push(mil1Name);
+        milsAchieved.push('MIL Achieved')
+      } else {
+        let milRollup = this.donutData[i-1].domainMilRollup;
+        mil3.push(milRollup[2]);
+        mil2.push(milRollup[1]);
+        mil1.push(milRollup[0]);
+      }
+
+      if (i < this.donutData.length) {
+        milsAchieved.push(this.donutData[i].milAchieved);
+      }
+    }
+
+    this.milData.push(mil3);
+    this.milData.push(mil2);
+    this.milData.push(mil1);
+    this.milData.push(milsAchieved);
+  }
+
+  milNumberFlip(mil: number) {
+    switch(mil){
+      case 0:
+        return 3;
+      case 1:
+        return 2;
+      case 2:
+        return 1;
+    }
+    
+  }
+
 }
