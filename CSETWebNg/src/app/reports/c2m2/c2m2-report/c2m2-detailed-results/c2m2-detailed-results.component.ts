@@ -28,15 +28,12 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './c2m2-detailed-results.component.html',
   styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
 })
-
-
 export class C2m2DetailedResultsComponent implements OnInit {
 
   constructor() { }
 
   @Input() donutData: any[] = [];
   @Input() tableData: any[] = [];
-
 
   questionDistribution: any[] = [];
   tableIndex: number = 1;
