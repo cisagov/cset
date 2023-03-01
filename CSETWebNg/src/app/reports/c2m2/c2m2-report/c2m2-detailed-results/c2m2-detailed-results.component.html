@@ -28,12 +28,12 @@
   further detail regarding self-evaluation results.
 </p>
 
-<div *ngFor="let domain of donutData">
-  <h1>4.{{domain.sequence}} Domain: {{domain.title}}</h1>
-  <p>
-    {{domain.description}}
-  </p>
-
+<!-- Domain Level -->
+<div *ngFor="let domain of donutData; let i = index">
+  <h1>4.{{ domain.sequence }} Domain: {{ domain.title }}</h1>
+  <p>{{ domain.description }}</p>
+  
+  <!-- Donut Chart -->
   <div style="border: 1px solid rgb(179, 179, 179);">
     <div class="d-flex" style="padding: 4px; align-items: center;">
       <div>
@@ -48,12 +48,7 @@
         <span style="display: block; background-color: #AAAAAA; height: 15px; width: 15px; margin: 4px;"></span>
       </div>
       <span style="font-size: 0.75em;">Unanswered (U)</span>
-
-      <div style="font-size: 0.75em; font-weight: bold; margin-left: auto; margin-right: 4px;">
-        <div>{{takeOffDomainTag(domain.title)}}</div>
-      </div>
     </div>
-
     <div class="d-flex" style="padding: 4px; align-items: center;">
       <div>
         <span style="display: block; background-color: #90A5C7; height: 15px; width: 15px; margin: 4px;"></span>
@@ -64,15 +59,31 @@
       </div>
       <span style="font-size: 0.75em;">Not Implemented (NI)</span>
     </div>
-    <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
-      text-align: center; align-items: top;">
-
+    <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly; text-align: center; align-items: top;">
       <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
         <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
-        <p style="font-size: 0.75em;">{{objective.title}}</p>
+        <p style="font-size: 0.75em;">{{ objective.title }}</p>
       </div>
     </div>
   </div>
+
+  <br>
+
+  <!-- Heat Map Chart -->
+  <div *ngFor="let row of domain.heatmapRows">
+    <table class="heatmap">
+      <tr>
+        <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
+        <td class="heatmap-answer-column" *ngFor="let practice of row.practices" 
+          [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
+            {{ practice.number }}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <br>
+  <!-- Objective Breakdown Table -->
+  <app-c2m2-objective-table [data]="tableData[i].objectives"></app-c2m2-objective-table>
+
 </div>
-
-
