@@ -433,8 +433,8 @@ namespace CSETWebCore.DatabaseManager
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
-        public static string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=True;connect timeout=20;MultipleActiveResultSets=True;";
-        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=True;connect timeout=10;MultipleActiveResultSets=True;";
+        public static string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;";
+        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;";
         public string DatabaseCode
         {
             get
@@ -451,7 +451,7 @@ namespace CSETWebCore.DatabaseManager
         }
         public string CurrentDatabaseConnectionString
         {
-            get { return @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=True;connect timeout=25;MultipleActiveResultSets=True;"; }
+            get { return @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=25;MultipleActiveResultSets=True;"; }
         }
         public string OldDatabaseConnectionString
         {
