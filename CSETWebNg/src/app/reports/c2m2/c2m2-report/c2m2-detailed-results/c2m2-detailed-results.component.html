@@ -35,36 +35,34 @@
   </p>
   
   <!-- start of the donut box -->
-  <div style="border: 1px solid rgb(179, 179, 179);">
-    <div class="d-flex" style="padding: 4px; align-items: center;">
-      <div>
-        <span style="display: block; background-color: #265B94; height: 15px; width: 15px; margin: 4px;"></span>
+  <div style="position: relative; border: 1px solid rgb(179, 179, 179);">
+    <div class="color-legend ml-3 mt-1" style="width: 60%; flex-wrap: wrap;">
+      <div class="row d-flex align-items-center mr-4">
+        <span class="legend-color-box" style="background-color: #265B94;"></span>
+        <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
       </div>
-      <span style="font-size: 0.75em;">Fully Implemented (FI)</span>
-      <div>
-        <span style="display: block; background-color: #F5DA8C; height: 15px; width: 15px; margin: 4px; margin-left: 17px;"></span>
+      <div class="row d-flex align-items-center mr-4">
+        <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
+        <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
       </div>
-      <span style="font-size: 0.75em;">Partially Implemented (PI)</span>
-      <div>
-        <span style="display: block; background-color: #AAAAAA; height: 15px; width: 15px; margin: 4px;"></span>
+      <div class="row d-flex align-items-center">
+        <span class="legend-color-box" style="background-color: #AAAAAA;"></span>
+        <span style="font-size: 0.8em;">Unanswered (U)</span>
       </div>
-      <span style="font-size: 0.75em;">Unanswered (U)</span>
-
-      <div style="font-size: 0.75em; font-weight: bold; margin-left: auto; margin-right: 4px;">
-        <div>{{domain.title}}</div>
+      <div class="row d-flex align-items-center mr-4">
+        <span class="legend-color-box" style="background-color: #90A5C7;"></span>
+        <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
+      </div>
+      <div class="row d-flex align-items-center">
+        <span class="legend-color-box" style="background-color: #DCA237;"></span>
+        <span style="font-size: 0.8em;">Not Implemented (NI)</span>
       </div>
     </div>
 
-    <div class="d-flex" style="padding: 4px; align-items: center;">
-      <div>
-        <span style="display: block; background-color: #90A5C7; height: 15px; width: 15px; margin: 4px;"></span>
-      </div>
-      <span style="font-size: 0.75em;">Largely Implemented (LI)</span>
-      <div>
-        <span style="display: block; background-color: #DCA237; height: 15px; width: 15px; margin: 4px;"></span>
-      </div>
-      <span style="font-size: 0.75em;">Not Implemented (NI)</span>
+    <div style="position: absolute; font-size: 0.8em; font-weight: bold; top: 8px; right: 10px">
+      <div>{{domain.title}}</div>
     </div>
+
     <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
       text-align: center; align-items: top;">
 
@@ -72,7 +70,7 @@
         
         <!-- supplying the donuts with question info -->
         <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
-        <p class="mt-2" style="font-size: 0.75em;">{{objective.title}}</p>
+        <p class="mt-2" style="font-size: 0.8em;">{{objective.title}}</p>
       </div>
     </div>
   </div>

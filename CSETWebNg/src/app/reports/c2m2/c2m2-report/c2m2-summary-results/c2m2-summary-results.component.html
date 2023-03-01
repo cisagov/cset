@@ -44,43 +44,64 @@
   Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
 </p>
 
-<!-- <div style="display: inline-grid; -webkit-box-pack: center; justify-content: center;"> -->
-<!-- <div class="d-flex" style="border: 1px solid rgb(179, 179, 179);">
-  <div *ngFor="let domain of donutData">
-    {{domain.shortTitle}}
-  </div>
-</div> -->
-<div style="max-width: 1200px; margin-left: -125px;">
+<div class="d-flex flex-column align-items-center" style="margin-left: -50px;">
   <!-- goes to a new MIL row -->
   <div *ngFor="let dataRow of milData; let i = index">
     <div class="d-flex" style="justify-items: space-evenly; ">
       <!--supplies donut with current MIL level info for each domain -->
       <div *ngFor="let data of dataRow; let j = index"> 
         <div *ngIf="i == 0">
-          <div *ngIf="j > 0 && j != dataRow.length - 1" class="donut-grid-header">
-            {{donutData[j-1].shortTitle}}
+          <div *ngIf="j > 0" class="donut-grid-header">
+            {{donutData[j - 1].shortTitle}}
           </div>
           <div *ngIf="j == 0" style="height: 20px;">
             <!-- this holds the empty cell in the top left corner -->
           </div>
-          <div *ngIf="j == dataRow.length - 1" class="donut-grid-mil-box">
-            MIL <br> Achieved
-          </div>
         </div>
-        <div *ngIf="j == 0" class="d-flex donut-grid-mil-box">
+        <div *ngIf="j == 0 && i != milData.length - 1" class="donut-grid-mil-box">
           MIL{{milNumberFlip(i)}}
         </div>
-        <div *ngIf="j > 0 && j != dataRow.length - 1" class="donut-grid-chart-box">
+        <div *ngIf="j == 0 && i == milData.length - 1" class="donut-grid-mil-box"
+          style="height: 70px;">
+          {{ dataRow[j] }}
+        </div>
+        <div *ngIf="j > 0 && i != milData.length - 1" class="donut-grid-chart-box">
           <app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>
         </div>
-        <div *ngIf="j == dataRow.length - 1">
-
+        <div *ngIf="j > 0 && i == milData.length - 1" class="donut-grid-chart-box"
+           style="height: 70px;">
+          {{ dataRow[j] }}
         </div>
       </div>
     </div>
   </div>
+
+  <div class="color-legend justify-content-between mt-3 mb-1" style="width: 90%">
+    <div class="row d-flex align-items-center">
+      <span class="legend-color-box" style="background-color: #265B94;"></span>
+      <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
+    </div>
+    <div class="row d-flex align-items-center">
+      <span class="legend-color-box" style="background-color: #90A5C7;"></span>
+      <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
+    </div>
+    <div class="row d-flex align-items-center">
+      <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
+      <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
+    </div>
+    <div class="row d-flex align-items-center">
+      <span class="legend-color-box" style="background-color: #DCA237;"></span>
+      <span style="font-size: 0.8em;">Not Implemented (NI)</span>
+    </div>
+    <div class="row d-flex align-items-center">
+      <span class="legend-color-box" style="background-color: #AAAAAA;"></span>
+      <span style="font-size: 0.8em;">Unanswered (U)</span>
+    </div>
+  </div>
+  <span class="caption">
+    Figure 3: Summary of Responses Input by MIL and Domain
+  </span>
 </div>
-<!-- </div> -->
 
 <h1>3.3 Implementation of Management Activities across Domains</h1>
 <p>
