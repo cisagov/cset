@@ -44,7 +44,6 @@ export class C2m2SummaryResultsComponent implements OnInit {
     let mil2 = [];
     let mil1 = [];
     let milsAchieved = [];
-    console.log(this.donutData);
 
     for (let i = 0; i < this.donutData.length+1; i++) {
       if(i==0) {
@@ -71,8 +70,6 @@ export class C2m2SummaryResultsComponent implements OnInit {
     this.milData.push(mil2);
     this.milData.push(mil1);
     this.milData.push(milsAchieved);
-
-    console.log(this.milData);
   }
 
   milNumberFlip(mil: number) {

@@ -28,7 +28,7 @@
   further detail regarding self-evaluation results.
 </p>
 
-<div *ngFor="let domain of donutData">
+<div *ngFor="let domain of donutData; let i = index">
   <h1>4.{{domain.sequence}} Domain: {{domain.title}} ({{domain.shortTitle}})</h1>
   <p>
     {{domain.description}}
@@ -76,8 +76,6 @@
     </div>
   </div>
 
-</div>
-
   <br>
 
   <!-- Heat Map Chart -->
@@ -95,6 +93,6 @@
 
   <br>
   <!-- Objective Breakdown Table -->
-  <app-c2m2-objective-table [data]="tableData[i].objectives"></app-c2m2-objective-table>
+  <app-c2m2-objective-table [data]="tableData.domainList[i].objectives"></app-c2m2-objective-table>
 
 </div>
