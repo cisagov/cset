@@ -7,6 +7,35 @@ using System.Threading.Tasks;
 namespace CSETWebCore.Model.C2M2.Tables
 {
     /// <summary>
+    /// Container for QuestionTables endpoint response
+    /// </summary>
+    public class QuestionTablesResponse
+    {
+        public List<Model.C2M2.Tables.Domain> DomainList { get; set; }
+        public List<ManagementQuestions> ManagementQuestions { get; set; }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ManagementQuestions
+    {
+        public string QuestionText { get; set; }
+        public List<ManagementDomain> DomainAnswers { get; set; } = new List<ManagementDomain>();
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ManagementDomain
+    {
+        public string DomainShortName { get; set; }
+        public string Answer { get; set; }
+    }
+
+    /// <summary>
     /// Domain container for question tables in report.
     /// </summary>
     public class Domain
