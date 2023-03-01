@@ -21,42 +21,31 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-detailed-results',
-  templateUrl: './c2m2-detailed-results.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+  selector: 'app-c2m2-objective-table',
+  templateUrl: './c2m2-objective-table.component.html',
+  styleUrls: ['./c2m2-objective-table.component.scss']
 })
+export class C2m2ObjectiveTableComponent implements OnInit {
+
+  @Input() data: any[] = [];
 
 
-export class C2m2DetailedResultsComponent implements OnInit {
-
-  constructor() { }
-
-  @Input() donutData: any[] = [];
-  @Input() tableData: any[] = [];
-
-
-  questionDistribution: any[] = [];
-  tableIndex: number = 1;
+  constructor() {
+  }
 
   ngOnInit(): void {
-    for (let i = 0; i < this.donutData.length; i++) {
-      let objectives = this.donutData[i].objectives;
-      for (let j = 0; j < objectives.length; j++) {
-        this.questionDistribution.push(objectives[j]);
-      }
-    }
+
   }
 
-  removeHyphen(title: string) {
-    let fixedString = '';
-    fixedString = title.replace('-', ' ');
-    return fixedString;
+  removeHyphen(text: string) {
+    let newString = text.replace('-', '');
+    return newString;
   }
-  
-  getHeatMapColor(answer: string) {
+
+  getAnswerColor(answer: string) {
     switch (answer) {
       case 'FI':
         return '#265B94';
