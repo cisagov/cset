@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div style="position: relative">
+<div style="position: relative; padding: 0px;">
   <ngx-charts-pie-chart #pieChart
   [view]="view"
   [scheme]="colorScheme"
@@ -31,7 +31,7 @@
   [animations]="false"
   [arcWidth]="0.65">
   </ngx-charts-pie-chart>
-  <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 52px" [style.left]="totalQuestionsCount > 9 ? '41px' : '44px'">
+  <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 39px" [style.left]="totalQuestionsCount > 9 ? '28px' : '32px'">
     <text x="15" y="15" style="font-size: 12px;">{{ totalQuestionsCount }}</text>
   </svg>
 </div>

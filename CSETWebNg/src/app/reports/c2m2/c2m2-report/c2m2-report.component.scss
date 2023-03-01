@@ -72,6 +72,51 @@ h4 {
 
 .caption {
   text-align: center;
+  margin: 4px 0px 0px; 
+  color: rgb(3, 83, 148); 
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.donut-grid-header {
+  border: 1px solid rgb(179, 179, 179); 
+  text-align: center; 
+  font-size: 0.75em; 
+  height: 20px;
+}
+
+.donut-grid-chart-box {
+  border: 1px solid rgb(179, 179, 179); 
+  padding: 0; 
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donut-grid-mil-box {
+  border: 1px solid rgb(179, 179, 179); 
+  text-align: center; 
+  font-size: 1rem; 
+  height: 100px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-legend {
+  display: flex;
+  padding: 4px; 
+  align-items: center;
+}
+
+.legend-color-box {
+  display: inline-block;
+  height: 16px; 
+  width: 16px; 
+  margin: 4px;
 }
 
 ol, ul {
