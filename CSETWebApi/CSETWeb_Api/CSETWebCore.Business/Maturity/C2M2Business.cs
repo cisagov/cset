@@ -5,9 +5,10 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Helpers;
+using CSETWebCore.Model;
 using CSETWebCore.Model.C2M2.Charts;
+using CSETWebCore.Model.C2M2.Tables;
 using CSETWebCore.Model.Cis;
-using DocumentFormat.OpenXml.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,15 +27,15 @@ namespace CSETWebCore.Business.Maturity
         /// heatmaps for each Domain.
         /// </summary>
         /// <returns></returns>
-        public List<Domain> DonutsAndHeatmap(MaturityStructureForModel model)
+        public List<Model.C2M2.Charts.Domain> DonutsAndHeatmap(MaturityStructureForModel model)
         {
-            var response = new List<Domain>();
+            var response = new List<CSETWebCore.Model.C2M2.Charts.Domain>();
 
             int sequence = 0;
 
             foreach (Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
             {
-                var d = new Domain()
+                var d = new Model.C2M2.Charts.Domain()
                 {
                     Title = domain.Title,
                     ShortTitle = domain.Abbreviation,
@@ -48,7 +49,7 @@ namespace CSETWebCore.Business.Maturity
 
                 foreach (Grouping objective in domain.Groupings)
                 {
-                    var o = new Objective()
+                    var o = new Model.C2M2.Charts.Objective()
                     {
                         Title = objective.Title,
                         FI = objective.Questions.Count(x => x.AnswerText == "FI"),
@@ -104,17 +105,29 @@ namespace CSETWebCore.Business.Maturity
 
                 // Now that the Domain rollups are populated, determine its achieved MIL level
                 bool precedingMilAchieved = true;
-                d.DomainMilRollup.ForEach(x => 
-                { 
-                    if (precedingMilAchieved && (x.PI + x.NI + x.U == 0) && (x.FI + x.LI > 0))
+                for (int i = 0; i < d.DomainMilRollup.Count(); i++)
+                {
+                    var r = d.DomainMilRollup[i];
+
+                    // add the previous MIL level's totals to this one
+                    if (i > 0)
                     {
-                        d.MilAchieved = x.Level;
+                        r.FI += d.DomainMilRollup[i - 1].FI;
+                        r.LI += d.DomainMilRollup[i - 1].LI;
+                        r.PI += d.DomainMilRollup[i - 1].PI;
+                        r.NI += d.DomainMilRollup[i - 1].NI;
+                        r.U += d.DomainMilRollup[i - 1].U;
+                    }
+
+                    if (precedingMilAchieved && (r.PI + r.NI + r.U == 0) && (r.FI + r.LI > 0))
+                    {
+                        d.MilAchieved = r.Level;
                     }
                     else
                     {
-                        precedingMilAchieved = false;                        
+                        precedingMilAchieved = false;
                     }
-                });
+                }
             }
 
             return response;
@@ -125,7 +138,7 @@ namespace CSETWebCore.Business.Maturity
         /// Create an empty rollup object for each MIL level 1-3.  
         /// </summary>
         /// <param name="d"></param>
-        private void InitializeDomainMilRollups(Domain d)
+        private void InitializeDomainMilRollups(Model.C2M2.Charts.Domain d)
         {
             for (var i = 1; i <= 3; i++)
             {
@@ -145,7 +158,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private HeatmapPractice CreatePractice(Model.Cis.Question q)
         {
-            var shortNumber = q.DisplayNumber.Contains('-') ? q.DisplayNumber.Split('-')[1] : q.DisplayNumber;
+            var shortNumber = q.DisplayNumber.Contains('-') ? q.DisplayNumber.Split('-').Last() : q.DisplayNumber;
             return new HeatmapPractice()
             {
                 Number = shortNumber,
@@ -163,12 +176,13 @@ namespace CSETWebCore.Business.Maturity
         /// Reformats the structure object into a simpler format
         /// for the question/answer tables in the C2M2 report.
         /// </summary>
-        public List<Model.C2M2.Tables.Domain> QuestionTables(MaturityStructureForModel model)
+        public QuestionTablesResponse QuestionTables(MaturityStructureForModel model)
         {
+            var response = new QuestionTablesResponse();
+
+            response.DomainList = new List<Model.C2M2.Tables.Domain>();
+
             int sequence = 0;
-
-            var response = new List<Model.C2M2.Tables.Domain>();
-
             foreach (Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
             {
                 var d = new Model.C2M2.Tables.Domain()
@@ -177,7 +191,7 @@ namespace CSETWebCore.Business.Maturity
                     Sequence = ++sequence
                 };
 
-                response.Add(d);
+                response.DomainList.Add(d);
 
                 foreach (Grouping objective in domain.Groupings)
                 {
@@ -203,6 +217,8 @@ namespace CSETWebCore.Business.Maturity
                     }
                 }
             }
+
+            response.ManagementQuestions = TabularizeManagementActivities(model);
 
             return response;
         }
@@ -231,7 +247,7 @@ namespace CSETWebCore.Business.Maturity
 
                     if (c.Contains('|'))
                     {
-                        c = c.Split('|')[1];
+                        c = c.Split('|').Last();
                     }
                 }
 
@@ -241,7 +257,59 @@ namespace CSETWebCore.Business.Maturity
             return sb.ToString();
         }
 
+
+        /// <summary>
+        /// Returns an object with the six management activity questions and each domain's
+        /// answer to those questions.
+        /// </summary>
+        private List<ManagementQuestions> TabularizeManagementActivities(MaturityStructureForModel model)
+        {
+            var response = new List<ManagementQuestions>();
+
+            // this is hokey, but we currently don't store this "generic" version of the
+            // management activity questions anywhere.  And trying to parse one of the domain-specific
+            // versions will be difficult if the questions are not in English.
+            var genericMaintQuestions = new List<string>() {
+                "Documented procedures are established, followed, and maintained for activities in the domain",
+                "Adequate resources (people, funding, and tools) are provided to support activities in the domain",
+                "Up-to-date policies or other organizational directives define requirements for activities in the domain",
+                "Responsibility, accountability, and authority for the performance of activities in the domain are assigned to personnel",
+                "Personnel performing activities in the domain have the skills and knowledge needed to perform their assigned responsibilities",
+                "The effectiveness of activities in the domain is evaluated and tracked"
+            };
+
+            for (int i = 0; i < genericMaintQuestions.Count(); i++)
+            {
+                response.Add(new ManagementQuestions()
+                {
+                    QuestionText = genericMaintQuestions[i]
+                });
+            }
+
+            // build the questions, parse out the domain name from the text
+            var domains = model.Model.Groupings.Where(x => x.GroupType == "Domain").ToList();
+
+            for (int i = 0; i < domains.Count(); i++)
+            {
+                var d = domains[i];
+                var maintObjective = d.Groupings.Last();
+
+                for (int j = 0; j < maintObjective.Questions.Count(); j++)
+                {
+                    var q = maintObjective.Questions[j];
+                    response[j].DomainAnswers.Add(new ManagementDomain() { DomainShortName = d.Abbreviation, Answer = q.AnswerText });
+                }
+            }
+
+            return response;
+        }
+
+
         #endregion
 
     }
+
+
+
+  
 }
