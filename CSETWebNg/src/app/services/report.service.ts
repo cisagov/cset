@@ -125,10 +125,7 @@ export class ReportService {
         }
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
-
-    getC2M2Donuts() {
-        return this.http.get(this.configSvc.apiUrl + 'c2m2/donutheatmap');
-    }
+    
 
     /**
      * Split paragraphs into divs
@@ -183,6 +180,14 @@ export class ReportService {
         });
 
         return s;
+    }
+
+    getC2M2Donuts() {
+        return this.http.get(this.configSvc.apiUrl + 'c2m2/donutheatmap');
+    }
+
+    getC2M2TableData() {
+        return this.http.get(this.configSvc.apiUrl + 'c2m2/questionTable');
     }
 
     /**
