@@ -35,6 +35,7 @@ export class C2m2SummaryResultsComponent implements OnInit {
   donutData: any;
 
   milData: any[] = [];
+  test: string = ' ';
   // milDataMap: Map<number, any[]> = new Map<number, any[]>(); //<domainSequence, [{mil3Data},{mil2Data},{mil1Data}]>
 
 
@@ -56,12 +57,17 @@ export class C2m2SummaryResultsComponent implements OnInit {
         mil3.push(mil3Name);
         mil2.push(mil2Name);
         mil1.push(mil1Name);
-      } else {
+      } else {//if(i > this.donutData.length+1){
         let milRollup = this.donutData[i-1].domainMilRollup;
         mil3.push(milRollup[2]);
         mil2.push(milRollup[1]);
         mil1.push(milRollup[0]);
       }
+      // } else {
+      //   // mil3.push(donutData);
+      //   // mil2.push(milRollup[1]);
+      //   // mil1.push(milRollup[0]);
+      // }
 
       //shortTitles.push(shortTitle);
       
@@ -72,7 +78,7 @@ export class C2m2SummaryResultsComponent implements OnInit {
     this.milData.push(mil2);
     this.milData.push(mil1);
 
-    console.log(this.milData)
+    console.log(this.donutData)
   }
 
   milNumberFlip(mil: number) {
