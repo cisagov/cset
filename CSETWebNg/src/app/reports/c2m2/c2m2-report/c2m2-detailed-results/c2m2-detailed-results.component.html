@@ -85,7 +85,9 @@
         <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
         <td class="heatmap-answer-column" *ngFor="let practice of row.practices" 
           [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
-            {{ practice.number }}
+            <div [ngStyle]="{'color': getHeapMapTextColor(practice.answer)}">
+              {{ practice.number }}
+            </div>
         </td>
       </tr>
     </table>
