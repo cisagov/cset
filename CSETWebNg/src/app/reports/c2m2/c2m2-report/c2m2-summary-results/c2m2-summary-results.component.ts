@@ -31,23 +31,19 @@ import { ReportService } from '../../../../services/report.service';
 })
 export class C2m2SummaryResultsComponent implements OnInit {
 
-  @Input()
-  donutData: any;
+  @Input() donutData: any[];
 
   milData: any[] = [];
-  test: string = ' ';
-  // milDataMap: Map<number, any[]> = new Map<number, any[]>(); //<domainSequence, [{mil3Data},{mil2Data},{mil1Data}]>
-
 
   constructor(
     public reportSvc: ReportService
   ) { }
 
   ngOnInit(): void {
-    let shortTitles = [];
     let mil3 = [];
     let mil2 = [];
     let mil1 = [];
+    let milsAchieved = [];
 
     for (let i = 0; i < this.donutData.length+1; i++) {
       if(i==0) {
@@ -57,28 +53,22 @@ export class C2m2SummaryResultsComponent implements OnInit {
         mil3.push(mil3Name);
         mil2.push(mil2Name);
         mil1.push(mil1Name);
-      } else {//if(i > this.donutData.length+1){
+      } else {
         let milRollup = this.donutData[i-1].domainMilRollup;
         mil3.push(milRollup[2]);
         mil2.push(milRollup[1]);
         mil1.push(milRollup[0]);
       }
-      // } else {
-      //   // mil3.push(donutData);
-      //   // mil2.push(milRollup[1]);
-      //   // mil1.push(milRollup[0]);
-      // }
 
-      //shortTitles.push(shortTitle);
-      
+      if (i < this.donutData.length) {
+        milsAchieved.push(this.donutData[i].milAchieved);
+      }
     }
 
-    //this.milData.push(shortTitles);
     this.milData.push(mil3);
     this.milData.push(mil2);
     this.milData.push(mil1);
-
-    console.log(this.donutData)
+    this.milData.push(milsAchieved);
   }
 
   milNumberFlip(mil: number) {
