@@ -28,11 +28,15 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './c2m2-detailed-results.component.html',
   styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
 })
+
+
 export class C2m2DetailedResultsComponent implements OnInit {
 
   constructor() { }
 
   @Input() donutData: any[] = [];
+  @Input() tableData: any[] = [];
+
 
   questionDistribution: any[] = [];
   tableIndex: number = 1;
@@ -46,11 +50,25 @@ export class C2m2DetailedResultsComponent implements OnInit {
     }
   }
 
-  takeOffDomainTag(title: string) {
-    let indexOfOpenParen = title.indexOf('(');
-    if(indexOfOpenParen == -1) {
-      return title;
+  removeHyphen(title: string) {
+    let fixedString = '';
+    fixedString = title.replace('-', ' ');
+    return fixedString;
+  }
+  
+  getHeatMapColor(answer: string) {
+    switch (answer) {
+      case 'FI':
+        return '#265B94';
+      case 'LI':
+        return '#90A5C7';
+      case 'PI':
+        return '#F5DA8C';
+      case 'NI':
+        return '#DCA237';
+      case 'U':
+      case null:
+        return '#AAAAAA';
     }
-    return title.slice(0, indexOfOpenParen).trim();
   }
 }

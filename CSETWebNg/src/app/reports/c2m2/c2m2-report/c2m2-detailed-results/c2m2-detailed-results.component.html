@@ -78,4 +78,23 @@
 
 </div>
 
+  <br>
 
+  <!-- Heat Map Chart -->
+  <div *ngFor="let row of domain.heatmapRows">
+    <table class="heatmap">
+      <tr>
+        <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
+        <td class="heatmap-answer-column" *ngFor="let practice of row.practices" 
+          [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
+            {{ practice.number }}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <br>
+  <!-- Objective Breakdown Table -->
+  <app-c2m2-objective-table [data]="tableData[i].objectives"></app-c2m2-objective-table>
+
+</div>
