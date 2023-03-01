@@ -54,20 +54,21 @@
   <!-- goes to a new MIL row -->
   <div *ngFor="let dataRow of milData; let i = index">
     <div class="d-flex" style="justify-items: space-evenly; ">
-      <!-- <div style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
-        {{dataRow[i].milName.[]}}
-      </div> -->
       <!--supplies donut with current MIL level info for each domain -->
       <div *ngFor="let data of dataRow; let j = index"> 
         <div *ngIf="i == 0">
           <div *ngIf="j > 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
-            MIL{{milNumberFlip(i)}}
+            {{donutData[j-1].shortTitle}}
           </div>
-          {{}}
+          <div *ngIf="j == 0" style="height: 20px;">
+            <!-- this holds the empty cell in the top left corner -->
+          </div>
         </div>
-        <!-- <div *ngIf="j == 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 1.6rem; align-items: center;">
-          
-        </div> -->
+        <div *ngIf="j == 0" class="d-flex" style="padding: 0;border: 1px solid rgb(179, 179, 179); text-align: center; align-items: center;font-size: 1.6rem; height: 102px;">
+          <span style="margin: 10px">
+            MIL{{milNumberFlip(i)}}
+          </span>
+        </div>
         <div *ngIf="j > 0" style="border: 1px solid rgb(179, 179, 179); padding: 0">
           <app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>
         </div>
