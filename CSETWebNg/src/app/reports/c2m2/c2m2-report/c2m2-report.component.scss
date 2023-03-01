@@ -72,6 +72,32 @@ h4 {
 
 .caption {
   text-align: center;
+  margin: 4px 0px 0px; 
+  color: rgb(3, 83, 148); 
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.donut-grid-header {
+  border: 1px solid rgb(179, 179, 179); 
+  text-align: center; 
+  font-size: 0.75em; 
+  height: 20px;
+}
+
+.donut-grid-chart-box {
+  border: 1px solid rgb(179, 179, 179); 
+  padding: 0; 
+  height: 100px;
+}
+
+.donut-grid-mil-box {
+  padding: 10px;
+  border: 1px solid rgb(179, 179, 179); 
+  text-align: center; 
+  align-items: center;
+  font-size: 1.6rem; 
+  height: 100px;
 }
 
 ol, ul {

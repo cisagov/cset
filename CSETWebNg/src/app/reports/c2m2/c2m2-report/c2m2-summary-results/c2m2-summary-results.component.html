@@ -27,7 +27,7 @@
 
 <div class="w-100 d-flex flex-column">
   <app-c2m2-domain-mil-bar-chart [domainData]="donutData"></app-c2m2-domain-mil-bar-chart>
-  <span class="caption" style="margin: 4px 0px 0px; color: rgb(3, 83, 148); display: block;">
+  <span class="caption">
     Figure 2: MIL Achieved by Domain
   </span>
 </div>
@@ -50,30 +50,33 @@
     {{domain.shortTitle}}
   </div>
 </div> -->
-<div style="max-width: 1200px; margin-left: -100px;">
+<div style="max-width: 1200px; margin-left: -125px;">
   <!-- goes to a new MIL row -->
   <div *ngFor="let dataRow of milData; let i = index">
     <div class="d-flex" style="justify-items: space-evenly; ">
       <!--supplies donut with current MIL level info for each domain -->
       <div *ngFor="let data of dataRow; let j = index"> 
         <div *ngIf="i == 0">
-          <div *ngIf="j > 0" style="border: 1px solid rgb(179, 179, 179); text-align: center; font-size: 0.75em;">
+          <div *ngIf="j > 0 && j != dataRow.length - 1" class="donut-grid-header">
             {{donutData[j-1].shortTitle}}
           </div>
           <div *ngIf="j == 0" style="height: 20px;">
             <!-- this holds the empty cell in the top left corner -->
           </div>
+          <div *ngIf="j == dataRow.length - 1" class="donut-grid-mil-box">
+            MIL <br> Achieved
+          </div>
         </div>
-        <div *ngIf="j == 0" class="d-flex" style="padding: 0;border: 1px solid rgb(179, 179, 179); text-align: center; align-items: center;font-size: 1.6rem; height: 102px;">
-          <span style="margin: 10px">
-            MIL{{milNumberFlip(i)}}
-          </span>
+        <div *ngIf="j == 0" class="d-flex donut-grid-mil-box">
+          MIL{{milNumberFlip(i)}}
         </div>
-        <div *ngIf="j > 0" style="border: 1px solid rgb(179, 179, 179); padding: 0">
+        <div *ngIf="j > 0 && j != dataRow.length - 1" class="donut-grid-chart-box">
           <app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>
         </div>
-      </div>
+        <div *ngIf="j == dataRow.length - 1">
 
+        </div>
+      </div>
     </div>
   </div>
 </div>
