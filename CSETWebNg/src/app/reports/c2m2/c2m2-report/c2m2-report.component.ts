@@ -30,21 +30,25 @@ import { ReportService } from '../../../services/report.service';
   styleUrls: ['./c2m2-report.component.scss', '../../reports.scss']
 })
 export class C2m2ReportComponent implements OnInit {
+  donutData: any[] = [];
+  tableData: any[] = [];
+  loaded: boolean = false;
 
   constructor(
     public reportSvc: ReportService
   ) { }
 
-  donutData: any[] = [];
-  loaded: boolean = false;
-
   ngOnInit(): void {
     this.reportSvc.getC2M2Donuts().subscribe(
       (data: any) => {
         this.donutData = data;
-        this.loaded = true;
+
+        this.reportSvc.getC2M2TableData().subscribe(
+          (data: any) => {
+            this.tableData = data;
+            this.loaded = true;
+        });
       }
     );
   }
-
 }
