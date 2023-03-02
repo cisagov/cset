@@ -128,7 +128,7 @@
     <td style="border: 1px solid black;" *ngFor="let answer of question.domainAnswers" 
         [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
         <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
-          {{ answer.answer !== null ? 'answer.answer' : 'U' }}
+          {{ answer.answer !== null ? answer.answer : 'U' }}
         </div>
     </td>
   </tr>
