@@ -32,6 +32,9 @@ import { ReportService } from '../../../../services/report.service';
 export class C2m2SummaryResultsComponent implements OnInit {
 
   @Input() donutData: any[];
+  @Input() tableData: any;
+
+  domainCategories = [];
 
   milData: any[] = [];
 
@@ -40,6 +43,8 @@ export class C2m2SummaryResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getDomainCategories();
+
     let mil3 = [];
     let mil2 = [];
     let mil1 = [];
@@ -81,7 +86,38 @@ export class C2m2SummaryResultsComponent implements OnInit {
       case 2:
         return 1;
     }
-    
+  }
+
+  getDomainCategories() {
+    for (let i = 0; i < this.tableData.domainList.length; i++) {
+      let text = this.tableData.domainList[i].objectives[0].practices[0].title
+      let modifiedText = text.split('-')[0];
+      this.domainCategories.push(modifiedText);
+    }
+  }
+
+  getBackgroundColor(answer: string) {
+    switch (answer) {
+      case 'FI':
+        return '#265B94';
+      case 'LI':
+        return '#90A5C7';
+      case 'PI':
+        return '#F5DA8C';
+      case 'NI':
+        return '#DCA237';
+      case 'U':
+      case null:
+        return '#AAAAAA';
+    }
+  }
+
+  getTextColor(answer: string) {
+    if (answer == 'FI') {
+      return 'white';
+    } else {
+      return 'black';
+    }
   }
 
 }
