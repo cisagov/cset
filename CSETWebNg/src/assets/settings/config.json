@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["TSA"],
+    "currentConfigChain": ["CSETonline"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
