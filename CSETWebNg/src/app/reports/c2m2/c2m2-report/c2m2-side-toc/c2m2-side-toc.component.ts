@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-side-toc',
@@ -29,6 +29,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
 })
 export class C2m2SideTocComponent implements OnInit {
+
+  @Input() domainData;
 
   constructor() { }
 
