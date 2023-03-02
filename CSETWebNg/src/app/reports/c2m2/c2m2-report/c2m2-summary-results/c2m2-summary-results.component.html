@@ -21,7 +21,8 @@
   SOFTWARE.
 -------------------------->
 <h1>3. Summary of Self-Evaluation Results</h1>
-<h1>3.1 MIL Achievement by Domain</h1>
+
+<h1 id="toc-mil-achievement-by-domain">3.1 MIL Achievement by Domain</h1>
 
 <p>Figure 2 shows the MIL achieved for each C2M2 domain.</p>
 
@@ -32,7 +33,7 @@
   </span>
 </div>
 
-<h1>3.2 Practice Implementation by Domain</h1>
+<h1 id="toc-practice-implementation-by-domain">3.2 Practice Implementation by Domain</h1>
 <p>
   Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for
   each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding
@@ -49,7 +50,7 @@
   <div *ngFor="let dataRow of milData; let i = index">
     <div class="d-flex" style="justify-items: space-evenly; ">
       <!--supplies donut with current MIL level info for each domain -->
-      <div *ngFor="let data of dataRow; let j = index"> 
+      <div *ngFor="let data of dataRow; let j = index">
         <div *ngIf="i == 0">
           <div *ngIf="j > 0" class="donut-grid-header">
             {{donutData[j - 1].shortTitle}}
@@ -103,7 +104,9 @@
   </span>
 </div>
 
-<h1>3.3 Implementation of Management Activities across Domains</h1>
+<h1 id="toc-implementation-of-management-activities">
+  3.3 Implementation of Management Activities across Domains
+</h1>
 <p>
   The final objective of each C2M2 domain includes practices focused on cybersecurity management activities. These
   practices focus on the extent to which cybersecurity practices are institutionalized, or ingrained, in the
@@ -125,7 +128,7 @@
     <td style="padding-left: 5px; padding-bottom: 3px;">
       {{ question.questionText }}
     </td>
-    <td style="border: 1px solid black;" *ngFor="let answer of question.domainAnswers" 
+    <td style="border: 1px solid black;" *ngFor="let answer of question.domainAnswers"
         [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
         <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
           {{ answer.answer !== null ? answer.answer : 'U' }}

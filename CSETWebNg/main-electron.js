@@ -391,7 +391,7 @@ function launchAPI(exeDir, fileName, port, window) {
         dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + stdout);
       }
     }
-  })
+  });
 }
 
 // Increment port number until a non listening port is found
