@@ -9,11 +9,11 @@ using Microsoft.Data.SqlClient;
 using System.IO;
 namespace UpgradeLibrary.Upgrade
 {
-    internal class ConvertDatabase12014 : ConvertSqlDatabase
+    internal class ConvertDatabase12015 : ConvertSqlDatabase
     {
-        public ConvertDatabase12014(string path) : base(path)
+        public ConvertDatabase12015(string path) : base(path)
         {
-            myVersion = new Version("12.0.1.4");
+            myVersion = new Version("12.0.1.5");
         }
 
         /// <summary>
@@ -24,13 +24,14 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12013_to_12014_AddGalleryItemGuids.sql"), conn);
-                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12013_to_12014_data.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12014_to_12015.sql"), conn);
+                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12014_to_12015_data.sql"), conn);
+
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading database version 12.0.1.3 to 12.0.1.4: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 12.0.1.4 to 12.0.1.5: " + e.Message);
             }
         }
     }
