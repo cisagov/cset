@@ -120,17 +120,17 @@
 <table>
   <tr>
     <td></td>
-    <td style="writing-mode: vertical-lr; transform: rotate(180deg); border: 1px solid black;" *ngFor="let domain of this.domainCategories">
+    <td style="writing-mode: vertical-lr; transform: rotate(180deg); border: 1px solid rgb(179, 179, 179);" *ngFor="let domain of this.domainCategories">
       {{ domain}}
     </td>
   </tr>
-  <tr style="border: 1px solid black;" *ngFor="let question of this.tableData.managementQuestions">
+  <tr style="border: 1px solid rgb(179, 179, 179);" *ngFor="let question of this.tableData.managementQuestions">
     <td style="padding-left: 5px; padding-bottom: 3px;">
       {{ question.questionText }}
     </td>
-    <td style="border: 1px solid black;" *ngFor="let answer of question.domainAnswers"
+    <td style="border: 1px solid rgb(179, 179, 179);" *ngFor="let answer of question.domainAnswers"
         [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
-        <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
+        <div style="vertical-align: middle; text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
           {{ answer.answer !== null ? answer.answer : 'U' }}
         </div>
     </td>
