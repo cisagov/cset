@@ -125,7 +125,6 @@ export class AssessmentService {
    */
   createNewAssessmentGallery(workflow: string, galleryItem: any) {
     let queryString: string = 'workflow=' + workflow + '&galleryGuid=' + galleryItem.gallery_Item_Guid;
-    console.log(galleryItem)
     if (!!galleryItem.custom_Set_Name) {
       queryString += '&csn=' + galleryItem.custom_Set_Name
     }

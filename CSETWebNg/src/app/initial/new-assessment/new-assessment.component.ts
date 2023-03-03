@@ -103,8 +103,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.checkNavigation();
-    console.log(this.gallerySvc.rows)
-
   }
 
   checkNavigation() {
