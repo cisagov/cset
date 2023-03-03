@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
-import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-cpg-practice-table',
@@ -56,12 +55,9 @@ export class CpgPracticeTableComponent implements OnInit {
       this.model.Domain.forEach(d => {
         if (!(d.Question instanceof Array)) {
           const questions = [].concat(d.Question);
-          console.log(questions);
           d.Question = JSON.parse(JSON.stringify(questions));
         }
       });
-
-      console.log(this.model);
     });
   }
 
