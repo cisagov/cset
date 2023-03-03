@@ -133,7 +133,7 @@
 	{ "s": "CONTENTS", "p": [14, 12, 4] },
 	{ "s": "CONTINGENCY", "p": [13] },
 	{ "s": "CONTINUE", "p": [4] },
-	{ "s": "CONTINUES", "p": [8, 4] },
+	{ "s": "CONTINUES", "p": [4] },
 	{ "s": "CONTINUOUS", "p": [13, 2] },
 	{ "s": "CONTRACT", "p": [14, 13, 12] },
 	{ "s": "CONTRACTOR", "p": [13] },
