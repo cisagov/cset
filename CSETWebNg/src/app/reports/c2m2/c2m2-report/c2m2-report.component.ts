@@ -32,6 +32,8 @@ import { ReportService } from '../../../services/report.service';
 export class C2m2ReportComponent implements OnInit {
   donutData: any[] = [];
   tableData: any[] = [];
+  assessmentInfo: any;
+
   loaded: boolean = false;
 
   constructor(
@@ -46,7 +48,13 @@ export class C2m2ReportComponent implements OnInit {
         this.reportSvc.getC2M2TableData().subscribe(
           (data: any) => {
             this.tableData = data;
-            this.loaded = true;
+
+            this.reportSvc.getAssessmentInfoForReport().subscribe(
+              (data: any) => {
+                this.assessmentInfo = data;
+                this.loaded = true;
+              }
+            )
         });
       }
     );
