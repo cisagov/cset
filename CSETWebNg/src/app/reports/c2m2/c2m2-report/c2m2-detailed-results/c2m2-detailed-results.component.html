@@ -28,12 +28,12 @@
   further detail regarding self-evaluation results.
 </p>
 
-<div *ngFor="let domain of donutData; let i = index">
+<div *ngFor="let domain of donutData; let i = index" [id]="'toc-' + domain.shortTitle" style="scroll-margin-top: 2rem;">
   <h1>4.{{domain.sequence}} Domain: {{domain.title}} ({{domain.shortTitle}})</h1>
   <p>
     {{domain.description}}
   </p>
-  
+
   <!-- start of the donut box -->
   <div style="position: relative; border: 1px solid rgb(179, 179, 179);">
     <div class="color-legend ml-3 mt-1" style="width: 60%; flex-wrap: wrap;">
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div style="position: absolute; font-size: 0.8em; text-align: right; 
+    <div style="position: absolute; font-size: 0.8em; text-align: right;
     font-weight: bold; top: 8px; right: 12px; width: 40%">
       <div>{{domain.title}}</div>
     </div>
@@ -68,7 +68,7 @@
       text-align: center; align-items: top;">
 
       <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
-        
+
         <!-- supplying the donuts with question info -->
         <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
         <p class="mt-2" style="font-size: 0.8em;">{{objective.title}}</p>
@@ -83,9 +83,11 @@
     <table class="heatmap">
       <tr>
         <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
-        <td class="heatmap-answer-column" *ngFor="let practice of row.practices" 
+        <td class="heatmap-answer-column" *ngFor="let practice of row.practices"
           [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
-            {{ practice.number }}
+            <div [ngStyle]="{'color': getHeapMapTextColor(practice.answer)}">
+              {{ practice.number }}
+            </div>
         </td>
       </tr>
     </table>

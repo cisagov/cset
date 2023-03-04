@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-introduction',
@@ -30,15 +30,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class C2m2IntroductionComponent implements OnInit {
 
-  scope: string;
-  date: string;
-  additionalNotes: string;
+  @Input() assessmentInfo;
+
   reportGeneratedDate: Date;
 
   constructor() { }
 
   ngOnInit(): void {
-    // TODO: set values for scope, date, and additionalNotes here...
     this.reportGeneratedDate = new Date();
   }
 
