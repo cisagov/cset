@@ -52,6 +52,17 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
+        [Route("api/reports/info")]
+        public IActionResult GetAssessmentInfoForReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData.INFORMATION info = _report.GetInformation();
+    
+            return Ok(info);
+        }
+
+        [HttpGet]
         [Route("api/reports/securityplan")]
         public IActionResult GetSecurityPlan()
         {

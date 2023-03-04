@@ -68,4 +68,12 @@ export class C2m2DetailedResultsComponent implements OnInit {
         return '#AAAAAA';
     }
   }
+
+  getHeapMapTextColor(answer: string) {
+    if (answer == 'FI') {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  }
 }

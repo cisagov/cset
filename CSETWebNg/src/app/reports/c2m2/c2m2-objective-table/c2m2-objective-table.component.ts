@@ -60,4 +60,12 @@ export class C2m2ObjectiveTableComponent implements OnInit {
         return '#AAAAAA';
     }
   }
+
+  getTextColor(answer: string) {
+    if (answer == 'FI') {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  }
 }
