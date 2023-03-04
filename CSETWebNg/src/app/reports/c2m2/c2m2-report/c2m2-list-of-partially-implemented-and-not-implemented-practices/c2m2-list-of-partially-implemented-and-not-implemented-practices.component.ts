@@ -336,7 +336,7 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
     if(answerText == 'NI') {
       return 2;
     }
-    if(answerText == null) { // 'U'
+    if(answerText == null || answerText=='U') { // 'U'
       return 3;
     }
   }
