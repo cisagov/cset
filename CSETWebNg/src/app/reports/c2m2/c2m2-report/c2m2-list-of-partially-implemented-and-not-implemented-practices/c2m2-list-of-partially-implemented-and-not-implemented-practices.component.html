@@ -63,17 +63,11 @@
         <tr>
           <td [ngClass]="styleSwitcher(practice.answerText)" [attr.rowspan]="getNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)+1" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
             {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
-            <!-- {{getNewAnswerSection(rowspanList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)}} -->
           </td>
         </tr>
       </ng-container>
       <!-- last 3 columns -->
       <tr>
-        <!-- the indexOf stuff gets the # out of 'MIL-#' -->
-        <!-- <td>{{practice.mil.charAt(practice.mil.indexOf('-')+1)}}</td>  -->
-        <!-- <td [ngClass]="styleSwitcher(practice.answerText)" style="text-align: center; font-weight: bold;border: 1px solid rgb(179, 179, 179);">
-          {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
-        </td> -->
         <td style="border: 1px solid rgb(179, 179, 179);">{{practice.title}}</td>
         <td style="border: 1px solid rgb(179, 179, 179);">{{practice.questionText}}</td>
         <td style="border: 1px solid rgb(179, 179, 179);">{{nullReplaceWithEmpty(practice.comment)}}</td>
