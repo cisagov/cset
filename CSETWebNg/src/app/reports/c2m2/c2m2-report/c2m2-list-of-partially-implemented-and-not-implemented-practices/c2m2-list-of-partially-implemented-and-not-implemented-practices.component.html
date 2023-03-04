@@ -31,3 +31,54 @@
   at that MIL, with Partially Implemented practices followed by Not Implemented practices. This highlights the practices
   that may be the focus of improvement efforts to reach a MIL target in each domain.
 </p>
+<div *ngFor="let domain of domainList; let i = index">
+  <h1>Domain: {{domain.title}} ({{domain.objectives[0].practices[0].title.substring(0, domain.objectives[0].practices[0].title.indexOf('-'))}})</h1>
+
+  <table class="table-responsive td-align-top td-padding-half-rem">
+    <tr class="table-header" style="width: 800px;">
+        <td style="border: 1px solid rgb(179, 179, 179);width: 50px;">MIL</td>
+        <td style="border: 1px solid rgb(179, 179, 179);width: 125px;">Response</td>
+        <td style="border: 1px solid rgb(179, 179, 179);width: 100px;">ID</td>
+        <td style="border: 1px solid rgb(179, 179, 179);width: 325px;">Practice</td>
+        <td style="border: 1px solid rgb(179, 179, 179);width: 300px;">Self-Evaluation Notes</td>
+    </tr>
+
+    <ng-container *ngIf="milSortedDomainList[i].length == 0">
+      <tr>
+        <td colspan="5" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
+          All MIL completed for the {{domain.title}} domain.
+        </td>
+      </tr>
+    </ng-container>
+
+    <ng-container *ngFor="let practice of milSortedDomainList[i]; let j = index;">
+      <ng-container *ngIf="checkIfNewMilSection(rowspanList[i], j)">
+        <tr>
+          <td [attr.rowspan]="getNewMilSection(rowspanList[i], j, i)" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
+            {{practice.mil.charAt(practice.mil.indexOf('-')+1)}}
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="checkIfNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)">
+        <tr>
+          <td [ngClass]="styleSwitcher(practice.answerText)" [attr.rowspan]="getNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)+1" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
+            {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
+            <!-- {{getNewAnswerSection(rowspanList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)}} -->
+          </td>
+        </tr>
+      </ng-container>
+      <!-- last 3 columns -->
+      <tr>
+        <!-- the indexOf stuff gets the # out of 'MIL-#' -->
+        <!-- <td>{{practice.mil.charAt(practice.mil.indexOf('-')+1)}}</td>  -->
+        <!-- <td [ngClass]="styleSwitcher(practice.answerText)" style="text-align: center; font-weight: bold;border: 1px solid rgb(179, 179, 179);">
+          {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
+        </td> -->
+        <td style="border: 1px solid rgb(179, 179, 179);">{{practice.title}}</td>
+        <td style="border: 1px solid rgb(179, 179, 179);">{{practice.questionText}}</td>
+        <td style="border: 1px solid rgb(179, 179, 179);">{{nullReplaceWithEmpty(practice.comment)}}</td>
+      </tr>
+      
+    </ng-container>
+  </table>
+</div>
