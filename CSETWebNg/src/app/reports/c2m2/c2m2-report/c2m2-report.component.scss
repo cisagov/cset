@@ -172,7 +172,8 @@ a:hover {
 
 
 .heatmap {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 3px;
 }
 
 .heatmap-mil-column {
@@ -184,4 +185,15 @@ a:hover {
   padding: 3px;
   color: white;
   text-align: center;
+}
+
+.comment-table {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid rgb(179, 179, 179);
+}
+
+.all-borders {
+  border: 1px solid rgb(179, 179, 179);
 }
