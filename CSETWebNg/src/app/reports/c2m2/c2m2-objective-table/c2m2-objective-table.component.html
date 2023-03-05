@@ -20,9 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngFor="let objective of data">
+<div *ngFor="let objective of data; let i = index;">
 
-  <h6 class="objective-title">{{ objective.title }}</h6>
+  <h5 class="objective-title">Objective {{i+1}}: {{ objective.title }}</h5>
   <table class="objective-table">
     <tr style="text-align: center;">
       <th>MIL</th>
@@ -32,8 +32,8 @@
     </tr>
     <tr class="tallRow" *ngFor="let practice of objective.practices">
       <td class="centered" width="5%">{{ removeHyphen(practice.mil) }}</td>
-      <td class="centered" width="15%">{{ practice.title }}</td>
-      <td width="70">{{ practice.questionText }}</td>
+      <td class="centered" style="white-space: nowrap;" width="15%">{{ practice.title }}</td>
+      <td width="70%" style="padding-left: 4px;">{{ practice.questionText }}</td>
       <td class="centered" width="10%" [ngStyle]="{'background-color': getAnswerColor(practice.answerText)}">
         <div [ngStyle]="{'color': getTextColor(practice.answerText)}">
           {{ practice.answerText !== null ? 'practice.answerText' : 'U' }}
