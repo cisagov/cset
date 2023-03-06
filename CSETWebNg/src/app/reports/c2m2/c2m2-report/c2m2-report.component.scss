@@ -170,6 +170,14 @@ a:hover {
   text-decoration: underline !important;
 }
 
+.vertical-headers {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  border: 1px solid rgb(179, 179, 179);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
 
 .heatmap {
   border-collapse: separate;
@@ -178,13 +186,17 @@ a:hover {
 
 .heatmap-mil-column {
   padding-right: 10px;
+  white-space: nowrap;
 }
 
 .heatmap-answer-column {
-  border: 1px solid gray;
+  border: 1px solid rgb(179, 179, 179);
   padding: 3px;
   color: white;
   text-align: center;
+  min-width: 25px;
+  overflow-x: visible;
+  font-size: 14px;
 }
 
 .comment-table {
