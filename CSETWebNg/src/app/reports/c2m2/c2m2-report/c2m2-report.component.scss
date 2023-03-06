@@ -30,6 +30,7 @@ h4 {
   font-size: 1rem !important;
   font-style: normal !important;
   font-weight: bold !important;
+  color: #0A5278;
 }
 
 .c2m2-report-background {
@@ -155,16 +156,6 @@ ol, ul {
   }
 }
 
-@media print {
-  .side-toc {
-      display: none;
-  }
-
-  .c2m2-report-background {
-    background-color: transparent;
-  }
-}
-
 .side-toc {
   background-color: #f0f0f0;
   box-sizing: border-box;
@@ -248,4 +239,39 @@ a:hover {
 
 .all-borders {
   border: 1px solid rgb(179, 179, 179);
+}
+
+/**************** Print styles ****************/
+@page {
+  size: letter;
+  margin: 1.5cm 0;
+}
+
+@media print {
+  .side-toc {
+    display: none;
+  }
+
+  .c2m2-report-background {
+    background-color: transparent;
+    display: inline;
+  }
+
+  html, body {
+    margin: 0 !important;
+  }
+
+  .report-body {
+    margin: 1.5cm 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page-break {
+    padding-top: 0 !important;
+  }
+
+  main {
+    box-decoration-break: clone;
+  }
 }
