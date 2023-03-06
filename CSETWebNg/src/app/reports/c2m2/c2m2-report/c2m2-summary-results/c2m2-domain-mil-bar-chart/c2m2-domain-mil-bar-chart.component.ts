@@ -36,7 +36,7 @@ export class C2m2DomainMilBarChartComponent implements OnInit {
   data: any[] = [];
 
   colorScheme = {
-    domain: ['#807C7C']
+    domain: ['#0A5278']
   };
 
   constructor() { }
