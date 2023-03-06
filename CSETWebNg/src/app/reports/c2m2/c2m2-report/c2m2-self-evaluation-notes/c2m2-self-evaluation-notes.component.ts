@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-self-evaluation-notes',
@@ -32,7 +32,93 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
 
   constructor() { }
 
+  @Input() tableData: any = null;
+  loading: boolean = true;
+  domainTitles = [];
+  domainCategories = [];
+  commentCount: number = 0;
+
+  commentTableData: {
+    id: string, // ASSET-1a
+    mil: string, // 1
+    practiceText: string, // "IT and OT assets that are important to..."
+    response: string, // "Fully Implemented (FI)"
+    comment: string // "My comment!"
+  } [] = [];
+
+
   ngOnInit(): void {
+    this.parseData();
+  }
+
+  parseData() {
+    for (let i = 0; i < this.tableData.domainList.length; i++) {
+      this.commentCount = 0;
+
+      // Domain Title ==> "Manage IT and OT Asset Inventory"
+      this.domainTitles.push(this.tableData.domainList[i].title);
+
+      // Domain Category ==> "ASSET-1a" or "THREAT-2c". Modified removes the text after the dash.
+      let category = this.tableData.domainList[i].objectives[0].practices[0].title;
+      let modifiedCategory = category.split('-')[0];
+
+      if (modifiedCategory === 'THIRD') {
+        this.domainCategories.push('THIRD-PARTIES'); // Third-parties is the only domain with a '-' inside the domain.
+      } else {
+        this.domainCategories.push(modifiedCategory);
+      }
+
+      // Table Data
+      for (let j = 0; j < this.tableData.domainList[i].objectives.length; j++) {
+        for (let k = 0; k < this.tableData.domainList[i].objectives[j].practices.length; k++) {
+          let myData = this.tableData.domainList[i].objectives[j].practices[k];
+
+          if (myData.comment !== null && myData.comment !== '') {
+            this.countComment();
+
+            this.commentTableData.push({
+              "id": myData.title, 
+              "mil": (myData.mil = myData.mil.split('-')[1]), 
+              "practiceText": myData.questionText, 
+              "response": (myData.answerText != null ? myData.answerText : 'U'), 
+              "comment": myData.commment
+            });
+          }
+        }
+      }
+
+      if (i === this.tableData.domainList.length - 1) {
+        this.loading = false;
+      }
+    }
+  }
+
+  getBackgroundColor(answer: string) {
+    switch (answer) {
+      case 'FI':
+        return '#265B94';
+      case 'LI':
+        return '#90A5C7';
+      case 'PI':
+        return '#F5DA8C';
+      case 'NI':
+        return '#DCA237';
+      case 'U':
+      case null:
+        return '#AAAAAA';
+    }
+  }
+
+  getTextColor(answer: string) {
+    if (answer == 'FI') {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  }
+
+  countComment() {
+    this.commentCount++;
   }
 
 }
