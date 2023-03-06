@@ -319,14 +319,6 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
       this.answerTextList.push(newAnswerArray);
     }
 
-    console.log('milSorted:')
-    console.log(this.milSortedDomainList)
-
-    console.log('rowspanList:')
-    console.log(this.rowspanList)
-
-    console.log('answerTextList: ')
-    console.log(this.answerTextList)
   }
 
   answerToValue(answerText: string) {
