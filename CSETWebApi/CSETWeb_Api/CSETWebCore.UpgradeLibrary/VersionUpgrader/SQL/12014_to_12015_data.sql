@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/3/2023 7:18:13 AM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/6/2023 7:37:11 AM
 
 */
 		
@@ -245,11 +245,7 @@ PRINT(N'Update row in [dbo].[MATURITY_MODELS]')
 UPDATE [dbo].[MATURITY_MODELS] SET [Answer_Options]=N'FI,LI,PI,NI' WHERE [Maturity_Model_Id] = 12
 
 PRINT(N'Update rows in [dbo].[GALLERY_ITEM]')
-UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'Guidelines and best practices tailored for Wind Energy Systems.  
-This cybersecurity evaluation is tuned to the Operational Technology systems, 
-average cybersecurity program maturity level, and business practices typically 
-supported by Utility connected wind systems and is geared to help identify 
-and understand the cyber risks for this type of user.' WHERE [Gallery_Item_Guid] = 'a3b6d634-b149-41cf-a16f-4bb19db5e6c0'
+UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'Guidelines and best practices tailored for Utility Scale Wind plants. This cybersecurity evaluation is tuned to the Operational Technology systems, average cybersecurity program maturity level, and business practices typically supported by Utility connected Wind plant systems and is geared to help identify and understand the cyber risks for this type of user.', [Title]=N'Wind Cybersecurity Evaluation Risk Tool (Wind-CERT)' WHERE [Gallery_Item_Guid] = 'a3b6d634-b149-41cf-a16f-4bb19db5e6c0'
 UPDATE [dbo].[GALLERY_ITEM] SET [Is_Visible]=1 WHERE [Gallery_Item_Guid] = 'd752a1b1-9afe-44cb-b114-e7517339d776'
 PRINT(N'Operation applied to 2 rows out of 2')
 
