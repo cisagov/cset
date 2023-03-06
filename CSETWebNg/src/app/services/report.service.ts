@@ -63,6 +63,13 @@ export class ReportService {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
     }
 
+    /**
+     * Calls the API to get basic information about the assessment for a report
+     */
+    public getAssessmentInfoForReport() {
+      return this.http.get(this.apiUrl + 'reports/info')
+    }
+
     public getAggReport(reportId: string, aggId: number) {
         return this.http.get(this.apiUrl + 'reports/' + reportId + '?aggregationID=' + aggId);
     }
@@ -125,7 +132,7 @@ export class ReportService {
         }
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
-    
+
 
     /**
      * Split paragraphs into divs
