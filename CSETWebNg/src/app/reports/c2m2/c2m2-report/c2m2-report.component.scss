@@ -120,6 +120,34 @@ h4 {
   margin: 4px;
 }
 
+.border {
+  border: 1px solid rgb(179, 179, 179); 
+}
+
+.table-header {
+  background-color: rgb(230, 230, 230);
+}
+.pi-background {
+  background-color: #F5DA8C;
+}
+.ni-background {
+  background-color: #DCA237;
+}
+.u-background {
+  background-color: rgb(230, 230, 230);
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.table-responsive > .table-bordered {
+  border: 0;
+}
+
 ol, ul {
   margin-bottom: 1rem !important;
 }
