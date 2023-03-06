@@ -33,7 +33,7 @@
     <tr class="tallRow" *ngFor="let practice of objective.practices">
       <td class="centered" width="5%">{{ removeHyphen(practice.mil) }}</td>
       <td class="centered" style="white-space: nowrap;" width="15%">{{ practice.title }}</td>
-      <td width="70%" style="padding-left: 4px;">{{ practice.questionText }}</td>
+      <td class="left-right-padded" width="70%">{{ practice.questionText }}</td>
       <td class="centered" width="10%" [ngStyle]="{'background-color': getAnswerColor(practice.answerText)}">
         <div [ngStyle]="{'color': getTextColor(practice.answerText)}">
           {{ practice.answerText !== null ? 'practice.answerText' : 'U' }}
