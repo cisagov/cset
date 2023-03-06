@@ -216,10 +216,27 @@ namespace CSETWebCore.Business.ModuleBuilder
             string newSetName = GenerateNewSetName();
 
             ModuleCloner cloner = new ModuleCloner(_context);
-            bool cloneSuccess = cloner.CloneModule(setName, newSetName);
+            SETS clonedSet = cloner.CloneModule(setName, newSetName);
 
-            if (cloneSuccess)
+            if (clonedSet != null)
             {
+                // Add custom gallery card for newly cloned set
+                string configSetup = "{Sets:[\"" + clonedSet.Set_Name + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
+
+                var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
+                int colIndex = 0;
+                if (custom != null)
+                {
+                    var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+
+                    if (colIndexList != null)
+                    {
+                        colIndex = colIndexList.Count;
+                    }
+                }
+
+                _galleryEditor.AddGalleryItem("", "", clonedSet.Standard_ToolTip, clonedSet.Full_Name, configSetup, custom.Group_Id, colIndex);
+
                 return GetSetDetail(newSetName);
             }
 

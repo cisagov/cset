@@ -125,7 +125,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       if (state.breakpoints['(min-width:1460px)']) {
         this.cardsPerView = 5;
       }
-      this.shuffelCards(this.cardsPerView);
+      this.shuffleCards(this.cardsPerView);
     });
 
     const dom = document.createElement("div");
@@ -151,7 +151,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           score: 1,
         })
         );
-        this.shuffelCards(this.cardsPerView);
+        this.shuffleCards(this.cardsPerView);
         this.sort();
       }
     );
@@ -163,8 +163,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     this.checkNavigation();
   }
 
-  shuffelCards(i: number) {
-
+  shuffleCards(i: number) {
     this.rows = [];
     var count = this.cardsPerView;
     var row = [];
@@ -226,7 +225,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       );
     }
 
-    this.shuffelCards(this.cardsPerView);
+    this.shuffleCards(this.cardsPerView);
   }
 
   onHover(i: number) {

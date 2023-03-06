@@ -2935,7 +2935,7 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
                 ;
 
             var newArticleWrapperHeight = newArticlePreWrapperHeight
-                - this.dom.$articleHeader.outerHeight( true )
+                - ( 0 < this.dom.$articleHeader.length ? this.dom.$articleHeader.outerHeight( true ) : 0 )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderTopWidth" )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderBottomWidth" )
             ;

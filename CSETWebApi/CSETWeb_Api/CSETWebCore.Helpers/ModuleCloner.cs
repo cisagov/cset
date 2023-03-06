@@ -30,7 +30,7 @@ namespace CSETWebCore.Helpers
         /// <param name="setName"></param>
         /// <param name="newSetName"></param>
         /// <returns></returns>
-        public bool CloneModule(string setName, string newSetName)
+        public SETS CloneModule(string setName, string newSetName)
         {
             this.origSetName = setName;
             this.newSetName = newSetName;
@@ -40,7 +40,7 @@ namespace CSETWebCore.Helpers
             var origSet = _context.SETS.Where(x => x.Set_Name == this.origSetName).FirstOrDefault();
             if (origSet == null)
             {
-                return false;
+                return null;
             }
 
             var copySet = (SETS)_context.Entry(origSet).CurrentValues.ToObject();
@@ -58,7 +58,7 @@ namespace CSETWebCore.Helpers
             CloneRequirements(copySet);
 
             // indicate that the cloning took place
-            return true;
+            return copySet;
         }
 
 
