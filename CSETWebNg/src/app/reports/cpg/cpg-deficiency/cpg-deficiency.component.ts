@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { QuestionsService } from '../../../services/questions.service';
 import { RraDataService } from '../../../services/rra-data.service';
 
 @Component({
@@ -38,13 +39,14 @@ export class CpgDeficiencyComponent implements OnInit {
 
   loading = false;
 
-  catPracMap: Map<number, any[]> = new Map<number, any[]>();
+  // catPracMap: Map<number, any[]> = new Map<number, any[]>(); // <grouping_Id, [ansText_S, ansText_N, ans_Text_U]>
 
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
 
-  answerDistribByDomain: any;
+  info: any;
+  def: any;
 
   /**
    * 
@@ -54,6 +56,7 @@ export class CpgDeficiencyComponent implements OnInit {
     public titleSvc: Title,
     public maturitySvc: MaturityService,
     private assessSvc: AssessmentService,
+    public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
     public configSvc: ConfigService
   ) { }
@@ -66,22 +69,39 @@ export class CpgDeficiencyComponent implements OnInit {
 
     this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
       console.log(resp)
-      let info = resp.information;
-      let def = resp.deficienciesList;
+      this.info = resp.information;
+      this.def = resp.deficienciesList;
 
-      this.assessmentName = info.assessment_Name;
-      this.assessmentDate = info.assessment_Date;
-      this.assessorName = info.assessor_Name;
+      this.assessmentName = this.info.assessment_Name;
+      this.assessmentDate = this.info.assessment_Date;
+      this.assessorName = this.info.assessor_Name;
 
-      for(let i = 0; i < def.length; i++) {
-        let ansText = def[i].answer.answer_Text;
-        let questInfo = def[i].mat;
+      this.loading = true;
 
-        if (!this.catPracMap.has(questInfo.grouping_Id)) {
+      // for(let i = 0; i < def.length; i++) {
+      //   let ansText = def[i].answer.answer_Text;
+      //   let questInfo = def[i].mat;
+
+      //   if (!this.catPracMap.has(questInfo.grouping_Id)) {
           
-        }
+      //   } else {
+      //     let currCatArray = this.catPracMap.get(questInfo.grouping_Id);
+      //     currCatArray.push();
+      //   }
         
-      }
+      // }
     })
+  }
+
+  colorSwitcher(color: string) {
+    switch(color){
+      case 'S':
+        return 'scoped-background';
+      case 'N':
+        return 'not-background';
+      // case 'S':
+      //   return 'scoped-background';
+            
+    }
   }
 }

@@ -25,45 +25,61 @@
     <app-cover-sheet-a [title]="'CYBERSECURITY PERFORMANCE GOALS (CPG) DEFICIENCY'" [assessmentName]="assessmentName"
         [assessmentDate]="assessmentDate" [assessorName]="assessorName"></app-cover-sheet-a>
 
-    <div class="page-break">
-        <app-report-disclaimer></app-report-disclaimer>
-    </div>
-
-    <div class="page-break">
-        <app-report-advisory></app-report-advisory>
-    </div>
-
-
-    <div class="page-break">
-        <h1>Performance Summary</h1>
+    <div class="disclaimer-blurb mt-4">
         <p>
-            This chart shows the answer distribution for each of the Security Practice categories.
+            This deficiency report lists the statements that are not currently compliant or "No" answers.
         </p>
-        <div class="chart mb-5 d-inline-block w-100">
-            <!-- <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"
-                class="mb-5"></app-cpg-domain-summary> -->
-        </div>
+        <p>
+            This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
+            the report in identifying gaps, prioritizing work, and beginning to make a plan to address
+            the gaps by implementing the controls necessary to come into compliance with the associated statement.
+        </p>
+        <!-- <p>
+            The percentage gap in each domain is also listed and will help to determine the priority.
+            EDM is a cumulative maturity model meaning lower levels should be completed before
+            moving to higher levels. Ideally baseline should be completed before focusing efforts on
+            controls in evolving and so forth up the line of maturity levels.</p> -->
+    </div>
 
-        <div>
-            <h4>
-                Chart Detail
-            </h4>
+    <div class="d-flex flex-row justify-content-between align-items-end">
+        <h1 class="page-title">Deficiencies</h1>
+        <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+    </div>
+    <hr class="page-break m-0">
 
-            <p>This table indicates the answer distribution percentages for each category as indicated in the chart
-                above.
-            </p>
-
-            <!-- <app-cpg-domain-summary-table [data]="answerDistribByDomain" [inReport]="true"></app-cpg-domain-summary-table> -->
-        </div>
+    <div *ngIf="loading">
+        <table role="presentation">
+            <ng-template ngFor let-s [ngForOf]="def">
+                <tr>
+                    <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
+                    <td class="deficiencies-list-comment"
+                        [innerHTML]="s.mat.question_Text"></td>
+                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                        <div style="width: 7rem">
+                            <!-- {{s.answer.answer_Text}} -->
+                            {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
+                        </div>
+                    </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                        src="assets/images/icons/MarkedFlag.png"></td>
+                </tr>
+                <tr *ngIf="s.answer.comment">
+                    <td></td>
+                    <td colspan="4">
+                        <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <hr class="my-2">
+                    </td>
+                </tr>
+            </ng-template>
+        </table>
     </div>
 
 
-    <div class="page-break">
-        <h1>Security Practice Checklist</h1>
-        <p class="mb-0">
-            This table lists all security practices and how they have been answered.
-        </p>
-        <!-- <app-cpg-practice-table></app-cpg-practice-table> -->
-    </div>
+    
 
 </div>
