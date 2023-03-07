@@ -395,6 +395,11 @@
             CPG Report
           </button>
         </div>
+        <div>
+          <button tabindex="0" (click)="clickReportLink('cpgDeficiency')" class="btn btn-link btn-link-dark text-left">
+            CPG Deficiency
+          </button>
+        </div>
       </div>
 
       <div *ngIf="!!assessSvc.assessment && (assessSvc.usesMaturityModel('C2M2')) && !isMobile"

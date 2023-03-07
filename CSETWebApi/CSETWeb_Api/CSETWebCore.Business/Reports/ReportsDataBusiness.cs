@@ -175,6 +175,10 @@ namespace CSETWebCore.Business.Reports
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
+            if (myModel.model.Model_Name.ToUpper() == "CPG")
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
 
             var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 

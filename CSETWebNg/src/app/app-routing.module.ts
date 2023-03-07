@@ -191,6 +191,7 @@ import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
+import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
@@ -499,6 +500,7 @@ const appRoutes: Routes = [
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'mvraReport', component: MvraReportComponent },
       { path: 'cpgReport', component: CpgReportComponent },
+      { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
       { path: 'c2m2Report', component: C2m2ReportComponent },
