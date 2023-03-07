@@ -179,7 +179,7 @@
             "code": "N",
             "buttonLabel": "Not",
             "buttonCss": "btn-no",
-            "answerLabel": "Not Started",
+            "answerLabel": "Not Implemented",
             "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
         }
     ],
