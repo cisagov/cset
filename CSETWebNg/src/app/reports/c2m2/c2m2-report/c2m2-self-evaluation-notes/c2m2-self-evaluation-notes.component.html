@@ -21,6 +21,7 @@
   SOFTWARE.
 -------------------------->
 <ng-container *ngIf="loading === false">
+
 <h1>6. Self-Evaluation Notes</h1>
 <p>
   This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation
@@ -42,27 +43,27 @@
       <th class="all-borders">Self-Evaluation Notes</th>
     </tr>
 
-    <ng-container *ngFor="let row of commentTableData">
-      <ng-container *ngIf="row.id.includes(domainCategories[i])">
-        <ng-container *ngIf="commentCount !==  0">
-          <!-- If we have comments -->
-          <tr class="all-borders">
+    <!-- If we have comments -->
+    <ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
+      <ng-container *ngFor="let row of commentTableData">
+        <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
+          <tr>
             <td class="all-borders" width="15%">{{ row.id }}</td>
             <td class="all-borders" width="5%">{{ row.mil }}</td>
-            <td class="all-borders" width="40%" style="text-align: left;">{{ row.practiceText }}</td>
+            <td class="all-borders" width="40%" style="text-align: left; padding-left: 4px;">{{ row.practiceText }}</td>
             <td class="all-borders" width="10%" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
               <div [ngStyle]="{'color': getTextColor(row.response)}">
                 {{ row.response }}
               </div>
             </td>
-            <td class="all-borders" width="30%">{{ row.comment }} lol</td>
+            <td class="all-borders" width="30%">{{ row.comment }}</td>
           </tr>
         </ng-container>
       </ng-container>
     </ng-container>
-
+  
     <!-- If we don't have comments -->
-    <ng-container *ngIf="commentCount == 0">
+    <ng-template #noComments>
       <tr><br></tr>
       <tr>
         <br>
@@ -70,9 +71,8 @@
         <br>
       </tr>
       <tr><br></tr>
-    </ng-container>
+    </ng-template>
 
   </table>
-
 </div>
 </ng-container>
