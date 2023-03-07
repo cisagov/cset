@@ -406,6 +406,7 @@ export class QuestionsService {
    */
   findAnsDefinition(modelId: Number, answerCode: string) {
     // first look for a skin-specific label set
+    console.log(answerCode)
     let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
       && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
     if (ans) {
