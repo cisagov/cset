@@ -36,7 +36,7 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
   loading: boolean = true;
   domainTitles = [];
   domainCategories = [];
-  commentCount: number = 0;
+  hasComments = new Map();
 
   commentTableData: {
     id: string, // ASSET-1a
@@ -53,8 +53,6 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
 
   parseData() {
     for (let i = 0; i < this.tableData.domainList.length; i++) {
-      this.commentCount = 0;
-
       // Domain Title ==> "Manage IT and OT Asset Inventory"
       this.domainTitles.push(this.tableData.domainList[i].title);
 
@@ -74,14 +72,14 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
           let myData = this.tableData.domainList[i].objectives[j].practices[k];
 
           if (myData.comment !== null && myData.comment !== '') {
-            this.countComment();
+            this.hasComments.set(modifiedCategory, true);
 
             this.commentTableData.push({
               "id": myData.title, 
               "mil": (myData.mil = myData.mil.split('-')[1]), 
               "practiceText": myData.questionText, 
               "response": (myData.answerText != null ? myData.answerText : 'U'), 
-              "comment": myData.commment
+              "comment": myData.comment
             });
           }
         }
@@ -117,8 +115,20 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
     }
   }
 
-  countComment() {
-    this.commentCount++;
+  checkForComments(category: string) {
+    if (this.hasComments.get(category) === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  checkCategory(id: string, category: string) {
+    if (id.split('-')[0] === category) {
+      return true;
+    } else {
+      return false;
+    } 
   }
 
 }
