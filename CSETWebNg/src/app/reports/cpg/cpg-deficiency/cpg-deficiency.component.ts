@@ -39,8 +39,11 @@ export class CpgDeficiencyComponent implements OnInit {
 
   loading = false;
 
-  // catPracMap: Map<number, any[]> = new Map<number, any[]>(); // <grouping_Id, [ansText_S, ansText_N, ans_Text_U]>
-
+  /**
+   * Sorry for hardcoding the cpgPracticeTag,
+   * but the purpose is to get the hardcoded HTML out of the question text,
+   * so look at this if wonky stuff is happening with question text stuff
+  */  
   cpgPracticeTag: string = '<p class="cpg-practice">';
 
   assessmentName: string;
