@@ -41,6 +41,8 @@ export class CpgDeficiencyComponent implements OnInit {
 
   // catPracMap: Map<number, any[]> = new Map<number, any[]>(); // <grouping_Id, [ansText_S, ansText_N, ans_Text_U]>
 
+  cpgPracticeTag: string = '<p class="cpg-practice">';
+
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -65,10 +67,9 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPGs Deficiency - CSET");
+    this.titleSvc.setTitle("CPG Deficiencies - CSET");
 
     this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
-      console.log(resp)
       this.info = resp.information;
       this.def = resp.deficienciesList;
 
@@ -77,31 +78,14 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessorName = this.info.assessor_Name;
 
       this.loading = true;
-
-      // for(let i = 0; i < def.length; i++) {
-      //   let ansText = def[i].answer.answer_Text;
-      //   let questInfo = def[i].mat;
-
-      //   if (!this.catPracMap.has(questInfo.grouping_Id)) {
-          
-      //   } else {
-      //     let currCatArray = this.catPracMap.get(questInfo.grouping_Id);
-      //     currCatArray.push();
-      //   }
-        
-      // }
     })
   }
 
-  colorSwitcher(color: string) {
-    switch(color){
-      case 'S':
-        return 'scoped-background';
-      case 'N':
-        return 'not-background';
-      // case 'S':
-      //   return 'scoped-background';
-            
-    }
+  parseQuestionText(textWithHtml: string) {
+    let startOfRealText = textWithHtml.indexOf(this.cpgPracticeTag)+this.cpgPracticeTag.length;
+    let endOfRealText = textWithHtml.indexOf('<', startOfRealText);
+
+    return textWithHtml.substring(startOfRealText, endOfRealText);
   }
+
 }
