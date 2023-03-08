@@ -30,9 +30,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class C2m2UsingSelfEvaluationResultsComponent implements OnInit {
 
+  loading: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.loading = false;
   }
 
 }

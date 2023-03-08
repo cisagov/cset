@@ -34,6 +34,7 @@ export class C2m2DomainMilBarChartComponent implements OnInit {
 
   view: any[] = [600, 700];
   data: any[] = [];
+  loading: boolean = true;
 
   colorScheme = {
     domain: ['#0A5278']
@@ -50,6 +51,8 @@ export class C2m2DomainMilBarChartComponent implements OnInit {
         }
       );
     });
+
+    this.loading = false;
   }
 
   xAxisTickFormatting(label) {

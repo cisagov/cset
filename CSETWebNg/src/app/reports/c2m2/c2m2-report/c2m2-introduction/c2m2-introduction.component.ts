@@ -33,11 +33,13 @@ export class C2m2IntroductionComponent implements OnInit {
   @Input() assessmentInfo;
 
   reportGeneratedDate: Date;
+  loading: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
     this.reportGeneratedDate = new Date();
+    this.loading = false;
   }
 
 }

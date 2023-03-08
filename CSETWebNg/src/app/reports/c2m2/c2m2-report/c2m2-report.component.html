@@ -20,42 +20,49 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="c2m2-report-background">
-  <app-c2m2-side-toc [domainData]="donutData"></app-c2m2-side-toc>
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
 
-  <div *ngIf="loaded" class="report-body pb-5 pt-5">
+<div *ngIf="!loading">
+  <div class="c2m2-report-background">
+    <app-c2m2-side-toc [domainData]="donutData"></app-c2m2-side-toc>
+    <div class="report-body pb-5 pt-5">
 
-    <div class="d-flex justify-content-center">
-      <app-c2m2-cover-sheet></app-c2m2-cover-sheet>
+      <div class="d-flex justify-content-center">
+        <app-c2m2-cover-sheet></app-c2m2-cover-sheet>
+      </div>
+
+      <div class="page-break" id="toc-intro">
+        <app-c2m2-introduction [assessmentInfo]="assessmentInfo"></app-c2m2-introduction>
+      </div>
+
+      <div class="page-break" id="toc-model-architecture">
+        <app-c2m2-model-architecture></app-c2m2-model-architecture>
+      </div>
+
+      <div class="page-break" id="toc-summary-results">
+        <app-c2m2-summary-results [donutData]="donutData" [tableData]="tableData"></app-c2m2-summary-results>
+      </div>
+
+      <div class="page-break" id="toc-detailed-results">
+        <app-c2m2-detailed-results [donutData]="donutData" [tableData]="tableData"></app-c2m2-detailed-results>
+      </div>
+
+      <div class="page-break" id="toc-using-results">
+        <app-c2m2-using-self-evaluation-results></app-c2m2-using-self-evaluation-results>
+      </div>
+
+      <div class="page-break" id="toc-self-eval-notes">
+        <app-c2m2-self-evaluation-notes [tableData]="tableData"></app-c2m2-self-evaluation-notes>
+      </div>
+
+      <div class="page-break" id="toc-list-of-pi-and-ni-practices">
+        <app-c2m2-list-of-partially-implemented-and-not-implemented-practices [tableData]="tableData"></app-c2m2-list-of-partially-implemented-and-not-implemented-practices>
+      </div>
+
     </div>
-
-    <div class="page-break" id="toc-intro">
-      <app-c2m2-introduction [assessmentInfo]="assessmentInfo"></app-c2m2-introduction>
-    </div>
-
-    <div class="page-break" id="toc-model-architecture">
-      <app-c2m2-model-architecture></app-c2m2-model-architecture>
-    </div>
-
-    <div class="page-break" id="toc-summary-results">
-      <app-c2m2-summary-results [donutData]="donutData" [tableData]="tableData"></app-c2m2-summary-results>
-    </div>
-
-    <div class="page-break" id="toc-detailed-results">
-      <app-c2m2-detailed-results [donutData]="donutData" [tableData]="tableData"></app-c2m2-detailed-results>
-    </div>
-
-    <div class="page-break" id="toc-using-results">
-      <app-c2m2-using-self-evaluation-results></app-c2m2-using-self-evaluation-results>
-    </div>
-
-    <div class="page-break" id="toc-self-eval-notes">
-      <app-c2m2-self-evaluation-notes [tableData]="tableData"></app-c2m2-self-evaluation-notes>
-    </div>
-
-    <div class="page-break" id="toc-list-of-pi-and-ni-practices">
-      <app-c2m2-list-of-partially-implemented-and-not-implemented-practices [tableData]="tableData"></app-c2m2-list-of-partially-implemented-and-not-implemented-practices>
-    </div>
-
   </div>
 </div>
