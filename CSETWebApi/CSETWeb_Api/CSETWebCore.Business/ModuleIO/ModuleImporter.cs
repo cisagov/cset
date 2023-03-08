@@ -98,7 +98,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
         }
 
@@ -238,7 +238,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                        NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                         var myExc = exc;
                     }
                 }
@@ -358,7 +358,7 @@ namespace CSETWebCore.Business.ModuleIO
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
 
@@ -427,7 +427,7 @@ namespace CSETWebCore.Business.ModuleIO
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                        NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                         // result.LogError(String.Format("Question {0} could not be added for requirement {1} {2}.", question, externalRequirement.Identifier, externalRequirement.Text));
                     }
                 }
@@ -499,7 +499,7 @@ namespace CSETWebCore.Business.ModuleIO
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                     throw new Exception("Error saving REQUIREMENT_QUESTIONS_SETS and REQUIREMENT_QUESTIONS");
                 }
             }

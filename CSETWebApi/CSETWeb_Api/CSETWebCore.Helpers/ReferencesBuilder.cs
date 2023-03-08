@@ -157,7 +157,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return new List<string>();
             }

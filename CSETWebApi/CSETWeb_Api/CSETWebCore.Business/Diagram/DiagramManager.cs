@@ -28,14 +28,12 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
-        static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(DiagramManager));
+        static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        //private IHttpContextAccessor _httpContext;
 
         public DiagramManager(CSETContext context)
         {
             _context = context;
-            //_httpContext = httpContext;
         }
 
         /// <summary>
@@ -96,7 +94,7 @@ namespace CSETWebCore.Business.Diagram
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 }
                 finally
                 {
@@ -183,7 +181,7 @@ namespace CSETWebCore.Business.Diagram
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 // whatever is in the database is not XML
                 return string.Empty;

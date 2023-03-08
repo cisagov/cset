@@ -371,7 +371,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 // The user is not currently 'in' an assessment
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
             if (userid != userBeingUpdated.UserId)
@@ -495,7 +495,7 @@ namespace CSETWebCore.Api.Controllers
                     // this can happen if there is no USER_SECURITY_QUESTIONS record
                     // but the code tries to delete it.
 
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 }
 
                 return Ok();
