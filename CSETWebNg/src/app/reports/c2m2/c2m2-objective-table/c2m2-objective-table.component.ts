@@ -31,13 +31,13 @@ import { Component, Input, OnInit} from '@angular/core';
 export class C2m2ObjectiveTableComponent implements OnInit {
 
   @Input() data: any[] = [];
-
+  loading: boolean = true;
 
   constructor() {
   }
 
   ngOnInit(): void {
-
+    this.loading = false;
   }
 
   removeHyphen(text: string) {

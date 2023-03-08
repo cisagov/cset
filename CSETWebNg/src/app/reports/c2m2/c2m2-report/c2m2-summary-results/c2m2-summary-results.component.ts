@@ -35,8 +35,9 @@ export class C2m2SummaryResultsComponent implements OnInit {
   @Input() tableData: any;
 
   domainCategories = [];
-
   milData: any[] = [];
+
+  loading: boolean = true;
 
   constructor(
     public reportSvc: ReportService
@@ -75,6 +76,8 @@ export class C2m2SummaryResultsComponent implements OnInit {
     this.milData.push(mil2);
     this.milData.push(mil1);
     this.milData.push(milsAchieved);
+
+    this.loading = false;
   }
 
   milNumberFlip(mil: number) {
