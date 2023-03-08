@@ -408,17 +408,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok(integrityCheckOptions);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        [Route("api/logtest")]
-        public IActionResult LogTest()
-        {
-            var l = LogManager.GetCurrentClassLogger();
-            l.Info("Hey hey, this is logtest");
-
-            return Ok();
-        }
-
 
         /// <summary>
         /// 
