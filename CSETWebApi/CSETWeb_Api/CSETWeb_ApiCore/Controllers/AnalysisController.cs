@@ -86,14 +86,15 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/analysis/Feedback")]
         public IActionResult GetFeedback()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            _requirement.SetRequirementAssessmentId(assessmentId);
-            FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
-
-            string AssessmentMode = GetAssessmentMode(assessmentId);
-
             try
             {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _requirement.SetRequirementAssessmentId(assessmentId);
+
+                FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
+
+                string AssessmentMode = GetAssessmentMode(assessmentId);
+
                 List<FeedbackQuestion> feedbackQuestions = new List<FeedbackQuestion>();
 
                 // standard questions
@@ -198,7 +199,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 throw;
             }
@@ -1063,8 +1064,11 @@ namespace CSETWebCore.Api.Controllers
         {
             string applicationMode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId)
                 .Select(x => x.Application_Mode).FirstOrDefault();
+
             if (applicationMode == null)
+            {
                 return "Q";
+            }
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 return "Q";

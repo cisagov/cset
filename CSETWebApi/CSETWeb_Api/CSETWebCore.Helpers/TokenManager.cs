@@ -281,15 +281,15 @@ namespace CSETWebCore.Helpers
             }
             catch (Microsoft.IdentityModel.Tokens.SecurityTokenSignatureKeyNotFoundException stss)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {stss}");
-                
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {stss}");
+
                 return false;
             }
             catch (ArgumentException argExc)
             {
                 // the encoded JWT string is not valid because it couldn't be decoded for whatever reason
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {argExc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {argExc}");
 
                 return false;
             }
@@ -298,7 +298,7 @@ namespace CSETWebCore.Helpers
                 // Something failed, likely in the validation.  The debugger shows a SecurityTokenInvalidSignatureException
                 // but that class is not found in Microsoft.IdentityModel.Tokens, or anywhere.
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }
@@ -308,7 +308,7 @@ namespace CSETWebCore.Helpers
             // see if the token has expired (we aren't really concerned with expiration on local installations)
             if (token.ValidTo < DateTime.UtcNow && !isLocal)
             {
-                log4net.LogManager.GetLogger("a").Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
+                NLog.LogManager.GetCurrentClassLogger().Warn($"TokenManager.IsTokenValid -- the token has expired.  ValidTo={token.ValidTo}, UtcNow={DateTime.UtcNow}");
 
                 return false;
             }
@@ -550,7 +550,7 @@ namespace CSETWebCore.Helpers
 
             if (assessmentId == null)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
+                NLog.LogManager.GetCurrentClassLogger().Error($"TokenManager.AuthorizeAdminRole - assessmentId not in token payload");
                 Throw401();
             }
 

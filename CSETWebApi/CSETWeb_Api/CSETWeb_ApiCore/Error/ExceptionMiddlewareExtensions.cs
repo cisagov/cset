@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using log4net.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +25,7 @@ namespace CSETWebCore.Api.Error
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        log4net.LogManager.GetLogger(app.GetType()).Error($"... {contextFeature.Error}");
+                        NLog.LogManager.GetCurrentClassLogger().Error($"... {contextFeature.Error}");
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
                             StatusCode = context.Response.StatusCode,

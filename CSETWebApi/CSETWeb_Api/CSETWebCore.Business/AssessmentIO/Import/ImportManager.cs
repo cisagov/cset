@@ -11,12 +11,10 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Model.Diagram;
-using log4net;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -90,7 +88,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             }
                             catch (Exception exc)
                             {
-                                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                                 throw;
                             }
@@ -146,7 +144,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                 }
                                 catch (Exception exc)
                                 {
-                                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                                     throw;
                                 }
@@ -225,7 +223,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
                 catch (Exception exc)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                     throw;
                 }

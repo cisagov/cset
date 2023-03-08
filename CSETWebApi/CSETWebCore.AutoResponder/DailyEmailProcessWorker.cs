@@ -35,19 +35,20 @@ namespace CSETWebCore.AutoResponder
 
         public void ProcessEmails()
         {
-            var userlist = from u in _context.USERS                           
+            var userlist = from u in _context.USERS
                            where u.EmailSentCount < 5 && u.PrimaryEmail != null
                            select u;
-            
+
             var emailHistory = (from h in _context.USER_EMAIL_HISTORY
-                               group h by h.UserId into g                               
-                               select new { userid = g.Key, LastSentDate = g.Max(s => s.EmailSentDate) }
-                               ).ToDictionary(x=> x.userid,y=> y.LastSentDate);
+                                group h by h.UserId into g
+                                select new { userid = g.Key, LastSentDate = g.Max(s => s.EmailSentDate) }
+                               ).ToDictionary(x => x.userid, y => y.LastSentDate);
 
 
             foreach (var user in userlist.ToList())
             {
-                if (IsValidEmail(user.PrimaryEmail)){
+                if (IsValidEmail(user.PrimaryEmail))
+                {
                     switch (user.EmailSentCount)
                     {
                         case 0:
@@ -81,7 +82,7 @@ namespace CSETWebCore.AutoResponder
             }
         }
 
-        private void checkEmailSend(USERS user, Dictionary<int,DateTime> emailHistory, int weekCheck)
+        private void checkEmailSend(USERS user, Dictionary<int, DateTime> emailHistory, int weekCheck)
         {
             DateTime lastSent;
             if (emailHistory.TryGetValue(user.UserId, out lastSent))
@@ -106,14 +107,14 @@ namespace CSETWebCore.AutoResponder
         /// <returns></returns>
         private bool ProcessUserAssessments(string userPrimaryEmail)
         {
-            
-            
+
+
             var assessment_ids = (from a in _context.ASSESSMENT_CONTACTS
-                                where a.PrimaryEmail == userPrimaryEmail
-                                select a.Assessment_Id).ToList();
-            
-            foreach(var assessment_id in assessment_ids)
-            {   
+                                  where a.PrimaryEmail == userPrimaryEmail
+                                  select a.Assessment_Id).ToList();
+
+            foreach (var assessment_id in assessment_ids)
+            {
                 _context.Database.ExecuteSql($"exec FillAll {assessment_id}");
                 if (percentComplete(assessment_id))
                     return false;
@@ -128,15 +129,15 @@ namespace CSETWebCore.AutoResponder
                        where a.Assessment_Id == assessmentId
                        group a by a.Answer_Text into answer_group
                        select new
-                        {
-                            answer_text = answer_group.Key,
-                            answer_count = answer_group.Count()
-                        };
+                       {
+                           answer_text = answer_group.Key,
+                           answer_count = answer_group.Count()
+                       };
 
             //go through the list and if the answer percentage is greater than 95
             //the assessment is complete
-            int total = 0; 
-            foreach(var item in list)
+            int total = 0;
+            foreach (var item in list)
             {
                 total += item.answer_count;
             }
@@ -146,7 +147,7 @@ namespace CSETWebCore.AutoResponder
             else
             {
                 int unanswer_count = unanswer.answer_count;
-                double percent = (double) unanswer_count / (double) total;
+                double percent = (double)unanswer_count / (double)total;
                 return (percent <= .05);
             }
 
@@ -179,7 +180,7 @@ namespace CSETWebCore.AutoResponder
         private bool AtleastAWeekHasPassed(DateTime StartDate, int weekspassed)
         {
             DateTime EndDate = this.NowDate;
-            return (EndDate - StartDate).TotalDays >= 7*weekspassed;
+            return (EndDate - StartDate).TotalDays >= 7 * weekspassed;
         }
 
 
@@ -194,9 +195,10 @@ namespace CSETWebCore.AutoResponder
                     EmailSentDate = this.NowDate
                 });
                 _context.SaveChanges();
-            }catch(Exception exc)
-            {   
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
         }
     }
