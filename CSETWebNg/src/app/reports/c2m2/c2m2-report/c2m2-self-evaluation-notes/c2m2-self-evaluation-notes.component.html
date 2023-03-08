@@ -20,59 +20,64 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *ngIf="loading === false">
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
 
-<h1>6. Self-Evaluation Notes</h1>
-<p>
-  This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation
-  status. Reviewing the notes may provide the rationale for the selection of an implementation response during the
-  completion of the self-evaluation. The tables in this section are ordered by model practice identifier.
-</p>
+<div *ngIf="!loading">
+  <h1>6. Self-Evaluation Notes</h1>
+  <p>
+    This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation
+    status. Reviewing the notes may provide the rationale for the selection of an implementation response during the
+    completion of the self-evaluation. The tables in this section are ordered by model practice identifier.
+  </p>
 
-<div *ngFor="let domain of domainTitles; let i = index;">
-  <h1 style="color: #265B94;">
-    Domain: {{ domainTitles[i] }} ({{ domainCategories[i] }})
-  </h1>
+  <div *ngFor="let domain of domainTitles; let i = index;">
+    <h1 style="color: #265B94;">
+      Domain: {{ domainTitles[i] }} ({{ domainCategories[i] }})
+    </h1>
 
-  <table class="comment-table">
-    <tr class="all-borders">
-      <th class="all-borders">ID</th>
-      <th class="all-borders" style="padding: 5px;">MIL</th>
-      <th class="all-borders">Practice</th>
-      <th class="all-borders">Response</th>
-      <th class="all-borders">Self-Evaluation Notes</th>
-    </tr>
+    <table class="comment-table">
+      <tr class="all-borders">
+        <th class="all-borders">ID</th>
+        <th class="all-borders" style="padding: 5px;">MIL</th>
+        <th class="all-borders">Practice</th>
+        <th class="all-borders">Response</th>
+        <th class="all-borders">Self-Evaluation Notes</th>
+      </tr>
 
-    <!-- If we have comments -->
-    <ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
-      <ng-container *ngFor="let row of commentTableData">
-        <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
-          <tr>
-            <td class="all-borders" width="15%">{{ row.id }}</td>
-            <td class="all-borders" width="5%">{{ row.mil }}</td>
-            <td class="all-borders" width="40%" style="text-align: left; padding-left: 4px;">{{ row.practiceText }}</td>
-            <td class="all-borders" width="10%" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
-              <div [ngStyle]="{'color': getTextColor(row.response)}">
-                {{ row.response }}
-              </div>
-            </td>
-            <td class="all-borders" width="30%">{{ row.comment }}</td>
-          </tr>
+      <!-- If we have comments -->
+      <ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
+        <ng-container *ngFor="let row of commentTableData">
+          <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
+            <tr>
+              <td class="all-borders" width="15%">{{ row.id }}</td>
+              <td class="all-borders" width="5%">{{ row.mil }}</td>
+              <td class="all-borders" width="40%" style="text-align: left; padding-left: 4px;">{{ row.practiceText }}</td>
+              <td class="all-borders" width="10%" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
+                <div [ngStyle]="{'color': getTextColor(row.response)}">
+                  {{ row.response }}
+                </div>
+              </td>
+              <td class="all-borders" width="30%">{{ row.comment }}</td>
+            </tr>
+          </ng-container>
         </ng-container>
       </ng-container>
-    </ng-container>
-  
-    <!-- If we don't have comments -->
-    <ng-template #noComments>
-      <tr><br></tr>
-      <tr>
-        <br>
-        <td colspan="5">Notes were not entered for the {{ domainCategories[i] }} domain. Added notes will appear in this table.</td>
-        <br>
-      </tr>
-      <tr><br></tr>
-    </ng-template>
+    
+      <!-- If we don't have comments -->
+      <ng-template #noComments>
+        <tr><br></tr>
+        <tr>
+          <br>
+          <td colspan="5">Notes were not entered for the {{ domainCategories[i] }} domain. Added notes will appear in this table.</td>
+          <br>
+        </tr>
+        <tr><br></tr>
+      </ng-template>
 
-  </table>
+    </table>
+  </div>
 </div>
-</ng-container>

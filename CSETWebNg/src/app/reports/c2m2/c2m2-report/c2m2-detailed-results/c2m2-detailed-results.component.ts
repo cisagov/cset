@@ -37,6 +37,7 @@ export class C2m2DetailedResultsComponent implements OnInit {
 
   questionDistribution: any[] = [];
   tableIndex: number = 1;
+  loading: boolean = true;
 
   ngOnInit(): void {
     for (let i = 0; i < this.donutData.length; i++) {
@@ -45,6 +46,8 @@ export class C2m2DetailedResultsComponent implements OnInit {
         this.questionDistribution.push(objectives[j]);
       }
     }
+
+    this.loading = false;
   }
 
   removeHyphen(title: string) {

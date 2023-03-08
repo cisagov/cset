@@ -49,6 +49,7 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.parseData();
+    this.loading = false;
   }
 
   parseData() {

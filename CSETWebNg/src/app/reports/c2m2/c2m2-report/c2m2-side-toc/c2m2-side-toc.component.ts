@@ -31,10 +31,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class C2m2SideTocComponent implements OnInit {
 
   @Input() domainData;
+  loading: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.loading = false;
   }
 
   scrollToElement(element) {
