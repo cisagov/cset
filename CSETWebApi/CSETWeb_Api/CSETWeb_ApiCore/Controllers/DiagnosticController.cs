@@ -7,6 +7,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using CSETWebCore.Interfaces.Notification;
+using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -38,6 +39,25 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return "Test email sent successfully";
+        }
+
+
+        /// <summary>
+        /// Test logging configuration by echoing supplied text
+        /// to the two logging targets.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/diagnostic/logging")]
+        public IActionResult TestLogging([FromQuery] string text)
+        {
+            var logToDb = LogManager.GetCurrentClassLogger();
+            logToDb.Info(text);
+
+            var logToFile = LogManager.GetLogger("DBManager");
+            logToFile.Info(text);
+
+            return Ok();
         }
     }
 }
