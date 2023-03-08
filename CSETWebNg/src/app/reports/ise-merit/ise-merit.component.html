@@ -234,7 +234,7 @@
 
                                 <br>
                                 <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
-                                    <span *ngIf="finding?.finding?.auto_Generated != 1">
+                                    <!-- <span *ngIf="finding?.finding?.auto_Generated != 1">
                                         <label *ngIf="(finding?.finding?.actionItems != null && finding?.finding?.actionItems != '')" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                         flex-direction: column; line-height: 150%;" title="Copy All to Clipboard"
                                         [cdkCopyToClipboard]="finding.finding.actionItems">
@@ -257,7 +257,7 @@
                                         [cdkCopyToClipboard]="'(no Action Items available)'">
                                             <span class="cset-icons-copy"> Copy All</span>
                                         </label>
-                                    </span>
+                                    </span> -->
                                     <strong> Action Items: </strong>
                                     <br>
                                     <div *ngIf="finding?.finding?.auto_Generated != 1">
@@ -370,11 +370,11 @@
                                     <span *ngIf="finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
 
                                     <br>
-                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                    <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                         [cdkCopyToClipboard]="this.copyAllSourceFiles(finding?.finding?.finding_Id)">
                                         <span class="cset-icons-copy"> Copy All</span>
-                                    </label>
+                                    </label> -->
                                     <strong> Resources: </strong>
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(finding?.finding?.finding_Id)">
