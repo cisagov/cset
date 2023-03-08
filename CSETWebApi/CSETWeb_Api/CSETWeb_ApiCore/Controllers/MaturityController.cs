@@ -21,7 +21,8 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
+using CSETWebCore.Api.Interfaces;
+using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -32,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
-        private readonly ICrrScoringHelper _crr;
+        private readonly ICrrScoringHelper _crr;        
 
         public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, 
             IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
@@ -227,7 +228,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 assessmentId = _tokenManager.AssessmentForUser();
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 // It's okay to call this controller method
                 // without an assessment ID for the module content report
@@ -405,6 +406,17 @@ namespace CSETWebCore.Api.Controllers
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
             return Ok(integrityCheckOptions);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/logtest")]
+        public IActionResult LogTest()
+        {
+            var l = LogManager.GetCurrentClassLogger();
+            l.Info("Hey hey, this is logtest");
+
+            return Ok();
         }
 
 
