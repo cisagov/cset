@@ -329,7 +329,7 @@ namespace CSETWebCore.Api.Controllers
             // If an edit is happening to a brand-new user, it is possible that the UI does not yet
             // know its UserId. In that case we will attempt to determine it via the primary email.
 
-            if (userBeingUpdated.UserId == null || userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
+            if (userBeingUpdated.UserId == 0 || userBeingUpdated.UserId == 1)
             {
                 var u = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.saveEmail).FirstOrDefault();
                 if (u != null)
@@ -371,7 +371,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 // The user is not currently 'in' an assessment
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
             if (userid != userBeingUpdated.UserId)
@@ -495,7 +495,7 @@ namespace CSETWebCore.Api.Controllers
                     // this can happen if there is no USER_SECURITY_QUESTIONS record
                     // but the code tries to delete it.
 
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 }
 
                 return Ok();

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using System.Reflection;
 using CSETWebCore.DataLayer.Model;
 using System.Net;
-using log4net;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;

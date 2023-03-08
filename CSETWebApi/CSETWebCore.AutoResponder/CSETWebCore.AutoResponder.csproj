@@ -14,7 +14,6 @@
     <None Remove="App_Data\EmailFooter_CF.html" />
     <None Remove="App_Data\inlineStylesheet.html" />
     <None Remove="App_Data\weeklyTemplate_CF.html" />
-    <None Remove="log4net.config" />
     <None Remove="~%24Survey contacts.xlsx" />
   </ItemGroup>
 
@@ -32,11 +31,6 @@
 
   <ItemGroup>
     <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -60,6 +54,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>

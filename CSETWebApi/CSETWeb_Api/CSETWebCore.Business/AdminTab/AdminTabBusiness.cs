@@ -45,7 +45,7 @@ namespace CSETWebCore.Business.AdminTab
             }
             catch (System.Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
             // add another total entry for Statements Reviewed   
