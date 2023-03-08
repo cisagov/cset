@@ -34,7 +34,7 @@ export class C2m2ReportComponent implements OnInit {
   tableData: any[] = [];
   assessmentInfo: any;
 
-  loaded: boolean = false;
+  loading: boolean = true;
 
   constructor(
     public reportSvc: ReportService
@@ -52,7 +52,7 @@ export class C2m2ReportComponent implements OnInit {
             this.reportSvc.getAssessmentInfoForReport().subscribe(
               (data: any) => {
                 this.assessmentInfo = data;
-                this.loaded = true;
+                this.loading = false;
               }
             )
         });

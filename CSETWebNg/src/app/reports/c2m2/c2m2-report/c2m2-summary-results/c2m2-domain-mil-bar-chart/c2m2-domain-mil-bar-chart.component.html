@@ -20,27 +20,35 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ngx-charts-bar-horizontal
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="data"
-  [gradient]="false"
-  [noBarWhenZero]="false"
-  [roundEdges]="false"
-  [barPadding]="28"
-  [xAxis]="true"
-  [yAxis]="true"
-  [legend]="false"
-  [xScaleMin]="0"
-  [xScaleMax]="3"
-  [xAxisTicks]="[0, 1, 2, 3]"
-  [xAxisTickFormatting]="xAxisTickFormatting"
-  [showXAxisLabel]="true"
-  [showYAxisLabel]="true">
-  <ng-template #tooltipTemplate let-model="model">
-    <div>
-      {{ model.name }}<br>
-      MIL{{ model.value }} Achieved
-    </div>
-  </ng-template>
-</ngx-charts-bar-horizontal>
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <ngx-charts-bar-horizontal
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="data"
+    [gradient]="false"
+    [noBarWhenZero]="false"
+    [roundEdges]="false"
+    [barPadding]="28"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="false"
+    [xScaleMin]="0"
+    [xScaleMax]="3"
+    [xAxisTicks]="[0, 1, 2, 3]"
+    [xAxisTickFormatting]="xAxisTickFormatting"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true">
+    <ng-template #tooltipTemplate let-model="model">
+      <div>
+        {{ model.name }}<br>
+        MIL{{ model.value }} Achieved
+      </div>
+    </ng-template>
+  </ngx-charts-bar-horizontal>
+</div>

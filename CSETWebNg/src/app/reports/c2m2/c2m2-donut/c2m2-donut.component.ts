@@ -34,6 +34,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
   @ViewChild('pieChart') pieChart;
   @Input() questionDistribution: any;
   totalQuestionsCount: number;
+  loading: boolean = true;
 
   data: any[];
   view: any[] = [100, 100];
@@ -72,6 +73,8 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
     ]
 
     this.totalQuestionsCount = this.data.map(x => x.value).reduce((a, b) => a + b);
+    this.loading = false;
+
   }
 
   ngAfterViewInit() {

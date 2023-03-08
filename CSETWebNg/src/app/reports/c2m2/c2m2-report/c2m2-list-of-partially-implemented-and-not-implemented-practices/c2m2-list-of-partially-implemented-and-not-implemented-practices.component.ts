@@ -36,6 +36,7 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   answerTextList: any[] = [];
   mils: string[]=['MIL-1', 'MIL-2', 'MIL-3'];
   milSortedDomainList: any[] = [];
+  loading: boolean = true;
 
   constructor() { }
 
@@ -44,10 +45,10 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
     // 2. separate by answerChoice (PI, NI, U)
     // 3. make sure the last 3 points of data are grouped: [title (ID), questionText (Practice), comment (Self-Evaluation Notes)]
     this.domainList = this.tableData.domainList;
-    console.log(this.domainList)
 
     this.reorderByMIL();
 
+    this.loading = false;
   }
 
   styleSwitcher(answerText: string) {
