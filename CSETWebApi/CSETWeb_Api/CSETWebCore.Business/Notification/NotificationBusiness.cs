@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Contact;
@@ -15,6 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using NSoup;
 
 
 namespace CSETWebCore.Business.Notification
@@ -25,18 +27,20 @@ namespace CSETWebCore.Business.Notification
         private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
         private readonly IResourceHelper _resourceHelper;
+        private readonly ILocalInstallationHelper _localInstallationHelper;
         private CSETContext _context;
         private string _scope;
         private Dictionary<string, string> _appDisplayName = new Dictionary<string, string>();
 
         public NotificationBusiness(IConfiguration configuration, ITokenManager tokenManager, IUtilities utilities,
-            CSETContext context, IResourceHelper resourceHelper)
+            CSETContext context, IResourceHelper resourceHelper, ILocalInstallationHelper localInstallationHelper)
         {
             _configuration = configuration;
             _tokenManager = tokenManager;
             _utilities = utilities;
             _context = context;
             _resourceHelper = resourceHelper;
+            _localInstallationHelper = localInstallationHelper;
 
             Initialize();
         }
@@ -100,6 +104,13 @@ namespace CSETWebCore.Business.Notification
             bodyHtml = bodyHtml.Replace("{{id}}", contact.AssessmentId.ToString());
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
 
+            // remove the link to CSET if running locally
+            if (_localInstallationHelper.IsLocalInstallation())
+            {
+                RemoveCsetAppLink(ref bodyHtml);
+            }           
+
+
             MailMessage message = new MailMessage();
             message.Subject = contact.Subject;
             message.Body = bodyHtml;
@@ -127,6 +138,13 @@ namespace CSETWebCore.Business.Notification
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
+
+            // remove the link to CSET if running locally
+            if (_localInstallationHelper.IsLocalInstallation())
+            {
+                RemoveCsetAppLink(ref bodyHtml);
+            }
+
 
             MailMessage message = new MailMessage();
             message.Subject = "New " + _appDisplayName[appCode] + " account creation";
@@ -157,6 +175,13 @@ namespace CSETWebCore.Business.Notification
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
+
+            // remove the link to CSET if running locally
+            if (_localInstallationHelper.IsLocalInstallation())
+            {
+                RemoveCsetAppLink(ref bodyHtml);
+            }
+
 
             MailMessage message = new MailMessage();
             message.Subject = "You are invited to " + _appDisplayName[appCode];
@@ -192,6 +217,13 @@ namespace CSETWebCore.Business.Notification
             bodyHtml = bodyHtml.Replace("{{name}}", name);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
+
+            // remove the link to CSET if running locally
+            if (_localInstallationHelper.IsLocalInstallation())
+            {
+                RemoveCsetAppLink(ref bodyHtml);
+            }
+
 
             MailMessage message = new MailMessage();
             message.Subject = subject;
@@ -289,6 +321,23 @@ namespace CSETWebCore.Business.Notification
                 emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail").Value,
                 emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
             this.SendMail(m);
+        }
+
+
+        /// <summary>
+        /// Removes the link to the CSET application from the email HTML.
+        /// </summary>
+        /// <param name="html"></param>
+        /// <returns></returns>
+        private void RemoveCsetAppLink(ref string html)
+        {
+            var doc = NSoup.Parse.Parser.Parse(html, "");
+            var appLinks = doc.Select(".cset-app-link").ToList();
+            appLinks.ForEach(l => {
+                l.Parent.RemoveChild(l);
+            });
+
+            html = doc.ToString();
         }
     }
 }
