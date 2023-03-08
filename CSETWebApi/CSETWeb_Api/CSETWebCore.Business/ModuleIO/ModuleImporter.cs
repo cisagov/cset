@@ -40,15 +40,6 @@ namespace CSETWebCore.Business.ModuleIO
         /// <param name="externalStandard"></param>
         public void ProcessStandard(ExternalStandard externalStandard)
         {
-
-            //     private static readonly log4net.ILog log
-            //= log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-            // CsetLogManager.Instance.LogInfoMessage("ModuleImporter.ProcessStandard - basic");
-
-
-            // CsetLogManager.Instance.LogDebugMessage("ModuleImporter.ProcessStandard");
-
             SETS_CATEGORY category;
             int? categoryOrder = 0;
             var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
