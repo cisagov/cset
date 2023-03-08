@@ -21,7 +21,7 @@ namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
-        private static readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger _logger = LogManager.GetLogger("DBManager");
         private readonly VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
 
         public DbManager(Version version, string clientCode, string applicationCode)
