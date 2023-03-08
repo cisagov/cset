@@ -8,7 +8,6 @@ using System;
 using System.Data;
 using System.IO;
 using System.Reflection;
-using log4net;
 using Microsoft.Data.SqlClient;
 
 namespace CSETWebCore.DatabaseManager

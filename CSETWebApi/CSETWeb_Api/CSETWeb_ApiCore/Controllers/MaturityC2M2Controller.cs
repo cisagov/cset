@@ -10,7 +10,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using log4net;
 using Microsoft.AspNetCore.Mvc;
 
 

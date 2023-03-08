@@ -21,7 +21,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _tokenManager;
         private static readonly object _locker = new object();
-        static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(AuthController));
+        static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 _logger.Error(exc.Message);
                 return StatusCode(500);
