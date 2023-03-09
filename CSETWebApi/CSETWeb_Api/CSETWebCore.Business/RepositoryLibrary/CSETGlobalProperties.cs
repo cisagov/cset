@@ -241,14 +241,23 @@ namespace CSETWebCore.Api.Models
         public string ProfileFolder { get { return System.IO.Path.Combine(CSETFolder, "Profiles"); } }
         public string ReportsFolder { get { return System.IO.Path.Combine(CSETFolder, "Reports"); } }
 
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public CSETGlobalProperties(CSETContext context)
         {
             this._context = context;
         }
 
 
-
-        private void SetProperty(String name, String value)
+        /// <summary>
+        /// Sets the named property to the specified string value.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetProperty(String name, String value)
         {
             try
             {
@@ -288,16 +297,25 @@ namespace CSETWebCore.Api.Models
 
         }
 
-        private double? GetDoubleProperty(String name)
+
+        /// <summary>
+        /// Gets the named property as a double.  Returns null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public double? GetDoubleProperty(String name)
         {
             try
             {
                 String sPropertyValue = GetProperty(name);
                 if (sPropertyValue == null)
+                {
                     return null;
+                }
                 else
+                {
                     return Double.Parse(sPropertyValue);
-
+                }
             }
             catch (Exception exc)
             {
@@ -307,23 +325,33 @@ namespace CSETWebCore.Api.Models
             }
         }
 
-        private bool? GetBoolProperty(String name)
+
+        /// <summary>
+        /// Gets the named property as a bool.  Returns null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool? GetBoolProperty(String name)
         {
             try
             {
                 String sPropertyValue = GetProperty(name);
                 if (sPropertyValue == null)
+                {
                     return null;
+                }
                 else
                 {
                     bool bValue;
                     if (bool.TryParse(sPropertyValue, out bValue))
+                    {
                         return bValue;
+                    }
                     else
+                    {
                         return null;
+                    }
                 }
-
-
             }
             catch (Exception exc)
             {
@@ -334,8 +362,12 @@ namespace CSETWebCore.Api.Models
         }
 
 
-
-        private String GetProperty(String name)
+        /// <summary>
+        /// Gets the named property as a string.  Returns null if not found.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public String GetProperty(String name)
         {
             try
             {
@@ -352,9 +384,8 @@ namespace CSETWebCore.Api.Models
                         propertiesDictionary.Add(name, rval);
                         return rval; //ToList()[0].Property_Value
                     }
-
-
                 }
+
                 return null;
             }
             catch (Exception exc)

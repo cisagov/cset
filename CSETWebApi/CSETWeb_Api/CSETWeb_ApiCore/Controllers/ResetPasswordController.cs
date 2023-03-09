@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.Auth;
-
+using CSETWebCore.Api.Models;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -177,6 +177,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         [HttpPost]
         [Route("api/ResetPassword/CheckPassword")]
         public IActionResult CheckPassword([FromBody] ChangePassword changePass)
@@ -234,12 +235,31 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest("An account already exists for that email address");
                 }
 
-                UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                bool rval = resetter.CreateUserSendEmail(user);
-                if (rval)
-                    return Ok("Created Successfully");
+                var resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
+
+                var gp = new CSETGlobalProperties(_context);
+                var beta = gp.GetBoolProperty("IsCsetOnlineBeta") ?? false;
+
+                if (beta)
+                {
+                    // create the user but DO NOT send the temp password email (test/beta)
+                    var rval = resetter.CreateUser(user, false);
+                    if (rval)
+                    {
+                        return Ok("waiting-for-approval");
+                    }
+                }
                 else
-                    return BadRequest("Unknown error");
+                {
+                    // create the user and send the temp password email immediately (production)
+                    var rval = resetter.CreateUser(user, true);
+                    if (rval)
+                    {
+                        return Ok("created-and-email-sent");
+                    }
+                }
+
+                return BadRequest("Unknown error");
             }
             catch (Exception e)
             {
