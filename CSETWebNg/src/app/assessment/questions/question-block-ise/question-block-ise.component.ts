@@ -567,7 +567,9 @@ export class QuestionBlockIseComponent implements OnInit {
    * attaches to the parent statement.
    * @param q
   */
-  storeSummaryComment(q: Question, e: any) {
+  storeSummaryComment(q: Question, id: number, e: any) {
+    this.autoResize(id);
+
     this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;    
 
@@ -650,8 +652,14 @@ export class QuestionBlockIseComponent implements OnInit {
   autoResize(id: number) {
     let textArea = document.getElementById("summaryComment" + id);
     textArea.style.overflow = 'hidden';
+    // textArea.style.overflowY = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
+    if (textArea.scrollHeight > 600) {
+      textArea.style.height = '600px';
+      textArea.style.overflowY = 'scroll';
+      
+    }
   }
 
   isFinalQuestion(id: number) {

@@ -204,8 +204,8 @@
                         
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
-                    <textarea appAutoSize id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                        (mousedown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, $event)"></textarea>
+                    <textarea id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 40px; max-height: 600px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                        (mousedown)="autoResize(q.parentQuestionId)" (keydown)="autoResize(q.parentQuestionId)" (keydown.enter)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, q.parentQuestionId, $event)"></textarea>
                 </div>
             </ng-container>
         </div>
