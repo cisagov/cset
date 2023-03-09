@@ -116,6 +116,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NJsonSchema" Version="10.8.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.2" />
+    <PackageReference Include="NSoupCore" Version="1.0.0" />
     <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
