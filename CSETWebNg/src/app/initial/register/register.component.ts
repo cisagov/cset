@@ -43,6 +43,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   receivedError = false;
   emailSent = false;
+  waitingForApproval = false;
   errorMessage: any;
 
   constructor(
@@ -52,11 +53,16 @@ export class RegisterComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
-    console.log("into the registration component");
     this.getSecurityList();
   }
 
+  /**
+   * Compiles the user details and posts them to the create endpoint.
+   */
   signup() {
     this.receivedError = false;
 
@@ -76,12 +82,19 @@ export class RegisterComponent implements OnInit {
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {
-        this.emailSent = true;
         this.loading = false;
         this.receivedError = false;
+        
+        if (data == 'created-and-email-sent') {
+          this.emailSent = true;
+        }
+        if (data == 'waiting-for-approval') {
+          this.waitingForApproval = true;
+        }
       },
       error => {
         this.emailSent = false;
+        this.waitingForApproval = false;
         this.receivedError = true;
         this.loading = false;
         this.errorMessage = error.error;
@@ -95,6 +108,9 @@ export class RegisterComponent implements OnInit {
       });
   }
 
+  /**
+   * Gets potential security questions. 
+   */
   getSecurityList() {
     this.auth
       .getSecurityQuestionsPotentialList()
