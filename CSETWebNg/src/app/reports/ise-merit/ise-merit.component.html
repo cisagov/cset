@@ -230,9 +230,8 @@
                                     <span class="cset-icons-copy"></span>
                                 </label>
                                 <strong> Description: </strong><br>
-                                {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
+                                <div style="white-space: pre-wrap;" [innerHTML]="(finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description"></div>
 
-                                <br>
                                 <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
                                     <span *ngIf="finding?.finding?.auto_Generated != 1">
                                         <label *ngIf="(finding?.finding?.actionItems != null && finding?.finding?.actionItems != '')" class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
@@ -261,8 +260,7 @@
                                     <strong> Action Items: </strong>
                                     <br>
                                     <div *ngIf="finding?.finding?.auto_Generated != 1">
-                                        <div *ngIf="finding?.finding?.actionItems != null">
-                                            {{ finding?.finding?.actionItems }}
+                                        <div *ngIf="finding?.finding?.actionItems != null" style="white-space: pre-wrap;" [innerHTML]="finding?.finding?.actionItems">
                                         </div>
                                         <div *ngIf="finding?.finding?.actionItems == null">
                                             (no Action Items available)
@@ -366,7 +364,7 @@
                                     </label>
                                     <strong> Supplemental Fact: </strong>
                                     <br>
-                                    <span *ngIf="finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;" [innerHtml]="finding?.finding?.supp_Guidance"></span>
                                     <span *ngIf="finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
 
                                     <br>
