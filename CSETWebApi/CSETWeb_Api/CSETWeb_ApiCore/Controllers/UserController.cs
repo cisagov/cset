@@ -75,14 +75,14 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            // set the active flag on the user
+            // set the IsActive flag on the user
             var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
             if (user == null)
             {
                 return BadRequest();
             }
 
-            // user.IsActive = isActive;   Once EF has been updated with the new column ...
+            user.IsActive = isActive;
             _context.SaveChanges();
 
 
