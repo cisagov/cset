@@ -43,7 +43,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/users")]
         public IActionResult GetUsers([FromQuery] string apiKey)
         {           
-            if (!IsApiKeyGood(apiKey))
+            if (!IsApiKeyValid(apiKey))
             {
                 return Unauthorized();
             }
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult ChangeUserActivation(
             [FromQuery] int userId, [FromQuery] bool isActive, [FromQuery] string apiKey)
         {
-            if (!IsApiKeyGood(apiKey))
+            if (!IsApiKeyValid(apiKey))
             {
                 return Unauthorized();
             }
@@ -82,9 +82,16 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest();
             }
 
+
+            // return if no change
+            if (isActive == user.IsActive)
+            {
+                return Ok();
+            }
+
+
             user.IsActive = isActive;
             _context.SaveChanges();
-
 
 
             // if the user is being activated, send them a new temp password
@@ -105,7 +112,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="apiKey"></param>
         /// <returns></returns>
-        private bool IsApiKeyGood(string apiKey)
+        private bool IsApiKeyValid(string apiKey)
         {
             if (string.IsNullOrEmpty(apiKey))
             {
