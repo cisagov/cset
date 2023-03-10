@@ -218,7 +218,8 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = result.IsSuperUser,
                 PasswordResetRequired = result.PasswordResetRequired ?? true,
                 FirstName = result.FirstName,
-                LastName = result.LastName
+                LastName = result.LastName,
+                IsActive = result.IsActive
             };
 
             return u;

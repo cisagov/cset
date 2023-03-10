@@ -108,8 +108,14 @@ export class ResetPassComponent {
                     }
                 },
                 error => {
-                    this.warning = 'Unknown email account';
                     this.errorMsg = true;
+
+                    if (error.error == 'user-inactive') {
+                        this.warning = 'The user does not exist or is not active';
+                    } else {
+                        this.warning = 'Unknown email account';
+                    }
+
                     this.handleError('Error retrieving security questions', error);
                 });
     }
@@ -125,7 +131,7 @@ export class ResetPassComponent {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode??environment.appCode
+            appCode: this.configSvc.installationMode ?? environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)
