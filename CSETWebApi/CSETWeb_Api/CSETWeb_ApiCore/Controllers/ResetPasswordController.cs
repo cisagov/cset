@@ -274,23 +274,36 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
+                answer.PrimaryEmail = answer.PrimaryEmail.Trim();
+
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
-                if (!emailvalidator.IsMatch(answer.PrimaryEmail.Trim()))
+
+                if (!emailvalidator.IsMatch(answer.PrimaryEmail))
                 {
                     return BadRequest();
+                }
+
+                if (!_userBusiness.GetUserDetail(answer.PrimaryEmail).IsActive)
+                {
+                    return BadRequest("user-inactive");
                 }
 
                 if (IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                     bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
+
                     if (rval)
+                    {
                         return Ok();
+                    }
                     else
+                    {
                         return BadRequest();
+                    }
                 }
 
                 // return Unauthorized();
@@ -327,9 +340,18 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                if (_context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault() == null)
+                email = email.Trim();
+
+                var user = _context.USERS.Where(x => String.Equals(x.PrimaryEmail, email)).FirstOrDefault();
+
+                if (user == null)
                 {
                     return BadRequest();
+                }
+
+                if (!user.IsActive)
+                {
+                    return BadRequest("user-inactive");
                 }
 
 
