@@ -31,6 +31,8 @@ import { JwtParser } from '../../helpers/jwt-parser';
 import { MatDialog } from '@angular/material/dialog';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
+import { PasswordStatusResponse } from '../../models/reset-pass.model';
 
 @Component({
   selector: 'app-login-access-key',
@@ -102,6 +104,8 @@ export class LoginAccessKeyComponent implements OnInit {
     // default the page as 'login'
     this.checkForEjection(this.route.snapshot.queryParams['token']);
 
+    this.checkPasswordReset();
+
     // Clear token query param to make the url look nicer.
     if (this.route.snapshot.queryParams['token']) {
       this.router.navigate([], { queryParams: {} });
@@ -139,6 +143,44 @@ export class LoginAccessKeyComponent implements OnInit {
           .afterClosed()
           .subscribe(() => (this.isEjectDialogOpen = false));
       }
+    }
+  }
+
+  /**
+   *
+   */
+  checkPasswordReset() {
+    this.authSvc.passwordStatus()
+      .subscribe((result: PasswordStatusResponse) => {
+        if (result) {
+          if (!result.resetRequired) {
+            this.openPasswordDialog(true);
+          }
+        }
+      });
+  }
+
+  openPasswordDialog(showWarning: boolean) {
+    if (localStorage.getItem("returnPath")) {
+      if (!Number(localStorage.getItem("redirectid"))) {
+        this.hasPath(localStorage.getItem("returnPath"));
+      }
+    }
+    this.dialog
+      .open(ChangePasswordComponent, {
+        width: "300px",
+        data: { primaryEmail: this.authSvc.email(), warning: showWarning }
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.checkPasswordReset();
+      });
+  }
+
+  hasPath(rpath: string) {
+    if (rpath != null) {
+      localStorage.removeItem("returnPath");
+      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
     }
   }
 
