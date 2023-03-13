@@ -64,7 +64,8 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt,
                 IsSuperUser = false,
-                PasswordResetRequired = true
+                PasswordResetRequired = true,
+                IsActive = true
             };
 
             // default the new user to NOT active if CSET Online is running in beta mode
