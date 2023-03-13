@@ -73,6 +73,7 @@ export class QuestionBlockIseComponent implements OnInit {
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Note - -\n';
   summaryConvoBuffer = '\n- - End of Statement Summary - -\n';
+  summaryBoxMax = 800;
     
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
@@ -655,8 +656,8 @@ export class QuestionBlockIseComponent implements OnInit {
     // textArea.style.overflowY = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
-    if (textArea.scrollHeight > 600) {
-      textArea.style.height = '600px';
+    if (textArea.scrollHeight > this.summaryBoxMax) {
+      textArea.style.height = this.summaryBoxMax + 'px';
       textArea.style.overflowY = 'scroll';
       
     }
