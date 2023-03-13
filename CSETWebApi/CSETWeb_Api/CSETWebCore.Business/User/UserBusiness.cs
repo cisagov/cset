@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using System;
 using System.Linq;
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
@@ -63,8 +64,16 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt,
                 IsSuperUser = false,
-                PasswordResetRequired = true
+                PasswordResetRequired = true,
+                IsActive = true
             };
+
+            // default the new user to NOT active if CSET Online is running in beta mode
+            if (new CSETGlobalProperties(_context).GetBoolProperty("IsCsetOnlineBeta") ?? false)
+            {
+                u.IsActive = false;
+            }
+
             tmpContext.USERS.Add(u);
 
 
@@ -210,7 +219,8 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = result.IsSuperUser,
                 PasswordResetRequired = result.PasswordResetRequired ?? true,
                 FirstName = result.FirstName,
-                LastName = result.LastName
+                LastName = result.LastName,
+                IsActive = result.IsActive
             };
 
             return u;

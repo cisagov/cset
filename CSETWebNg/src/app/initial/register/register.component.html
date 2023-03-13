@@ -110,6 +110,15 @@
           process.</p>
       </div>
     </div>
+    <div *ngIf="waitingForApproval" style="margin-top: 15px;">
+      <div class="alert alert-success">
+        <p>Your account was successfully created. When your account has been approved
+          an email will be sent to {{model.primaryEmail}} containing your
+          temporary password.</p>
+        <p>Please <a href="index.html">login</a> using your temporary password to complete the registration
+          process.</p>
+      </div>
+    </div>
     <div *ngIf="receivedError" class="mb-3">
       <div class="alert alert-danger">
         <p>{{errorMessage}}</p>
