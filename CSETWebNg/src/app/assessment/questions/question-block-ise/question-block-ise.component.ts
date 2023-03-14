@@ -168,9 +168,7 @@ export class QuestionBlockIseComponent implements OnInit {
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
-      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-      this.contactInitials = firstInitial + lastInitial;
+      this.contactInitials = response.contactList[0].firstName;
     });
   }
 
