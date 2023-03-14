@@ -28,13 +28,13 @@
 </div>
 
 <div *ngIf="!loading">
-  <h1>3. Summary of Self-Evaluation Results</h1>
+  <h1 class="pagebreak-before">3. Summary of Self-Evaluation Results</h1>
 
   <h1 id="toc-mil-achievement-by-domain">3.1 MIL Achievement by Domain</h1>
 
   <p>Figure 2 shows the MIL achieved for each C2M2 domain.</p>
 
-  <div class="w-100 d-flex flex-column">
+  <!--<div class="w-100 d-flex flex-column">
     <app-c2m2-domain-mil-bar-chart [domainData]="donutData"></app-c2m2-domain-mil-bar-chart>
     <span class="caption">
       Figure 2: MIL Achieved by Domain
@@ -51,21 +51,21 @@
   <p>
     The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain.
     Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
-  </p>
+  </p>-->
 
-  <div class="d-flex flex-column align-items-center" style="margin-left: -20px;">
+  <!--<div class="d-flex flex-column align-items-center" style="margin-left: -20px;">-->
     <!-- goes to a new MIL row -->
-    <div *ngFor="let dataRow of milData; let i = index">
-      <div class="d-flex" style="justify-items: space-evenly; ">
+    <!--<div *ngFor="let dataRow of milData; let i = index">
+      <div class="d-flex" style="justify-items: space-evenly; ">-->
         <!--supplies donut with current MIL level info for each domain -->
-        <div *ngFor="let data of dataRow; let j = index">
+        <!--<div *ngFor="let data of dataRow; let j = index">
           <div *ngIf="i == 0">
             <div *ngIf="j > 0" class="donut-grid-header">
               {{donutData[j - 1].shortTitle}}
             </div>
-            <div *ngIf="j == 0" style="height: 20px;">
+            <div *ngIf="j == 0" style="height: 20px;">-->
               <!-- this holds the empty cell in the top left corner -->
-            </div>
+            <!--</div>
           </div>
           <div *ngIf="j == 0 && i != milData.length - 1" class="donut-grid-mil-box">
             MIL{{milNumberFlip(i)}}
@@ -83,9 +83,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
-    <div class="color-legend justify-content-between mt-2 mb-1" style="width: 90%">
+    <!--<div class="color-legend justify-content-between mt-2 mb-1" style="width: 90%">
       <div class="row d-flex align-items-center">
         <span class="legend-color-box" style="background-color: #265B94;"></span>
         <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
@@ -110,7 +110,7 @@
     <span class="caption">
       Figure 3: Summary of Responses Input by MIL and Domain
     </span>
-  </div>
+  </div>-->
 
   <h1 id="toc-implementation-of-management-activities">
     3.3 Implementation of Management Activities across Domains
@@ -125,7 +125,7 @@
     domain and 2) implementation of each Management Activities practice across the ten C2M2 domains.
   </p>
 
-  <table>
+  <!--<table>
     <tr>
       <td></td>
       <td class="vertical-headers" *ngFor="let domain of this.domainCategories">
@@ -144,5 +144,5 @@
       </td>
     </tr>
     <caption style="caption-side: bottom; text-align: center; color: #265B94">Table 2: Management Activities</caption>
-  </table>
+  </table>-->
 </div>
