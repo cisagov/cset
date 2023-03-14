@@ -240,7 +240,7 @@
                                     <div>
                                         <span class="font-weight-bold">Statement Summary: </span>
                                         <br>
-                                        <span class="pr-3">{{ q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]' }}</span>
+                                        <span class="pr-3" style="white-space: pre-wrap;" [innerHTML]="q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]'"></span>
                                     </div>
 
                                     <hr class="page-line">
@@ -273,17 +273,15 @@
                                     <strong>Issue Type: </strong> {{ finding?.finding?.type }}
                                 </div>
 
-                                <strong>Description: </strong><br>
-                                {{ (finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description }}
-
-                                <br>
+                                <strong>Description: </strong>
+                                <div style="white-space: pre-wrap;" [innerHTML]="(finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description">
+                                </div>
                                 <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
 
                                     <strong> Action Items: </strong>
                                     <br>
                                     <div *ngIf="finding?.finding?.auto_Generated != 1">
-                                        <div *ngIf="finding?.finding?.actionItems != null">
-                                            {{ finding?.finding?.actionItems }}
+                                        <div *ngIf="finding?.finding?.actionItems != null" style="white-space: pre-wrap;" [innerHTML]="finding?.finding?.actionItems">
                                         </div>
                                         <div *ngIf="finding?.finding?.actionItems == null">
                                             (no Action Items available)
@@ -334,7 +332,7 @@
                                     <strong> Supplemental Fact: </strong>
 
                                     <br>
-                                    <span *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''" [innerHtml]="finding?.finding?.supp_Guidance"></span>
+                                    <span *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;" [innerHtml]="finding?.finding?.supp_Guidance"></span>
                                     <span *ngIf="finding?.finding?.supp_Guidance == null || finding?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                     <br>
                                     <strong> Resources: </strong>
