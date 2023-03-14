@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-c2m2-side-toc',
   templateUrl: './c2m2-side-toc.component.html',
@@ -31,12 +32,16 @@ import { Component, OnInit, Input } from '@angular/core';
 export class C2m2SideTocComponent implements OnInit {
 
   @Input() domainData;
+  @Input() assessmentInfo;
+  @Input() donutData;
+  @Input() tableData;
   loading: boolean = true;
 
   constructor() { }
 
   ngOnInit(): void {
     this.loading = false;
+   console.log(this.domainData);
   }
 
   scrollToElement(element) {

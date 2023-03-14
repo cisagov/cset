@@ -27,7 +27,7 @@
 </div>
 
 <div *ngIf="!loading">
-  <h1>7. List of Partially Implemented and Not Implemented Practices</h1>
+  <h1 class="pagebreak-before">7. List of Partially Implemented and Not Implemented Practices</h1>
   <p>
     Practices that received a response of Partially Implemented or Not Implemented are consolidated in this section and
     shown with any notes captured during the self-evaluation. If an organization is targeting a MIL in a specific domain,
@@ -38,10 +38,10 @@
     at that MIL, with Partially Implemented practices followed by Not Implemented practices. This highlights the practices
     that may be the focus of improvement efforts to reach a MIL target in each domain.
   </p>
-  <div *ngFor="let domain of domainList; let i = index">
-    <h1>Domain: {{domain.title}} ({{domain.objectives[0].practices[0].title.substring(0, domain.objectives[0].practices[0].title.indexOf('-'))}})</h1>
+ <!--<div *ngFor="let domain of domainList; let i = index">
+    <h1>Domain: {{domain.title}} ({{domain.objectives[0].practices[0].title.substring(0, domain.objectives[0].practices[0].title.indexOf('-'))}})</h1>-->
 
-    <table class="table-responsive td-align-top td-padding-half-rem">
+    <!--<table class="table-responsive td-align-top td-padding-half-rem">
       <tr class="table-header" style="width: 800px;">
           <td style="border: 1px solid rgb(179, 179, 179);width: 50px;">MIL</td>
           <td style="border: 1px solid rgb(179, 179, 179);width: 125px;">Response</td>
@@ -72,15 +72,14 @@
               {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
             </td>
           </tr>
-        </ng-container>
+        </ng-container>-->
         <!-- last 3 columns -->
-        <tr>
+        <!--<tr>
           <td style="border: 1px solid rgb(179, 179, 179);">{{practice.title}}</td>
           <td style="border: 1px solid rgb(179, 179, 179);">{{practice.questionText}}</td>
           <td style="border: 1px solid rgb(179, 179, 179);">{{nullReplaceWithEmpty(practice.comment)}}</td>
         </tr>
-        
       </ng-container>
     </table>
-  </div>
+  </div>-->
 </div>
