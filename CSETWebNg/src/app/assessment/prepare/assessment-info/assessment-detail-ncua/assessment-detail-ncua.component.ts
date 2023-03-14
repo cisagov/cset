@@ -40,6 +40,7 @@ import { AcetDashboard } from '../../../../models/acet-dashboard.model';
 @Component({
   selector: 'app-assessment-detail-ncua',
   templateUrl: './assessment-detail-ncua.component.html',
+  styleUrls: ['./assessment-detail-ncua.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })
 
@@ -69,6 +70,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   examOverride: string = "";
 
   loading: boolean;
+  isJoint: boolean = false;
 
   /**
    * 
@@ -326,6 +328,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.isAnExamination()) {
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
     }
+  }
+
+
+  toggleJoint() {
+    this.isJoint = !this.isJoint;
   }
 
 }
