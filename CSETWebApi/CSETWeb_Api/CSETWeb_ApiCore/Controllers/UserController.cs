@@ -41,15 +41,36 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/users")]
-        public IActionResult GetUsers([FromQuery] string apiKey)
+        public IActionResult GetUsers([FromQuery] bool? onlyInactive, [FromQuery] string apiKey)
         {           
             if (!IsApiKeyValid(apiKey))
             {
                 return Unauthorized();
             }
 
-            // TODO:  build out the response to send the users back to the admin client
-            var resp = new List<USERS>();
+            var resp = new List<UserAdmin>();
+
+
+            var query = _context.USERS.AsQueryable();
+
+            // the consumer can limit the response to inactive users only
+            if (onlyInactive ?? false)
+            {
+                query =  _context.USERS.Where(x => !x.IsActive);
+            }
+
+            query.ToList().ForEach(u => 
+            {
+                var user = new UserAdmin() {
+                    UserId = u.UserId,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    PrimaryEmail = u.PrimaryEmail,
+                    IsActive = u.IsActive                  
+                };
+
+                resp.Add(user);
+            });
 
             return Ok(resp);
         }
