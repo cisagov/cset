@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-.irp-risk { 
+.state-led { 
     // margin: 10px 30px;
     width: 40%;
     border-radius: .25rem;
@@ -29,27 +29,27 @@ SOFTWARE.
     border: 1px solid transparent;
 }
 
-.irp-risk:hover {
+.state-led:hover {
     background-color: transparent;
     border: 1px solid #0f3c7a;
 }
 
-.irp-risk:focus {
+.state-led:focus {
     background-color: transparent;
     border: 1px solid #0f3c7a;
 }
 
-.irp-selected {
+.state-led-selected {
     background-color: #0f3c7a !important;
     color: white !important;
 }
 
-.irp-selected h3 {
+.state-led-selected h3 {
     background-color: transparent !important;
     color: white !important;
 }
 
-.irp-selected:hover {
+.state-led-selected:hover {
     background-color: #1964cc !important;
 }
 

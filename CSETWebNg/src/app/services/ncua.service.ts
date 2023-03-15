@@ -84,6 +84,8 @@ let headers = {
   unassignedIssueTitles: any = [];
   unassignedIssues: boolean = false;
 
+  isJoint: boolean = false;
+
   questions: any = null;
   iseIrps: any = null;
   information: any = null;
@@ -95,6 +97,7 @@ let headers = {
       "examiner": '',
       "effectiveDate": '',
       "creationDate": '',
+      "isJoint": false,
       "examLevel": '',
       "guid": ''
     },
@@ -532,6 +535,7 @@ let headers = {
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
       "creationDate": this.information.assessment_Creation_Date,
+      "isJoint": this.isJoint,
       "examLevel": this.examLevel,
       "guid": this.questions.assessmentGuid
     };
