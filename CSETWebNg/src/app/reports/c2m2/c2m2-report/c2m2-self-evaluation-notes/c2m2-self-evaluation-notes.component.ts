@@ -104,7 +104,7 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
         return '#DCA237';
       case 'U':
       case null:
-        return '#AAAAAA';
+        return '#E6E6E6';
     }
   }
 
@@ -130,6 +130,22 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
     } else {
       return false;
     } 
+  }
+
+  fullNameTranslate(answerText: string) {
+    if (answerText == 'FI') {
+      return 'Fully Implemented (PI)';
+    }
+    if (answerText == 'LI') {
+      return 'Largely Implemented (PI)';
+    }
+    if (answerText == 'PI') {
+      return 'Partially Implemented (PI)';
+    }
+    if (answerText == 'NI') {
+      return 'Not Implemented (NI)';
+    }
+    return 'Unanswered (U)';
   }
 
 }

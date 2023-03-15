@@ -39,13 +39,13 @@
       Domain: {{ domainTitles[i] }} ({{ domainCategories[i] }})
     </h1>
 
-    <table class="comment-table">
+    <table class="comment-table td-align-top td-padding-half-rem">
       <tr class="all-borders">
-        <th class="all-borders">ID</th>
-        <th class="all-borders" style="padding: 5px;">MIL</th>
-        <th class="all-borders">Practice</th>
-        <th class="all-borders">Response</th>
-        <th class="all-borders">Self-Evaluation Notes</th>
+        <td class="all-borders table-header id-column">ID</td>
+        <td class="all-borders table-header mil-column">MIL</td>
+        <td class="all-borders table-header practice-column">Practice</td>
+        <td class="all-borders table-header response-column">Response</td>
+        <td class="all-borders table-header note-column">Self-Evaluation Notes</td>
       </tr>
 
       <!-- If we have comments -->
@@ -53,15 +53,15 @@
         <ng-container *ngFor="let row of commentTableData">
           <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
             <tr>
-              <td class="all-borders" width="15%">{{ row.id }}</td>
-              <td class="all-borders" width="5%">{{ row.mil }}</td>
-              <td class="all-borders" width="40%" style="text-align: left; padding-left: 4px;">{{ row.practiceText }}</td>
-              <td class="all-borders" width="10%" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
+              <td class="all-borders">{{ row.id }}</td>
+              <td class="all-borders">{{ row.mil }}</td>
+              <td class="all-borders" style="text-align: left;">{{ row.practiceText }}</td>
+              <td class="all-borders" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
                 <div [ngStyle]="{'color': getTextColor(row.response)}">
-                  {{ row.response }}
+                  {{ fullNameTranslate(row.response) }}
                 </div>
               </td>
-              <td class="all-borders" width="30%">{{ row.comment }}</td>
+              <td class="all-borders" style="text-align: left;">{{ row.comment }}</td>
             </tr>
           </ng-container>
         </ng-container>
