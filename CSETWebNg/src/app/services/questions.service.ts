@@ -397,7 +397,12 @@ export class QuestionsService {
    * Finds the button definition and returns its full label (tooltip)
    */
   answerDisplayLabel(modelId: Number, answerCode: string) {
-    return this.findAnsDefinition(modelId, answerCode).answerLabel;
+    const def = this.findAnsDefinition(modelId, answerCode);
+    if (!def) {
+      console.log('cannot find definition for model: ' + modelId + ', answerCode: ' + answerCode);
+      return "?";
+    }
+    return def.answerLabel;
   }
 
   /**
@@ -405,6 +410,11 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(modelId: Number, answerCode: string) {
+    // assume unanswered if null or undefined
+    if (!answerCode) {
+      answerCode = 'U';
+    }
+
     // first look for a skin-specific label set
     let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
       && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
