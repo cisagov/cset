@@ -132,7 +132,7 @@ h4 {
   background-color: #DCA237;
 }
 .u-background {
-  background-color: rgb(230, 230, 230);
+  background-color: #E6E6E6;
 }
 
 .table-responsive {
@@ -232,13 +232,37 @@ a:hover {
 
 .comment-table {
   width: 100%;
-  font-size: 14px;
   text-align: center;
   border: 1px solid rgb(179, 179, 179);
 }
 
 .all-borders {
   border: 1px solid rgb(179, 179, 179);
+}
+
+.mil-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 50px;
+}
+
+.response-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 125px;
+}
+
+.id-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 100px;
+}
+
+.practice-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 325px;
+}
+
+.note-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 300px;
 }
 
 /**************** Print styles ****************/

@@ -31,11 +31,11 @@
 
     <h5 class="objective-title">Objective {{i+1}}: {{ objective.title }}</h5>
     <table class="objective-table">
-      <tr style="text-align: center;">
-        <th>MIL</th>
-        <th>ID</th>
-        <th>Practice Statement</th>
-        <th>Response</th>
+      <tr class="table-header">
+        <td>MIL</td>
+        <td>ID</td>
+        <td>Practice Statement</td>
+        <td>Response</td>
       </tr>
       <tr class="tallRow" *ngFor="let practice of objective.practices">
         <td class="centered" width="5%">{{ removeHyphen(practice.mil) }}</td>
