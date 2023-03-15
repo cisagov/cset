@@ -263,8 +263,11 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="(disableIseReportLinks && !ncuaSvc.isJoint) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           "Submit" button and some reports are disabled until all statements have been answered.
+        </span>
+        <span *ngIf="(disableIseReportLinks && ncuaSvc.isJoint) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          There are unanswered statements.
         </span>
         <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           <br>"Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
@@ -279,7 +282,14 @@
           </span><br>
         </span>
         <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="!ncuaSvc.isJoint">
+            "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          </span>
+          <span *ngIf="ncuaSvc.isJoint">
+            There are unanswered statements.
+            <br><br>
+            "Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          </span>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -292,11 +302,11 @@
         </span>
       </div>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="(disableIseReportLinks && !ncuaSvc.isJoint) || this.ncuaSvc.unassignedIssues">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="(disableIseReportLinks && !ncuaSvc.isJoint) || this.ncuaSvc.unassignedIssues">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
       <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
@@ -427,7 +437,7 @@
     <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
       <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
       <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
+        [disabled]="(disableIseReportLinks && !ncuaSvc.isJoint) || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
     </div>
 
   </div>

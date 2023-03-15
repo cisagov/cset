@@ -86,6 +86,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.isJoint = this.ncuaSvc.isJoint;
 
     // Load dashboard to keep track of irp overriding
     this.acetSvc.getAcetDashboard().subscribe(
@@ -148,9 +149,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
-        let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-        let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-        this.contactInitials = "_" + firstInitial + lastInitial;
+        this.contactInitials = "_" + response.contactList[0].firstName;
+        console.log(this.contactInitials)
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -229,6 +229,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
     this.createAssessmentName();
     this.setCharterPad();
+
+    if (this.assessment.charter != '00001') {
+      this.ncuaSvc.isJoint = false;
+      this.isJoint = false;
+    }
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
@@ -332,6 +337,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
 
   toggleJoint() {
+    this.ncuaSvc.isJoint = !this.ncuaSvc.isJoint;
     this.isJoint = !this.isJoint;
   }
 
