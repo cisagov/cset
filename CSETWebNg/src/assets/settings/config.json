@@ -62,7 +62,8 @@
         "showCompare": true,
         "showEnableProtectedFeatures": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
-        "showVulnerabilitiesDiagramInventoryTab": false
+        "showVulnerabilitiesDiagramInventoryTab": false,
+        "additionalUserGuides": []
     },
     "answersDefault": [
         {
