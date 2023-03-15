@@ -57,7 +57,7 @@ export class C2m2ObjectiveTableComponent implements OnInit {
         return '#DCA237';
       case 'U':
       case null:
-        return '#AAAAAA';
+        return '#E6E6E6';
     }
   }
 
