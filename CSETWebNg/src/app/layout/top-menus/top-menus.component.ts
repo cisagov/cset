@@ -263,8 +263,8 @@ export class TopMenusComponent implements OnInit {
       return true;
     }
 
-    if (module == 'TSA') {
-      return this.assessSvc.assessment?.workflow == 'TSA';
+    if (this.configSvc.behaviors.additionalUserGuides?.includes(module)) {
+      return true;
     }
 
     return false;

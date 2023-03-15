@@ -17,7 +17,8 @@
         "showContacts": true,
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
-        "showCriticalService": true
+        "showCriticalService": true,
+        "additionalUserGuides": ["TSA"]
     }
 
 }
