@@ -102,13 +102,14 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges() {
+    this.searchQuery = this.searchQuery.trim();
+
     if (this.searchQuery && this.fuse) {
       this.sort();
     }
   }
 
   ngOnInit(): void {
-
     this.breakpointObserver.observe(['(min-width:200px)', '(min-width:620px)', '(min-width:800px)', '(min-width:1220px)', '(min-width:1460px)']).subscribe((state: BreakpointState) => {
       if (state.breakpoints['(min-width:200px)']) {
         this.cardsPerView = 1;
@@ -201,8 +202,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
   showButtons(show: boolean) {
     this.show = show;
   }
@@ -213,16 +212,20 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     if (!this.fuse) {
       this.fuse = new Fuse(this.galleryItemsTmp, this.options);
     }
+
     if (this.searchQuery) {
       this.galleryItemsTmp = this.fuse.search(this.searchQuery);
+
+      // de-dupe
+      const set = [];
+      this.galleryItemsTmp.forEach(x => {
+        if (!set.find(s => s.item.gallery_Item_Guid == x.item.gallery_Item_Guid)) {
+          set.push(x);
+        }
+      });
+      this.galleryItemsTmp = set;
     } else {
-      this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index) => ({
-        item,
-        refIndex: index,
-        matches: [],
-        score: 1,
-      })
-      );
+      this.galleryItemsTmp = [];
     }
 
     this.shuffleCards(this.cardsPerView);
