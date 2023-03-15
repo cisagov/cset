@@ -62,6 +62,12 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   }
 
   fullNameTranslate(answerText: string) {
+    if (answerText == 'FI') {
+      return 'Fully Implemented (PI)';
+    }
+    if (answerText == 'LI') {
+      return 'Largely Implemented (PI)';
+    }
     if (answerText == 'PI') {
       return 'Partially Implemented (PI)';
     }
