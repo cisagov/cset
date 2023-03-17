@@ -70,7 +70,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   examOverride: string = "";
 
   loading: boolean;
-  isJoint: boolean = false;
 
   /**
    * 
@@ -86,7 +85,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.isJoint = this.ncuaSvc.isJoint;
 
     // Load dashboard to keep track of irp overriding
     this.acetSvc.getAcetDashboard().subscribe(
@@ -143,6 +141,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
+    console.log(this.assessment)
+
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
@@ -169,7 +169,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
+    this.ncuaSvc.isJoint = this.assessment.isJoint;
+
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
+
 
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -227,12 +230,16 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       }
     }
 
+    if (e.target.value == true || e.target.value == false) {
+      this.toggleJoint();
+    }
+
     this.createAssessmentName();
     this.setCharterPad();
 
     if (this.assessment.charter != '00001') {
       this.ncuaSvc.isJoint = false;
-      this.isJoint = false;
+      this.assessment.isJoint = false;
     }
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -338,7 +345,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
   toggleJoint() {
     this.ncuaSvc.isJoint = !this.ncuaSvc.isJoint;
-    this.isJoint = !this.isJoint;
+
+    this.assessment.isJoint = this.ncuaSvc.isJoint;
+
+    console.log(this.assessment.isJoint)
+    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
 }

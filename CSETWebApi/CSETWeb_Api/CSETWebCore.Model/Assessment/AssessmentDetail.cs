@@ -37,6 +37,7 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+        public bool IsJoint { get; set; }
 
         public List<string> HiddenScreens { get; set; } = new List<string>();
 
