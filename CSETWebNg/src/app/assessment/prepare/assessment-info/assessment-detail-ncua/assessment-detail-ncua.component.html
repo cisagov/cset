@@ -171,12 +171,12 @@
                 </select>
             </div>
         </div>
-        <div *ngIf="assessment.charter == '00001'" (click)="toggleJoint();" tabindex="0"
-            class="state-led cursor-pointer" [ngClass]="{'state-led-selected': isJoint}">
+        <div *ngIf="assessment.charter == '00001'" (click)="toggleJoint()" tabindex="0"
+            class="state-led cursor-pointer" [ngClass]="{'state-led-selected': ncuaSvc.isJoint}">
             <div class="row">
                 <div class="col-2">
-                    <h3 *ngIf="!isJoint">&#x2610;</h3>
-                    <h3 *ngIf="isJoint">&#x2611;</h3>
+                    <h3 *ngIf="!ncuaSvc.isJoint">&#x2610;</h3>
+                    <h3 *ngIf="ncuaSvc.isJoint">&#x2611;</h3>
                 </div>
                 <div style="padding-top: 5px;">State led examination?</div>
             </div>
