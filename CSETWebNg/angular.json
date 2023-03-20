@@ -9,7 +9,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "aot": true,
             "outputPath": "dist",
@@ -17,6 +17,9 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "customWebpackConfig": {
+              "path": "custom-webpack.config.js"
+            },
             "allowedCommonJsDependencies": [
               "jquery",
               "lodash",
@@ -142,7 +145,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "browserTarget": "csetweb-ng:build"
           },
@@ -201,8 +204,8 @@
           }
         }
       }
-    }   
-  },  
+    }
+  },
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
