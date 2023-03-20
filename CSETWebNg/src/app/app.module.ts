@@ -560,7 +560,6 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         HttpClientModule,
         CommonModule,
         AppRoutingModule,
-
         // Material
         A11yModule,
         CdkAccordionModule,
@@ -634,7 +633,6 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         // MatListModule,
         // MatMenuModule,
         // MatTabsModule,
-
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
@@ -927,7 +925,7 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
         TsaAnalyticsComponent,
-         MaturityQuestionsNestedComponent,
+        MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
@@ -1062,16 +1060,16 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         ConfigService,
         AuthenticationService,
         {
-          provide: APP_INITIALIZER,
-          useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
-            return () => {
-              return configSvc.loadConfig().then(() => {
-                return authSvc.checkLocal();
-              });
-            };
-          },
-          deps: [ConfigService, AuthenticationService],
-          multi: true
+            provide: APP_INITIALIZER,
+            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
+                return () => {
+                    return configSvc.loadConfig().then(() => {
+                        return authSvc.checkLocal();
+                    });
+                };
+            },
+            deps: [ConfigService, AuthenticationService],
+            multi: true
         },
         {
             provide: HTTP_INTERCEPTORS,
@@ -1118,36 +1116,7 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         NCUAService,
         GalleryService
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [
-        EmailComponent,
-        EditUserComponent,
-        EjectionComponent,
-        AlertComponent,
-        ConfirmComponent,
-        ChangePasswordComponent,
-        AboutComponent,
-        AdvisoryComponent,
-        OkayComponent,
-        TermsOfUseComponent,
-        FindingsComponent,
-        IssuesComponent,
-        EnableProtectedComponent,
-        QuestionFiltersComponent,
-        AssessmentDocumentsComponent,
-        UploadExportComponent,
-        InlineParameterComponent,
-        GlobalParametersComponent,
-        KeyboardShortcutsComponent,
-        LicenseComponent,
-        AddRequirementComponent,
-        ComponentOverrideComponent,
-        ExcelExportComponent,
-        MergeQuestionDetailComponent,
-        SelectAssessmentsComponent,
-        AwwaStandardComponent,
-        SectorHelpComponent
-    ]
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }
