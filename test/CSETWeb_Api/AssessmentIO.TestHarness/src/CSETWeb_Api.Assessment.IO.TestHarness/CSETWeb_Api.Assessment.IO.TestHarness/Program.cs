@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Serilog.Core;
+using System.Data.SqlClient;
 
 namespace CSETWeb_Api.AssessmentIO.TestHarness
 {
@@ -20,8 +22,13 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
     {
         internal static IConfigurationRoot config;
 
+        //private static Logger logger = LogManager.GetCurrentClassLogger();
+        //static readonly log4net.ILog _logger = log4net.LogManager.GetLogger(typeof(Program));
+
+
         static void Main(string[] args)
         {
+
             config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true)
@@ -36,8 +43,63 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 ShowHelp();
 
             initClient();
+
+            Console.WriteLine("Enter the directory to import assessments from (or 'none' to use the prexisting db), " +
+                "the directory to export assessments to, your email, and your password in the form of:\n" +
+                "C:\\Users\\MyAccount\\Documents\\INL\\AssessmentsToImport " +
+                "C:\\Users\\MyAccount\\Documents\\INL\\AssessmentsExportedHere my.email@inl.gov myPassword123");
+
+            
+
             try
             {
+                var input = Console.ReadLine().Split(" ");
+
+                string importDirectory = input[0];
+                string exportDirectory = input[1];
+                string inputEmail = input[2];
+                string inputPassword = input[3];
+
+                string connString = config.GetConnectionString("CSET_DB");
+                //SqlConnection conn = new SqlConnection(connString);
+                //Console.WriteLine("You typed: " + importDirectory + " "+ inputEmail + " "+ inputPassword);
+
+                if (!Directory.Exists(importDirectory) && importDirectory != "none")
+                {
+                    Log.Logger.Fatal("The import directory " + importDirectory + " could not be found.");
+                    Console.WriteLine("The import directory could not be found.");
+                    Environment.Exit(-1);
+                }
+                if (string.IsNullOrEmpty(inputEmail) || string.IsNullOrEmpty(inputPassword))
+                {
+                    Log.Logger.Fatal("The import directory " + importDirectory + " could not be found.");
+                    Console.WriteLine("Either the email or password is missing.");
+                    Environment.Exit(-1);
+                }
+                if (!Directory.Exists(exportDirectory))
+                {
+                    Console.WriteLine("Export directory not found. Creating a new export directory with the path: "+exportDirectory);
+                    Directory.CreateDirectory(exportDirectory);
+                }
+
+                Task<string> t = Task.Run(() => GetToken(inputEmail, inputPassword));
+                t.Wait();
+                string token = t.Result;
+
+                if (importDirectory == "none")
+                {
+                    var fileList = Export(token, exportDirectory);
+                    Import(token, importDirectory, fileList);
+
+                }
+
+                else
+                {
+                    //Import(token, importDirectory, )
+                }
+
+
+
                 var export = ht.GetValueOrDefault<bool>("export");
                 var import = ht.GetValueOrDefault<bool>("import");
                 if (!export && !import)
@@ -47,7 +109,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     Environment.Exit(-1);
                 }
 
-                var token = ht.GetValueOrDefault<string>("token");
+                //var token = ht.GetValueOrDefault<string>("token");
                 var notoken = ht.GetValueOrDefault<bool>("notoken");
                 if (notoken)
                 {
@@ -65,9 +127,9 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                         Console.WriteLine("Insufficient authentication paramaters provided.");
                         Environment.Exit(-3);
                     }
-                    Task<string> t = Task.Run(()=> GetToken(email, password));
-                    t.Wait();
-                    token = t.Result;
+                    //Task<string> t = Task.Run(()=> GetToken(email, password));
+                    //t.Wait();
+                    //token = t.Result;
                 }
 
                 var files = new List<KeyValuePair<string, byte[]>>();
@@ -213,6 +275,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
             {
                 string json = await response.Content.ReadAsStringAsync();
                 var loginResponse = JsonConvert.DeserializeObject<Credential>(json);
+                Console.WriteLine("Login successful");
                 return loginResponse.Token;
             }
             else
