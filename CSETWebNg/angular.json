@@ -18,7 +18,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "customWebpackConfig": {
-              "path": "custom-webpack.config.ts"
+              "path": "custom-webpack.config.js"
             },
             "allowedCommonJsDependencies": [
               "jquery",
@@ -63,7 +63,6 @@
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/monaco-editor/min/vs/editor/editor.main.css",
               "src/styles.css"
             ],
             "scripts": [
