@@ -1691,11 +1691,11 @@ ul.nav-tabs li.active button .tab-icon {
   color: $gray-150;
 }
 
-.mdc-list-item__primary-text {
-  font-family: 'Roboto', 'sans-serif';
+.mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
+  color: $primary-250;
 }
 
-.mat-mdc-button-base {
+.mat-mdc-button-base, .mdc-list-item__primary-text {
   letter-spacing: normal !important;
 }
 

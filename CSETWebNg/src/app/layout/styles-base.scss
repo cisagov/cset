@@ -1530,6 +1530,13 @@ ul.nav-tabs li.active button .tab-icon {
   color: $gray-150;
 }
 
+.mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
+  color: $primary-250;
+}
+
+.mat-mdc-button-base, .mdc-list-item__primary-text {
+  letter-spacing: normal !important;
+}
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
