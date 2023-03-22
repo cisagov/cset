@@ -89,13 +89,22 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 if (importDirectory == "none")
                 {
                     var fileList = Export(token, exportDirectory);
+                    // switch DBs
+
+                    // switch DBs
                     Import(token, importDirectory, fileList);
 
                 }
 
                 else
                 {
-                    //Import(token, importDirectory, )
+                    var fileList = new List<KeyValuePair<string, byte[]>>();
+                    Import(token, importDirectory, fileList);
+                    fileList = Export(token, exportDirectory);
+                    // switch DBs
+
+                    // switch DBs
+                    Import(token, importDirectory, fileList);
                 }
 
 
@@ -262,13 +271,14 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
         private static async Task<string> GetToken(string email, string password)
         {
             string apiUrl = config["apiUrl"];
-            var req = new WebRequestOptions { UriString = $"{apiUrl}{Urls.login}" };
-
-            HttpResponseMessage response = await client.PostAsJsonAsync(req.UriString, 
+            //var req = new WebRequestOptions { UriString = $"{apiUrl}{Urls.login}" };
+            var req1 = new WebRequestOptions { UriString = $"{apiUrl}{Urls.loginStandalone}", Username = email };
+            
+            HttpResponseMessage response = await client.PostAsJsonAsync(req1.UriString, 
             new Authorize()
             {
                 Email = email,
-                Password = password,
+                //Password = password,
                 TzOffset = 360
             });
             if (response.IsSuccessStatusCode)
@@ -342,6 +352,12 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     var buffer = File.ReadAllBytes(filepath);
                     files.Add(new KeyValuePair<string, byte[]>(Path.GetFileName(filepath), buffer));
                 }
+
+            }
+            else
+            {
+                Console.WriteLine("The import directory \"" + importdir + "\" could not be found.");
+                Environment.Exit(-4);
             }
 
             var req = new WebRequestOptions
