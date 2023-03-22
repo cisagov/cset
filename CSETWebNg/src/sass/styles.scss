@@ -869,7 +869,7 @@ table.td-align-top td {
   background-color: $primary-color;
 }
 
-.mat-tooltip {
+.mat-mdc-tooltip {
   font-size: 1em;
   background-color: $gray-200  !important;
   color: $gray-900  !important;
@@ -2235,21 +2235,31 @@ mat-sidenav {
   min-width: 100%;
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
+
+*/
 .mat-dialog-header {
   color: $gray-100;
   background-color: $primary-color;
   font-weight: 600;
 }
 
-.upload-export .mat-list .mat-list-item .mat-list-item-content {
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
+
+*/
+.upload-export .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
   padding: 0;
 }
 
-.mat-dialog-content {
+.mat-mdc-dialog-content {
   margin: 0 !important;
 }
 
-.mat-dialog-container {
+.mat-mdc-dialog-container {
   background-color: $gray-50;
   display: flex !important;
   flex: 1 1 auto;

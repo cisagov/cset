@@ -52,7 +52,7 @@ $button1-focus: #2d3236;
 $link1: $blue2;
 $text1: #222;
 
-.cset-header, .mat-menu-panel.menu-panel {
+.cset-header, .mat-mdc-menu-panel.menu-panel {
     background-color: $gray1;
 }
 
@@ -87,6 +87,11 @@ table.assessment-summary th {
 
 
 /* drawer / side nav */
+/* 
+
+  TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version. 
+
+*/
 .mat-drawer, .mat-dialog-header {
     background-color: $drawer-bg;
 }
