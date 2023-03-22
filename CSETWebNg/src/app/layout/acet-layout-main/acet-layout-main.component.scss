@@ -1654,7 +1654,7 @@ ul.nav-tabs li.active button .tab-icon {
 
 .navbar-menu-header,
 .menu-panel [mat-menu-item].mat-mdc-menu-item {
-  color: $gray-150;
+  color: $gray-150 !important;
   background-color: transparent;
   border: 1px solid transparent;
   text-decoration: none !important;
@@ -1666,7 +1666,7 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
-  color: $primary-color;
+  color: $primary-color !important;
   background-color: $white;
 }
 
@@ -1687,8 +1687,17 @@ ul.nav-tabs li.active button .tab-icon {
   color: $primary-color;
 }
 
+.mat-mdc-menu-item:not(:hover):not([disabled]) .mdc-list-item__primary-text {
+  color: $gray-150;
+}
 
+.mdc-list-item__primary-text {
+  font-family: 'Roboto', 'sans-serif';
+}
 
+.mat-mdc-button-base {
+  letter-spacing: normal !important;
+}
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
@@ -2716,6 +2725,12 @@ mat-sidenav {
   flex: 1 1 auto;
   padding: 0 !important;
   overflow: hidden !important;
+  max-width: 100% !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content {
+  color: black !important;
+  letter-spacing: normal !important;
 }
 
 table.assessment-documents {
