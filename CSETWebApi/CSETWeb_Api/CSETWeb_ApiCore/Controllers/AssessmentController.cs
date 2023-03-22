@@ -15,6 +15,7 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -55,6 +56,14 @@ namespace CSETWebCore.Api.Controllers
         {
             var currentUserId = _tokenManager.GetUserId();
             return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow));
+        }
+
+
+        [HttpPost]
+        [Route("api/changeconnectionstring")]
+        public IActionResult ChangeConnectionString([FromBody] string connectionString) 
+        {
+            return Ok(ChangeConnString);
         }
 
 
@@ -314,6 +323,17 @@ namespace CSETWebCore.Api.Controllers
                           .ToDateTimeUnspecified();
 
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
+        }
+
+
+        private string ChangeConnString(string connectionString)
+        {
+            if (connectionString != null && connectionString.Trim() != "") 
+            {
+                
+                //return this.http.get("./assets/mydata.json");
+            }
+            return "";
         }
 
     }

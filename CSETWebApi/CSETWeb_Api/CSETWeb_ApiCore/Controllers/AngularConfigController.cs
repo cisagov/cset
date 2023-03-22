@@ -51,6 +51,36 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("api/assets/changeConnectionString")]
+        public IActionResult ChangeConnectionString()
+        {
+            try
+            {
+                var provider = _webHost.WebRootFileProvider;
+                Console.WriteLine("Reading the path test");
+
+                if (System.IO.File.Exists(Path.Combine(_webHost.WebRootPath)))
+                {
+                    Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
+
+                    //process this as if we are running internally else do what ever used to be the case
+                    //in this case they are running together and we can just replace the config document. 
+                    var jd = processUpdatedJson(HttpContext.Request);
+                    return Ok(jd);
+                }
+                Console.WriteLine("Path didn't exist");
+
+                return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
+            }
+            catch (Exception)
+            {
+                return BadRequest("assets/config.json file not found");
+            }
+        }
+
+
         Newtonsoft.Json.Linq.JObject processUpdatedJson(HttpRequest context)
         {
             string webpath = _webHost.ContentRootPath;
