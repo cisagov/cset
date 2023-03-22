@@ -36,10 +36,12 @@ import { HttpClient } from '@angular/common/http';
   })
 
 export class PdfReportsComponent implements OnInit, AfterViewChecked {
+  // Input Data
   @Input() assessmentInfo;
   @Input() donutData;
   @Input() tableData;
 
+  // Child Data - grabbing HTML of the template for use in the HTML to pdfmake package
   @ViewChild('Cover') divCover: ElementRef
   @ViewChild('One') divOne: ElementRef;
   @ViewChild('Two') divTwo: ElementRef;
@@ -48,7 +50,8 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
   @ViewChild('Five') divFive: ElementRef;
   @ViewChild('Six') divSix: ElementRef;
   @ViewChild('Seven') divSeven: ElementRef;
-   
+
+  // Pdf variables
   coverImage: any = null;
   sectionOne: any = null;
   sectionTwo: any = null;
@@ -57,8 +60,9 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
   sectionFive: any = null;
   sectionSix: any = null;
   sectionSeven: any = null;
-
   document: any = null;
+  reportGeneratedDate: Date;
+
 
   constructor(
     public reportSvc: ReportService,
@@ -66,7 +70,7 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
   ) { }
 
   ngOnInit(): void {
-    // Cover Sheet Image
+    this.reportGeneratedDate = new Date();
     this.getBase64('assets/images/C2M2/C2M2-Report-Cover-Sheet.png');
   }
 
