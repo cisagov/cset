@@ -1212,7 +1212,7 @@ table.td-align-top td {
   background-color: $primary-color;
 }
 
-.mat-tooltip {
+.mat-mdc-tooltip {
   font-size: 1em;
   background-color: $gray-200  !important;
   color: $gray-900  !important;
@@ -1256,11 +1256,21 @@ ul.mat-tree-node {
   width: auto !important;
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version.
+
+*/
 .cset .mat-radio-label {
   align-items: start !important;
   padding-top: .2rem
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.
+
+*/
 .cset .mat-checkbox-inner-container {
   margin: 4px 8px auto 0;
 }
@@ -1639,7 +1649,7 @@ ul.nav-tabs li.active button .tab-icon {
 
 
 // Menus
-.mat-menu-panel.menu-panel {
+.mat-mdc-menu-panel.menu-panel {
   background-color: $primary-color;
   min-height: 20px;
 }
@@ -1650,7 +1660,7 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar-menu-header,
-.menu-panel [mat-menu-item].mat-menu-item {
+.menu-panel [mat-menu-item].mat-mdc-menu-item {
   color: $gray-150;
   background-color: transparent;
   border: 1px solid transparent;
@@ -1659,7 +1669,7 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]),
+.menu-panel [mat-menu-item].mat-mdc-menu-item:hover:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
@@ -1667,7 +1677,7 @@ ul.nav-tabs li.active button .tab-icon {
   background-color: $white;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-mdc-menu-item.disabled-menu-item,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
@@ -2673,21 +2683,31 @@ mat-sidenav {
   min-width: 100%;
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
+
+*/
 .mat-dialog-header {
   color: $gray-100;
   background-color: $primary-color;
   font-weight: 600;
 }
 
-.upload-export .mat-list .mat-list-item .mat-list-item-content {
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
+
+*/
+.upload-export .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
   padding: 0;
 }
 
-.mat-dialog-content {
+.mat-mdc-dialog-content {
   margin: 0 !important;
 }
 
-.mat-dialog-container {
+.mat-mdc-dialog-container {
   background-color: $gray-50;
   display: flex !important;
   flex: 1 1 auto;

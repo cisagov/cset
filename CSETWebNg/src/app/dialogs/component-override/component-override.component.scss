@@ -24,7 +24,7 @@ SOFTWARE.
 .example-container.mat-elevation-z8 {    
   overflow-y: auto;
 }
-.example-container .mat-table.mat-table {
+.example-container .mat-mdc-table.mat-table {
   min-height: 300px;
 }
 .bottom-fix {
@@ -33,6 +33,6 @@ SOFTWARE.
   right: 0;
   width: 100%;
 }
-.mat-dialog-content {
+.mat-mdc-dialog-content {
   flex-grow:1;
 }
