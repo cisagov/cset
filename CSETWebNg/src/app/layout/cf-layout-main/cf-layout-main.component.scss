@@ -495,6 +495,15 @@ label[required]::after {
   color: $white;
 }
 
+.accordion-button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.accordion-header {
+  padding: 0.2em;
+}
+
 .footer .bg-primary {
   background-color: $primary-color  !important;
 }
@@ -1750,6 +1759,11 @@ ul.mat-tree-node {
 #accordion {
   // position: fixed;
   // bottom: 0;
+  width: 100%;
+}
+
+.accordion-item {
+  text-align: center;
   width: 100%;
 }
 
