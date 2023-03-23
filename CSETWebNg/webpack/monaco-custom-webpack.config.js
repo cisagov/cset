@@ -1,9 +1,9 @@
 const path = require('path');
-const MONACO_DIR = path.join(__dirname, "node_modules/monaco-editor");
+const MONACO_DIR = path.join(__dirname, "../node_modules/monaco-editor");
 
 module.exports = {
 	entry: {
-		app: './index.js',
+		app: './webpack/monaco-webpack-entry.js',
 		// Package each language's worker and give these filenames in `getWorkerUrl`
 		'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
 		'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',

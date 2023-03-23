@@ -116,8 +116,6 @@
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
-    "mini-css-extract-plugin": "^2.7.5",
-    "monaco-editor-webpack-plugin": "^7.0.1",
     "protractor": "^7.0.0",
     "rxjs-tslint": "^0.1.6",
     "style-loader": "^3.3.2",
