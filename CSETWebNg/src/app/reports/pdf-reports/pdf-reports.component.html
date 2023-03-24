@@ -20,12 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<button (click)="generatePdf()">View PDF</button>
+<button (click)="generatePdf()">View PDF (HTML)</button>
+<button (click)="generatePdfTwo()">View PDF (JSON)</button>
 
+<!-- Display none while we still have an HTML aspect -->
 <div style="display: none">
-	<div #Cover>
-	</div>
-	
 	<div #One>
     <h1 class="pagebreak-before">Notification</h1>
     <p>
@@ -53,15 +52,10 @@
     
     <h1 class="pagebreak-before">1. Introduction</h1>
     <p>
-      The Cybersecurity Capability Maturity Model (C2M2) can help organizations of all sectors, types, and sizes to evaluate
-      and make improvements to their cybersecurity programs and strengthen their operational resilience. This report presents
-      the results of a C2M2 self-evaluation. The results included in this report may be used to measure and improve an
-      existing cybersecurity program. It also may serve as an input for other activities, such as informing cybersecurity risk
-      managers about the controls in place to mitigate cybersecurity risks within an organization.
+      The Cybersecurity Capability Maturity Model (C2M2) can help organizations of all sectors, types, and sizes to evaluate and make improvements to their cybersecurity programs and strengthen their operational resilience. This report presents the results of a C2M2 self-evaluation. The results included in this report may be used to measure and improve an existing cybersecurity program. It also may serve as an input for other activities, such as informing cybersecurity risk managers about the controls in place to mitigate cybersecurity risks within an organization.
     </p>
     <p>
-      The results presented in this report are based on participant responses describing the degree to which C2M2 practices
-      are implemented. This report may include sensitive information and should be protected accordingly.
+      The results presented in this report are based on participant responses describing the degree to which C2M2 practices are implemented. This report may include sensitive information and should be protected accordingly.
     </p>
     
     <p>Assessment Information:</p>
@@ -85,14 +79,10 @@
 
 		<h1 class="pagebreak-before" id="toc-domains-objectives-practices">2.1 Domains, Objectives, and Practices</h1>
 		<p>
-  		The C2M2 includes 356 cybersecurity practices, which are grouped into 10 domains. These practices represent the
-  		activities an organization can perform to establish and mature capability in the domain. For example, the Asset, Change,
-  		and Configuration Management domain is a group of practices that an organization can perform to establish and mature
-  		asset management, change management, and configuration management capabilities.
+  		The C2M2 includes 356 cybersecurity practices, which are grouped into 10 domains. These practices represent the activities an organization can perform to establish and mature capability in the domain. For example, the Asset, Change, and Configuration Management domain is a group of practices that an organization can perform to establish and mature asset management, change management, and configuration management capabilities.
 		</p>
 		<p>
-  		The practices within each domain are organized into objectives, which represent achievements that support the domain.
-  		For example, the Asset, Change, and Configuration Management domain comprises five objectives:
+  		The practices within each domain are organized into objectives, which represent achievements that support the domain. For example, the Asset, Change, and Configuration Management domain comprises five objectives:
 		</p>
 		<ol class="mb-3">
   		<li>Manage IT and OT Asset Inventory</li>
@@ -107,7 +97,7 @@
 		</p>
 
     <div class="d-flex justify-content-center mt-4 mb-4">
-		  <svg xmlns="http://www.w3.org/2000/svg" width="535" viewBox="0 0 875 574" font-size="16" role="img"
+		  <svg xmlns="http://www.w3.org/2000/svg" width="535" viewBox="0 150 875 574" font-size="16" role="img"
 		  style="display: block; max-width: 100%; max-height: 100%; width: 100%;">
 		    <title id="MIL_DefinitionTitle">Model Architecture</title>
 		    <desc id="MIL_DefinitionDesc">Figure 1: Model and Domain Elements. A graphic representation of the Model, Domain and
@@ -169,10 +159,10 @@
 			  </text></g>
 		  </svg>
 	  </div>
-	
-    <span class="caption">
+    <span class="caption" style="text-align: center; color: rgb(3, 83, 148); margin-top: -185; margin-bottom: 30">
       Figure 1: Model and Domain Elements
     </span>
+
     <p>
       For each domain, this report provides a purpose statement, which is a high-level summary of the intent of the domain.
       Further guidance for each of the domains, such as introductory discussions and example scenarios is provided in the C2M2
@@ -318,51 +308,149 @@
     <p>
       Descriptions for self-evaluation response options are shown in the following table.
     </p>
-    <div class="d-flex justify-content-center mb-3">
-      <div class="grid-table"
-        alt="This table lists the responses in the response scale and provides their Implementation descriptions.  It also shows the color used to represent each response.  Fully Implemented is dark blue with white text.  Largely Implemented is light blue with black text. Partially Implemented is a light yellow with black text.  Not Implemented is a dark yellow with black text."
-        aria-label="This table lists the responses in the response scale and provides their Implementation descriptions.  It also shows the color used to represent each response.  Fully Implemented is dark blue with white text.  Largely Implemented is light blue with black text. Partially Implemented is a light yellow with black text.  Not Implemented is a dark yellow with black text."
-        role="img" tabindex="-1" style="line-height: 1;">
-        <div class="table-header table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 1 / span 1 / span 1;">
-          <span class="tableHeader" style="font-weight: bold; display: block;">Response</span></div>
-        <div class="table-header table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 1 / 2 / span 1 / span 1;">
-          <span class="table-header" style="font-weight: bold; display: block;">Implementation Description</span></div>
-        <div class="table-block"
-          style="background-color: rgb(0, 92, 153); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 2 / 1 / span 1 / span 1;">
-          <span style="color: rgb(255, 255, 255); display: block;">Fully Implemented (FI)</span></div>
-        <div class="table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 2 / 2 / span 1 / span 1;">
-          <span style="display: block;">Complete</span></div>
-        <div class="table-block"
-          style="background-color: rgb(139, 166, 202); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 3 / 1 / span 1 / span 1;">
-          <span style="color: rgb(0, 0, 0); display: block;">Largely Implemented (LI)</span></div>
-        <div class="table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 3 / 2 / span 1 / span 1;">
-          <span style="display: block;">Complete, but with a recognized opportunity for improvement</span></div>
-        <div class="table-block"
-          style="background-color: rgb(250, 217, 128); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 4 / 1 / span 1 / span 1;">
-          <span style="color: rgb(0, 0, 0); display: block;">Partially Implemented (PI)</span></div>
-        <div class="table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 4 / 2 / span 1 / span 1;">
-          <span style="display: block;">Incomplete; there are multiple opportunities for improvement</span></div>
-        <div class="table-block"
-          style="background-color: rgb(230, 159, 0); padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; text-align: center; grid-area: 5 / 1 / span 1 / span 1;">
-          <span style="color: rgb(0, 0, 0); display: block;">Not Implemented (NI)</span></div>
-        <div class="table-block"
-          style="padding: 4px; border-width: 1px; margin-bottom: -1px; margin-right: -1px; grid-area: 5 / 2 / span 1 / span 1;">
-          <span style="display: block;">Absent; the practice is not performed by the organization</span></div>
-      </div>
-    </div>
-    <span class="caption">
+
+    <table style="margin-top: 10">
+      <tr>
+        <th style="background-color: white; font-weight: bold; text-align: center; margin: 4">Response</th>
+        <th style="background-color: white; font-weight: bold; text-align: center; margin: 4">Implementation Description</th>
+      </tr>
+      <tr>
+        <td style="background-color: rgb(0, 91, 153); color: white; text-align: center; margin: 2">Fully Implemented (FI)</td>
+        <td style="margin: 2">Complete</td>
+      </tr>
+      <tr>
+        <td style="background-color: rgb(139, 166, 202); text-align: center; margin: 2">Largely Implemented (LI)</td>
+        <td style="margin: 2">Complete, but with a recognized opportunity for improvement</td>
+      </tr>
+      <tr>
+        <td style="background-color: rgb(250, 217, 128); text-align: center; margin: 2">Partially Implemented (PI)</td>
+        <td style="margin: 2">Incomplete; there are multiple opportunities for improvement</td>
+      </tr>
+      <tr>
+        <td style="background-color: rgb(230, 159, 0); text-align: center; margin: 2">Not Implemented (FI)</td>
+        <td style="margin: 2">Absent; the practice is not performed by the organization</td>
+      </tr>
+    </table>
+    <span class="caption" style="text-align: center; color: rgb(3, 83, 148); margin: 2">
       Table 1: Description of Self-Evaluation Response Options
     </span>
   </div>
 
-
   <div #Three>
-    <app-c2m2-summary-results [donutData]="donutData" [tableData]="tableData"></app-c2m2-summary-results>
+    <h1 class="pagebreak-before">3. Summary of Self-Evaluation Results</h1>
+
+    <h1 id="toc-mil-achievement-by-domain">3.1 MIL Achievement by Domain</h1>
+  
+    <p>Figure 2 shows the MIL achieved for each C2M2 domain.</p>
+      <app-c2m2-domain-mil-bar-chart [domainData]="donutData"></app-c2m2-domain-mil-bar-chart>
+      <span class="caption" style="text-align: center; color: rgb(3, 83, 148); margin: 2;">
+        Figure 2: MIL Achieved by Domain
+      </span>
+  
+    <h1 id="toc-practice-implementation-by-domain" class="pagebreak-before">3.2 Practice Implementation by Domain</h1>
+    <p>
+      Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for
+      each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding
+      MILs receive responses of Fully Implemented or Largely Implemented. A high-level understanding of the organization’s
+      self-evaluation results can be gained from this figure and may be useful when evaluating areas for future improvement.
+    </p>
+    <p>
+      The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain.
+      Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
+    </p>
+  
+    <!--<div class="d-flex flex-column align-items-center" style="margin-left: -20px;">-->
+      <!-- goes to a new MIL row -->
+      <!--<div *ngFor="let dataRow of milData; let i = index">
+        <div class="d-flex" style="justify-items: space-evenly; ">-->
+          <!--supplies donut with current MIL level info for each domain -->
+          <!--<div *ngFor="let data of dataRow; let j = index">
+            <div *ngIf="i == 0">
+              <div *ngIf="j > 0" class="donut-grid-header">
+                {{donutData[j - 1].shortTitle}}
+              </div>
+              <div *ngIf="j == 0" style="height: 20px;">-->
+                <!-- this holds the empty cell in the top left corner -->
+              <!--</div>
+            </div>
+            <div *ngIf="j == 0 && i != milData.length - 1" class="donut-grid-mil-box">
+              MIL{{milNumberFlip(i)}}
+            </div>
+            <div *ngIf="j == 0 && i == milData.length - 1" class="donut-grid-mil-box"
+              style="height: 70px;">
+              {{ dataRow[j] }}
+            </div>
+            <div *ngIf="j > 0 && i != milData.length - 1" class="donut-grid-chart-box">
+              <app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>
+            </div>
+            <div *ngIf="j > 0 && i == milData.length - 1" class="donut-grid-chart-box"
+              style="height: 70px;">
+              {{ dataRow[j] }}
+            </div>
+          </div>
+        </div>
+      </div>-->
+  
+      <!--<div class="color-legend justify-content-between mt-2 mb-1" style="width: 90%">
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #265B94;"></span>
+          <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #90A5C7;"></span>
+          <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
+          <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #DCA237;"></span>
+          <span style="font-size: 0.8em;">Not Implemented (NI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #AAAAAA;"></span>
+          <span style="font-size: 0.8em;">Unanswered (U)</span>
+        </div>
+      </div>
+      <span class="caption">
+        Figure 3: Summary of Responses Input by MIL and Domain
+      </span>
+    </div>-->
+  
+    <h1 id="toc-implementation-of-management-activities"  class="pagebreak-before">
+      3.3 Implementation of Management Activities across Domains
+    </h1>
+    <p>
+      The final objective of each C2M2 domain includes practices focused on cybersecurity management activities. These
+      practices focus on the extent to which cybersecurity practices are institutionalized, or ingrained, in the
+      organization's operations. The more deeply ingrained an activity, the more likely it is that the organization will
+      continue to perform the activity over time; the activity will be retained under times of stress; and the outcomes of the
+      activity will be consistent, repeatable, and of high quality. Table 2 provides a high-level overview of implementation
+      of the Management Activities practices from two perspectives: 1) implementation of all Management Activities within each
+      domain and 2) implementation of each Management Activities practice across the ten C2M2 domains.
+    </p>
+  
+    <!--<table>
+      <tr>
+        <td></td>
+        <td class="vertical-headers" *ngFor="let domain of this.domainCategories">
+          {{ domain }}
+        </td>
+      </tr>
+      <tr style="border: 1px solid rgb(179, 179, 179);" *ngFor="let question of this.tableData.managementQuestions">
+        <td style="padding-left: 5px; padding-bottom: 3px;">
+          {{ question.questionText }}
+        </td>
+        <td style="border: 1px solid rgb(179, 179, 179);" *ngFor="let answer of question.domainAnswers" 
+            [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
+            <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
+              {{ answer.answer !== null ? answer.answer : 'U' }}
+            </div>
+        </td>
+      </tr>
+      <caption style="caption-side: bottom; text-align: center; color: #265B94">Table 2: Management Activities</caption>
+    </table>-->
   </div>
 
   <div #Four>
