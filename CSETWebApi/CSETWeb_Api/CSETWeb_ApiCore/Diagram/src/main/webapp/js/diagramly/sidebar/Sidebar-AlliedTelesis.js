@@ -8,13 +8,21 @@
 		var s = 'points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image;image=img/lib/allied_telesis/';
 
 		// Adds Allied Telesis shapes
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisBuildings');
 		this.addAlliedTelesisBuildingsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisComputer and Terminals');
 		this.addAlliedTelesisComputerTerminalsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisMedia Converters');
 		this.addAlliedTelesisMediaConvertersPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisSecurity');
 		this.addAlliedTelesisSecurityPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisStorage');
 		this.addAlliedTelesisStoragePalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisSwitch');
 		this.addAlliedTelesisSwitchPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('allied_telesis', 'allied_telesisWireless');
 		this.addAlliedTelesisWirelessPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary();
 	};
 
 	Sidebar.prototype.addAlliedTelesisBuildingsPalette = function(d, dt, sb, s)
@@ -251,5 +259,4 @@
 			}
 		}));
 	};
-	
 })();

@@ -1,7 +1,7 @@
 /**
  * Mindmaps plugin.
  * 
- * to-do:
+ * Todo:
  * - Make cursor key selection more generic
  * - Handle single-cell movement on touch
  * - Move multiple cells without subtrees
@@ -1010,7 +1010,7 @@ Draw.loadPlugin(function(ui)
 				// Gets the subtree from cell downwards
 				graph.traverse(temp[i], true, function(vertex, edge)
 				{
-					// to-do: Use dictionary to avoid duplicates
+					// TODO: Use dictionary to avoid duplicates
 					if (edge != null && mxUtils.indexOf(cells, edge) < 0)
 					{
 						cells.push(edge);
@@ -1046,7 +1046,7 @@ Draw.loadPlugin(function(ui)
 //				
 //				if (state != null && state.style['mindmapRoot'] == '1')
 //				{
-//					// to-do: Move subtree by same dx/dy
+//					// TODO: Move subtree by same dx/dy
 //					//layout.execute(model.getParent(state.cell), state.cell);
 //					
 //					// Gets the subtree from cell downwards
@@ -1179,7 +1179,7 @@ Draw.loadPlugin(function(ui)
           		this.currentState = null;
         	}
         	
-        	// to-do: Fix single cell movement on touch devices
+        	// TODO: Fix single cell movement on touch devices
 //        	if (mxEvent.isTouchEvent(me.getEvent()))
 //        	{
 //        		this.mouseMove(sender, me);
@@ -1246,7 +1246,7 @@ Draw.loadPlugin(function(ui)
 	// Adds sidebar entries
 	var sb = ui.sidebar;
 	
-    sb.addPalette('trees', 'Trees', true, function(content)
+    sb.addPalette('trees', 'Trees', false, function(content)
     {
         (function()
         {
@@ -1432,11 +1432,4 @@ Draw.loadPlugin(function(ui)
 			content.appendChild(sb.createVertexTemplateFromCells([edge, edge2, cell, cell2], 220, 60, 'Sub Sections'));
         })();
     });
-    
-    // Collapses default sidebar entry and inserts this before
-    var c = ui.sidebar.container;
-    var general = c.getElementsByTagName('a')[0];
-    general.click();
-    c.insertBefore(c.lastChild.previousSibling, general);
-    c.insertBefore(c.lastChild, general);
 });
