@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
+using DocumentFormat.OpenXml.InkML;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -52,31 +53,39 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/assets/changeConnectionString")]
-        public IActionResult ChangeConnectionString()
+        public string ChangeConnectionString([FromBody] string connString)
         {
             try
             {
-                var provider = _webHost.WebRootFileProvider;
                 Console.WriteLine("Reading the path test");
+                string currDirectory = Directory.GetCurrentDirectory();
+                string appSettingsPath = currDirectory+ "\\appsettings.json";
 
-                if (System.IO.File.Exists(Path.Combine(_webHost.WebRootPath)))
+                if (System.IO.File.Exists(appSettingsPath))
                 {
-                    Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
+                    JObject document = JObject.Parse(System.IO.File.ReadAllText(appSettingsPath));
+                    JToken element = document["ConnectionStrings"];
 
-                    //process this as if we are running internally else do what ever used to be the case
-                    //in this case they are running together and we can just replace the config document. 
-                    var jd = processUpdatedJson(HttpContext.Request);
-                    return Ok(jd);
+                    string previousConnString = element["CSET_DB"].ToString();
+                    element["CSET_DB"] = connString;
+                    document["ConnectionStrings"].Replace(element);
+
+                    System.IO.File.WriteAllText(appSettingsPath, document.ToString());
+                    
+
+                    Console.WriteLine($"{document}");
+                    return previousConnString;
                 }
-                Console.WriteLine("Path didn't exist");
-
-                return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
+                else
+                {
+                    return "Error: \"appsettings.json\" could not be found";
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("assets/config.json file not found");
+                return "Error: something went wrong with changing the connection string in \"appsettings.json\". "+ex.Message;
             }
         }
 
