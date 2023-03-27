@@ -109,6 +109,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.creditUnionOptions = response;
           for (let i = 0; i < this.creditUnionOptions.length; i++) {
             this.creditUnionOptions[i].charter = this.padLeft(this.creditUnionOptions[i].charter, '0', 5);
+            if (this.creditUnionOptions[i].charter == this.assessment.charter) {
+              this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
+              this.assessment.charterType = this.creditUnionOptions[i].charterType;
+            }
           }
         }
       );
@@ -121,7 +125,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           } 
           else{
             //tval= value.name;
-            console.log(value);
           }
           const name = tval;
           return name ? this.filter(name as string) : this.creditUnionOptions.slice();
@@ -141,8 +144,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    console.log(this.assessment)
-
     
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
@@ -150,7 +151,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         this.contactInitials = "_" + response.contactList[0].firstName;
-        console.log(this.contactInitials)
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -169,7 +169,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
-    this.ncuaSvc.isJoint = this.assessment.isJoint;
+    this.ncuaSvc.ISE_StateLed = this.assessment.isE_StateLed;
 
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
 
@@ -216,6 +216,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
+          this.assessment.charterType = this.creditUnionOptions[i].charterType;
+          this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
@@ -224,23 +226,21 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
+          this.assessment.charterType = this.creditUnionOptions[i].charterType;
+          this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
+
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
       }
     }
 
-    if (e.target.value == true || e.target.value == false) {
-      this.toggleJoint();
-    }
+    // if (e.target.value == true || e.target.value == false) {
+    //   this.toggleJoint();
+    // }
 
     this.createAssessmentName();
     this.setCharterPad();
-
-    if (this.assessment.charter != '00001') {
-      this.ncuaSvc.isJoint = false;
-      this.assessment.isJoint = false;
-    }
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
@@ -344,11 +344,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
 
   toggleJoint() {
-    this.ncuaSvc.isJoint = !this.ncuaSvc.isJoint;
+    this.ncuaSvc.ISE_StateLed = !this.ncuaSvc.ISE_StateLed;
 
-    this.assessment.isJoint = this.ncuaSvc.isJoint;
+    this.assessment.isE_StateLed = !this.assessment.isE_StateLed;
 
-    console.log(this.assessment.isJoint)
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
