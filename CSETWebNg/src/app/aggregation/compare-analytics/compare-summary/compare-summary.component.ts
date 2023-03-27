@@ -36,10 +36,10 @@ import { deepStrictEqual } from 'assert';
 })
 export class CompareSummaryComponent implements OnInit {
 
-  chartOverallAverage: Chart;
-  chartStandardsPie: Chart;
-  chartComponentsPie: Chart;
-  chartCategoryAverage: Chart;
+  chartOverallAverage: any;
+  chartStandardsPie: any;
+  chartComponentsPie: any;
+  chartCategoryAverage: any;
   catAvgHeight: number;
 
   chartsMaturityCompliance: any[];
