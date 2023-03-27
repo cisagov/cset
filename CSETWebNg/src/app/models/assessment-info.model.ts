@@ -45,7 +45,9 @@ export interface AssessmentDetail {
     useStandard?: boolean;
     useMaturity?: boolean;
     useDiagram?: boolean;
-    isJoint?: boolean;
+    isE_StateLed?: boolean;
+    regionCode?: number;
+    charterType?: number;
 
     isAcetOnly?: boolean;
     workflow?: string;
