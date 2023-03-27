@@ -2722,6 +2722,11 @@ mat-sidenav {
   margin: 0 !important;
 }
 
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 0;
+}
+
 .mat-mdc-dialog-container {
   background-color: $gray-50;
   display: flex !important;
@@ -2729,6 +2734,7 @@ mat-sidenav {
   padding: 0 !important;
   overflow: hidden !important;
   max-width: 100% !important;
+  border-radius: 0.25em;
 }
 
 .mat-mdc-dialog-container .mdc-dialog__content {
