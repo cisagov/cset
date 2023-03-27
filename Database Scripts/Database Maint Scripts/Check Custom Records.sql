@@ -1,6 +1,6 @@
-WITH AllCustomRowCounts as 
+WITH AllCustomRowCounts AS
 (
-	SELECT COUNT(*) as RowCnt FROM [NEW_REQUIREMENT] WHERE [Requirement_Id] >= 1000000
+	SELECT COUNT(*) AS RowCnt FROM [NEW_REQUIREMENT] WHERE [Requirement_Id] >= 1000000
 	UNION ALL
 	SELECT COUNT(*) FROM [NEW_QUESTION] WHERE [Question_Id] >= 1000000
 	UNION ALL
@@ -10,4 +10,4 @@ WITH AllCustomRowCounts as
 	UNION ALL
 	SELECT COUNT(*) FROM [UNIVERSAL_SUB_CATEGORIES] WHERE [Universal_Sub_Category_Id] >= 1000000
 )
-SELECT SUM(RowCnt) as TotalCustomRowCount from AllCustomRowCounts
+SELECT SUM(RowCnt) AS TotalCustomRowCount FROM AllCustomRowCounts
