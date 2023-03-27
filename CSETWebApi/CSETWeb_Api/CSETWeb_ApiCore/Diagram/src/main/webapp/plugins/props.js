@@ -4,55 +4,102 @@
 Draw.loadPlugin(function(ui) {
 	
 	var div = document.createElement('div');
-	div.style.background = '#ffffff';
+	div.style.background = Editor.isDarkMode() ? Editor.darkColor : '#ffffff';
 	div.style.border = '1px solid gray';
 	div.style.opacity = '0.8';
-	div.style.position = 'absolute';
 	div.style.padding = '10px';
 	div.style.paddingTop = '0px';
 	div.style.width = '20%';
-	div.style.minWidth = '200px';
-	div.style.top = '40px';
-	div.style.right = '20px';
+	div.innerHTML = '<p><i>' + mxResources.get('nothingIsSelected') + '</i></p>';
 	
 	var graph = ui.editor.graph;
 	
-	// Made for chromeless mode
 	if (!ui.editor.isChromelessView())
 	{
-		div.style.top = '100px';
-		div.style.right = '260px';
+		div.style.boxSizing = 'border-box';
+		div.style.minHeight = '100%';
+		div.style.width = '100%';
+
+		var iiw = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		
+		var dataWindow = new mxWindow('Data', div, iiw - 320, 60, 240, 220, true, true);
+		dataWindow.destroyOnClose = false;
+		dataWindow.setMaximizable(false);
+		dataWindow.setResizable(true);
+		dataWindow.setScrollable(true);
+		dataWindow.setClosable(true);
+		dataWindow.contentWrapper.style.overflowY = 'scroll';
+
+		// Adds resource for action
+		mxResources.parse('extractData=Extract Data');
+
+		// Adds action
+		ui.actions.addAction('extractData...', function()
+		{
+			dataWindow.setVisible(!dataWindow.isVisible());
+		});
+		
+		var menu = ui.menus.get('extras');
+		var oldFunct = menu.funct;
+		
+		menu.funct = function(menu, parent)
+		{
+			oldFunct.apply(this, arguments);
+			
+			ui.menus.addMenuItems(menu, ['-', 'extractData'], parent);
+		};
 	}
-	
-	div.innerHTML = '<p><i>Select a shape.</i></p>';
-	document.body.appendChild(div);
+	else
+	{
+		div.style.position = 'absolute';
+		div.style.minWidth = '200px';
+		div.style.top = '40px';
+		div.style.right = '20px';
+
+		document.body.appendChild(div);
+	}
 	
 	// Highlights current cell
 	var highlight = new mxCellHighlight(graph, '#00ff00', 8);
+	var ignored = ['label', 'tooltip', 'placeholders'];
+
+	function extractData(evt)
+	{
+		var result = graph.getDataForCells(graph.getSelectionCells());
+
+		if (mxEvent.isShiftDown(evt))
+		{
+			console.log(JSON.stringify(result, null, '  '));
+		}
+		else
+		{
+			console.log(result);
+		}
+	};
 
 	/**
 	 * Updates the properties panel
 	 */
 	function cellClicked(cell)
 	{
-		// Forces focusout in IE
-		graph.container.focus();
-
 		// Gets the selection cell
 		if (cell == null)
 		{
 			highlight.highlight(null);
-			div.innerHTML = '<p><i>Select a shape.</i></p>';
+			div.innerHTML = '<p><i>' + mxResources.get('nothingIsSelected') + '</i></p>';
 		}
 		else
 		{
 			var attrs = (cell.value != null) ? cell.value.attributes : null;
+
+			if (ui.editor.isChromelessView())
+			{
+				highlight.highlight(graph.view.getState(cell));
+			}
 	
 			if (attrs != null)
 			{
-				var ignored = ['label', 'tooltip', 'placeholders'];
-				highlight.highlight(graph.view.getState(cell));
-				var label = graph.sanitizeHtml(graph.getLabel(cell));
+				var label = Graph.sanitizeHtml(graph.getLabel(cell));
 				
 				if (label != null && label.length > 0)
 				{
@@ -60,7 +107,7 @@ Draw.loadPlugin(function(ui) {
 				}
 				else
 				{
-					div.innerHTML = '';
+					div.innerText = '';
 				}
 				
 				for (var i = 0; i < attrs.length; i++)
@@ -68,77 +115,68 @@ Draw.loadPlugin(function(ui) {
 					if (mxUtils.indexOf(ignored, attrs[i].nodeName) < 0 &&
 						attrs[i].nodeValue.length > 0)
 					{
-						div.innerHTML += '<h2>' + graph.sanitizeHtml(attrs[i].nodeName) + '</h2>' +
-							'<p>' + graph.sanitizeHtml(attrs[i].nodeValue) + '</p>';
+						// TODO: Add click handler on h2 to output data
+						var h2 = document.createElement('h2');
+						mxUtils.write(h2, attrs[i].nodeName);
+						div.appendChild(h2);
+						var p = document.createElement('p');
+						mxUtils.write(p, attrs[i].nodeValue);
+						div.appendChild(p);
 					}
 				}
 			}
+			else
+			{
+				var label = graph.convertValueToString(cell);
+				
+				if (label != '')
+				{
+					div.innerHTML = '<h1>' + Graph.sanitizeHtml(label) + '</h1>';
+				}
+				else
+				{
+					div.innerHTML = '<p><i>No data</i></p>';
+				}
+			}
+
+			if (!ui.editor.isChromelessView())
+			{
+				var button = document.createElement('button');
+				button.setAttribute('title', 'Click or Shift+Click to write data for all selected cells to the browser console');
+				button.style['float'] = 'none';
+				mxUtils.write(button, 'Write to Console');
+
+				mxEvent.addListener(button, 'click', function(evt)
+				{
+					extractData(evt);
+				});
+
+				div.appendChild(button);
+			}
 		}
 	};
 
-	/**
-	 * Creates the textfield for the given property.
-	 */
-	function createTextField(graph, form, cell, attribute)
+	if (!ui.editor.isChromelessView())
 	{
-		var input = form.addText(attribute.nodeName + ':', attribute.nodeValue);
-
-		var applyHandler = function()
+		graph.selectionModel.addListener(mxEvent.CHANGE, function(sender, evt)
 		{
-			var newValue = input.value || '';
-			var oldValue = cell.getAttribute(attribute.nodeName, '');
-
-			if (newValue != oldValue)
-			{
-				graph.getModel().beginUpdate();
-                
-                try
-                {
-                	var edit = new mxCellAttributeChange(
-                           cell, attribute.nodeName,
-                           newValue);
-                   	graph.getModel().execute(edit);
-                   	graph.updateCellSize(cell);
-                }
-                finally
-                {
-                    graph.getModel().endUpdate();
-                }
-			}
-		}; 
-
-		mxEvent.addListener(input, 'keypress', function (evt)
-		{
-			// Needs to take shift into account for textareas
-			if (evt.keyCode == /*enter*/13 &&
-				!mxEvent.isShiftDown(evt))
-			{
-				input.blur();
-			}
+			cellClicked(graph.getSelectionCell());
 		});
-
-		if (mxClient.IS_IE)
+		
+		graph.model.addListener(mxEvent.CHANGE, function(sender, evt)
 		{
-			mxEvent.addListener(input, 'focusout', applyHandler);
-		}
-		else
-		{
-			// Note: Known problem is the blurring of fields in
-			// Firefox by changing the selection, in which case
-			// no event is fired in FF and the change is lost.
-			// As a workaround you should use a local variable
-			// that stores the focused field and invoke blur
-			// explicitely where we do the graph.focus above.
-			mxEvent.addListener(input, 'blur', applyHandler);
-		}
-	};
-	
-	graph.click = function(me)
+			cellClicked(graph.getSelectionCell());
+		});
+	}
+	else
 	{
-		// Async required to enable hyperlinks in labels
-		window.setTimeout(function()
+		graph.click = function(me)
 		{
-			cellClicked(me.getCell());
-		}, 0);
-	};
+			// Async required to enable hyperlinks in labels
+			window.setTimeout(function()
+			{
+				cellClicked(me.getCell());
+			}, 0);
+		};
+	}
 });

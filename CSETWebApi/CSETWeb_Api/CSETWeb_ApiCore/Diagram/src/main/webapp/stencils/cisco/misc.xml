@@ -2374,10 +2374,10 @@
 <connections>
 <constraint x="0.5" y="0" perimeter="0" name="N"/>
 <constraint x="0.5" y="0.99" perimeter="0" name="S"/>
-<constraint x="0.0050" y="0.5" perimeter="0" name="W"/>
+<constraint x="0.005" y="0.5" perimeter="0" name="W"/>
 <constraint x="1" y="0.5" perimeter="0" name="E"/>
 <constraint x="0.16" y="0.15" perimeter="0" name="NW"/>
-<constraint x="0.0050" y="0.99" perimeter="0" name="SW"/>
+<constraint x="0.005" y="0.99" perimeter="0" name="SW"/>
 <constraint x="1" y="0" perimeter="0" name="NE"/>
 <constraint x="0.89" y="0.8" perimeter="0" name="SE"/>
 </connections>
@@ -3673,7 +3673,6 @@
 <close/>
 </path>
 <fill/>
-<restore/>
 <rect/>
 <stroke/>
 <strokecolor color="#ffffff"/>
@@ -3695,7 +3694,6 @@
 <close/>
 </path>
 <stroke/>
-<save/>
 <path>
 <move x="11.33" y="52.33"/>
 <curve x1="11.66" y1="52.33" x2="11.66" y2="52" x3="11.66" y3="52"/>

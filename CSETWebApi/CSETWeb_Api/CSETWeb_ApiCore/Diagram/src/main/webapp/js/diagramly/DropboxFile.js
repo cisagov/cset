@@ -92,6 +92,24 @@ DropboxFile.prototype.isRevisionHistorySupported = function()
 };
 
 /**
+ * Returns true if copy, export and print are not allowed for this file.
+ */
+DropboxFile.prototype.getFileUrl = function()
+{
+	return 'https://www.dropbox.com/home/Apps' + this.ui.dropbox.appPath + this.stat.path_display;
+};
+
+/**
+ * Returns true if copy, export and print are not allowed for this file.
+ */
+DropboxFile.prototype.getFolderUrl = function()
+{
+	var url = this.getFileUrl();
+				
+	return url.substring(0, url.lastIndexOf('/'));
+};
+
+/**
  * Hook for subclassers.
  */
 DropboxFile.prototype.getRevisions = function(success, error)
@@ -159,9 +177,9 @@ DropboxFile.prototype.updateDescriptor = function(newFile)
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-DropboxFile.prototype.save = function(revision, success, error)
+DropboxFile.prototype.save = function(revision, success, error, unloading, overwrite)
 {
-	this.doSave(this.getTitle(), success, error);
+	this.doSave(this.getTitle(), revision, success, error, unloading, overwrite);
 };
 
 /**
@@ -172,7 +190,7 @@ DropboxFile.prototype.save = function(revision, success, error)
  */
 DropboxFile.prototype.saveAs = function(title, success, error)
 {
-	this.doSave(title, success, error);
+	this.doSave(title, false, success, error);
 };
 
 /**
@@ -181,15 +199,17 @@ DropboxFile.prototype.saveAs = function(title, success, error)
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
  */
-DropboxFile.prototype.doSave = function(title, success, error)
+DropboxFile.prototype.doSave = function(title, revision, success, error, unloading, overwrite)
 {
 	// Forces update of data for new extensions
 	var prev = this.stat.name;
 	this.stat.name = title;
-	DrawioFile.prototype.save.apply(this, arguments);
-	this.stat.name = prev;
 	
-	this.saveFile(title, false, success, error);
+	DrawioFile.prototype.save.apply(this, [null, mxUtils.bind(this, function()
+	{
+		this.stat.name = prev;
+		this.saveFile(title, revision, success, error, unloading, overwrite);
+	}), error, unloading, overwrite]);
 };
 
 /**
@@ -213,75 +233,68 @@ DropboxFile.prototype.saveFile = function(title, revision, success, error)
 		{
 			if (checked)
 			{
-				this.savingFile = true;
-				
-				// Makes sure no changes get lost while the file is saved
-				var prevModified = this.isModified;
-				var modified = this.isModified();
-
-				var prepare = mxUtils.bind(this, function()
+				try
 				{
-					this.setModified(false);
+					// Sets shadow modified state during save
+					this.savingFileTime = new Date();
+					this.setShadowModified(false);
+					this.savingFile = true;
 					
-					this.isModified = function()
+					var doSave = mxUtils.bind(this, function(data)
 					{
-						return modified;
-					};
-				});
-				
-				prepare();
-				
-				var doSave = mxUtils.bind(this, function(data)
-				{
-					var index = this.stat.path_display.lastIndexOf('/');
-					var folder = (index > 1) ? this.stat.path_display.substring(1, index + 1) : null;
-					
-					this.ui.dropbox.saveFile(title, data, mxUtils.bind(this, function(stat)
-					{
-						this.savingFile = false;
-						this.isModified = prevModified;
-						this.stat = stat;
-						this.contentChanged();
+						var index = this.stat.path_display.lastIndexOf('/');
+						var folder = (index > 1) ? this.stat.path_display.substring(1, index + 1) : null;
 						
-						if (success != null)
+						this.ui.dropbox.saveFile(title, data, mxUtils.bind(this, function(stat)
 						{
-							success();
-						}
-					}), mxUtils.bind(this, function(err)
-					{
-						this.savingFile = false;
-						this.isModified = prevModified;
-						this.setModified(modified || this.isModified());
-						
-						if (error != null)
-						{
-							// Handles modified state for retries
-							if (err != null && err.retry != null)
-							{
-								var retry = err.retry;
-								
-								err.retry = function()
-								{
-									prepare();
-									retry();
-								};
-							}
+							// Checks for changes during save
+							this.setModified(this.getShadowModified());
+							this.savingFile = false;
+							this.stat = stat;
+							this.contentChanged();
 							
-							error(err);
-						}
-					}), folder);
-				});
-				
-				if (this.ui.useCanvasForExport && /(\.png)$/i.test(this.getTitle()))
-				{
-					this.ui.getEmbeddedPng(mxUtils.bind(this, function(data)
+							if (success != null)
+							{
+								success();
+							}
+						}), mxUtils.bind(this, function(err)
+						{
+							this.savingFile = false;
+
+							if (error != null)
+							{
+								error(err);
+							}
+						}), folder);
+					});
+					
+					if (this.ui.useCanvasForExport && /(\.png)$/i.test(this.getTitle()))
 					{
-						doSave(this.ui.base64ToBlob(data, 'image/png'));
-					}), error, (this.ui.getCurrentFile() != this) ? this.getData() : null);
+						var p = this.ui.getPngFileProperties(this.ui.fileNode);
+						
+						this.ui.getEmbeddedPng(mxUtils.bind(this, function(data)
+						{
+							doSave(this.ui.base64ToBlob(data, 'image/png'));
+						}), error, (this.ui.getCurrentFile() != this) ?
+							this.getData() : null, p.scale, p.border);
+					}
+					else
+					{
+						doSave(this.getData());
+					}
 				}
-				else
+				catch (e)
 				{
-					doSave(this.getData());
+					this.savingFile = false;
+
+					if (error != null)
+					{
+						error(e);
+					}
+					else
+					{
+						throw e;
+					}
 				}
 			}
 			else if (error != null)

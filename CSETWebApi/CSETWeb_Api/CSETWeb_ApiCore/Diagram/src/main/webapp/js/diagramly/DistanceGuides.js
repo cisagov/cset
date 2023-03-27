@@ -17,7 +17,7 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-//to-do integrate this code in mxGuide (Especially as this is now affecting the other guides)
+//TODO integrate this code in mxGuide (Especially as this is now affecting the other guides)
 (function()
 {
 	var guideMove = mxGuide.prototype.move;

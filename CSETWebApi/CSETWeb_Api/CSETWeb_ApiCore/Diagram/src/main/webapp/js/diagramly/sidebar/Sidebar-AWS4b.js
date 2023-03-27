@@ -7,45 +7,73 @@
 		var w = 80 * s;
 		var h = 100 * s;
 		var w2 = 60 * s;
-		var n = 'outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
-		var n2 = 'outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#232F3E;fillColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
-		var n3 = 'outlineConnect=0;gradientColor=none;fontColor=#545B64;strokeColor=none;fillColor=#879196;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
-		var n4 = 'outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
+		var n = 'sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
+		var n2 = 'sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#232F3E;fillColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
+		var n3 = 'sketch=0;outlineConnect=0;gradientColor=none;fontColor=#545B64;strokeColor=none;fillColor=#879196;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
+		var n4 = 'sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;' + mxConstants.STYLE_SHAPE + "=mxgraph.aws4.";
 		var gn = 'mxgraph.aws4';
 		var sb = this;
 
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bArrows');
 		this.addAWS4bArrowsPalette(gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bGeneral Resources');
 		this.addAWS4bGeneralResourcesPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bIllustrations');
 		this.addAWS4bIllustrationsPalette(n3, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bGroups Light');
 		this.addAWS4bGroupsLightPalette(n4, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bGroups Dark');
 		this.addAWS4bGroupsDarkPalette(n4, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bAnalytics');
 		this.addAWS4bAnalyticsPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bApplication Integration');
 		this.addAWS4bApplicationIntegrationPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bAR VR');
 		this.addAWS4bARVRPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bCost Management');
 		this.addAWS4bCostManagementPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bBusiness Productivity');
 		this.addAWS4bBusinessProductivityPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bCompute');
 		this.addAWS4bComputePalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bCustomer Engagement');
 		this.addAWS4bCustomerEngagementPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bDatabase');
 		this.addAWS4bDatabasePalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bDesktop App Streaming');
 		this.addAWS4bDesktopAppStreamingPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bDeveloper Tools');
 		this.addAWS4bDeveloperToolsPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bGame Development');
 		this.addAWS4bGameDevelopmentPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bInternet of Things');
 		this.addAWS4bInternetOfThingsPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bIoT Things');
 		this.addAWS4bIOTThingsPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bIoT Resources');
 		this.addAWS4bIOTResourcesPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bMachine Learning');
 		this.addAWS4bMachineLearningPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bManagement Tools');
 		this.addAWS4bManagementToolsPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bMedia Services');
 		this.addAWS4bMediaServicesPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bMigration');
 		this.addAWS4bMigrationPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bMobile Services');
 		this.addAWS4bMobileServicesPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bNetwork Content Delivery');
 		this.addAWS4bNetworkContentDeliveryPalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bSecurity Identity Compliance');
 		this.addAWS4bSecurityIdentityCompliancePalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary('aws4b', 'aws4bStorage');
 		this.addAWS4bStoragePalette(w, h, w2, n, n2, gn, sb);
+		this.setCurrentSearchEntryLibrary();
 	};
 	
 	Sidebar.prototype.addAWS4bArrowsPalette = function(gn, sb)
 	{
-		var dt = 'aws amazon web service arrows';
+		var dt = 'aws amazon web service arrows arrow ';
 		
 		this.addPaletteFunctions('aws4bArrows', 'AWS18 / Arrows', false,
 		[
@@ -72,7 +100,7 @@
 
 	Sidebar.prototype.addAWS4bGeneralResourcesPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service general resources';
+		var dt = 'aws amazon web service general resources ';
 		
 		this.addPaletteFunctions('aws4bGeneral Resources', 'AWS18 / General Resources', false,
 		[
@@ -119,7 +147,7 @@
 
 	Sidebar.prototype.addAWS4bIllustrationsPalette = function(n3, gn, sb)
 	{
-		var dt = 'aws amazon web service illustrations';
+		var dt = 'aws amazon web service illustrations ';
 		
 		this.addPaletteFunctions('aws4bIllustrations', 'AWS18 / Illustrations', false,
 		[
@@ -138,7 +166,7 @@
 
 	Sidebar.prototype.addAWS4bGroupsLightPalette = function(n4, gn, sb)
 	{
-		var dt = 'aws amazon web service groups group light';
+		var dt = 'aws amazon web service groups group light ';
 		
 		this.addPaletteFunctions('aws4bGroups Light', 'AWS18 / Groups (light)', false,
 		[
@@ -171,7 +199,7 @@
 
 	Sidebar.prototype.addAWS4bGroupsDarkPalette = function(n4, gn, sb)
 	{
-		var dt = 'aws amazon web service groups group dark';
+		var dt = 'aws amazon web service groups group dark ';
 		
 		this.addPaletteFunctions('aws4bGroups Dark', 'AWS18 / Groups (dark)', false,
 		[
@@ -204,7 +232,7 @@
 
 	Sidebar.prototype.addAWS4bAnalyticsPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service analytics';
+		var dt = 'aws amazon web service analytics ';
 		
 		this.addPaletteFunctions('aws4bAnalytics', 'AWS18 / Analytics', false,
 		[
@@ -258,7 +286,7 @@
 
 	Sidebar.prototype.addAWS4bApplicationIntegrationPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service application integration';
+		var dt = 'aws amazon web service application integration ';
 		
 		this.addPaletteFunctions('aws4bApplication Integration', 'AWS18 / Application Integration', false,
 		[
@@ -299,7 +327,7 @@
 
 	Sidebar.prototype.addAWS4bCostManagementPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service cost management';
+		var dt = 'aws amazon web service cost management ';
 		
 		this.addPaletteFunctions('aws4bCost Management', 'AWS18 / Cost Management', false,
 		[
@@ -316,7 +344,7 @@
 
 	Sidebar.prototype.addAWS4bBusinessProductivityPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service business productivity';
+		var dt = 'aws amazon web service business productivity ';
 		
 		this.addPaletteFunctions('aws4bBusiness Productivity', 'AWS18 / Business Productivity', false,
 		[
@@ -327,7 +355,7 @@
 
 	Sidebar.prototype.addAWS4bComputePalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service compute';
+		var dt = 'aws amazon web service compute ';
 		
 		this.addPaletteFunctions('aws4bCompute', 'AWS18 / Compute', false,
 		[
@@ -403,7 +431,7 @@
 
 	Sidebar.prototype.addAWS4bCustomerEngagementPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service customer engagement';
+		var dt = 'aws amazon web service customer engagement ';
 		
 		this.addPaletteFunctions('aws4bCustomer Engagement', 'AWS18 / Customer Engagement', false,
 		[
@@ -421,7 +449,7 @@
 
 	Sidebar.prototype.addAWS4bDatabasePalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service db database';
+		var dt = 'aws amazon web service db database ';
 		
 		this.addPaletteFunctions('aws4bDatabase', 'AWS18 / Database', false,
 		[
@@ -495,7 +523,7 @@
 
 	Sidebar.prototype.addAWS4bDesktopAppStreamingPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service db database';
+		var dt = 'aws amazon web service db database ';
 		
 		this.addPaletteFunctions('aws4bDesktop App Streaming', 'AWS18 / Desktop & App Streaming', false,
 		[
@@ -506,7 +534,7 @@
 
 	Sidebar.prototype.addAWS4bDeveloperToolsPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service dev developer tools';
+		var dt = 'aws amazon web service dev developer tools ';
 		
 		this.addPaletteFunctions('aws4bDeveloper Tools', 'AWS18 / Developer Tools', false,
 		[
@@ -533,7 +561,7 @@
 
 	Sidebar.prototype.addAWS4bGameDevelopmentPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service game development';
+		var dt = 'aws amazon web service game development ';
 		
 		this.addPaletteFunctions('aws4bGame Development', 'AWS18 / Game Development', false,
 		[
@@ -544,7 +572,7 @@
 
 	Sidebar.prototype.addAWS4bInternetOfThingsPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service internet of things iot';
+		var dt = 'aws amazon web service internet of things iot ';
 		
 		this.addPaletteFunctions('aws4bInternet of Things', 'AWS18 / Internet of Things', false,
 		[
@@ -569,7 +597,7 @@
 
 	Sidebar.prototype.addAWS4bIOTThingsPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service internet of things iot';
+		var dt = 'aws amazon web service internet of things iot ';
 		
 		this.addPaletteFunctions('aws4bIoT Things', 'AWS18 / IoT Things', false,
 		[
@@ -612,7 +640,7 @@
 
 	Sidebar.prototype.addAWS4bIOTResourcesPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service internet of things iot resources';
+		var dt = 'aws amazon web service internet of things iot resources ';
 		
 		this.addPaletteFunctions('aws4bIoT Resources', 'AWS18 / IoT Resources', false,
 		[
@@ -669,7 +697,7 @@
 
 	Sidebar.prototype.addAWS4bMachineLearningPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service machine learning';
+		var dt = 'aws amazon web service machine learning ';
 		
 		this.addPaletteFunctions('aws4bMachine Learning', 'AWS18 / Machine Learning', false,
 		[
@@ -700,7 +728,7 @@
 
 	Sidebar.prototype.addAWS4bManagementToolsPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service management tools';
+		var dt = 'aws amazon web service management tools ';
 		
 		this.addPaletteFunctions('aws4bManagement Tools', 'AWS18 / Management Tools', false,
 		[
@@ -796,7 +824,7 @@
 
 	Sidebar.prototype.addAWS4bMediaServicesPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service media services';
+		var dt = 'aws amazon web service media services ';
 		
 		this.addPaletteFunctions('aws4bMedia Services', 'AWS18 / Media Services', false,
 		[
@@ -819,7 +847,7 @@
 
 	Sidebar.prototype.addAWS4bMigrationPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service migration';
+		var dt = 'aws amazon web service migration ';
 		
 		this.addPaletteFunctions('aws4bMigration', 'AWS18 / Migration', false,
 		[
@@ -842,7 +870,7 @@
 
 	Sidebar.prototype.addAWS4bMobileServicesPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service mobile services';
+		var dt = 'aws amazon web service mobile services ';
 		
 		this.addPaletteFunctions('aws4bMobile Services', 'AWS18 / Mobile Services', false,
 		[
@@ -861,7 +889,7 @@
 
 	Sidebar.prototype.addAWS4bNetworkContentDeliveryPalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service netowrk content delivery';
+		var dt = 'aws amazon web service netowrk content delivery ';
 		
 		this.addPaletteFunctions('aws4bNetwork Content Delivery', 'AWS18 / Network & Content Delivery', false,
 		[
@@ -917,7 +945,7 @@
 
 	Sidebar.prototype.addAWS4bSecurityIdentityCompliancePalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service security identity compliance';
+		var dt = 'aws amazon web service security identity compliance ';
 		
 		this.addPaletteFunctions('aws4bSecurity Identity Compliance', 'AWS18 / Security, Identity & Compliance', false,
 		[
@@ -981,7 +1009,7 @@
 
 	Sidebar.prototype.addAWS4bStoragePalette = function(w, h, w2, n, n2, gn, sb)
 	{
-		var dt = 'aws amazon web service storage';
+		var dt = 'aws amazon web service storage ';
 		
 		this.addPaletteFunctions('aws4bStorage', 'AWS18 / Storage', false,
 		[

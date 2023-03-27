@@ -8,6 +8,7 @@
 		var s = mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;html=1;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;' + mxConstants.STYLE_STROKEWIDTH + '=1;align=center;outlineConnect=0;dashed=0;outlineConnect=0;shape=mxgraph.aws3d.';
 		var gn = 'mxgraph.aws3d';
 		var dt = 'aws 3d amazon web service';
+		this.setCurrentSearchEntryLibrary('aws3d');
 
 		this.addPaletteFunctions('aws3d', 'AWS 3D', false,
 		[
@@ -29,9 +30,9 @@
 					w * 0.308, h * 0.706, '', 'Content', null, null, this.getTagsForStencil(gn, 'content', dt).join(' ')),
 			this.createVertexTemplateEntry(s + 'customerGateway;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 1.167, h * 1.028, '', 'Customer Gateway', null, null, this.getTagsForStencil(gn, 'customer gateway', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'dataCenter;fillColor=#ffffff;strokeColor=#5E5E5E;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'dataCenter;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 1.23, h * 1.42, '', 'Data Center', null, null, this.getTagsForStencil(gn, 'data center', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'dataServer;fillColor=#ffffff;strokeColor=#5E5E5E;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'dataServer;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 1.23, h * 1.06, '', 'Data Server', null, null, this.getTagsForStencil(gn, 'data server', dt).join(' ')),
 			this.createVertexTemplateEntry(s + 'decider;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 0.74, h * 0.5, '', 'Decider', null, null, this.getTagsForStencil(gn, 'decider', dt).join(' ')),
@@ -62,11 +63,11 @@
 		   		return sb.createVertexTemplateFromCells([bg1, bg2, bg3, bg4], 264, 204, 'Elasticache');
 			}),
 	
-			this.createVertexTemplateEntry(s + 'email;aspect=fixed;strokeColor=#292929;fillColor=#ffffff;', 
+			this.createVertexTemplateEntry(s + 'email;aspect=fixed;strokeColor=#292929;', 
 					w * 0.43, h * 0.57, '', 'Email', null, null, this.getTagsForStencil(gn, 'email', dt).join(' ')),
 			this.createVertexTemplateEntry(s + 'email_service;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 1.51, h * 1.92, '', 'Email Service', null, null, this.getTagsForStencil(gn, 'email service', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'file;aspect=fixed;strokeColor=#292929;fillColor=#ffffff;', 
+			this.createVertexTemplateEntry(s + 'file;aspect=fixed;strokeColor=#292929;', 
 					w * 0.308, h * 0.706, '', 'File', null, null, this.getTagsForStencil(gn, 'file', dt).join(' ')),
 			this.createVertexTemplateEntry(s + 'glacier;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;', 
 					w * 1.81, h * 1.92, '', 'Glacier', null, null, this.getTagsForStencil(gn, 'glacier', dt).join(' ')),
@@ -133,27 +134,28 @@
 					w * 0.455, h * 0.26, '', 'Arrow NW', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
 			this.createVertexTemplateEntry(s + 'arrowlessNE;fillColor=#000000;aspect=fixed;', 
 					w * 0.316, h * 0.18, '', 'Arrowless NE', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'dashedEdgeDouble;fillColor=#000000;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'dashedEdgeDouble2;strokeColor=#2D6195;aspect=fixed;', 
 					w * 0.316, h * 0.18, '', 'Dashed Edge Double Arrow', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'dashedArrowlessEdge;fillColor=#000000;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'dashedArrowlessEdge2;strokeColor=#2D6195;aspect=fixed;', 
 					w * 0.316, h * 0.18, '', 'Dashed Arrowless Edge', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'dashedEdge;fillColor=#000000;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'dashedEdge2;strokeColor=#2D6195;aspect=fixed;', 
 					w * 0.316, h * 0.18, '', 'Dashed Edge', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'flatEdge;fillColor=#000000;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'flatEdge2;strokeColor=none;fillColor=#F4B934;aspect=fixed;', 
 					w * 0.632, h * 0.36, '', 'Flat Edge', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'flatDoubleEdge;fillColor=#000000;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'flatDoubleEdge2;strokeColor=none;fillColor=#F4B934;aspect=fixed;', 
 					w * 2.528, h * 1.44, '', 'Flat Double Edge', null, null, this.getTagsForStencil(gn, 'arrow ne north east northeast', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'arrowhead;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'arrowhead2;fillColor=#000000;aspect=fixed;', 
 					w * 0.19, h * 0.11, '', 'Arrowhead', null, null, this.getTagsForStencil(gn, 'arrowhead', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'edge;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'edge2;strokeColor=#000000;aspect=fixed;', 
 					w * 0.97, h * 1.074, '', 'Edge', null, null, this.getTagsForStencil(gn, 'edge', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'reference;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'reference2;fillColor=#2d6195;strokeColor=none;aspect=fixed;', 
 					w * 0.295, h * 0.195, '', 'Reference', null, null, this.getTagsForStencil(gn, 'reference', dt).join(' ')),
-			this.createVertexTemplateEntry(s + 'spot;aspect=fixed;', 
+			this.createVertexTemplateEntry(s + 'spot2;fillColor=#F4B934;strokeColor=none;aspect=fixed;', 
 					w * 0.62, h * 0.36, '', 'Spot', null, null, this.getTagsForStencil(gn, 'spot', dt).join(' ')),
 		 	this.createEdgeTemplateEntry('edgeStyle=isometricEdgeStyle;endArrow=none;html=1;', 50, 100, 'isometric edge', 'Isometric Edge 1'),
 		 	this.createEdgeTemplateEntry('edgeStyle=isometricEdgeStyle;endArrow=none;html=1;elbow=vertical;', 50, 100, 'isometric edge', 'Isometric Edge 2')
 		]);
+		
+		this.setCurrentSearchEntryLibrary();
 	};
-
 })();

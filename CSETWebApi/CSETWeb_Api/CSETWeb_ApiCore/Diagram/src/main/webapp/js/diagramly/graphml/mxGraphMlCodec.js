@@ -167,7 +167,7 @@ mxGraphMlCodec.prototype.initializeKeys = function (graphmlElement)
 		
 		attName = attName? attName : yType
 		
-		//to-do handle the defaults inside these keys
+		//TODO handle the defaults inside these keys
 		switch (_for)
 		{
 			case mxGraphMlConstants.NODE:
@@ -380,7 +380,7 @@ mxGraphMlCodec.prototype.mapArray = function(arr, mapping, map)
 	this.mapObject(obj, mapping, map);
 }
 //Use mapping information to fill the map based on obj content
-//to-do yjs looks like they need special handling
+//TODO yjs looks like they need special handling
 mxGraphMlCodec.prototype.mapObject = function (obj, mapping, map)
 {
 	//defaults can be overridden by actual values later
@@ -547,6 +547,7 @@ mxGraphMlCodec.prototype.importPort = function (portElement, portsMap)
 				}
 			}, portObj);
 		} 
+		/*
 		else if (dataObj.key == this.portsKeys[mxGraphMlConstants.PORT_STYLE].key) 
 		{
 			
@@ -554,7 +555,7 @@ mxGraphMlCodec.prototype.importPort = function (portElement, portsMap)
 		else if (dataObj.key == this.portsKeys[mxGraphMlConstants.PORT_VIEW_STATE].key) 
 		{
 			
-		}
+		}*/
 	}
 	
 	portsMap[name] = portObj;
@@ -633,7 +634,7 @@ mxGraphMlCodec.prototype.importNode = function (nodeElement, graph, parent, dx, 
 					if (key == "key" || key == "#text") continue;
 					
 					//Special case when a node has multiple graphics
-					//to-do support the open/closed states
+					//TODO support the open/closed states
 					if (key == "y:ProxyAutoBoundsNode") 
 					{
 						var realizers = dataObj[key]["y:Realizers"];
@@ -716,7 +717,7 @@ mxGraphMlCodec.prototype.importNode = function (nodeElement, graph, parent, dx, 
 
 mxGraphMlCodec.prototype.addNodeStyle = function (node, dataObj, style)
 {
-	//to-do move these static mapping objects outside such that they are defined once only
+	//TODO move these static mapping objects outside such that they are defined once only
 	var dashStyleFn = function(val, map)
 	{
 		if (val == "line") return;
@@ -858,7 +859,7 @@ mxGraphMlCodec.prototype.addNodeStyle = function (node, dataObj, style)
 		"shape": "js:BpmnChoreography"//"swimlane;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;startSize=20;rounded=1;collapsible=0"
 	};
 	
-	//approximation to GraphML shapes to-do improve them
+	//approximation to GraphML shapes TODO improve them
 	var bevelNodeStyle = mxUtils.clone(styleCommonMap);
 	bevelNodeStyle["defaults"] = {
 		"rounded": "1",
@@ -878,7 +879,7 @@ mxGraphMlCodec.prototype.addNodeStyle = function (node, dataObj, style)
 		"glass": "1",
 		"shadow": "1",
 		"strokeColor": "none"
-		//,"rotation": -90 //to-do requires rotation!
+		//,"rotation": -90 //TODO requires rotation!
 	};
 	shinyPlateNodeStyle["drawShadow"] = {key:"shadow", mod:"bool"};
 	
@@ -887,18 +888,18 @@ mxGraphMlCodec.prototype.addNodeStyle = function (node, dataObj, style)
 		"shape": "swimlane",
 		"startSize": 20,
 		"strokeWidth": 4,
-		"spacingLeft": 10 //to-do can we change collapse icon to be in right side?
+		"spacingLeft": 10 //TODO can we change collapse icon to be in right side?
 	};
 	demoGroupStyle["isCollapsible"] = {key:"collapsible", mod:"bool"};
 	demoGroupStyle["borderColor"] = {key:"strokeColor", mod:"color"};
-	demoGroupStyle["folderFrontColor"] = {key:"fillColor", mod:"color"}; //to-do fillColor always match strokeColor!
+	demoGroupStyle["folderFrontColor"] = {key:"fillColor", mod:"color"}; //TODO fillColor always match strokeColor!
 //			demoGroupStyle["folderBackColor"] = {key:"fillColor", mod:"color"}; //??
 	
 	var collapsibleNodeStyle = mxUtils.clone(styleCommonMap);
 	collapsibleNodeStyle["defaults"] = {
 		"shape": "swimlane",
 		"startSize": 20,
-		"spacingLeft": 10 //to-do can we change collapse icon to be in right side?
+		"spacingLeft": 10 //TODO can we change collapse icon to be in right side?
 	};
 	collapsibleNodeStyle["yjs:PanelNodeStyle"] = {
 		"color": {key:"swimlaneFillColor", mod:"color"},
@@ -962,7 +963,7 @@ mxGraphMlCodec.prototype.addNodeStyle = function (node, dataObj, style)
 	genericNodeStyle["y:Fill"]["color2"] = {key: "gradientColor", mod: "color"};
 	genericNodeStyle["y:StyleProperties.y:Property"] = {
 		"com.yworks.bpmn.characteristic": {key: "outline", mod: "bpmnOutline"},
-		//to-do support colors for the icon itself other than the remaining shape!
+		//TODO support colors for the icon itself other than the remaining shape!
 //		"com.yworks.bpmn.icon.line.color": "",
 		"com.yworks.bpmn.icon.fill": {key:"gradientColor", mod:"color"},
 		"com.yworks.bpmn.icon.fill2": {key:"fillColor", mod:"color"},
@@ -1012,7 +1013,7 @@ mxGraphMlCodec.prototype.handleTemplates = function (template, userTags, node, s
 		var header = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 '+ w + ' ' + h +'"><g>';
 		var footer = '</g></svg>';
 		
-		//to-do optimize this! probably only the text before defs has bindings
+		//TODO optimize this! probably only the text before defs has bindings
 		var matches = null;
 		var bindingPairs = [];
 		//find template bindings
@@ -1055,14 +1056,14 @@ mxGraphMlCodec.prototype.handleTemplates = function (template, userTags, node, s
 		        			
 		        			if (func)
 	        				{
-				        		var arguments = [val];
+				        		var args = [val];
 				        		
 				        		if (parts[2])
 				        		{
-				        			arguments.push(parts[2].substr(11)); //11 is the length of Parameter=
+				        			args.push(parts[2].substr(11)); //11 is the length of Parameter=
 				        		}
 				        			
-		        				val = func.apply(null, arguments)
+		        				val = func.apply(null, args)
 	        				}
 	        			}
 	        		}
@@ -1078,7 +1079,7 @@ mxGraphMlCodec.prototype.handleTemplates = function (template, userTags, node, s
 		}
 		
 		bindingPairs = [];
-		//Fix text elements (to-do can it be merged with the previous step?)
+		//Fix text elements (TODO can it be merged with the previous step?)
 		var txtRegEx = /\<text.+data-content="([^"]+).+\<\/text\>/g;
 		while ((matches = txtRegEx.exec(template)) != null) 
 		{
@@ -1163,13 +1164,13 @@ mxGraphMlCodec.prototype.handleCompoundShape = function (node, styleMap, mlStyle
 					}
 				}, styleMap);
 				
-				//to-do the shape should be clipped by parent borders. It should also be resized relative to its parent
+				//TODO the shape should be clipped by parent borders. It should also be resized relative to its parent
 				var pGeo = node.geometry;
 				var cell1 = new mxCell('', new mxGeometry(0, pGeo.height - 20, pGeo.width, 20), 'strokeColor=#006000;fillColor=#777777;rounded=1');
 				cell1.vertex = true;
 				node.insert(cell1);
 				
-				//to-do handle labels accurately
+				//TODO handle labels accurately
 				if (lbls && lbls.lblTxts)
 				{
 //					console.log(lbls);
@@ -1296,9 +1297,9 @@ mxGraphMlCodec.prototype.handleCompoundShape = function (node, styleMap, mlStyle
 				}
 			break;
 			case "js:table":
-				//to-do we need 2 passes to find the exact shift of columns/rows especially when there is rows inside rows
-				//to-do Internal table strokes needs to match table strokeWidth and only be on one side
-				//to-do code optimization
+				//TODO we need 2 passes to find the exact shift of columns/rows especially when there is rows inside rows
+				//TODO Internal table strokes needs to match table strokeWidth and only be on one side
+				//TODO code optimization
 				styleMap["shape"] = "swimlane;collapsible=0;swimlaneLine=0";
 				var tableObj = mlStyleObj["yjs:TableNodeStyle"] || mlStyleObj["demotablestyle:DemoTableStyle"];
 				
@@ -1370,7 +1371,7 @@ mxGraphMlCodec.prototype.handleCompoundShape = function (node, styleMap, mlStyle
 							"backgroundFill": {key: "oddLaneFill", mod: "color"}
 						}
 						//parentDescriptor ??
-						//to-do collect common types in a special mapping hash
+						//TODO collect common types in a special mapping hash
 					},
 					"Style.yjs:NodeStyleStripeStyleAdapter":{
 						"demotablestyle:DemoStripeStyle": {
@@ -1408,7 +1409,7 @@ mxGraphMlCodec.prototype.handleCompoundShape = function (node, styleMap, mlStyle
 							"backgroundFill": {key: "oddLaneFill", mod: "color"}
 						}
 						//parentDescriptor ??
-						//to-do collect common types in a special mapping hash
+						//TODO collect common types in a special mapping hash
 					},
 					"Style.yjs:NodeStyleStripeStyleAdapter":{
 						"demotablestyle:DemoStripeStyle": {
@@ -1440,7 +1441,7 @@ mxGraphMlCodec.prototype.handleCompoundShape = function (node, styleMap, mlStyle
 				var initX = xShift.x;
 				xShift.lx = xShift.x;
 				
-				//to-do We need two passes to determine the header size!
+				//TODO We need two passes to determine the header size!
 				if (rows)
 				{
 					if (!(rows instanceof Array))
@@ -1879,7 +1880,7 @@ mxGraphMlCodec.prototype.addNodeGeo = function (node, geoObj, dx, dy)
 	geo.height = parseFloat(h);
 };
 
-//to-do handle other ports cases
+//TODO handle other ports cases
 mxGraphMlCodec.prototype.importEdge = function (edgeElement, graph, parent, dx, dy)
 {
 	var data = this.getDirectChildNamedElements(edgeElement, mxGraphMlConstants.DATA);
@@ -1926,7 +1927,7 @@ mxGraphMlCodec.prototype.importEdge = function (edgeElement, graph, parent, dx, 
 				this.addLabels(edge, desktopEdgeObj["y:EdgeLabel"], style, graph, absPoints);
 			
 			//special case for link edge
-			//to-do link doesn't support arrow head types
+			//TODO link doesn't support arrow head types
 			if (style["shape"] != null && style["shape"].indexOf("link") == 0)
 			{
 				style["width"] = style["strokeWidth"];
@@ -2043,7 +2044,7 @@ mxGraphMlCodec.prototype.addEdgePath = function (edge, pathObj, style, dx, dy)
 	return absPoints;
 };
 
-//to-do improve similarity handling
+//TODO improve similarity handling
 mxGraphMlCodec.prototype.addEdgeStyle = function (edge, styleObj, styleMap) 
 {
 	var dashStyleFn = function(val, map)
@@ -2137,7 +2138,7 @@ mxGraphMlCodec.prototype.addEdgeStyle = function (edge, styleObj, styleMap)
 		"y:LineStyle": {
 			"color": {key: "strokeColor", mod: "color"},
 			"type": desktopLineStyleFn,
-			"width": "strokeWidth",
+			"width": "strokeWidth"
 		},
 		"y:Arrows": {
 			"source": startArrow,
@@ -2212,8 +2213,8 @@ mxGraphMlCodec.prototype.addEdgeStyle = function (edge, styleObj, styleMap)
 	}, styleMap);
 };
 
-//to-do label offset
-//to-do labels object is over swim lanes collapse button
+//TODO label offset
+//TODO labels object is over swim lanes collapse button
 mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, absPoints) 
 {
 	var lastChildIndex = node.getChildCount();
@@ -2292,7 +2293,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 						"verticalTextAlignment": "verticalAlign",
 						"wrapping": function(val, map) 
 						{
-							//to-do mxGraph has a single type of wrapping only
+							//TODO mxGraph has a single type of wrapping only
 							if (val)
 								map["whiteSpace"] = "wrap";
 						},
@@ -2333,7 +2334,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 		}
 	}
 	
-	//to-do Use the style map with defaults to change the style
+	//TODO Use the style map with defaults to change the style
 	for (var i = 0; i < lblTxts.length; i++)
 	{
 		if (lblTxts[i])
@@ -2368,16 +2369,16 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 				}
 				else
 				{
-					//to-do map there?
+					//TODO map there?
 					var lblRatio = lblLayouts[i]["y:RatioAnchoredLabelModelParameter"]["LabelRatio"];
 					var layoutRatio = lblLayouts[i]["y:RatioAnchoredLabelModelParameter"]["LayoutRatio"];
 					
 					lblCell.style += ";align=center;";
 				}
 			}
-			else if (lblLayouts[i]["y:InteriorLabelModel"]) //to-do this is probably can be done by setting the value?
+			else if (lblLayouts[i]["y:InteriorLabelModel"]) //TODO this is probably can be done by setting the value?
 			{
-				//to-do merge with next one if they are identical in all cases!
+				//TODO merge with next one if they are identical in all cases!
 				switch (lblLayouts[i]["y:InteriorLabelModel"])
 				{
 					case "Center":
@@ -2397,10 +2398,10 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 				}
 				lblCell.style += ";align=center;";
 			}
-			//to-do Spacing still need to be adjusted
+			//TODO Spacing still need to be adjusted
 			else if (lblLayouts[i]["y:StretchStripeLabelModel"] || lblLayouts[i]["y:StripeLabelModelParameter"])
 			{
-				//to-do merge with previous one if they are identical in all cases!
+				//TODO merge with previous one if they are identical in all cases!
 				var dir = lblLayouts[i]["y:StretchStripeLabelModel"] || lblLayouts[i]["y:StripeLabelModelParameter"]["Position"];
 				switch (dir)
 				{
@@ -2419,7 +2420,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 			}
 			else if (lblLayouts[i]["bpmn:PoolHeaderLabelModel"])
 			{
-				//to-do merge with previous one if they are identical in all cases!
+				//TODO merge with previous one if they are identical in all cases!
 				switch (lblLayouts[i]["bpmn:PoolHeaderLabelModel"])
 				{
 					case "NORTH":
@@ -2438,10 +2439,10 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 			}
 			else if (lblLayouts[i]["y:InteriorStretchLabelModelParameter"])
 			{
-				//to-do probably mapObject is needed in this method in general
+				//TODO probably mapObject is needed in this method in general
 				try {
 					var insets = lblLayouts[i]["y:InteriorStretchLabelModelParameter"]["Model"]["y:InteriorStretchLabelModel"]["Insets"];
-					//to-do how to map it?
+					//TODO how to map it?
 				} catch(e) {
 					//Ignore
 				}
@@ -2502,7 +2503,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 
 				lGeo.x = ratio? (2 * parseFloat(ratio) - 1) : 0;
 
-				//to-do this is an approximation, it needs to take into consideration the segment direction and label size
+				//TODO this is an approximation, it needs to take into consideration the segment direction and label size
 				if (side)
 				{
 					switch(side) 
@@ -2548,7 +2549,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 
 						if (segment == -1 && angle == 6.283185307179586)
 						{
-							//to-do FIXME this case is still incorrect
+							//TODO FIXME this case is still incorrect
 							lGeo.offset = new mxPoint(Math.abs(ratio) < 1? eState.segments[0] * ratio : ratio, sign * distance);
 						}
 						else 
@@ -2580,7 +2581,7 @@ mxGraphMlCodec.prototype.addLabels = function (node, lblObj, nodeStyle, graph, a
 			
 			if (lblStyles[i]["rotation"]) 
 			{
-				//to-do fix label coordinates after rotation 
+				//TODO fix label coordinates after rotation 
 				//console.log(lGeo, lblStyles[i]["rotation"]);
 				if (lblStyles[i]["rotation"] == 270)
 				{
@@ -2618,7 +2619,7 @@ mxGraphMlCodec.prototype.getDirectChildNamedElements = function (parent, name) {
     var result = ([]);
     for (var child = parent.firstChild; child != null; child = child.nextSibling) {
         if ((child != null && (child.nodeType == 1)) && (name == child.nodeName)) {
-            /* add */ (result.push(child) > 0);
+            /* add */ result.push(child);
         }
     }
     ;
@@ -2644,7 +2645,7 @@ mxGraphMlCodec.prototype.getDirectChildElements = function (parent) {
     var result = ([]);
     for (var child = parent.firstChild; child != null; child = child.nextSibling) {
         if (child != null && (child.nodeType == 1)) {
-            /* add */ (result.push(child) > 0);
+            /* add */ result.push(child);
         }
     }
     ;
@@ -2665,7 +2666,7 @@ mxGraphMlCodec.prototype.getDirectFirstChildElement = function (parent) {
     return null;
 };
 
-var mxGraphMlConverters = //to-do this code is taken from yworks.com. Is that OK?
+var mxGraphMlConverters = //TODO this code is taken from yworks.com. Is that OK?
 {
 	"orgchartconverters.linebreakconverter": function(e, t) {
 		if (typeof e === "string") {
@@ -2728,8 +2729,8 @@ var mxGraphMlArrowsMap =
 
 var mxGraphMlShapesMap =
 {
-	"star5": "mxgraph.basic.star;flipV=1", //to-do This is not close enough!
-	"star6": "mxgraph.basic.6_point_star",//;rotation=30", //to-do requires rotation!
+	"star5": "mxgraph.basic.star;flipV=1", //TODO This is not close enough!
+	"star6": "mxgraph.basic.6_point_star",//;rotation=30", //TODO requires rotation!
 	"star8": "mxgraph.basic.8_point_star",
 	"sheared_rectangle": "parallelogram",
 	"sheared_rectangle2": "parallelogram;flipH=1",
@@ -2742,10 +2743,10 @@ var mxGraphMlShapesMap =
 	"fat_arrow2": "step;perimeter=stepPerimeter;flipH=1",
 	"trapez": "trapezoid;perimeter=trapezoidPerimeter;flipV=1",
 	"trapez2": "trapezoid;perimeter=trapezoidPerimeter",
-	"triangle": "triangle",//;rotation=-90", //to-do requires rotation!
-	"triangle2": "triangle",//;rotation=90", //to-do requires rotation!
+	"triangle": "triangle",//;rotation=-90", //TODO requires rotation!
+	"triangle2": "triangle",//;rotation=90", //TODO requires rotation!
 	"rectangle": "rect",
-	"rectangle3d": "", //to-do create this shape
+	"rectangle3d": "", //TODO create this shape
 	"roundrectangle": "rect;rounded=1;arcsize=30",
 	"fatarrow": "step;perimeter=stepPerimeter",
 	"fatarrow2": "step;perimeter=stepPerimeter;flipH=1",
@@ -2753,15 +2754,15 @@ var mxGraphMlShapesMap =
 	"parallelogram2": "parallelogram;flipH=1",
 	"trapezoid2": "trapezoid;perimeter=trapezoidPerimeter;flipV=1",
 	"trapezoid": "trapezoid;perimeter=trapezoidPerimeter",
-	//Bevel to-do make them looks closer to yEd
+	//Bevel TODO make them looks closer to yEd
 	"bevelnode": "rect;glass=1;",
 	"bevelnodewithshadow": "rect;glass=1;shadow=1",
 	"bevelnode2": "rect;glass=1;rounded=1;arcsize=30",
 	"bevelnode3": "rect;glass=1;rounded=1;arcsize=30;shadow=1",
-	"shinyplatenode": "rect;glass=1",//;rotation=-90",//to-do requires rotation!
-	"shinyplatenodewithshadow": "rect;glass=1;shadow=1",//;rotation=-90",//to-do requires rotation!
-	"shinyplatenode2": "rect;glass=1;rounded=1;arcsize=30",//;rotation=-90",//to-do requires rotation!
-	"shinyplatenode3": "rect;glass=1;rounded=1;arcsize=30;shadow=1",//;rotation=-90",//to-do requires rotation!
+	"shinyplatenode": "rect;glass=1",//;rotation=-90",//TODO requires rotation!
+	"shinyplatenodewithshadow": "rect;glass=1;shadow=1",//;rotation=-90",//TODO requires rotation!
+	"shinyplatenode2": "rect;glass=1;rounded=1;arcsize=30",//;rotation=-90",//TODO requires rotation!
+	"shinyplatenode3": "rect;glass=1;rounded=1;arcsize=30;shadow=1",//;rotation=-90",//TODO requires rotation!
 	//Table
 //	"yed_table_node
 	//flowchart
@@ -2790,10 +2791,10 @@ var mxGraphMlShapesMap =
 	"looplimitend": "mxgraph.flowchart.loop_limit;flipV=1",
 	"onpagereference": "mxgraph.flowchart.on-page_reference;aspect=fixed",
 	"offpagereference": "mxgraph.flowchart.off-page_reference;aspect=fixed",
-	"annotation": "mxgraph.flowchart.annotation_1", //to-do not similar!
-	"usermessage": "mxgraph.arrows2.arrow;dy=0;dx=10;notch=0", //to-do requires rotation!
+	"annotation": "mxgraph.flowchart.annotation_1", //TODO not similar!
+	"usermessage": "mxgraph.arrows2.arrow;dy=0;dx=10;notch=0", //TODO requires rotation!
 	"networkmessage": "mxgraph.arrows2.arrow;dy=0;dx=0;notch=10",
-	//The same like above but with "com.yworks.flowchart." prefex. to-do should we just remove the prefex? 
+	//The same like above but with "com.yworks.flowchart." prefex. TODO should we just remove the prefex? 
 	"com.yworks.flowchart.start1": "mxgraph.flowchart.start_1",
 	"com.yworks.flowchart.start2": "mxgraph.flowchart.start_2;aspect=fixed",
 	"com.yworks.flowchart.terminator": "mxgraph.flowchart.terminator",
@@ -2819,23 +2820,23 @@ var mxGraphMlShapesMap =
 	"com.yworks.flowchart.preparation": "mxgraph.flowchart.preparation",
 	"com.yworks.flowchart.onpagereference": "mxgraph.flowchart.on-page_reference;aspect=fixed",
 	"com.yworks.flowchart.offpagereference": "mxgraph.flowchart.off-page_reference;aspect=fixed",
-	"com.yworks.flowchart.usermessage": "mxgraph.arrows2.arrow;dy=0;dx=10;notch=0", //to-do requires rotation!
+	"com.yworks.flowchart.usermessage": "mxgraph.arrows2.arrow;dy=0;dx=10;notch=0", //TODO requires rotation!
 	"com.yworks.flowchart.networkmessage": "mxgraph.arrows2.arrow;dy=0;dx=0;notch=10",
-	"com.yworks.flowchart.annotation": "mxgraph.flowchart.annotation_1", //to-do not similar!
+	"com.yworks.flowchart.annotation": "mxgraph.flowchart.annotation_1", //TODO not similar!
 
 	//icons (network)
-	"database.svg": "mxgraph.networks.storage", //to-do not similar!
-	"laptop.svg": "mxgraph.networks.laptop",//to-do not similar!
-	"server.svg": "mxgraph.networks.server",//to-do not similar!
-	"smartphone.svg": "mxgraph.networks.mobile",//to-do not similar! //to-do fixed aspect ratio
-	"switch.svg": "mxgraph.networks.switch",//to-do not similar! //to-do fixed aspect ratio
-	"wlan.svg": "mxgraph.networks.wireless_hub",//to-do not similar!
-	"workstation.svg": "mxgraph.networks.pc",//to-do not similar!
+	"database.svg": "mxgraph.networks.storage", //TODO not similar!
+	"laptop.svg": "mxgraph.networks.laptop",//TODO not similar!
+	"server.svg": "mxgraph.networks.server",//TODO not similar!
+	"smartphone.svg": "mxgraph.networks.mobile",//TODO not similar! //TODO fixed aspect ratio
+	"switch.svg": "mxgraph.networks.switch",//TODO not similar! //TODO fixed aspect ratio
+	"wlan.svg": "mxgraph.networks.wireless_hub",//TODO not similar!
+	"workstation.svg": "mxgraph.networks.pc",//TODO not similar!
 	//bpmn
 	"transaction": "ext;double=1;rounded=1",
 	"sub_process": "ext;rounded=1",
 	"call_activity": "ext;rounded=1;strokeWidth=3",
-	//to-do two colors for stroke!
+	//TODO two colors for stroke!
 	"exclusive_with_marker": "mxgraph.bpmn.shape;perimeter=rhombusPerimeter;background=gateway;outline=none;symbol=exclusiveGw",  
 	"event_based": "mxgraph.bpmn.shape;perimeter=rhombusPerimeter;background=gateway;outline=boundInt;symbol=multiple", 
 	"parallel": "mxgraph.bpmn.shape;perimeter=rhombusPerimeter;background=gateway;outline=none;symbol=parallelGw",
@@ -2938,14 +2939,14 @@ var mxGraphMlShapesMap =
 	"com.yworks.sbgn.unspecifiedentity": "ellipse",
 	"com.yworks.sbgn.simplechemical": "ellipse",
 	"com.yworks.sbgn.macromolecule": "ext;rounded=1",
-	"com.yworks.sbgn.nucleicacidfeature": "", //to-do create this shape!
-	"com.yworks.sbgn.perturbingagent": "", //to-do create this shape!
+	"com.yworks.sbgn.nucleicacidfeature": "", //TODO create this shape!
+	"com.yworks.sbgn.perturbingagent": "", //TODO create this shape!
 	"com.yworks.sbgn.phenotype": "hexagon;perimeter=hexagonPerimeter2;size=0.2",
-	"com.yworks.sbgn.emptyset": "lineEllipse;line=vertical;perimeter=ellipsePerimeter",//;rotation=45", //to-do create this shape!
-	"com.yworks.sbgn.submap": "",  //to-do create this shape!
-	"com.yworks.sbgn.unitofinformation": "",  //to-do create this shape!
+	"com.yworks.sbgn.emptyset": "lineEllipse;line=vertical;perimeter=ellipsePerimeter",//;rotation=45", //TODO create this shape!
+	"com.yworks.sbgn.submap": "",  //TODO create this shape!
+	"com.yworks.sbgn.unitofinformation": "",  //TODO create this shape!
 	"com.yworks.sbgn.statevariable": "mxgraph.flowchart.terminator",
-	"com.yworks.sbgn.tag": "offPageConnector;size=0.25", //;rotation=90", //to-do create this shape without rotation!
+	"com.yworks.sbgn.tag": "offPageConnector;size=0.25", //;rotation=90", //TODO create this shape without rotation!
 	"com.yworks.sbgn.process": "rect",
 	"com.yworks.sbgn.operator": "ellipse",
 

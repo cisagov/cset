@@ -8,12 +8,13 @@
 		var gn = 'mxgraph.arrows2';
 		var dt = 'arrow ';
 		var sb = this;
+		this.setCurrentSearchEntryLibrary('arrows2');
 		
 		var fns = [
 			this.createVertexTemplateEntry(s + 'arrow;dy=0.6;dx=40;notch=0;', 
 					100, 70, '', 'Arrow Right', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'right').join(' ')),
 			this.createVertexTemplateEntry(s + 'arrow;dy=0.6;dx=40;flipH=1;notch=0;', 
-					100, 70, '', 'Arrow Left', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'leftt').join(' ')),
+					100, 70, '', 'Arrow Left', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'left').join(' ')),
 			this.createVertexTemplateEntry(s + 'arrow;dy=0.6;dx=40;direction=north;notch=0;', 
 					70, 100, '', 'Arrow Up', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'up').join(' ')),
 			this.createVertexTemplateEntry(s + 'arrow;dy=0.6;dx=40;direction=south;notch=0;', 
@@ -67,7 +68,9 @@
 			this.createVertexTemplateEntry(s + 'jumpInArrow;dy=15;dx=38;arrowHead=55;', 
 					100, 100, '', 'Jump-In Arrow', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'jump in').join(' ')),
 			this.createVertexTemplateEntry(s + 'uTurnArrow;dy=11;arrowHead=43;dx2=25;', 
-					100, 100, '', 'U Turn Arrow', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'u turn uturn').join(' '))
+					100, 100, '', 'U Turn Arrow', null, null, this.getTagsForStencil(gn, 'arrow', dt + 'u turn uturn').join(' ')),
+		    this.createEdgeTemplateEntry('shape=mxgraph.arrows2.wedgeArrow;html=1;bendable=0;startWidth=50;fillColor=strokeColor;defaultFillColor=invert;defaultGradientColor=invert;', 100, 100, '', 'Wedge Arrow', null, this.getTagsForStencil(gn, 'wedge arrow', dt).join(' ')),
+		    this.createEdgeTemplateEntry('shape=mxgraph.arrows2.wedgeArrowDashed2;html=1;bendable=0;startWidth=50;stepSize=15;', 100, 100, '', 'Wedge Arrow Dashed', null, this.getTagsForStencil(gn, 'wedge arrow dashed', dt).join(' '))
 		];
 			   	
    		this.addPalette('arrows2', mxResources.get('arrows'), false, mxUtils.bind(this, function(content)
@@ -77,6 +80,8 @@
 				content.appendChild(fns[i](content));
 			}
 		}));
+   		
+		this.setCurrentSearchEntryLibrary();
 	};
 	
 })();

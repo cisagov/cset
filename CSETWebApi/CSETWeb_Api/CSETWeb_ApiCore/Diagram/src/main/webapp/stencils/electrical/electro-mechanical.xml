@@ -320,6 +320,58 @@
         <stroke/>
     </foreground>
 </shape>
+<shape aspect="variable" h="62.25" name="DPDT2" strokewidth="inherit" w="57.75">
+    <connections>
+        <constraint name="NW" perimeter="0" x="0" y="0.227"/>
+        <constraint name="NE" perimeter="0" x="1" y="0.05"/>
+        <constraint name="E1" perimeter="0" x="1" y="0.39"/>
+        <constraint name="E2" perimeter="0" x="1" y="0.61"/>
+        <constraint name="SW" perimeter="0" x="0" y="0.793"/>
+        <constraint name="SE" perimeter="0" x="1" y="0.95"/>
+    </connections>
+    <foreground>
+        <rect/>
+        <stroke/>
+        <ellipse h="6" w="6" x="36.75" y="21.25"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="15.25" y="11.25"/>
+        <fillstroke/>
+        <path>
+            <move x="0" y="14.25"/>
+            <line x="15" y="14.25"/>
+            <move x="42.75" y="24.25"/>
+            <line x="57.75" y="24.25"/>
+            <move x="20.75" y="13.5"/>
+            <line x="39.75" y="6.5"/>
+            <move x="42.75" y="3"/>
+            <line x="57.75" y="3"/>
+            <move x="0.25" y="49.25"/>
+            <line x="15.25" y="49.25"/>
+            <move x="20.75" y="48.5"/>
+            <line x="39.75" y="41.5"/>
+            <move x="42.75" y="59.25"/>
+            <line x="57.75" y="59.25"/>
+            <move x="42.75" y="38"/>
+            <line x="57.75" y="38"/>
+        </path>
+        <stroke/>
+        <ellipse h="6" w="6" x="36.75" y="0"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="15.25" y="46.25"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="36.75" y="56.25"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="36.75" y="35"/>
+        <fillstroke/>
+        <dashpattern pattern="5 2"/>
+        <dashed dashed="1"/>
+        <path>
+            <move x="29.75" y="10.25"/>
+            <line x="29.75" y="45.25"/>
+        </path>
+        <stroke/>
+    </foreground>
+</shape>
 <shape aspect="variable" h="26" name="DPST" strokewidth="inherit" w="75">
     <connections>
         <constraint name="NW" perimeter="0" x="0" y="0.115"/>
@@ -1321,6 +1373,101 @@
             <close/>
         </path>
         <fillstroke/>
+    </foreground>
+</shape>
+<shape aspect="variable" h="46" name="Selector Switch 3 position" strokewidth="inherit" w="75">
+    <connections>
+        <constraint name="W" perimeter="0" x="0" y="0.5"/>
+        <constraint name="NE" perimeter="0" x="1" y="0.065"/>
+        <constraint name="E" perimeter="0" x="1" y="0.5"/>
+        <constraint name="SE" perimeter="0" x="1" y="0.935"/>
+    </connections>
+    <foreground>
+        <path>
+            <move x="0" y="23"/>
+            <line x="15" y="23"/>
+            <move x="55.4" y="23"/>
+            <line x="75" y="23"/>
+            <move x="51" y="3"/>
+            <line x="75" y="3"/>
+            <move x="51" y="43"/>
+            <line x="75" y="43"/>
+            <move x="18.592" y="22.68"/>
+            <line x="46.465" y="3.877"/>
+        </path>
+        <stroke/>
+        <ellipse h="6" w="6" x="50" y="20"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="45" y="0"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="45" y="40"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="15" y="20"/>
+        <fillstroke/>
+        <fillcolor color="#000000"/>
+        <path>
+            <move x="43.268" y="9.436"/>
+            <line x="39.746" y="4.984"/>
+            <line x="46.416" y="3.95"/>
+            <close/>
+        </path>
+        <fill/>
+    </foreground>
+</shape>
+<shape aspect="variable" h="106" name="Selector Switch 6 position" strokewidth="inherit" w="74.85">
+    <connections>
+        <constraint name="W" perimeter="0" x="0" y="0.5"/>
+        <constraint name="NE" perimeter="0" x="1" y="0.025"/>
+        <constraint name="E1" perimeter="0" x="1" y="0.22"/>
+        <constraint name="E2" perimeter="0" x="1" y="0.405"/>
+        <constraint name="E3" perimeter="0" x="1" y="0.595"/>
+        <constraint name="E4" perimeter="0" x="1" y="0.78"/>
+        <constraint name="SE" perimeter="0" x="1" y="0.97"/>
+    </connections>
+    <background>
+        <path>
+            <move x="0" y="53"/>
+            <line x="15" y="53"/>
+            <move x="60" y="63"/>
+            <line x="74.85" y="63"/>
+            <move x="60" y="43"/>
+            <line x="74.85" y="43"/>
+            <move x="51" y="23"/>
+            <line x="74.85" y="23"/>
+            <move x="28.99" y="3"/>
+            <line x="74.85" y="3"/>
+            <move x="28.99" y="103"/>
+            <line x="74.85" y="103"/>
+            <move x="51" y="83"/>
+            <line x="74.85" y="83"/>
+            <move x="18" y="53"/>
+            <line x="47" y="24"/>
+        </path>
+    </background>
+    <foreground>
+        <stroke/>
+        <ellipse h="6" w="6" x="54" y="60"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="54" y="40"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="45" y="20"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="23" y="0"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="23" y="100"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="45" y="80"/>
+        <fillstroke/>
+        <ellipse h="6" w="6" x="15" y="50"/>
+        <fillstroke/>
+        <fillcolor color="#000000"/>
+        <path>
+            <move x="47" y="24"/>
+            <line x="45" y="30"/>
+            <line x="40.67" y="26.34"/>
+            <close/>
+        </path>
+        <fill/>
     </foreground>
 </shape>
 <shape aspect="variable" h="66" name="Shorting Selector" strokewidth="inherit" w="60">

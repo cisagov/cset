@@ -162,7 +162,7 @@ mxAsyncCanvas.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 		image.onerror = mxUtils.bind(this, function()
 		{
 			this.decWaitCounter();
-			// to-do null the image out? this.htmlCanvas.images[src] = null;
+			// TODO null the image out? this.htmlCanvas.images[src] = null;
 		});
 
 		this.incWaitCounter();
@@ -206,7 +206,7 @@ mxAsyncCanvas.prototype.text = function(x, y, w, h, str, align, valign, wrap, fo
 
 mxAsyncCanvas.prototype.finish = function(handler)
 {
-	// to-do: Check if waitCounter updates need a monitor. Question is
+	// TODO: Check if waitCounter updates need a monitor. Question is
 	// if image load-handler can be executed in parallel leading to
 	// race conditions when updating the "shared" waitCounter.
 	if (this.waitCounter == 0)

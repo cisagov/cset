@@ -205,10 +205,10 @@ mxVsdxCanvas2D.prototype.createRowRel = function(type, index, x, y, a, b, c , d,
 	row.appendChild(this.createCellElem("X", x, xF));
 	row.appendChild(this.createCellElem("Y", y, yF));
 	
-	if (a != null) row.appendChild(this.createCellElem("A", a, aF));
-	if (b != null) row.appendChild(this.createCellElem("B", b, bF));
-	if (c != null) row.appendChild(this.createCellElem("C", c, cF));
-	if (d != null) row.appendChild(this.createCellElem("D", d, dF));
+	if (a != null && isFinite(a)) row.appendChild(this.createCellElem("A", a, aF));
+	if (b != null && isFinite(b)) row.appendChild(this.createCellElem("B", b, bF));
+	if (c != null && isFinite(c)) row.appendChild(this.createCellElem("C", c, cF));
+	if (d != null && isFinite(d)) row.appendChild(this.createCellElem("D", d, dF));
 	
 	return row;
 };
@@ -238,14 +238,14 @@ mxVsdxCanvas2D.prototype.rect = function(x, y, w, h)
 	h = h * s.scale;
 
 	var geo = this.xmGeo;
-	x = ((x - geo.x + s.dx) * s.scale) /w;
-	y = ((geo.height - y + geo.y - s.dy) * s.scale) /h;
-
-	this.geoSec.appendChild(this.createRowRel("RelMoveTo", this.geoStepIndex++, x, y));
-	this.geoSec.appendChild(this.createRowRel("RelLineTo", this.geoStepIndex++, x + 1, y));
-	this.geoSec.appendChild(this.createRowRel("RelLineTo", this.geoStepIndex++, x + 1, y - 1));
-	this.geoSec.appendChild(this.createRowRel("RelLineTo", this.geoStepIndex++, x, y - 1));
-	this.geoSec.appendChild(this.createRowRel("RelLineTo", this.geoStepIndex++, x, y));	
+	x = ((x - geo.x + s.dx) * s.scale);
+	y = ((geo.height - y + geo.y - s.dy) * s.scale);
+	
+	this.geoSec.appendChild(this.createRowScaled("MoveTo", this.geoStepIndex++, x, y));
+	this.geoSec.appendChild(this.createRowScaled("LineTo", this.geoStepIndex++, x + w, y));
+	this.geoSec.appendChild(this.createRowScaled("LineTo", this.geoStepIndex++, x + w, y - h));
+	this.geoSec.appendChild(this.createRowScaled("LineTo", this.geoStepIndex++, x, y - h));
+	this.geoSec.appendChild(this.createRowScaled("LineTo", this.geoStepIndex++, x, y));
 };
 
 /**
@@ -256,7 +256,7 @@ mxVsdxCanvas2D.prototype.rect = function(x, y, w, h)
 mxVsdxCanvas2D.prototype.roundrect = function(x, y, w, h, dx, dy)
 {
 	this.rect(x, y, w, h);
-	//to-do this assume dx and dy are equal and only one rounding is needed
+	//TODO this assume dx and dy are equal and only one rounding is needed
 	this.shape.appendChild(this.createCellElemScaled("Rounding", dx));
 };
 
@@ -551,7 +551,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 {
 	var that = this;
 
-	//to-do image reusing, if the same image is used more than once, reuse it. Applicable for URLs specifically (but can also be applied to embedded ones)
+	//TODO image reusing, if the same image is used more than once, reuse it. Applicable for URLs specifically (but can also be applied to embedded ones)
 	var imgName = "image" + (this.images.length + 1) + "."; 
 	var type;
 	if (src.indexOf("data:") == 0)
@@ -560,7 +560,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 		var base64 = src.substring(p + 7); //7 is the length of "base64,"
 		type = src.substring(11, p-1); //11 is the length of "data:image/"
 		
-		//SVG files cannot be embedded in vsdx files, to-do convert them to a visio shape
+		//SVG files cannot be embedded in vsdx files, TODO convert them to a visio shape
 		if (type.indexOf('svg') == 0) {
 			type = 'png';
 			imgName += type;
@@ -602,7 +602,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 		    {
 		    	if (this.status == 200)
 	    		{
-		    		//SVG files cannot be embedded in vsdx files, to-do convert them to a visio shape
+		    		//SVG files cannot be embedded in vsdx files, TODO convert them to a visio shape
 		    		if (convertSvg)
 	    			{
 		    			that.convertSvg2Png(this.response, false, function(pngData){
@@ -628,11 +628,11 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 
 	this.images.push(imgName);
 	
-	//to-do can a shape has more than one image?
+	//TODO can a shape has more than one image?
 	//We add one to the id as rId1 is reserved for the edges master
 	this.shapeImg = {type: type, id: this.images.length + 1};
 
-	//to-do support these!
+	//TODO support these!
 	aspect = (aspect != null) ? aspect : true;
 	flipH = (flipH != null) ? flipH : false;
 	flipV = (flipV != null) ? flipV : false;
@@ -699,8 +699,7 @@ mxVsdxCanvas2D.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
  * Function: text
  * 
  * Paints the given text. Possible values for format are empty string for
- * plain text and html for HTML markup. Background and border color as well
- * as clipping is not available in plain text labels for VML. HTML labels
+ * plain text and html for HTML markup. HTML labels
  * are not available as part of shapes with no foreignObject support in SVG
  * (eg. IE9, IE10).
  * 
@@ -734,11 +733,11 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 		if (w == 0 && h == 0)
 		{
 			var strSize = mxUtils.getSizeForString(str, that.cellState.style["fontSize"], that.cellState.style["fontFamily"]);
-			w = strSize.width * 1.2;
-			h = strSize.height * 1.2;
+			w = strSize.width * 2;
+			h = strSize.height * 2;
 		}
 		
-		//to-do support HTML text formatting and remaining attributes
+		//TODO support HTML text formatting and remaining attributes
 		if (format == 'html')
     	{
     		if (mxUtils.getValue(this.cellState.style, 'nl2Br', '1') != '0')
@@ -752,7 +751,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 			if (this.html2txtDiv == null)
 				this.html2txtDiv = document.createElement('div');
 			
-			this.html2txtDiv.innerHTML = str;
+			this.html2txtDiv.innerHTML = Graph.sanitizeHtml(str);
 			str = mxUtils.extractTextWithWhitespace(this.html2txtDiv.childNodes);
     	}
 		
@@ -770,14 +769,6 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 
 		var text = this.createElt("Text");
 
-		var rgb2hex = function (rgb){
-			rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-			return (rgb && rgb.length === 4) ? "#" +
-			  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-			  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-			  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-		};
-		
 		var rowIndex = 0, pIndex = 0;
 		var calcW = 0, calcH = 0, lastW = 0, lastH = 0, lineH = 0;
 		
@@ -817,7 +808,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 			charRow.setAttribute('IX', rowIndex);
 			
 			
-			if (styleMap['fontColor'])	charRow.appendChild(that.createCellElem("Color", styleMap['fontColor']));
+			if (styleMap['fontColor'])	charRow.appendChild(that.createCellElem("Color", mxUtils.rgba2hex(styleMap['fontColor'])));
 			
 			if (fontSize)	charRow.appendChild(that.createCellElemScaled("Size", fontSize * 0.97)); //the magic number 0.97 is needed such that text do not overflow
 			
@@ -841,21 +832,26 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 			
 			charSect.appendChild(charRow);
 			
-//			var pRow = that.createElt("Row");
-//			pRow.setAttribute('IX', pIndex);
-//			
-//			var align = 1; //center is default
-//			
-//			switch(styleMap['align'])
-//			{
-//				case 'left': align = 0; break;
-//				case 'center': align = 1; break;
-//				case 'right': align = 2; break;
-//			}
+			var pRow = that.createElt("Row");
+			pRow.setAttribute('IX', pIndex);
 			
-//			pRow.appendChild(that.createCellElem("HorzAlign", align));
+			var align = 1; //center is default
+			
+			switch(styleMap['align'])
+			{
+				case 'left': align = 0; break;
+				case 'center': align = 1; break;
+				case 'right': align = 2; break;
+				case 'start': align = 0; break; //TODO check right-to-left
+				case 'end': align = 2; break; //TODO check right-to-left
+				case 'justify': align = 0; break;
+				default:
+					align = 1;
+			}
+			
+			pRow.appendChild(that.createCellElem("HorzAlign", align));
 //			pRow.appendChild(that.createCellElem("SpLine", "-1.2"));
-//			pSect.appendChild(pRow);
+			pSect.appendChild(pRow);
 			
 //			var pp = that.createElt("pp");
 //			pp.setAttribute('IX', pIndex++);
@@ -872,7 +868,9 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 			pStyle = pStyle || {};
 			for (var i=0; i<ch.length; i++) 
 			{
-				if (ch[i].nodeType == 3) 
+				var curCh = ch[i];
+				
+				if (curCh.nodeType == 3) 
 				{ //#text
 					var fontStyle = that.cellState.style["fontStyle"];
 					var styleMap = {
@@ -884,46 +882,83 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 						italic: pStyle['italic'] || (fontStyle & 2),
 						underline: pStyle['underline'] || (fontStyle & 4)
 					};
-					createTextRow(styleMap, charSect, pSect, text, ch[i].textContent);
+					
+					var brNext = false;
+					
+					if (i + 1 < ch.length && ch[i + 1].nodeName.toUpperCase() == 'BR')
+					{
+						brNext = true;
+						i++;
+					}
+					
+					//VSDX doesn't have numbered list!
+					createTextRow(styleMap, charSect, pSect, text, (pStyle['OL']? pStyle['LiIndex'] + '. ' : '') + curCh.textContent + (brNext? '\n' : ''));
 				} 
-				else if (ch[i].nodeType == 1) 
+				else if (curCh.nodeType == 1) 
 				{ //element
-					var nodeName = ch[i].nodeName.toUpperCase();
-					var chLen = ch[i].childNodes.length;
-					var style = window.getComputedStyle(ch[i], null);
+					var nodeName = curCh.nodeName.toUpperCase();
+					var chLen = curCh.childNodes.length;
+					var style = window.getComputedStyle(curCh, null);
 					var styleMap = {
 						bold: style.getPropertyValue('font-weight') == 'bold' || pStyle['bold'],
 						italic: style.getPropertyValue('font-style') == 'italic' || pStyle['italic'],
 						underline: style.getPropertyValue('text-decoration').indexOf('underline') >= 0 || pStyle['underline'],
 						align: style.getPropertyValue('text-align'),
-						fontColor: rgb2hex(style.getPropertyValue('color')),
+						fontColor: style.getPropertyValue('color'),
 						fontSize: parseFloat(style.getPropertyValue('font-size')),
 						fontFamily: style.getPropertyValue('font-family').replace(/"/g, ''), //remove quotes
-						blockElem: style.getPropertyValue('display') == 'block' || nodeName == "BR" || nodeName == "LI"
+						blockElem: style.getPropertyValue('display') == 'block' || nodeName == "BR" || nodeName == "LI",
+						OL: pStyle['OL'],
+						LiIndex: pStyle['LiIndex']
 					};
 					
-//					if (nodeName == "OL" || nodeName == "UL")
-//					{
-//						var pRow = that.createElt("Row");
-//						pRow.setAttribute('IX', pIndex);
-//						
-//						pRow.appendChild(that.createCellElem("HorzAlign", "0"));
-//						pRow.appendChild(that.createCellElem("Bullet", "1"));
-//						pSect.appendChild(pRow);
-//						
-//						var pp = that.createElt("pp");
-//						pp.setAttribute('IX', pIndex++);
-//						text.appendChild(pp);
-//					}
+					if (nodeName == "UL")
+					{
+						var pRow = that.createElt("Row");
+						pRow.setAttribute('IX', pIndex);
+						
+						pRow.appendChild(that.createCellElem("HorzAlign", "0"));
+						pRow.appendChild(that.createCellElem("Bullet", "1"));
+						pSect.appendChild(pRow);
+						
+						var pp = that.createElt("pp");
+						pp.setAttribute('IX', pIndex++);
+						text.appendChild(pp);
+					}
+					//VSDX doesn't have numbered list!
+					else if (nodeName == "OL")
+					{
+						styleMap['OL'] = true;
+					}
+					else if (nodeName == "LI")
+					{
+						styleMap['LiIndex'] = i + 1;
+					}
 					
 					if (chLen > 0)
 					{
+						processNodeChildren(curCh.childNodes, styleMap);
+						
+						//Close the UL by adding another pp with no Vullets
+						if (nodeName == "UL")
+						{
+							var pRow = that.createElt("Row");
+							pRow.setAttribute('IX', pIndex);
+							
+							pRow.appendChild(that.createCellElem("Bullet", "0"));
+							pSect.appendChild(pRow);
+							
+							var pp = that.createElt("pp");
+							pp.setAttribute('IX', pIndex++);
+							text.appendChild(pp);
+						}
+
 						createTextRow(styleMap, charSect, pSect, text, ""); //to handle block elements if any
-						processNodeChildren(ch[i].childNodes, styleMap);
 					}
 					else
 					{
-						createTextRow(styleMap, charSect, pSect, text, ch[i].textContent);
+						//VSDX doesn't have numbered list!
+						createTextRow(styleMap, charSect, pSect, text, (pStyle['OL']? pStyle['LiIndex'] + '. ' : '') + curCh.textContent);
 					}
 				}
 			}
@@ -960,7 +995,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 		var pRotDegrees = parseInt(mxUtils.getValue(this.cellState.style, 'rotation', '0'));
 		var pRot = pRotDegrees * Math.PI / 180;
 
-		//to-do Fix align and valign for rotated cases. Currently, all rotated shapes labels are centered
+		//TODO Fix align and valign for rotated cases. Currently, all rotated shapes labels are centered
 		switch(align) 
 		{
 			case "right": 
@@ -1038,7 +1073,7 @@ mxVsdxCanvas2D.prototype.text = function(x, y, w, h, str, align, valign, wrap, f
 		
 		
 		this.shape.appendChild(charSect);
-//		this.shape.appendChild(pSect);
+		this.shape.appendChild(pSect);
 		this.shape.appendChild(text);
 //		if (overflow != null)
 //		{

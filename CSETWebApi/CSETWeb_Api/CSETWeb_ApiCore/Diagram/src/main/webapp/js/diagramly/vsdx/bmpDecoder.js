@@ -200,7 +200,7 @@ BmpDecoder.prototype.bit15 = function() {
   }
 };
 
-//to-do support other RGB masks, e.g., RGB565
+//TODO support other RGB masks, e.g., RGB565
 BmpDecoder.prototype.bit16 = function() {
   //FIXED BUG, padding is based on number of bytes not the width
   var dif_w = (this.width * 2) % 4;

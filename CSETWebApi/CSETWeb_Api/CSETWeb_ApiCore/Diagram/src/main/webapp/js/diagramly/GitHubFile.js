@@ -7,10 +7,24 @@ GitHubFile = function(ui, data, meta)
 	DrawioFile.call(this, ui, data);
 	
 	this.meta = meta;
+	this.peer = this.ui.gitHub;
 };
 
 //Extends mxEventSource
 mxUtils.extend(GitHubFile, DrawioFile);
+
+/**
+ * Translates this point by the given vector.
+ * 
+ * @param {number} dx X-coordinate of the translation.
+ * @param {number} dy Y-coordinate of the translation.
+ */
+GitHubFile.prototype.share = function()
+{
+	this.ui.editor.graph.openLink('https://github.com/' +
+		encodeURIComponent(this.meta.org) + '/' +
+		encodeURIComponent(this.meta.repo) +'/settings/access');
+};
 
 /**
  * Translates this point by the given vector.
@@ -40,18 +54,54 @@ GitHubFile.prototype.getHash = function()
 /**
  * Returns true if copy, export and print are not allowed for this file.
  */
+GitHubFile.prototype.getFileUrl = function()
+{
+	return 'https://github.com/' + encodeURIComponent(this.meta.org) + '/' +
+		encodeURIComponent(this.meta.repo) + '/blob/' +
+		this.meta.ref + '/' + this.meta.path;
+};
+
+/**
+ * Returns true if copy, export and print are not allowed for this file.
+ */
+GitHubFile.prototype.getFolderUrl = function()
+{
+	return 'https://github.com/' + encodeURIComponent(this.meta.org) + '/' +
+		encodeURIComponent(this.meta.repo) + '/tree/' + this.meta.ref + '/' +
+		this.meta.path.split('/').slice(0, -1).join('/');
+};
+
+/**
+ * Returns true if copy, export and print are not allowed for this file.
+ */
 GitHubFile.prototype.getPublicUrl = function(fn)
 {
-	// LATER: Check if download_url is always null for private repos
 	if (this.meta.download_url != null)
 	{
-		mxUtils.get(this.meta.download_url, mxUtils.bind(this, function(req)
+		try
 		{
-			fn((req.getStatus() >= 200 && req.getStatus() <= 299) ? this.meta.download_url : null);
-		}), mxUtils.bind(this, function()
+			// Checks for short-term token in URL which means private repo
+			var url = new URL(this.meta.download_url);
+
+			if (url.search != '')
+			{
+				fn(null);
+			}
+			else
+			{
+				mxUtils.get(this.meta.download_url, mxUtils.bind(this, function(req)
+				{
+					fn((req.getStatus() >= 200 && req.getStatus() <= 299) ? this.meta.download_url : null);
+				}), mxUtils.bind(this, function()
+				{
+					fn(null);
+				}));
+			}
+		}
+		catch (e)
 		{
 			fn(null);
-		}));
+		}
 	}
 	else
 	{
@@ -113,7 +163,18 @@ GitHubFile.prototype.isRenamable = function()
  */
 GitHubFile.prototype.getLatestVersion = function(success, error)
 {
-	this.ui.gitHub.getFile(this.getId(), success, error);
+	this.peer.getFile(this.getId(), success, error);
+};
+
+/**
+ * Translates this point by the given vector.
+ * 
+ * @param {number} dx X-coordinate of the translation.
+ * @param {number} dy Y-coordinate of the translation.
+ */
+GitHubFile.prototype.isCompressedStorage = function()
+{
+	return false;
 };
 
 /**
@@ -181,10 +242,12 @@ GitHubFile.prototype.doSave = function(title, success, error, unloading, overwri
 	// Forces update of data for new extensions
 	var prev = this.meta.name;
 	this.meta.name = title;
-	DrawioFile.prototype.save.apply(this, arguments);
-	this.meta.name = prev;
 	
-	this.saveFile(title, false, success, error, unloading, overwrite, message);
+	DrawioFile.prototype.save.apply(this, [null, mxUtils.bind(this, function()
+	{
+		this.meta.name = prev;
+		this.saveFile(title, false, success, error, unloading, overwrite, message);
+	}), error, unloading, overwrite]);
 };
 
 /**
@@ -208,88 +271,81 @@ GitHubFile.prototype.saveFile = function(title, revision, success, error, unload
 		{
 			if (this.getTitle() == title)
 			{
-				var savedEtag = this.getCurrentEtag();
-				var savedData = this.data;
-
-				// Makes sure no changes get lost while the file is saved
-				var prevModified = this.isModified;
-				var modified = this.isModified();
-				this.savingFile = true;
-					
-				var prepare = mxUtils.bind(this, function()
+				try
 				{
-					this.setModified(false);
-					
-					this.isModified = function()
-					{
-						return modified;
-					};
-				});
-				
-				prepare();
-				
-				this.ui.gitHub.saveFile(this, mxUtils.bind(this, function(commit)
-				{
-					this.isModified = prevModified;
-					this.savingFile = false;
-					
-					this.meta.sha = commit.content.sha;
-					this.meta.html_url = commit.content.html_url;
-					this.meta.download_url = commit.content.download_url;
-
-					this.fileSaved(savedData, savedEtag, mxUtils.bind(this, function()
-					{
-						this.contentChanged();
+					// Sets shadow modified state during save
+					this.savingFileTime = new Date();
+					this.setShadowModified(false);
+					this.savingFile = true;
 						
-						if (success != null)
-						{
-							success();
-						}
-					}), error);
-				}),
-				mxUtils.bind(this, function(err)
-				{
-					this.savingFile = false;
-					this.isModified = prevModified;
-					this.setModified(modified || this.isModified());
+					var savedEtag = this.getCurrentEtag();
+					var savedData = this.data;
 
-					if (this.isConflict(err))
+					this.peer.saveFile(this, mxUtils.bind(this, function(etag)
 					{
-						this.inConflictState = true;
+						// Checks for changes during save
+						this.setModified(this.getShadowModified());
+						this.savingFile = false;
+						this.setDescriptorEtag(this.meta, etag);
 						
-						if (error != null)
+						this.fileSaved(savedData, savedEtag, mxUtils.bind(this, function()
 						{
-							// Passes current commit message to avoid
-							// multiple dialogs after synchronize
-							error({commitMessage: message});
-						}
-					}
-					else if (error != null)
-					{
-						// Handles modified state for retries
-						if (err != null && err.retry != null)
-						{
-							var retry = err.retry;
+							this.contentChanged();
 							
-							err.retry = function()
+							if (success != null)
 							{
-								prepare();
-								retry();
-							};
+								success();
+							}
+						}), error);
+					}),
+					mxUtils.bind(this, function(err)
+					{
+						this.savingFile = false;
+	
+						if (this.isConflict(err))
+						{
+							this.inConflictState = true;
+							
+							if (error != null)
+							{
+								// Passes current commit message to avoid
+								// multiple dialogs after synchronize
+								error({commitMessage: message});
+							}
 						}
-						
-						error(err);
+						else if (error != null)
+						{
+							error(err);
+						}
+					}), overwrite, message);
+				}
+				catch (e)
+				{
+					this.savingFile = false;
+					
+					if (error != null)
+					{
+						error(e);
 					}
-				}), overwrite, message);
+					else
+					{
+						throw e;
+					}
+				}
 			}
 			else
 			{
+				// Sets shadow modified state during save
+				this.savingFileTime = new Date();
+				this.setShadowModified(false);
 				this.savingFile = true;
 				
-				this.ui.pickFolder(App.MODE_GITHUB, mxUtils.bind(this, function(folderId)
+				this.ui.pickFolder(this.getMode(), mxUtils.bind(this, function(folderId)
 				{
-					this.ui.gitHub.insertFile(title, this.getData(), mxUtils.bind(this, function(file)
+					this.peer.insertFile(title, this.getData(), mxUtils.bind(this, function(file)
 					{
+						// Checks for changes during save
+						this.setModified(this.getShadowModified());
 						this.savingFile = false;
 						
 						if (success != null)
@@ -317,8 +373,9 @@ GitHubFile.prototype.saveFile = function(title, revision, success, error, unload
 		}
 		else
 		{
-			this.ui.gitHub.showCommitDialog(this.meta.name, this.meta.sha == null || this.meta.isNew,
-				mxUtils.bind(this, function(message)
+			this.peer.showCommitDialog(this.meta.name,
+				this.getDescriptorEtag(this.meta) == null ||
+				this.meta.isNew, mxUtils.bind(this, function(message)
 			{
 				doSave(message);	
 			}), error);
