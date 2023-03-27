@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Serilog.Core;
 using System.Data.SqlClient;
+using System.Xml;
 
 namespace CSETWeb_Api.AssessmentIO.TestHarness
 {
@@ -57,10 +58,11 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
                 string importDirectory = input[0];
                 string exportDirectory = input[1];
-                string inputEmail = input[2];
-                string inputPassword = input[3];
+                string originalDBName = input[2];
+                string inputEmail = input[3];
+                string inputPassword = input[4];
 
-                string connString = config.GetConnectionString("CSET_DB");
+                //string connString = config.GetConnectionString("CSET_DB");
                 //SqlConnection conn = new SqlConnection(connString);
                 //Console.WriteLine("You typed: " + importDirectory + " "+ inputEmail + " "+ inputPassword);
 
@@ -88,11 +90,52 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
                 if (importDirectory == "none")
                 {
-                    var fileList = Export(token, exportDirectory);
+                    //var fileList = Export(token, exportDirectory);
                     // switch DBs
+                    string apiUrl = config["apiUrl"];
 
-                    // switch DBs
-                    Import(token, importDirectory, fileList);
+                    string copyConnString = "data source=(localdb)\\mssqllocaldb;initial catalog=CopyForDBComparison;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True";
+
+
+                    string cmdText =
+                        "set srcDBName=" + originalDBName + "\r\nset destDBName=CopyForDBComparison\r\nsqlcmd -E -S (localdb)\\MSSQLLocalDB -d \"MASTER\"  -Q \"if exists (SELECT name FROM master..sysdatabases where name ='%destDBName%')    DROP DATABASE %destDBName%; EXEC sp_detach_db  @dbname = N'%srcDBName%';\"\r\ncopy /Y \"C:\\Users\\%USERNAME%\\%srcDBName%.mdf\" \"C:\\Users\\%USERNAME%\\%destDBName%.mdf\"                                                                                        \r\ncopy /Y \"C:\\Users\\%USERNAME%\\%srcDBName%_log.ldf\" \"C:\\Users\\%USERNAME%\\%destDBName%_log.ldf\"\r\nsqlcmd -E -S (localdb)\\MSSQLLocalDB -d \"MASTER\"  -Q \"CREATE DATABASE %destDBName%  ON (FILENAME = 'C:\\Users\\%USERNAME%\\%destDBName%.mdf'), (FILENAME = 'C:\\Users\\%USERNAME%\\%destDBName%_log.ldf') FOR ATTACH;\"\r\nsqlcmd -E -S (localdb)\\MSSQLLocalDB -d \"MASTER\"  -Q \"EXEC sp_attach_db  @dbname = N'%srcDBName%', @FILENAME1 = 'C:\\Users\\%USERNAME%\\%srcDBName%.mdf', @FILENAME2 = 'C:\\Users\\%USERNAME%\\%srcDBName%_log.ldf'\"";
+
+
+                    Task<string> task = Task.Run(() => ChangeConnString(copyConnString));
+                    task.Wait();
+                    string originalConnString = task.Result;
+
+                    string[] originalConnStringAttr = originalConnString.Split(";");
+                    string originalDbName = originalConnStringAttr[1].Substring(originalConnStringAttr[1].IndexOf("=")+1).Trim();
+
+                    SqlConnection sqlConnection = new SqlConnection(originalConnString);
+                    sqlConnection.Open();
+
+                    SqlCommand sqlCommand = new SqlCommand(cmdText, sqlConnection);
+                    
+                    IAsyncResult results = sqlCommand.BeginExecuteReader();
+                    SqlDataReader returnedData = sqlCommand.EndExecuteReader(results);
+
+                    sqlConnection.Close();
+                    sqlConnection.Dispose();
+
+
+                    // end of switch DBs
+                    //Import(token, importDirectory, fileList);
+
+                    // switch DBs back
+                    task = Task.Run(() => ChangeConnString(originalConnString));
+                    task.Wait();
+                    copyConnString = task.Result;
+
+                    if (copyConnString == originalConnString) 
+                    {
+                        Console.WriteLine($"The original connection string {originalConnString} is the same as the copied DB's connection string ({copyConnString})");
+                        Environment.Exit(-5);
+                    }
+                    // end of switch DBs back
+
+
 
                 }
 
@@ -103,8 +146,11 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                     fileList = Export(token, exportDirectory);
                     // switch DBs
 
-                    // switch DBs
+                    // end of switch DBs
                     Import(token, importDirectory, fileList);
+                    // switch DBs back
+
+                    // end of switch DBs back
                 }
 
 
@@ -287,6 +333,30 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 var loginResponse = JsonConvert.DeserializeObject<Credential>(json);
                 Console.WriteLine("Login successful");
                 return loginResponse.Token;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+            }
+            return "";
+        }
+
+        private static async Task<string> ChangeConnString(string connString)
+        {
+            string apiUrl = config["apiUrl"];
+            //var req = new WebRequestOptions { UriString = $"{apiUrl}{Urls.login}" };
+            var req1 = new WebRequestOptions { UriString = $"{apiUrl}{Urls.connString}"};
+
+            HttpResponseMessage response = await client.PostAsJsonAsync(req1.UriString,
+                connString);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                //var loginResponse = JsonConvert.DeserializeObject<Credential>(json);
+                //Console.WriteLine("Login successful");
+                //return loginResponse.Token;
+                return json;
             }
             else
             {
