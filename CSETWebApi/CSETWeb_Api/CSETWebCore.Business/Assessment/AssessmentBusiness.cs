@@ -75,7 +75,8 @@ namespace CSETWebCore.Business.Assessment
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
                 ExecutiveSummary = defaultExecSumm,
-                GalleryItemGuid = galleryGuid
+                GalleryItemGuid = galleryGuid,
+                ISE_StateLed = false,
             };
 
 
@@ -345,6 +346,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate; //_utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
+                assessment.ISE_StateLed = result.aa.ISE_StateLed;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -573,6 +575,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
             dbAssessment.Assets = assessment.Assets.ToString();
+            dbAssessment.ISE_StateLed= assessment.ISE_StateLed;
             dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
 
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;

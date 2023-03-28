@@ -84,6 +84,8 @@ let headers = {
   unassignedIssueTitles: any = [];
   unassignedIssues: boolean = false;
 
+  ISE_StateLed: boolean = false;
+
   questions: any = null;
   iseIrps: any = null;
   information: any = null;
@@ -95,7 +97,9 @@ let headers = {
       "examiner": '',
       "effectiveDate": '',
       "creationDate": '',
+      "stateLed": false,
       "examLevel": '',
+      "region": 0,
       "guid": ''
     },
     "issuesTotal": {
@@ -532,7 +536,9 @@ let headers = {
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
       "creationDate": this.information.assessment_Creation_Date,
+      "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
+      "region": this.assessmentSvc.assessment.regionCode,
       "guid": this.questions.assessmentGuid
     };
 
@@ -662,6 +668,7 @@ let headers = {
         "effectiveDate": '',
         "creationDate": '',
         "examLevel": '',
+        "region": 0,
         "guid": ''
       },
       "issuesTotal": {

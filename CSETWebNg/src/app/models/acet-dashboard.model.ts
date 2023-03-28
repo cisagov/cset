@@ -29,6 +29,7 @@ export class AcetDashboard {
     charter: string;
     assets: string;
     hours: number;
+    isJoint: boolean;
 
     // IRP Secion
     irps: IRPSummary[];

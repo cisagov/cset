@@ -40,6 +40,7 @@ import { AcetDashboard } from '../../../../models/acet-dashboard.model';
 @Component({
   selector: 'app-assessment-detail-ncua',
   templateUrl: './assessment-detail-ncua.component.html',
+  styleUrls: ['./assessment-detail-ncua.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })
 
@@ -108,6 +109,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.creditUnionOptions = response;
           for (let i = 0; i < this.creditUnionOptions.length; i++) {
             this.creditUnionOptions[i].charter = this.padLeft(this.creditUnionOptions[i].charter, '0', 5);
+            if (this.creditUnionOptions[i].charter == this.assessment.charter) {
+              this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
+              this.assessment.charterType = this.creditUnionOptions[i].charterType;
+            }
           }
         }
       );
@@ -120,7 +125,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           } 
           else{
             //tval= value.name;
-            console.log(value);
           }
           const name = tval;
           return name ? this.filter(name as string) : this.creditUnionOptions.slice();
@@ -146,9 +150,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
-        let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-        let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-        this.contactInitials = "_" + firstInitial + lastInitial;
+        this.contactInitials = "_" + response.contactList[0].firstName;
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -167,7 +169,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
+    this.ncuaSvc.ISE_StateLed = this.assessment.isE_StateLed;
+
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
+
 
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -211,6 +216,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
+          this.assessment.charterType = this.creditUnionOptions[i].charterType;
+          this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
@@ -219,11 +226,22 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.cityOrSiteName = this.creditUnionOptions[i].cityOrSite;
           this.assessment.stateProvRegion = this.creditUnionOptions[i].state;
           this.assessment.charter = this.creditUnionOptions[i].charter;
+          this.assessment.charterType = this.creditUnionOptions[i].charterType;
+          this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
+
+          if (this.creditUnionOptions[i].charterType != 1) {
+            this.assessment.isE_StateLed = false;
+          }
+
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
       }
     }
+
+    // if (e.target.value == true || e.target.value == false) {
+    //   this.toggleJoint();
+    // }
 
     this.createAssessmentName();
     this.setCharterPad();
@@ -326,6 +344,15 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.isAnExamination()) {
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
     }
+  }
+
+
+  toggleJoint() {
+    this.ncuaSvc.ISE_StateLed = !this.ncuaSvc.ISE_StateLed;
+
+    this.assessment.isE_StateLed = !this.assessment.isE_StateLed;
+
+    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
 }
