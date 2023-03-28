@@ -130,10 +130,15 @@
                 <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
                     (change)="update($event)" tabindex="0">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label class="mb-1" for="stateProvRegion">State or Province</label>
-                <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
+                <input type="text" maxlength="50" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                     (change)="update($event)" tabindex="0">
+            </div>
+            <div class="form-group col-md-3">
+                <label class="mb-1" for="region">Region</label>
+                <input type="text" maxlength="50" class="form-control" id="region" name="region" [(ngModel)]="assessment.regionCode"
+                    disabled="true" tabindex="0">
             </div>
         </div>
         <div class="form-row">
@@ -169,6 +174,16 @@
                     <option>No Override</option>
                     <option>CORE</option>
                 </select>
+            </div>
+        </div>
+        <div *ngIf="assessment.charterType == 1" (click)="toggleJoint()" tabindex="0"
+            class="state-led cursor-pointer" [ngClass]="{'state-led-selected': assessment.isE_StateLed}">
+            <div class="row">
+                <div class="col-2">
+                    <h3 *ngIf="!assessment.isE_StateLed">&#x2610;</h3>
+                    <h3 *ngIf="assessment.isE_StateLed">&#x2611;</h3>
+                </div>
+                <div style="padding-top: 5px;">State-led examination?</div>
             </div>
         </div>
     </ng-container>

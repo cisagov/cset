@@ -136,7 +136,7 @@
                 
                     <div *ngIf="q.extrasExpanded">
                         <div class="form-group">
-                            <textarea autosize [(ngModel)]="q.comment" (change)="storeComment(q)" 
+                            <textarea autosize spellcheck="false" [(ngModel)]="q.comment" (change)="storeComment(q)" 
                               style="min-height: 120px; width: 100%" class="form-control" [placeholder]="altTextPlaceholder"></textarea>
                         </div>
                     </div>
@@ -204,8 +204,8 @@
                         
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
-                    <textarea appAutoSize id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 80px;" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                        (mousedown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, $event)"></textarea>
+                    <textarea spellcheck="false" id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 40px; max-height: summaryBoxMax + 'px'" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
+                        (focus)="autoResize(q.parentQuestionId)" (keydown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, q.parentQuestionId, $event)"></textarea>
                 </div>
             </ng-container>
         </div>
