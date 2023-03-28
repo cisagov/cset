@@ -78,7 +78,7 @@
 
                         <label *ngIf="this.ncuaSvc.switchStatus"
                             class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
-                            matTooltip="Merge examinations" (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
+                            (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
                             <span class="fs-base"></span>
                             <label for="mergeExamination" class="m-0">
                                 <span>{{this.ncuaSvc.prepForMerge === false ? 'Merge Examinations' : 'Cancel Merging'}}</span>
