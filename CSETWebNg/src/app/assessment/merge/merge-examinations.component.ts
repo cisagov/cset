@@ -264,6 +264,7 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   navToHome() {
+    this.ncuaSvc.prepForMerge = false;
     this.router.navigate(['/landing-page']);
   }
 
