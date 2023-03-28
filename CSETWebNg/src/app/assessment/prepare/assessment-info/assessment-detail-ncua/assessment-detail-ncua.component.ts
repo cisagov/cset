@@ -229,6 +229,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.charterType = this.creditUnionOptions[i].charterType;
           this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
+          if (this.creditUnionOptions[i].charterType != 1) {
+            this.assessment.isE_StateLed = false;
+          }
+
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
           this.acetDashboard.charter = this.creditUnionOptions[i].charter;
         }
