@@ -34,9 +34,14 @@ namespace CSETWebCore.Model.Findings
         public string Supp_Guidance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
 
-        public bool IsFindingEmpty()
+        public bool IsFindingEmpty(bool cancel = false)
         {
             bool noValue = true;
+
+            if (cancel == true)
+            {
+                return noValue;
+            }
 
             noValue = noValue && String.IsNullOrWhiteSpace(Impact);
             //hasValues = hasValues && webFinding.Importance
@@ -46,10 +51,7 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
-            if (String.IsNullOrWhiteSpace(Risk_Area) || Auto_Generated == 1) 
-            {
-                noValue = noValue && String.IsNullOrWhiteSpace(Title);
-            }
+            noValue = noValue && String.IsNullOrWhiteSpace(Title);
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
 

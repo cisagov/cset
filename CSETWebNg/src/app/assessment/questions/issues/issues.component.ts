@@ -72,6 +72,8 @@ export class IssuesComponent implements OnInit {
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
     this.autoGen = data.auto_Generated;
+    this.finding.risk_Area = this.risk;
+    this.finding.sub_Risk = this.subRisk;
   }
   
   ngOnInit() {
@@ -94,12 +96,10 @@ export class IssuesComponent implements OnInit {
       this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);  
     });
 
-
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
+      
       this.finding = response;
-      console.log('heres the finding from the db')
-      console.log(response)
 
       this.questionsSvc.getActionItems(this.questionID, this.finding.finding_Id).subscribe(
         (data: any) => {
@@ -189,16 +189,11 @@ export class IssuesComponent implements OnInit {
     let mapToArray = Array.from(this.ActionItemList.values());
     this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
     
-    if (this.finding.auto_Generated == 0) {
-      this.isIssueEmpty();
-    }
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
-        console.log('issue saved')
         this.dialog.close(true);
       });
     } else {
-      console.log('issue NOT saved')
       this.showRequiredHelper = true;
       let el = document.getElementById("titleLabel");
       el.scrollIntoView();
@@ -230,17 +225,15 @@ export class IssuesComponent implements OnInit {
 
   cancel() {
     //this.findSvc.deleteFinding(this.finding.finding_Id);
-    this.dialog.close(false);
+    this.dialog.close(this.finding.finding_Id);
   }
 
   isIssueEmpty() {
-    console.log(this.finding)
     if ( this.finding.actionItems == null
     && this.finding.citations == null
     && this.finding.description == null
     && this.finding.issue == null
     && this.finding.type == null) {
-      console.log('this finding is empty')
       return true;
     }
     return false;
