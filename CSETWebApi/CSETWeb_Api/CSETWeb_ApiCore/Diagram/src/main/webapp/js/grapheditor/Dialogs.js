@@ -858,7 +858,8 @@ var ExportDialog = function(editorUi)
 	mxUtils.write(jpgOption, mxResources.get('formatJpg'));
 	imageFormatSelect.appendChild(jpgOption);
 
-	if (!editorUi.printPdfExport)
+	//if (!editorUi.printPdfExport)
+	if (!App.CSET)
 	{
 		var pdfOption = document.createElement('option');
 		pdfOption.setAttribute('value', 'pdf');
@@ -1502,8 +1503,11 @@ var EditDataDialog = function(ui, cell)
 		{
 			texts[index].setAttribute('rows', '2');
 		}
-		
-		addRemoveButton(texts[index], name);
+
+		// In CSET we don't give them the right to remove properties
+		if (!App.CSET) {
+			addRemoveButton(texts[index], name);
+		}
 		
 		if (meta[name] != null && meta[name].editable == false)
 		{
@@ -1519,7 +1523,10 @@ var EditDataDialog = function(ui, cell)
 		if ((attrs[i].nodeName != 'label' || Graph.translateDiagram ||
 			isLayer) && attrs[i].nodeName != 'placeholders')
 		{
-			temp.push({name: attrs[i].nodeName, value: attrs[i].nodeValue});
+			// Do not display any of CSET's hidden properties
+			if (CsetUtils.ignoredProperties.indexOf(attrs[i].nodeName) < 0) {
+				temp.push({ name: attrs[i].nodeName, value: attrs[i].nodeValue });
+			}
 		}
 	}
 	

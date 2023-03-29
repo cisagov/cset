@@ -379,9 +379,9 @@
     <None Update="Diagram\src\main\webapp\images\all-diagrams.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Diagram\src\main\webapp\images\android-chrome-192x192.png">
+    <!--<None Update="Diagram\src\main\webapp\images\android-chrome-192x192.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </None>-->
     <None Update="Diagram\src\main\webapp\images\android-chrome-512x512.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

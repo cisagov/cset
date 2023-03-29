@@ -205,37 +205,37 @@ var StorageDialog = function(editorUi, fn, rowLimit)
 		
 		if (typeof window.DriveClient === 'function')
 		{
-			addLogo(IMAGE_PATH + '/google-drive-logo.svg', mxResources.get('googleDrive'), App.MODE_GOOGLE, 'drive');
+			// CSET - addLogo(IMAGE_PATH + '/google-drive-logo.svg', mxResources.get('googleDrive'), App.MODE_GOOGLE, 'drive');
 		}
 	
 		if (typeof window.OneDriveClient === 'function')
 		{
-			addLogo(IMAGE_PATH + '/onedrive-logo.svg', mxResources.get('oneDrive'), App.MODE_ONEDRIVE, 'oneDrive');
+			// CSET - addLogo(IMAGE_PATH + '/onedrive-logo.svg', mxResources.get('oneDrive'), App.MODE_ONEDRIVE, 'oneDrive');
 		}
 	
 		if (urlParams['noDevice'] != '1')
 		{
-			addLogo(IMAGE_PATH + '/osa_drive-harddisk.png', mxResources.get('device'), App.MODE_DEVICE);			
+			// CSET - addLogo(IMAGE_PATH + '/osa_drive-harddisk.png', mxResources.get('device'), App.MODE_DEVICE);
 		}
 		
 		if (isLocalStorage && (urlParams['browser'] == '1' || urlParams['offline'] == '1'))
 		{
-			addLogo(IMAGE_PATH + '/osa_database.png', mxResources.get('browser'), App.MODE_BROWSER);
+			// CSET - addLogo(IMAGE_PATH + '/osa_database.png', mxResources.get('browser'), App.MODE_BROWSER);
 		}
 		
 		if (typeof window.DropboxClient === 'function')
 		{
-			addLogo(IMAGE_PATH + '/dropbox-logo.svg', mxResources.get('dropbox'), App.MODE_DROPBOX, 'dropbox');
+			// CSET - addLogo(IMAGE_PATH + '/dropbox-logo.svg', mxResources.get('dropbox'), App.MODE_DROPBOX, 'dropbox');
 		}
 
 		if (editorUi.gitHub != null)
 		{
-			addLogo(IMAGE_PATH + '/github-logo.svg', mxResources.get('github'), App.MODE_GITHUB, 'gitHub');
+			// CSET - addLogo(IMAGE_PATH + '/github-logo.svg', mxResources.get('github'), App.MODE_GITHUB, 'gitHub');
 		}
 		
 		if (editorUi.gitLab != null)
 		{
-			addLogo(IMAGE_PATH + '/gitlab-logo.svg', mxResources.get('gitlab'), App.MODE_GITLAB, 'gitLab');
+			// CSET - addLogo(IMAGE_PATH + '/gitlab-logo.svg', mxResources.get('gitlab'), App.MODE_GITLAB, 'gitLab');
 		}
 	};
 	
@@ -2713,7 +2713,7 @@ var ParseDialog = function(editorUi, title, defaultType)
 		});
 		
 		helpBtn.className = 'geBtn';	
-		div.appendChild(helpBtn);
+		// CSET - div.appendChild(helpBtn);
 	}
 	
 	var cancelBtn = mxUtils.button(mxResources.get('close'), function()
@@ -4957,7 +4957,7 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 		});
 		
 		openBtn.className = 'geBtn';
-		btns.appendChild(openBtn);
+		// CSET - btns.appendChild(openBtn);
 	}
 
 	if (CreateDialog.showDownloadButton)
@@ -5935,6 +5935,39 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn, showPages, showN
 	}
 
 	div.appendChild(btns);
+
+	this.container = div;
+};
+
+/**
+ * Constructs a new about dialog (CSET)
+ */
+var AboutDialog = function (editorUi) {
+	const div = document.createElement('div');
+	div.style.marginTop = '6px';
+	div.setAttribute('align', 'center');
+
+	CsetUtils.makeHttpRequest({
+		method: 'GET',
+		url: 'about-diag.html',
+		onreadystatechange: e => {
+			if (e.readyState !== 4) {
+				return;
+			}
+
+			switch (e.status) {
+				case 200:
+					div.innerHTML = e.responseText;
+					break
+			}
+		}
+	});
+
+	mxEvent.addListener(div, 'click', e => {
+		if (mxEvent.getSource(e).nodeName !== 'A') {
+			editorUi.hideDialog();
+		}
+	});
 
 	this.container = div;
 };

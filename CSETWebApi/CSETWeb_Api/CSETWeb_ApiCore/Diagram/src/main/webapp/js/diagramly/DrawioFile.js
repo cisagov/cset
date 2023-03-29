@@ -1807,6 +1807,9 @@ DrawioFile.prototype.removeDraft = function()
  */
 DrawioFile.prototype.addUnsavedStatus = function(err)
 {
+	// CSET - suppress this element
+	return;
+
 	if (!this.inConflictState && this.ui.statusContainer != null && this.ui.getCurrentFile() == this)
 	{
 		if (err instanceof Error && err.message != null && err.message != '')
