@@ -762,15 +762,15 @@ table.td-align-top td {
 }
 
 .btn-secondary {
-  background-color: $gray-200;
-  color: $gray-900;
+  background-color: $gray-200 !important;
+  color: $gray-900 !important;
   height: fit-content;
 }
 
 .btn-secondary:hover {
-  background-color: $secondary-color;
-  border-color: $secondary-color;
-  color: $white;
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
+  color: $white !important;
   fill: $white;
 }
 

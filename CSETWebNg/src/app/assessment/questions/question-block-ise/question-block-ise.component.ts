@@ -784,16 +784,69 @@ export class QuestionBlockIseComponent implements OnInit {
       data: find,
       disableClose: true,
     }).afterClosed().subscribe(result => {
+      console.log('after close')
       const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          this.extras.findings = response;
-          this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
-          this.myGrouping.questions[0].answer_Id = find.answer_Id;
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
-    });
+      // if (result == true) {
+        this.findSvc.getAllDiscoveries(answerID).subscribe(
+
+          (response: Finding[]) => {
+            console.log('inside getAllDiscoveries')
+            this.extras.findings = response;
+
+            if (result == false) {
+              let id = 0;
+              let index = 0;
+
+              for (let i = 0; i < this.extras.findings.length; i++) {
+                let finding = this.extras.findings[i];
+                if (this.isIssueEmpty(finding)) {
+                  id = finding.finding_Id;
+                  index = i;
+                }
+              }
+
+              this.findSvc.deleteFinding(id).subscribe(
+                (r:any) => {
+                  console.log('inside delete')
+                  this.extras.findings.splice(index, 1);
+
+                  this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+                  this.myGrouping.questions[0].answer_Id = find.answer_Id;
+                }
+              );
+                
+            }
+            else if (result == true) {
+              this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+              this.myGrouping.questions[0].answer_Id = find.answer_Id;
+            }
+          }
+        ),
+            
+            
+          error => console.log('Error updating findings | ' + (<Error>error).message)
+      });
+      // } else if (result == false) {
+      //   console.log('canceled')
+      //   console.log(find)
+      //   this.findSvc.deleteFinding(find.finding_Id);
+      // }
+      
+    
+  
+  }
+
+  isIssueEmpty(finding: Finding) {
+    console.log(finding)
+    if ( finding.actionItems == null
+    && finding.citations == null
+    && finding.description == null
+    && finding.issue == null
+    && finding.type == null) {
+      console.log('this finding is empty')
+      return true;
+    }
+    return false;
   }
 
   // ISE "issues" should be generated if an examiner answers 'No' to
