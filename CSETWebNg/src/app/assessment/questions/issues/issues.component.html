@@ -144,6 +144,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0" align="end">
+    <button [disabled]="finding.auto_Generated == 1 || !isIssueEmpty()" mat-button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+
     <button mat-button class="btn btn-primary" (click)="update()">Done</button>
   </mat-dialog-actions>
+  
 </ng-template>

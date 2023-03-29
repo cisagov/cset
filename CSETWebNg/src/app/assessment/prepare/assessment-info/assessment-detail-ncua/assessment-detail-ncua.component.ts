@@ -355,4 +355,20 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
+
+  regionTranslator(regionCode: number) {
+    switch(regionCode) {
+      case 1:
+        return 'Eastern';
+      case 2:
+        return 'Southern';
+      case 3:
+        return 'Western';
+      case 8:
+        return 'ONES';
+      default:
+        return '';
+    }
+  }
+
 }

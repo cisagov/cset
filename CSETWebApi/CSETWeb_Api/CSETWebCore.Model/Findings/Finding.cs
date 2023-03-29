@@ -46,7 +46,10 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Summary);
             noValue = noValue && String.IsNullOrWhiteSpace(Vulnerabilities);
             noValue = noValue && Resolution_Date == null;
-            noValue = noValue && String.IsNullOrWhiteSpace(Title);
+            if (String.IsNullOrWhiteSpace(Risk_Area) || Auto_Generated == 1) 
+            {
+                noValue = noValue && String.IsNullOrWhiteSpace(Title);
+            }
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
 
