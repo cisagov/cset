@@ -24,6 +24,7 @@ namespace CSETWebCore.Model.Assessment
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
         public string PostalCode { get; set; }
+        public int RegionCode { get; set; }
 
         public string Charter { get; set; }
         public string CreditUnion { get; set; }
