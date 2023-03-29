@@ -154,14 +154,11 @@
             </div>
             <div class="form-group col-md-3">
                 <label class="mb-1" for="region">Region</label>
-                <!-- <input type="text" maxlength="50" class="form-control" id="region" name="region" [(ngModel)]="assessment.regionCode"
-                    disabled="true" tabindex="0"> -->
-                <input type="text" maxlength="50" class="form-control" id="region" name="region" [value]="regionTranslator(assessment.regionCode)"
-                    disabled="true" tabindex="0">
-                <select class="form-control" name="examOverride" [(ngModel)]="examOverride" 
-                    (change)="updateOverride($event.target.value)" [disabled]="this.acetDashboard === undefined || this.ncuaSvc.proposedExamLevel == 'CORE'">
-                    <option>No Override</option>
-                    <option>CORE</option>
+                <select (change)="update($event)" class="form-control" id="region" name="region" tabindex="0" [(ngModel)]="assessment.regionCode">
+                    <option [ngValue]="1">1 - Eastern</option>
+                    <option [ngValue]="2">2 - Southern</option>
+                    <option [ngValue]="3">3 - Western</option>
+                    <option [ngValue]="8">8 - Ones</option>
                 </select>
             </div>
         </div>
