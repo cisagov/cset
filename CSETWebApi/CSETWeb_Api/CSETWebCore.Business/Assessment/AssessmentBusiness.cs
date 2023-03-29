@@ -347,6 +347,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
                 assessment.ISE_StateLed = result.aa.ISE_StateLed;
+                assessment.RegionCode = result.ii.Region_Code;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -625,6 +626,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
+            dbInformation.Region_Code = assessment.RegionCode;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
