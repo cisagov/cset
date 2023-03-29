@@ -191,6 +191,7 @@ mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-Cisco.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-Cisco19.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-CiscoSafe.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-Citrix.js');
+mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-CSET.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-Cumulus.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-DFD.js');
 mxscript(drawDevUrl + 'js/diagramly/sidebar/Sidebar-EIP.js');
@@ -229,6 +230,7 @@ mxscript(drawDevUrl + 'js/diagramly/util/mxJsCanvas.js');
 mxscript(drawDevUrl + 'js/diagramly/util/mxAsyncCanvas.js');
 
 mxscript(drawDevUrl + 'js/diagramly/DrawioFile.js');
+mxscript(drawDevUrl + 'js/diagramly/CsetFile.js');
 mxscript(drawDevUrl + 'js/diagramly/LocalFile.js');
 mxscript(drawDevUrl + 'js/diagramly/LocalLibrary.js');
 mxscript(drawDevUrl + 'js/diagramly/StorageFile.js');

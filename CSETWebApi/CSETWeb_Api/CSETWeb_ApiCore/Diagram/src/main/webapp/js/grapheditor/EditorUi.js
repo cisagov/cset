@@ -1273,7 +1273,7 @@ EditorUi.prototype.init = function()
 	
 		// Updates action states
 		this.addUndoListener();
-		this.addBeforeUnloadListener();
+		// CSET - this.addBeforeUnloadListener();
 		
 		graph.getSelectionModel().addListener(mxEvent.CHANGE, mxUtils.bind(this, function()
 		{
@@ -3801,6 +3801,9 @@ EditorUi.prototype.addBeforeUnloadListener = function()
  */
 EditorUi.prototype.onBeforeUnload = function()
 {
+	// CSET - suppress the 'are you sure you want to leave?' dialog
+	return;
+
 	if (this.editor.modified)
 	{
 		return mxResources.get('allChangesLost');
@@ -3812,6 +3815,12 @@ EditorUi.prototype.onBeforeUnload = function()
  */
 EditorUi.prototype.open = function()
 {
+	console.log("EditorUi.prototype.open");
+
+	if (App.CSET) {
+		return;
+	}
+
 	// Cross-domain window access is not allowed in FF, so if we
 	// were opened from another domain then this will fail.
 	try
@@ -3926,6 +3935,9 @@ EditorUi.prototype.updateDocumentTitle = function()
 	}
 	
 	document.title = title;
+
+	// CSET - set browser title
+	document.title = 'CSET Diagram';
 };
 
 /**
@@ -4721,6 +4733,7 @@ EditorUi.prototype.createTabContainer = function()
  */
 EditorUi.prototype.createDivs = function()
 {
+	this.localInstallRibbon = this.createDiv('local-install'); // CSET
 	this.menubarContainer = this.createDiv('geMenubarContainer');
 	this.toolbarContainer = this.createDiv('geToolbarContainer');
 	this.sidebarContainer = this.createDiv('geSidebarContainer');
@@ -4728,9 +4741,15 @@ EditorUi.prototype.createDivs = function()
 	this.diagramContainer = this.createDiv('geDiagramContainer');
 	this.footerContainer = this.createDiv('geFooterContainer');
 	this.hsplit = this.createDiv('geHsplit');
+	this.hsplit.setAttribute('title', mxResources.get('collapseExpand'));
+
+	// Do not show the 'local installation' ribbon if not running locally
+	if (localStorage.getItem('cset.isLocal') != 'true') {
+		this.ribbonHeight = 0;
+	}
 
 	// Sets static style for containers
-	this.menubarContainer.style.top = '0px';
+	this.menubarContainer.style.top = this.ribbonHeight;
 	this.menubarContainer.style.left = '0px';
 	this.menubarContainer.style.right = '0px';
 	this.toolbarContainer.style.left = '0px';
@@ -4851,6 +4870,20 @@ EditorUi.prototype.createUi = function()
 			this.refresh();
 		}));
 	}
+};
+
+/**
+ * A clickable area that returns us to CSET.
+ */
+EditorUi.prototype.createNavBackContainer = function () {
+	var container = document.createElement('a');
+	container.className = 'geItem geNavBack';
+	container.style.float = 'right';
+	container.innerHTML = 'Return to CSET';
+	container.onclick = function () {
+		window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/info';
+	};
+	return container;
 };
 
 /**
@@ -6417,5 +6450,25 @@ EditorUi.prototype.destroy = function()
 		{
 			c[i].parentNode.removeChild(c[i]);
 		}
+	}
+};
+
+/**
+ * Add network analyzer button. 
+ */ 
+EditorUi.prototype.toggleAnalyzer = function (e) {
+	if (!e.action.toggleAction) {
+		return;
+	}
+
+	const klas = 'geSprite-analyze-selected';
+	e.elmt.classList.remove(klas);
+	if (e.state) {
+		e.elmt.classList.add(klas);
+	}
+
+	if (this.editor) {
+		this.editor.analyzeDiagram = e.state;
+		CsetUtils.PersistGraphToCSET(this.editor);
 	}
 };

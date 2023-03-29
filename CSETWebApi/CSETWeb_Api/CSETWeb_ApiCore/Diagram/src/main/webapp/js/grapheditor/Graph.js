@@ -2149,6 +2149,7 @@ Graph.prototype.immediateHandling = true;
  * Allows all values in fit.
  */
 Graph.prototype.connectionArrowsEnabled = true;
+Graph.prototype.connectionArrowsEnabled = false; // CSET
 
 /**
  * Specifies the regular expression for matching placeholders.
@@ -5419,6 +5420,9 @@ Graph.prototype.getTooltipForCell = function(cell)
 				ignored.push('linkTarget');
 				ignored.push('link');
 			}
+
+			// Hide certain CSET attributes
+			CsetUtils.ignoredProperties.forEach(i => ignored.push(i));
 			
 			for (var i = 0; i < attrs.length; i++)
 			{
@@ -8164,8 +8168,14 @@ if (typeof mxVertexHandler !== 'undefined')
 		/**
 		 * Contains the default style for edges.
 		 */
-		Graph.prototype.defaultEdgeStyle = {'edgeStyle': 'orthogonalEdgeStyle', 'rounded': '0',
-			'jettySize': 'auto', 'orthogonalLoop': '1'};
+		Graph.prototype.defaultEdgeStyle = {
+			'edgeStyle': '',           // CSET
+			'strokeColor': '#808080',  // CSET
+			'endArrow': 'none',        // CSET
+			'rounded': '0',
+			'jettySize': 'auto',
+			'orthogonalLoop': '1'
+		};
 
 		/**
 		 * Returns the current edge style as a string.
