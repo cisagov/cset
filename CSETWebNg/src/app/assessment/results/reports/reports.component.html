@@ -226,17 +226,13 @@
           Some reports are disabled until all statements have been answered.
         </span>
       </div>
-      <p *ngIf="disableAcetReportLinks"></p>
-      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Executive Summary
       </button>
-      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Gap Report
       </button>
-      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Comments and Marked for Review
       </button>
       <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
@@ -244,7 +240,7 @@
         ACET Answered Statements
       </button>
       <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left" [disabled]="disableAcetReportLinks">
+        class="btn btn-link btn-link-dark text-left">
         ACET Compensating Controls
       </button>
     </div>
