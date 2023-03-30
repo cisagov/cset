@@ -1,11 +1,11 @@
 /*
 Run this script on:
 
-(localdb)\MSSQLLocalDB.TestUpgrade    -  This database will be modified
+(localdb)\MSSQLLocalDB.CSETWeb12016    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\MSSQLLocalDB.NCUAWeb12017
+(localdb)\MSSQLLocalDB.CSETWeb12017
 
 You are recommended to back up your database before running this script
 
