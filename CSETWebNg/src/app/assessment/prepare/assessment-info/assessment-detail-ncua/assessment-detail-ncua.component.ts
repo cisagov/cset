@@ -168,7 +168,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
-    this.ncuaSvc.ISE_StateLed = this.assessment.ise_StateLed;
+    this.ncuaSvc.ISE_StateLed = this.assessment.isE_StateLed;
 
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
 
@@ -229,7 +229,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
           this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
           if (this.creditUnionOptions[i].charterType != 1) {
-            this.assessment.ise_StateLed = false;
+            this.assessment.isE_StateLed = false;
           }
 
           this.acetDashboard.creditUnionName = this.creditUnionOptions[i].name;
@@ -349,7 +349,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   toggleJoint() {
     this.ncuaSvc.ISE_StateLed = !this.ncuaSvc.ISE_StateLed;
 
-    this.assessment.ise_StateLed = !this.assessment.ise_StateLed;
+    this.assessment.isE_StateLed = !this.assessment.isE_StateLed;
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
