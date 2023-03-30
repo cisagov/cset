@@ -98,6 +98,6 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("eMass_Document_Id")]
         [InverseProperty("INFORMATION")]
         public virtual DOCUMENT_FILE eMass_Document { get; set; }
-        public int Region_Code { get; set; }
+        public int? Region_Code { get; set; }
     }
 }
