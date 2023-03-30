@@ -390,7 +390,7 @@ export class MergeExaminationsComponent implements OnInit {
             details.creditUnion = this.primaryAssessDetails.creditUnion;
             details.charter = this.primaryAssessDetails.charter;
             details.assets = this.primaryAssessDetails.assets;
-            details.ise_StateLed = this.primaryAssessDetails.ise_StateLed;
+            details.isE_StateLed = this.primaryAssessDetails.isE_StateLed;
             details.regionCode = this.primaryAssessDetails.regionCode;
             details.isAcetOnly = true;
             details.useMaturity = true;
