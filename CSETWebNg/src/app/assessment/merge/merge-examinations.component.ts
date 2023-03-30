@@ -264,6 +264,7 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   navToHome() {
+    this.ncuaSvc.prepForMerge = false;
     this.router.navigate(['/landing-page']);
   }
 
@@ -366,11 +367,15 @@ export class MergeExaminationsComponent implements OnInit {
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
 
+    // Create a fake gallery item for the GUID. Using ISE's GUID because only ISE's can be merged currently
+    let galItem = { gallery_Item_Guid: "f2407ff1-9f0f-420b-8f86-8528b60fcbc1"};
+
     // Create a brand new assessment
-    this.assessSvc.createAssessment("ACET")
+    this.assessSvc.createNewAssessmentGallery("ACET", galItem)
     .toPromise()
     .then(
       (response: any) => {
+        console.log("We got a response!");
         // Authorize the user to modify the new assessment with a new token
         this.assessSvc.getAssessmentToken(response.id).then(() => {
           
@@ -385,6 +390,8 @@ export class MergeExaminationsComponent implements OnInit {
             details.creditUnion = this.primaryAssessDetails.creditUnion;
             details.charter = this.primaryAssessDetails.charter;
             details.assets = this.primaryAssessDetails.assets;
+            details.isE_StateLed = this.primaryAssessDetails.isE_StateLed;
+            details.regionCode = this.primaryAssessDetails.regionCode;
             details.isAcetOnly = true;
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");
