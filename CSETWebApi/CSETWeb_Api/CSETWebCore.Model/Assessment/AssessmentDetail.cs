@@ -24,6 +24,7 @@ namespace CSETWebCore.Model.Assessment
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
         public string PostalCode { get; set; }
+        public int RegionCode { get; set; }
 
         public string Charter { get; set; }
         public string CreditUnion { get; set; }
@@ -37,6 +38,7 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+        public Boolean ISE_StateLed { get; set; }
 
         public List<string> HiddenScreens { get; set; } = new List<string>();
 

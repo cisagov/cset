@@ -487,17 +487,18 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="finding"></param>
         [HttpPost]
         [Route("api/AnswerSaveDiscovery")]
-        public IActionResult SaveDiscovery([FromBody] Finding finding)
+        public IActionResult SaveDiscovery([FromBody] Finding finding, [FromQuery] bool cancel = false)
         {
             int assessmentId = _token.AssessmentForUser();
+            var fm = new FindingsManager(_context, assessmentId);
 
-            if (finding.IsFindingEmpty())
+
+            if (finding.IsFindingEmpty(cancel))
             {
-                DeleteFinding(finding.Finding_Id);
+                fm.DeleteFinding(finding);
                 return Ok();
             }
 
-            var fm = new FindingsManager(_context, assessmentId);
             var id = fm.UpdateFinding(finding);
             return Ok(id);
         }

@@ -26,6 +26,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-merit-check',
+  
   templateUrl: './merit-check.component.html',
 })
  
