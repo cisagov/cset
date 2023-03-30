@@ -604,7 +604,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (app_code == "ACET")
             {
-                if (assessment.MaturityModel?.ModelName != "ISE")
+                if (!assessment.AssessmentName.StartsWith("ISE "))
                 {
                     var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
                         ? string.Empty
