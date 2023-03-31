@@ -495,6 +495,7 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
@@ -1000,6 +1001,7 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         SearchPageComponent,
         LogoTsaComponent,
         CfLayoutMainComponent,
+        RenewLayoutMainComponent,
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
