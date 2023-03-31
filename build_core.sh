@@ -18,7 +18,7 @@ build_ng() {
 	outputDir="/c/temp/ng-dist_${1}"
     ng build --configuration production --base-href ./ --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
 
-	cp -r dist "${outputDir}/."
+	mkdir -p "${outputDir}" && cp -r dist "${outputDir}/."
 	
     echo 'Angular project built.'
 	
