@@ -1,0 +1,25 @@
+{
+    "NOTE": "This drives the 'Renewables' skin and behavior",
+    "galleryLayout": "CSET",
+    "installationMode":"RENEW",
+    "helpContactEmail": "cset@inl.gov",
+    "behaviors": {
+        "defaultTitle":"CSET-Renewables",
+        "showModuleBuilder": true,
+        "showAssessmentDocuments": true,
+        "showAggregation": true,
+        "showAnalytics": true,
+        "showAnalyticsAtTheEnd": true,
+        "showAnalyticsColumnOnLanding": true,
+        "splashPageHTML": "dist/assets/splashTSA.html",
+        "showFacilityName": true,
+        "showCityName": true,
+        "showStateName": true,
+        "showContacts": true,
+        "showOrganizationName": true,
+        "showBusinessAgencyName": true,
+        "showCriticalService": true,
+        "additionalUserGuides": []
+    }
+
+}

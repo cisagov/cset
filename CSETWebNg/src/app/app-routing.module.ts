@@ -90,6 +90,7 @@ import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-m
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
@@ -215,6 +216,9 @@ switch (installationMode) {
     break;
   case 'CF':
     homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
+    break;
+  case 'RENEW':
+    homeComponentForCurrentInstallationMode = RenewLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
