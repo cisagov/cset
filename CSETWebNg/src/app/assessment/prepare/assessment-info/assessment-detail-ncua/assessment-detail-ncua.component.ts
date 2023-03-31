@@ -230,7 +230,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       i++;
     }
 
-    if (e.target.value === "") {
+    if (e.target.value.padStart(5, '0') === '00000') {
       this.clearAssessmentFields();
     }
     
@@ -270,20 +270,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessment.charterType = 0;
     this.assessment.regionCode = 0;
     this.assessment.assets = '0';
+    this.updateAssets();
+
   }
 
   /**
   * 
   */
-  updateAssets(e: any) {
-    // default Assessment Name if it is left empty
-    if (!!this.assessment) {
-      if (this.assessment.assessmentName.trim().length === 0) {
-        this.assessment.assessmentName = "(Untitled Assessment)";
-        this.createAssessmentName();
-      }
-    }
-    
+  updateAssets() {
    // this.assessment.assets = e.target.value;
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
     this.acetDashboard.assets = this.assessment.assets;
