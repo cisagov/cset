@@ -113,10 +113,10 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label class="mb-1" for="charter">Charter</label>
-                <input type="text" [maxlength]="5" class="form-control" 
+                <input type="text" (focus)="$event.target.select()" [maxlength]="5" class="form-control" 
                     id="charter" name="charter" [(ngModel)]="assessment.charter" digitsOnly
                     [formControl]="assessmentCharterControl" [matAutocomplete]="autoCharter" 
-                    (blur)="update($event)" (input)="createAssessmentName()" tabindex="0">
+                    (blur)="update($event)" tabindex="0">
                 <cdk-virtual-scroll-viewport itemSize="20">
                     <mat-autocomplete #autoCharter="matAutocomplete" hideSingleSelectionIndicator="true">
                         <mat-option *cdkVirtualFor="let option of filteredOptions | async" [value]="option.charter">
@@ -129,7 +129,7 @@
 
         <div class="form-group">
             <label class="mb-1" for="creditUnion">Credit Union Name</label>
-            <input type="text" maxlength="100" class="form-control" 
+            <input type="text" (focus)="$event.target.select()" maxlength="100" class="form-control" 
                 id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
                 [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" tabindex="0">
             <cdk-virtual-scroll-viewport itemSize="20">
