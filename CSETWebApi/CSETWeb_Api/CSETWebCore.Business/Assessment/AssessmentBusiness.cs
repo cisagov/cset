@@ -20,6 +20,7 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
@@ -604,7 +605,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (app_code == "ACET")
             {
-                if (!assessment.AssessmentName.StartsWith("ISE "))
+                if (!assessment.AssessmentName.StartsWith("ISE ") && (!assessment.AssessmentName.StartsWith("Merged ")))
                 {
                     var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
                         ? string.Empty
@@ -829,5 +830,26 @@ namespace CSETWebCore.Business.Assessment
             public string ShortName { get; set; }
         }
 
+        public IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            var results = _context.INFORMATION.Where(x => myList.Contains(x.Id)).Select(x => x.Assessment_Name).ToList();
+
+
+            return results;
+        }
     }
 }
