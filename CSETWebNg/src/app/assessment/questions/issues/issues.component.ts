@@ -72,6 +72,8 @@ export class IssuesComponent implements OnInit {
     this.answerID = data.answer_Id;
     this.questionID = data.question_Id;
     this.autoGen = data.auto_Generated;
+    this.finding.risk_Area = this.risk;
+    this.finding.sub_Risk = this.subRisk;
   }
   
   ngOnInit() {
@@ -94,9 +96,9 @@ export class IssuesComponent implements OnInit {
       this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);  
     });
 
-
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
+      
       this.finding = response;
 
       this.questionsSvc.getActionItems(this.questionID, this.finding.finding_Id).subscribe(
@@ -187,7 +189,6 @@ export class IssuesComponent implements OnInit {
     let mapToArray = Array.from(this.ActionItemList.values());
     this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
     
-
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
         this.dialog.close(true);
@@ -199,8 +200,43 @@ export class IssuesComponent implements OnInit {
     }
   }
 
+  openIssue() {
+    this.finding.answer_Id = this.answerID;
+    this.finding.question_Id = this.questionID;
+    
+    //let mapToArray = Array.from(this.ActionItemList.values());
+    //this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
+    
+    // if (this.finding.auto_Generated == 0) {
+    //   this.isIssueEmpty();
+    // }
+    // if (this.finding.type !== null) {
+    //   this.findSvc.saveDiscovery(this.finding).subscribe(() => {
+    //     console.log('issue saved')
+    //     this.dialog.close(true);
+    //   });
+    // if (this.finding.type !== null) {
+    //   console.log('issue NOT saved')
+    //   this.showRequiredHelper = true;
+    //   let el = document.getElementById("titleLabel");
+    //   el.scrollIntoView();
+    // }
+  }
+
   cancel() {
-    this.dialog.close(true);
+    //this.findSvc.deleteFinding(this.finding.finding_Id);
+    this.dialog.close(this.finding.finding_Id);
+  }
+
+  isIssueEmpty() {
+    if ( this.finding.actionItems == null
+    && this.finding.citations == null
+    && this.finding.description == null
+    && this.finding.issue == null
+    && this.finding.type == null) {
+      return true;
+    }
+    return false;
   }
 
 }

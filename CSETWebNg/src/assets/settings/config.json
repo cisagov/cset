@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["CSETonline"],
+    "currentConfigChain": ["CSETOnline"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -62,7 +62,8 @@
         "showCompare": true,
         "showEnableProtectedFeatures": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
-        "showVulnerabilitiesDiagramInventoryTab": false
+        "showVulnerabilitiesDiagramInventoryTab": false,
+        "additionalUserGuides": []
     },
     "answersDefault": [
         {

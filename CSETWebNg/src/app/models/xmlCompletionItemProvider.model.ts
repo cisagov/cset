@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import * as Monaco from 'monaco-editor';
+import { editor, languages, CancellationToken } from 'monaco-editor/esm/vs/editor/editor.api';
 
 
-export class XmlCompletionItemProvider implements Monaco.languages.CompletionItemProvider  {
+export class XmlCompletionItemProvider implements languages.CompletionItemProvider  {
     constructor(monaco, schemaNodeString: string) {
         this.monaco = monaco;
         this.schemaNode = this.stringToXml(schemaNodeString);
@@ -199,7 +199,7 @@ export class XmlCompletionItemProvider implements Monaco.languages.CompletionIte
                     // mark it as a 'field', and get the documentation
                     availableItems.push({
                         label: elementAttrs.name,
-                        kind: monaco.languages.CompletionItemKind.Field,
+                        kind: languages.CompletionItemKind.Field,
                         detail: elementAttrs.type,
                         documentation:  this.getItemDocumentation(children[i])
                     });
@@ -236,7 +236,7 @@ export class XmlCompletionItemProvider implements Monaco.languages.CompletionIte
                     // mark it as a 'property', and get it's documentation
                     availableItems.push({
                         label: attrs.name,
-                        kind: monaco.languages.CompletionItemKind.Property,
+                        kind: languages.CompletionItemKind.Property,
                         detail: attrs.type,
                         documentation:  this.getItemDocumentation(children[i])
                     });
@@ -251,7 +251,7 @@ export class XmlCompletionItemProvider implements Monaco.languages.CompletionIte
           xmlDoc = parser.parseFromString(text, 'text/xml');
           return xmlDoc;
         }
-        public provideCompletionItems(model: Monaco.editor.ITextModel, position, context: Monaco.languages.CompletionContext, token: Monaco.CancellationToken)
+        public provideCompletionItems(model: editor.ITextModel, position, context: languages.CompletionContext, token: CancellationToken)
             : any{
         //public provideCompletionItems(model, position) {
             // get editor content before the pointer

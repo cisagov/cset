@@ -73,6 +73,7 @@ export class QuestionBlockIseComponent implements OnInit {
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Note - -\n';
   summaryConvoBuffer = '\n- - End of Statement Summary - -\n';
+  summaryBoxMax = 800;
     
   // Used to place buttons/text boxes at the bottom of each subcategory
   finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
@@ -167,9 +168,7 @@ export class QuestionBlockIseComponent implements OnInit {
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
 
     this.assessSvc.getAssessmentContacts().then((response: any) => {
-      let firstInitial = response.contactList[0].firstName[0] !== undefined ? response.contactList[0].firstName[0] : "";
-      let lastInitial = response.contactList[0].lastName[0] !== undefined ? response.contactList[0].lastName[0] : "";
-      this.contactInitials = firstInitial + lastInitial;
+      this.contactInitials = response.contactList[0].firstName;
     });
   }
 
@@ -567,7 +566,9 @@ export class QuestionBlockIseComponent implements OnInit {
    * attaches to the parent statement.
    * @param q
   */
-  storeSummaryComment(q: Question, e: any) {
+  storeSummaryComment(q: Question, id: number, e: any) {
+    this.autoResize(id);
+
     this.summaryCommentCopy = e.target.value;
     this.summaryEditedCheck = true;    
 
@@ -650,8 +651,14 @@ export class QuestionBlockIseComponent implements OnInit {
   autoResize(id: number) {
     let textArea = document.getElementById("summaryComment" + id);
     textArea.style.overflow = 'hidden';
+    // textArea.style.overflowY = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
+    if (textArea.scrollHeight > this.summaryBoxMax) {
+      textArea.style.height = this.summaryBoxMax + 'px';
+      textArea.style.overflowY = 'scroll';
+      
+    }
   }
 
   isFinalQuestion(id: number) {
@@ -777,16 +784,44 @@ export class QuestionBlockIseComponent implements OnInit {
       data: find,
       disableClose: true,
     }).afterClosed().subscribe(result => {
-      const answerID = find.answer_Id;
-      this.findSvc.getAllDiscoveries(answerID).subscribe(
-        (response: Finding[]) => {
-          this.extras.findings = response;
+      let stringResult = result.toString();
+      if (stringResult != 'true') {
+        find.finding_Id = result;
+
+        this.findSvc.saveDiscovery(find, true).subscribe( (r: any) => {
           this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
-        },
-        error => console.log('Error updating findings | ' + (<Error>error).message)
-      );
+        });
+        
+      }
+      else {
+        const answerID = find.answer_Id;
+        // if (result == true) {
+        this.findSvc.getAllDiscoveries(answerID).subscribe(
+
+          (response: Finding[]) => {
+            this.extras.findings = response;
+            this.myGrouping.questions[0].hasDiscovery = (this.extras.findings.length > 0);
+            this.myGrouping.questions[0].answer_Id = find.answer_Id;
+          }
+        ),
+              
+              
+          error => console.log('Error updating findings | ' + (<Error>error).message)
+      }
     });
+      
+  }
+
+  isIssueEmpty(finding: Finding) {
+    if ( finding.actionItems == null
+    && finding.citations == null
+    && finding.description == null
+    && finding.issue == null
+    && finding.type == null) {
+      return true;
+    }
+    return false;
   }
 
   // ISE "issues" should be generated if an examiner answers 'No' to
