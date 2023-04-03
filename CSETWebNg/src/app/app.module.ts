@@ -495,12 +495,14 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { LoginRenewComponent } from './initial/login-renew/login-renew.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
@@ -1000,12 +1002,14 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         SearchPageComponent,
         LogoTsaComponent,
         CfLayoutMainComponent,
+        RenewLayoutMainComponent,
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
         AssessmentDetailCfComponent,
         LoginCfComponent,
+        LoginRenewComponent,
         MvraGapsComponent,
         MvraSummaryComponent,
         MvraAnswerFunctionsComponent,
