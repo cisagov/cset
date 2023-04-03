@@ -66,7 +66,7 @@
 
       <div class="m-4 d-flex flex-column flex-lg-row justify-content-center flex-00a ml-lg-auto mr-lg-auto" *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">        
         <div class="float-left ml-3">
-            <img class="mt-4 mr-4" src="./assets/images/CF/CyberSecureFlorida_logo_color-1.png" width="auto" height="125" alt="Cyber Florida">
+            <img class="mr-4" src="./assets/images/RENEW/inl_cyber_shield_full.png" width="auto" height="240rem" alt="INL Cyber SHIELD">
         </div>
         <div>
         <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
@@ -77,9 +77,7 @@
           <div *ngIf="passwordExpired">
             <div class="alert alert-danger">Password is expired.  Click 'Reset Password'</div>
           </div>
-          <label for="email">
-            Enter your email address and password to login.
-          </label>
+
           <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
             #email="ngModel" required email focusOnInit="true" />
           <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
@@ -87,7 +85,7 @@
             [(ngModel)]="model.password" #password="ngModel" required />
           <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
           <div class="mt-2 d-flex justify-content-between flex-00a">
-            <div class="d-flex flex-nowrap flex-00a">
+            <div class="d-flex flex-nowrap flex-00a mr-3">
               <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
               <div class="spinner-container" *ngIf="loading">
                 <div style="max-width: 30px; max-height: 30px;"></div>
@@ -95,7 +93,7 @@
             </div>
             <div class="d-flex flex-column flex-00a">
               <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset Password</a>
-              <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0"   >Register New User Account</a>
+              <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register New User Account</a>
             </div>
           </div>
         </form>
@@ -106,14 +104,12 @@
         <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
       </div>
 
-      <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
-        <p class="c-gray-600 m-5 w-70" style=" max-width:1200px">
+      <div class="my-4 mx-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+        <p class="c-gray-600 w-70" style=" max-width:1200px">
             This is where some explanatory text will go, explaining what CSET Renewables is
-            and how it nk you for participating in the CyberSecureFlorida initiative, 
-            
-        </p>
-
-        
+            and how it is intended to be used.  It should also have a logo indicating the organization
+            that this application is sponsored by, be it Idaho National Laboratory or whatever.
+        </p>       
 
         <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
           Internet Explorer has been detected as your current browser.

@@ -37,8 +37,8 @@
           [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
           (click)="this.router.url!='/resource-library' && goHome()">
           <!-- CSET Lock Logo -->
-          <div class="d-flex justify-content-start align-items-center flex-00a">
-            <app-logo-tsa style="max-height: 3rem"></app-logo-tsa>
+          <div class="d-flex justify-content-start align-items-end flex-00a">
+            <app-logo-cset mode="white" /> <span class="mx-2 text-white" style="line-height: normal; margin-bottom: -.2rem">- INL Cyber SHIELD</span>
           </div>
     </span>
     <!-- Navbar Toggler Button -->

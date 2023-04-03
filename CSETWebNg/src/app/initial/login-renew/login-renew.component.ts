@@ -40,13 +40,11 @@ import { JwtParser } from '../../helpers/jwt-parser';
   styleUrls: ['./login-renew.component.scss']
 })
 export class LoginRenewComponent implements OnInit {
-
-
-
   /**
    * The current display mode of the page -- LOGIN or SIGNUP
    */
   mode: string;
+  
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
