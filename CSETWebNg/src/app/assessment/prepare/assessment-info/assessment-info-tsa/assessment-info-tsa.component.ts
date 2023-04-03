@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog/public-api';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';

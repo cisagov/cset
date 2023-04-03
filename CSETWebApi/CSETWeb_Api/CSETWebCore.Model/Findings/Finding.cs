@@ -34,9 +34,14 @@ namespace CSETWebCore.Model.Findings
         public string Supp_Guidance { get; set; }
         public List<FindingContact> Finding_Contacts { get; set; }
 
-        public bool IsFindingEmpty()
+        public bool IsFindingEmpty(bool cancel = false)
         {
             bool noValue = true;
+
+            if (cancel == true)
+            {
+                return noValue;
+            }
 
             noValue = noValue && String.IsNullOrWhiteSpace(Impact);
             //hasValues = hasValues && webFinding.Importance

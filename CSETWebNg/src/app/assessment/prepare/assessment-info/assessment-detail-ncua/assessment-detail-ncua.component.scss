@@ -1,0 +1,94 @@
+/* 
+
+  Copyright 2023 Battelle Energy Alliance, LLC  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions: 
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software. 
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE. 
+
+*/
+.state-led { 
+    // margin: 10px 30px;
+    width: 40%;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    border: 1px solid transparent;
+}
+
+.state-led:hover {
+    background-color: transparent;
+    border: 1px solid #0f3c7a;
+}
+
+.state-led:focus {
+    background-color: transparent;
+    border: 1px solid #0f3c7a;
+}
+
+.state-led-selected {
+    background-color: #0f3c7a !important;
+    color: white !important;
+}
+
+.state-led-selected h3 {
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.state-led-selected:hover {
+    background-color: #1964cc !important;
+}
+
+.irp-header {
+    width: 100%;
+    //background-color: rgb(245,245,245);
+    margin-bottom: 0px;
+}
+
+.risk-text {
+    margin-left: 10px;
+}
+
+.risk-subheader {
+    color: rgb(140,140,140);
+}
+
+.irp-info-box {
+    width: 90%;
+    border: 3px solid rgb(200,200,200);
+    margin: 5px 20px;
+    line-height: 1.4;
+    border-radius: .25rem;
+}
+
+.irp-info-btn {
+    border: 0px;
+    width: 100%;
+    text-align: left;
+    background-color: rgb(200,200,200);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.irp-info-body {
+    background-color: rgb(245,245,245);
+    padding: 5px;
+}
+
+.irp-textarea {
+    width: 100%;
+}

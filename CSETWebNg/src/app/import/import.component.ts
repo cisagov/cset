@@ -25,7 +25,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { DomSanitizer } from '@angular/platform-browser';
 import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
-import * as monaco from 'monaco-editor';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { interval, Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators/debounce';
 import { startWith } from 'rxjs/operators/startWith';
@@ -125,7 +125,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     });
   }
 
-  get configOptions(): monaco.editor.IEditorConstructionOptions {
+  get configOptions(): editor.IEditorConstructionOptions {
     return {
       formatOnPaste: true,
       formatOnType: true,
@@ -398,6 +398,6 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   public showError(){
-    return this.state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length|| this.errors.length;
+    return this.state!='Processing'&&editor&&editor.getModelMarkers({}).length|| this.errors.length;
   }
 }

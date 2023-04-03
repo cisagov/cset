@@ -21,11 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import * as Monaco from "monaco-editor";
+import { editor, languages } from 'monaco-editor/esm/vs/editor/editor.api';
 import { MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "@angular/material/checkbox";
 
 export interface XmlFormattingOptions {
-    editorOptions: Monaco.languages.FormattingOptions;
+    editorOptions: languages.FormattingOptions;
     enforcePrettySelfClosingTagOnFormat: boolean;
     newLine: string;
     removeCommentsOnMinify: boolean;
@@ -34,7 +34,7 @@ export interface XmlFormattingOptions {
 }
 
 export class XmlFormattingOptionsFactory {
-    static getXmlFormattingOptions(formattingOptions: Monaco.languages.FormattingOptions, document: Monaco.editor.ITextModel):
+    static getXmlFormattingOptions(formattingOptions: languages.FormattingOptions, document: editor.ITextModel):
     XmlFormattingOptions {
         return {
             editorOptions: formattingOptions,

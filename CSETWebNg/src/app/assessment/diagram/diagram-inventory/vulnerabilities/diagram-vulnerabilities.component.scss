@@ -33,6 +33,11 @@ mat-icon.delete-button {
   visibility: hidden;
 }
 
+/* 
+
+  TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version. 
+
+*/
 mat-option:hover mat-icon.delete-button {
   visibility: visible;
   color: red;

@@ -40,7 +40,7 @@ import { Utilities } from '../../../../services/utilities.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsSummaryComponent implements OnInit, AfterViewInit {
-  chart: Chart;
+  chart: any;
   dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[];
   // tslint:disable-next-line:max-line-length
   dataSets: { dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[], label: string, Colors: string[], backgroundColor: string[] }[];
