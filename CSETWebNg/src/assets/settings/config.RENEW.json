@@ -11,7 +11,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showAnalyticsColumnOnLanding": true,
-        "splashPageHTML": "dist/assets/splashTSA.html",
+        "splashPageHTML": "",
         "showFacilityName": true,
         "showCityName": true,
         "showStateName": true,

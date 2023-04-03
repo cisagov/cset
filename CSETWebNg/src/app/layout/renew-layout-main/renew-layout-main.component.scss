@@ -34,19 +34,29 @@ SOFTWARE.
 $white: #ffffff;
 $black: #000000;
 
+
+// Renewables skin color palette
+$renew-color-1: #0A2439; // #38613B;
+$renew-color-2: #235199; // #3e4444;
+$renew-color-3: #5c5f62; // #5c6262;
+$renew-color-4: #23273b; // #233b24;
+$renew-color-5: #242429; // #242924;
+
+
+
 /* --- Blues --- */
 $primary: (
   50: #E9EDF2,
-  100: #D1D9E6,
+  100: #dde2e6,
   150: #BCCFDA,
   200: #A3B4CC,
   250: #8FB0C1,
   300: #79A0B5,
   350: #6390A9,
   400: #83A5D4,
-  450: #215283,
+  450: #214c83,
   500: #008ABB,
-  550: #0A5278,
+  550: #0a3a78,
   600: #0A4B6E,
   650: #094463,
   700: #2c5c6d,
@@ -76,8 +86,12 @@ $primary-800: map-get($primary, 800);
 $primary-850: map-get($primary, 850);
 $primary-900: map-get($primary, 900); // Main Dark Primary
 
-$primary-color: $primary-450;
-$secondary-color: $primary-900;
+$primary-color: $renew-color-1; // $primary-450;
+$secondary-color: $renew-color-2; // $primary-900;
+
+
+
+
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -392,7 +406,7 @@ label[required]::after {
 
 /* --- header --- */
 .cset-header {
-  background-color: #274634;
+  background-color: $renew-color-1;
   height: 62px;
 }
 
@@ -501,7 +515,7 @@ label[required]::after {
 }
 
 .footer .bg-primary {
-  background-color: $primary-450  !important;
+  background-color: $renew-color-1 !important;
 }
 
 .footer .card-header:first-child {
@@ -605,7 +619,7 @@ table.cset-table tr.total-row {
 
 table.assessment-summary {
   width: 100%;
-  color: $primary-color;
+  color: $renew-color-5;
 }
 
 // hide some columns in phone mode
@@ -627,7 +641,7 @@ table.assessment-summary th {
 }
 
 table.assessment-summary th {
-  background-color: $secondary-color;
+  background-color: $renew-color-2;
   color: $gray-50;
   font-weight: 500;
 }
@@ -1512,14 +1526,14 @@ th.data-table {
 }
 
 .nav-tab {
-  background-color: $secondary-color;
+  background-color: $renew-color-2;
   color: $gray-100;
   width: 300px;
   text-align: justify;
 }
 
 .nav-tab-collapsed {
-  background-color: $secondary-color;
+  background-color: $renew-color-2;
   color: $gray-100;
   text-align: center;
 }
@@ -1527,7 +1541,7 @@ th.data-table {
 .nav-tabs {
   height: 50px;
   border: none;
-  background-color: #3e4444;
+  background-color: $renew-color-2;
 }
 
 ul.nav-tabs li.active {
@@ -2834,7 +2848,7 @@ table.assessment-documents th {
   display: inline-block;
   font-weight: 400;
   color: $gray-50;
-  background-color: $primary-900;
+  background-color: $renew-color-4;
   border: 1px solid #ccc;
   text-align: center;
   vertical-align: middle;
@@ -3704,16 +3718,16 @@ div.tutorial h6 {
 
 .docTitle {
   font-size: large;
-  color: $primary-450;
+  color: $renew-color-5; //$primary-450;
 }
 
 .categTitle {
-  color: $primary-450;
+  color: $renew-color-5; //$primary-450;
 }
 
 .matbtn,
 .singletree {
-  color: $primary-450;
+  color: $renew-color-5; //$primary-450;
 }
 
 .nodesubcategory:hover {
@@ -3928,7 +3942,7 @@ h6.dropdown-header {
 
 .gallery-card:hover {
   border: 1px solid rgba(54, 113, 144, .40);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(183, 204, 215, .30) 60%, rgba(54, 113, 144, .30) 100%) !important;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(183, 204, 215, .30) 60%, rgba(68, 129, 98, 0.3) 100%) !important;
 }
 
 .gallery-card-footer {
