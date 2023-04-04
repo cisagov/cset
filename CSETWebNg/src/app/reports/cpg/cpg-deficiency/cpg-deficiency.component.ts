@@ -49,6 +49,7 @@ export class CpgDeficiencyComponent implements OnInit {
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
+  facilityName: string;
 
   info: any;
   def: any;
@@ -79,6 +80,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
+      this.facilityName = this.info.facility_Name;
 
       this.loading = true;
     })

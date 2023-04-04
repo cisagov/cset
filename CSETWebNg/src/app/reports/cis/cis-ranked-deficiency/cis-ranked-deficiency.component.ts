@@ -36,6 +36,7 @@ export class CisRankedDeficiencyComponent implements OnInit {
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
+  facilityName: string;
 
   baselineAssessmentName: string;
 
@@ -52,6 +53,8 @@ export class CisRankedDeficiencyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
+      this.assessorName = assessmentDetail.creatorName;
+      this.facilityName = assessmentDetail.facilityName;
     });
   }
 
