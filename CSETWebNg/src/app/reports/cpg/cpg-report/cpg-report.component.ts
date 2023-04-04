@@ -40,6 +40,7 @@ export class CpgReportComponent implements OnInit {
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
+  facilityName: string;
 
   answerDistribByDomain: any;
 
@@ -64,6 +65,7 @@ export class CpgReportComponent implements OnInit {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
       this.assessorName = assessmentDetail.creatorName;
+      this.facilityName = assessmentDetail.facilityName;
     });
 
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
