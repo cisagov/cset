@@ -36,15 +36,7 @@
 
         <div class="cover-page-bottom">
           <app-logo-for-reports></app-logo-for-reports>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.assessment_Name}}</div>
-                <div>
-                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
-                </div>
-                <div>
-                    {{response?.information.assessor_Name}}
-                </div>
-            </div>
+          <app-info-block [response]="response"/>
         </div>
     </div>
 
@@ -65,53 +57,7 @@
     <div class="page-break">
         <div style="margin-bottom: 3em;">
             <h1>Site Information</h1>
-
-            <table class="table-site-info">
-                <tr>
-                    <td>Assessment Name:</td>
-                    <td>{{response?.information.assessment_Name}}</td>
-                </tr>
-                <tr>
-                    <td>Assessment Date:</td>
-                    <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
-                </tr>
-                <tr>
-                    <td>Facility Name:</td>
-                    <td>{{response?.information.facility_Name}}</td>
-                </tr>
-                <tr>
-                    <td>City or Site Name:</td>
-                    <td>{{response?.information.city_Or_Site_Name}}</td>
-                </tr>
-                <tr>
-                    <td>State, Province or Region:</td>
-                    <td>{{response?.information.state_Province_Or_Region}}</td>
-                </tr>
-                <tr>
-                    <td>Principal Assessor Name:</td>
-                    <td>{{response?.information.assessor_Name}}</td>
-                </tr>
-                <!-- <tr>
-                    <td>Assessor Telephone:</td>
-                    <td>{{response?.information.assessor_Phone}}</td>
-                </tr> -->
-                <tr>
-                    <td>Additional Notes and Comments:</td>
-                    <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
-                </tr>
-                <tr>
-                    <td>Contact(s):</td>
-                    <td>
-                        <div *ngFor="let c of response?.information.additional_Contacts">
-                            {{c}}
-                        </div>
-                    </td>
-                </tr>
-                <!-- <tr>
-                    <td>Real Property Site Unique ID (RPSUID):</td>
-                    <td>{{response?.information.real_Property_Unique_Id}}</td>
-                </tr> -->
-            </table>
+            <app-site-information [response]="response"></app-site-information>
         </div>
 
         <div *ngIf="response?.individuals.length === 0" style="font-style: italic; font-weight: bold;">

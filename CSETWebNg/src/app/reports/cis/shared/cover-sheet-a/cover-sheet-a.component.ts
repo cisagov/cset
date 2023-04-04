@@ -21,14 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-cover-sheet-a',
   templateUrl: './cover-sheet-a.component.html',
   styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss']
 })
-export class CoverSheetAComponent implements OnInit {
+export class CoverSheetAComponent implements OnInit, OnChanges {
 
   @Input()
   title: string;
@@ -42,9 +42,26 @@ export class CoverSheetAComponent implements OnInit {
   @Input()
   assessmentDate: Date;
 
+  @Input()
+  facilityName: string;
+
+  infoParent: any;
+
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+  
+  ngOnChanges(): void {
+    this.infoParent = {
+      information: {
+        assessment_Name: this.assessmentName,
+        assessor_Name: this.assessorName,
+        facility_Name: this.facilityName,
+        assessment_Date: this.assessmentDate
+      }
+    }
   }
 
 }
