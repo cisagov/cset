@@ -30,6 +30,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LogoCsetComponent implements OnInit {
 
+  /**
+   * If "white" is provided, 
+   */
   @Input() 
   mode: string;
 
