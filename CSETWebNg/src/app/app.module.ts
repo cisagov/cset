@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -249,21 +249,18 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
-import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { AnalyticsService } from './services/analytics.service';
-import { DataloginComponent } from './assessment/results/analysis/submitdata/datalogin/datalogin.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
-import { DetailComponent } from './reports/detail/detail.component';
+import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
-import { EvalAgainstComponent } from './reports/eval-against/eval-against.component';
-import { ExecutiveComponent } from './reports/executive/executive.component';
+import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
+import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
-import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
 import { ReportService } from './services/report.service';
 import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
@@ -316,7 +313,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from 'ng2-tooltip-directive-ng13fix';
+import { TooltipModule } from 'ng2-tooltip-directive-ngfix';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
@@ -498,12 +495,14 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { LoginRenewComponent } from './initial/login-renew/login-renew.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
@@ -527,7 +526,31 @@ import { ReferencesTableComponent } from './assessment/questions/references-tabl
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { DiagramVulnerabilitiesComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities.component';
-import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
+import { AnalysisNetworkComponentsComponent } from './reports/analysis-network-components/analysis-network-components.component';
+import { SalSectionComponent } from './reports/sal-section/sal-section.component';
+import { AltJustificationCommentsComponent } from './reports/alt-justification-comments/alt-justification-comments.component';
+import { QuestionCommentsComponent } from './reports/question-comments/question-comments.component';
+import { QuestionsMarkedForReviewComponent } from './reports/questions-marked-for-review/questions-marked-for-review.component';
+import { StandardsComplianceComponent } from './reports/standards-compliance/standards-compliance.component';
+import { ComponentComplianceComponent } from './reports/component-compliance/component-compliance.component';
+import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
+import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
+import { ComponentQuestionListComponent } from './reports/component-question-list/component-question-list.component';
+import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
+import { C2m2CoverSheetComponent } from './reports/c2m2/c2m2-report/c2m2-cover-sheet/c2m2-cover-sheet.component';
+import { C2m2IntroductionComponent } from './reports/c2m2/c2m2-report/c2m2-introduction/c2m2-introduction.component';
+import { C2m2ModelArchitectureComponent } from './reports/c2m2/c2m2-report/c2m2-model-architecture/c2m2-model-architecture.component';
+import { C2m2SummaryResultsComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-summary-results.component';
+import { C2m2DetailedResultsComponent } from './reports/c2m2/c2m2-report/c2m2-detailed-results/c2m2-detailed-results.component';
+import { C2m2UsingSelfEvaluationResultsComponent } from './reports/c2m2/c2m2-report/c2m2-using-self-evaluation-results/c2m2-using-self-evaluation-results.component';
+import { C2m2SelfEvaluationNotesComponent } from './reports/c2m2/c2m2-report/c2m2-self-evaluation-notes/c2m2-self-evaluation-notes.component';
+import { C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent } from './reports/c2m2/c2m2-report/c2m2-list-of-partially-implemented-and-not-implemented-practices/c2m2-list-of-partially-implemented-and-not-implemented-practices.component';
+import { C2m2SideTocComponent } from './reports/c2m2/c2m2-report/c2m2-side-toc/c2m2-side-toc.component';
+import { C2m2DonutComponent } from './reports/c2m2/c2m2-donut/c2m2-donut.component';
+import { C2m2ObjectiveTableComponent } from './reports/c2m2/c2m2-objective-table/c2m2-objective-table.component';
+import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
+import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
+import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
 
 
 
@@ -539,7 +562,6 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         HttpClientModule,
         CommonModule,
         AppRoutingModule,
-
         // Material
         A11yModule,
         CdkAccordionModule,
@@ -613,7 +635,6 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         // MatListModule,
         // MatMenuModule,
         // MatTabsModule,
-
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
@@ -752,18 +773,16 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         CompareBestworstComponent,
         ComponentOverrideComponent,
         ExcelExportComponent,
-        AnalyticsComponent,
-        DataloginComponent,
         LayoutBlankComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
-        DetailComponent,
+        SiteDetailComponent,
         DiscoveryTearoutsComponent,
-        EvalAgainstComponent,
-        ExecutiveComponent,
+        EvalAgainstStandardsComponent,
+        ExecutiveSummaryComponent,
         SecurityplanComponent,
-        SitesummaryComponent,
+        SiteSummaryComponent,
         TrendReportComponent,
         CompareReportComponent,
         Assessment2InfoComponent,
@@ -908,7 +927,7 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
         TsaAnalyticsComponent,
-         MaturityQuestionsNestedComponent,
+        MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
         OptionBlockNestedComponent,
@@ -983,12 +1002,14 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         SearchPageComponent,
         LogoTsaComponent,
         CfLayoutMainComponent,
+        RenewLayoutMainComponent,
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
         AssessmentDetailCfComponent,
         LoginCfComponent,
+        LoginRenewComponent,
         MvraGapsComponent,
         MvraSummaryComponent,
         MvraAnswerFunctionsComponent,
@@ -1013,22 +1034,46 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         ReferencesDisplayComponent,
         DiagramVulnerabilitiesDialogComponent,
         DiagramVulnerabilitiesComponent,
-        AddNewVendorProductDialogComponent
+        AnalysisNetworkComponentsComponent,
+        SalSectionComponent,
+        AltJustificationCommentsComponent,
+        QuestionCommentsComponent,
+        QuestionsMarkedForReviewComponent,
+        StandardsComplianceComponent,
+        ComponentComplianceComponent,
+        OverallComplianceComponent,
+        RankedSubjectAreasComponent,
+        ComponentQuestionListComponent,
+        C2m2ReportComponent,
+        C2m2CoverSheetComponent,
+        C2m2IntroductionComponent,
+        C2m2ModelArchitectureComponent,
+        C2m2SummaryResultsComponent,
+        C2m2DetailedResultsComponent,
+        C2m2UsingSelfEvaluationResultsComponent,
+        C2m2SelfEvaluationNotesComponent,
+        C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent,
+        C2m2SideTocComponent,
+        C2m2DonutComponent,
+        C2m2ObjectiveTableComponent,
+        CpgDomainSummaryTableComponent,
+        CpgDeficiencyComponent,
+        C2m2DomainMilBarChartComponent
     ],
     providers: [
         ConfigService,
         AuthenticationService,
         {
-          provide: APP_INITIALIZER,
-          useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
-            return () => {
-              return configSvc.loadConfig().then(() => {
-                return authSvc.checkLocal();
-              });
-            };
-          },
-          deps: [ConfigService, AuthenticationService],
-          multi: true
+            provide: APP_INITIALIZER,
+            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
+                return () => {
+                    return configSvc.loadConfig().then(() => {
+                        return authSvc.checkLocal();
+                    });
+                };
+            },
+            deps: [ConfigService, AuthenticationService],
+            multi: true
         },
         {
             provide: HTTP_INTERCEPTORS,
@@ -1058,7 +1103,6 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         ACETService,
         ResourceLibraryService,
         DiagramService,
-        AnalyticsService,
         AggregationService,
         ChartService,
         ChartColors,
@@ -1076,37 +1120,7 @@ import { AddNewVendorProductDialogComponent } from './assessment/diagram/diagram
         NCUAService,
         GalleryService
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [
-        EmailComponent,
-        EditUserComponent,
-        EjectionComponent,
-        AlertComponent,
-        ConfirmComponent,
-        ChangePasswordComponent,
-        AboutComponent,
-        AdvisoryComponent,
-        OkayComponent,
-        TermsOfUseComponent,
-        FindingsComponent,
-        IssuesComponent,
-        EnableProtectedComponent,
-        QuestionFiltersComponent,
-        AssessmentDocumentsComponent,
-        UploadExportComponent,
-        InlineParameterComponent,
-        GlobalParametersComponent,
-        KeyboardShortcutsComponent,
-        LicenseComponent,
-        AddRequirementComponent,
-        ComponentOverrideComponent,
-        ExcelExportComponent,
-        MergeQuestionDetailComponent,
-        SelectAssessmentsComponent,
-        DataloginComponent,
-        AwwaStandardComponent,
-        SectorHelpComponent
-    ]
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }

@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Auth
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Auth
 {
     public class TokenResponse
     {

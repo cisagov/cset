@@ -1,4 +1,10 @@
-﻿using System.Linq;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
@@ -187,7 +193,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            dbDemog.CyberRiskService = demographics.cyberRiskService;
+            dbDemog.cyberRiskService = demographics.cyberRiskService;
 
             _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();

@@ -1,4 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CSETWebCore.Business.GalleryParser;
 using System;
 using System.Collections.Generic;
@@ -42,7 +48,7 @@ namespace CSETWebCore.Business.GalleryParser.Tests
                 null);
             foreach(var i in gallery.GetUnused("CF"))
             {
-                Console.WriteLine(i.Gallery_Item_Id);
+                Console.WriteLine(i.Gallery_Item_Guid);
             }
         }
     }

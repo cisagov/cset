@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,7 +66,7 @@ namespace CSETWebCore.Helpers
                     }
                     catch (Exception exc)
                     {
-                        log4net.LogManager.GetLogger("RequirementConverter").Error($"... {exc}");
+                        NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                         var myExc = exc;
                     }

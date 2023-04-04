@@ -1184,10 +1184,10 @@ InputSync.prototype ={
 DR_EXPLAIN.namespace( 'DR_EXPLAIN.data_menu' );
 DR_EXPLAIN.data_menu = {
     // menu
-    DREX_NODE_NAMES: ["Title","CSET TSA User Guide Cover Page","Introduction to CSET TSA","System Basics","Importing a .cset tsa File","Cloning and Building Modules in CSET TSA","Resource Library Functions","Other Videos and Training Materials","CSET Advisory and Disclaimer","Operation Menus","Main CSET TSA Window Sections","Results Section","Reports","Glossary","Contact Us","CSET TSA Revision History","Background","Objectives and Benefits","Limitations of this Tool","User Qualifications","User Profile Menu","About CSET TSA","Title Bar","Tools Menu","Import Modules","Create a New Module Feature ","Wildcards","Topic Searches","Expanded Document Tree","Assessment Configuration","Results Tab","Assessment Screen","Assessment Screen - Requirements Mode  ","Assessment Categories","Assessment Functions","Question Filter","Results - Ranked Categories","Submit Feedback","Assessment Complete","Observations Tear-Out Sheets","Executive Summary","Site Summary ","Site Cybersecurity Plan","Site Detail Report","Help Menu","Module Detail Page ","Cloning a Module","Add Questions","Filter","List checkboxes","Comparison Details Screen","Compare and Trend Analysis Functions","Keyboard Shortcuts"],
-    DREX_NODE_LINKS: ["index.htm","cset_tsa_user_guide_cover_page.htm","introduction_to_cset_tsa.htm","system_basics.htm","importing_a__cset_tsa_file.htm","cloning_and_building_modules_in_cset_tsa.htm","resource_library_functions.htm","other_videos_and_training_materials.htm","cset_advisory_and_disclaimer.htm","operation_menus.htm","main_cset_tsa_window_sections.htm","results_section.htm","reports.htm","glossary.htm","contact_us.htm","cset_tsa_revision_history.htm","background.htm","objectives_and_benefits.htm","limitations_of_this_tool.htm","user_qualifications.htm","user_profile_menu.htm","about_cset_tsa.htm","title_bar.htm","tools_menu.htm","import_modules.htm","create_a_new_module_feature_.htm","wildcards.htm","topic_searches.htm","expanded_document_tree.htm","assessment_configuration.htm","results_tab.htm","assessment_screen.htm","assessment_screen___requirements_mode___.htm","assessment_categories.htm","assessment_functions.htm","question_filter.htm","results___ranked_categories.htm","submit_feedback.htm","assessment_complete.htm","observations_tear_out_sheets.htm","executive_summary.htm","site_summary_.htm","site_cybersecurity_plan.htm","site_detail_report.htm","help_menu.htm","module_detail_page_.htm","cloning_a_module.htm","add_questions.htm","filter.htm","list_checkboxes.htm","comparison_details_screen.htm","compare_and_trend_analysis_functions.htm","keyboard_shortcuts.htm"],
-    DREX_NODE_CHILD_START: [1,16,16,20,22,25,26,29,29,29,31,36,39,44,44,44,44,44,44,44,44,45,45,45,45,45,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,53,53,53,53,53,53,53,53],
-    DREX_NODE_CHILD_END: [16,16,20,22,25,26,29,29,29,31,36,39,44,44,44,44,44,44,44,44,45,45,45,45,45,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,53,53,53,53,53,53,53,53,53],
+    DREX_NODE_NAMES: ["Title","Introduction to CSET TSA","System Basics","Importing a .cset tsa File","Cloning and Building Modules in CSET TSA","Resource Library Functions","Other Videos and Training Materials","CSET Advisory and Disclaimer","CSET TSA Gallery and Assessment Repository","Operation Menus","Main CSET TSA Window Sections","Results Section","Reports","Glossary","Contact Us","CSET TSA Revision History","Background","Objectives and Benefits","Limitations of this Tool","User Qualifications","User Profile Menu","About CSET TSA","Title Bar","Tools Menu","Import Modules","Create a New Module Feature ","Wildcards","Topic Searches","Expanded Document Tree","Assessment Configuration","Results Tab","Assessment Screen","Assessment Screen - Requirements Mode  ","Assessment Categories","Assessment Functions","Question Filter","Results - Ranked Categories","Submit Feedback","Assessment Complete","Observations Tear-Out Sheets","Executive Summary","Site Summary ","Site Cybersecurity Plan","Site Detail Report","Help Menu","Module Detail Page ","Cloning a Module","Add Questions","Filter","List checkboxes","Comparison Details Screen","Compare and Trend Analysis Functions","Keyboard Shortcuts"],
+    DREX_NODE_LINKS: ["index.htm","introduction_to_cset_tsa.htm","system_basics.htm","importing_a__cset_tsa_file.htm","cloning_and_building_modules_in_cset_tsa.htm","resource_library_functions.htm","other_videos_and_training_materials.htm","cset_advisory_and_disclaimer.htm","cset_tsa_gallery_and_assessment_repository.htm","operation_menus.htm","main_cset_tsa_window_sections.htm","results_section.htm","reports.htm","glossary.htm","contact_us.htm","cset_tsa_revision_history.htm","background.htm","objectives_and_benefits.htm","limitations_of_this_tool.htm","user_qualifications.htm","user_profile_menu.htm","about_cset_tsa.htm","title_bar.htm","tools_menu.htm","import_modules.htm","create_a_new_module_feature_.htm","wildcards.htm","topic_searches.htm","expanded_document_tree.htm","assessment_configuration.htm","results_tab.htm","assessment_screen.htm","assessment_screen___requirements_mode___.htm","assessment_categories.htm","assessment_functions.htm","question_filter.htm","results___ranked_categories.htm","submit_feedback.htm","assessment_complete.htm","observations_tear_out_sheets.htm","executive_summary.htm","site_summary_.htm","site_cybersecurity_plan.htm","site_detail_report.htm","help_menu.htm","module_detail_page_.htm","cloning_a_module.htm","add_questions.htm","filter.htm","list_checkboxes.htm","comparison_details_screen.htm","compare_and_trend_analysis_functions.htm","keyboard_shortcuts.htm"],
+    DREX_NODE_CHILD_START: [1,16,20,22,25,26,29,29,29,29,31,36,39,44,44,44,44,44,44,44,44,45,45,45,45,45,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,53,53,53,53,53,53,53,53],
+    DREX_NODE_CHILD_END: [16,20,22,25,26,29,29,29,29,31,36,39,44,44,44,44,44,44,44,44,45,45,45,45,45,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,53,53,53,53,53,53,53,53,53],
     DREX_MENU_TYPE: 2,
     DREX_HAS_ROOT_NODE: 0};
 
@@ -1285,3 +1285,72 @@ $(document).ready(function() {
 });
 
 
+
+$(document).ready(function () {
+    var spoilers = $('table.de-spoiler-text-block');
+    spoilers.each(function (index) {
+        var el = $(this);
+
+        var default_state = el.data('spoiler-text-block-state');
+        var toggle_show_unicode = el.data('spoiler-text-block-toggle-show-unicode');
+        var toggle_hide_unicode = el.data('spoiler-text-block-toggle-hide-unicode');
+        var toggle_normal_color = el.data('spoiler-text-block-toggle-normal-color');
+        var toggle_highlight_color = el.data('spoiler-text-block-toggle-highlight-color');
+
+        var toggle_el = el.find('> tbody > tr > td.de-tb-spoiler > span.de-spoiler-text-block-toggle');
+
+        var text_el = el.find('> tbody > tr > td.de-tb-text');
+
+        var first_paragraph_el = text_el.find('> *:first-child');
+        var toggle_and_first_paragraph = $($.merge($.merge([], toggle_el), first_paragraph_el));
+
+        toggle_and_first_paragraph.css('cursor', 'pointer');
+        toggle_and_first_paragraph.css('user-select', 'none');
+
+        var other_paragraphs = text_el.find('> *').not(first_paragraph_el);
+
+        toggle_and_first_paragraph.click(function (event) {
+            event.stopPropagation();
+            if (el.data('spoiler-text-block-state') == 'show')
+            {
+                if (toggle_hide_unicode != '')
+                {
+                    toggle_el.css('display', 'inline-block');
+                    toggle_el.html('&#x' + toggle_hide_unicode + ';');
+                }
+                else
+                {
+                    toggle_el.css('display', 'none');
+                }
+                other_paragraphs.hide();
+                el.data('spoiler-text-block-state', 'hide');
+            }
+            else if (el.data('spoiler-text-block-state') == 'hide')
+            {
+                if (toggle_show_unicode != '')
+                {
+                    toggle_el.css('display', 'inline-block');
+                    toggle_el.html('&#x' + toggle_show_unicode + ';');
+                }
+                else
+                {
+                    toggle_el.css('display', 'none');
+                }
+                other_paragraphs.show();
+                el.data('spoiler-text-block-state', 'show');
+            }
+        });
+
+        toggle_el.css('color', toggle_normal_color);
+
+        toggle_and_first_paragraph.hover(function (event) {
+            event.stopPropagation();
+            toggle_el.css('color', toggle_highlight_color);
+        }, function () {
+            toggle_el.css('color', toggle_normal_color);
+        });
+
+        el.data('spoiler-text-block-state', (default_state == 'show' ? 'hide' : 'show'));
+        first_paragraph_el.click();
+    });
+});

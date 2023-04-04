@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Api.Interfaces
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Api.Interfaces
 {
     public interface ILogger
     {

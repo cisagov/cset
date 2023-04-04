@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Sal;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -88,7 +94,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return Conflict();
             }
@@ -177,7 +183,7 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"... {dbe}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {dbe}");
 
                     throw;
                 }
@@ -208,7 +214,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (DbUpdateException exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 if (STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
                 {

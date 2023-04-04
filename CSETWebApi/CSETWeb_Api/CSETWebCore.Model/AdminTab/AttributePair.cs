@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.AdminTab
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.AdminTab
 {
     public class AttributePair
     {

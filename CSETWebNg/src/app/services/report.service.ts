@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,13 @@ export class ReportService {
      */
     public getReport(reportId: string) {
         return this.http.get(this.apiUrl + 'reports/' + reportId);
+    }
+
+    /**
+     * Calls the API to get basic information about the assessment for a report
+     */
+    public getAssessmentInfoForReport() {
+      return this.http.get(this.apiUrl + 'reports/info')
     }
 
     public getAggReport(reportId: string, aggId: number) {
@@ -126,6 +133,7 @@ export class ReportService {
         return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
 
+
     /**
      * Split paragraphs into divs
      */
@@ -179,6 +187,14 @@ export class ReportService {
         });
 
         return s;
+    }
+
+    getC2M2Donuts() {
+        return this.http.get(this.configSvc.apiUrl + 'c2m2/donutheatmap');
+    }
+
+    getC2M2TableData() {
+        return this.http.get(this.configSvc.apiUrl + 'c2m2/questionTable');
     }
 
     /**

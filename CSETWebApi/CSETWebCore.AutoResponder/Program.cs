@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog.Web;
 using System.Reflection;
 
 namespace CSETWebCore.AutoResponder
@@ -13,8 +14,6 @@ namespace CSETWebCore.AutoResponder
     {
 
         static Program(){
-            var log4netRepository = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
-            log4net.Config.XmlConfigurator.Configure(log4netRepository, new FileInfo("log4net.config"));
         }
 
         /// <summary>
@@ -51,6 +50,7 @@ namespace CSETWebCore.AutoResponder
                 {
                     app.AddJsonFile("appsettings.json");
                 })
+                .ConfigureLogging(l => { }).UseNLog()
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<WeeklyStatusWorker>();

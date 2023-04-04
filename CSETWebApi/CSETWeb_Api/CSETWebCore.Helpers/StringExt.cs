@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Helpers
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Helpers
 {
     public static class StringExt
     {

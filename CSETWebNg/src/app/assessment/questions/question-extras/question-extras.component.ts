@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -621,10 +621,12 @@ export class QuestionExtrasComponent implements OnInit {
    */
   displayIcon(mode) {
 
-    // EDM
+    // DETAIL & REVIEWED
     if (this.myQuestion.is_Maturity
       && (this.assessSvc.usesMaturityModel('EDM')
         || this.assessSvc.usesMaturityModel('CRR')
+        || this.assessSvc.usesMaturityModel('CPG')
+        || this.assessSvc.usesMaturityModel('C2M2')
         || this.assessSvc.isISE())) {
       if (mode == 'DETAIL') {
         return false;

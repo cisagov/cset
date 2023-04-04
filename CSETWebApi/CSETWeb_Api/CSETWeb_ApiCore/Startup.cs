@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using CSETWebCore.Business.ACETDashboard;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Aggregation;

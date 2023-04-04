@@ -96,7 +96,7 @@ function electronPrompt(options, parentWindow) {
 
     const findListener = (event, value) => {
       parentWindow.webContents.once('found-in-page', (event, result) => {
-        promptWindow.webContents.send('found-in-page-results', result)
+        promptWindow?.webContents.send('found-in-page-results', result)
       })
 
       if (!!value) {

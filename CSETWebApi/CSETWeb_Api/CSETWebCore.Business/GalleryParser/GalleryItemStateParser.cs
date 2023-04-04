@@ -1,4 +1,10 @@
-﻿using CSETWebCore.DataLayer.Model;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
@@ -46,7 +52,7 @@ namespace CSETWebCore.Business.GalleryParser
             var data = from r in _context.GALLERY_ROWS
                        join g in _context.GALLERY_GROUP on r.Group_Id equals g.Group_Id
                        join d in _context.GALLERY_GROUP_DETAILS on g.Group_Id equals d.Group_Id
-                       join i in _context.GALLERY_ITEM on d.Gallery_Item_Id equals i.Gallery_Item_Id
+                       join i in _context.GALLERY_ITEM on d.Gallery_Item_Guid equals i.Gallery_Item_Guid
                        where r.Layout_Name == layout_name
                        orderby r.Row_Index, d.Column_Index
                        select new { r, g, d, i };
@@ -73,7 +79,12 @@ namespace CSETWebCore.Business.GalleryParser
                 }
             }
 
-            IncludeCustomSets(rvalue);
+            /* The below "IncludeCustomSets(rvalue)" is commented out because we migrated from "on the fly" building 
+             * to making a new GALLERY_ITEM and GALLERY_GROUP_DETAILS, like normal sets/models, when the custom set is made.
+             * 
+             * I don't feel safe taking this out until we know the new way is solid.
+             */
+            //IncludeCustomSets(rvalue);
 
             return rvalue;
         }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -73,6 +73,13 @@ export class AdvisoryComponent {
         this.appShortName = 'CSET';
         this.orgLongName = 'Cyber Florida';
         this.orgShortName = 'CF';
+        this.showIntellectualPropertyRightsAssertion = false;
+        break;
+      case 'RENEW':
+        this.appLongName = 'Cyber Security Evaluation Tool';
+        this.appShortName = 'CSET';
+        this.orgLongName = 'ORG NAME ORG NAME';
+        this.orgShortName = 'OOOOO';
         this.showIntellectualPropertyRightsAssertion = false;
         break;
       case 'RRA':

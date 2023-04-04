@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -39,15 +39,28 @@
         <p>
             This chart shows the answer distribution for each of the Security Practice categories.
         </p>
-        <div class="chart mb-5">
-            <app-cpg-domain-summary></app-cpg-domain-summary>
+        <div class="chart mb-5 d-inline-block w-100">
+            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"
+                class="mb-5"></app-cpg-domain-summary>
+        </div>
+
+        <div>
+            <h4>
+                Chart Detail
+            </h4>
+
+            <p>This table indicates the answer distribution percentages for each category as indicated in the chart
+                above.
+            </p>
+
+            <app-cpg-domain-summary-table [data]="answerDistribByDomain" [inReport]="true"></app-cpg-domain-summary-table>
         </div>
     </div>
 
-    
+
     <div class="page-break">
         <h1>Security Practice Checklist</h1>
-        <p>
+        <p class="mb-0">
             This table lists all security practices and how they have been answered.
         </p>
         <app-cpg-practice-table></app-cpg-practice-table>

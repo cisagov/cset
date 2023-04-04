@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.ModuleBuilder;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Set;
@@ -8,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Business.Reports
 {
@@ -15,12 +22,14 @@ namespace CSETWebCore.Business.Reports
     {
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
+        private readonly IGalleryEditor _gallery;
 
 
-        public ModuleContentReport(CSETContext context, IQuestionRequirementManager question)
+        public ModuleContentReport(CSETContext context, IQuestionRequirementManager question, IGalleryEditor gallery)
         {
             _context = context;
             _question = question;
+            _gallery = gallery;
         }
 
 
@@ -29,7 +38,7 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         public ModuleResponse GetResponse(string set)
         {
-            var mbb = new ModuleBuilderBusiness(_context, _question);
+            var mbb = new ModuleBuilderBusiness(_context, _question, _gallery);
             var resp = mbb.GetModuleStructure(set);
 
             IncludeSourceFiles(resp, set);

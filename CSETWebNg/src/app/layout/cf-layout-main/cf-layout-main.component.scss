@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2022 Battelle Energy Alliance, LLC
+  Copyright 2023 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,14 @@ SOFTWARE.
 
 */
 @charset "UTF-8";
-@import "../../../sass/mixins";
-@import "../../../sass/sal";
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import "../../../sass/cset-font-styles.css";
-@import "../../../sass/cset2-font-styles.css";
-@import 'swiper/scss';
-@import 'swiper/scss/navigation';
-@import 'swiper/scss/pagination';
+@use "../../../sass/mixins";
+@use "../../../sass/sal";
+@use "@angular/material/prebuilt-themes/indigo-pink.css";
+@use "../../../sass/cset-font-styles.css";
+@use "../../../sass/cset2-font-styles.css";
+@use 'swiper/scss';
+@use 'swiper/scss/navigation';
+@use 'swiper/scss/pagination';
 
 $white: #ffffff;
 $black: #000000;
@@ -147,7 +147,28 @@ $na-hover-color: #0a4b6e;
 $alt-color: #b17300;
 $alt-hover-color: #805300;
 
+$c2m2-fi-color: #265B94;
+$c2m2-fi-hover-color: #1e4976;
+$c2m2-li-color: #90A5C7;
+$c2m2-li-hover-color: #6280b0;
+$c2m2-pi-color: #F5DA8C;
+$c2m2-pi-hover-color: #efc345;
+$c2m2-ni-color: #DCA237;
+$c2m2-ni-hover-color: #bb8521;
+
+
 $spacer: 18px;
+
+// C2M2 Options
+$c2m2-fi-color: #005c99;
+$c2m2-fi-hover-color: #005c99;
+$c2m2-li-color: #8ba6ca;
+$c2m2-li-hovor-color: #8ba6ca;
+$c2m2-pi-color: #fad980;
+$c2m2-pi-hovor-color: #fad980;
+$c2m2-ni-color: #e69f00;
+$c2m2-ni-hovor-color: #e69f00;
+
 
 *:not(font) {
   font-family: "Roboto", sans-serif;
@@ -474,6 +495,15 @@ label[required]::after {
   color: $white;
 }
 
+.accordion-button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.accordion-header {
+  padding: 0.2em;
+}
+
 .footer .bg-primary {
   background-color: $primary-color  !important;
 }
@@ -706,20 +736,20 @@ table.td-align-top td {
 
 /* override a few bootstrap classes */
 .form-control {
-  color: $gray-800;
+  color: $gray-800 !important;
 }
 
 .btn-primary {
-  color: $gray-100;
-  background-color: $secondary-color;
-  border-color: $secondary-color;
+  color: $gray-100 !important;
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
   height: fit-content;
 }
 
 .btn-primary:hover {
-  background-color: $primary-color;
-  border-color: $secondary-color;
-  color: $active-text-color;
+  background-color: $primary-color !important;
+  border-color: $secondary-color !important;
+  color: $active-text-color !important;
 }
 
 .btn-outline-primary {
@@ -870,6 +900,74 @@ table.td-align-top td {
   background-color: $alt-color;
   color: $active-text-color;
 }
+
+
+/* C2M2 custom styles */
+.btn-c2m2-fi {
+  background-color: $white;
+  border-color: $c2m2-fi-color;
+  color: $c2m2-fi-color;
+}
+
+.btn-c2m2-fi.answer-selected,
+.btn-c2m2-fi:hover {
+  background-color: $c2m2-fi-color;
+  color: $active-text-color;
+}
+
+.btn-c2m2-fi.answer-selected:hover {
+  background-color: $c2m2-fi-hover-color;
+}
+
+.btn-c2m2-li {
+  background-color: $white;
+  border-color: $c2m2-li-color;
+  color: #5977AB;
+}
+
+.btn-c2m2-li.answer-selected,
+.btn-c2m2-li:hover {
+  background-color: $c2m2-li-color;
+  color: $black;
+}
+
+.btn-c2m2-li.answer-selected:hover {
+  background-color: $c2m2-li-hover-color;
+}
+
+.btn-c2m2-pi {
+  background-color: $white;
+  border-color: $c2m2-pi-color;
+  color: #986C1B;
+}
+
+.btn-c2m2-pi.answer-selected,
+.btn-c2m2-pi:hover {
+  background-color: $c2m2-pi-color;
+  color: $black;
+}
+
+.btn-c2m2-pi.answer-selected:hover {
+  background-color: $c2m2-pi-hover-color;
+}
+
+.btn-c2m2-ni {
+  background-color: $white;
+  border-color: $c2m2-ni-color;
+  color: #986C1B;
+}
+
+.btn-c2m2-ni.answer-selected,
+.btn-c2m2-ni:hover {
+  background-color: $c2m2-ni-color;
+  color: $black;
+}
+
+.btn-c2m2-ni.answer-selected:hover {
+  background-color: $c2m2-ni-hover-color;
+}
+
+
 
 .btn-mfr {
   background-color: $primary-50;
@@ -1123,12 +1221,13 @@ table.td-align-top td {
   background-color: $primary-color;
 }
 
-.mat-tooltip {
-  font-size: 1em;
+.mdc-tooltip__surface {
+  font-size: 1em !important;
   background-color: $gray-200  !important;
   color: $gray-900  !important;
-  border-radius: 1em;
-  border: 1px solid $gray-100;
+  letter-spacing: normal !important;
+  border: 1px solid $gray-100 !important;
+  line-height: 1.5em !important;
 }
 
 ul.mat-tree-node {
@@ -1167,11 +1266,21 @@ ul.mat-tree-node {
   width: auto !important;
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version.
+
+*/
 .cset .mat-radio-label {
   align-items: start !important;
   padding-top: .2rem
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version.
+
+*/
 .cset .mat-checkbox-inner-container {
   margin: 4px 8px auto 0;
 }
@@ -1550,7 +1659,7 @@ ul.nav-tabs li.active button .tab-icon {
 
 
 // Menus
-.mat-menu-panel.menu-panel {
+.mat-mdc-menu-panel.menu-panel {
   background-color: $primary-color;
   min-height: 20px;
 }
@@ -1561,8 +1670,8 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .navbar-menu-header,
-.menu-panel [mat-menu-item].mat-menu-item {
-  color: $gray-150;
+.menu-panel [mat-menu-item].mat-mdc-menu-item {
+  color: $gray-150 !important;
   background-color: transparent;
   border: 1px solid transparent;
   text-decoration: none !important;
@@ -1570,15 +1679,15 @@ ul.nav-tabs li.active button .tab-icon {
   line-height: 2.2rem;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item:hover:not([disabled]),
+.menu-panel [mat-menu-item].mat-mdc-menu-item:hover:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item.cdk-program-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item.cdk-keyboard-focused:not([disabled]),
 .menu-panel [mat-menu-item].mat-menu-item-highlighted:not([disabled]) {
-  color: $primary-color;
+  color: $primary-color !important;
   background-color: $white;
 }
 
-.menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item,
+.menu-panel [mat-menu-item].mat-mdc-menu-item.disabled-menu-item,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
   color: $primary-250;
@@ -1590,13 +1699,23 @@ ul.nav-tabs li.active button .tab-icon {
   color: $gray-150;
 }
 
-.menu-panel [mat-menu-item]:focus .mat-menu-submenu-icon,
-.menu-panel [mat-menu-item]:hover .mat-menu-submenu-icon {
+.menu-panel [mat-menu-item]:focus .mat-mdc-menu-submenu-icon,
+.menu-panel [mat-menu-item]:hover .mat-mdc-menu-submenu-icon {
   color: $primary-color;
 }
 
+.mat-mdc-menu-item:not(:hover):not([disabled]) .mdc-list-item__primary-text,
+.mat-mdc-menu-submenu-icon {
+  color: $gray-150;
+}
 
+.mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
+  color: $primary-250;
+}
 
+.mat-mdc-button-base, .mdc-list-item__primary-text {
+  letter-spacing: normal !important;
+}
 
 // Results Nav indentation. Default is 40px
 ul.mat-tree-node {
@@ -1642,6 +1761,11 @@ ul.mat-tree-node {
 #accordion {
   // position: fixed;
   // bottom: 0;
+  width: 100%;
+}
+
+.accordion-item {
+  text-align: center;
   width: 100%;
 }
 
@@ -2584,26 +2708,43 @@ mat-sidenav {
   min-width: 100%;
 }
 
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
+
+*/
 .mat-dialog-header {
   color: $gray-100;
   background-color: $primary-color;
   font-weight: 600;
 }
 
-.upload-export .mat-list .mat-list-item .mat-list-item-content {
+/*
+
+  TODO(mdc-migration): The following rule targets internal classes of list that may no longer apply for the MDC version.
+
+*/
+.upload-export .mat-mdc-list .mat-mdc-list-item .mat-list-item-content {
   padding: 0;
 }
 
-.mat-dialog-content {
+.mat-mdc-dialog-content {
   margin: 0 !important;
 }
 
-.mat-dialog-container {
+.mat-mdc-dialog-container {
   background-color: $gray-50;
   display: flex !important;
   flex: 1 1 auto;
   padding: 0 !important;
   overflow: hidden !important;
+  max-width: 100% !important;
+  border-radius: 0.25em;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__content {
+  color: black !important;
+  letter-spacing: normal !important;
 }
 
 table.assessment-documents {

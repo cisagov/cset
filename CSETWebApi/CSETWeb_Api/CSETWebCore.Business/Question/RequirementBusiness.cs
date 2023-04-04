@@ -1,4 +1,10 @@
-﻿using CSETWebCore.DataLayer.Model;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
@@ -346,7 +352,7 @@ namespace CSETWebCore.Business.Question
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 throw;
             }

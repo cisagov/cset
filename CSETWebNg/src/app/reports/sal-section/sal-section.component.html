@@ -1,0 +1,139 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
+    <div class="sal-label">CALCULATED LEVEL</div>
+    <div class="sal-value">
+        {{response?.salTable.osv}}
+    </div>
+</div>
+
+<table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
+    <tr>
+        <th style="width: 25%"></th>
+        <th style="width: 25%">Confidentiality</th>
+        <th style="width: 25%">Integrity</th>
+        <th style="width: 25%">Availability</th>
+    </tr>
+    <tr>
+        <td>Overall Values</td>
+        <td>{{response?.salTable.q_CV}}</td>
+        <td>{{response?.salTable.q_IV}}</td>
+        <td>{{response?.salTable.q_AV}}</td>
+    </tr>
+</table>
+
+
+<div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
+    <p>
+        <b>Calculated General Security Assurance Levels (SAL)</b>
+    </p>
+    <table class="cset-table" style="table-layout: fixed">
+        <tr>
+            <th style="width: 33%"></th>
+            <th style="width: 33%">Onsite</th>
+            <th style="width: 33%">Offsite</th>
+        </tr>
+        <tr>
+            <td>Physical Injury</td>
+            <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
+            <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
+        </tr>
+        <tr>
+            <td>Hospital Injury</td>
+            <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
+            <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
+        </tr>
+        <tr>
+            <td>Death</td>
+            <td>{{response?.genSalTable.on_Site_Death}}</td>
+            <td>{{response?.genSalTable.off_Site_Death}}</td>
+        </tr>
+        <tr>
+            <td>Capital Assets</td>
+            <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
+            <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
+        </tr>
+        <tr>
+            <td>Economic Impact</td>
+            <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
+            <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
+        </tr>
+        <tr>
+            <td>Environmental Impact</td>
+            <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
+            <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
+        </tr>
+    </table>
+</div>
+
+
+<div *ngIf="response?.salTable.lastSalDeterminationType === 'NIST'">
+    <h2>
+        FIPS 199 Security Assurance Level Guidance
+    </h2>
+
+    <p>
+        <b>NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors</b>
+    </p>
+
+    <table class="cset-table">
+        <tr>
+            <th></th>
+            <th>Confidentiality</th>
+            <th>Integrity</th>
+            <th>Availability</th>
+        </tr>
+        <tr>
+            <td>Adjusted For System Questions</td>
+            <td>{{response?.nistSalTable?.q_CV}}</td>
+            <td>{{response?.nistSalTable?.q_IV}}</td>
+            <td>{{response?.nistSalTable?.q_AV}}</td>
+        </tr>
+        <tr>
+            <td>Information Type</td>
+            <td>{{response?.nistSalTable?.iT_CV}}</td>
+            <td>{{response?.nistSalTable?.iT_IV}}</td>
+            <td>{{response?.nistSalTable?.iT_AV}}</td>
+        </tr>
+    </table>
+
+
+    <table class="cset-table">
+        <tr>
+            <th>Type</th>
+            <th>Special Factors</th>
+        </tr>
+        <tr>
+            <td>Confidentiality</td>
+            <td>{{nistSalC}}</td>
+        </tr>
+        <tr>
+            <td>Integrity</td>
+            <td>{{nistSalI}}</td>
+        </tr>
+        <tr>
+            <td>Availability</td>
+            <td>{{nistSalA}}</td>
+        </tr>
+    </table>
+</div>

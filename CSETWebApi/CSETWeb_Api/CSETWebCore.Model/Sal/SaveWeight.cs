@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Sal
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Sal
 {
     public class SaveWeight
     {

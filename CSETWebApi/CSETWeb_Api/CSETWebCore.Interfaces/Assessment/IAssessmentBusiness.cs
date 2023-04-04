@@ -1,4 +1,10 @@
-﻿
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
 using System;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
@@ -8,7 +14,7 @@ namespace CSETWebCore.Interfaces.Assessment
 {
     public interface IAssessmentBusiness
     {
-        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow);
+        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid);
         AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey);
@@ -25,6 +31,8 @@ namespace CSETWebCore.Interfaces.Assessment
         DateTime GetLastModifiedDateUtc(int assessmentId);
         IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId);
         IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForAccessKey(string accessKey);
+
+        IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10);
       
     }
 }

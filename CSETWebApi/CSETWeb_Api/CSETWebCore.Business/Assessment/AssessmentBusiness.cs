@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Sal;
@@ -14,6 +20,7 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
@@ -49,7 +56,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow)
+        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
@@ -68,14 +75,11 @@ namespace CSETWebCore.Business.Assessment
                 LastModifiedDate = nowUTC,
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
-                ExecutiveSummary = defaultExecSumm
-
+                ExecutiveSummary = defaultExecSumm,
+                GalleryItemGuid = galleryGuid,
+                ISE_StateLed = false,
             };
 
-            if (newAssessment.Workflow == "TSA")
-            {
-                SetDefaultTsaStuff(newAssessment);
-            }
 
             // Commit the new assessment
             int assessment_id = SaveAssessmentDetail(0, newAssessment);
@@ -103,19 +107,10 @@ namespace CSETWebCore.Business.Assessment
 
 
             string defaultSal = "Low";
-            if (newAssessment.Workflow == "TSA")
-            {
-                defaultSal = SalBusiness.DefaultSalTsa;
-            }
             _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
 
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
-
-            if (newAssessment.Workflow == "TSA")
-            {
-                _standardsBusiness.PersistDefaultSelectedStandard(assessment_id);
-            }
 
 
             CreateIrpHeaders(assessment_id);
@@ -336,6 +331,7 @@ namespace CSETWebCore.Business.Assessment
             if (result != null)
             {
                 assessment.Id = result.aa.Assessment_Id;
+                assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
                 assessment.AssessmentDate = result.aa.Assessment_Date;
                 assessment.FacilityName = result.ii.Facility_Name;
@@ -351,6 +347,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate; //_utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
+                assessment.ISE_StateLed = result.aa.ISE_StateLed;
+                assessment.RegionCode = result.ii.Region_Code;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -393,6 +391,13 @@ namespace CSETWebCore.Business.Assessment
                 }
 
                 SetAssessmentTypeInfo(assessment);
+
+
+                var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (ss != null && ss.Hidden_Screens != null)
+                {
+                    assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                }
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
@@ -558,6 +563,7 @@ namespace CSETWebCore.Business.Assessment
             }
 
             dbAssessment.Assessment_Id = assessmentId;
+            dbAssessment.GalleryItemGuid = assessment.GalleryItemGuid;
             dbAssessment.AssessmentCreatedDate = assessment.CreatedDate;
             dbAssessment.AssessmentCreatorId = assessment.CreatorId == 0 ? null : assessment.CreatorId;
             dbAssessment.Assessment_Date = assessment.AssessmentDate ?? DateTime.Now;
@@ -571,6 +577,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
             dbAssessment.Assets = assessment.Assets.ToString();
+            dbAssessment.ISE_StateLed= assessment.ISE_StateLed;
             dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
 
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
@@ -598,7 +605,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (app_code == "ACET")
             {
-                if (assessment.MaturityModel?.ModelName != "ISE")
+                if (!assessment.AssessmentName.StartsWith("ISE ") && (!assessment.AssessmentName.StartsWith("Merged ")))
                 {
                     var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
                         ? string.Empty
@@ -620,6 +627,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
+            dbInformation.Region_Code = assessment.RegionCode;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -689,15 +697,6 @@ namespace CSETWebCore.Business.Assessment
 
 
         /// <summary>
-        /// Default a few things
-        /// </summary>
-        private void SetDefaultTsaStuff(AssessmentDetail assessment)
-        {
-            assessment.UseStandard = true;
-        }
-
-
-        /// <summary>
         /// Get all organization types
         /// </summary>
         /// <param></param>
@@ -763,11 +762,24 @@ namespace CSETWebCore.Business.Assessment
                                 || (assessment.UseDiagram && assessment.UseStandard)
                                 || (assessment.UseMaturity && assessment.UseStandard);
 
+            // Grab the Gallery Card Item Description to use elsewhere in the assessment.
+            // This replaces the old Maturity_Model_Description & Set tooltips
+            string galleryCardDescription = "";
+            var query = from g in _context.GALLERY_ITEM
+                        where g.Gallery_Item_Guid == assessment.GalleryItemGuid
+                        select g;
+
+            var result = query.ToList().FirstOrDefault();
+
+            if (result != null) {
+                galleryCardDescription = result.Description;
+            }
+
             if (assessment.UseMaturity)
             {
                 // Use shorter names on assessments with multiple types.
                 assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
-                assessment.TypeDescription = assessment.MaturityModel.ModelDescription;
+                assessment.TypeDescription = galleryCardDescription;
             }
 
             if (assessment.UseStandard)
@@ -776,7 +788,7 @@ namespace CSETWebCore.Business.Assessment
                 {
                     // Use shorter names on assessments with multiple types.
                     assessment.TypeTitle += ", " + (multipleTypes ? standard.ShortName : standard.FullName);
-                    assessment.TypeDescription = standard.Description;
+                    assessment.TypeDescription = galleryCardDescription;
                 });
             }
 
@@ -807,7 +819,7 @@ namespace CSETWebCore.Business.Assessment
             foreach (string setName in setNames)
             {
                 var set = allSets.Find(set => set.Set_Name == setName);
-                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name, Description = set.Standard_ToolTip });
+                processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name });
             }
             return processedSets;
         }
@@ -816,8 +828,28 @@ namespace CSETWebCore.Business.Assessment
         {
             public string FullName { get; set; }
             public string ShortName { get; set; }
-            public string Description { get; set; }
         }
 
+        public IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            var results = _context.INFORMATION.Where(x => myList.Contains(x.Id)).Select(x => x.Assessment_Name).ToList();
+
+
+            return results;
+        }
     }
 }

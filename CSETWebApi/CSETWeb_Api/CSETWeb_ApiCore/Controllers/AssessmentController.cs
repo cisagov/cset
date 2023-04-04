@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Authorization;
@@ -16,6 +22,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -30,11 +37,12 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IGalleryEditor _galleryEditor;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness)
+            IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
@@ -43,6 +51,7 @@ namespace CSETWebCore.Api.Controllers
             _standards = standards;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+            _galleryEditor = galleryEditor;
         }
 
         /// <summary>
@@ -54,8 +63,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/createassessment")]
         public IActionResult CreateAssessment([FromQuery] string workflow)
         {
+            Guid galleryGuid = Guid.Empty;
             var currentUserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow));
+            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid));
         }
 
 
@@ -77,14 +87,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/createassessment/gallery")]
-        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] int galleryId, [FromQuery] string csn = null)
+        public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] Guid galleryGuid, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
 
 
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
-            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Id == galleryId);
+            var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == galleryGuid);
             if (galleryItem != null)
             {
                 config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
@@ -95,6 +105,7 @@ namespace CSETWebCore.Api.Controllers
                 if (csn != null)
                 {
                     config = JsonConvert.DeserializeObject<GalleryConfig>($"{{Sets:[\"{csn}\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}}");
+                    //_galleryEditor.AddGalleryItem(null, null, )
                 }
                 else
                 {
@@ -104,7 +115,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             // create new empty assessment
-            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow);
+            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid);
 
 
             // build a list of Sets to be selected
@@ -121,7 +132,6 @@ namespace CSETWebCore.Api.Controllers
                 assessment.QuestionRequirementCounts = counts;
                 assessment.UseStandard = true;
             }
-
 
 
             // Application Mode.  Including "only" will restrict the mode on the questions page.
@@ -141,12 +151,19 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-
             // SAL 
             if (config.SALLevel != null && ss != null)
             {
                 ss.Selected_Sal_Level = config.SALLevel;
             }
+
+
+            // Hidden Screens
+            if (config.HiddenScreens != null && ss != null)
+            {
+                ss.Hidden_Screens = String.Join(",", config.HiddenScreens);
+            }
+
 
             _context.SaveChanges();
 
@@ -334,6 +351,16 @@ namespace CSETWebCore.Api.Controllers
                 //return this.http.get("./assets/mydata.json");
             }
             return "";
+        }
+
+        
+        [HttpGet]
+        [Route("api/getMergeNames")]
+        public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 
+                                           [FromQuery] int id4, [FromQuery] int id5, [FromQuery] int id6,
+                                           [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
+        {
+            return Ok(_assessmentBusiness.GetNames(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
 
     }

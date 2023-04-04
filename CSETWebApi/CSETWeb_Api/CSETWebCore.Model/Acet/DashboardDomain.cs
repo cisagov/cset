@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Acet
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Acet
 {
     public class DashboardDomain
     {

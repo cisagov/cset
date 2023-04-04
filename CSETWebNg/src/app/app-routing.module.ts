@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -82,7 +82,7 @@ import { AggregationGuard } from './guards/aggregation.guard';
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
-import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+//import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
@@ -90,15 +90,16 @@ import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-m
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
-import { DetailComponent } from './reports/detail/detail.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
+import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
-import { ExecutiveComponent } from './reports/executive/executive.component';
+import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
-import { SitesummaryComponent } from './reports/sitesummary/sitesummary.component';
+import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -191,9 +192,12 @@ import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraGapsPageComponent } from './assessment/results/mat-mvra/mvra-gaps-page/mvra-gaps-page.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
 import { CpgReportComponent } from './reports/cpg/cpg-report/cpg-report.component';
+import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { LogoutComponent } from './initial/logout/logout.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
+import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -212,6 +216,9 @@ switch (installationMode) {
     break;
   case 'CF':
     homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
+    break;
+  case 'RENEW':
+    homeComponentForCurrentInstallationMode = RenewLayoutMainComponent;
     break;
   default:
     homeComponentForCurrentInstallationMode = LayoutMainComponent;
@@ -238,6 +245,7 @@ const appRoutes: Routes = [
       { path: 'login/assessment/:id', component: LoginComponent },
       { path: 'login/:eject', component: LoginComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'login-access', component: LoginAccessKeyComponent },
       { path: 'logout', component: LogoutComponent },
       { path: 'reset-pass', component: ResetPassComponent },
       {
@@ -311,11 +319,11 @@ const appRoutes: Routes = [
         path:'tsa-analytics',
         component:TsaAnalyticsComponent
       },
-      { path: 'resource-library', 
+      { path: 'resource-library',
         component: ResourceLibraryComponent },
       {
         path: 'examination-merge',
-        component: MergeExaminationsComponent 
+        component: MergeExaminationsComponent
       },
 
       {
@@ -436,7 +444,6 @@ const appRoutes: Routes = [
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics-compare', component: AnalyticsCompareComponent },
-              { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
               { path: 'section-scoring', component: SectionScoringComponent },
@@ -454,11 +461,11 @@ const appRoutes: Routes = [
   // reports routing
   {
     path: 'report', component: LayoutBlankComponent, children: [
-      { path: 'detail', component: DetailComponent },
+      { path: 'detail', component: SiteDetailComponent },
       { path: 'discoveries', component: DiscoveryTearoutsComponent },
-      { path: 'executive', component: ExecutiveComponent },
+      { path: 'executive', component: ExecutiveSummaryComponent },
       { path: 'securityplan', component: SecurityplanComponent },
-      { path: 'sitesummary', component: SitesummaryComponent },
+      { path: 'sitesummary', component: SiteSummaryComponent },
       { path: 'trendreport', component: TrendReportComponent },
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
@@ -497,15 +504,17 @@ const appRoutes: Routes = [
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'mvraReport', component: MvraReportComponent },
       { path: 'cpgReport', component: CpgReportComponent },
+      { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
+      { path: 'c2m2Report', component: C2m2ReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, { enableTracing: false, relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(appRoutes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

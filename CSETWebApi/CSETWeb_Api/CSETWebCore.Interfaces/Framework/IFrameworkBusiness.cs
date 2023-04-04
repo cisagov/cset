@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Model.Framework;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Model.Framework;
 
 namespace CSETWebCore.Interfaces.Framework
 {

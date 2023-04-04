@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
@@ -72,7 +78,14 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("12.0.0.14", new ConvertDatabase120015(path));
             converters.Add("12.0.0.15", new ConvertDatabase120016(path));
             converters.Add("12.0.0.16", new ConvertDatabase120017(path));
-
+            converters.Add("12.0.0.17", new ConvertDatabase120018(path));
+            converters.Add("12.0.0.18", new ConvertDatabase120019(path));
+            converters.Add("12.0.0.19", new ConvertDatabase12012(path));
+            converters.Add("12.0.1.2", new ConvertDatabase12013(path));
+            converters.Add("12.0.1.3", new ConvertDatabase12014(path));
+            converters.Add("12.0.1.4", new ConvertDatabase12015(path));
+            converters.Add("12.0.1.5", new ConvertDatabase12016(path));
+            converters.Add("12.0.1.6", new ConvertDatabase12017(path));
         }
 
         public void UpgradeOnly(Version currentVersion, string tempConnect)

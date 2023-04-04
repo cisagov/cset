@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2023 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Answer, MaturityQuestionResponse, Question } from '../../models/questions.model';
 import { AssessmentDetail } from '../../models/assessment-info.model';
@@ -104,6 +127,8 @@ export class MergeExaminationsComponent implements OnInit {
         if (response.length > 0) {
           this.mergeConflicts = response;
           this.getAssessmentNames();
+        } else {
+            this.ncuaSvc.getNames().subscribe((result: any) => this.getAssessmentNames(result));
         }
       }
     );
@@ -212,12 +237,16 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-  getAssessmentNames() {
+  getAssessmentNames(result = '') {
+    if (result === '') {
     let names = [];
-    names.push(this.mergeConflicts[0].assessment_Name1, this.mergeConflicts[0].assessment_Name2, this.mergeConflicts[0].assessment_Name3,
+
+    if (this.mergeConflicts.length > 0) {
+      names.push(this.mergeConflicts[0].assessment_Name1, this.mergeConflicts[0].assessment_Name2, this.mergeConflicts[0].assessment_Name3,
           this.mergeConflicts[0].assessment_Name4, this.mergeConflicts[0].assessment_Name5, this.mergeConflicts[0].assessment_Name6,
           this.mergeConflicts[0].assessment_Name7, this.mergeConflicts[0].assessment_Name8, this.mergeConflicts[0].assessment_Name9,
           this.mergeConflicts[0].assessment_Name10);
+    }
     
     for (let i = 0; i < names.length; i++) {
       this.assessmentNames[i] = names[i];
@@ -228,6 +257,11 @@ export class MergeExaminationsComponent implements OnInit {
         this.getAssessmentContactInitials(name);
       }
     });
+  } else {
+    for (let i = 0; i < result.length; i++) {
+      this.getAssessmentContactInitials(result[i]);
+    }
+  }
   }
 
   getAssessmentContactInitials(assessmentName: string) {
@@ -241,6 +275,7 @@ export class MergeExaminationsComponent implements OnInit {
   }
 
   navToHome() {
+    this.ncuaSvc.prepForMerge = false;
     this.router.navigate(['/landing-page']);
   }
 
@@ -343,8 +378,11 @@ export class MergeExaminationsComponent implements OnInit {
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
 
+    // Create a fake gallery item for the GUID. Using ISE's GUID because only ISE's can be merged currently
+    let galItem = { gallery_Item_Guid: "f2407ff1-9f0f-420b-8f86-8528b60fcbc1"};
+
     // Create a brand new assessment
-    this.assessSvc.createAssessment("ACET")
+    this.assessSvc.createNewAssessmentGallery("ACET", galItem)
     .toPromise()
     .then(
       (response: any) => {
@@ -362,6 +400,8 @@ export class MergeExaminationsComponent implements OnInit {
             details.creditUnion = this.primaryAssessDetails.creditUnion;
             details.charter = this.primaryAssessDetails.charter;
             details.assets = this.primaryAssessDetails.assets;
+            details.isE_StateLed = this.primaryAssessDetails.isE_StateLed;
+            details.regionCode = this.primaryAssessDetails.regionCode;
             details.isAcetOnly = true;
             details.useMaturity = true;
             details.maturityModel = this.maturitySvc.getModel("ISE");

@@ -1285,3 +1285,72 @@ $(document).ready(function() {
 });
 
 
+
+$(document).ready(function () {
+    var spoilers = $('table.de-spoiler-text-block');
+    spoilers.each(function (index) {
+        var el = $(this);
+
+        var default_state = el.data('spoiler-text-block-state');
+        var toggle_show_unicode = el.data('spoiler-text-block-toggle-show-unicode');
+        var toggle_hide_unicode = el.data('spoiler-text-block-toggle-hide-unicode');
+        var toggle_normal_color = el.data('spoiler-text-block-toggle-normal-color');
+        var toggle_highlight_color = el.data('spoiler-text-block-toggle-highlight-color');
+
+        var toggle_el = el.find('> tbody > tr > td.de-tb-spoiler > span.de-spoiler-text-block-toggle');
+
+        var text_el = el.find('> tbody > tr > td.de-tb-text');
+
+        var first_paragraph_el = text_el.find('> *:first-child');
+        var toggle_and_first_paragraph = $($.merge($.merge([], toggle_el), first_paragraph_el));
+
+        toggle_and_first_paragraph.css('cursor', 'pointer');
+        toggle_and_first_paragraph.css('user-select', 'none');
+
+        var other_paragraphs = text_el.find('> *').not(first_paragraph_el);
+
+        toggle_and_first_paragraph.click(function (event) {
+            event.stopPropagation();
+            if (el.data('spoiler-text-block-state') == 'show')
+            {
+                if (toggle_hide_unicode != '')
+                {
+                    toggle_el.css('display', 'inline-block');
+                    toggle_el.html('&#x' + toggle_hide_unicode + ';');
+                }
+                else
+                {
+                    toggle_el.css('display', 'none');
+                }
+                other_paragraphs.hide();
+                el.data('spoiler-text-block-state', 'hide');
+            }
+            else if (el.data('spoiler-text-block-state') == 'hide')
+            {
+                if (toggle_show_unicode != '')
+                {
+                    toggle_el.css('display', 'inline-block');
+                    toggle_el.html('&#x' + toggle_show_unicode + ';');
+                }
+                else
+                {
+                    toggle_el.css('display', 'none');
+                }
+                other_paragraphs.show();
+                el.data('spoiler-text-block-state', 'show');
+            }
+        });
+
+        toggle_el.css('color', toggle_normal_color);
+
+        toggle_and_first_paragraph.hover(function (event) {
+            event.stopPropagation();
+            toggle_el.css('color', toggle_highlight_color);
+        }, function () {
+            toggle_el.css('color', toggle_normal_color);
+        });
+
+        el.data('spoiler-text-block-state', (default_state == 'show' ? 'hide' : 'show'));
+        first_paragraph_el.click();
+    });
+});

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc, SetGalleryDetails } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),

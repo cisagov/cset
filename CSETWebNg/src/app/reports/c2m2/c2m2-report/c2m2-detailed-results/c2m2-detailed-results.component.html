@@ -1,0 +1,108 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <h1>4. Detailed Self-Evaluation Results</h1>
+  <p>
+    This section provides the level of implementation (i.e., Fully Implemented, Largely Implemented, Partially Implemented,
+    and Not Implemented) input to the self-evaluation tool for each C2M2 practice by domain, objective, and MIL. See Section
+    2.3 Maturity Indicator Level Scoring for a detailed explanation of the scoring process and Section 5 Using the Model for
+    further detail regarding self-evaluation results.
+  </p>
+
+  <div *ngFor="let domain of donutData; let i = index" [id]="'toc-' + domain.shortTitle" style="scroll-margin-top: 2rem;">
+    <h1>4.{{domain.sequence}} Domain: {{domain.title}} ({{domain.shortTitle}})</h1>
+    <p>
+      {{domain.description}}
+    </p>
+
+    <!-- start of the donut box -->
+    <div style="position: relative; border: 1px solid rgb(179, 179, 179);">
+      <div class="color-legend ml-3 mt-1" style="width: 60%; flex-wrap: wrap;">
+        <div class="row d-flex align-items-center mr-4">
+          <span class="legend-color-box" style="background-color: #265B94;"></span>
+          <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
+        </div>
+        <div class="row d-flex align-items-center mr-4" style="padding-left: 14px;">
+          <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
+          <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box all-borders" style="background-color: #E6E6E6;"></span>
+          <span style="font-size: 0.8em;">Unanswered (U)</span>
+        </div>
+        <div class="row d-flex align-items-center mr-4">
+          <span class="legend-color-box" style="background-color: #90A5C7;"></span>
+          <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
+        </div>
+        <div class="row d-flex align-items-center">
+          <span class="legend-color-box" style="background-color: #DCA237;"></span>
+          <span style="font-size: 0.8em;">Not Implemented (NI)</span>
+        </div>
+      </div>
+
+      <div style="position: absolute; font-size: 0.8em; text-align: right;
+      font-weight: bold; top: 8px; right: 12px; width: 40%">
+        <div>{{domain.title}}</div>
+      </div>
+
+      <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
+        text-align: center; align-items: top;">
+
+        <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
+
+          <!-- supplying the donuts with question info -->
+          <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
+          <p class="mt-2" style="font-size: 0.8em;">{{objective.title}}</p>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Heat Map Chart -->
+    <div *ngFor="let row of domain.heatmapRows">
+      <table class="heatmap">
+        <tr>
+          <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
+          <td class="heatmap-answer-column" *ngFor="let practice of row.practices"
+            [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
+              <div [ngStyle]="{'color': getHeapMapTextColor(practice.answer)}">
+                {{ practice.number }}
+              </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <!-- Objective Breakdown Table -->
+    <app-c2m2-objective-table [data]="tableData.domainList[i].objectives"></app-c2m2-objective-table>
+
+  </div>
+</div>

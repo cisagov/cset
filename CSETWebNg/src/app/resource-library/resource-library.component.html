@@ -1,6 +1,6 @@
 <!-- --------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -86,8 +86,8 @@
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [style.display]="(node.visible == null ? true : node.visible) ? 'block' : 'none!important'" >
             <div class="d-flex justify-content-start flex-00a nestedsection">
               <button class="fs-smaller btn btn-link mr-2 p-0 b-none" matIconButton matTreeNodeToggle *ngIf="!navTreeSvc?.disableCollapse">
-                <span class="cset-icons-chevron-down" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)" matTooltip="Collapse"></span>
-                <span class="cset-icons-chevron-right" *ngIf="!navTreeSvc?.tocControl?.isExpanded(node)" matTooltip="Expand"></span>
+                <span class="cset-icons-chevron-down" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)"></span>
+                <span class="cset-icons-chevron-right" *ngIf="!navTreeSvc?.tocControl?.isExpanded(node)"></span>
               </button>
               <a href="{{node?.value ? docUrl + node.value : ''}}" target="_blank" rel="noopener noreferrer" *ngIf="node?.value">
                 <span class="fs-base-2 ">

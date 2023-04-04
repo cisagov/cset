@@ -1,26 +1,57 @@
-<div style="height:235px; margin:0 1.5rem" *ngFor="let row of rows" >
-  <swiper class="gallery-slider"
-      [config]="config"
-      (slideChange)="onSlideChange()"
-      #swiper
-  >
+<!---------------------- 
+
+   Copyright 2023 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="mx-4 mt-4">
+  <h4>Search Results</h4>
+  <div *ngIf="rows.length == 0">
+    No items were found matching the search request. 
+  </div>
+  <div style="height:235px; margin: 0 1.5rem" *ngFor="let row of rows">
+    <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
       <ng-template swiperSlide *ngFor="let c of row; let i = index">
 
-        <div 
-        class="card gallery-card" 
-        (mouseover)="onHover(c.item.gallery_Item_Id)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Id)">
+        <div class="card gallery-card" (mouseover)="onHover(c.item.gallery_Item_Guid)"
+          (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
           <div class="card-image-parent">
-              <img class="card-image-child" [src]="getImageSrc(c.item.icon_File_Name_Small)">
+            <img class="card-image-child" [src]="getImageSrc(c.item.icon_File_Name_Small)">
           </div>
-          <div class="card-body gallery-card-body" style="min-height:180px; max-height:200px; z-index:1">
-              <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title" style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-              <p class="card-text" ellipsis [ellipsis-content]="c.item.plainText" style="max-height:80px; min-height:80px;"></p>
+          <div class="card-body gallery-card-body cursor-pointer" style="min-height:180px; max-height:200px; z-index:1"
+            (click)="assessSvc.newAssessmentGallery(c.item)">
+            <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
+              style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
+            <p class="card-text" ellipsis [ellipsis-content]="c.item.plainText"
+              style="max-height:80px; min-height:80px;"></p>
           </div>
-          <div class="card-footer gallery-card-footer" style="text-align:right;" [hidden]="c.item.gallery_Item_Id!=hoverIndex">
-              <button  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)" style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
-              <button  class="btn btn-light btn-circle btn-sm gallery-btn-play" (click)="assessSvc.newAssessmentGallery(c.item)" ><i class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
+          <div class="card-footer gallery-card-footer" style="text-align:right;"
+            [hidden]="c.item.gallery_Item_Guid!=hoverIndex">
+            <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)"
+              style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
+                style="font-size: 18px;"></i></button>
+            <button class="btn btn-light btn-circle btn-sm gallery-btn-play"
+              (click)="assessSvc.newAssessmentGallery(c.item)"><i class="fa-solid fa-play"
+                style="font-size: 18px; z-index:100"></i></button>
           </div>
         </div>
       </ng-template>
-  </swiper>
+    </swiper>
+  </div>
 </div>

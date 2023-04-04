@@ -1,4 +1,10 @@
-﻿using NJsonSchema;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using NJsonSchema;
 using NJsonSchema.Annotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

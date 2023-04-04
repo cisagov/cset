@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
@@ -253,9 +259,6 @@ namespace CSETWebCore.Business.Standards
                     break;
                 case "acet":
                     basicStandards.Add("ACET_V1");
-                    break;
-                case "tsa":
-                    basicStandards.Add("TSA2018");
                     break;
             }
 

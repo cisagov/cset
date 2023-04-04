@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Interfaces.ACETDashboard
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Interfaces.ACETDashboard
 {
     public interface IACETDashboardBusiness
     {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,7 @@ export class EnableProtectedComponent implements OnInit {
 
   modulesList: EnabledModule[];
   message: any;
+  enableFeatureButtonClick: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
     private featureSvc: EnableFeatureService) { }
@@ -70,6 +71,8 @@ export class EnableProtectedComponent implements OnInit {
       
       this.message = m;
       this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+
+      this.enableFeatureButtonClick = true;
     });
   }
 
@@ -77,7 +80,7 @@ export class EnableProtectedComponent implements OnInit {
    * 
    */
   close() {
-    return this.dialog.close();
+    return this.dialog.close(this.enableFeatureButtonClick);
   }
 }
 

@@ -1,9 +1,10 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
@@ -33,10 +34,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+        private readonly IGalleryEditor _galleryEditor;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
-            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _context = context;
             _report = report;
@@ -46,6 +48,18 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement = questionRequirement;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+            _galleryEditor = galleryEditor;
+        }
+
+        [HttpGet]
+        [Route("api/reports/info")]
+        public IActionResult GetAssessmentInfoForReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData.INFORMATION info = _report.GetInformation();
+    
+            return Ok(info);
         }
 
         [HttpGet]
@@ -63,11 +77,13 @@ namespace CSETWebCore.Api.Controllers
             }
 
             data.ControlList = _report.GetControls(data.ApplicationMode);
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.Zones = _report.GetDiagramZones();
             return Ok(data);
         }
@@ -81,9 +97,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
+            data.nistTypes = _report.GetNistInfoTypes();
+            data.nistSalTable = _report.GetNistSals();
+
             data.top5Categories = _report.GetTop5Categories();
             data.top5Questions = _report.GetTop5Questions();
             return Ok(data);
@@ -399,11 +419,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.FinancialQuestionsTable = _report.GetFinancialQuestions();
@@ -422,11 +444,13 @@ namespace CSETWebCore.Api.Controllers
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
-            data.genSalTable = _report.GetGenSals();
             data.information = _report.GetInformation();
+
+            data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
+
             data.DocumentLibraryTable = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
@@ -610,7 +634,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/modulecontent")]
         public IActionResult ModuleContentReport([FromQuery] string set)
         {
-            var report = new ModuleContentReport(_context, _questionRequirement);
+            var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
             var resp = report.GetResponse(set);
             return Ok(resp);
         }

@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2022 Battelle Energy Alliance, LLC
+  Copyright 2023 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,15 @@ a.navbar-brand {
   font-family: Arial !important;
   font-size: 12pt !important;
   margin-left: 15vw !important;
+}
+
+.report-title {
+  margin-left: 25px;
+  text-align: center;
+  font-family: Verdana;
+  font-size: 40px;
+  letter-spacing: 12px;
+  color: #0f3c7a;
 }
 
 h1 {
@@ -473,8 +482,6 @@ div.widget {
   div.widget svg {
       vertical-align: top !important;
   }
-
-/*# sourceMappingURL=bootstrap-grid.css.map */
 
 .page-margin-top {
   page-break-before: always;

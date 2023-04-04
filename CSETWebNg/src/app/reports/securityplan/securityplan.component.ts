@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,11 +44,9 @@ export class SecurityplanComponent implements OnInit {
 
   acetDashboard: AcetDashboard;
 
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
-
+  /**
+   * 
+   */
   public constructor(
     private titleService: Title,
     public reportSvc: ReportService,
@@ -67,19 +65,6 @@ export class SecurityplanComponent implements OnInit {
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {
         this.response = r;
-        // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
-        if (!!v) {
-          this.nistSalC = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
-        if (!!v) {
-          this.nistSalI = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
-        if (!!v) {
-          this.nistSalA = v.justification;
-        }
 
         // convert line breaks to HTML
         this.response.controlList.forEach(control => {

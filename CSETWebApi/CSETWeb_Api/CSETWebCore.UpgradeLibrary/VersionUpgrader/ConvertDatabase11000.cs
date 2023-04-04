@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System;
 using Microsoft.Data.SqlClient;
 using System.IO;

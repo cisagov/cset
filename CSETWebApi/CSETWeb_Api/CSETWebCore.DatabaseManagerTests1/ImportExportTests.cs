@@ -1,4 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CSETWebCore.DatabaseManager;
 using System;
 using System.Collections.Generic;
@@ -8,7 +14,6 @@ using System.Threading.Tasks;
 using System.Reflection;
 using CSETWebCore.DataLayer.Model;
 using System.Net;
-using log4net;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -64,7 +69,7 @@ namespace CSETWebCore.DatabaseManager.Tests
         {   
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.0.0.16"),clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.0.1.3"),clientCode, appCode);
             //TODO finish this.
             //manager.CopyDBAcrossServers();
         }

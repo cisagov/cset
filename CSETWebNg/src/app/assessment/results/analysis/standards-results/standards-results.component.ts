@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,11 @@ import { LayoutService } from '../../../../services/layout.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsResultsComponent implements OnInit {
-  
+
   chart: Chart;
   dataRows: { title: string; failed: number; total: number; percent: number; }[];
   dataSets: { dataRows: { title: string; failed: number; total: number; percent: number; }[], label: string };
-  
+
   initialized = false;
 
   constructor(
@@ -95,6 +95,11 @@ export class StandardsResultsComponent implements OnInit {
         scales: {
           x: {
             beginAtZero: true
+          },
+          y: {
+            ticks: {
+              autoSkip: false
+            }
           }
         }
       }

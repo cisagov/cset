@@ -1,5 +1,12 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Linq;
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
@@ -57,8 +64,16 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt,
                 IsSuperUser = false,
-                PasswordResetRequired = true
+                PasswordResetRequired = true,
+                IsActive = true
             };
+
+            // default the new user to NOT active if CSET Online is running in beta mode
+            if (new CSETGlobalProperties(_context).GetBoolProperty("IsCsetOnlineBeta") ?? false)
+            {
+                u.IsActive = false;
+            }
+
             tmpContext.USERS.Add(u);
 
 
@@ -71,7 +86,7 @@ namespace CSETWebCore.Business.User
                 Microsoft.Data.SqlClient.SqlException sqlException = (Microsoft.Data.SqlClient.SqlException)ex.InnerException;
                 if (sqlException.Number != 2627)
                 {
-                    log4net.LogManager.GetLogger(this.GetType()).Error($"Exception thrown in UserBusiness.  sqlExceptionNumber = {sqlException.Number}");
+                    NLog.LogManager.GetCurrentClassLogger().Error($"Exception thrown in UserBusiness.  sqlExceptionNumber = {sqlException.Number}");
 
                     throw;
                 }
@@ -204,7 +219,8 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = result.IsSuperUser,
                 PasswordResetRequired = result.PasswordResetRequired ?? true,
                 FirstName = result.FirstName,
-                LastName = result.LastName
+                LastName = result.LastName,
+                IsActive = result.IsActive
             };
 
             return u;

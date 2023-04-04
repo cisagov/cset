@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AuthenticationService } from './authentication.service';
 
 
 @Injectable({
@@ -35,14 +36,47 @@ export class LayoutService {
    */
   hp = false;
 
+
+  routesWithHiddenHeader = [
+    '/home/login',
+    '/home/login-access',
+    '/home/reset-pass',
+    '/home/privacy-warning'
+  ];
+
+  routesWithHiddenFooter = [
+    '/home/login', 
+    '/home/login-access',
+    '/home/reset-pass'
+  ];
+
   /**
    * 
    */
   constructor(
-    public boSvc: BreakpointObserver
+    public boSvc: BreakpointObserver,
+    private authSvc: AuthenticationService
   ) {
     this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
       this.hp = hp.matches;
     });
+  }
+
+  /**
+   * Certain routes should not show the header
+   */
+  isNavHeaderShown(url: string) {
+    if (!this.authSvc.userToken() || this.authSvc.userToken() == 'null') {
+        return false;
+    }
+
+    return this.routesWithHiddenHeader.indexOf(url) < 0;
+  }
+
+  /**
+   * Certain routes should not show the footer
+   */
+  isFooterShown(url: string) {
+    return this.routesWithHiddenFooter.indexOf(url) < 0;
   }
 }

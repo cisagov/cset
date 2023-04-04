@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,12 @@ export class PageVisibilityService {
     // look for a condition on the current page or its nearest parent
     let nnnn = page.closest('[condition]');
     let conditionAttrib = nnnn?.attributes['condition']?.value.trim();
+
+    // if the assessment wants to hide the page
+    const pageId = page.attributes['id']?.value;
+    if (!!pageId && this.assessSvc.assessment?.hiddenScreens?.includes(pageId.toLowerCase())) {
+      return false;
+    }
 
     // if no conditions are specified, show the page
     if (!conditionAttrib || conditionAttrib.length === 0) {

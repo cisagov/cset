@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
-import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-cpg-practice-table',
@@ -39,7 +39,8 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   constructor(
-    public cpgSvc: CpgService
+    public cpgSvc: CpgService,
+    public colorSvc: ColorService
   ) { }
 
   /**
@@ -48,6 +49,51 @@ export class CpgPracticeTableComponent implements OnInit {
   ngOnInit(): void {
     this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
       this.model = resp.Model;
+
+      // domain groups with a single question need to have that question 
+      // converted to an array.
+      this.model.Domain.forEach(d => {
+        if (!(d.Question instanceof Array)) {
+          const questions = [].concat(d.Question);
+          d.Question = JSON.parse(JSON.stringify(questions));
+        }
+      });
     });
+  }
+
+  /**
+   * White text for all except DETECT (yellow)
+   */
+  textColor(groupId): string {
+    if (groupId == '202') {
+      return '#000';
+    }
+    return '#fff';
+  }
+
+  /**
+   * Returns the color for the CSF function of the group.
+   * This is specific to CPG grouping IDs.
+   */
+  backgroundColor(groupId: string): string {
+    switch (groupId) {
+      case '200':
+        // identify
+        return this.colorSvc.nistCsfFuncColor('ID');
+      case '201':
+        // protect
+        return this.colorSvc.nistCsfFuncColor('PR');
+      case '202':
+        // detect
+        return this.colorSvc.nistCsfFuncColor('DE');
+      case '203':
+        // respond
+        return this.colorSvc.nistCsfFuncColor('RS');
+      case '204':
+        // recover
+        return this.colorSvc.nistCsfFuncColor('RC');
+      default:
+        return '#6BA443';
+    }
   }
 }

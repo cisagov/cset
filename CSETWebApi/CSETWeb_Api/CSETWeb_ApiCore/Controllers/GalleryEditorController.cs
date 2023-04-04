@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.GalleryParser;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -38,116 +44,12 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _context.Database.ExecuteSqlRaw("delete GALLERY_ROWS FROM[GALLERY_ROWS] AS[g] INNER JOIN[GALLERY_GROUP] AS[g0] ON[g].[Group_Id] = [g0].[Group_Id] left JOIN[GALLERY_GROUP_DETAILS] AS[g1] ON[g0].[Group_Id] = [g1].[Group_Id] WHERE g1.Column_Index is null");
-                if (String.IsNullOrWhiteSpace(moveItem.fromId) && !string.IsNullOrWhiteSpace(moveItem.toId)){
-
-                    //find the new group and insert it
-                    //renumber both groups                    
-                    var dbItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == moveItem.gallery_Item_Id).FirstOrDefault();
-                    if (dbItem != null)
-                    {
-                        
-                        var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();
-                        var newGroupItem = new GALLERY_GROUP_DETAILS()
-                        {
-                            Gallery_Item_Id = moveItem.gallery_Item_Id,
-                            Column_Index = int.Parse(moveItem.newIndex),
-                            Group_Id = int.Parse(moveItem.toId)
-                        };
-                        _context.GALLERY_GROUP_DETAILS.Add(newGroupItem);
-                        detailsNewList.Insert(int.Parse(moveItem.newIndex), newGroupItem);
-                        RenumberGroup(detailsNewList);
-                        
-                        _context.SaveChanges();
-                    }
-                    
-
-                }
-                else if (String.IsNullOrWhiteSpace(moveItem.fromId) || string.IsNullOrWhiteSpace(moveItem.toId))
-                {
-
-                    
-
-                    //we are changing position of the rows. 
-                    //move the item from the old index to the new index and then 
-                    //update the indexes of everything below them.
-                    var rows = (from r in _context.GALLERY_ROWS
-                               where r.Layout_Name == moveItem.Layout_Name
-                               orderby r.Row_Index
-                               select r).ToList();
-                    _context.GALLERY_ROWS.RemoveRange(rows);
-                    _context.SaveChanges();
-                    //question can I violate the primary key before I save? 
-                    //if so then remove the old one and insert it at the new position.
-                    //iterate through all the items and just reassign the row_index. 
-                    var itemToMove = rows[int.Parse(moveItem.oldIndex)];
-                    rows.Remove(itemToMove);
-                    if (int.Parse(moveItem.oldIndex) < int.Parse(moveItem.newIndex))
-                    {
-                        //we are moving it down. so the new index needs to be -1
-                        rows.Insert(int.Parse(moveItem.newIndex)-1, itemToMove);
-                    }
-                    else if(int.Parse(moveItem.oldIndex) > int.Parse(moveItem.newIndex))
-                    {
-                        //we are moving it up. so the new index is unchanged
-                        rows.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    }
-                    
-                    RenumberGroup(rows);
-                    _context.GALLERY_ROWS.AddRange(rows);
-                    _context.SaveChanges();
-                }
-                else if(moveItem.fromId == moveItem.toId)
-                {
-                    //the items is moved in the same group 
-                    //find the group and move it
-                    //get the group
-                    var detailsList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r=> r.Column_Index).ToList();
-                    var itemToMove = detailsList[int.Parse(moveItem.oldIndex)];
-                    detailsList.Remove(itemToMove);
-                    detailsList.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    RenumberGroup(detailsList);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    //find the old group and remove it
-                    //find the new group and insert it
-                    //renumber both groups
-                    var detailsOldList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.fromId)).OrderBy(r => r.Column_Index).ToList();
-                    var itemToMove = detailsOldList[int.Parse(moveItem.oldIndex)];                    
-                    detailsOldList.Remove(itemToMove);
-                    RenumberGroup(detailsOldList);                    
-                    var detailsNewList = _context.GALLERY_GROUP_DETAILS.Where(r => r.Group_Id == int.Parse(moveItem.toId)).OrderBy(r => r.Column_Index).ToList();                    
-                    detailsNewList.Insert(int.Parse(moveItem.newIndex), itemToMove);
-                    RenumberGroup(detailsNewList);
-                    itemToMove.Group_Id = int.Parse(moveItem.toId);                    
-                    _context.SaveChanges();
-                }
-
+                _galleryEditor.UpdatePosition(moveItem);
                 return Ok();
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }
-        }
-
-        private void RenumberGroup(List<GALLERY_GROUP_DETAILS> detailsList)
-        {
-            int i = 0;
-            foreach (var item in detailsList)
-            {
-                item.Column_Index = i++;
-            }
-        }
-
-        private void RenumberGroup(List<GALLERY_ROWS> rows)
-        {
-            int i = 0; 
-            foreach(var row in rows)
-            {
-                row.Row_Index = i++;
             }
         }
 
@@ -158,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/cloneItem")]
-        public IActionResult CloneItem(int Item_To_Clone, int Group_Id)
+        public IActionResult CloneItem(String Item_To_Clone, int Group_Id, bool New_Id)
         {
             if (!inDev)
             {
@@ -166,7 +68,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.CloneGalleryItem(Item_To_Clone, Group_Id);
+                Guid Item_To_Clone_Guid= Guid.Parse(Item_To_Clone);
+                _galleryEditor.CloneGalleryItem(Item_To_Clone_Guid, Group_Id, New_Id);
                 return Ok();
             }
             catch (Exception e)
@@ -201,28 +104,26 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Adds the item
         /// </summary>
-        /// <param name="newIcon_File_Name_Small"></param>
-        /// <param name="newIcon_File_Name_Large"></param>
         /// <param name="newDescription"></param>
         /// <param name="newTitle"></param>
+        /// <param name="newIconSmall"></param>
+        /// <param name="newIconLarge"></param>
+        /// <param name="newConfigSetup"></param>
         /// <param name="group_Id"></param>
         /// <param name="columnId"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addItem")]
-        public IActionResult AddItem(string newDescription, string newTitle, int group_Id, int columnId)
+        public IActionResult AddItem(string newDescription, string newTitle, string newIconSmall, string newIconLarge, string newConfigSetup, int group_Id, int columnId)
         {
             if (!inDev)
             {
                 return Ok(200);
             }
-            string newIcon_File_Name_Small = "";
-            string newIcon_File_Name_Large = "";
 
             try
             {
-                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_Id, columnId);
-                //_galleryEditor.AddGalleryDetail(columnId);
+                _galleryEditor.AddGalleryItem(newIconSmall, newIconLarge, newDescription, newTitle, newConfigSetup, group_Id, columnId);
                 return Ok();
             }
             catch (Exception e)
@@ -238,19 +139,17 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/addGroup")]
-        public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, int columnId)
+        public IActionResult AddGroup(string group, string layout, string newDescription, string newTitle, string newIconSmall, string newIconLarge, string newConfigSetup, int columnId)
         {
             if (!inDev)
             {
                 return Ok(200);
             }
-            string newIcon_File_Name_Small = "";
-            string newIcon_File_Name_Large = "";
 
             try
             {
                 var group_id = _galleryEditor.AddGalleryGroup(group, layout);
-                _galleryEditor.AddGalleryItem(newIcon_File_Name_Small, newIcon_File_Name_Large, newDescription, newTitle, group_id, columnId);
+                _galleryEditor.AddGalleryItem(newIconSmall, newIconLarge, newDescription, newTitle, newConfigSetup, group_id, columnId);
                 return Ok();
             }
             catch (Exception e)
@@ -266,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/gallery/deleteGalleryItem")]
-        public IActionResult DeleteItem(int id, int group_id)
+        public IActionResult DeleteItem(string galleryItemGuid, int group_id)
         {
             if (!inDev)
             {
@@ -274,7 +173,8 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                _galleryEditor.DeleteGalleryItem(id, group_id);
+                Guid guid = Guid.Parse(galleryItemGuid);
+                _galleryEditor.DeleteGalleryItem(guid, group_id);
                 return Ok();
             }
             catch (Exception e)
@@ -327,8 +227,8 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/galleryEdit/updateItem")]
-        public IActionResult updateItem([FromBody] UpdateItem item)
+        [Route("api/galleryEdit/updateName")]
+        public IActionResult UpdateName([FromBody] UpdateItem item)
         {
             if (!inDev)
             {
@@ -346,7 +246,8 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Id == item.Group_Id).FirstOrDefault();
+                    Guid guid = Guid.Parse(item.Gallery_Item_Guid);
+                    var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == guid).FirstOrDefault();
                     if (galleryItem == null) return BadRequest();
 
                     galleryItem.Title = item.Value;
@@ -360,6 +261,40 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+        [HttpPost]
+        [Route("api/galleryEdit/updateItem")]
+        public IActionResult UpdateItem([FromBody] GALLERY_ITEM item)
+        {
+            if (!inDev)
+            {
+                return Ok(200);
+            }
+            try
+            {
+                
+                var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == item.Gallery_Item_Guid).FirstOrDefault();
+                if (galleryItem == null) return BadRequest();
+
+                galleryItem.Title = item.Title;
+                galleryItem.Description = item.Description;
+                galleryItem.Configuration_Setup = item.Configuration_Setup;
+                galleryItem.Icon_File_Name_Large = item.Icon_File_Name_Large;
+                galleryItem.Icon_File_Name_Small = item.Icon_File_Name_Small;
+                galleryItem.Is_Visible = item.Is_Visible;
+
+                _context.SaveChanges();
+                
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         /// <summary>
         /// Returns the gallery card structure
@@ -387,22 +322,5 @@ namespace CSETWebCore.Api.Controllers
 
     }
 
-    public class MoveItem
-    {
-        public string Layout_Name { get; set; }
-        public string fromId { get; set; }
-        public string toId { get;set; }
-        public string oldIndex { get; set; }
-        public string newIndex { get; set; }
-        public int gallery_Item_Id { get; set; }
-    }
-
-    public class UpdateItem
-    {
-        public bool IsGroup { get; set; }
-        public int Group_Id { get; set; }
-
-        public string Value { get; set; }
-    }
 #endif
 }

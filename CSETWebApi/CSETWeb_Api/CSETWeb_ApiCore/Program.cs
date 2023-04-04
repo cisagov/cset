@@ -1,10 +1,17 @@
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using CSETWebCore.DatabaseManager;
-using System.IO;
 using System;
+using NLog.Web;
+
 
 namespace CSETWeb_ApiCore
 {
@@ -12,9 +19,6 @@ namespace CSETWeb_ApiCore
     {
         public static void Main(string[] args)
         {
-            var log4netRepository = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
-            log4net.Config.XmlConfigurator.Configure(log4netRepository, new FileInfo("log4net.config"));
-
             var host = CreateHostBuilder(args).Build();
 
             var hostEnvironment = (IHostEnvironment)host.Services.GetService(typeof(IHostEnvironment));
@@ -34,8 +38,15 @@ namespace CSETWeb_ApiCore
             host.Run();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)          
+            Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(l => { }).UseNLog()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,10 +45,14 @@ export interface AssessmentDetail {
     useStandard?: boolean;
     useMaturity?: boolean;
     useDiagram?: boolean;
+    isE_StateLed?: boolean;
+    regionCode?: number;
+    charterType?: number;
 
     isAcetOnly?: boolean;
     workflow?: string;
     origin?: string;
+    hiddenScreens?: string[];
 
     maturityModel?: MaturityModel;
 

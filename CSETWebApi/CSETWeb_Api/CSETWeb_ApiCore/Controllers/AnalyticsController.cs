@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Authorization;
