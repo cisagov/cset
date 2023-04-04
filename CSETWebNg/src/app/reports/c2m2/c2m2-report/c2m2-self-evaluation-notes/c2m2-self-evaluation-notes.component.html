@@ -1,0 +1,83 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <h1>6. Self-Evaluation Notes</h1>
+  <p>
+    This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation
+    status. Reviewing the notes may provide the rationale for the selection of an implementation response during the
+    completion of the self-evaluation. The tables in this section are ordered by model practice identifier.
+  </p>
+
+  <div *ngFor="let domain of domainTitles; let i = index;">
+    <h1 style="color: #265B94;">
+      Domain: {{ domainTitles[i] }} ({{ domainCategories[i] }})
+    </h1>
+
+    <table class="comment-table td-align-top td-padding-half-rem">
+      <tr class="all-borders">
+        <td class="all-borders table-header id-column">ID</td>
+        <td class="all-borders table-header mil-column">MIL</td>
+        <td class="all-borders table-header practice-column">Practice</td>
+        <td class="all-borders table-header response-column">Response</td>
+        <td class="all-borders table-header note-column">Self-Evaluation Notes</td>
+      </tr>
+
+      <!-- If we have comments -->
+      <ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
+        <ng-container *ngFor="let row of commentTableData">
+          <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
+            <tr>
+              <td class="all-borders">{{ row.id }}</td>
+              <td class="all-borders">{{ row.mil }}</td>
+              <td class="all-borders" style="text-align: left;">{{ row.practiceText }}</td>
+              <td class="all-borders" [ngStyle]="{'background-color': getBackgroundColor(row.response)}">
+                <div [ngStyle]="{'color': getTextColor(row.response)}">
+                  {{ fullNameTranslate(row.response) }}
+                </div>
+              </td>
+              <td class="all-borders" style="text-align: left;">{{ row.comment }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    
+      <!-- If we don't have comments -->
+      <ng-template #noComments>
+        <tr><br></tr>
+        <tr>
+          <br>
+          <td colspan="5">Notes were not entered for the {{ domainCategories[i] }} domain. Added notes will appear in this table.</td>
+          <br>
+        </tr>
+        <tr><br></tr>
+      </ng-template>
+
+    </table>
+  </div>
+</div>

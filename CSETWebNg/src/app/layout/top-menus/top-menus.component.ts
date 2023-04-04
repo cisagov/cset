@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,6 +44,7 @@ import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
+import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 
 
@@ -69,7 +70,8 @@ export class TopMenusComponent implements OnInit {
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router,
-    private _hotkeysService: HotkeysService
+    private _hotkeysService: HotkeysService,
+    private gallerySvc: GalleryService
   ) { }
 
   ngOnInit(): void {
@@ -261,8 +263,8 @@ export class TopMenusComponent implements OnInit {
       return true;
     }
 
-    if (module == 'TSA') {
-      return this.assessSvc.assessment?.workflow == 'TSA';
+    if (this.configSvc.behaviors.additionalUserGuides?.includes(module)) {
+      return true;
     }
 
     return false;
@@ -322,6 +324,12 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent);
+    this.dialogRef.afterClosed().subscribe(enableFeatureButtonClick => {
+      
+      if (enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
+        this.gallerySvc.refreshCards();
+      }
+    })
   }
 
   setMeritExportPath() {

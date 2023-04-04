@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -143,7 +143,10 @@
     </ng-container>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 mb-0" align="end">
-    <button mat-button class="btn btn-primary" (click)="update()">Done</button>
+  <mat-dialog-actions class="p-3 mb-0" >
+    <button style="margin-left: 0%;" [disabled]="finding.auto_Generated == 1 || !isIssueEmpty()" mat-button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+
+    <button style="margin-left: auto;" mat-button class="btn btn-primary" (click)="update()">Done</button>
   </mat-dialog-actions>
+  
 </ng-template>

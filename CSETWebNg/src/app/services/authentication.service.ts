@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -62,6 +62,8 @@ export class AuthenticationService {
     isLocal: boolean;
     private initialized = false;
     private parser = new JwtParser();
+
+    isAuthenticated = false;
 
     constructor(
         private http: HttpClient,
@@ -192,14 +194,26 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     this.storeUserData(user);
 
+                    this.isAuthenticated = true;
+
                     return user;
                 }));
     }
 
 
     logout() {
+        this.isAuthenticated = false;
         this.router.navigate(['/home/logout'], { queryParamsHandling: "preserve" });
     }
+
+    /**
+     * TODO:  This is not working correctly - the local storage stuff
+     * hangs around even if we are sitting on the login page again
+     */
+    // isAuthenticated() {
+    //     const uid = localStorage.getItem('userId');
+    //     return !!uid;
+    // }
 
 
     /**

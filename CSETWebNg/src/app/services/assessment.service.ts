@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -124,8 +124,7 @@ export class AssessmentService {
    * Custom set gallery items are built on the fly and don't have a gallery ID.
    */
   createNewAssessmentGallery(workflow: string, galleryItem: any) {
-    let queryString: string = 'workflow=' + workflow + '&galleryId=' + galleryItem.gallery_Item_Id;
-
+    let queryString: string = 'workflow=' + workflow + '&galleryGuid=' + galleryItem.gallery_Item_Guid;
     if (!!galleryItem.custom_Set_Name) {
       queryString += '&csn=' + galleryItem.custom_Set_Name
     }
@@ -187,10 +186,17 @@ export class AssessmentService {
   updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
 
+    // clean out properties that may contain HTML before posting.
+    // The API WAF may reject to prevent XSS.  
+    // These properties are not user updatable.
+    const payload = JSON.parse(JSON.stringify(assessment));
+    payload.maturityModel = null;
+    payload.typeDescription = null;
+
     return this.http
       .post(
         this.apiUrl + 'assessmentdetail',
-        JSON.stringify(assessment),
+        JSON.stringify(payload),
         headers
       )
       .subscribe();

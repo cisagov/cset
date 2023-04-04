@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using CSETWebCore.DataLayer.Model;
@@ -6,7 +12,8 @@ using System.Collections.Generic;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using Snickler.EFCore;
-
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Assessment;
 
 namespace CSETWebCore.Api.Controllers
 {

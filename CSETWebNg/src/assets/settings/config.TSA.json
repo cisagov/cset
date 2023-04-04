@@ -1,6 +1,7 @@
 {
     "galleryLayout": "TSA",
     "installationMode":"TSA",
+    "helpContactEmail": "cset@inl.gov",
     "behaviors": {
         "defaultTitle":"CSET-TSA",
         "showModuleBuilder": true,
@@ -16,7 +17,8 @@
         "showContacts": true,
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
-        "showCriticalService": true
+        "showCriticalService": true,
+        "additionalUserGuides": ["TSA"]
     }
 
 }

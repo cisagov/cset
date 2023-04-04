@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
   <h4 class="wrap-text">Maturity Models</h4>
   <hr class="w-100 mt-0 mb-3 hr-sal">
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'ACET')"
     (keydown.enter)="changeSelection($event, 'ACET')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('ACET') }">
     <h4>{{getModelTitle('ACET')}}</h4>
@@ -37,7 +37,7 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC')"
     (keydown.enter)="changeSelection($event, 'CMMC')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC') }">
     <div>
@@ -48,7 +48,7 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CMMC2')"
     (keydown.enter)="changeSelection($event, 'CMMC2')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CMMC2') }">
     <div>
@@ -62,7 +62,7 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CRR')"
     (keydown.enter)="changeSelection($event, 'CRR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CRR') }">
     <h4>{{getModelTitle('CRR')}}</h4>
@@ -74,7 +74,7 @@
     </div>
   </mat-card>
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'EDM')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('EDM') }">
     <h4>{{getModelTitle('EDM')}}</h4>
     <div class="d-flex flex-row">
@@ -88,7 +88,7 @@
   <h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
   <hr class="w-100 mt-0 mb-3 hr-sal">
 
-  <mat-card *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
+  <mat-card appearance="outlined" *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
     (keydown.enter)="changeSelection($event, 'CIS')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIS') }">
     <h4>{{getModelTitle('CIS')}}</h4>
@@ -102,7 +102,7 @@
   </mat-card>
 
 
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'RRA')"
     (keydown.enter)="changeSelection($event, 'RRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('RRA') }">
     <h4>{{getModelTitle('RRA')}}</h4>
@@ -115,7 +115,7 @@
 
 
   <!-- Quick card to allow MVRA to be selected -->
-  <mat-card class="maturity-model-card mb-5" (click)="changeSelection($event, 'MVRA')"
+  <mat-card appearance="outlined" class="maturity-model-card mb-5" (click)="changeSelection($event, 'MVRA')"
     (keydown.enter)="changeSelection($event, 'MVRA')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('MVRA') }">
     <h4>{{getModelTitle('MVRA')}}</h4>
@@ -125,7 +125,7 @@
   </mat-card>
 
 
-  <mat-card *ngIf="false" class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
+  <mat-card appearance="outlined" *ngIf="false" class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
     (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
     <h4>{{getModelTitle('VADR')}}</h4>

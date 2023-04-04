@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2022 Battelle Energy Alliance, LLC
+  Copyright 2023 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,11 @@ SOFTWARE.
 
 */
 @charset "UTF-8";
-@import "../../sass/mixins";
-@import "../../sass/sal";
-/* @import "@angular/material/prebuilt-themes/indigo-pink.css"; */
-@import "../../sass/cset-font-styles.css";
-@import "../../sass/cset2-font-styles.css";
+@use "../../sass/mixins";
+@use "../../sass/sal";
+/* @use "@angular/material/prebuilt-themes/indigo-pink.css"; */
+@use "../../sass/cset-font-styles.css";
+@use "../../sass/cset2-font-styles.css";
 
 $white: #ffffff;
 $black: #000000;
@@ -151,6 +151,15 @@ $na-color: #367190;
 $na-hover-color: #0a4b6e;
 $alt-color: #b17300;
 $alt-hover-color: #805300;
+
+$c2m2-fi-color: #265B94;
+$c2m2-fi-hover-color: #1e4976;
+$c2m2-li-color: #90A5C7;
+$c2m2-li-hover-color: #6280b0;
+$c2m2-pi-color: #F5DA8C;
+$c2m2-pi-hover-color: #efc345;
+$c2m2-ni-color: #DCA237;
+$c2m2-ni-hover-color: #bb8521;
 
 $spacer: 18px;
 

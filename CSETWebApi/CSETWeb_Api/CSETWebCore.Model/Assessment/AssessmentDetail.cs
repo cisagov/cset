@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Collections.Generic;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -18,6 +24,7 @@ namespace CSETWebCore.Model.Assessment
         public string CityOrSiteName { get; set; }
         public string StateProvRegion { get; set; }
         public string PostalCode { get; set; }
+        public int? RegionCode { get; set; }
 
         public string Charter { get; set; }
         public string CreditUnion { get; set; }
@@ -31,11 +38,15 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+        public Boolean ISE_StateLed { get; set; }
+
+        public List<string> HiddenScreens { get; set; } = new List<string>();
 
         public int? BaselineAssessmentId { get; set; }
         public string BaselineAssessmentName { get; set; }
 
         public string Workflow { get; set; }
+        public Guid? GalleryItemGuid { get; set; }
 
         /// <summary>
         /// Created to be flexible to able to 'flag' an assessment for a special behavior

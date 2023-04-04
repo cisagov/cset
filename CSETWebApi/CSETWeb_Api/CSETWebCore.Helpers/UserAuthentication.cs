@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -47,6 +53,11 @@ namespace CSETWebCore.Helpers
             loginUser = _context.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
 
             if (loginUser == null)
+            {
+                return null;
+            }
+
+            if (!loginUser.IsActive)
             {
                 return null;
             }
@@ -116,89 +127,88 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
+            string name = null;
 
-                string name = null;
+            name = Environment.UserName;
+            name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
 
-                name = Environment.UserName;
-                name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
-
-                primaryEmailSO = name;
-                //check for legacy default email for local installation and set to new standard
-                var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
-                if (userOrg != null)
+            primaryEmailSO = name;
+            //check for legacy default email for local installation and set to new standard
+            var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+            if (userOrg != null)
+            {
+                string tmp = userOrg.PrimaryEmail.Split('@')[0];
+                userOrg.PrimaryEmail = tmp;
+                if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                    _context.SaveChanges();
+                primaryEmailSO = userOrg.PrimaryEmail;
+            }
+            else
+            {
+                //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
+                string regex = @"^.*(\\)" + primaryEmailSO + "$";
+                var allUsers = _context.USERS.ToList();
+                var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
+                if (legacyUser != null)
                 {
-                    string tmp = userOrg.PrimaryEmail.Split('@')[0];
-                    userOrg.PrimaryEmail = tmp;
+                    string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
+                    legacyUser.PrimaryEmail = tmp;
                     if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
                         _context.SaveChanges();
-                    primaryEmailSO = userOrg.PrimaryEmail;
+                    primaryEmailSO = legacyUser.PrimaryEmail;
                 }
-                else
+            }
+
+
+            var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+            if (user == null)
+            {
+                UserDetail ud = new UserDetail()
                 {
-                    //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
-                    string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                    var allUsers = _context.USERS.ToList();
-                    var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
-                    if (legacyUser != null)
-                    {
-                        string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
-                        legacyUser.PrimaryEmail = tmp;
-                        if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                            _context.SaveChanges();
-                        primaryEmailSO = legacyUser.PrimaryEmail;
-                    }
-                }
-
-
-                var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-                if (user == null)
-                {
-                    UserDetail ud = new UserDetail()
-                    {
-                        Email = primaryEmailSO,
-                        FirstName = name,
-                        LastName = ""
-                    };
-                    UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
-
-                    _context.SaveChanges();
-                    //update the userid 1 to the new user
-                    var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-                    if (tempu != null)
-                        userIdSO = tempu.UserId;
-                    _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
-                }
-                else
-                {
-                    userIdSO = user.UserId;
-                }
-
-                if (string.IsNullOrEmpty(primaryEmailSO))
-                {
-                    return null;
-                }
-
-
-                // Generate a token for this user
-                string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
-
-                // Build response object
-                LoginResponse resp = new LoginResponse
-                {
-                    Token = token,
                     Email = primaryEmailSO,
-                    UserFirstName = name,
-                    UserLastName = "",
-                    IsSuperUser = false,
-                    ResetRequired = false,
-                    UserId = userIdSO,
-                    ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
-                    ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                    LinkerTime = new BuildNumberHelper().GetLinkerTime()
+                    FirstName = name,
+                    LastName = ""
                 };
+                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
+
+                _context.SaveChanges();
+                //update the userid 1 to the new user
+                var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                if (tempu != null)
+                    userIdSO = tempu.UserId;
+                _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
+            }
+            else
+            {
+                userIdSO = user.UserId;
+            }
+
+            if (string.IsNullOrEmpty(primaryEmailSO))
+            {
+                return null;
+            }
 
 
-                return resp;
+            // Generate a token for this user
+            string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
+
+            // Build response object
+            LoginResponse resp = new LoginResponse
+            {
+                Token = token,
+                Email = primaryEmailSO,
+                UserFirstName = name,
+                UserLastName = "",
+                IsSuperUser = false,
+                ResetRequired = false,
+                UserId = userIdSO,
+                ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+            };
+
+
+            return resp;
         }
 
 
@@ -221,7 +231,7 @@ namespace CSETWebCore.Helpers
                 }
             }
 
-            var dbAK = new ACCESS_KEY() 
+            var dbAK = new ACCESS_KEY()
             {
                 AccessKey = key,
                 GeneratedDate = DateTime.UtcNow

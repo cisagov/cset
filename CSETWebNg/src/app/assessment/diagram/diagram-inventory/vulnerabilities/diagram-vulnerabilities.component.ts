@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { Comparer } from '../../../../helpers/comparer';
 import { MatDialog } from '@angular/material/dialog';
 import { DiagramVulnerabilitiesDialogComponent } from './diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
 import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.model';
-import { AddNewVendorProductDialogComponent } from './add-new-vendor-product-dialog/add-new-vendor-product-dialog.component';
+import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 
 @Component({
   selector: 'app-diagram-vulnerabilities',
@@ -75,37 +75,23 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   filterVendors(value: string) {
-    console.log(value);
     let val = "";
     if (typeof value === 'string') {
       val = value;
     }
     const name = val;
     const filterValue = name.toLowerCase();
-    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name.toLowerCase().includes(filterValue));
-
-    // If no matching vendors are found, give option to add a new one
-    if (this.filteredVendorOptions.length === 0) {
-      let noMatchingVendors = new Vendor("-- Add New Vendor --");
-      this.filteredVendorOptions = [noMatchingVendors];
-    }
+    this.filteredVendorOptions = this.diagramSvc.csafVendors.filter(option => option.name?.toLowerCase().includes(filterValue));
   }
 
   filterProducts(value: string, products: Product[]) {
-    console.log(value);
     let val = "";
     if (typeof value === 'string') {
       val = value;
     }
     const name = val;
     const filterValue = name.toLowerCase();
-    this.filteredProductOptions = products?.filter(option => option.name.toLowerCase().includes(filterValue)) ?? [];
-
-    // If no matching products are found, give option to add a new one
-    if (this.filteredProductOptions.length === 0) {
-      let noMatchingProducts = new Product("-- Add New Product --");
-      this.filteredProductOptions = [noMatchingProducts];
-    }
+    this.filteredProductOptions = products?.filter(option => option.name?.toLowerCase().includes(filterValue)) ?? [];
   }
 
   clearVendorFilterOptions() {
@@ -129,19 +115,15 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     });
   }
 
-  saveComponent(e, component) {
-    if (e != null) {
-      if (e.target.value === '-- Add New Vendor --') {
-        this.addNewVendor(component);
-      } else if (e.target.value === '-- Add New Product --') {
-        this.addNewProduct(component);
-      } else {
-        this.updateComponentVendorAndProduct(component);
-      }
-
-      console.log(component);
-      this.diagramSvc.saveComponent(component).subscribe();
+  saveComponent(component) {
+    if (!!component.vendorName && !this.diagramSvc.csafVendors.find(vendor => vendor.name === component.vendorName)) {
+      this.addNewVendor(component);
+    } else if (!!component.productName && !!component.vendor && !component.vendor.products.find(product => product.name === component.productName)) {
+      this.addNewProduct(component);
+    } else {
+      this.updateComponentVendorAndProduct(component);
     }
+    this.diagramSvc.saveComponent(component).subscribe();
   }
 
   showVulnerabilities(component) {
@@ -183,14 +165,17 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
     component.vendor = this.diagramSvc.csafVendors.find(v => v.name === component.vendorName) ?? null;
     component.product = component.vendor?.products.find(p => p.name === component.productName) ?? null;
 
-
     if (!component.product) {
       component.productName = null;
+    }
+
+    if (!component.vendor) {
+      component.vendorName = null;
     }
   }
 
   isShowVulnerabilitiesButtonDisabled(component) {
-    if (!component.vendorName || !component.productName || component.vendorName === 'addNewVendor' || component.productName === 'addNewProduct') {
+    if (!component.vendor || !component.product) {
       return true;
     }
 
@@ -206,33 +191,71 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
   }
 
   addNewVendor(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingVendor: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          this.diagramSvc.csafVendors.unshift(vendor);
-          this.saveComponent(null, component);
+    if (!component.vendorName) {
+      return;
+    }
 
-          return component.vendorName;
+    component.vendor = new Vendor(component.vendorName);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      this.diagramSvc.csafVendors.unshift(vendor);
+    });
+  }
+
+  addNewProduct(component) {
+    if (!component.productName) {
+      return;
+    }
+
+    const newProduct = new Product(component.productName);
+    component.product = newProduct;
+    component.vendor.products.unshift(newProduct);
+    this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
+      let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
+      this.diagramSvc.csafVendors[index] = vendor;
+    });
+  }
+
+  deleteVendor(vendorName: string) {
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete \"${vendorName}\" from the vendor list?`;
+
+    dialogRef.afterClosed().subscribe(deleteConfirmed => {
+      if (deleteConfirmed) {
+        this.diagramSvc.deleteCsafVendor(vendorName).subscribe(() => {
+          let removeIndex = this.diagramSvc.csafVendors.findIndex(vendor => vendor.name === vendorName);
+          if (removeIndex > -1) {
+            this.diagramSvc.csafVendors.splice(removeIndex, 1);
+          }
+
+          this.diagramComponentList.forEach(component => {
+            if (component.vendorName === vendorName) {
+              component.vendorName = null;
+              this.saveComponent(component);
+            }
+          });
         });
       }
     });
   }
 
-  addNewProduct(component) {
-    this.dialog.open(AddNewVendorProductDialogComponent, {
-      data: { isAddingProduct: true, currentComponent: component }
-    })
-    .afterClosed()
-    .subscribe((save) => {
-      if (save) {
-        this.diagramSvc.saveCsafVendor(component.vendor).subscribe((vendor: Vendor) => {
-          let index = this.diagramSvc.csafVendors.findIndex(v => v.name === vendor.name);
-          this.diagramSvc.csafVendors[index] = vendor;
-          this.saveComponent(null, component);
+  deleteProduct(vendorName: string , productName: string) {
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete \"${productName}\" from the product list?`;
+
+    dialogRef.afterClosed().subscribe(deleteConfirmed => {
+      if (deleteConfirmed) {
+        this.diagramSvc.deleteCsafProduct(vendorName, productName).subscribe(() => {
+          let vendorsWithProduct: Vendor[] = this.diagramSvc.csafVendors.filter(vendor => vendor.products.find(product => product.name === productName));
+          vendorsWithProduct.forEach(vendor => {
+            vendor.products.splice(vendor.products.findIndex(product => product.name === productName), 1);
+          });
+
+          this.diagramComponentList.forEach(component => {
+            if (component.productName === productName) {
+              component.productName = null;
+              this.saveComponent(component);
+            }
+          });
         });
       }
     });

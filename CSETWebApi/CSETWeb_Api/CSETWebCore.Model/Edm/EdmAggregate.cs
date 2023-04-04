@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Edm
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Edm
 {
     public class EdmAggregate
     {

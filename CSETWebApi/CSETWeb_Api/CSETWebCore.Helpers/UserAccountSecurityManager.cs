@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -52,11 +52,17 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// Creates a new user and sends them an email containing a temporary password.
+        /// Creates a new user.  If sendEmail = true, it sends them an email 
+        /// containing a temporary password.
+        /// 
+        /// When CSET is in "beta/test mode", this method is called with sendEmail = false.
+        /// This prevents the user from logging in before an administrator 
+        /// has a chance to approve the user's access first.
         /// </summary>
-        /// <param name="info"></param>
+        /// <param name="info">User details</param>
+        /// <param name="sendEmail">Indicates if the temp password email should be sent immediately</param>
         /// <returns></returns>
-        public bool CreateUserSendEmail(CreateUser info)
+        public bool CreateUser(CreateUser info, bool sendEmail)
         {
             try
             {
@@ -82,7 +88,10 @@ namespace CSETWebCore.Helpers
                 _context.SaveChanges();
 
                 // Send the new temp password to the user
-                _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppCode);
+                if (sendEmail)
+                {
+                    _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppCode);
+                }
 
                 return true;
             }
@@ -96,7 +105,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }
@@ -146,7 +155,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }
@@ -217,7 +226,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }

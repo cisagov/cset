@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -131,7 +131,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         }
                         catch (Exception exc)
                         {
-                            log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                            NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                             throw new Exception("CSET import data exception", exc);
                         }

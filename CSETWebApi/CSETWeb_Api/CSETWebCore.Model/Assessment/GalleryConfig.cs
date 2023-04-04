@@ -1,3 +1,9 @@
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Assessment
@@ -17,6 +23,11 @@ namespace CSETWebCore.Model.Assessment
         public GalleryModel Model { get; set; }
 
         public string SALLevel { get; set; }
+
+        /// <summary>
+        /// Multiple screens can be hidden
+        /// </summary>
+        public List<string> HiddenScreens { get; set; }
 
         /// <summary>
         /// Indicates the starting application mode, 

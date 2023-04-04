@@ -1,4 +1,11 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
+using System.ComponentModel.DataAnnotations;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 
@@ -45,7 +52,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return dt;
             }
@@ -77,7 +84,13 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string GetClientHost()
         {
-            var h = new Uri(_httpContext.HttpContext.Request.Headers["Referer"].ToString(), UriKind.RelativeOrAbsolute);
+            var referrer = _httpContext.HttpContext.Request.Headers["Referer"].ToString();
+            if (referrer == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            var h = new Uri(referrer, UriKind.RelativeOrAbsolute);            
             return h.GetLeftPart(UriPartial.Authority);
         }
     }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -131,6 +131,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
+        public Boolean ISE_StateLed { get; set; }
     }
 
     public class jvQUESTION_HEADINGS
@@ -617,6 +618,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Int32 eMass_Document_Id { get; set; }
 
         public Nullable<Int32> Baseline_Assessment_Id { get; set; }
+
+        public int? Region_Code { get; set; }
+
 
     }
 

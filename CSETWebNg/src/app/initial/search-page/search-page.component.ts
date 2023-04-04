@@ -1,3 +1,26 @@
+////////////////////////////////
+//
+//   Copyright 2023 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -79,13 +102,14 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges() {
+    this.searchQuery = this.searchQuery.trim();
+
     if (this.searchQuery && this.fuse) {
       this.sort();
     }
   }
 
   ngOnInit(): void {
-
     this.breakpointObserver.observe(['(min-width:200px)', '(min-width:620px)', '(min-width:800px)', '(min-width:1220px)', '(min-width:1460px)']).subscribe((state: BreakpointState) => {
       if (state.breakpoints['(min-width:200px)']) {
         this.cardsPerView = 1;
@@ -102,7 +126,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       if (state.breakpoints['(min-width:1460px)']) {
         this.cardsPerView = 5;
       }
-      this.shuffelCards(this.cardsPerView);
+      this.shuffleCards(this.cardsPerView);
     });
 
     const dom = document.createElement("div");
@@ -128,7 +152,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           score: 1,
         })
         );
-        this.shuffelCards(this.cardsPerView);
+        this.shuffleCards(this.cardsPerView);
         this.sort();
       }
     );
@@ -140,8 +164,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     this.checkNavigation();
   }
 
-  shuffelCards(i: number) {
-
+  shuffleCards(i: number) {
     this.rows = [];
     var count = this.cardsPerView;
     var row = [];
@@ -179,8 +202,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
   showButtons(show: boolean) {
     this.show = show;
   }
@@ -191,19 +212,23 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     if (!this.fuse) {
       this.fuse = new Fuse(this.galleryItemsTmp, this.options);
     }
+
     if (this.searchQuery) {
       this.galleryItemsTmp = this.fuse.search(this.searchQuery);
+
+      // de-dupe
+      const set = [];
+      this.galleryItemsTmp.forEach(x => {
+        if (!set.find(s => s.item.gallery_Item_Guid == x.item.gallery_Item_Guid)) {
+          set.push(x);
+        }
+      });
+      this.galleryItemsTmp = set;
     } else {
-      this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index) => ({
-        item,
-        refIndex: index,
-        matches: [],
-        score: 1,
-      })
-      );
+      this.galleryItemsTmp = [];
     }
 
-    this.shuffelCards(this.cardsPerView);
+    this.shuffleCards(this.cardsPerView);
   }
 
   onHover(i: number) {

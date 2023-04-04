@@ -1,0 +1,85 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *ngIf="loading">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+
+<div *ngIf="!loading">
+  <div class="side-toc">
+
+    <h1 class="mb-3">Contents</h1>
+
+    <ul>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-intro')">1. Introduction</a>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-model-architecture')">2. Model Architecture</a>
+          <ul>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-domains-objectives-practices')">2.1 Domains, Objectives, and Practices</a>
+            </li>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-levels')">2.2 Maturity Indicator Levels</a>
+            </li>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-level-scoring')">2.3 Maturity Indicator Level Scoring</a>
+            </li>
+          </ul>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-summary-results')">3. Summary of Self-Evaluation Results</a>
+          <ul>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-mil-achievement-by-domain')">3.1 MIL Achievement by Domain</a>
+            </li>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-practice-implementation-by-domain')">3.2 Practice Implementation by Domain</a>
+            </li>
+            <li>
+              <a class="link-primary" (click)="scrollToElement('toc-implementation-of-management-activities')">3.3 Implementation of Management Activities across Domains</a>
+            </li>
+          </ul>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-detailed-results')">4. Detailed Self-Evaluation Results</a>
+          <ul>
+            <li *ngFor="let domain of domainData; let i = index">
+              <a class="link-primary" (click)="scrollToElement('toc-' + domain.shortTitle)">4.{{ i + 1 }} {{ domain.title }} ({{ domain.shortTitle }})</a>
+            </li>
+          </ul>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-using-results')">5. Using the Self-Evaluation Results</a>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-self-eval-notes')">6. Self-Evaluation Notes</a>
+      </li>
+      <li>
+          <a class="link-primary" (click)="scrollToElement('toc-list-of-pi-and-ni-practices')">7. List of Partially Implemented and Not Implemented Practices</a>
+      </li>
+    </ul>
+  </div>
+</div>

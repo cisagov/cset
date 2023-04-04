@@ -1,8 +1,27 @@
+<div>
+  <p>INSTRUCTIONS</p>
+  <div style="padding-left: 15px">
+    <p>Choose the wanted skin from the dropdown below.</p>
+    <p>To edit a group / card Title, click in the box, make the edit, and hit the 'Enter' key to push the change.</p>
+    <p>To edit the card attributes, click the "Expand Options" button, edit the wanted fields, and click the "Update" button to push the changes.
+      <br>This will also push changes to the card Title.
+    </p>
+    <p>To change the position of a group / card, drag and drop the group's / card's black handle to the wanted position.</p>
+    <p>There are two kinds of cloning:<ul>
+        <li>Independent: The newly created item is it's own entity, with no link to other items.</li>
+        <li>Dependent: The newly created item is linked to the original and any change (except deleting) affects both items.</li>
+      </ul>
+    <p style="color:red">
+      *Cloning a group links the items to the original ones. Click "Add New" or "Clone Independent Item" to make independent items.*
+    </p>
+  </div>
+</div>
 <div>Type Enter to Update a value <Select (change)="layoutChange($event)">
   <option></option>
   <option *ngFor="let layout of layouts">{{layout.layoutName}}</option>
 </Select> 
 </div>
+
 <div class="section-bdy">  
   <app-list-items [listTest]="{ children: list }" [unusedList]="unusedListCopy" (treeNeedsRefreshed)="parentEventHandlerFunction()" [isRoot]="true"></app-list-items>
 </div>

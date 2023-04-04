@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ import { deepStrictEqual } from 'assert';
 })
 export class CompareSummaryComponent implements OnInit {
 
-  chartOverallAverage: Chart;
-  chartStandardsPie: Chart;
-  chartComponentsPie: Chart;
-  chartCategoryAverage: Chart;
+  chartOverallAverage: any;
+  chartStandardsPie: any;
+  chartComponentsPie: any;
+  chartCategoryAverage: any;
   catAvgHeight: number;
 
   chartsMaturityCompliance: any[];

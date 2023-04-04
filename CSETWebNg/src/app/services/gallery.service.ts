@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { SelectedTier } from '../models/frameworks.model';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -39,7 +40,13 @@ const headers = {
 })
 export class GalleryService {
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) { }
+  constructor(private http: HttpClient, 
+              private configSvc: ConfigService,
+              private assessSvc: AssessmentService) { }
+
+  galleryData: any;
+  rows: any;
+  testRow: any;
 
   /**
    * Retrieves the list of frameworks.
@@ -52,10 +59,34 @@ export class GalleryService {
     });
   }
 
+  refreshCards() {
+    this.getGalleryItems(this.configSvc.galleryLayout).subscribe(
+      (resp: any) => {        
+        this.galleryData = resp;
+        this.rows = this.galleryData.rows;
+        this.testRow = this.rows[1];
+
+        ///NOTE THIS runs the default item if there is only one item automatically
+        if(this.rows.length==1 && this.rows[0].galleryItems.length==1){
+          this.assessSvc.newAssessmentGallery(this.rows[0].galleryItems[0]);
+        }
+
+        // create a plainText property for the elipsis display in case a description has HTML markup
+        const dom = document.createElement("div");
+        this.rows.forEach(row => {
+          row.galleryItems.forEach(item => {            
+            dom.innerHTML = item.description;
+            item.plainText = dom.innerText;
+          });
+        });
+      }
+    );
+  }
+
   /**
    * Posts the current selected tier to the server.
    */
-  postSelections(galleryItemId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemId, headers);
+  postSelections(galleryItemGuid: number) {
+    return this.http.post(this.configSvc.apiUrl + 'gallery/setstate', galleryItemGuid, headers);
   }
 }

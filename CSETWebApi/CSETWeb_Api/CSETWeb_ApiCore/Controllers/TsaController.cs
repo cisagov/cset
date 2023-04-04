@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -158,6 +158,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// Adds or removes the TSA standard to the assessment.  
         /// Because this method is exclusive to a TSA installation, it cannot be used
@@ -187,6 +188,8 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
+
+
         [HttpPost]
         [Route("api/tsa/standard")]
         public IActionResult PersistSelectedStandards([FromBody] List<string> selectedStandards)
@@ -194,6 +197,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(_standards.PersistSelectedStandards(assessmentId, selectedStandards));
         }
+
+
         [HttpGet]
         [Route("api/tsa/getModelsName")]
         public List <TSAModelNames>  getModelsName()
@@ -217,7 +222,7 @@ namespace CSETWebCore.Api.Controllers
                    
 
                 }).ToList();
-           var allModelsMaturity = (from m in _context.MODES_SETS_MATURITY_MODELS
+            var allModelsMaturity = (from m in _context.MODES_SETS_MATURITY_MODELS
                    join mat in _context.MATURITY_MODELS on m.Model_Name equals mat.Model_Name
                    where m.AppCode=="TSA"
                    select new TSAModelNames()
@@ -227,7 +232,9 @@ namespace CSETWebCore.Api.Controllers
                        AppCode=m.AppCode,
                        Model_Name=mat.Model_Name,
                        Model_Title=mat.Model_Title,
-                       Model_Description= mat.Model_Description,
+                       // Leaving description blank for now. Maturity Model Description is being removed in favor of gallery card description.
+                       // getModelsName is legacy CSET functionality that is not presently being used with the new gallery interface.
+                       Model_Description= "",//mat.Model_Description,
                        Is_Included=m.Is_Included
                    }
                ).ToList();

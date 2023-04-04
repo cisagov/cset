@@ -1,5 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+////////////////////////////////
+//
+//   Copyright 2023 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { LayoutService } from '../../services/layout.service';
@@ -7,10 +30,7 @@ import { Utilities } from '../../services/utilities.service';
 import { JwtParser } from '../../helpers/jwt-parser';
 import { MatDialog } from '@angular/material/dialog';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
-import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { AssessmentService } from '../../services/assessment.service';
-import { EmailService } from '../../services/email.service';
-import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
 import { PasswordStatusResponse } from '../../models/reset-pass.model';
 
@@ -21,12 +41,8 @@ import { PasswordStatusResponse } from '../../models/reset-pass.model';
 })
 export class LoginAccessKeyComponent implements OnInit {
 
+  skin: string = 'CSET';
 
-
-  /**
-   * The current display mode of the page -- LOGIN or SIGNUP
-   */
-  mode: string;
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
@@ -38,12 +54,6 @@ export class LoginAccessKeyComponent implements OnInit {
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
-  /**
-   * The page is in either EMAIL-PASSWORD mode
-   * or ACCESS-KEY mode.  This determines which
-   * portion of the page displays.
-   */
-  pageMode = 'EMAIL-PASSWORD';
 
 
   // ===========================
@@ -56,6 +66,12 @@ export class LoginAccessKeyComponent implements OnInit {
 
   loginAccessKeyFailed = false;
 
+  title1: object[] = [];
+  title2: object[] = [];
+
+
+
+
   /**
    *
    */
@@ -64,29 +80,31 @@ export class LoginAccessKeyComponent implements OnInit {
     private utilitiesSvc: Utilities,
     private authSvc: AuthenticationService,
     private assessSvc: AssessmentService,
-    private emailSvc: EmailService,
     public configSvc: ConfigService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog
   ) {
-
+    this.title1['CSET'] = 'CSET Online';
+    this.title2['CSET'] = 'CSET';
+    this.title1['TSA'] = 'CSET TSA Online';
+    this.title2['TSA'] = 'CSET TSA';
   }
 
   /**
    *
    */
   ngOnInit(): void {
+    this.skin = this.configSvc.installationMode;
+
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.isRunningInElectron = this.configSvc.isRunningInElectron;
 
-    // reset login status
-    //this.authSvc.logout();
-    this.pageMode = 'EMAIL-PASSWORD';
 
     // default the page as 'login'
-    this.mode = 'LOGIN';
     this.checkForEjection(this.route.snapshot.queryParams['token']);
+
+    this.checkPasswordReset();
 
     // Clear token query param to make the url look nicer.
     if (this.route.snapshot.queryParams['token']) {
@@ -100,70 +118,32 @@ export class LoginAccessKeyComponent implements OnInit {
     this.loginAccessKeyFailed = false;
   }
 
-
-
   /**
    *
    */
-  emailValid() {
-    return this.emailSvc.validAddress(this.model.email);
-  }
+  checkForEjection(token: string) {
+    if (this.route.snapshot.params['eject']) {
 
-  /**
-   *
-   */
-  setMode(newMode: string) {
-    this.mode = newMode;
-  }
+      let minutesSinceExpiration = 0;
 
-  /**
-   * Authenticates the user's email and password.  If they supply
-   * valid credentials, the Access Key controls are revealed.
-   */
-  loginEmailPassword() {
-    this.loading = true;
-    this.incorrectEmailOrPassword = false;
-    this.passwordExpired = false;
+      if (token) {
+        const jwt = new JwtParser();
+        const parsedToken = jwt.decodeToken(token);
+        const expTimeUnix = parsedToken.exp;
+        const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
+        // divide by 60 to convert seconds to minutes
+        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
+      }
 
-    this.authSvc
-      .login(this.model.email, this.model.password)
-      .subscribe(
-        data => {
-          this.loading = false;
-          this.incorrectEmailOrPassword = false;
-
-          this.checkPasswordReset();
-
-          // show the access key controls
-          this.pageMode = 'ACCESS-KEY';
-
-        },
-        error => {
-          if (error.status === 0) {
-            console.log('SERVER UNAVAILABLE');
-
-            this.loading = false;
-            this.incorrectEmailOrPassword = false;
-            this.dialog.open(AlertComponent, {
-              data: { messageText: this.configSvc.config.msgServerNotAvailable }
-            });
-
-            return;
-          }
-
-          this.loading = false;
-          console.log('Error logging in: ' + (<Error>error).message);
-
-
-          // see if the password is expired
-          if (error.error.isPasswordExpired) {
-            this.passwordExpired = true;
-            return;
-          }
-
-          this.incorrectEmailOrPassword = true;
-        }
-      );
+      // Only show eject dialog if token has been expired for less than an hour.
+      if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
+        this.isEjectDialogOpen = true;
+        this.dialog
+          .open(EjectionComponent)
+          .afterClosed()
+          .subscribe(() => (this.isEjectDialogOpen = false));
+      }
+    }
   }
 
   /**
@@ -205,38 +185,10 @@ export class LoginAccessKeyComponent implements OnInit {
   }
 
   /**
-   *
+   * Validate the Access Key to see if the user has access.
+   * If valid, route them to the landing page.
    */
-  checkForEjection(token: string) {
-    if (this.route.snapshot.params['eject']) {
-
-      let minutesSinceExpiration = 0;
-
-      if (token) {
-        const jwt = new JwtParser();
-        const parsedToken = jwt.decodeToken(token);
-        const expTimeUnix = parsedToken.exp;
-        const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
-        // divide by 60 to convert seconds to minutes
-        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
-      }
-
-      // Only show eject dialog if token has been expired for less than an hour.
-      if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
-        this.isEjectDialogOpen = true;
-        this.dialog
-          .open(EjectionComponent)
-          .afterClosed()
-          .subscribe(() => (this.isEjectDialogOpen = false));
-      }
-    }
-  }
-
-
-  /**
-   *
-   */
-  loginWithAccessKey() {
+  login() {
     this.authSvc.loginWithAccessKey(this.loginAccessKey).subscribe((resp) => {
       localStorage.setItem('accessKey', this.loginAccessKey);
       this.router.navigate(['/home', 'landing-page-tabs']);
@@ -260,9 +212,4 @@ export class LoginAccessKeyComponent implements OnInit {
       this.isKeyGenerated = true;
     });
   }
-
-  showDisclaimer() {
-    this.dialog.open(OnlineDisclaimerComponent);
-  }
-
 }

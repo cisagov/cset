@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import * as monaco from "monaco-editor";
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 
 
-export function formatAsXml(editor: monaco.editor.ICodeEditor, edit: monaco.editor.ISingleEditOperation): void {
+export function formatAsXml(editor: editor.ICodeEditor, edit: editor.ISingleEditOperation): void {
     const xmlFormattingEditProvider = new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter());
     const formattingOptions = {
         insertSpaces: true,

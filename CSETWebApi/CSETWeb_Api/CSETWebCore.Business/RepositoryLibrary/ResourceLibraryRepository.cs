@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -48,16 +48,29 @@ namespace CSETWebCore.Business.RepositoryLibrary
             return getNodes(this.TopNodes.ToList());
         }
 
+
+        /// <summary>
+        /// Walk through the tree and extract 
+        /// a copy with only the fields we want. 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <returns></returns>
         private List<SimpleNode> getNodes(List<ResourceNode> nodes)
         {
-
             List<SimpleNode> rlist = new List<SimpleNode>();
-            //walk through the tree and extract 
-            //a copy with only the fields we want. 
+
             SimpleNode s = null;
+
             foreach (ResourceNode r in nodes)
             {
                 List<SimpleNode> schildren = getNodes(r.Nodes.ToList());
+
+                // don't include structure/parent nodes without children
+                if (r is NoneNode && schildren.Count == 0)
+                {
+                    continue;
+                }
+
                 s = new SimpleNode()
                 {
                     label = r.TreeTextNode,
@@ -75,8 +88,8 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 rlist.Add(s);
             }
-            return rlist;
 
+            return rlist;
         }
 
 
@@ -222,7 +235,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
             }
             catch (Exception exc)
             {
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
         }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -228,7 +228,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (!this.assessSvc.isISE()) {
             return;
         }
-        // the below code needs converted to ISE stuff
         this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
             if (percentAnswered == 100) {
                 this.disableIseReportLinks = false;
@@ -296,10 +295,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id)
             .subscribe((response: any) => {
-                const url =
-                    this.fileSvc.exportUrl + "?token=" + response.token;
+                const url = this.fileSvc.exportUrl + "?token=" + response.token;
 
-                //if electron
                 window.location.href = url;
             });
     }
@@ -307,19 +304,25 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
 @Component({
     selector: 'snack-bar-component-example-snack',
-    template: ' <span class="">To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button> ',
+    template: '<span>To print or save any of these reports as PDF, click the report which will open in a new window. {{ printInstructions }} To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button>',
     styles: [
         '',
     ],
 })
-
-export class PrintSnackComponent {
+export class PrintSnackComponent implements OnInit {
     constructor(
         public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
         @Inject(MAT_SNACK_BAR_DATA) public data: any) {
     }
 
-    closeMe() {
+    printInstructions: string;
 
+    ngOnInit() {
+      const isRunningInElectron = (localStorage.getItem('isRunningInElectron') === 'true');
+      if (isRunningInElectron) {
+        this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P).'
+      } else {
+        this.printInstructions = 'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.'
+      }
     }
 }

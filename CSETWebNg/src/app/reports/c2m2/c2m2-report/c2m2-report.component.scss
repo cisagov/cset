@@ -1,0 +1,301 @@
+/*
+
+  Copyright 2023 Battelle Energy Alliance, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+h1, h2, h3, h4 {
+  font-weight: 400 !important;
+  scroll-margin-top: 2rem;
+}
+
+h4 {
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  color: #0A5278;
+}
+
+.c2m2-report-background {
+  background-color: rgb(247, 247, 247);
+  height: 100%;
+  width: 100%;
+}
+
+.side-toc h1 {
+  color: rgb(71, 73, 76);
+}
+
+.report-body {
+  position: relative;
+  left: 8rem;
+}
+
+.cover-sheet-image {
+  max-width:100%;
+  max-height:100%;
+}
+
+.table-header {
+  text-align: center;
+  background-color: rgb(240, 240, 240);
+}
+
+.grid-table {
+  display: inline-grid;
+}
+
+.table-block {
+  margin: 0px;
+  border: 1px solid rgb(179, 179, 179);
+  padding: 2px;
+  overflow-wrap: break-word;
+}
+
+.caption {
+  text-align: center;
+  margin: 4px 0px 0px;
+  color: rgb(3, 83, 148);
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.donut-grid-header {
+  border: 1px solid rgb(179, 179, 179);
+  text-align: center;
+  font-size: 0.75em;
+  height: 20px;
+}
+
+.donut-grid-chart-box {
+  border: 1px solid rgb(179, 179, 179);
+  padding: 0;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donut-grid-mil-box {
+  border: 1px solid rgb(179, 179, 179);
+  text-align: center;
+  font-size: 1rem;
+  height: 100px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-legend {
+  display: flex;
+  padding: 4px;
+  align-items: center;
+}
+
+.legend-color-box {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  margin: 4px;
+}
+
+.border {
+  border: 1px solid rgb(179, 179, 179);
+}
+
+.table-header {
+  background-color: rgb(230, 230, 230);
+}
+.pi-background {
+  background-color: #F5DA8C;
+}
+.ni-background {
+  background-color: #DCA237;
+}
+.u-background {
+  background-color: #E6E6E6;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.table-responsive > .table-bordered {
+  border: 0;
+}
+
+ol, ul {
+  margin-bottom: 1rem !important;
+}
+
+@media only screen and (max-width: 900px) {
+  .side-toc {
+      display: none;
+  }
+}
+
+.side-toc {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  border-right: solid 1px #262626;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  height: 100vh;
+  padding: 0.75rem;
+  overflow-y: auto;
+  width: 20vw;
+  min-width: 250px;
+  max-width: 400px;
+  z-index: 100;
+}
+
+.side-toc a {
+  word-break: break-word;
+  text-decoration: none;
+  color: rgb(71, 73, 76);
+}
+
+.side-toc div {
+  margin: 10px;
+}
+
+.side-toc ul {
+  margin-left: -15px;
+  margin-bottom: 0 !important;
+}
+
+.side-toc li {
+  padding: 0.25rem 0;
+}
+
+.side-toc li:last-child {
+  padding-bottom: 0;
+}
+
+a:hover {
+  cursor :pointer;
+  text-decoration: underline !important;
+}
+
+.vertical-headers {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  border: 1px solid rgb(179, 179, 179);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+.heatmap {
+  border-collapse: separate;
+  border-spacing: 0 3px;
+}
+
+.heatmap-mil-column {
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+.heatmap-answer-column {
+  border: 1px solid rgb(179, 179, 179);
+  padding: 3px;
+  color: white;
+  text-align: center;
+  min-width: 25px;
+  overflow-x: visible;
+  font-size: 14px;
+}
+
+.comment-table {
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgb(179, 179, 179);
+}
+
+.all-borders {
+  border: 1px solid rgb(179, 179, 179);
+}
+
+.mil-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 50px;
+}
+
+.response-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 125px;
+}
+
+.id-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 100px;
+}
+
+.practice-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 325px;
+}
+
+.note-column {
+  border: 1px solid rgb(179, 179, 179);
+  width: 300px;
+}
+
+/**************** Print styles ****************/
+@page {
+  size: letter;
+  margin: 1.5cm 0;
+}
+
+@media print {
+  .side-toc {
+    display: none;
+  }
+
+  .c2m2-report-background {
+    background-color: transparent;
+    display: inline;
+  }
+
+  html, body {
+    margin: 0 !important;
+  }
+
+  .report-body {
+    margin: 1.5cm 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page-break {
+    padding-top: 0 !important;
+  }
+
+  main {
+    box-decoration-break: clone;
+  }
+}

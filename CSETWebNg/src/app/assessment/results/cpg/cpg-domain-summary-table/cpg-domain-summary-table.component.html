@@ -1,0 +1,42 @@
+<!---------------------- 
+
+   Copyright 2023 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="w-100 d-block">
+    <table class="table">
+        <tr>
+            <th class="text-left align-top">Category</th>
+            <th class="text-right align-top">Implemented</th>
+            <th class="text-right align-top">In Progress</th>
+            <th class="text-right align-top">Scoped</th>
+            <th class="text-right align-top">Not Started</th>
+            <th class="text-right align-top">Unanswered</th>
+        </tr>
+        <tr *ngFor="let func of data">
+            <td>{{func.name}}</td>
+            <td class="text-right">{{formatPercent(func, 0)}}</td>
+            <td class="text-right">{{formatPercent(func, 1)}}</td>
+            <td class="text-right">{{formatPercent(func, 2)}}</td>
+            <td class="text-right">{{formatPercent(func, 3)}}</td>
+            <td class="text-right">{{formatPercent(func, 4)}}</td>
+        </tr>
+    </table>
+</div>

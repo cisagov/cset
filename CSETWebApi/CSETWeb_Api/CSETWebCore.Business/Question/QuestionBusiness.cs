@@ -1,4 +1,10 @@
-﻿using CSETWebCore.Business.Standards;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Document;

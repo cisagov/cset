@@ -1,4 +1,10 @@
-﻿namespace CSETWebCore.Model.Standards
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+namespace CSETWebCore.Model.Standards
 {
     public class Standard
     {

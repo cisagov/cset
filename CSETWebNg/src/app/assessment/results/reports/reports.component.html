@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2022 Battelle Energy Alliance, LLC
+   Copyright 2023 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -210,7 +210,8 @@
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('ACET') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ACET Reports</h4>
-      <div *ngIf="disableAcetReportLinks" class="
+      <!-- commenting out this warning for now because NCUA people wanted reports always available -->
+      <!-- <div *ngIf="disableAcetReportLinks" class="
         alert-warning
         mt-2
         mb-2
@@ -225,18 +226,14 @@
         <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           Some reports are disabled until all statements have been answered.
         </span>
-      </div>
-      <p *ngIf="disableAcetReportLinks"></p>
-      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      </div> -->
+      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Executive Summary
       </button>
-      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Gap Report
       </button>
-      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableAcetReportLinks">
+      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ACET Comments and Marked for Review
       </button>
       <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
@@ -244,7 +241,7 @@
         ACET Answered Statements
       </button>
       <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left" [disabled]="disableAcetReportLinks">
+        class="btn btn-link btn-link-dark text-left">
         ACET Compensating Controls
       </button>
     </div>
@@ -263,11 +260,14 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           "Submit" button and some reports are disabled until all statements have been answered.
         </span>
+        <span *ngIf="(disableIseReportLinks && assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+          There are unanswered statements. Some domains will be incomplete.
+        </span>
         <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          <br>"Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          <br><br>"Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -279,7 +279,14 @@
           </span><br>
         </span>
         <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
-          "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          <span *ngIf="!assessSvc.assessment.isE_StateLed">
+            "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+          </span>
+          <span *ngIf="assessSvc.assessment.isE_StateLed">
+            There are unanswered statements. Some domains will be incomplete.
+            <br><br><br>
+            "Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
+          </span>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
           </span>
@@ -292,11 +299,11 @@
         </span>
       </div>
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) || this.ncuaSvc.unassignedIssues">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) || this.ncuaSvc.unassignedIssues">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
       <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
@@ -306,15 +313,10 @@
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Examiner Notes
       </button>
-      
+
       <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
-      <!-- Below is commented out to hide background data for now -->
-      <!-- <button (click)="clickReportLink('isedata')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks">
-        ISE Data Report
-      </button> -->
     </div>
 
 
@@ -395,6 +397,24 @@
             CPG Report
           </button>
         </div>
+        <div>
+          <button tabindex="0" (click)="clickReportLink('cpgDeficiency')" class="btn btn-link btn-link-dark text-left">
+            CPG Deficiency
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!!assessSvc.assessment && (assessSvc.usesMaturityModel('C2M2')) && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Cybersecurity Capability Maturity Model (C2M2)
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('c2m2Report')" class="btn btn-link btn-link-dark text-left">
+            C2M2 Report
+          </button>
+        </div>
       </div>
 
       <div class="mt-5">
@@ -414,7 +434,7 @@
     <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
       <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
       <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
+        [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
     </div>
 
   </div>

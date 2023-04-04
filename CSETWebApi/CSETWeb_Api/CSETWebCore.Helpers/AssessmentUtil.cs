@@ -1,4 +1,10 @@
-﻿using System;
+//////////////////////////////// 
+// 
+//   Copyright 2023 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces.Helpers;
@@ -35,7 +41,7 @@ namespace CSETWebCore.Helpers
                 // On a brand new claim, the token does not yet have an assessment in the payload.
                 // TouchAssessment() is smart enough to not blow up if there is no current assessment.
 
-                log4net.LogManager.GetLogger(this.GetType()).Error($"... {exc}");
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
         }
     }

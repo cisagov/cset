@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,28 @@
 ////////////////////////////////
 import { XmlFormatter } from "./xml-formatter";
 import { XmlFormattingOptionsFactory } from "./xml-formatting-options";
-import * as Monaco from 'monaco-editor';
+import { editor, languages, Range, CancellationToken } from 'monaco-editor/esm/vs/editor/editor.api';
 
 export class XmlFormattingEditProvider implements
-  Monaco.languages.DocumentFormattingEditProvider,
-  Monaco.languages.DocumentRangeFormattingEditProvider {
+  languages.DocumentFormattingEditProvider,
+  languages.DocumentRangeFormattingEditProvider {
 
     provideDocumentRangeFormattingEdits(
-          model: Monaco.editor.ITextModel,
-          range: Monaco.Range,
-          options: Monaco.languages.FormattingOptions,
-          token: Monaco.CancellationToken
-        ):  Monaco.languages.TextEdit[]
-          | PromiseLike<Monaco.languages.TextEdit[]> {
+          model: editor.ITextModel,
+          range: Range,
+          options: languages.FormattingOptions,
+          token: CancellationToken
+        ):  languages.TextEdit[]
+          | PromiseLike<languages.TextEdit[]> {
         let xml = model.getValueInRange(range);
 
         xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, model));
 
         return [ {range: range, text: xml} ];
     }
-    provideDocumentFormattingEdits(model: Monaco.editor.ITextModel,
-        options: Monaco.languages.FormattingOptions, token: Monaco.CancellationToken
-      ): Monaco.languages.TextEdit[] | PromiseLike<Monaco.languages.TextEdit[]> {
+    provideDocumentFormattingEdits(model: editor.ITextModel,
+        options: languages.FormattingOptions, token: CancellationToken
+      ): languages.TextEdit[] | PromiseLike<languages.TextEdit[]> {
         const documentRange = model.getFullModelRange();
         return this.provideDocumentRangeFormattingEdits(model, documentRange, options, token);
     }

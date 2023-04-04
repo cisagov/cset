@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2022 Battelle Energy Alliance, LLC  
+//   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -172,6 +172,10 @@ namespace CSETWebCore.Business.Reports
 
             // VADR considers unanswered as deficient
             if (myModel.model.Model_Name.ToUpper() == "VADR")
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
+            if (myModel.model.Model_Name.ToUpper() == "CPG")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
@@ -1320,6 +1324,10 @@ namespace CSETWebCore.Business.Reports
                     info.Additional_Contacts.Add(c);
                 }
             }
+
+            info.UseStandard = assessment.UseStandard;
+            info.UseMaturity = assessment.UseMaturity;
+            info.UseDiagram = assessment.UseDiagram;
 
             // ACET properties
             info.Credit_Union_Name = assessment.CreditUnionName;

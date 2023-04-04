@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2022 Battelle Energy Alliance, LLC
+//   Copyright 2023 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -354,6 +354,11 @@ export class QuestionsService {
       answers: this.configSvc.config.answersCPG
     });
 
+    this.answerButtonDefs.push({
+      modelId: 12,
+      answers: this.configSvc.config.answersC2M2
+    });
+
     // ACET labels are only used in the ACET skin
     this.answerButtonDefs.push({
       skin: 'ACET',
@@ -392,7 +397,12 @@ export class QuestionsService {
    * Finds the button definition and returns its full label (tooltip)
    */
   answerDisplayLabel(modelId: Number, answerCode: string) {
-    return this.findAnsDefinition(modelId, answerCode).answerLabel;
+    const def = this.findAnsDefinition(modelId, answerCode);
+    if (!def) {
+      console.log('cannot find definition for model: ' + modelId + ', answerCode: ' + answerCode);
+      return "?";
+    }
+    return def.answerLabel;
   }
 
   /**
@@ -400,6 +410,10 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(modelId: Number, answerCode: string) {
+    // assume unanswered if null or undefined
+    if (!answerCode) {
+      answerCode = 'U';
+    }
 
     // first look for a skin-specific label set
     let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
