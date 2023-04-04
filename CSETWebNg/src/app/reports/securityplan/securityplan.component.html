@@ -37,15 +37,7 @@
 
         <div class="cover-page-bottom mb-4">
             <app-logo-for-reports></app-logo-for-reports>
-            <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-                <div>{{response?.information.assessment_Name}}</div>
-                <div>
-                    {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
-                </div>
-                <div>
-                    {{response?.information.assessor_Name}}
-                </div>
-            </div>
+            <app-info-block [response]="response"/>
         </div>
     </div>
 
