@@ -124,6 +124,132 @@ Format.prototype.init = function () {
 };
 
 /**
+ * Returns information about the current selection.
+ * Copied over for CSET
+ */
+//Format.prototype.getSelectionState = function () {
+//    if (this.selectionState == null) {
+//        this.selectionState = this.createSelectionState();
+//    }
+
+//    return this.selectionState;
+//};
+
+/**
+ * Returns information about the current selection.
+ */
+Format.prototype.createSelectionState = function () {
+    var cells = this.editorUi.editor.graph.getSelectionCells();
+    var result = this.initSelectionState();
+
+    for (var i = 0; i < cells.length; i++) {
+        this.updateSelectionStateForCell(result, cells[i], cells);
+    }
+
+    return result;
+};
+
+/**
+ * Returns information about the current selection.
+ */
+Format.prototype.initSelectionState = function () {
+    return {
+        vertices: [], edges: [], x: null, y: null, width: null, height: null, style: {},
+        containsImage: false, containsLabel: false, fill: true, glass: true, rounded: true,
+        comic: true, autoSize: false, image: true, shadow: true, lineJumps: true
+    };
+};
+
+/**
+ * Returns information about the current selection.
+ */
+Format.prototype.updateSelectionStateForCell = function (result, cell, cells) {
+    var graph = this.editorUi.editor.graph;
+
+    if (graph.getModel().isVertex(cell)) {
+        result.vertices.push(cell);
+        var geo = graph.getCellGeometry(cell);
+
+        if (geo != null) {
+            if (geo.width > 0) {
+                if (result.width == null) {
+                    result.width = geo.width;
+                }
+                else if (result.width != geo.width) {
+                    result.width = '';
+                }
+            }
+            else {
+                result.containsLabel = true;
+            }
+
+            if (geo.height > 0) {
+                if (result.height == null) {
+                    result.height = geo.height;
+                }
+                else if (result.height != geo.height) {
+                    result.height = '';
+                }
+            }
+            else {
+                result.containsLabel = true;
+            }
+
+            if (!geo.relative || geo.offset != null) {
+                var x = (geo.relative) ? geo.offset.x : geo.x;
+                var y = (geo.relative) ? geo.offset.y : geo.y;
+
+                if (result.x == null) {
+                    result.x = x;
+                }
+                else if (result.x != x) {
+                    result.x = '';
+                }
+
+                if (result.y == null) {
+                    result.y = y;
+                }
+                else if (result.y != y) {
+                    result.y = '';
+                }
+            }
+        }
+    }
+    else if (graph.getModel().isEdge(cell)) {
+        result.edges.push(cell);
+    }
+
+    var state = graph.view.getState(cell);
+
+    if (state != null) {
+        result.autoSize = result.autoSize || this.isAutoSizeState(state);
+        result.glass = result.glass && this.isGlassState(state);
+        result.rounded = result.rounded && this.isRoundedState(state);
+        result.lineJumps = result.lineJumps && this.isLineJumpState(state);
+        result.comic = result.comic && this.isComicState(state);
+        result.image = result.image && this.isImageState(state);
+        result.shadow = result.shadow && this.isShadowState(state);
+        result.fill = result.fill && this.isFillState(state);
+
+        var shape = mxUtils.getValue(state.style, mxConstants.STYLE_SHAPE, null);
+        result.containsImage = result.containsImage || shape == 'image';
+
+        for (var key in state.style) {
+            var value = state.style[key];
+
+            if (value != null) {
+                if (result.style[key] == null) {
+                    result.style[key] = value;
+                }
+                else if (result.style[key] != value) {
+                    result.style[key] = '';
+                }
+            }
+        }
+    }
+};
+
+/**
  * Adds the label menu items to the given menu and parent.
  */
 Format.prototype.clear = function () {
@@ -331,10 +457,15 @@ Format.prototype.immediateRefresh = function () {
             (containsLabel ? '50%' : '33.3%');
         var label2 = label.cloneNode(false);
         var label3 = label2.cloneNode(false);
+        var labelProperties = label3.cloneNode(false); // CSET
+        console.log('hey');
+        console.log(labelProperties);
+
 
         // Workaround for ignored background in IE
         label2.style.backgroundColor = Format.inactiveTabBackgroundColor;
         label3.style.backgroundColor = Format.inactiveTabBackgroundColor;
+        labelProperties.backgroundColor = this.inactiveTabBackgroundColor; // CSET
 
         // Style
         if (containsLabel) {
@@ -375,6 +506,9 @@ Format.prototype.immediateRefresh = function () {
         mxUtils.write(labelProperties, mxResources.get('prop'));
         div.appendChild(labelProperties);
 
+        console.log('x');
+        console.log(div);
+
         var propertiesPanel = div.cloneNode(false);
         propertiesPanel.style.display = 'none';
         this.panels.push(new PropertiesPanel(this, ui, propertiesPanel));
@@ -388,6 +522,9 @@ Format.prototype.immediateRefresh = function () {
         }
 
         addClickHandler(label3, arrangePanel, idx++, true);
+
+
+        addClickHandler(labelProperties, propertiesPanel, idx++); // CSET
     }
 };
 
@@ -405,6 +542,35 @@ BaseFormatPanel = function (format, editorUi, container) {
  * 
  */
 BaseFormatPanel.prototype.buttonBackgroundColor = 'transparent';
+
+/**
+ * Adds the given color option.
+ */
+BaseFormatPanel.prototype.getSelectionState = function () {
+    var graph = this.editorUi.editor.graph;
+    var cells = graph.getSelectionCells();
+    var shape = null;
+
+    for (var i = 0; i < cells.length; i++) {
+        var state = graph.view.getState(cells[i]);
+
+        if (state != null) {
+            var tmp = mxUtils.getValue(state.style, mxConstants.STYLE_SHAPE, null);
+
+            if (tmp != null) {
+                if (shape == null) {
+                    shape = tmp;
+                }
+                else if (shape != tmp) {
+                    return null;
+                }
+            }
+
+        }
+    }
+
+    return shape;
+};
 
 /**
  * Install input handler.
@@ -2489,7 +2655,7 @@ PropertiesPanel.prototype.addProperties = function (container) {
     var cell = graph.getSelectionCell();
 
     // if multiple things are selected, don't show the properties panel
-    var ss = this.format.getSelectionState();
+    var ss = ui.getSelectionState();
     if (ss.vertices.length + ss.edges.length > 1) {
         return;
     }
@@ -2579,7 +2745,8 @@ PropertiesPanel.prototype.addProperties = function (container) {
                 }
 
                 // if there is no value yet, try defaulting
-                if (idx < 0 && !!pp.defaultValue) {
+                // TODO:  there used to be an idx < 0 condition too
+                if (!!pp.defaultValue) {
                     for (var o = 0; o < ctl.options.length; o++) {
                         if (ctl.options[o].value === pp.defaultValue) {
                             ctl.selectedIndex = o;
