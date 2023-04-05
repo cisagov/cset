@@ -162,7 +162,7 @@ Figure 11: Local Install Landing Page
 ## CSET Enterprise Installation Instructions
 
 ### Introduction
-This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
+This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition for use on Windows Server. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
 
 ### Using the Provided Setup Script
 The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
@@ -175,7 +175,7 @@ The enterprise installation can be automated through the use of a provided Power
 <br/>
 
 3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
- ```cd C:\users\%USER%\Desktop\CSETv11012_Enterprise_Binaries```.
+ ```cd C:\users\%USER%\Desktop\CSETv%VERSION%_Enterprise_Binaries```.
 
 4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
 
@@ -203,13 +203,18 @@ The enterprise installation can be automated through the use of a provided Power
 ![](img/figES6.PNG)
 <br/>
 
+### Manual Setup
+
 ### Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases/tag/v10.1). Click "CSET_X.X.X.XBinary.zip" file to download it. Once the download is complete, you will need to unzip the folder.  The download is found in in the latest release.   
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequsites 2-4.
 
-2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=56840)
-  a.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=47337)
+2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
+  
+3.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
+  
+4. CSET® requires the ASP.NET Core 7 and .NET 7 runtimes to run successfully. It is recommended to install these using the .NET 7 Hosting Bundle, which includes both of these runtimes and IIS support. This can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
 
-3.	If you are using an SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+5.	If you are using a SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15).
 
 
 ### Installing IIS
@@ -227,7 +232,7 @@ The enterprise installation can be automated through the use of a provided Power
   * Server Roles – Select the “Web Server (IIS)” check box. Add any features the program prompts you for.
   * Features – The defaults will work just fine for running CSET®, however you may add any additional features you wish.
   * Web Server Role (IIS) – Click “Next.”
-  * Role Services – Under Common HTTP Features, select “HTTP Redirection.” Under Application Development, select “ASP.NET 4.7” and add any features      the program prompts you for. (Please note: ASP.net 4.7.2 or higher is required for CSET to run properly. If you have anything less than that, you will need to download the latest version from Microsoft directly.)
+  * Role Services – Under Common HTTP Features, select “HTTP Redirection.”
   * Confirmation – Click “Install”. Close out of the Wizard when installation is complete.
 
   3. It may be necessary to create a new IIS Application Pool for your CSET Installation to run properly. When setting up the application in IIS, create a new Application Pool for CSET and give it the identity of the account you want to access the SQL Server with. Provided below are links to the official Microsoft documentation for this process.
@@ -280,7 +285,7 @@ The enterprise installation can be automated through the use of a provided Power
   * Name – The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”
 
 ### Database Setup
-1.	Open the CSET® Dist folder that you downloaded earlier and navigate to the “Data” subfolder. Inside this folder you will find two files called “CSETWeb” and “CSETWeb_log.” Copy these two files to your server.
+1.	Open the CSET® Enterprise Binaries folder that you downloaded earlier and navigate to the “database” subfolder. Inside this folder you will find two files called “CSETWebXXXX” and “CSETWebXXXX_log.” Copy these two files to your server.
 
 2.	Open Microsoft SQL Server Management Studio (see below) and connect to the SQL Server that we setup previously. 
   * Open the “Connect to Server” dialog box.
@@ -351,13 +356,13 @@ The enterprise installation can be automated through the use of a provided Power
   * As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
   * Delete everything inside this folder EXCEPT for the “aspnet_client subfolder”. 
   * If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
-  * Copy all of contents from inside the CSET® Dist folder you downloaded and place them into your "wwwroot" folder.
+  * Copy  from inside the CSET® Dist folder you downloaded and place them into your "wwwroot" folder.
 
   ![](img/figE25.PNG)
 
 
 ### CSET Configuration
-1.	Locate the "Web.config" file that should now be inside the “wwwroot” folder. Open this file using a text editor such as notepad.
+1.	Locate the "appsettings.json" file that should now be inside the “wwwroot” folder. Open this file using a text editor such as notepad.
 
 ![](img/figE26.PNG)
 
@@ -374,12 +379,12 @@ The enterprise installation can be automated through the use of a provided Power
   
   * If you are using the Windows domain authentication method, then you will use “Trusted_Connection=SSPI” instead of a user ID and password
 
-  * Save and close the Web.config file.
-  * If you receive an error stating that you do not have permissions to save the Web.config file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
+  * Save and close the appsettings.json file.
+  * If you receive an error stating that you do not have permissions to save the appsettings.json file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
   * Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET® Installation!
 
 ### Other Steps (Optional)
-## Creating CSET User
+### Creating CSET User
 There are two ways to add a new user to your freshly created CSET® Stand-Alone. The first way is to register for a new account inside the CSET® application itself. This will require a valid mail host as user’s will be required to enter their email address and receive a confirmation email on your network.
 
   1.	Using a browser, navigate to your CSET® webpage.
@@ -388,7 +393,7 @@ There are two ways to add a new user to your freshly created CSET® Stand-Alone.
   4.	A confirmation email will be sent to the email you entered. This email will contain a temporary password that will allow you to login to the CSET® Application.
   5.	Once a user has logged in for the first time, they will be prompted to create their own password to replace the temporary one.
 
-The second way to add a new user to your CSET® Application is to use the “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system. This tool can be downloaded from the CSET github page found [here](https://github.com/cisagov/cset/releases/tag/9.2.2enterprise). Simply click on the "AddUser.zip" link to download the file.
+The second way to add a new user to your CSET® Application is to use the “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system. This tool can be downloaded from the latest CSET [releases page](https://github.com/cisagov/cset/releases). Simply click on the "AddUser.zip" link to download the file.
 
   1.	Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. 
   * Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
@@ -402,7 +407,7 @@ The second way to add a new user to your CSET® Application is to use the “Add
   * Enter the required information and click “Save.”
   * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
 
-## Mail Host Configuration
+### Mail Host Configuration
 1.	Inside your “wwwroot”, open the Web.config file.
   * Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.
 
@@ -431,7 +436,7 @@ This documentation is provided to assist users in installing and running CSET lo
 5. Visual Studio 2019 (Community Edition is fine) which can be [downloaded here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16)
 6. VS Code which can be [downloaded here.](https://code.visualstudio.com/docs/?dv=win)
 
-Note: VSCode and Visual studio are two diffent IDE's VS Code is used for Front end UI (CSETWenNg) while Visual Studio is used for the backend (CSETWebAPI)
+Note: VSCode and Visual studio are two diffent IDE's VS Code is used for Front end UI (CSETWebNg) while Visual Studio is used for the backend (CSETWebAPI)
 
 ### Installation
 
@@ -456,8 +461,8 @@ Here you can open VSCode and run these commands from the terminal within VSCode.
     5. [Create Database User](https://github.com/cisagov/cset#create-database-user)
 2. Open CSET with Visual Studio.
 3. Select `CSETWeb_Api.sin` for project file.
-4. Open `Web.config` and change the settings in `connectionStrings` according to [CSET Configuration](https://github.com/cisagov/cset#cset-configuration)
-5. Build solution and run within Visual Studio by selecting  the play button on the top with "IIS Express"
+4. Open `appsettings.json` in the CSETWebCore.Api project and change the settings in `connectionStrings` according to [CSET Configuration](https://github.com/cisagov/cset#cset-configuration).
+5. Build solution and run within Visual Studio by selecting the play button on the top with "CSETWeb_ApiCore" selected.
 
 ![](img/figApiRun.png) 
 
