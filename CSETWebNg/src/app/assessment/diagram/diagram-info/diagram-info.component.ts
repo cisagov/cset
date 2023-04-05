@@ -85,7 +85,7 @@ export class DiagramInfoComponent implements OnInit {
         return new Promise(resolve => setTimeout(resolve,ms));
     }
 
-    navToDiagram() {
+    navToDiagram(which: string) {
         const jwt = localStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
         let host = this.configSvc.apiUrl;
@@ -100,7 +100,12 @@ export class DiagramInfoComponent implements OnInit {
           client = window.location.origin;
         }
 
-        window.location.href = host + 'diagram/src/main/webapp/index.html' +
+        let folder = 'diagram';
+        if (which == 'orig') {
+            folder = 'diagram-orig'
+        }
+
+        window.location.href = host + folder + '/src/main/webapp/index.html' +
             '?j=' + jwt +
             '&h=' + apiUrl +
             '&c=' + client +
