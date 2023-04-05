@@ -212,6 +212,13 @@ namespace CSETWeb_ApiCore
                     Path.Combine(env.ContentRootPath, "Diagram")),
                 RequestPath = "/Diagram"
             });
+            // TODO TEMP:  This is for develpment only, not production
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Diagram-orig")),
+                RequestPath = "/Diagram-orig"
+            });
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(

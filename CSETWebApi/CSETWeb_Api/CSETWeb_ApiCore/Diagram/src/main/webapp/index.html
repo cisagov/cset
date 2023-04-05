@@ -93,6 +93,44 @@
             })();
         }
 
+
+        /**
+         * Capture the query string parameters that define this diagram session.
+         */
+        (function () {
+            if (!!urlParams['a']) {
+                localStorage.setItem('assessmentId', urlParams['a']);
+            }
+
+            if (!!urlParams['j']) {
+                localStorage.setItem('jwt', urlParams['j']);
+            }
+
+            if (!!urlParams['h']) {
+                localStorage.setItem('cset.host', decodeURIComponent(urlParams['h']));
+            }
+
+            if (!!urlParams['c']) {
+                localStorage.setItem('cset.client', decodeURIComponent(urlParams['c']));
+            }
+
+            if (!!urlParams['l']) {
+                localStorage.setItem('cset.isLocal', decodeURIComponent(urlParams['l']));
+            }
+
+            if (localStorage.getItem('jwt') == null || localStorage.getItem('cset.host') == null) {
+                window.location = 'error.html';
+            }
+
+
+            // remove query string and redirect
+            var q = window.location.href.indexOf('?');
+            if (q >= 0) {
+                window.location.href = window.location.href.substr(0, q);
+            }
+
+        })();
+
         /**
          * Adds meta tag to the page.
          */
@@ -208,6 +246,7 @@
 
         function checkAllLoaded() {
             if (mxScriptsLoaded && mxWinLoaded) {
+                App.CSET = true;
                 App.main();
             }
         };
@@ -256,16 +295,17 @@
         else {
             (function () {
                 var hostName = window.location.hostname;
-
+               
                 // Supported domains are *.draw.io and the packaged version in Quip
                 var supportedDomain = (hostName.substring(hostName.length - 8, hostName.length) === '.draw.io') ||
                     (hostName.substring(hostName.length - 13, hostName.length) === '.diagrams.net');
 
-                function loadAppJS() {
+                function loadAppJS() {                  
                     mxscript('js/app.min.js', function () {
                         mxScriptsLoaded = true;
                         checkAllLoaded();
 
+                       
                         // Electron
                         if (mxIsElectron) {
                             mxscript('js/diagramly/DesktopLibrary.js', function () {
@@ -284,13 +324,12 @@
                             mxscript('js/PostConfig.js');
                         }
                     });
-                };
 
-
-                mxscript('js/diagramly/util/CsetUtils.js');
-                mxscript('js/diagramly/util/CsetAnalysis.js')
-                mxscript('js/diagramly/util/CellCset.js');
-
+                    // load CSET libraries
+                    mxscript('js/diagramly/util/CsetUtils.js');
+                    mxscript('js/diagramly/util/CsetAnalysis.js')
+                    mxscript('js/diagramly/util/CellCset.js');
+                };               
 
 
                 if (!supportedDomain || mxIsElectron) {

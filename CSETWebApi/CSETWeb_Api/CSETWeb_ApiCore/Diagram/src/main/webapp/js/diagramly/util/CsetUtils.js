@@ -123,7 +123,6 @@ function makeRequest(e) {
             };
         }
         xhr.onload = function () {
-            debugger;
             if (this.status >= 200 && this.status < 300) {
                 resolve(xhr.response);
             } else {
