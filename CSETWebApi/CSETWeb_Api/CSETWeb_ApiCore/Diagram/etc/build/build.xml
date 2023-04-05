@@ -5,7 +5,27 @@
 	<property file="build.properties" />
 	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="${jscompiler}" />
 
-	<target name="merge">
+	<target name="tfsJava" depends="dir.check" if="dir.exists">
+		<java fork="false" classname="Xml2Js" classpath=".">
+			<arg value="CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/stencils"/>
+			<arg value="CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/stencils.min.js"/>			
+		</java>
+	</target>
+	
+	<target name="localJava" depends="dir.check" unless="dir.exists">
+		<java fork="false" classname="Xml2Js" classpath=".">
+			<arg value="../../src/main/webapp/stencils"/>
+			<arg value="../../src/main/webapp/js/stencils.min.js"/>
+		</java>
+	</target>
+	
+	<target name="dir.check">
+		<condition property="dir.exists">
+		<available file="${directory}" type="dir"/>
+		</condition>
+	</target>
+	
+	<target name="merge" depends="tfsJava, localJava">
     	<concat destfile="${basedir}/../../build/shapes.js" fixlastline="yes" append="no">
     		<fileset dir="${war.dir}/shapes" includes="**/*.js"/>
     		<fileset dir="${war.dir}/stencils" includes="**/*.js"/>
@@ -110,6 +130,7 @@
 				<file name="Sidebar-Cisco19.js" />
 				<file name="Sidebar-CiscoSafe.js" />
 				<file name="Sidebar-Citrix.js" />
+				<file name="Sidebar-CSET.js" />
 				<file name="Sidebar-Cumulus.js" />
 				<file name="Sidebar-DFD.js" />
 				<file name="Sidebar-EIP.js" />
@@ -185,7 +206,7 @@
 			
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
-        <file name="CsetFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="Editor.js" />
 				<file name="EditorUi.js" />
@@ -287,7 +308,7 @@
 		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
-        <file name="CsetFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="LocalLibrary.js" />
 				<file name="StorageFile.js" />
@@ -372,7 +393,7 @@
 		<jscomp compilationLevel="simple" debug="false" forceRecompile="true" output="${basedir}/.tmp1.js">
 			<sources dir="${war.dir}/js/diagramly">
 				<file name="DrawioFile.js" />
-        <file name="CsetFile.js" />
+				<file name="CsetFile.js" />
 				<file name="LocalFile.js" />
 				<file name="LocalLibrary.js" />
 				<file name="StorageFile.js" />
