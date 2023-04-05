@@ -15,9 +15,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
     <PackageReference Include="NJsonSchema" Version="10.8.0" />
-    <PackageReference Include="NLog.Database" Version="5.1.2" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.2" />
-    <PackageReference Include="NodaTime" Version="3.1.8" />
+    <PackageReference Include="NLog.Database" Version="5.1.3" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
+    <PackageReference Include="NodaTime" Version="3.1.9" />
     <PackageReference Include="NSoupCore" Version="1.0.0" />
     <PackageReference Include="Snickler.EFCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -8420,6 +8420,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="IISUrlRewrite.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="LOCAL-INSTALLATION">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="WebApp\Holder.html">
