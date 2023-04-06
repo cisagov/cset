@@ -382,6 +382,8 @@ The enterprise installation can be automated through the use of a provided Power
   ![](img/figE28.PNG)
   
   * If you are using the Windows domain authentication method, then you will use “Integrated Security=SSPI” instead of a user ID and password
+  
+  * If you run into the error "The certificate chain was issued by an authority that is not trusted" when attempting to establish a connection to the database, you can can add this property to the connection string: `Trust Server Certificate=True`
 
   * Save and close the appsettings.json file.
   * If you receive an error stating that you do not have permissions to save the appsettings.json file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
@@ -577,7 +579,7 @@ Within `ConnectionStrings` in `appsettings.json` check if creds are set correctl
 ```config
 {
   "ConnectionStrings": {
-    "CSET_DB": "data source=localhost;user id=user;password=password;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True"
+    "CSET_DB": "data source=localhost;user id=user;password=password;initial catalog=CSETWeb;persist security info=True;MultipleActiveResultSets=True;"
   }
 ```
 
