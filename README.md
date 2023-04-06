@@ -263,7 +263,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   * The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.
 
-2. Once your server is up and running, you will need to install the URL Rewrite Module. Simply download the file from Microsoft (see Page 2 links or above hyperlink) and run the application to install the necessary patch.
+2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 7 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
 
 ### Firewall Configuration
 1. Open Windows Defender Firewall
@@ -354,30 +354,30 @@ The enterprise installation can be automated through the use of a provided Power
 ![](img/figE24.PNG)
 
   * As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
-  * Delete everything inside this folder EXCEPT for the “aspnet_client subfolder”. 
+  * Delete everything inside this folder. 
   * If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
-  * Copy  from inside the CSET® Dist folder you downloaded and place them into your "wwwroot" folder.
+  * Copy the "CSETUI" and "CSETWebApi" folders from inside the CSET® Enterprise Binaries folder you downloaded and place them into your "wwwroot" folder.
 
   ![](img/figE25.PNG)
 
 
 ### CSET Configuration
-1.	Locate the "appsettings.json" file that should now be inside the “wwwroot” folder. Open this file using a text editor such as notepad.
+1.	Locate the "appsettings.json" file that should now be inside the “wwwroot\CSETWebApi” folder. Open this file using a text editor such as notepad.
 
 ![](img/figE26.PNG)
 
-  * Scroll to the bottom of the document and you will find the "connectionStrings" section. We will need to edit these to correctly connect to CSET®.
-  * On each of the lines inside the two connection string tags, there is a part that says “data source=…” You will need to change the part after the equals sign to the IP address or domain name of the machine on which the SQL Server is running.
+  * The top of the document contains the "ConnectionStrings" section. We will need to edit the "CSET_DB" value to correctly connect to CSET®.
+  * In the value for "CSET_DB" there is a part that says “data source=…” You will need to change the part after the equals sign to the IP address or domain name of the machine on which the SQL Server is running.
 
   ![](img/figE27.PNG)
 
   * If IIS and the SQL Server instance are running on the same machine, you can use “localhost” as the domain name. Otherwise, you will need the specific domain or IP address to connect properly.
 
-  * On each of the same lines, you will need to update the “Integrated Security=SSPI” section to reflect your SQL Server specific login info.
+  * In the connection string, you will need to update the “Integrated Security=SSPI” section to reflect your SQL Server specific login info.
 
   ![](img/figE28.PNG)
   
-  * If you are using the Windows domain authentication method, then you will use “Trusted_Connection=SSPI” instead of a user ID and password
+  * If you are using the Windows domain authentication method, then you will use “Integrated Security=SSPI” instead of a user ID and password
 
   * Save and close the appsettings.json file.
   * If you receive an error stating that you do not have permissions to save the appsettings.json file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
