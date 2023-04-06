@@ -354,12 +354,16 @@ The enterprise installation can be automated through the use of a provided Power
 ![](img/figE24.PNG)
 
   * As seen in the picture below, expand the server’s name drop-down list and then expand the Sites drop down list. You should see a “Default Web Site” item. Right-click this item and select “Explore”. This will open the “wwwroot” folder.
+  
+![](img/figE25.PNG)
+  
   * Delete everything inside this folder. 
   * If you’ve done any kind of changes or work inside this folder previously, we recommend copying the contents to preserve those changes as deleting the files will erase any changes you have made.
   * Copy the "CSETUI" and "CSETWebApi" folders from inside the CSET® Enterprise Binaries folder you downloaded and place them into your "wwwroot" folder.
+  * You can add two additional websites (i.e. one to host the front-end application called CSETUI and one to host the back-end api called CSETWebApi) and point the physical paths to their respective folders located in "wwwroot." Ensure that the backend site is assigned to an application pool that has the .Net CLR Version set to "No Managed Code."
+  * If you set the back-end api port to something other than 5000, you will need to update the following config value found in wwwroot\CSETUI\assets\settings\config.json:
 
-  ![](img/figE25.PNG)
-
+![](img/figE31.PNG)
 
 ### CSET Configuration
 1.	Locate the "appsettings.json" file that should now be inside the “wwwroot\CSETWebApi” folder. Open this file using a text editor such as notepad.
