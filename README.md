@@ -408,7 +408,7 @@ The second way to add a new user to your CSET® Application is to use the “Add
   * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
 
 ### Mail Host Configuration
-1.	Inside your “wwwroot”, open the Web.config file.
+1.	Inside “wwwroot\CSETWebApi”, open the appsettings.json file.
   * Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.
 
   ![](img/figE30.PNG)
@@ -568,16 +568,13 @@ recompile as needed.
 
 ### CSETWebApi runs but cannot connect to DB
 
-Withing `connectionStrings` in `Web.config` check if creds are set correctly, for local db, the connetion string would look as follows.
+Within `ConnectionStrings` in `appsettings.json` check if creds are set correctly, for local db, the connetion string would look as follows.
 
 ```config
-  <connectionStrings>
-    <add name="CSET_DB"
-      connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True"/>
-    <add name="ElmahConn"
-      connectionString="data source=localhost;initial catalog=CSETWeb;persist security info=True;user id=user;password=password;MultipleActiveResultSets=True;App=Elmah"
-      providerName="System.Data.EntityClient"/>
-  </connectionStrings>
+{
+  "ConnectionStrings": {
+    "CSET_DB": "data source=localhost;user id=user;password=password;initial catalog=CSETWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True"
+  }
 ```
 
 These settings will connect to a SQL DB running on `localhost` with created user: `user` with password: `password`. 
