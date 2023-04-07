@@ -30,39 +30,35 @@ import { result } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import html2canvas from 'html2canvas';
 
+
+
 @Component({
     selector: 'app-pdf-reports',
     templateUrl: './pdf-reports.component.html',
     styleUrls: ['../reports.scss']
   })
 
-export class PdfReportsComponent implements OnInit, AfterViewChecked {
+export class PdfReportsComponent implements OnInit {
   // Input Data
   @Input() assessmentInfo;
   @Input() donutData;
   @Input() tableData;
 
-  // Child Data - grabbing HTML of the template for use in the HTML to pdfmake package
-  @ViewChild('Cover') divCover: ElementRef
-  @ViewChild('One') divOne: ElementRef;
-  @ViewChild('Two') divTwo: ElementRef;
-  @ViewChild('Three') divThree: ElementRef;
-  @ViewChild('Four') divFour: ElementRef;
-  @ViewChild('Five') divFive: ElementRef;
-  @ViewChild('Six') divSix: ElementRef;
-  @ViewChild('Seven') divSeven: ElementRef;
 
-  // Pdf variables
-  coverImage: any = null;
-  sectionOne: any = null;
-  sectionTwo: any = null;
-  sectionThree: any = null;
-  sectionFour: any = null;
-  sectionFive: any = null;
-  sectionSix: any = null;
-  sectionSeven: any = null;
-  document: any = null;
-  reportGeneratedDate: Date;
+  // PDF images & variables
+  pdfDocument: any = null;
+
+  coverImage: any = null; // Front C2M2 cover
+  reportGeneratedDate: Date; // Section 1 assessment information
+
+  managementActivitiesData = []; // Section 3.2 Table data
+  tableTwoStructure = []; // Section 3.2 pdfmake JSON
+
+  selfEvalCirlces: any = null;
+  
+  milAchievementData: any[] = [];
+  milAchievementChart: any = null;
+
 
   // Style Variables
   normalSpacing = 12;
@@ -70,87 +66,22 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
   largeSpacing = 24;
   extraLargeSpacing = 36;
 
+  milAchievementColorScheme = {
+    domain: ['#0A5278']
+  };
+
 
   constructor(
     public reportSvc: ReportService,
     private http: HttpClient,
-  ) { }
+  ) {}
+
 
   ngOnInit(): void {
     this.reportGeneratedDate = new Date();
     this.getBase64('assets/images/C2M2/C2M2-Report-Cover-Sheet.png');
-  }
-
-  ngAfterViewChecked(): void {
-    this.sectionOne = this.divOne.nativeElement.innerHTML;
-    this.sectionTwo = this.divTwo.nativeElement.innerHTML;
-    this.sectionThree = this.divThree.nativeElement.innerHTML;
-    this.sectionFour = this.divFour.nativeElement.innerHTML;
-    this.sectionFive = this.divFive.nativeElement.innerHTML;
-    this.sectionSix = this.divSix.nativeElement.innerHTML;
-    this.sectionSeven = this.divSeven.nativeElement.innerHTML;
-  }
-
-  generatePdf() {
-    let pdfMake = require('pdfmake/build/pdfmake.js');
-    let pdfFonts = require('pdfmake/build/vfs_fonts.js');
-    let htmlToPdfmake = require('html-to-pdfmake');
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    let reportCover = htmlToPdfmake(this.coverImage);
-    let reportBody = htmlToPdfmake(
-      this.sectionOne + this.sectionTwo + this.sectionThree + 
-      this.sectionFour + this.sectionFive + this.sectionSix + this.sectionSeven, 
-      {
-        defaultStyles: {
-          h1: {
-            color: '#0A5278',
-            marginTop: 24,
-            marginBottom: 12,
-          },
-          h2: {
-            color: '#0A5278',
-            marginTop: 12,
-            marginBottom: 8,
-          },
-          h3: {
-            color: '#0A5278',
-            marginTop: 12,
-            marginBottom: 8,
-          },
-          h4: {
-            color: '#0A5278',
-            marginTop: 12,
-            marginBottom: 8,
-          },
-          h5: {
-            color: '#0A5278',
-            marginTop: 12,
-            marginBottom: 8,
-          },
-          h6: {
-            color: '#0A5278',
-            marginTop: 12,
-            marginBottom: 8,
-          }
-        }
-      }
-    );
-
-    this.document = {
-      content: [
-        reportCover,
-        reportBody,
-      ],
-      styles: {
-      },
-
-      pageBreakBefore: function(currentNode) {
-        return currentNode.style && currentNode.style.indexOf('pagebreak-before') > -1;
-      }
-    };
-
-    pdfMake.createPdf(this.document).open();
+    this.getMilAchievementChartData();
+    this.getManagementActivitiesData();
   }
 
   getBase64(path: string) {
@@ -161,15 +92,58 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
       const binaryString = reader.readAsDataURL(blob);
       reader.onload = (event: any) => {
         this.coverImage = "<img width='700' src='" + event.target.result + "'>";
-      };
+      }
       reader.onerror = (event: any) => {
         console.log("File could not be read: " + event.target.error.code);
       };
     });
   }
 
+  getMilAchievementChartData() {
+    this.donutData.forEach(domain => {
+      this.milAchievementData.push({name: domain.shortTitle, value: domain.milAchieved});
+    });
+  }
 
-  generatePdfTwo() {
+  getManagementActivitiesData() {
+    for (let i = 0; i < this.tableData.managementQuestions.length; i++) {
+      for (let j = 0; j < this.tableData.managementQuestions[i].domainAnswers.length; j++) {
+        if (this.tableData.managementQuestions[i].domainAnswers[j].answer == null) {
+          this.tableData.managementQuestions[i].domainAnswers[j].answer = "U";
+        }
+        this.managementActivitiesData.push(this.tableData.managementQuestions[i].domainAnswers[j].answer);
+      }
+    }
+
+    this.buildTable2Structure();
+  }
+
+  buildTable2Structure() {
+    for (let k = 0; k < this.managementActivitiesData.length; k++) {
+      let fillColor = 'white';
+      let textColor = 'black';
+
+      if (this.managementActivitiesData[k] === 'FI') {
+        fillColor = '#005c99';
+        textColor = 'white';
+      } else if (this.managementActivitiesData[k] === 'LI') {
+        fillColor = '#8ba6ca';
+      } else if (this.managementActivitiesData[k] === 'PI') {
+        fillColor = '#fad980';
+      } else if (this.managementActivitiesData[k] === 'NI') {
+        fillColor = '#e69f00';
+      } else if (this.managementActivitiesData[k] === 'U') {
+        this.managementActivitiesData[k] = 'U';
+        fillColor = '#E6E6E6';
+      }
+
+      this.tableTwoStructure.push( {text: this.managementActivitiesData[k], alignment: 'center', marginTop: 10, fillColor: fillColor, color: textColor } );
+    }
+
+  }
+
+
+  generatePdf() {
     let normalSpacing = 12;
     let smallSpacing = 6;
     let largeSpacing = 24;
@@ -182,8 +156,20 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
 
     let reportCover = htmlToPdfmake(this.coverImage);
 
+    // Section 3.2 Table Vertical Headers
+    let assetSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">ASSET</text></svg>' };
+    let threatSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">THREAT</text></svg>' };
+    let riskSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">RISK</text></svg>' };
+    let accessSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">ACCESS</text></svg>' };
+    let situationSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">SITUATION</text></svg>' };
+    let responseSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">RESPONSE</text></svg>' };
+    let thirdpartySvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">THIRD-PARTIES</text></svg>' };
+    let workforceSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">WORKFORCE</text></svg>' };
+    let architectureSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">ARCHITECTURE</text></svg>' };
+    let programSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">PROGRAM</text></svg>' };
     
-    this.document = {
+
+    this.pdfDocument = {
       content: [
         // Cover Image Here
         reportCover,
@@ -258,7 +244,7 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
         { text: 'Establish and maintain an enterprise cybersecurity program that provides governance, strategic planning, and sponsorship for the organization\'s cybersecurity activities in a manner that aligns cybersecurity objectives with both the organization\'s strategic objectives and the risk to critical infrastructure', marginBottom: largeSpacing },
         { text: 'For a more in-depth discussion of the C2M2 domains, refer to the C2M2 V2.1 model document available here: https://energy.gov/C2M2.', pageBreak: 'after' },
         
-        // 2.2 Maturity Indicator Levels'
+        // Section 2.2 Maturity Indicator Levels'
         { text: '2.2 Maturity Indicator Levels', style: 'header', marginBottom: largeSpacing },
         { text: 'The model defines four maturity indicator levels (MILs), MIL0 through MIL3, which apply independently to each domain in the mode. The MILs define a dual progression of maturity: an approach progression and a management progression.', marginBottom: normalSpacing },
         { text: 'Four aspects of the MILs are important for understanding and applying the model: ',
@@ -270,9 +256,10 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
             ],
             marginBottom: normalSpacing
         },
-        { text: 'For a more in-depth discussion of the C2M2 domains, refer to the C2M2 V2.1 model document available here: https://energy.gov/C2M2.', pageBreak: 'after' },
+        { text: 'For a more in-depth discussion of the C2M2 domains, refer to the C2M2 V2.1 model document available here: https://energy.gov/C2M2.', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
         
-        //Section 2.3 Maturity Indicator Level Scoring
+        // Section 2.3 Maturity Indicator Level Scoring
         { text: '2.3 Maturity Indicator Level Scoring', style: 'header', marginBottom: largeSpacing },
         { text: 'MIL achievement scores are derived from responses entered into the C2M2 Self-Evaluation Tool. Responses are chosen from a four-point scale: Fully Implemented (FI), Largely Implemented (LI), Partially Implemented (PI), and Not Implemented (NI). A MIL is achieved when all practices in that MIL and all preceding MILs receive responses of Fully Implemented or Largely Implemented. A MIL is not achieved if any practices in that MIL or a preceding MIL have received a response of Partially Implemented or Not Implemented. ', marginBottom: normalSpacing },
         { text: 'In other words, achieving a MIL in a domain requires the following: ',
@@ -289,40 +276,318 @@ export class PdfReportsComponent implements OnInit, AfterViewChecked {
             widths: [ '*', 'auto' ],
             body: [
                 [ { text: 'Response', bold: true, alignment: 'center' }, { text: 'Implementation Description', bold: true, alignment: 'center' }],
-                ['Fully Implemented (FI)', 'Complete'],
-                ['Largely Implemented (LI)', 'Complete, but with a recognized opportunity for improvement'],
-                ['Partially Implemented (PI)', 'Incomplete; there are multiple opportunities for improvement'],
-                ['Not Implemented (NI)', 'Absent; the practice is not performed by the organization'],
+                [ { text: 'Fully Implemented (FI)', fillColor: '#005c99', color: 'white', alignment: 'center' }, 'Complete'],
+                [ { text: 'Largely Implemented (LI)', fillColor: '#8ba6ca', alignment: 'center' }, 'Complete, but with a recognized opportunity for improvement'],
+                [ { text: 'Partially Implemented (PI)', fillColor: '#fad980', alignment: 'center' }, 'Incomplete; there are multiple opportunities for improvement'],
+                [ { text: 'Not Implemented (NI)', fillColor: '#e69f00', alignment: 'center' }, 'Absent; the practice is not performed by the organization'],
                 ],
             },
             marginBottom: smallSpacing 
         },
-        { text: 'Table 1: Description of Self-Evaluation Response Options', style: 'caption', pageBreak: 'after' }  
+        { text: 'Table 1: Description of Self-Evaluation Response Options', style: 'caption', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 3 Summary of Self-Evaluation Results
+        { text: '3. Summary of Self-Evaluation Results', style: 'header', marginBottom: largeSpacing },
+        
+        // Section 3.1 MIL Achievement by Domain
+        { text: '3.1 MIL Achievement by Domain', style: 'header', marginBottom: extraLargeSpacing },
+        { text: 'Figure 2 shows the MIL achieved for each C2M2 domain.', marginBottom: normalSpacing },
+
+
+
+        { text: 'Figure 2: MIL Achieved by Domain', style: 'caption', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 3.2 Practice Implementation by Domain
+        { text: '3.2 Practice Implementation by Domain', style: 'header', marginBottom: largeSpacing },
+        { text: 'Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding MILs receive responses of Fully Implemented or Largely Implemented. A high-level understanding of the organization\'s self-evaluation results can be gained from this figure and may be useful when evaluation areas for future improvement.', marginBottom: normalSpacing },
+        { text: 'The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain. Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        { text: 'COOL CHART HERE' },
+        { text: 'Figure 3: Summary of Responses Input by MIL and Domain', style: 'caption', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 3.3 Implementation of Management Activities across Domains
+        { text: '3.3 Implementation of Management Activities across Domains', style: 'header', marginBottom: largeSpacing },
+        { text: 'The final objective of each C2M2 domain includes practices focused on cybersecurity management activities. These practices focus on the extent to which cybersecurity practices are institutionalized, or ingrained, in the organization\'s operations. The more deeply ingrained an activity, the more likely it is that the organization will continue to perform the activity over time; the activity will be retained under time of stress; and the outcomes of the activity will be consistent, repeatable, and of high quality. Table 2 provides a high-level overview of implementation of the Management Activities from two perspectives: 1) implementation of all Management Activities within each domain and 2) implementation of each Management Activities practice across the ten C2M2 domains.', marginBottom: normalSpacing },
+        { text: '', marginBottom: smallSpacing },
+        { table: 
+          {
+            widths: [170, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25 ],
+            body: [
+              [ '', assetSvg, threatSvg, riskSvg, accessSvg, situationSvg, responseSvg, thirdpartySvg, workforceSvg, architectureSvg, programSvg ],
+              [ this.tableData.managementQuestions[0].questionText, this.tableTwoStructure[0], this.tableTwoStructure[1], this.tableTwoStructure[2], this.tableTwoStructure[3], this.tableTwoStructure[4], this.tableTwoStructure[5], this.tableTwoStructure[6], this.tableTwoStructure[7], this.tableTwoStructure[8], this.tableTwoStructure[9] ], 
+              [ this.tableData.managementQuestions[1].questionText, this.tableTwoStructure[10], this.tableTwoStructure[11], this.tableTwoStructure[12], this.tableTwoStructure[13], this.tableTwoStructure[14], this.tableTwoStructure[15], this.tableTwoStructure[16], this.tableTwoStructure[17], this.tableTwoStructure[18], this.tableTwoStructure[19] ],
+              [ this.tableData.managementQuestions[2].questionText, this.tableTwoStructure[20], this.tableTwoStructure[21], this.tableTwoStructure[22], this.tableTwoStructure[23], this.tableTwoStructure[24], this.tableTwoStructure[25], this.tableTwoStructure[26], this.tableTwoStructure[27], this.tableTwoStructure[28], this.tableTwoStructure[29] ],
+              [ this.tableData.managementQuestions[3].questionText, this.tableTwoStructure[30], this.tableTwoStructure[31], this.tableTwoStructure[32], this.tableTwoStructure[33], this.tableTwoStructure[34], this.tableTwoStructure[35], this.tableTwoStructure[36], this.tableTwoStructure[37], this.tableTwoStructure[38], this.tableTwoStructure[39] ],
+              [ this.tableData.managementQuestions[4].questionText, this.tableTwoStructure[40], this.tableTwoStructure[41], this.tableTwoStructure[42], this.tableTwoStructure[43], this.tableTwoStructure[44], this.tableTwoStructure[45], this.tableTwoStructure[46], this.tableTwoStructure[47], this.tableTwoStructure[48], this.tableTwoStructure[49] ],
+              [ this.tableData.managementQuestions[5].questionText, this.tableTwoStructure[50], this.tableTwoStructure[51], this.tableTwoStructure[52], this.tableTwoStructure[53], this.tableTwoStructure[54], this.tableTwoStructure[55], this.tableTwoStructure[56], this.tableTwoStructure[57], this.tableTwoStructure[58], this.tableTwoStructure[59] ],
+            ]
+          }, 
+          layout: {
+            hLineColor: function (i, node) {
+              return '#b3b3b3';
+           },
+           vLineColor: function (i, node) {
+            return '#b3b3b3';
+          },
+          }, marginBottom: smallSpacing },
+        { text: 'Table 2: Management Activities', style: 'caption', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4 Detailed Self-Evaluation Results
+        { text: '4. Detailed Self-Evaluation Results', style: 'header', marginBottom: largeSpacing },
+        { text: 'This section provides the level of implementation (i.e., Fully Implemented, Largely Implemented, Partially Implemented, and Not Implemented) input to the self-evaluation tool for each C2M2 practice by domain, objective, and MIL. See Section 2.3 Maturity Indicator Level Scoring for a detailed explanation of the scoring process and Section 5 Using the Model for further detail regarding self-evaluation results.', marginBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.1 Domain: Asset. Change, and Configuration Management (ASSET)
+        { text: '4.1 Domain: Asset, Change, and Configuration Management (ASSET)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Manage the organization\'s IT and OT assets, including both hardware and software, and information assets commensurate with the risk to critical infrastructure and organizational objectives', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Manage IT and OT Asset Inventory', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Manage Information Asset Inventory', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Manage IT and OT Asset Configurations', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Manage Changes to IT and OT Assets', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 5: Management Activities for the ASSET domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.2 Domain: Threat and Vulnerability Management (THREAT)
+        { text: '4.2 Domain: Threat and Vulnerability Management (THREAT)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain plans, procedures, and technologies to detect, identify, analyze, manage, and respond to cybersecurity threats and vulnerabilities, commensurate with the risk to the organization\'s infrastructure (such as critical, IT, and operational) and organizational objectives.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Reduce Cybersecurity Vulnerabilities', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Respond to Threats and Share Threat Information', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Management Activities for the THREAT domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.3 Domain: Risk Management (RISK)
+        { text: '4.3 Domain: Risk Management (RISK) ', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and response to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Establish and Maintain Cyber Risk Management Strategy and Program', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Identify Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Analyze Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Respond to Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 5: Management Activities for the RISK domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.4 Domain: Identity and Access Management (ACCESS) 
+        { text: '4.4 Domain: Identity and Access Management (ACCESS)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Create and manage identities for the entities that may be granted logical or physical access to the organization\'s assets. Control access to the organization\'s assets, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Establish Identities and Manage Authentication', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Control Logical Access', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Control Physical Access', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Management Activities for the ACCESS domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.5 Domain: Situational Awareness (SITUATION)
+        { text: '4.5 Domain: Situational Awareness (SITUATION)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain activities and technologies to collect, monitor, analyze, alarm, report, and use operational, security, and threat information, including status and summary information from the other model domains, to establish situational awareness for both the organization\'s operational state and cybersecurity state.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Perform Logging', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Perform Monitoring', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Establish and Maintain Situation Awareness', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Management Activities for the SITUATION', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)
+        { text: '4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain plans, procedures, and technologies to detect, analyze, mitigate, respond to, and recovery from cybersecurity events and incidents and to sustain operations during cybersecurity incidents, commensurate with the risk to critical and organizational objectives.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Detect Cybersecurity Events', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Analyze Cybersecurity Events and Declare Incidents', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Respond to Cybersecurity Incidents', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Address Cybersecurity in Continuity of Operations', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 5: Management Activities for the RESPONSE domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)
+        { text: '4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain controls to manage the cyber risks arising from suppliers and other third parties, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Identify and Prioritize Third Parties', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Manage Third-Party Risk', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Management Activities for the THIRD-PARTIES domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.8 Domain: Workforce Management (WORKFORCE)
+        { text: '4.8 Domain: Workforce Management (WORKFORCE)', style: 'header', marginBottom: largeSpacing },
+        { text: '', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Implement Workforce Controls', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Increase Cybersecurity Awareness', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Assign Cybersecurity Responsibilities', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Develop Cybersecurity Workforce', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 5: Management Activities for the WORKFORCE domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)
+        { text: '4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain the structure and behavior of the organization\'s cybersecurity architecture, including controls, processes, technologies, and other elements, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Establish and Maintain Cybersecurity Architecture Strategy and Program', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: plement Network Protections as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 4: Implement Software Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 5: Implement Data Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 6: Management Activities for the ARCHITECTURE domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 4.10 Domain: Cybersecurity Program Management (PROGRAM)
+        { text: '4.10 Domain: Cybersecurity Program Management (PROGRAM) ', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain an enterprise cybersecurity program that provides governance, strategic planning, and sponsorship for the organization\'s cybersecurity activities in a manner that aligns cybersecurity objectives with both the organization\'s strategic objectives and the risk to critical infrastructure.', marginBottom: normalSpacing },
+        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
+        { text: 'Objective 1: Establish Cybersecurity Program Strategy', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 2: Establish and Maintain Cybersecurity Program', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        { text: 'Objective 3: Management Activities for the PROGRAM domain', style: 'subHeader', marginBottom: smallSpacing },
+        { text: 'TABLE HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 5: Using the Self-Evaluation Results
+        { text: '5. Using the Self-Evaluation Results', style: 'header', marginBottom: largeSpacing },
+        { text: 'The C2M2 is meant to be used by an organization to evaluate its cybersecurity capabilities consistently, to communicate its capability levels in meaningful terms, and to inform the prioritization of its cybersecurity investments. Figure 4 summarizes a potential approach for using the model. An organization performs a self-evaluation against the model, uses that self-evaluation to identify gaps in capability, prioritizes those gaps and develops plans to address them, and finally implements plans to address the gaps. As plans are implemented, business objectives change, and the risk environment evolves, the process is repeated. This section offers a brief overview of how to use the self-evaluation results in this approach. For a more detailed review of these steps and additional guidance, see the "Using the Model" section of the C2M2 V2.1 model document available here: https://energy.gov/C2M2.', marginBottom: smallSpacing },
+        { svg: '<svg width="335" viewBox="-700 -230 895 444" fill="#fff" font-family="Calibri" font-size="36" text-anchor="middle" overflow="visible"><title id="assessmentApproachTitle">Figure 4: Potential Approach for Using the Model</title><desc id="assessmentApproachDesc">Figure 4: Potential Approach for Using the Model. A flow chart graphic showing 4 steps in a circular formation with arrows demonstrating a clockwise movement. The steps are Perform Evaluation, Analyze Identified Gaps, Prioritize and Plan, and Implement Plans.</desc><g id="aa-use" transform="translate(350) rotate(45)"><circle r="150" fill="#015289"></circle><path fill="#015289" d="M0 300l50-40H30v-50h-60v50h-20z"></path></g><use href="#aa-use" transform="rotate(90)"></use><use href="#aa-use" transform="rotate(180)"></use><use href="#aa-use" transform="rotate(270)"></use><text x="-350"><tspan dy="-.8em">Implement</tspan><tspan x="-350" dy="1.2em">Plans</tspan></text><text y="-350"><tspan dy="-.8em">Perform a</tspan><tspan x="0" dy="1.2em">Self-</tspan><tspan x="0" dy="1.2em">Evaluation</tspan></text><text x="350"><tspan dy="-.8em">Analyze</tspan><tspan x="350" dy="1.2em">Identified</tspan><tspan x="350" dy="1.2em">Gaps</tspan></text><text y="350"><tspan x="0" dy="-.6em">Prioritize</tspan><tspan x="0" dy="1.2em">and Plan</tspan></text></svg>', marginBottom: -15 },
+        { text: 'Figure 4: Proposed Approach for Using the Model', style: 'caption', marginBottom: extraLargeSpacing },
+        { text: 'This report summarizes the results of the organization\'s self-evaluation conducted in Step 1, Perform a Self-Evaluation', marginBottom: normalSpacing },
+        { text: 'It provides a point-in-tine view of the cybersecurity posture of the in-scope function. Self-evaluation workshop participants should review this report and collectively address, any discrepancies or questions before the next step.', marginBottom: normalSpacing },
+        { text: 'In Step 2, Analyze Identified Gaps, the organization identifies gaps in the performance of model practices by examining the self-evaluation results against its target profile - the desired profile that represents the organization\'s target MIL rating for each domain in the model. Organizations using the model for the first time may identify the target profile after performing a self-evaluation, while others often identify a target profile before conducting a self-evaluation. For more information on setting targets, see Appendix D, "Setting Targets" in the C2M2 Self-Evaluation Guide available here: https://energy.gov/C2M2.', marginBottom: normalSpacing },
+        { text: 'In Step 3, Prioritize and Plan, the organization uses the gap analysis to prioritize the actions needed to fully implement the practices in the target profile. A cost-benefit analysis may help to inform the prioritization of actions needed. The organization should then develop a plan to address the selected gaps and assign ownership of the plan to an individual with sufficient authority to oversee implementation.', marginBottom: normalSpacing },
+        { text: 'Regular reviews by organizational leadership should be conducted to evaluate status, clear obstacles, and identify any necessary course corrections as implementation progresses.', marginBottom: normalSpacing },
+        { text: 'In Step 4, Implement Plans and Periodically Reevaluate, plans developed in the previous step should be implemented to address the identified gaps. Subsequent model self-evaluations are particularly useful in tracking implementation and should be conducted periodically to ensure that desired progress is achieved. Reevaluations should also be considered in response to major changes in business, technology, market, or threat environments to ensure that the current profile matches the organization\'s desired state.', marinBottom: normalSpacing },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 6 Self-Evaluation Notes
+        { text: '6. Self-Evaluation Notes', style: 'header', marginBottom: largeSpacing },
+        { text: 'This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation status. Reviewing the notes may provide the rationale for the selection of an implementation response during the completion of the self-evaluation. The tables in this section are ordered by model practice identifier.', marginBottom: largeSpacing },
+        { text: 'TABLE WITH COMMENTS OR NO COMMENT BOXES HERE' },
+        { text: '', pageBreak: 'after' },
+        
+        // Section 7 List of Partially Implemented and Not Implemented Practices
+        { text: '7. List of Partially Implemented and Not Implemented Practices', style: 'header', marginBottom: largeSpacing },
+        { text: 'Practices that received a response of Partially Implemented or Not Implemented are consolidated in this section and shown with any notes captured during the self-evaluation. If an organization is targeting a MIL in a specific domain, these tables will highlight the practices the organization must prioritize to achieve the target MIL.', marginBottom: normalSpacing },
+        { text: 'The tables in this section are ordered first by MIL, then further ordered by the implementation response for practices at that MIL, with Partially Implemented practices followed by Not Implemented practices. This highlights the practices that may be the focus of improvement efforts to reach a MIL target in each domain.', marginBottom: largeSpacing },
+        { text: 'TABLE WITH PARTIALLY IMPLEMENTED QUESTIONS', marginBottom: normalSpacing },
+        { text: '', pageBreakL: 'after' }
     ],
-
-    styles: 
-    {
-      header: {
-        fontSize: 28,
-        bold: true,
-        color: '#0A5278'
-      },
-      subHeader: {
-        fontSize: 16,
-        color: '#0A5278'
-      },
-      caption: {
-        fontSize: 12,
-        color: '#0A5278',
-        alignment: 'center'
-      },
-      defaultStyle: {
-        fontSize: 12,
-      }
-    },
+	
+	styles: {
+      header: { fontSize: 28, bold: true, color: '#0A5278' },
+      subHeader: { fontSize: 16, color: '#0A5278' },
+      caption: { fontSize: 12, color: '#0A5278', alignment: 'center' },
+      defaultStyle: { fontSize: 12 }
+    }
   };
-  
-    pdfMake.createPdf(this.document).open();
-  }
 
+    pdfMake.createPdf(this.pdfDocument).open();
+  }
 }
